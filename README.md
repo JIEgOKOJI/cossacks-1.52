@@ -9,7 +9,8 @@ If you love classic strategy games, Cossacks: Back to War is a genre classic. Ho
 Full Compatibility with Windows, macOS, and Linux The game now runs smoothly on all modern platforms without crashes, delivering stable performance.
 Removed 1920x1080 Resolution Limit You can now enjoy the game in high resolutions with no screen size restrictions. 🚀
 
-Improved Graphics and Interface Updated textures and UI make the game easier on the eyes, adding vibrancy and enhancing the visual experience. 🎨
+**Multiplayer Fix (Direct IP) — Fix by [emilekm2142](https://github.com/emilekm2142/)**  
+Direct TCP/IP now uses the UDP-based CommCore network stack instead of DirectPlay. Multiplayer works reliably over Hamachi, Radmin VPN, ZeroTier, and direct IP connections — no freezes, no greyed-out Start button, and no connection errors. CGNAT and strict NAT setups are fully supported. Enter the IP and play.
 
 **Vertical synchronization has been enabled by default.**
 
@@ -286,6 +287,9 @@ By supporting developers and purchasing games legally, you contribute to the dev
 Полная совместимость с Windows, macOS и Linux: Игра теперь работает без вылетов на всех современных платформах, обеспечивая стабильную производительность.
 
 Убрано ограничение разрешения 1920x1080: Теперь вы можете наслаждаться игрой в высоком разрешении, без ограничений по размеру экрана. 🚀
+
+**Исправлен мультиплеер Direct IP (Fix by [emilekm2142](https://github.com/emilekm2142/))**
+Direct TCP/IP теперь работает через UDP-сетевой стек CommCore вместо DirectPlay. Мультиплеер стабильно запускается через Hamachi, Radmin VPN, ZeroTier и прямое подключение по IP — без зависаний, серой кнопки Start и ошибок соединения. CGNAT и строгие NAT больше не мешают игре. Вводишь IP — играешь.
 
 Улучшенная графика и интерфейс: Обновлённые текстуры и интерфейс делают игру более приятной для глаз, добавляя яркости и улучшая восприятие. 🎨
 
