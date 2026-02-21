@@ -251,6 +251,8 @@ I also express my sincere gratitude to the esteemed [rb515proto](https://github.
 
 I would also like to thank [Ivan Petkov](https://github.com/MisterCoderman/cossacks-2025/issues/35) for his contribution and for creating the missions included in version 1.52 🙏
 
+I would also like to thank the esteemed [emilekm2142](https://github.com/emilekm2142/) for creating the Multiplayer Fix (Direct IP), which replaces DirectPlay with the UDP-based CommCore network stack and makes Direct IP multiplayer stable and reliable, even under CGNAT and strict NAT setups 🙏
+
 
 #  👨‍💻 For Developers
 
@@ -545,6 +547,9 @@ Direct TCP/IP теперь работает через UDP-сетевой сте
 Также выражаю искреннюю благодарность уважаемому [rb515proto](https://github.com/MisterCoderman/cossacks-2025/issues/34) за помощь с переводом и исправлением багов 🙏
 
 Также хочу поблагодарить [Ивана Петкова](https://github.com/MisterCoderman/cossacks-2025/issues/35) за его вклад и создание миссий, которые доступны в версии 1.52 🙏
+
+
+Также хочу поблагодарить уважаемого [emilekm2142](https://github.com/emilekm2142/) за создание Multiplayer Fix (Direct IP), который заменяет DirectPlay на сетевой стек CommCore и делает Direct IP мультиплеер стабильным и надёжным даже при CGNAT и строгом NAT 🙏
 
 
 
