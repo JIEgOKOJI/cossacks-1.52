@@ -1,6 +1,8 @@
 // Network initialization part
 //
 #include "CommCore.h"
+#include <iphlpapi.h>
+#pragma comment(lib, "Iphlpapi.lib")
 
 // ---------------------------------------------------------------------------------------------
 
@@ -28,24 +30,51 @@ BOOL CCommCore::InitHost()
 {
 	_log_message("InitHost()");
 
-	if(gethostname(m_szUserName,255)==SOCKET_ERROR)
+	m_uAddrCount = 0;
+
+	ULONG bufLen = 15000;
+	PIP_ADAPTER_ADDRESSES pAddresses = NULL;
+	ULONG ret;
+
+	do {
+		pAddresses = (PIP_ADAPTER_ADDRESSES)malloc(bufLen);
+		if (!pAddresses)
+			return FALSE;
+
+		ret = GetAdaptersAddresses(AF_INET,
+			GAA_FLAG_SKIP_ANYCAST | GAA_FLAG_SKIP_MULTICAST |
+			GAA_FLAG_SKIP_DNS_SERVER | GAA_FLAG_SKIP_FRIENDLY_NAME,
+			NULL, pAddresses, &bufLen);
+
+		if (ret == ERROR_BUFFER_OVERFLOW) {
+			free(pAddresses);
+			pAddresses = NULL;
+		}
+	} while (ret == ERROR_BUFFER_OVERFLOW);
+
+	if (ret != NO_ERROR) {
+		if (pAddresses) free(pAddresses);
 		return FALSE;
+	}
 
-	HOSTENT * pHostEnt;
+	for (PIP_ADAPTER_ADDRESSES pCurr = pAddresses;
+		pCurr && m_uAddrCount < 8;
+		pCurr = pCurr->Next)
+	{
+		if (pCurr->IfType == IF_TYPE_SOFTWARE_LOOPBACK) continue;
+		if (pCurr->OperStatus != IfOperStatusUp) continue;
 
-	pHostEnt=gethostbyname(m_szUserName);
+		for (PIP_ADAPTER_UNICAST_ADDRESS pUnicast = pCurr->FirstUnicastAddress;
+			pUnicast && m_uAddrCount < 8;
+			pUnicast = pUnicast->Next)
+		{
+			sockaddr_in* sa = (sockaddr_in*)pUnicast->Address.lpSockaddr;
+			m_dwAddrList[m_uAddrCount++] = sa->sin_addr.s_addr;
+		}
+	}
 
-	if(!pHostEnt)
-		return FALSE;
-
-	m_uAddrCount=0;
-
-	while(pHostEnt->h_addr_list[m_uAddrCount]){
-		memcpy(&m_dwAddrList[m_uAddrCount],pHostEnt->h_addr_list[m_uAddrCount],pHostEnt->h_length);
-		m_uAddrCount++;
-	};
-
-	return TRUE;
+	free(pAddresses);
+	return (m_uAddrCount > 0);
 }
 
 // ---------------------------------------------------------------------------------------------
