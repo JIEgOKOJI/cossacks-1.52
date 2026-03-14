@@ -1,4 +1,5 @@
 #include "ddini.h"
+#include <cstdint>
 #include "ResFile.h"
 #include "FastDraw.h"
 #include "mgraph.h"
@@ -655,7 +656,7 @@ void TakeUnitFromCash( byte NI, word ID )
 		{
 			if ( i < CSSIZE - 1 )
 			{
-				memcpy( UNICASH + i, UNICASH + i + 1, ( CSSIZE - i - 1 ) * sizeof ProCash );
+				memcpy( UNICASH + i, UNICASH + i + 1, ( CSSIZE - i - 1 ) * sizeof(ProCash) );
 			};
 			CSSIZE--;
 			i--;
@@ -673,7 +674,7 @@ bool AddUnitsToCash( byte NI, word ID )
 		cps = CSSIZE;
 		CSSIZE++;
 		addc = 1;
-		memset( UNICASH + cps, 0, sizeof ProCash );
+		memset( UNICASH + cps, 0, sizeof(ProCash) );
 	};
 	int COST[8];
 	int CMON[8];
@@ -720,10 +721,10 @@ int GetAmount( word ID )
 		if ( MID != 0xFFFF )
 		{
 			OneObject* OBJ = Group[MID];
-			if ( int( OBJ ) )
+			if ( (intptr_t)( OBJ ) )
 			{
 				Order1* OR1 = OBJ->LocalOrder;
-				while ( int( OR1 ) )
+				while ( (intptr_t)( OR1 ) )
 				{
 					if ( OR1->OrderType == 13 &&
 						OR1->info.Produce.ObjIndex == ID )
@@ -757,10 +758,10 @@ int GetProgress( word ID, int* MaxProgress )
 		if ( MID != 0xFFFF )
 		{
 			OneObject* OBJ = Group[MID];
-			if ( int( OBJ ) )
+			if ( (intptr_t)( OBJ ) )
 			{
 				Order1* OR1 = OBJ->LocalOrder;
-				if ( int( OR1 ) && OR1->OrderType == 13 &&
+				if ( (intptr_t)( OR1 ) && OR1->OrderType == 13 &&
 					OR1->info.Produce.ObjIndex == ID&&
 					OR1->info.Produce.Progress > CID )
 				{

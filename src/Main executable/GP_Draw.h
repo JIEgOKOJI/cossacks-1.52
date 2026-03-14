@@ -3,6 +3,7 @@
 #else
 #define GP_API __declspec(dllimport)
 #endif
+#include <stdint.h>
 #pragma pack(1)
 typedef unsigned short word;
 typedef char* LPCHAR; 
@@ -16,7 +17,7 @@ public:
 	short dy;
 	short Lx;
 	short Ly;
-	byte* Pack;
+	uint32_t Pack; // Originally byte*, but must stay 4 bytes for .gp file binary compat
 	char  Options;
 	DWORD CData;
 	short NLines;
@@ -63,7 +64,7 @@ public:
 	UNICODETABLE* FindFont(char* Name);
 };
 extern GP_API UNIFONTS UFONTS;
-#define NO_PACK ((byte*)0xFFFFFFFF)
+#define NO_PACK ((byte*)(uintptr_t)-1)
 void ErrM(char* s);
 typedef GP_GlobalHeader* lpGP_GlobalHeader;
 
@@ -82,7 +83,7 @@ public:
 	//Array of pointers to buffers with loaded resource files
 	GP_GlobalHeader** GPH;
 
-	DWORD** CASHREF;
+	uintptr_t** CASHREF;
 	byte* Mapping;
 	char** GPNames;
 	word* GPNFrames;

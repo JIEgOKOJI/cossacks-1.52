@@ -12,6 +12,8 @@
 #include <crtdbg.h>
 #include <math.h>
 
+extern void dbglog(const char* fmt, ...);
+
 #include "Megapolis.h"
 
 #include "fonts.h"
@@ -35,7 +37,7 @@
 #include "ActiveScenary.h"
 #include "DrawForm.h"
 #include "recorder.h"
-#include "Safety.h "
+#include "Safety.h"
 #include "EInfoClass.h"
 
 #include "PlayerInfo.h"
@@ -52,7 +54,7 @@ ScenaryInterface SCENINF;
 
 ScenaryInterface::ScenaryInterface()
 {
-	memset( this, 0, sizeof ScenaryInterface );
+	memset( this, 0, sizeof(ScenaryInterface) );
 }
 
 ScenaryInterface::~ScenaryInterface()
@@ -404,7 +406,7 @@ extern word COMPSTART[8];
 void ScenaryInterface::Load(char* Name, char* Text)
 {
 	for (int i = 0; i < 8; i++) AssignTBL[i] = i;
-	memset(COMPSTART, 0, sizeof COMPSTART);
+	memset(COMPSTART, 0, sizeof(COMPSTART));
 	char lang[3] = "en";
 
 	LCID uiLCID = GetSystemDefaultUILanguage();
@@ -456,10 +458,10 @@ void ScenaryInterface::Load(char* Name, char* Text)
 					if (NPages >= MaxPages)
 					{
 						MaxPages += 32;
-						Page = (char**)realloc(Page, 4 * MaxPages);
-						PageID = (char**)realloc(PageID, 4 * MaxPages);
-						PageBMP = (char**)realloc(PageBMP, 4 * MaxPages);
-						PageSize = (int*)realloc(PageSize, 4 * MaxPages);
+						Page = (char**)realloc(Page, sizeof(char*) * MaxPages);
+						PageID = (char**)realloc(PageID, sizeof(char*) * MaxPages);
+						PageBMP = (char**)realloc(PageBMP, sizeof(char*) * MaxPages);
+						PageSize = (int*)realloc(PageSize, sizeof(int) * MaxPages);
 					}
 
 					STR0 += L + 1;
@@ -496,6 +498,8 @@ void ScenaryInterface::Load(char* Name, char* Text)
 	strcpy(cc3, Name);
 	_strupr(cc3);
 
+	dbglog("SCENINF.Load: Name='%s' cc3='%s'\n", Name, cc3);
+
 	if (strstr(cc3, ".CMS"))
 	{
 		FILE* F = fopen("UserMissions\\start.dat", "w");
@@ -504,23 +508,29 @@ void ScenaryInterface::Load(char* Name, char* Text)
 			fprintf(F, "%s", cc3);
 			fclose(F);
 		}
+		dbglog("SCENINF.Load: loading UserMissions\\CMS_start.dll\n");
 		hLib = LoadLibrary("UserMissions\\CMS_start.dll");
 	}
 	else
 	{
 		if (hLib) FreeLibrary(hLib);
+		dbglog("SCENINF.Load: loading '%s'\n", Name);
 		hLib = LoadLibrary(Name);
 	}
 
 	ScenaryHandler = NULL;
 	if (hLib == NULL)
 	{
+		DWORD err = GetLastError();
+		dbglog("SCENINF.Load: LoadLibrary FAILED, GetLastError=%u\n", err);
 		ScenErr("Can't load DLL:%s", Name);
 	}
 	else
 	{
+		dbglog("SCENINF.Load: LoadLibrary OK, hLib=%p\n", hLib);
 		NErrors = 0;
 		ScenaryHandler = (StdVoid*)GetProcAddress(hLib, "ProcessScenary");
+		dbglog("SCENINF.Load: GetProcAddress(ProcessScenary)=%p\n", (void*)ScenaryHandler);
 		if (!ScenaryHandler)
 		{
 			ScenErr("%s: can't find function:void ProcessScenary()", Name);
@@ -593,7 +603,7 @@ extern "C" __declspec( dllexport ) bool RegisterUnits( GAMEOBJ* GOBJ, char* Name
 		if ( SCENINF.NUGRP >= SCENINF.MaxUGRP )
 		{
 			SCENINF.MaxUGRP += 32;
-			SCENINF.UGRP = (UnitsGroup*) realloc( SCENINF.UGRP, SCENINF.MaxUGRP * sizeof UnitsGroup );
+			SCENINF.UGRP = (UnitsGroup*) realloc( SCENINF.UGRP, SCENINF.MaxUGRP * sizeof(UnitsGroup) );
 		}
 		GOBJ->Index = SCENINF.NUGRP;
 		UnitsGroup* UG = SCENINF.UGRP + SCENINF.NUGRP;
@@ -634,7 +644,7 @@ extern "C" __declspec( dllexport ) bool RegisterString( GAMEOBJ* GOBJ, char* ID 
 	if ( SCENINF.NMess >= SCENINF.MaxMess )
 	{
 		SCENINF.MaxMess += 64;
-		SCENINF.Messages = (char**) realloc( SCENINF.Messages, SCENINF.MaxMess * 4 );
+		SCENINF.Messages = (char**) realloc( SCENINF.Messages, SCENINF.MaxMess * sizeof(char*) );
 	}
 
 	SCENINF.Messages[SCENINF.NMess] = id;
@@ -650,7 +660,7 @@ extern "C" __declspec( dllexport ) bool RegisterSound( GAMEOBJ* GOBJ, char* Name
 	if ( SCENINF.NSnd >= SCENINF.MaxSnds )
 	{
 		SCENINF.MaxSnds += 32;
-		SCENINF.Sounds = (char**) realloc( SCENINF.Sounds, 4 * SCENINF.MaxSnds );
+		SCENINF.Sounds = (char**) realloc( SCENINF.Sounds, sizeof(char*) * SCENINF.MaxSnds );
 	}
 
 	SCENINF.Sounds[SCENINF.NSnd] = new char[strlen( Name ) + 1];
@@ -664,8 +674,8 @@ extern "C" __declspec( dllexport ) void RegisterVar( void* Var, int size )
 	if ( SCENINF.NSaves >= SCENINF.MaxSaves )
 	{
 		SCENINF.MaxSaves += 32;
-		SCENINF.SaveZone = (void**) realloc( SCENINF.SaveZone, 4 * SCENINF.MaxSaves );
-		SCENINF.SaveSize = (int*) realloc( SCENINF.SaveSize, 4 * SCENINF.MaxSaves );
+		SCENINF.SaveZone = (void**) realloc( SCENINF.SaveZone, sizeof(void*) * SCENINF.MaxSaves );
+		SCENINF.SaveSize = (int*) realloc( SCENINF.SaveSize, sizeof(int) * SCENINF.MaxSaves );
 	}
 
 	SCENINF.SaveSize[SCENINF.NSaves] = size;
@@ -695,7 +705,7 @@ extern "C" __declspec( dllexport ) void RegisterZone( GAMEOBJ* GOBJ, char* Name 
 		if ( SCENINF.NZGRP >= SCENINF.MaxZGRP )
 		{
 			SCENINF.MaxZGRP += 16;
-			SCENINF.ZGRP = (ZonesGroup*) realloc( SCENINF.ZGRP, SCENINF.MaxZGRP * sizeof ZonesGroup );
+			SCENINF.ZGRP = (ZonesGroup*) realloc( SCENINF.ZGRP, SCENINF.MaxZGRP * sizeof(ZonesGroup) );
 		}
 
 		SCENINF.ZGRP[SCENINF.NZGRP].N = NZON;
@@ -735,7 +745,7 @@ extern "C" __declspec( dllexport ) void RegisterVisibleZone( GAMEOBJ* GOBJ, char
 		if ( SCENINF.NZGRP >= SCENINF.MaxZGRP )
 		{
 			SCENINF.MaxZGRP += 16;
-			SCENINF.ZGRP = (ZonesGroup*) realloc( SCENINF.ZGRP, SCENINF.MaxZGRP * sizeof ZonesGroup );
+			SCENINF.ZGRP = (ZonesGroup*) realloc( SCENINF.ZGRP, SCENINF.MaxZGRP * sizeof(ZonesGroup) );
 		}
 
 		SCENINF.ZGRP[SCENINF.NZGRP].N = NZON;
@@ -1809,7 +1819,7 @@ extern "C" __declspec( dllexport ) bool CreateObject0( GAMEOBJ* DstObj, GAMEOBJ*
 	if ( SCENINF.NUGRP >= SCENINF.MaxUGRP )
 	{
 		SCENINF.MaxUGRP += 10;
-		SCENINF.UGRP = (UnitsGroup*) realloc( SCENINF.UGRP, SCENINF.MaxUGRP * sizeof UnitsGroup );
+		SCENINF.UGRP = (UnitsGroup*) realloc( SCENINF.UGRP, SCENINF.MaxUGRP * sizeof(UnitsGroup) );
 	}
 	UnitsGroup* UG = SCENINF.UGRP + SCENINF.NUGRP;
 	SCENINF.NUGRP++;
@@ -2992,7 +3002,7 @@ void ProcessMissionText( char* Bmp, char* Text );
 
 void AddHistory( Nation* NAT, char* Name )
 {
-	NAT->History = (char**) realloc( NAT->History, 4 * NAT->NHistory + 4 );
+	NAT->History = (char**) realloc( NAT->History, sizeof(char*) * (NAT->NHistory + 1) );
 	NAT->History[NAT->NHistory] = new char[strlen( Name ) + 1];
 	strcpy( NAT->History[NAT->NHistory], Name );
 	NAT->NHistory++;
@@ -4678,7 +4688,7 @@ extern "C" __declspec( dllexport ) void RegisterDynGroup( GAMEOBJ* Units )
 	if ( SCENINF.NUGRP >= SCENINF.MaxUGRP )
 	{
 		SCENINF.MaxUGRP += 32;
-		SCENINF.UGRP = (UnitsGroup*) realloc( SCENINF.UGRP, SCENINF.MaxUGRP * sizeof UnitsGroup );
+		SCENINF.UGRP = (UnitsGroup*) realloc( SCENINF.UGRP, SCENINF.MaxUGRP * sizeof(UnitsGroup) );
 	}
 	Units->Index = SCENINF.NUGRP;
 	UnitsGroup *UG = SCENINF.UGRP + SCENINF.NUGRP;
@@ -4813,7 +4823,7 @@ const int AI_PROB[4] = { 32768 / 100, 32768 / 50, 32768 / 10, 32768 };
 byte CurAINation = 1;
 City* CCIT = NULL;
 Nation* CNAT;
-#define PRC(x) ((32768*##x##)/100)
+#define PRC(x) ((32768*(x))/100)
 
 int PERCONV[101] = { PRC( 0 ),PRC( 1 ),PRC( 2 ),PRC( 3 ),PRC( 4 ),PRC( 5 ),PRC( 6 ),PRC( 7 ),PRC( 8 ),PRC( 9 ),
 				  PRC( 10 ),PRC( 11 ),PRC( 12 ),PRC( 13 ),PRC( 14 ),PRC( 15 ),PRC( 16 ),PRC( 17 ),PRC( 18 ),PRC( 19 ),
@@ -5701,7 +5711,7 @@ void MissPack::LoadMissions()
 				if ( NMiss >= MaxMiss )
 				{
 					MaxMiss += 32;
-					MISS = (SingleMission*) realloc( MISS, MaxMiss * sizeof SingleMission );
+					MISS = (SingleMission*) realloc( MISS, MaxMiss * sizeof(SingleMission) );
 				}
 				SingleMission* SM = MISS + NMiss;
 				NMiss++;
@@ -5722,7 +5732,7 @@ void MissPack::LoadMissions()
 				{
 					ErrM( "Invalid file Missiions\\Missions.txt" );
 				}
-				SM->Intro = (char**) malloc( 4 * SM->NIntro );
+				SM->Intro = (char**) malloc( sizeof(char*) * SM->NIntro );
 				for ( int j = 0; j < SM->NIntro; j++ )
 				{
 					ReadWinString( F, MissDesc, 256 );
@@ -5772,7 +5782,7 @@ void MissPack::LoadMissions()
 
 MissPack::MissPack()
 {
-	memset( this, 0, sizeof MissPack );
+	memset( this, 0, sizeof(MissPack) );
 	CurrentMission = -1;
 	LoadMissions();
 }
@@ -5920,10 +5930,14 @@ void LoadAIFromDLL( byte Nat, char* Name )
 	else
 	{
 #ifndef STARFORCE
+#ifdef _MSC_VER
 		char cc[128];
 		sprintf( cc, "Could not load %s", Name );
 		MessageBox( NULL, cc, "AI loadind from DLL", MB_TOPMOST );
 		assert( 0 );
+#else
+		fprintf(stderr, "[AI] Could not load %s (DLLs not supported on this platform)\n", Name);
+#endif
 #endif
 	}
 }
@@ -6083,7 +6097,7 @@ WarPack::WarPack()
 
 			int NH = BTL->NHints;
 
-			BTL->Hints = (char**) malloc( 4 * NH );
+			BTL->Hints = (char**) malloc( sizeof(char*) * NH );
 			BTL->Coor = new int[2 * NH];
 			for ( int j = 0; j < NH; j++ )
 			{

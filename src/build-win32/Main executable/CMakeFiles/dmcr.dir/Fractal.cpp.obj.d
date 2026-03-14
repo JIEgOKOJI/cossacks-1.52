@@ -1,0 +1,32 @@
+Main\ executable/CMakeFiles/dmcr.dir/Fractal.cpp.obj: \
+ /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/Fractal.cpp \
+ /Users/ildarkarimov/Documents/cossacks-1.52/src/cmake/../platform/msvcrt_compat.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/math.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/cmath \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/requires_hosted.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/i686-w64-mingw32/bits/c++config.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/i686-w64-mingw32/bits/os_defines.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/i686-w64-mingw32/bits/cpu_defines.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/cpp_type_traits.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/version.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/ext/type_traits.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/math.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/crtdefs.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/corecrt.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/_mingw.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/_mingw_mac.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/_mingw_secapi.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/vadefs.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/sdks/_mingw_ddk.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/std_abs.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/stdlib.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/corecrt_wstdlib.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/lib/gcc/i686-w64-mingw32/15.2.0/include/limits.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/lib/gcc/i686-w64-mingw32/15.2.0/include/syslimits.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/limits.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/sec_api/stdlib_s.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/stdlib.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/malloc.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/lib/gcc/i686-w64-mingw32/15.2.0/include/mm_malloc.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/errno.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/cstdlib

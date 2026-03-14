@@ -1,3 +1,4 @@
+#include <cstdint>
 #include "ddini.h"
 #include "ResFile.h"
 #include "FastDraw.h"
@@ -60,7 +61,7 @@ bool OneObject::GoToMine( word ID, byte Prio, byte Type )
 	if (LocalOrder&&LocalOrder->OrderType == 242
 		&& LocalOrder->info.BuildObj.ObjIndex == ID)return true;
 	Order1* Or1 = CreateOrder( Type );
-	if (!int( Or1 ))return false;
+	if (!(intptr_t)( Or1 ))return false;
 	Or1->PrioryLevel = Prio & 127;
 	Or1->OrderType = 242;
 	Or1->OrderTime = 0;

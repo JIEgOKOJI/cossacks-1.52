@@ -67,7 +67,7 @@ extern DWORD RealTime;
 
 void Syncro::Copy( Syncro* Syn )
 {
-	memcpy( Syn->RSL, RSL, NSlots * sizeof RandSlot );
+	memcpy( Syn->RSL, RSL, NSlots * sizeof(RandSlot) );
 	Syn->NSlots = NSlots;
 	NSlots = 0;
 }
@@ -79,12 +79,47 @@ extern char LASTFILE[128];
 extern int LastLine;
 char* LastFile;
 
+// === RANDO TRACE DIAGNOSTIC ===
+static FILE* randoTraceFile = nullptr;
+static int randoTraceCallNum = 0;
+// Trace rando() calls on ticks RANDO_TRACE_START..RANDO_TRACE_END
+#define RANDO_TRACE_START 130
+#define RANDO_TRACE_END   155
+
 int RandNew( char* File, int Line )
 {
 	LastFile = File;
 	LastLine = Line;
 	int r = randoma[rpos];
+	word oldRpos = rpos;
 	rpos = ( rpos + 1 ) & 8191;
+
+	// Trace on specific ticks
+	if (tmtmt >= RANDO_TRACE_START && tmtmt <= RANDO_TRACE_END)
+	{
+		if (!randoTraceFile)
+		{
+			randoTraceFile = fopen("rando_trace.log", "w");
+			if (randoTraceFile) fprintf(randoTraceFile, "call#\ttmtmt\trpos_before\tvalue\tfile\tline\n");
+		}
+		if (randoTraceFile)
+		{
+			// Extract just filename from path
+			const char* fname = File;
+			const char* p = File;
+			while (*p) { if (*p == '/' || *p == '\\') fname = p + 1; p++; }
+			fprintf(randoTraceFile, "%d\t%d\t%u\t%d\t%s\t%d\n",
+				randoTraceCallNum, tmtmt, oldRpos, r, fname, Line);
+		}
+		randoTraceCallNum++;
+	}
+	else if (randoTraceFile && tmtmt > RANDO_TRACE_END)
+	{
+		fclose(randoTraceFile);
+		randoTraceFile = nullptr;
+		fprintf(stderr, "[TRACE] rando_trace.log closed after %d calls\n", randoTraceCallNum);
+	}
+
 	if ( SYN.NSlots < maxUline )
 	{
 		RandSlot* RS = SYN.RSL + SYN.NSlots;

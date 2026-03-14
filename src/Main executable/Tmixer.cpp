@@ -1,5 +1,6 @@
 //#include "stdafx.h"
 #include "windows.h"
+#include <cstdint>
 #include "TMixer.h"
 
 #ifdef _DEBUG
@@ -69,7 +70,7 @@ CMixer::CMixer(HWND hwnd, DWORD DstType, DWORD SrcType, DWORD ControlType)
 {
 	ZeroAll();
 	if(mixerGetNumDevs() < 1) return;
-	mmr = mixerOpen(&m_HMixer, 0, (DWORD)hwnd, 0L, CALLBACK_WINDOW);
+	mmr = mixerOpen(&m_HMixer, 0, (DWORD)(uintptr_t)hwnd, 0L, CALLBACK_WINDOW);
 	if (mmr != MMSYSERR_NOERROR) return;
 // get dwLineID
 	MIXERLINE mxl;

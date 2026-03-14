@@ -4,7 +4,11 @@
 
 //#include <stdafx.h>
 //#include <afx.h>
-#include <windows.h>
+#ifdef _WIN32
+    #include <windows.h>
+#else
+    #include "platform.h"
+#endif
 #include "windowsx.h"
 //#include "stdafx.h"
 #include "cwave.h"

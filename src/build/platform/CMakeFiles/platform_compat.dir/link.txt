@@ -1,0 +1,2 @@
+/usr/bin/ar qc libplatform_compat.a CMakeFiles/platform_compat.dir/platform.cpp.o
+/usr/bin/ranlib libplatform_compat.a

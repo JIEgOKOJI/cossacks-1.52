@@ -2,12 +2,18 @@
 // Эмулятор DirectDraw на базе SDL2
 // MR.CODERMAN 2025
 // ==============================================
+extern void dbglog(const char* fmt, ...);
 #include <algorithm>
 #include <cstring>
 #include <vector>
 #include <thread>
 #include <mutex>
-#include <windows.h>
+#ifdef _WIN32
+    #include <windows.h>
+    #include <io.h>  // access(), F_OK on Windows/MinGW
+#else
+    #include "platform.h"
+#endif
 #include <psapi.h>
 #define __ddini_cpp_
 #include "ddini.h"
@@ -21,7 +27,6 @@
 #include "VirtScreen.h"
 #include <SDL.h>
 #include <SDL_syswm.h>
-#include <fstream>
 extern byte PlayGameMode;
 void Rept(LPSTR sz, ...);
 __declspec(dllexport) int ModeLX[32];
@@ -41,7 +46,11 @@ extern HWND hwnd;
 LPDIRECTDRAW lpDD = nullptr;
 LPDIRECTDRAWSURFACE lpDDSPrimary = nullptr;
 LPDIRECTDRAWSURFACE lpDDSBack = nullptr;
+#ifdef _WIN32
 BOOL bActive = FALSE;
+#else
+BOOL bActive = TRUE;
+#endif
 BOOL CurrentSurface = TRUE;
 BOOL DDError = FALSE;
 DDSURFACEDESC ddsd;
@@ -63,18 +72,29 @@ std::mutex renderMutex;
 extern bool PalDone;
 extern word PlayerMenuMode;
 bool IsRunningUnderWine_ByNtDll() {
-    std::ifstream force_wine_mode1("wine");
-    std::ifstream force_wine_mode2("wine.txt");
-    if (force_wine_mode1.good() || force_wine_mode2.good()) {
-        return true;
-    }
+#ifdef _WIN32
+    // Use C API instead of std::ifstream to avoid std::locale static init crash
+    FILE* f1 = fopen("wine", "r");
+    if (f1) { fclose(f1); return true; }
+    FILE* f2 = fopen("wine.txt", "r");
+    if (f2) { fclose(f2); return true; }
 
     HMODULE ntdll = GetModuleHandleA("ntdll.dll");
     if (!ntdll) return false;
     FARPROC wineVer = GetProcAddress(ntdll, "wine_get_version");
     return wineVer != nullptr;
+#else
+    return false;
+#endif
 }
-bool isWine = IsRunningUnderWine_ByNtDll();
+
+// Lazy init to avoid static init order issues
+static int _isWine_cached = -1;
+bool _isWine_get() {
+    if (_isWine_cached < 0) _isWine_cached = IsRunningUnderWine_ByNtDll() ? 1 : 0;
+    return _isWine_cached != 0;
+}
+#define isWine (_isWine_get())
 
 // Проверка использования памяти процесса (в байтах)
 size_t GetProcessMemoryUsage() {
@@ -154,6 +174,7 @@ void CaptureMouseOnce(SDL_Window* gWindow) {
     if (isWine) return;
     if (mouseCaptured) return;
 
+#ifdef _WIN32
     SDL_SysWMinfo wminfo;
     SDL_VERSION(&wminfo.version);
     if (SDL_GetWindowWMInfo(gWindow, &wminfo)) {
@@ -173,15 +194,18 @@ void CaptureMouseOnce(SDL_Window* gWindow) {
 
         mouseCaptured = true;
     }
+#else
+    (void)gWindow;
+    // On macOS, SDL handles window focus natively
+    mouseCaptured = true;
+#endif
 }
 
 void ResetMouseCapture() {
     mouseCaptured = false;
 }
 static bool disableVSyncByFile = []() {
-    std::ifstream novsync_file1("novsync");
-    std::ifstream novsync_file2("novsync.txt");
-    return novsync_file1.good() || novsync_file2.good();
+    return access("novsync", F_OK) == 0 || access("novsync.txt", F_OK) == 0;
 }();
 __declspec(dllexport) void FlipPages(void) {
     std::lock_guard<std::mutex> lock(renderMutex);
@@ -366,6 +390,7 @@ void UnlockSurface(void) {
 
 bool EnumModesOnly() {
     NModes = 0;
+#ifdef _WIN32
     DEVMODE devMode;
     devMode.dmSize = sizeof(DEVMODE);
     for (int iMode = 0; EnumDisplaySettings(NULL, iMode, &devMode) != 0 && NModes < 32; ++iMode) {
@@ -385,6 +410,34 @@ bool EnumModesOnly() {
             }
         }
     }
+#else
+    // Use SDL to enumerate display modes on non-Windows platforms
+    bool sdlWasInit = SDL_WasInit(SDL_INIT_VIDEO) != 0;
+    if (!sdlWasInit) {
+        SDL_Init(SDL_INIT_VIDEO);
+    }
+    int numModes = SDL_GetNumDisplayModes(0);
+    for (int i = 0; i < numModes && NModes < 32; i++) {
+        SDL_DisplayMode mode;
+        if (SDL_GetDisplayMode(0, i, &mode) != 0) continue;
+        if (mode.w < 1024 || mode.h < 768) continue;
+        bool exists = false;
+        for (int j = 0; j < NModes; j++) {
+            if (ModeLX[j] == mode.w && ModeLY[j] == mode.h) {
+                exists = true;
+                break;
+            }
+        }
+        if (!exists) {
+            ModeLX[NModes] = mode.w;
+            ModeLY[NModes] = mode.h;
+            NModes++;
+        }
+    }
+    if (!sdlWasInit) {
+        SDL_QuitSubSystem(SDL_INIT_VIDEO);
+    }
+#endif
     if (NModes == 0) {
         const int fallbackModes[][2] = {
             {1024, 768}, {1280, 720}, {1366, 768}, {1600, 900}, {1920, 1080}
@@ -446,6 +499,7 @@ bool CreateDDObjects(HWND hwnd_param) {
     sdlPal = nullptr;
 
     if (!hwnd_param) {
+        dbglog("  CreateDDObjects: hwnd is NULL!\n");
         char errorMsg[256], convertedMsg[256];
         sprintf(errorMsg, "Invalid HWND: hwnd is NULL");
         ConvertUTF8ToWindows1251(errorMsg, convertedMsg, 256);
@@ -453,13 +507,16 @@ bool CreateDDObjects(HWND hwnd_param) {
         return false;
     }
 
+    dbglog("  CreateDDObjects: SDL_Init(SDL_INIT_VIDEO)...\n");
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        dbglog("  CreateDDObjects: SDL_Init FAILED: %s\n", SDL_GetError());
         char errorMsg[256], convertedMsg[256];
         sprintf(errorMsg, "SDL_Init failed: %s", SDL_GetError());
         ConvertUTF8ToWindows1251(errorMsg, convertedMsg, 256);
         MessageBoxA(NULL, convertedMsg, "SDL Error", MB_OK | MB_ICONERROR);
         return false;
     }
+    dbglog("  CreateDDObjects: SDL_Init OK\n");
 
     bool validResolution = false;
     for (int i = 0; i < NModes; i++) {
@@ -476,15 +533,25 @@ bool CreateDDObjects(HWND hwnd_param) {
     if (RealLy <= 0) RealLy = 600;
 
     if (!gWindow) {
+#ifdef _WIN32
+        dbglog("  CreateDDObjects: SDL_CreateWindowFrom(hwnd=%p)...\n", hwnd_param);
         gWindow = SDL_CreateWindowFrom(hwnd_param);
+#else
+        fprintf(stderr, "[DMCR] SDL_CreateWindow(%dx%d)\n", RealLx, RealLy);
+        gWindow = SDL_CreateWindow("Cossacks", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+            RealLx, RealLy, SDL_WINDOW_SHOWN);
+        fprintf(stderr, "[DMCR] SDL_CreateWindow returned %p\n", (void*)gWindow);
+#endif
         if (!gWindow) {
+            dbglog("  CreateDDObjects: SDL_CreateWindow/From FAILED: %s\n", SDL_GetError());
             char errorMsg[256], convertedMsg[256];
-            sprintf(errorMsg, "SDL_CreateWindowFrom failed: %s", SDL_GetError());
+            sprintf(errorMsg, "SDL_CreateWindow failed: %s", SDL_GetError());
             ConvertUTF8ToWindows1251(errorMsg, convertedMsg, 256);
             MessageBoxA(NULL, convertedMsg, "SDL Error", MB_OK | MB_ICONERROR);
             SDL_Quit();
             return false;
         }
+        dbglog("  CreateDDObjects: gWindow=%p OK\n", (void*)gWindow);
     }
 
     hwnd = hwnd_param;
@@ -509,6 +576,11 @@ bool CreateDDObjects(HWND hwnd_param) {
         SetWindowPos(hwnd_param, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
     }
     if ((InGame || InEditor) && window_mode) {
+#ifndef _WIN32
+        // macOS: always use FULLSCREEN_DESKTOP to avoid Cocoa NSView issues
+        SDL_SetWindowFullscreen(gWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
+        SDL_Delay(300);
+#else
         if (isWine) {
             SDL_SetWindowFullscreen(gWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
             SDL_Delay(300);
@@ -519,6 +591,7 @@ bool CreateDDObjects(HWND hwnd_param) {
             ResetMouseCapture();
   
         }
+#endif
         SDL_SetWindowSize(gWindow, RealLx, RealLy);
         SDL_SetWindowPosition(gWindow, 0, 0);
         SDL_SetWindowGrab(gWindow, SDL_TRUE);
@@ -573,8 +646,10 @@ bool CreateDDObjects(HWND hwnd_param) {
     }
 
     Uint32 rendererFlags = SDL_RENDERER_ACCELERATED;
+    dbglog("  CreateDDObjects: SDL_CreateRenderer...\n");
     gRenderer = SDL_CreateRenderer(gWindow, -1, rendererFlags);
     if (!gRenderer) {
+        dbglog("  CreateDDObjects: SDL_CreateRenderer FAILED: %s\n", SDL_GetError());
         char errorMsg[256], convertedMsg[256];
         sprintf(errorMsg, "SDL_CreateRenderer failed: %s", SDL_GetError());
         ConvertUTF8ToWindows1251(errorMsg, convertedMsg, 256);

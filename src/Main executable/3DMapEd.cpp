@@ -679,30 +679,30 @@ void CreateMiniMap()
 			}*/
 			if (WaterDeep[ofs] > 128)
 			{
-				//FIX Вернул морю нормальные цвета
+				//FIX пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 				int B = WaterBright[ofs];
-				byte c = 0xB3; // Средний синий по умолчанию
+				byte c = 0xB3; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 				if (B > (6 * 16 - 8))
 				{ // Lighter
-					c = 0xB7; // Светло-синий
+					c = 0xB7; // пїЅпїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅ
 				}
 				else
 				{
 					if (B > (5 * 16 - 8))
 					{
-						c = 0xB6; // Чуть темнее
+						c = 0xB6; // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 					}
 					else
 					{
 						if (B > (3 * 16 - 8))
 						{
-							c = 0xB5; // Еще темнее
+							c = 0xB5; // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 						}
 						else
 						{
 							if (B > (1 * 16 - 8))
 							{ // Darker
-								c = 0xB4; // Темно-синий
+								c = 0xB4; // пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅ
 							}
 						}
 					}
@@ -940,6 +940,7 @@ void SetLockMask(int x, int y, char* mask) {
 void CreateLandLocking(int TAlp, bool ForVision) {
 	int mxx = msx >> 1;
 	int myy = msy >> 1;
+	fprintf(stderr, "[CLL] CreateLandLocking: mxx=%d myy=%d ForVision=%d\n", mxx, myy, (int)ForVision); fflush(stderr);
 	for (int ix = 0; ix < mxx; ix++) {
 		int ZLmin = 1000000;
 		int ZRmin = 1000000;
@@ -992,14 +993,22 @@ void CreateLandLocking(int TAlp, bool ForVision) {
 	for (int i = 0; i < N; i++) {
 		BSetBar(int(BC[i].x) << 2, int(BC[i].y) << 2, 4);
 	};
+	fprintf(stderr, "[CLL] Height loops done, UnLockBars/LockBars done\n");
 	if (ForVision) {
+		fprintf(stderr, "[CLL] ClearTrianglesSystem\n");
 		ClearTrianglesSystem();
+		fprintf(stderr, "[CLL] CreateTrianglesSystem\n");
 		CreateTrianglesSystem();
+		fprintf(stderr, "[CLL] TrianglesSystem done\n");
 	};
 	MotionField* TMF = new MotionField;
 	TMF->Allocate();
+	fprintf(stderr, "[CLL] TMF allocated, MAPSY=%d BMSX=%d size=%d\n", MAPSY, BMSX, MAPSY*BMSX);
+	fprintf(stderr, "[CLL] TMF->MapV=%p MFIELDS->MapV=%p MFIELDS=%p\n", (void*)TMF->MapV, (void*)MFIELDS->MapV, (void*)MFIELDS);
+	fflush(stderr);
 	//memcpy(TMF->MapH,MFIELDS->MapH,MAPSY*BMSX);
 	memcpy(TMF->MapV, MFIELDS->MapV, MAPSY*BMSX);
+	fprintf(stderr, "[CLL] first memcpy done\n"); fflush(stderr);
 	for (int ix = 1; ix < mxx; ix++)
 		for (int iy = 1; iy < myy; iy++) {
 			int ppx = ix << 2;
@@ -1032,11 +1041,16 @@ void CreateLandLocking(int TAlp, bool ForVision) {
 				};
 			};
 		};
-	//memcpy(TMF,MFIELDS,sizeof MotionField);
+	//memcpy(TMF,MFIELDS,sizeof(MotionField));
 	//memcpy(TMF->MapH,MFIELDS->MapH,MAPSY*BMSX);
+	fprintf(stderr, "[CLL] first loop done, second memcpy...\n"); fflush(stderr);
 	memcpy(TMF->MapV, MFIELDS->MapV, MAPSY*BMSX);
+	fprintf(stderr, "[CLL] second memcpy done, starting second loop mxx=%d myy=%d\n", mxx, myy); fflush(stderr);
+	{ int iter2 = 0;
 	for (int ix = 1; ix < mxx; ix++)
 		for (int iy = 1; iy < myy; iy++) {
+			if ((iter2 & 0xFFF) == 0) { fprintf(stderr, "[CLL] loop2 iter=%d ix=%d iy=%d\n", iter2, ix, iy); fflush(stderr); }
+			iter2++;
 			int ppx = ix << 2;
 			int ppy = iy << 2;
 			byte c = 0;
@@ -1064,44 +1078,25 @@ void CreateLandLocking(int TAlp, bool ForVision) {
 				};
 			};
 		};
+	fprintf(stderr, "[CLL] second loop done (iter2=%d), freeing TMF\n", iter2); fflush(stderr);
+	}
 	TMF->FreeAlloc();
 	free(TMF);
+	fprintf(stderr, "[CLL] CreateLandLocking complete\n"); fflush(stderr);
 };
 
 void CreateMapLocking() {
 	int maxx = msx << 1;
 	int maxy = msy << 1;
+	fprintf(stderr, "[CML] CreateMapLocking: msx=%d msy=%d maxx=%d maxy=%d\n", msx, msy, maxx, maxy);
 	ClearMaps();
-	//BSetBar(0,0,MAPSX);
-	//BClrBar(4,4,(msx-2)<<1);
-	/*
-	for(int ix=0;ix<maxx;ix++)
-		for(int iy=0;iy<maxy;iy++){
-			int xx=(ix<<4)+8;
-			int yy=(iy<<4)+8;
-			int dh1=iab(GetHeight(xx+16,yy)-GetHeight(xx-16,yy));
-			if(dh1>35){
-				//BSetSQ(ix-2,iy-1,5,3);
-				//BSetSQ(ix-1,iy-2,3,1);
-				BSetSQ(ix-1,iy-1,3,3);
-			}
-			else{
-				dh1=iab(GetHeight(xx,yy+16)-GetHeight(xx,yy-16));
-				if(dh1>35){
-					//BSetSQ(ix-2,iy-1,5,3);
-					//BSetSQ(ix-1,iy-2,3,1);
-					BSetSQ(ix-1,iy-1,3,3);
-
-
-				};
-			};
-		};
-	//tiles locking checking
-	*/
+	fprintf(stderr, "[CML] ClearMaps done\n");
 	CreateLandLocking(120, true);
+	fprintf(stderr, "[CML] CreateLandLocking done\n");
 	CreateWaterLocking(0, 0, (MaxWX)-1, (MaxWX)-1);
+	fprintf(stderr, "[CML] CreateWaterLocking done\n");
 	CreateFishMap();
-	//Border setting
+	fprintf(stderr, "[CML] CreateFishMap done\n");	//Border setting
 	int L1 = 32 << ADDSH;
 	for (int i = 0; i < 2; i++) {
 		MFIELDS[i].BSetSQ(0, 0, maxx, 4);
@@ -1156,12 +1151,19 @@ void CreateUnitsLocking() {
 }
 
 void CreateTotalLocking() {
+	fprintf(stderr, "[CTL] CreateTotalLocking enter\n");
 	rando();
+	fprintf(stderr, "[CTL] rando1 done\n");
 	CreateMapLocking();
+	fprintf(stderr, "[CTL] CreateMapLocking done\n");
 	rando();
+	fprintf(stderr, "[CTL] rando2 done, NAreas=%d\n", NAreas);
 	if (!NAreas)CreateAreas();
+	fprintf(stderr, "[CTL] CreateAreas done\n");
 	CreateUnitsLocking();
+	fprintf(stderr, "[CTL] CreateUnitsLocking done\n");
 	CreateInfoMap();
+	fprintf(stderr, "[CTL] CreateInfoMap done\n");
 };
 void EraseAreas();
 void CreateFastLocking() {
@@ -1286,8 +1288,8 @@ void DrawCurves1() {
 	if (!NCurves)return;
 
 	int NC = NCurves;
-	memcpy(CurveXt, CurveX, sizeof CurveX);
-	memcpy(CurveYt, CurveY, sizeof CurveY);
+	memcpy(CurveXt, CurveX, sizeof(CurveX));
+	memcpy(CurveYt, CurveY, sizeof(CurveY));
 
 	if (NCurves >= 3)InterpolateCurve();
 
@@ -1313,8 +1315,8 @@ void DrawCurves1() {
 	};
 
 	NCurves = NC;
-	memcpy(CurveX, CurveXt, sizeof CurveX);
-	memcpy(CurveY, CurveYt, sizeof CurveY);
+	memcpy(CurveX, CurveXt, sizeof(CurveX));
+	memcpy(CurveY, CurveYt, sizeof(CurveY));
 
 };
 bool CheckPointInside(int x, int y) {

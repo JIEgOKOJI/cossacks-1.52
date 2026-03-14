@@ -1,6 +1,8 @@
 // RAW Frame encapsulation part
 //
 #include "CommCore.h"
+#include <stdio.h>
+#include <errno.h>
 
 // ---------------------------------------------------------------------------------------------
 
@@ -42,8 +44,18 @@ BOOL CCommCore::ReSendFrame(u_short uFrameNum)
 		m_FrameList[uFrameNum].m_uSize,
 		0x00,
 		(sockaddr *)&sinPeer,
-		sizeof(sockaddr_in)) == SOCKET_ERROR)
+		sizeof(sockaddr_in)) == SOCKET_ERROR) {
+		fprintf(stderr, "[CC] ReSend FAIL type=0x%02x to=%s:%u errno=%d\n",
+			m_FrameList[uFrameNum].m_lpFrame->m_uType,
+			inet_ntoa(sinPeer.sin_addr), ntohs(sinPeer.sin_port), errno);
 		return FALSE;
+	}
+
+	fprintf(stderr, "[CC] ReSend OK type=0x%02x to=%s:%u size=%u retry=%u\n",
+		m_FrameList[uFrameNum].m_lpFrame->m_uType,
+		inet_ntoa(sinPeer.sin_addr), ntohs(sinPeer.sin_port),
+		m_FrameList[uFrameNum].m_uSize,
+		m_FrameList[uFrameNum].m_uRetrCount);
 
 	return TRUE;
 }
@@ -62,7 +74,7 @@ BOOL CCommCore::SendRawPacket(PEER_ADDR			PeerAddr,
 	LPCC_PK_RAW_FRAME	lpRawFrame;
 	u_short				uRawFrameSize;
 
-	uRawFrameSize = sizeof(CC_PK_RAW_FRAME) + uSize;
+	uRawFrameSize = RAW_FRAME_HEADER_SIZE + uSize;
 	lpRawFrame = (LPCC_PK_RAW_FRAME)malloc(uRawFrameSize);
 	assert(lpRawFrame);
 
@@ -104,16 +116,22 @@ BOOL CCommCore::SendRawPacket(PEER_ADDR			PeerAddr,
 	DebugMessage(szMsg);
 #endif //CC_DEBUG
 
-	if (sendto(m_DataSocket,
+	int sendResult = sendto(m_DataSocket,
 		(char *)lpRawFrame,
 		uRawFrameSize,
 		0x00,
 		(sockaddr *)&sinPeer,
-		sizeof(sockaddr_in)) == SOCKET_ERROR)
+		sizeof(sockaddr_in));
+	if (sendResult == SOCKET_ERROR)
 	{
+		fprintf(stderr, "[CC] sendto FAILED type=0x%02x to=%s:%u size=%u errno=%d\n",
+			uType, inet_ntoa(sinPeer.sin_addr), ntohs(sinPeer.sin_port), uRawFrameSize, errno);
 		free(lpRawFrame);
 		return FALSE;
-	};
+	}
+	if (uType == CC_PT_TRY_CONNECT || uType == CC_PT_CONNECT_OK || uType == CC_PT_CONNECT_REJECT)
+		fprintf(stderr, "[CC] sendto OK type=0x%02x to=%s:%u size=%u sent=%d\n",
+			uType, inet_ntoa(sinPeer.sin_addr), ntohs(sinPeer.sin_port), uRawFrameSize, sendResult);
 
 	if (!bSecureMessage) {
 		free(lpRawFrame);

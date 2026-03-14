@@ -5,8 +5,12 @@
 #ifndef __DDINI_H_
 #define __DDINI_H_
 
-#include <windows.h>
-#include <windowsx.h>
+#ifdef _WIN32
+    #include <windows.h>
+    #include <windowsx.h>
+#else
+    #include "platform.h"
+#endif
 #include <stdlib.h>
 #include <stdarg.h>
 #include "resource.h"
@@ -21,7 +25,7 @@ inline void* _cdecl operator new(size_t size) {
     return malloc(size);
 }
 
-inline void __cdecl operator delete(void* ptr) {
+inline void __cdecl operator delete(void* ptr) noexcept {
     free(ptr);
 }
 

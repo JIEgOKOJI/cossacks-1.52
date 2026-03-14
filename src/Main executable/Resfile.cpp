@@ -7,12 +7,16 @@
  */
  //#include <afx.h>
 
-#include <windows.h>
+#ifdef _WIN32
+    #include <windows.h>
+#else
+    #include "platform.h"
+#endif
 #include <stdlib.h>
 #include <stdio.h>
 //#include "tntFileIO.h"
 #include "unrar.h"
-#include "Arc\GSCSet.h"
+#include "Arc/GSCSet.h"
 #include "assert.h"
 void AText( char* str );
 //typedef LPGSCfile ResFile;
@@ -64,8 +68,8 @@ void AddFHandle( ResFile F, char* Name )
 	if (NHNames >= MaxNames)
 	{
 		MaxNames += 16;
-		FHNames = (char**) realloc( FHNames, 4 * MaxNames );
-		FHANDLES = (ResFile*) realloc( FHANDLES, 4 * MaxNames );
+		FHNames = (char**) realloc( FHNames, sizeof(char*) * MaxNames );
+		FHANDLES = (ResFile*) realloc( FHANDLES, sizeof(ResFile) * MaxNames );
 	}
 
 	FHNames[NHNames] = new char[strlen( Name ) + 1];
@@ -230,43 +234,16 @@ bool FilesInit()
 {
 	if (InitDone)
 	{
-		return true;
+		return GSFILES.m_ArchList != nullptr;
 	}
 
-	char CDR[256];
-	GetCurrentDirectory( 256, CDR );
-	if (CDR[strlen( CDR ) - 1] == '\\')
-	{
-		CDR[strlen( CDR ) - 1] = 0;
-	}
-
-	char ccc[290];
-	sprintf( ccc, "%s\\unrar.dll", CDR );
-	FILE* F = fopen( ccc, "r" );
-	if (F)
-	{
-		fclose( F );
-	}
-	else
-	{
-		int L = strlen( CDR );
-
-		while (L && CDR[L] != '\\')
-			L--;
-
-		CDR[L] = 0;
-		sprintf( ccc, "%s\\unrar.dll", CDR );
-		F = fopen( ccc, "r" );
-		if (F)
-		{
-			fclose( F );
-			SetCurrentDirectory( CDR );
-		}
-	}
-
-	InitDone = 1;
+	// CWD is already set by WinMain (Ddex1.cpp) on Windows,
+	// and by main() on macOS — no need to set it here again.
 
 	bool retval = 0 != GSFILES.gOpen();
+	if (retval) {
+		InitDone = 1; // Only mark done if successfully loaded
+	}
 
 	return retval;
 }

@@ -4,6 +4,12 @@
  * flying monsters, on-water monsters...
  */
 
+// 'small' is typedef'd in rpcndr.h (MSVC SDK) and platform_types.h (our layer)
+// but MinGW doesn't define it — provide a fallback
+#ifndef small
+typedef short small;
+#endif
+
  //Catch division by zero by "overloading" div()
  //(in case we will be able to link dynamically sometime, this causes no linking warnings)
 div_t __cdecl SecureDivision(int const numerator, int const denominator);
@@ -991,13 +997,13 @@ struct GlobalIconInfo
 {
 	HandlePro* HPLeft;
 	HandlePro* HPRight;
-	int LParam;
-	int RParam;
+	intptr_t LParam;
+	intptr_t RParam;
 	int IconSpriteID;
 	char* Hint;
 };
 
-typedef bool GOrderFn(OneObject* OB, GOrder* GOR, int LParam, int RParam);
+typedef bool GOrderFn(OneObject* OB, GOrder* GOR, intptr_t LParam, intptr_t RParam);
 typedef int IconInfo(GOrder* GOR, int IcoIndex, OneObject* OB, GlobalIconInfo* GIN);
 
 class GOrder
@@ -1355,6 +1361,7 @@ public:
 
 	inline int DistTo(int xx, int yy)
 	{
+#ifdef _MSC_VER
 		__asm
 		{
 			mov		eax, xx
@@ -1373,6 +1380,13 @@ public:
 			mov		eax, ecx
 			uuz :
 		}
+#else
+		int dx = xx - this->x;
+		int dy = yy - this->y;
+		if (dx < 0) dx = -dx;
+		if (dy < 0) dy = -dy;
+		return (dx > dy) ? dx : dy;
+#endif
 	};
 	void CloseObject();
 };

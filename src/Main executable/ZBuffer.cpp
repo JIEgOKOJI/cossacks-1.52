@@ -1,3 +1,4 @@
+#include <cstdint>
 #include "ddini.h"
 #include "ResFile.h"
 #include "FastDraw.h"
@@ -25,7 +26,8 @@ class ZElement//28 bytes
 public:
 	word FileID;
 	word SpriteID;
-	int Param1, Param2;
+	int Param1;
+	intptr_t Param2;
 	byte Nat;
 	short x, y;
 	short XL, YL;
@@ -73,7 +75,7 @@ void ClearZBuffer()
 	NBSel = 0;
 }
 
-void AddHiPoint( short x, short y, OneObject* OB, word FileID, word SpriteID, int Param1, int Param2 )
+void AddHiPoint( short x, short y, OneObject* OB, word FileID, word SpriteID, int Param1, intptr_t Param2 )
 {
 	if (NHIITEMS >= 1024)
 	{
@@ -100,7 +102,7 @@ void AddHiPoint( short x, short y, OneObject* OB, word FileID, word SpriteID, in
 	NZElm++;
 }
 
-void AddSuperLoPoint( short x, short y, OneObject* OB, word FileID, word SpriteID, int Param1, int Param2 )
+void AddSuperLoPoint( short x, short y, OneObject* OB, word FileID, word SpriteID, int Param1, intptr_t Param2 )
 {
 	if (NLOITEMS >= 1024)
 	{
@@ -128,7 +130,7 @@ void AddSuperLoPoint( short x, short y, OneObject* OB, word FileID, word SpriteI
 	NZElm++;
 }
 
-void AddLoPoint( short x, short y, OneObject* OB, word FileID, word SpriteID, int Param1, int Param2 )
+void AddLoPoint( short x, short y, OneObject* OB, word FileID, word SpriteID, int Param1, intptr_t Param2 )
 {
 	if (NLOITEMS >= 1024)
 	{
@@ -163,7 +165,7 @@ void AddLoPoint( short x, short y, OneObject* OB, word FileID, word SpriteID, in
 //2-transparent(Param2-pointer to transparency data)
 //3-encoded with palette(Param2-pointer to palette)
 //4-shading with mask(Param2-pointer to gradient data)
-void AddPoint( short XL, short YL, short x, short y, OneObject* OB, word FileID, word SpriteID, int Param1, int Param2 )
+void AddPoint( short XL, short YL, short x, short y, OneObject* OB, word FileID, word SpriteID, int Param1, intptr_t Param2 )
 {
 	if (kZCacheMaxElements <= NZElm)
 	{
@@ -223,20 +225,20 @@ void AddOptPoint( byte Method, short XL, short YL, short x, short y, OneObject* 
 	int CType = Options & 0x0F;
 	int CProp = Options & 0xF0;
 	int Param1 = Options & 0xFFFFF0F;
-	int Param2 = 0;
+	intptr_t Param2 = 0;
 	switch (CType)
 	{
 	case AV_PULSING:
 		switch (CProp)
 		{
 		case AV_RED:
-			Param2 = int( yfog );
+			Param2 = (intptr_t)( yfog );
 			break;
 		case AV_WHITE:
-			Param2 = int( wfog );
+			Param2 = (intptr_t)( wfog );
 			break;
 		case AV_DARK:
-			Param2 = int( fog + 1024 );
+			Param2 = (intptr_t)( fog + 1024 );
 			break;
 		default:
 			Param1 = 0;
@@ -248,13 +250,13 @@ void AddOptPoint( byte Method, short XL, short YL, short x, short y, OneObject* 
 		switch (CProp)
 		{
 		case AV_RED:
-			Param2 = int( yfog + 2048 );
+			Param2 = (intptr_t)( yfog + 2048 );
 			break;
 		case AV_WHITE:
-			Param2 = int( wfog + 2048 );
+			Param2 = (intptr_t)( wfog + 2048 );
 			break;
 		case AV_DARK:
-			Param2 = int( fog + 1024 + 2048 );
+			Param2 = (intptr_t)( fog + 1024 + 2048 );
 			break;
 		default:
 			Param1 = 0;
@@ -264,13 +266,13 @@ void AddOptPoint( byte Method, short XL, short YL, short x, short y, OneObject* 
 		switch (CProp)
 		{
 		case AV_RED:
-			Param2 = int( yfog );
+			Param2 = (intptr_t)( yfog );
 			break;
 		case AV_WHITE:
-			Param2 = int( wfog );
+			Param2 = (intptr_t)( wfog );
 			break;
 		case AV_DARK:
-			Param2 = int( fog + 1024 );
+			Param2 = (intptr_t)( fog + 1024 );
 			break;
 		default:
 			Param1 = 0;
@@ -291,26 +293,26 @@ void AddOptPoint( byte Method, short XL, short YL, short x, short y, OneObject* 
 		break;
 	}
 }
-void AddLine( short X1, short Y1, short X2, short Y2, short x, short y, OneObject* OB, word FileID, word SpriteID, int Param1, int Param2 );
+void AddLine( short X1, short Y1, short X2, short Y2, short x, short y, OneObject* OB, word FileID, word SpriteID, int Param1, intptr_t Param2 );
 void AddOptLine( short X1, short Y1, short X2, short Y2, short x, short y, OneObject* OB, word FileID, word SpriteID, int Options )
 {
 	int CType = Options & 0x0F;
 	int CProp = Options & 0xF0;
 	int Param1 = Options & 0xFFFFF0F;
-	int Param2 = 0;
+	intptr_t Param2 = 0;
 	switch (CType)
 	{
 	case AV_PULSING:
 		switch (CProp)
 		{
 		case AV_RED:
-			Param2 = int( yfog );
+			Param2 = (intptr_t)( yfog );
 			break;
 		case AV_WHITE:
-			Param2 = int( wfog );
+			Param2 = (intptr_t)( wfog );
 			break;
 		case AV_DARK:
-			Param2 = int( fog + 1024 );
+			Param2 = (intptr_t)( fog + 1024 );
 			break;
 		default:
 			Param1 = 0;
@@ -322,13 +324,13 @@ void AddOptLine( short X1, short Y1, short X2, short Y2, short x, short y, OneOb
 		switch (CProp)
 		{
 		case AV_RED:
-			Param2 = int( yfog + 2048 );
+			Param2 = (intptr_t)( yfog + 2048 );
 			break;
 		case AV_WHITE:
-			Param2 = int( wfog + 2048 );
+			Param2 = (intptr_t)( wfog + 2048 );
 			break;
 		case AV_DARK:
-			Param2 = int( fog + 1024 + 2048 );
+			Param2 = (intptr_t)( fog + 1024 + 2048 );
 			break;
 		default:
 			Param1 = 0;
@@ -338,13 +340,13 @@ void AddOptLine( short X1, short Y1, short X2, short Y2, short x, short y, OneOb
 		switch (CProp)
 		{
 		case AV_RED:
-			Param2 = int( yfog );
+			Param2 = (intptr_t)( yfog );
 			break;
 		case AV_WHITE:
-			Param2 = int( wfog );
+			Param2 = (intptr_t)( wfog );
 			break;
 		case AV_DARK:
-			Param2 = int( fog + 1024 );
+			Param2 = (intptr_t)( fog + 1024 );
 			break;
 		default:
 			Param1 = 0;
@@ -353,7 +355,7 @@ void AddOptLine( short X1, short Y1, short X2, short Y2, short x, short y, OneOb
 	};
 	AddLine( X1, Y1, X2, Y2, x, y, OB, FileID, SpriteID, Param1, Param2 );
 };
-void AddLine( short X1, short Y1, short X2, short Y2, short x, short y, OneObject* OB, word FileID, word SpriteID, int Param1, int Param2 )
+void AddLine( short X1, short Y1, short X2, short Y2, short x, short y, OneObject* OB, word FileID, word SpriteID, int Param1, intptr_t Param2 )
 {
 	if (Y1 == Y2)
 	{
@@ -448,6 +450,7 @@ void SortWords(int NWords, word* Data, short* Factor)
 		return;
 	}
 
+#ifdef _MSC_VER
 	__asm
 	{
 		push	esi
@@ -477,13 +480,31 @@ void SortWords(int NWords, word* Data, short* Factor)
 			pop		edi
 			pop		esi
 	}
+#else
+	// Bubble sort: parallel arrays Factor (sort key) and Data (payload)
+	bool sorted;
+	do {
+		sorted = true;
+		for (int i = 0; i < NWords - 1; i++) {
+			if (Factor[i + 1] < Factor[i]) {
+				short tmpF = Factor[i];
+				Factor[i] = Factor[i + 1];
+				Factor[i + 1] = tmpF;
+				word tmpD = Data[i];
+				Data[i] = Data[i + 1];
+				Data[i + 1] = tmpD;
+				sorted = false;
+			}
+		}
+	} while (!sorted);
+#endif
 }
 
 void SortZBuffer()
 {
 	int pos = 0;
 	short TEMPLINE[64];
-	int tofs = int( TEMPLINE );
+	intptr_t tofs = (intptr_t)( TEMPLINE );
 	for (int i = 0; i < NYLines; i++)
 	{
 		int N = ZBFCounter[i];
@@ -543,7 +564,7 @@ void ShowZElement( ZElement* ZEL )
 		mask = 0xFFFF;
 	}
 
-	int par2 = ZEL->Param2;
+	intptr_t par2 = ZEL->Param2;
 	byte nat = ZEL->Nat;
 
 	//Shadows
@@ -633,18 +654,19 @@ void ShowZElement( ZElement* ZEL )
 	break;
 
 	case AV_PULSING:
-	{
-		int NNN = 5 + int( 8 * ( sin( double( GetTickCount() ) / 100 ) + 2 ) );
-		GPS.ShowGPPalLayers( smapx + ZEL->x, smapy + ZEL->y, ZEL->FileID, ZEL->SpriteID, nat, (byte*) par2 + ( NNN << 8 ), mask );
-	}
-	break;
+		if (par2) {
+			int NNN = 5 + int( 8 * ( sin( double( GetTickCount() ) / 100 ) + 2 ) );
+			GPS.ShowGPPalLayers( smapx + ZEL->x, smapy + ZEL->y, ZEL->FileID, ZEL->SpriteID, nat, (byte*) par2 + ( NNN << 8 ), mask );
+		}
+		break;
 
 	case AV_TRANSPARENT:
 		GPS.ShowGPTransparentLayers( smapx + ZEL->x, smapy + ZEL->y, ZEL->FileID, ZEL->SpriteID, nat, mask );
 		break;
 
 	case AV_PALETTE:
-		GPS.ShowGPPalLayers( smapx + ZEL->x, smapy + ZEL->y, ZEL->FileID, ZEL->SpriteID, nat, (byte*) par2, mask );
+		if (par2)
+			GPS.ShowGPPalLayers( smapx + ZEL->x, smapy + ZEL->y, ZEL->FileID, ZEL->SpriteID, nat, (byte*) par2, mask );
 		break;
 
 	case AV_GRADIENT:

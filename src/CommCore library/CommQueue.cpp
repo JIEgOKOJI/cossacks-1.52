@@ -4,7 +4,7 @@
 
 // ---------------------------------------------------------------------------------------------
 
-BOOL CCommCore::QueuePacketExists(u_long lStamp)
+BOOL CCommCore::QueuePacketExists(wire_u32 lStamp)
 {
 	//	_log_message("QueuePacketExists()");
 
@@ -56,7 +56,7 @@ BOOL CCommCore::QueueDropPacket(int iFrameNum)
 
 // ---------------------------------------------------------------------------------------------
 
-BOOL CCommCore::QueueDropConfirmedPacket(u_long lStamp)
+BOOL CCommCore::QueueDropConfirmedPacket(wire_u32 lStamp)
 {
 	//	_log_message("QueueDropConfirmedPacket()");
 

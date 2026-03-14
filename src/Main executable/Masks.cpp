@@ -22,6 +22,7 @@ byte ResultMask[MaskLx * 256];
 extern byte trans4[65536];
 extern byte trans8[65536];
 void CopyMaskedBitmap64(byte* Bits, int x, int y, void* Mask) {
+#ifdef _MSC_VER
 	__asm {
 		push	esi
 		push	edi
@@ -64,8 +65,37 @@ void CopyMaskedBitmap64(byte* Bits, int x, int y, void* Mask) {
 			pop		edi
 			pop		esi
 	};
+#else
+	byte* mask_ptr = (byte*)Mask;
+	int nrows = mask_ptr[2];
+	byte* rle = mask_ptr + 4;
+	byte src_col = (byte)x;
+	byte src_row = (byte)y;
+	byte dst_col = 0;
+	byte dst_row = 0;
+	for (int r = 0; r < nrows; r++) {
+		byte nseg = *rle++;
+		for (int s = 0; s < nseg; s++) {
+			byte skip = rle[0];
+			byte count = rle[1];
+			src_col += skip;
+			dst_col += skip;
+			for (int i = 0; i < count; i++) {
+				ResultMask[(int)dst_row * 256 + dst_col] = Bits[(int)(src_row & 0x3F) * 256 + (src_col & 0x3F)];
+				src_col++;
+				dst_col++;
+			}
+			rle += 2;
+		}
+		dst_col = 0;
+		src_row++;
+		dst_row++;
+		src_col = (byte)x;
+	}
+#endif
 };
 void CopyMaskedTransparentBitmap_8(byte* Bits, int x, int y, void* Mask) {
+#ifdef _MSC_VER
 	byte nstr;
 	__asm {
 		push	esi
@@ -114,8 +144,39 @@ void CopyMaskedTransparentBitmap_8(byte* Bits, int x, int y, void* Mask) {
 			pop		edi
 			pop		esi
 	};
+#else
+	byte* mask_ptr = (byte*)Mask;
+	int nrows = mask_ptr[2];
+	byte* rle = mask_ptr + 4;
+	byte src_col = (byte)x;
+	byte src_row = (byte)y;
+	byte dst_col = 0;
+	byte dst_row = 0;
+	for (int r = 0; r < nrows; r++) {
+		byte nseg = *rle++;
+		for (int s = 0; s < nseg; s++) {
+			byte skip = rle[0];
+			byte count = rle[1];
+			src_col += skip;
+			dst_col += skip;
+			for (int i = 0; i < count; i++) {
+				byte src_pixel = Bits[(int)(src_row & 0x3F) * 256 + (src_col & 0x3F)];
+				byte dst_pixel = ResultMask[(int)dst_row * 256 + dst_col];
+				ResultMask[(int)dst_row * 256 + dst_col] = trans8[(int)src_pixel * 256 + dst_pixel];
+				src_col++;
+				dst_col++;
+			}
+			rle += 2;
+		}
+		dst_col = 0;
+		src_row++;
+		dst_row++;
+		src_col = (byte)x;
+	}
+#endif
 };
 void CopyMaskedTransparentBitmap_4(byte* Bits, int x, int y, void* Mask) {
+#ifdef _MSC_VER
 	byte nstr;
 	__asm {
 		push	esi
@@ -164,8 +225,39 @@ void CopyMaskedTransparentBitmap_4(byte* Bits, int x, int y, void* Mask) {
 			pop		edi
 			pop		esi
 	};
+#else
+	byte* mask_ptr = (byte*)Mask;
+	int nrows = mask_ptr[2];
+	byte* rle = mask_ptr + 4;
+	byte src_col = (byte)x;
+	byte src_row = (byte)y;
+	byte dst_col = 0;
+	byte dst_row = 0;
+	for (int r = 0; r < nrows; r++) {
+		byte nseg = *rle++;
+		for (int s = 0; s < nseg; s++) {
+			byte skip = rle[0];
+			byte count = rle[1];
+			src_col += skip;
+			dst_col += skip;
+			for (int i = 0; i < count; i++) {
+				byte src_pixel = Bits[(int)(src_row & 0x3F) * 256 + (src_col & 0x3F)];
+				byte dst_pixel = ResultMask[(int)dst_row * 256 + dst_col];
+				ResultMask[(int)dst_row * 256 + dst_col] = trans4[(int)src_pixel * 256 + dst_pixel];
+				src_col++;
+				dst_col++;
+			}
+			rle += 2;
+		}
+		dst_col = 0;
+		src_row++;
+		dst_row++;
+		src_col = (byte)x;
+	}
+#endif
 };
 void CopyMaskedTransparentBitmap_12(byte* Bits, int x, int y, void* Mask) {
+#ifdef _MSC_VER
 	byte nstr;
 	__asm {
 		push	esi
@@ -214,6 +306,36 @@ void CopyMaskedTransparentBitmap_12(byte* Bits, int x, int y, void* Mask) {
 			pop		edi
 			pop		esi
 	};
+#else
+	byte* mask_ptr = (byte*)Mask;
+	int nrows = mask_ptr[2];
+	byte* rle = mask_ptr + 4;
+	byte src_col = (byte)x;
+	byte src_row = (byte)y;
+	byte dst_col = 0;
+	byte dst_row = 0;
+	for (int r = 0; r < nrows; r++) {
+		byte nseg = *rle++;
+		for (int s = 0; s < nseg; s++) {
+			byte skip = rle[0];
+			byte count = rle[1];
+			src_col += skip;
+			dst_col += skip;
+			for (int i = 0; i < count; i++) {
+				byte src_pixel = Bits[(int)(src_row & 0x3F) * 256 + (src_col & 0x3F)];
+				byte dst_pixel = ResultMask[(int)dst_row * 256 + dst_col];
+				ResultMask[(int)dst_row * 256 + dst_col] = trans4[(int)dst_pixel * 256 + src_pixel];
+				src_col++;
+				dst_col++;
+			}
+			rle += 2;
+		}
+		dst_col = 0;
+		src_row++;
+		dst_row++;
+		src_col = (byte)x;
+	}
+#endif
 };
 extern RLCTable SimpleMaskA;
 extern RLCTable SimpleMaskB;
@@ -234,6 +356,7 @@ void CopyMaskedBitmap(byte* Bits, int x, int y, int MaskID) {
 //	|/ 
 //Creates triangle (Type1) with bitmap
 void FastCreateMaskedBitmap64_1(byte* Bits, int x, int y) {
+#ifdef _MSC_VER
 	int tmedi;
 	__asm {
 		push	esi
@@ -340,6 +463,40 @@ void FastCreateMaskedBitmap64_1(byte* Bits, int x, int y) {
 			pop		edi
 			pop		esi
 	};
+#else
+	int mx = (byte)x & 0x3F;
+	int max_w = 64 - mx;
+	byte src_y = (byte)y;
+	byte* dest = ResultMask;
+	// Expanding trapezoid: 16 rows, width 2,4,...,32
+	for (int row = 0; row < 16; row++) {
+		int width = 2 + row * 2;
+		int my = src_y & 0x3F;
+		byte* src = Bits + my * 256 + mx;
+		if (width <= max_w) {
+			memcpy(dest, src, width);
+		} else {
+			memcpy(dest, src, max_w);
+			memcpy(dest + max_w, src + max_w - 64, width - max_w);
+		}
+		dest += 256;
+		src_y++;
+	}
+	// Contracting trapezoid: 16 rows, width 32,30,...,2
+	for (int row = 0; row < 16; row++) {
+		int width = 32 - row * 2;
+		int my = src_y & 0x3F;
+		byte* src = Bits + my * 256 + mx;
+		if (width <= max_w) {
+			memcpy(dest, src, width);
+		} else {
+			memcpy(dest, src, max_w);
+			memcpy(dest + max_w, src + max_w - 64, width - max_w);
+		}
+		dest += 256;
+		src_y++;
+	}
+#endif
 };
 //      /|
 //    /  |
@@ -348,6 +505,7 @@ void FastCreateMaskedBitmap64_1(byte* Bits, int x, int y) {
 //    \  |
 //      \|
 void FastCreateMaskedBitmap64_2(byte* Bits, int x, int y) {
+#ifdef _MSC_VER
 	int tmedi;
 	__asm {
 		push	esi
@@ -506,6 +664,31 @@ void FastCreateMaskedBitmap64_2(byte* Bits, int x, int y) {
 			pop		edi
 			pop		esi
 	};
+#else
+	int src_col = ((byte)x + 32) & 0x3F;
+	byte src_y = (byte)y;
+	src_y -= 16;
+	// Expanding trapezoid: 16 rows, width 2,4,...,32 (right-aligned at column 32)
+	for (int row = 0; row < 16; row++) {
+		int width = 2 + row * 2;
+		int my = src_y & 0x3F;
+		for (int i = 0; i < width; i++) {
+			int sc = (src_col - 1 - i) & 0x3F;
+			ResultMask[row * 256 + (31 - i)] = Bits[my * 256 + sc];
+		}
+		src_y++;
+	}
+	// Contracting trapezoid: 16 rows, width 32,30,...,2
+	for (int row = 0; row < 16; row++) {
+		int width = 32 - row * 2;
+		int my = src_y & 0x3F;
+		for (int i = 0; i < width; i++) {
+			int sc = (src_col - 1 - i) & 0x3F;
+			ResultMask[(16 + row) * 256 + (31 - i)] = Bits[my * 256 + sc];
+		}
+		src_y++;
+	}
+#endif
 };
 int GetBmOfst(int i) {
 	return ((i & 3) << 6) + ((i >> 2) << (8 + 6));
@@ -830,10 +1013,11 @@ void PrepareIntersection2(int bm1, int bm2, int bm3,
 	CopyMaskedBitmap(BitmapsArray + GetBmOfst(bm2), x0, y0, 54 + (2 - s1) * 3 + s2);
 };
 void ClearIntersectionBuffer() {
-	memset(ResultMask, 0, sizeof ResultMask);
+	memset(ResultMask, 0, sizeof(ResultMask));
 };
 void ShowIntersectionBuffer() {
 	if (!bActive)return;
+#ifdef _MSC_VER
 	int SCROF = int(ScreenPtr) + 256 * ScrWidth + 256;
 	__asm {
 		push	esi
@@ -853,5 +1037,14 @@ void ShowIntersectionBuffer() {
 		pop		edi
 		pop		esi
 	};
-	//memset(ResultMask,0,sizeof ResultMask);
+#else
+	byte* src = ResultMask;
+	byte* dst = (byte*)ScreenPtr + 256 * ScrWidth + 256;
+	for (int row = 0; row < 64; row++) {
+		memcpy(dst, src, 256);
+		src += 256;
+		dst += ScrWidth;
+	}
+#endif
+	//memset(ResultMask,0,sizeof(ResultMask));
 };

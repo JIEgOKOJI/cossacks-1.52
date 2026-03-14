@@ -12,10 +12,10 @@ void SaveToBMP24(char* Name, int Lx, int Ly, byte* data)
 	BM.bfType = 'MB';
 	int rlx = Lx * 3;
 	if (rlx & 3)rlx = (rlx | 3) + 1;
-	BM.bfSize = (sizeof BMPformat) + rlx*Ly;
+	BM.bfSize = (sizeof(BMPformat)) + rlx*Ly;
 	BM.bfReserved1 = 0;
 	BM.bfReserved2 = 0;
-	BM.bfOffBits = (sizeof BMPformat);
+	BM.bfOffBits = (sizeof(BMPformat));
 	BM.biSize = 40;
 	BM.biWidth = Lx;
 	BM.biHeight = Ly;
@@ -27,7 +27,7 @@ void SaveToBMP24(char* Name, int Lx, int Ly, byte* data)
 	BM.biYPelsPerMeter = 0;
 	BM.biClrUsed = 0;
 	BM.biClrImportant = 0;
-	RBlockWrite(f1, &BM, sizeof BM);
+	RBlockWrite(f1, &BM, sizeof(BM));
 	for (int j = 0; j < Ly; j++) {
 		RBlockWrite(f1, &data[3 * Lx*(Ly - j - 1)], rlx);
 	};
@@ -36,7 +36,7 @@ void SaveToBMP24(char* Name, int Lx, int Ly, byte* data)
 bool ReadBMP24(char* Name, BMPformat* BM, byte** data) {
 	ResFile f1 = RReset(Name);
 	if (f1 != INVALID_HANDLE_VALUE) {
-		RBlockRead(f1, BM, sizeof BMPformat);
+		RBlockRead(f1, BM, sizeof(BMPformat));
 		if (IOresult() || BM->bfType != 'MB')return false;
 		if (BM->biBitCount != 24)return false;
 		*data = new byte[BM->biWidth*BM->biHeight * 3];
@@ -44,7 +44,7 @@ bool ReadBMP24(char* Name, BMPformat* BM, byte** data) {
 		int rwid = wid;
 		if (wid & 3)rwid = (wid | 3) + 1;
 		for (int i = 0; i < BM->biHeight; i++) {
-			RSeek(f1, (sizeof BMPformat) + (BM->biHeight - i - 1)*rwid);
+			RSeek(f1, (sizeof(BMPformat)) + (BM->biHeight - i - 1)*rwid);
 			RBlockRead(f1, &((*data)[i*wid]), wid);
 		};
 		RClose(f1);
@@ -55,7 +55,7 @@ bool ReadBMP24(char* Name, BMPformat* BM, byte** data) {
 bool ReadBMP8(char* Name, BMPformat* BM, byte** data) {
 	ResFile f1 = RReset(Name);
 	if (f1 != INVALID_HANDLE_VALUE) {
-		RBlockRead(f1, BM, sizeof BMPformat);
+		RBlockRead(f1, BM, sizeof(BMPformat));
 		if (IOresult() || BM->bfType != 'MB')return false;
 		if (BM->biBitCount != 8)return false;
 		*data = new byte[BM->biWidth*BM->biHeight];
@@ -63,7 +63,7 @@ bool ReadBMP8(char* Name, BMPformat* BM, byte** data) {
 		int rwid = wid;
 		if (wid & 3)rwid = (wid | 3) + 1;
 		for (int i = 0; i < BM->biHeight; i++) {
-			RSeek(f1, (sizeof BMPformat) + 1024 + (BM->biHeight - i - 1)*rwid);
+			RSeek(f1, (sizeof(BMPformat)) + 1024 + (BM->biHeight - i - 1)*rwid);
 			RBlockRead(f1, &((*data)[i*wid]), wid);
 		};
 		RClose(f1);
@@ -75,7 +75,7 @@ bool ReadBMP8TOBPX(char* Name, byte** data) {
 	BMPformat BM;
 	ResFile f1 = RReset(Name);
 	if (f1 != INVALID_HANDLE_VALUE) {
-		RBlockRead(f1, &BM, sizeof BMPformat);
+		RBlockRead(f1, &BM, sizeof(BMPformat));
 		if (IOresult() || BM.bfType != 'MB')return false;
 		if (BM.biBitCount != 8)return false;
 		*data = new byte[BM.biWidth*BM.biHeight + 4];
@@ -85,7 +85,7 @@ bool ReadBMP8TOBPX(char* Name, byte** data) {
 		((short*)*data)[0] = BM.biWidth;
 		((short*)*data)[1] = BM.biHeight;
 		for (int i = 0; i < BM.biHeight; i++) {
-			RSeek(f1,/*(sizeof BMPformat)+1024*/BM.bfOffBits + (BM.biHeight - i - 1)*rwid);
+			RSeek(f1,/*(sizeof(BMPformat))+1024*/BM.bfOffBits + (BM.biHeight - i - 1)*rwid);
 			RBlockRead(f1, &((*data)[i*wid + 4]), wid);
 		};
 		RClose(f1);
@@ -162,58 +162,14 @@ int TotalSize = 0;
 //FIX MEMORY
 
 __declspec(dllexport) void _ExFree(void* ptr) {
-	try {
-		// Проверка на нулевой указатель
-		if (!ptr) {
-			fprintf(stderr, "Предупреждение: передан нулевой указатель в _ExFree\n");
-			return;
-		}
-
-		DWORD* Ptr = (DWORD*)ptr;
-
-		// Проверка на минимально допустимый адрес
-		if ((uintptr_t)Ptr < 0x1000) {
-			fprintf(stderr, "Предупреждение: недействительный адрес %p в _ExFree\n", ptr);
-			return;
-		}
-
-		// Проверка на двойное освобождение
-		if (Ptr[0] == 0xDEADBEEF) {
-			fprintf(stderr, "Ошибка: обнаружено двойное освобождение памяти по адресу %p\n", ptr);
-			return; // Пропускаем освобождение, но не завершаем программу
-		}
-
-		// Маркируем память как освобожденную
-		Ptr[0] = 0xDEADBEEF;
-
-		// Освобождаем память
-		free(ptr);
-
-		// Уменьшаем счетчик
-		if (TotalSize > 0) {
-			TotalSize--;
-		}
-		else {
-			fprintf(stderr, "Предупреждение: TotalSize уже равен нулю\n");
-		}
-	}
-	catch (const std::exception& e) {
-		// Обработка любых стандартных исключений
-		fprintf(stderr, "Исключение в _ExFree: %s\n", e.what());
-	}
-	catch (...) {
-		// Обработка неизвестных исключений
-		fprintf(stderr, "Неизвестная ошибка в _ExFree для адреса %p\n", ptr);
-	}
+	if (!ptr) return;
+	free(ptr);
+	if (TotalSize > 0) TotalSize--;
 }
 //FIX MEMORY
 __declspec(dllexport) void* _ExMalloc(int Size) {
-	if (Size <= 0) return nullptr; // Обработка некорректных размеров
+	if (Size <= 0) return nullptr;
 	void* ptr = calloc(Size, 1);
-	if (ptr) {
-		TotalSize++;
-		// Опционально инициализируем метаданные
-		((DWORD*)ptr)[0] = 0xCAFEBABE; // Магическое число для выделенной памяти
-	}
+	if (ptr) TotalSize++;
 	return ptr;
 }

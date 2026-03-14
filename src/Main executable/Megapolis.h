@@ -6,7 +6,7 @@ class Cell8x8
 public:
 	union
 	{
-		struct foo
+		struct
 		{
 			byte Peasants;//кол-во крестьян на этой клетке
 			byte Towers;//------//------башен

@@ -1,5 +1,9 @@
 #define STRICT
-#include <windows.h>
+#ifdef _WIN32
+    #include <windows.h>
+#else
+    #include "platform.h"
+#endif
 #include <stdio.h>
 #include <ctype.h>
 #include "unrar.h"
@@ -19,7 +23,7 @@ int ProcessDataProc(unsigned char *Addr, int Size);
 HMODULE hLib;
 void* LoadF(char* Name)
 {
-	void* fn = GetProcAddress(hLib, Name);
+	void* fn = (void*)GetProcAddress(hLib, Name);
 	if (!fn) 
 	{
 		char ccc[256];
@@ -36,7 +40,6 @@ void LoadRARLib()
 	if (!hLib) 
 	{
 		MessageBox(NULL, "Could not load unrar.dll", "ERROR!", 0);
-		return;
 	}
 	else 
 	{
@@ -61,6 +64,7 @@ void CloseRARLib()
 void ExtractArchive(char *ArcName, int Mode, char* Dest)
 {
 	if (!hLib)LoadRARLib();
+	if (!hLib) return; // unrar.dll not available
 	HANDLE hArcData;
 	int RHCode, PFCode;
 	char CmtBuf[16384];

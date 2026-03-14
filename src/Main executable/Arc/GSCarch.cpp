@@ -87,10 +87,11 @@ LPGSCfile CGSCarch::GetFileHandle( LPCSTR lpcsFileName )
 
 	DWORD HASH = isiCalcHash( sUpFileName );
 
-	for (i = 0; i <= m_Header->m_Entries - 1; i++)
+for (i = 0; i <= m_Header->m_Entries - 1; i++)
 	{
 		pFAT = (TGSCarchFAT*) ( LPBYTE( m_FAT ) + i * sizeof( TGSCarchFAT ) );
 		if (pFAT->m_Hash == HASH)
+		{
 			if (!strcmp( LPCSTR( pFAT->m_FileName ), sUpFileName ))
 			{
 				lpFileHandle = new TGSCfile;
@@ -99,6 +100,7 @@ LPGSCfile CGSCarch::GetFileHandle( LPCSTR lpcsFileName )
 				lpFileHandle->m_Position = 0;
 				return lpFileHandle;
 			}
+		}
 	}
 
 	return NULL;

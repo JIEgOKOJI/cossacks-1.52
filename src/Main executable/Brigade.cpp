@@ -1,6 +1,4 @@
-﻿#include <thread>
-#include <vector>
-#include <mutex>
+﻿#include <vector>
 #include <algorithm>
 #include "ddini.h"
 #include "ResFile.h"
@@ -31,7 +29,6 @@
 #include "StrategyResearch.h"
 #include "Safety.h"
 #include "EinfoClass.h"
-std::mutex brigade_mutex;
 extern int PeaceTimeLeft;
 void CheckArmies( City* CT );
 void CorrectBrigadesSelection( byte NT );
@@ -39,7 +36,7 @@ void ImCorrectBrigadesSelection( byte NT );
 void NewMonsterSmartSendToLink( OneObject* OBJ );
 void NewMonsterSendToLink( OneObject* OBJ );
 void AI_AttackPointLink( OneObject* OBJ );
-extern word SelCenter[8];
+extern word SelCenterFlags[8];
 int CheckCreationAbility( byte NI, NewMonster* NM, int* x2i, int* y2i, word* BLD, int NBLD );
 void BuildWithSelected( byte NI, word ObjID, byte OrdType );
 void GoToMineWithSelected( byte NI, word ID );
@@ -50,7 +47,7 @@ constexpr int MaxBar = 8;
 
 void Brigade::Init( City* ct, word id )
 {
-	memset( this, 0, sizeof Brigade );
+	memset( this, 0, sizeof(Brigade) );
 	CT = ct;
 	ID = id;
 	ArmyID = 0xFFFF;
@@ -158,110 +155,27 @@ void Brigade::CheckMembers(City* pCT)
 {
 	if (WarType) return;
 
-	const int threshold = 5000;
-	int oldNMemb = NMemb;
-
-	// Параллельная фильтрация участников, если их больше threshold
-	if (oldNMemb > threshold)
+	for (int i = 0; i < NMemb; ++i)
 	{
-		unsigned tcount = std::thread::hardware_concurrency() ? (std::thread::hardware_concurrency() < 16u ? std::thread::hardware_concurrency() : 16u) : 2;
-		int chunk = (oldNMemb + tcount - 1) / tcount;
-
-		// Локальные контейнеры для потоков
-		std::vector<std::vector<int>> survMemb(tcount);
-		std::vector<std::vector<word>> survMembSN(tcount);
-		std::vector<std::vector<int>> survPosX, survPosY;
-		if (PosCreated)
+		OneObject* OB = Group[Memb[i]];
+		if (!OB || OB->Serial != MembSN[i] || OB->Sdoxlo)
 		{
-			survPosX.resize(tcount);
-			survPosY.resize(tcount);
-		}
-		std::vector<std::vector<OneObject*>> removedObjs(tcount);
-
-		// Запуск потоков
-		std::vector<std::thread> threads;
-		threads.reserve(tcount);
-		for (unsigned t = 0; t < tcount; ++t)
-		{
-			int start = t * chunk;
-			int end = (start + chunk < oldNMemb) ? (start + chunk) : oldNMemb;
-			threads.emplace_back([&, start, end, t]() {
-				for (int i = start; i < end; ++i)
-				{
-					OneObject* OB = Group[Memb[i]];
-					if (!OB || OB->Serial != MembSN[i] || OB->Sdoxlo)
-					{
-						removedObjs[t].push_back(OB);
-					}
-					else
-					{
-						survMemb[t].push_back(Memb[i]);
-						survMembSN[t].push_back(MembSN[i]);
-						if (PosCreated)
-						{
-							survPosX[t].push_back(posX[i]);
-							survPosY[t].push_back(posY[i]);
-						}
-					}
-				}
-				});
-		}
-		for (auto& th : threads) th.join();
-
-		// Обновление счётчиков и сбор результатов
-		// 1) декремент счётчиков
-		for (auto& block : removedObjs)
-		{
-			for (OneObject* OB : block)
-				(&BM.Peons)[GetBMIndex(OB)]--;
-		}
-
-		// 2) объединение survivors
-		int idx = 0;
-		for (unsigned t = 0; t < tcount; ++t)
-		{
-			for (size_t j = 0; j < survMemb[t].size(); ++j)
+			(&BM.Peons)[GetBMIndex(OB)]--;
+			if (i < NMemb - 1)
 			{
-				Memb[idx] = survMemb[t][j];
-				MembSN[idx] = survMembSN[t][j];
+				memcpy(Memb + i, Memb + i + 1, (NMemb - i - 1) << 1);
+				memcpy(MembSN + i, MembSN + i + 1, (NMemb - i - 1) << 1);
 				if (PosCreated)
 				{
-					posX[idx] = survPosX[t][j];
-					posY[idx] = survPosY[t][j];
+					memcpy(posX + i, posX + i + 1, (NMemb - i - 1) << 2);
+					memcpy(posY + i, posY + i + 1, (NMemb - i - 1) << 2);
 				}
-				++idx;
 			}
+			--NMemb;
+			--i;
 		}
-		NMemb = idx;
-
-		// Восстановление индексов
-		SetIndex();
 	}
-	else
-	{
-		// Оригинальная последовательная фильтрация
-		for (int i = 0; i < NMemb; ++i)
-		{
-			OneObject* OB = Group[Memb[i]];
-			if (!OB || OB->Serial != MembSN[i] || OB->Sdoxlo)
-			{
-				(&BM.Peons)[GetBMIndex(OB)]--;
-				if (i < NMemb - 1)
-				{
-					memcpy(Memb + i, Memb + i + 1, (NMemb - i - 1) << 1);
-					memcpy(MembSN + i, MembSN + i + 1, (NMemb - i - 1) << 1);
-					if (PosCreated)
-					{
-						memcpy(posX + i, posX + i + 1, (NMemb - i - 1) << 2);
-						memcpy(posY + i, posY + i + 1, (NMemb - i - 1) << 2);
-					}
-				}
-				--NMemb;
-				--i;
-			}
-		}
-		SetIndex();
-	}
+	SetIndex();
 
 	// Последовательная обработка CFN (перемещение объектов между бригадами)
 	if (CFN)
@@ -525,42 +439,15 @@ bool CorrectPositions( int* pos, word N )
 };
 int Brigade::SelectPeasants(byte NI)
 {
-	SelCenter[NI] = 0;
+	SelCenterFlags[NI] = 0;
 	int oldNMemb = NMemb;
-	const int threshold = 5000;
 	int total = 0;
 
-	// 1) Параллельный подсчёт количества крестьян
-	if (oldNMemb > threshold) {
-		unsigned tcount = std::thread::hardware_concurrency() ? (std::thread::hardware_concurrency() < 16u ? std::thread::hardware_concurrency() : 16u) : 2;
-		if (!tcount) tcount = 2;
-		int chunk = (oldNMemb + tcount - 1) / tcount;
-		std::vector<std::thread> threads;
-		std::vector<int> localCounts(tcount, 0);
-
-		for (unsigned t = 0; t < tcount; ++t) {
-			int start = t * chunk;
-			int end = (start + chunk < oldNMemb) ? (start + chunk) : oldNMemb;
-			threads.emplace_back([&, start, end, t]() {
-				int cnt = 0;
-				for (int i = start; i < end; ++i) {
-					OneObject* OB = Group[Memb[i]];
-					if (OB && OB->Serial == MembSN[i] && OB->newMons->Peasant && !(OB->Sdoxlo || OB->Hidden))
-						++cnt;
-				}
-				localCounts[t] = cnt;
-				});
-		}
-		for (auto& th : threads) th.join();
-		for (auto cnt : localCounts) total += cnt;
-	}
-	else {
-		// Последовательный подсчёт
-		for (int i = 0; i < oldNMemb; ++i) {
-			OneObject* OB = Group[Memb[i]];
-			if (OB && OB->Serial == MembSN[i] && OB->newMons->Peasant && !(OB->Sdoxlo || OB->Hidden))
-				++total;
-		}
+	// 1) Подсчёт количества крестьян
+	for (int i = 0; i < oldNMemb; ++i) {
+		OneObject* OB = Group[Memb[i]];
+		if (OB && OB->Serial == MembSN[i] && OB->newMons->Peasant && !(OB->Sdoxlo || OB->Hidden))
+			++total;
 	}
 
 	// 2) Сброс предыдущей выборки
@@ -583,54 +470,15 @@ int Brigade::SelectPeasants(byte NI)
 	Selm[NI] = (word*)malloc(sizeof(word) * total);
 	SerN[NI] = (word*)malloc(sizeof(word) * total);
 
-	// 3) Параллельная сборка новых списков
-	if (oldNMemb > threshold) {
-		unsigned tcount = std::thread::hardware_concurrency() ? (std::thread::hardware_concurrency() < 16u ? std::thread::hardware_concurrency() : 16u) : 2;
-		if (!tcount) tcount = 2;
-		int chunk = (oldNMemb + tcount - 1) / tcount;
-		std::vector<std::thread> threads;
-		std::vector<std::vector<word>> localSel(tcount);
-		std::vector<std::vector<word>> localSer(tcount);
-
-		for (unsigned t = 0; t < tcount; ++t) {
-			int start = t * chunk;
-			int end = (start + chunk < oldNMemb) ? (start + chunk) : oldNMemb;
-			threads.emplace_back([&, start, end, t]() {
-				auto& selList = localSel[t];
-				auto& serList = localSer[t];
-				for (int i = start; i < end; ++i) {
-					OneObject* OB = Group[Memb[i]];
-					if (OB && OB->Serial == MembSN[i] && OB->newMons->Peasant && !(OB->Sdoxlo || OB->Hidden)) {
-						selList.push_back(OB->Index);
-						serList.push_back(OB->Serial);
-					}
-				}
-				});
-		}
-		for (auto& th : threads) th.join();
-
-		// Объединяем результаты и устанавливаем флаг Selected
-		int idx = 0;
-		for (unsigned t = 0; t < tcount; ++t) {
-			for (size_t j = 0; j < localSel[t].size(); ++j) {
-				Selm[NI][idx] = localSel[t][j];
-				SerN[NI][idx] = localSer[t][j];
-				Group[Selm[NI][idx]]->Selected |= GM(NI);
-				++idx;
-			}
-		}
-	}
-	else {
-		// Последовательная сборка
-		int idx = 0;
-		for (int i = 0; i < oldNMemb; ++i) {
-			OneObject* OB = Group[Memb[i]];
-			if (OB && OB->Serial == MembSN[i] && OB->newMons->Peasant && !(OB->Sdoxlo || OB->Hidden)) {
-				Selm[NI][idx] = OB->Index;
-				SerN[NI][idx] = OB->Serial;
-				OB->Selected |= GM(NI);
-				++idx;
-			}
+	// 3) Сборка новых списков
+	int idx = 0;
+	for (int i = 0; i < oldNMemb; ++i) {
+		OneObject* OB = Group[Memb[i]];
+		if (OB && OB->Serial == MembSN[i] && OB->newMons->Peasant && !(OB->Sdoxlo || OB->Hidden)) {
+			Selm[NI][idx] = OB->Index;
+			SerN[NI][idx] = OB->Serial;
+			OB->Selected |= GM(NI);
+			++idx;
 		}
 	}
 
@@ -721,52 +569,18 @@ void B_LocalSendToLink(Brigade* BR)
 
 	int* pos = BLS->Position;
 	int N = BLS->N;
-	const int threshold = 5000;
 	long long S = 0;
 
 	// 1) подсчёт S (сумма RealX+RealY)
-	if (N > threshold)
+	for (int i = 0; i < N; ++i)
 	{
-		unsigned tcount = std::thread::hardware_concurrency() ? (std::thread::hardware_concurrency() < 16u ? std::thread::hardware_concurrency() : 16u) : 2;
-		if (!tcount) tcount = 2;
-		std::vector<std::thread> threads;
-		std::vector<long long> partial(tcount, 0);
-		int chunk = (N + tcount - 1) / tcount;
-
-		for (unsigned t = 0; t < tcount; ++t)
-		{
-			int start = t * chunk;
-			int end = (start + chunk < N) ? (start + chunk) : N;
-			threads.emplace_back([&, start, end, t]() {
-				long long sumLoc = 0;
-				for (int i = start; i < end; ++i)
-				{
-					int ti = i + i + i;
-					int ID = pos[ti + 2];
-					word SN = ID >> 13;
-					ID &= 8191;
-					OneObject* OB = Group[ID];
-					if (OB && OB->Serial == SN && !OB->Sdoxlo)
-						sumLoc += OB->RealX + OB->RealY;
-				}
-				partial[t] = sumLoc;
-				});
-		}
-		for (auto& th : threads) th.join();
-		for (auto& v : partial) S += v;
-	}
-	else
-	{
-		for (int i = 0; i < N; ++i)
-		{
-			int ti = i + i + i;
-			int ID = pos[ti + 2];
-			word SN = ID >> 13;
-			ID &= 8191;
-			OneObject* OB = Group[ID];
-			if (OB && OB->Serial == SN && !OB->Sdoxlo)
-				S += OB->RealX + OB->RealY;
-		}
+		int ti = i + i + i;
+		int ID = pos[ti + 2];
+		word SN = ID >> 13;
+		ID &= 8191;
+		OneObject* OB = Group[ID];
+		if (OB && OB->Serial == SN && !OB->Sdoxlo)
+			S += OB->RealX + OB->RealY;
 	}
 
 	// 2) проверка на «застревание»
@@ -782,71 +596,28 @@ void B_LocalSendToLink(Brigade* BR)
 	byte prio = BLS->Prio;
 
 	// 3) основная работа (команды NewMonsterSendTo)
-	if (N > threshold)
+	for (int i = 0; i < N; ++i)
 	{
-		unsigned tcount = std::thread::hardware_concurrency() ? (std::thread::hardware_concurrency() < 16u ? std::thread::hardware_concurrency() : 16u) : 2;
-		if (!tcount) tcount = 2;
-		std::vector<std::thread> threads;
-		int chunk = (N + tcount - 1) / tcount;
-
-		for (unsigned t = 0; t < tcount; ++t)
+		int ti = i + i + i;
+		int ID = pos[ti + 2];
+		word SN = ID >> 13;
+		ID &= 8191;
+		OneObject* OB = Group[ID];
+		if (OB && OB->Serial == SN && !OB->Sdoxlo)
 		{
-			int start = t * chunk;
-			int end = (start + chunk < N) ? (start + chunk) : N;
-			threads.emplace_back([&, start, end]() {
-				for (int i = start; i < end; ++i)
-				{
-					int ti = i + i + i;
-					int ID = pos[ti + 2];
-					word SN = ID >> 13;
-					ID &= 8191;
-					OneObject* OB = Group[ID];
-					if (OB && OB->Serial == SN && !OB->Sdoxlo)
-					{
-						if (OB->LocalOrder)
-						{
-							if (OB->EnemyID != 0xFFFF)
-							{
-								BR->DeleteBOrder();
-								return;
-							}
-							if (OB->LocalOrder->DoLink == &TakeResLink)
-								OB->NewMonsterSendTo(pos[ti] << 4, pos[ti + 1] << 4, (prio & 127) + 128, 0);
-						}
-						int dstt = Norma((OB->RealX >> 4) - pos[ti], (OB->RealY >> 4) - pos[ti + 1]);
-						if (dstt > 250 && !OB->LocalOrder)
-							OB->NewMonsterSendTo(pos[ti] << 4, pos[ti + 1] << 4, (prio & 127) + 128, 0);
-					}
-				}
-				});
-		}
-		for (auto& th : threads) th.join();
-	}
-	else
-	{
-		for (int i = 0; i < N; ++i)
-		{
-			int ti = i + i + i;
-			int ID = pos[ti + 2];
-			word SN = ID >> 13;
-			ID &= 8191;
-			OneObject* OB = Group[ID];
-			if (OB && OB->Serial == SN && !OB->Sdoxlo)
+			if (OB->LocalOrder)
 			{
-				if (OB->LocalOrder)
+				if (OB->EnemyID != 0xFFFF)
 				{
-					if (OB->EnemyID != 0xFFFF)
-					{
-						BR->DeleteBOrder();
-						return;
-					}
-					if (OB->LocalOrder->DoLink == &TakeResLink)
-						OB->NewMonsterSendTo(pos[ti] << 4, pos[ti + 1] << 4, (prio & 127) + 128, 0);
+					BR->DeleteBOrder();
+					return;
 				}
-				int dstt = Norma((OB->RealX >> 4) - pos[ti], (OB->RealY >> 4) - pos[ti + 1]);
-				if (dstt > 250 && !OB->LocalOrder)
+				if (OB->LocalOrder->DoLink == &TakeResLink)
 					OB->NewMonsterSendTo(pos[ti] << 4, pos[ti + 1] << 4, (prio & 127) + 128, 0);
 			}
+			int dstt = Norma((OB->RealX >> 4) - pos[ti], (OB->RealY >> 4) - pos[ti + 1]);
+			if (dstt > 250 && !OB->LocalOrder)
+				OB->NewMonsterSendTo(pos[ti] << 4, pos[ti + 1] << 4, (prio & 127) + 128, 0);
 		}
 	}
 
@@ -1010,7 +781,6 @@ void B_WideLocalSendToLink(Brigade* BR)
 	Brigade_LST* BLS = (Brigade_LST*)BR->BOrder;
 	int* pos = BLS->Position;
 	int N = BLS->N;
-	const int threshold = 5000;
 	bool moved = true;
 	bool zastr = false;
 
@@ -1024,85 +794,62 @@ void B_WideLocalSendToLink(Brigade* BR)
 	int NZast = 0;
 	byte prio = BLS->Prio;
 
-	auto process_range = [&](int start, int end) {
-		for (int i = start; i < end; ++i)
+	for (int i = 0; i < N; ++i)
+	{
+		int ti = i + i + i;
+		int ID = pos[ti + 2];
+		word SN = ID >> 13;
+		ID &= 8191;
+		OneObject* OB = Group[ID];
+		if (OB && OB->Serial == SN && !OB->Sdoxlo)
 		{
-			int ti = i + i + i;
-			int ID = pos[ti + 2];
-			word SN = ID >> 13;
-			ID &= 8191;
-			OneObject* OB = Group[ID];
-			if (OB && OB->Serial == SN && !OB->Sdoxlo)
+			if (OB->EnemyID != 0xFFFF)
 			{
-				if (OB->EnemyID != 0xFFFF)
+				BR->DeleteBOrder();
+				return;
+			}
+			int dstt = Norma((OB->RealX >> 4) - pos[ti], (OB->RealY >> 4) - pos[ti + 1]);
+			if (dstt > 300)
+			{
+				NZast++;
+				if (BLS->ZastTime != -1 && tmtmt - BLS->ZastTime > 600)
 				{
-					BR->DeleteBOrder();
-					return;
+					if (OB->newMons->Artilery)
+						BLS->ZastTime = tmtmt;
+					else
+						OB->Die();
 				}
-				int dstt = Norma((OB->RealX >> 4) - pos[ti], (OB->RealY >> 4) - pos[ti + 1]);
-				if (dstt > 300)
+				moved = false;
+				if (zastr)
 				{
-					NZast++;
-					if (BLS->ZastTime != -1 && tmtmt - BLS->ZastTime > 600)
+					int xx = OB->RealX;
+					int yy = OB->RealY;
+					bool done = false;
+					int nattm = 0;
+					while (!done && nattm < 6)
 					{
-						if (OB->newMons->Artilery)
-							BLS->ZastTime = tmtmt;
-						else
-							OB->Die();
-					}
-					moved = false;
-					if (zastr)
-					{
-						int xx = OB->RealX;
-						int yy = OB->RealY;
-						bool done = false;
-						int nattm = 0;
-						while (!done && nattm < 6)
+						int xx1 = xx + (rando() & 2048) - 1024;
+						int yy1 = yy + (rando() & 2048) - 1024;
+						if (!CheckBar((xx1 >> 8) - 2, (yy1 >> 8) - 2, 4, 4))
 						{
-							int xx1 = xx + (rando() & 2048) - 1024;
-							int yy1 = yy + (rando() & 2048) - 1024;
-							if (!CheckBar((xx1 >> 8) - 2, (yy1 >> 8) - 2, 4, 4))
-							{
-								done = true;
-								OB->NewMonsterSendTo(xx1, yy1, prio, 0);
-							}
-							++nattm;
+							done = true;
+							OB->NewMonsterSendTo(xx1, yy1, prio, 0);
 						}
-						if (!done) OB->Die();
+						++nattm;
 					}
-				}
-				else if (BLS->time == -1)
-				{
-					BLS->time = tmtmt;
-				}
-
-				if (dstt >= 300 && !OB->LocalOrder)
-				{
-					OB->NewMonsterSendTo(pos[ti] << 4, pos[ti + 1] << 4, prio, 0);
+					if (!done) OB->Die();
 				}
 			}
-		}
-	};
+			else if (BLS->time == -1)
+			{
+				BLS->time = tmtmt;
+			}
 
-	if (N > threshold)
-	{
-		unsigned tcount = std::thread::hardware_concurrency() ? (std::thread::hardware_concurrency() < 16u ? std::thread::hardware_concurrency() : 16u) : 2;
-		if (!tcount) tcount = 2;
-		int chunk = (N + tcount - 1) / tcount;
-		std::vector<std::thread> threads;
-		threads.reserve(tcount);
-
-		for (unsigned t = 0; t < tcount; ++t)
-		{
-			int start = t * chunk;
-			int end = (start + chunk < N) ? (start + chunk) : N;
-			threads.emplace_back(process_range, start, end);
+			if (dstt >= 300 && !OB->LocalOrder)
+			{
+				OB->NewMonsterSendTo(pos[ti] << 4, pos[ti + 1] << 4, prio, 0);
+			}
 		}
-		for (auto& th : threads) th.join();
-	}
-	else
-	{
-		process_range(0, N);
 	}
 
 	if (BLS->ZastTime == -1 && NZast && NZast < 4)
@@ -1234,76 +981,51 @@ int Brigade::AddInRadius(int x, int y, int r, BrigMemb* pBM)
 	int M = pBM->Grenaderov + pBM->Infantry + pBM->Mortir + pBM->Peons + pBM->Pushek + pBM->Strelkov;
 	word* mem = (word*)pBM;
 
-	// Подсчёт общего количества объектов в радиусе
-	int total_objects = 0;
 	for (int i = 0; i < r; i++) {
+		char* xi = Rarr[i].xi;
+		char* yi = Rarr[i].yi;
 		int N = Rarr[i].N;
 		for (int j = 0; j < N; j++) {
-			int xx = xc + Rarr[i].xi[j];
-			int yy = yc + Rarr[i].yi[j];
+			int xx = xc + xi[j];
+			int yy = yc + yi[j];
 			if (xx >= 0 && yy >= 0 && xx <= maxx && yy <= maxy) {
 				int ofst = xx + 1 + ((yy + 1) << VAL_SHFCX);
-				total_objects += MCount[ofst];
-			}
-		}
-	}
-
-	// Структура для хранения результатов каждого потока
-	struct ThreadResult {
-		int M;
-		std::vector<OneObject*> objects_to_add;
-		std::vector<std::pair<int, Brigade*> > objects_to_remove;
-		ThreadResult(int m) : M(m) {}
-	};
-
-	// Однопоточная обработка, если объектов ≤ 5000
-	if (total_objects <= 5000) {
-		for (int i = 0; i < r; i++) {
-			char* xi = Rarr[i].xi;
-			char* yi = Rarr[i].yi;
-			int N = Rarr[i].N;
-			for (int j = 0; j < N; j++) {
-				int xx = xc + xi[j];
-				int yy = yc + yi[j];
-				if (xx >= 0 && yy >= 0 && xx <= maxx && yy <= maxy) {
-					int ofst = xx + 1 + ((yy + 1) << VAL_SHFCX);
-					int N1 = MCount[ofst];
-					if (N1) {
-						ofst <<= SHFCELL;
-						for (int k = 0; k < N1; k++) {
-							word MID = GetNMSL(ofst + k);
-							if (MID != 0xFFFF) {
-								OneObject* OB = Group[MID];
-								if (OB && OB->NNUM == NI && !(OB->DoNotCall || OB->Sdoxlo || OB->InArmy)) {
-									byte nn = GetBMIndex(OB);
-									if (mem[nn]) {
-										bool Allow = true;
-										Order1* OR1 = OB->LocalOrder;
-										if (OR1 && OR1->DoLink == NewMonsterSendToLink && OR1->NextOrder) {
-											OR1 = OR1->NextOrder;
-										}
-										if (OR1 && OR1->DoLink == NewMonsterSmartSendToLink && OR1->NextOrder) {
-											OR1 = OR1->NextOrder;
-										}
-										if (!OR1 || (OR1->DoLink != &BuildObjLink && OR1->DoLink != &GoToMineLink)) {
-											if (OB->BrigadeID != 0xFFFF) {
-												if (OB->BrigadeID != MyID) {
-													Brigade* SRC = CT->Brigs + OB->BrigadeID;
-													if (SRC->Memb && SRC->Memb[OB->BrIndex] == OB->Index) {
-														SRC->RemoveOne(OB->BrIndex, this);
-														mem[nn]--;
-														M--;
-													}
+				int N1 = MCount[ofst];
+				if (N1) {
+					ofst <<= SHFCELL;
+					for (int k = 0; k < N1; k++) {
+						word MID = GetNMSL(ofst + k);
+						if (MID != 0xFFFF) {
+							OneObject* OB = Group[MID];
+							if (OB && OB->NNUM == NI && !(OB->DoNotCall || OB->Sdoxlo || OB->InArmy)) {
+								byte nn = GetBMIndex(OB);
+								if (mem[nn]) {
+									bool Allow = true;
+									Order1* OR1 = OB->LocalOrder;
+									if (OR1 && OR1->DoLink == NewMonsterSendToLink && OR1->NextOrder) {
+										OR1 = OR1->NextOrder;
+									}
+									if (OR1 && OR1->DoLink == NewMonsterSmartSendToLink && OR1->NextOrder) {
+										OR1 = OR1->NextOrder;
+									}
+									if (!OR1 || (OR1->DoLink != &BuildObjLink && OR1->DoLink != &GoToMineLink)) {
+										if (OB->BrigadeID != 0xFFFF) {
+											if (OB->BrigadeID != MyID) {
+												Brigade* SRC = CT->Brigs + OB->BrigadeID;
+												if (SRC->Memb && SRC->Memb[OB->BrIndex] == OB->Index) {
+													SRC->RemoveOne(OB->BrIndex, this);
+													mem[nn]--;
+													M--;
 												}
 											}
-											else {
-												AddObject(OB);
-												mem[nn]--;
-												M--;
-											}
-											if (!M) {
-												return 0;
-											}
+										}
+										else {
+											AddObject(OB);
+											mem[nn]--;
+											M--;
+										}
+										if (!M) {
+											return 0;
 										}
 									}
 								}
@@ -1313,98 +1035,7 @@ int Brigade::AddInRadius(int x, int y, int r, BrigMemb* pBM)
 				}
 			}
 		}
-		return M;
 	}
-
-	// Многопоточная обработка для > 5000 объектов
-	const int num_threads = min(std::min<int>(std::thread::hardware_concurrency(), r), 16);
-	std::vector<ThreadResult> results(num_threads, ThreadResult(M));
-	std::vector<std::thread> threads;
-
-	// Разделение радиусов между потоками
-	int radii_per_thread = r / num_threads + (r % num_threads > 0 ? 1 : 0);
-	for (int t = 0; t < num_threads; t++) {
-		int start_i = t * radii_per_thread;
-		int end_i = (start_i + radii_per_thread < r) ? start_i + radii_per_thread : r;
-		if (start_i >= r) break;
-
-		threads.push_back(std::thread([&, start_i, end_i, t]() {
-			ThreadResult& result = results[t];
-			for (int i = start_i; i < end_i; i++) {
-				char* xi = Rarr[i].xi;
-				char* yi = Rarr[i].yi;
-				int N = Rarr[i].N;
-				for (int j = 0; j < N; j++) {
-					int xx = xc + xi[j];
-					int yy = yc + yi[j];
-					if (xx >= 0 && yy >= 0 && xx <= maxx && yy <= maxy) {
-						int ofst = xx + 1 + ((yy + 1) << VAL_SHFCX);
-						int N1 = MCount[ofst];
-						if (N1) {
-							ofst <<= SHFCELL;
-							for (int k = 0; k < N1; k++) {
-								word MID = GetNMSL(ofst + k);
-								if (MID != 0xFFFF) {
-									OneObject* OB = Group[MID];
-									if (OB && OB->NNUM == NI && !(OB->DoNotCall || OB->Sdoxlo || OB->InArmy)) {
-										byte nn = GetBMIndex(OB);
-										if (mem[nn]) {
-											bool Allow = true;
-											Order1* OR1 = OB->LocalOrder;
-											if (OR1 && OR1->DoLink == NewMonsterSendToLink && OR1->NextOrder) {
-												OR1 = OR1->NextOrder;
-											}
-											if (OR1 && OR1->DoLink == NewMonsterSmartSendToLink && OR1->NextOrder) {
-												OR1 = OR1->NextOrder;
-											}
-											if (!OR1 || (OR1->DoLink != &BuildObjLink && OR1->DoLink != &GoToMineLink)) {
-												if (OB->BrigadeID != 0xFFFF) {
-													if (OB->BrigadeID != MyID) {
-														Brigade* SRC = CT->Brigs + OB->BrigadeID;
-														if (SRC->Memb && SRC->Memb[OB->BrIndex] == OB->Index) {
-															result.objects_to_remove.push_back(std::make_pair(OB->BrIndex, SRC));
-															result.M--;
-														}
-													}
-												}
-												else {
-													result.objects_to_add.push_back(OB);
-													result.M--;
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-			}));
-	}
-
-	// Ожидание завершения всех потоков
-	for (auto& thread : threads) {
-		thread.join();
-	}
-
-	// Объединение результатов с синхронизацией
-	for (auto& result : results) {
-		std::lock_guard<std::mutex> lock(brigade_mutex);
-		for (auto* OB : result.objects_to_add) {
-			AddObject(OB);
-			byte nn = GetBMIndex(OB);
-			mem[nn]--;
-			M--;
-		}
-		for (const auto& remove_pair : result.objects_to_remove) {
-			remove_pair.second->RemoveOne(remove_pair.first, this);
-			byte nn = GetBMIndex(Group[remove_pair.second->Memb[remove_pair.first]]);
-			mem[nn]--;
-			M--;
-		}
-	}
-
 	return M;
 }
 
@@ -1622,7 +1253,7 @@ void B_CaptureMineLink( Brigade* BR )
 							BMS->M_SN = MIN->Serial;
 							//BMS->NWalls=0;
 							//BMS->Walls=NULL;
-							BMS->Size = sizeof MineBase;
+							BMS->Size = sizeof(MineBase);
 							BMS->topx = MIN->RealX >> 10;
 							BMS->topy = MIN->RealY >> 10;
 							BMS->ID = 0x4519;
@@ -1914,7 +1545,7 @@ void B_ProtectOrder( Brigade* BR )
 char* PFM_Mess = "[Protect mines]";
 void Brigade::ProtectFarMines()
 {
-	Brigade_PFM* BPF = (Brigade_PFM*) CreateOrder( 0, sizeof Brigade_PFM );
+	Brigade_PFM* BPF = (Brigade_PFM*) CreateOrder( 0, sizeof(Brigade_PFM) );
 	BPF->Delay = 0;
 	BPF->Time = 0;
 	BPF->TowID = 0xFFFF;
@@ -1927,7 +1558,7 @@ void Brigade::ProtectFarMines()
 	BPF->BLink = &B_ProtectOrder;
 	BPF->Message = PFM_Mess;
 	BPF->Prio = 0;
-	BPF->Size = sizeof Brigade_PFM;
+	BPF->Size = sizeof(Brigade_PFM);
 	BOrder = BPF;
 }
 
@@ -2188,7 +1819,7 @@ bool Brigade::CreateNearOfficer( OneObject* OB, word Type, int ODIndex )
 			OB->InArmy = false;
 			Memb[1] = 0xFFFF;
 			MembSN[1] = 0xFFFF;
-			memset( &BM, 0, sizeof BM );
+			memset( &BM, 0, sizeof(BM) );
 		}
 		else OB->StandGround = true;
 		if ( !Dem )OB->InArmy = true;
@@ -2733,12 +2364,12 @@ char* HLST_Message = "[HumanLocalSendTo]";
 void Brigade::HumanLocalSendTo( int x, int y, short Dir, byte Prio, byte OrdType )
 {
 	if ( NMemb < 4 )return;
-	B_HSend* BS = (B_HSend*) CreateOrder( OrdType, sizeof B_HSend );
+	B_HSend* BS = (B_HSend*) CreateOrder( OrdType, sizeof(B_HSend) );
 	BS->x = x;
 	BS->y = y;
 	BS->Prio = Prio;
 	BS->Dir = Dir;
-	BS->Size = sizeof B_HSend;
+	BS->Size = sizeof(B_HSend);
 	BS->OrdType = OrdType;
 	BS->BLink = &HumanLocalSendToLink;
 	BS->Message = HLST_Message;
@@ -2930,10 +2561,10 @@ void B_LeaveAttackLink( Brigade* BR )
 char* KP_Message = "[KeepPosition]";
 void Brigade::KeepPositions( byte OrdType, byte Prio )
 {
-	BrigadeOrder* OR = CreateOrder( OrdType, sizeof BrigadeOrder );
+	BrigadeOrder* OR = CreateOrder( OrdType, sizeof(BrigadeOrder) );
 	OR->Message = KP_Message;
 	OR->Prio = Prio;
-	OR->Size = sizeof BrigadeOrder;
+	OR->Size = sizeof(BrigadeOrder);
 	OR->BLink = &B_KeepPositionsLink;
 	int N = NMemb;
 	char DIRC = Direction;
@@ -3414,13 +3045,13 @@ void Brigade::HumanGlobalSendTo( int x, int y, short Dir, byte Prio, byte OrdTyp
 	LastOrderTime = tmtmt;
 	word Top = GetTopology( &x, &y );
 	if ( Top == 0xFFFF )return;
-	B_SmartSend* OR1 = (B_SmartSend*) CreateOrder( OrdType, sizeof B_SmartSend );
+	B_SmartSend* OR1 = (B_SmartSend*) CreateOrder( OrdType, sizeof(B_SmartSend) );
 	OR1->BLink = &B_HumanGlobalSendToLink;
 	OR1->Prio = Prio;
 	OR1->x = x;
 	OR1->y = y;
 	OR1->Dir = Dir;
-	OR1->Size = sizeof B_SmartSend;
+	OR1->Size = sizeof(B_SmartSend);
 	OR1->NextX = 0xFFFF;
 	OR1->NextY = 0xFFFF;
 	OR1->NextTop = 0xFFFF;
@@ -3504,7 +3135,7 @@ void EraseBrigade( Brigade* BR )
 	City* CT = BR->CT;
 	int id = BR->ID;
 	BR->DeleteAll();
-	memset( BR, 0, sizeof Brigade );
+	memset( BR, 0, sizeof(Brigade) );
 	BR->ID = id;
 	BR->CT = CT;
 };
@@ -3827,15 +3458,15 @@ void B_BitvaLink( Brigade* BR )
 void Brigade::Bitva()
 {
 	if ( BOrder&&BOrder->BLink == &B_BitvaLink )return;
-	Brigade_Bitva* OR1 = (Brigade_Bitva*) CreateOrder( 0, sizeof Brigade_Bitva );
+	Brigade_Bitva* OR1 = (Brigade_Bitva*) CreateOrder( 0, sizeof(Brigade_Bitva) );
 	SetStandState( this, 1 );
 	OR1->StartTop = 0xFFFF;
 	OR1->BLink = &B_BitvaLink;
-	OR1->Size = sizeof Brigade_Bitva;
+	OR1->Size = sizeof(Brigade_Bitva);
 	OR1->Prio = 0;
 	OR1->Message = BBIT_Message;
 	OR1->NEn = 0;
-	memset( OR1->BitMask, 0, sizeof OR1->BitMask );
+	memset( OR1->BitMask, 0, sizeof(OR1)->BitMask );
 	int MinX = 10000000;
 	int MinY = 10000000;
 	int MaxX = 0;
@@ -3906,7 +3537,7 @@ void CorrectBrigadesSelection( byte NT )
 
 	int BrigsID[512];
 	byte BFlags[128];
-	memset( BFlags, 0, sizeof BFlags );
+	memset( BFlags, 0, sizeof(BFlags) );
 	int NBR = 0;
 	int N = NSL[NT];
 	word* mon = Selm[NT];
@@ -3950,7 +3581,7 @@ void ImCorrectBrigadesSelection( byte NT )
 {
 	int BrigsID[512];
 	byte BFlags[128];
-	memset( BFlags, 0, sizeof BFlags );
+	memset( BFlags, 0, sizeof(BFlags) );
 	int NBR = 0;
 	int N = ImNSL[NT];
 	word* mon = ImSelm[NT];
@@ -4115,8 +3746,8 @@ void ResearchCurrentIsland( byte Nat )
 
 	int NInIsl[MaxIsl];
 
-	memset( NInIsl, 0, sizeof NInIsl );
-	memset( IslPrs, 0, sizeof IslPrs );
+	memset( NInIsl, 0, sizeof(NInIsl) );
+	memset( IslPrs, 0, sizeof(IslPrs) );
 
 	int N = NtNUnits[Nat];
 	word* Uni = NatList[Nat];
@@ -5487,10 +5118,10 @@ void MakeShipBattle( Brigade* BR )
 {
 	word Top = DetermineWaterTopology( BR );
 	if ( Top == 0xFFFF )return;
-	Ship_Battle* OR = (Ship_Battle*) BR->CreateOrder( 0, sizeof Ship_Battle );
+	Ship_Battle* OR = (Ship_Battle*) BR->CreateOrder( 0, sizeof(Ship_Battle) );
 	OR->BLink = &MakeShipBattleLink;
 	OR->Message = NULL;
-	OR->Size = sizeof Ship_Battle;
+	OR->Size = sizeof(Ship_Battle);
 	OR->ComType = 0;
 	OR->Params[0] = -1;
 	OR->Params[1] = -1;
@@ -5568,7 +5199,7 @@ void CreateCostPlaces()
 							if ( NCost == MaxCost )
 							{
 								MaxCost += 100;
-								COSTPL = (CostPlace*) realloc( COSTPL, MaxCost * sizeof CostPlace );
+								COSTPL = (CostPlace*) realloc( COSTPL, MaxCost * sizeof(CostPlace) );
 							};
 							COSTPL[NCost].xc = ix + ix - DX;
 							COSTPL[NCost].yc = iy + iy - DY;
@@ -5576,7 +5207,7 @@ void CreateCostPlaces()
 							COSTPL[NCost].yw = iy + iy + DY;
 							COSTPL[NCost].R = R0;
 							int Top = SafeTopRef( ( COSTPL[NCost].xc >> 2 ), ( COSTPL[NCost].yc >> 2 ) );
-							if ( Top < 0xFFFE )
+							if ( Top < 0xFFFE && TopIslands )
 							{
 								COSTPL[NCost].Island = TopIslands[Top];
 							};
@@ -6158,9 +5789,9 @@ void MakeDiversionLink( Brigade* BR )
 };
 void MakeDiversion( Brigade* BR )
 {
-	B_DiversionOrder* DOR = (B_DiversionOrder*) BR->CreateOrder( 0, sizeof B_DiversionOrder );
+	B_DiversionOrder* DOR = (B_DiversionOrder*) BR->CreateOrder( 0, sizeof(B_DiversionOrder) );
 	BR->BOrder = DOR;
-	DOR->Size = sizeof B_DiversionOrder;
+	DOR->Size = sizeof(B_DiversionOrder);
 	DOR->NU = 0;
 	DOR->MaxU = 80;
 	DOR->Phase = 0;

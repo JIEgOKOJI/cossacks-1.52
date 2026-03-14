@@ -104,9 +104,16 @@ extern RoomInfo GlobalRIF;
 
 extern bool use_gsc_network_protocol;
 
-__declspec( dllimport ) int Process_GSC_ChatWindow( bool Active, RoomInfo* RIF );
-__declspec( dllimport ) void LeaveGSCRoom();
-__declspec( dllimport ) void StartGSCGame( char* Options, char* Map,
+// IChat library functions — linked as DLL on MSVC, statically stubbed otherwise
+#ifdef _MSC_VER
+#define ICHAT_API __declspec( dllimport )
+#else
+#define ICHAT_API
+#endif
+
+ICHAT_API int Process_GSC_ChatWindow( bool Active, RoomInfo* RIF );
+ICHAT_API void LeaveGSCRoom();
+ICHAT_API void StartGSCGame( char* Options, char* Map,
 	int NPlayers, int* Profiles, char** Nations, int* Teams, int* Colors );
 
 struct OnePlayerReport
@@ -120,5 +127,5 @@ struct OnePlayerReport
 	word NBornUnits;
 };
 
-__declspec( dllimport ) void ReportGSCGame( int time, int NPlayers, OnePlayerReport* OPR );
-__declspec( dllimport ) void ReportAliveState( int NPlayers, int* Profiles );
+ICHAT_API void ReportGSCGame( int time, int NPlayers, OnePlayerReport* OPR );
+ICHAT_API void ReportAliveState( int NPlayers, int* Profiles );

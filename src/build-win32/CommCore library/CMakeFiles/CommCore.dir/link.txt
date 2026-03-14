@@ -1,0 +1,2 @@
+/opt/homebrew/bin/i686-w64-mingw32-ar qc libCommCore.a CMakeFiles/CommCore.dir/CommCore.cpp.obj CMakeFiles/CommCore.dir/CommInet.cpp.obj CMakeFiles/CommCore.dir/CommInit.cpp.obj CMakeFiles/CommCore.dir/CommPeers.cpp.obj CMakeFiles/CommCore.dir/CommPing.cpp.obj CMakeFiles/CommCore.dir/CommQueue.cpp.obj CMakeFiles/CommCore.dir/CommRaw.cpp.obj CMakeFiles/CommCore.dir/CommRecv.cpp.obj CMakeFiles/CommCore.dir/CommServerList.cpp.obj
+/opt/homebrew/bin/i686-w64-mingw32-ranlib libCommCore.a

@@ -1,4 +1,5 @@
 #include <cstring> // Добавлено для std::memcpy
+#include <cstdint>
 #include "Cdirsnd.h"
 #include "ddini.h"
 #include "ResFile.h"
@@ -44,7 +45,13 @@ void ErrD( LPCSTR s )
 	sprintf( pal, "%d\\agew_1.pal", CurPalette );
 	LoadPalette( pal );
 	MessageBox( hwnd, s, "Loading failed...", MB_ICONWARNING | MB_OK );
+#ifndef _WIN32
+	fprintf(stderr, "[Loading failed...] %s\n", s);
+	// Non-fatal on macOS — continue past missing resources
+	return;
+#else
 	assert( false );
+#endif
 }
 
 void ShowString( int x, int y, LPCSTR lps, lpRLCFont lpf );
@@ -153,8 +160,13 @@ Picture* DialogsSystem::addPicture(
 		pic->Parent = Parent;
 		pic->x = BaseX + px;
 		pic->y = BaseY + py;
-		pic->x1 = pic->x + pPassive->PicPtr[0] - 1;
-		pic->y1 = pic->y + pPassive->PicPtr[1] - 1;
+		if (pPassive && pPassive->PicPtr) {
+			pic->x1 = pic->x + pPassive->PicPtr[0] - 1;
+			pic->y1 = pic->y + pPassive->PicPtr[1] - 1;
+		} else {
+			pic->x1 = pic->x;
+			pic->y1 = pic->y;
+		}
 		pic->ActivePicture = pActive;
 		pic->PassivePicture = pPassive;
 		pic->DisabledPicture = pDisabled;
@@ -177,6 +189,7 @@ bool CanvasDestroy( SimpleDialog* SD )
 	return true;
 };
 #define CV_INT(x) (*(int*)(CAN->DrawData+pos+x))
+#define CV_PTR(x) (*(intptr_t*)(CAN->DrawData+pos+x))
 #define CV_BYTE(x) CAN->DrawData[pos+x]
 __declspec( dllexport ) void CBar( int x, int y, int Lx, int Ly, byte c );
 void xLine( int x, int y, int x1, int y1, byte c );
@@ -240,23 +253,27 @@ bool CanvasDraw( SimpleDialog* SD )
 			pos += 17;
 			break;
 		case 4://text
+		{
+			int textOfs = 9 + (int)sizeof(intptr_t);
 			YY = y0 + CV_INT( 5 );
-			if (YY > ymin)ShowString( x0 + CV_INT( 1 ), YY, (char*) ( CAN->DrawData + pos + 13 ), *( (RLCFont**) ( CAN->DrawData + pos + 9 ) ) );
+			if (YY > ymin)ShowString( x0 + CV_INT( 1 ), YY, (char*) ( CAN->DrawData + pos + textOfs ), (RLCFont*) CV_PTR( 9 ) );
 			if (YY > ymax)goto XXZ;
-			pos += strlen( (char*) ( CAN->DrawData + pos + 13 ) ) + 14;
+			pos += strlen( (char*) ( CAN->DrawData + pos + textOfs ) ) + textOfs + 1;
 			break;
+		}
 		case 5://centered text
 		{
+			int textOfs = 9 + (int)sizeof(intptr_t);
 			YY = y0 + CV_INT( 5 );
-			char* str = (char*) ( CAN->DrawData + pos + 13 );
+			char* str = (char*) ( CAN->DrawData + pos + textOfs );
 			if (YY > ymin)
 			{
-				RLCFont* RF = *( (RLCFont**) ( CAN->DrawData + pos + 9 ) );
+				RLCFont* RF = (RLCFont*) CV_PTR( 9 );
 				int L = GetRLCStrWidth( str, RF ) >> 1;
 				ShowString( x0 + CV_INT( 1 ) - L, y0 + CV_INT( 5 ), str, RF );
 				if (y0 + CV_INT( 5 ) > ymax)goto XXZ;
 			};
-			pos += strlen( str ) + 14;
+			pos += strlen( str ) + textOfs + 1;
 		};
 		break;
 		default:
@@ -276,6 +293,7 @@ void Canvas::CheckSize( int sz )
 	};
 };
 #define CN_INT(x) (*(int*)(DrawData+L))=x;L+=4;
+#define CN_PTR(x) (*(intptr_t*)(DrawData+L))=(intptr_t)(x);L+=sizeof(intptr_t);
 #define CN_SHORT(x) (*(int*)(DrawData+L))=x;L+=2;
 #define CN_BYTE(x) DrawData[L]=x;L++;
 void Canvas::AddBar( int px, int py, int Lx, int Ly, byte c )
@@ -323,8 +341,7 @@ void Canvas::AddText( int px, int py, char* Text, RLCFont* Font )
 	CN_BYTE( 4 );
 	CN_INT( px );
 	CN_INT( py );
-	int V = int( Font );
-	CN_INT( V );
+	CN_PTR( Font );
 	strcpy( (char*) ( DrawData + L ), Text );
 	L += 1 + strlen( Text );
 };
@@ -334,8 +351,7 @@ void Canvas::AddCText( int px, int py, char* Text, RLCFont* Font )
 	CN_BYTE( 5 );
 	CN_INT( px );
 	CN_INT( py );
-	int V = int( Font );
-	CN_INT( V );
+	CN_PTR( Font );
 	strcpy( (char*) ( DrawData + L ), Text );
 	L += 1 + strlen( Text );
 };
@@ -491,7 +507,7 @@ RLCPicture* DialogsSystem::addRLCPicture(
 //------------class TextButton
 int GetRLen( char* s, RLCFont* font )
 {
-	if (!int( s ))return 0;
+	if (!(intptr_t)( s ))return 0;
 	int x = 0;
 	int L;
 	for (int i = 0; s[i] != 0;)
@@ -2130,7 +2146,7 @@ bool ListBox_OnDraw( SimpleDialog* SD )
 			int y = LB->y;
 			for (int i = 0; i < LB->ny; i++)
 			{
-				LB->ItemPic->Draw( LB->x, y );
+				if (LB->ItemPic) LB->ItemPic->Draw( LB->x, y );
 				int Iind = LB->FLItem + i;
 				ListBoxItem* str = LB->GetItem( Iind );
 				if (str)
@@ -2156,7 +2172,7 @@ bool ListBox_OnDraw( SimpleDialog* SD )
 			int fdx = LB->FontDx;
 			for (int i = 0; i < LB->ny; i++)
 			{
-				LB->ItemPic->Draw( LB->x, y );
+				if (LB->ItemPic) LB->ItemPic->Draw( LB->x, y );
 				int Iind = LB->FLItem + i;
 				ListBoxItem* str = LB->GetItem( Iind );
 				if (str)
@@ -4487,14 +4503,14 @@ void ComboBox::AddLine( char* Text )
 {
 	if (Lines)
 	{
-		Lines = (char**) realloc( Lines, ( NLines + 1 ) << 2 );
+		Lines = (char**) realloc( Lines, ( NLines + 1 ) * sizeof(char*) );
 		Lines[NLines] = new char[strlen( Text ) + 1];
 		strcpy( Lines[NLines], Text );
 		NLines++;
 	}
 	else
 	{
-		Lines = (char**) malloc( 4 );
+		Lines = (char**) malloc( sizeof(char*) );
 		Lines[0] = new char[strlen( Text ) + 1];
 		strcpy( Lines[0], Text );
 		NLines++;
@@ -4679,14 +4695,14 @@ void WinComboBox::AddLine( char* Text )
 {
 	if (Lines)
 	{
-		Lines = (char**) realloc( Lines, ( NLines + 1 ) << 2 );
+		Lines = (char**) realloc( Lines, ( NLines + 1 ) * sizeof(char*) );
 		Lines[NLines] = new char[strlen( Text ) + 1];
 		strcpy( Lines[NLines], Text );
 		NLines++;
 	}
 	else
 	{
-		Lines = (char**) malloc( 4 );
+		Lines = (char**) malloc( sizeof(char*) );
 		Lines[0] = new char[strlen( Text ) + 1];
 		strcpy( Lines[0], Text );
 		NLines++;
@@ -4760,7 +4776,7 @@ GP_PageControl* DialogsSystem::addPageControl( SimpleDialog* Parent, int x, int 
 
 void GP_PageControl::AddPage( int x0, int y0, int px1, int py1, int Index )
 {
-	Pages = (OnePage*) realloc( Pages, ( NPages + 1 ) * sizeof OnePage );
+	Pages = (OnePage*) realloc( Pages, ( NPages + 1 ) * sizeof(OnePage) );
 	Pages[NPages].Index = Index;
 	Pages[NPages].x = x0;
 	Pages[NPages].y = y0;
@@ -4895,13 +4911,13 @@ SimpleDialog::SimpleDialog()
 	OnKeyDown = nullptr;
 	OnLeave = nullptr;
 	OnMouseOver = nullptr;
-	MouseOverActive = nullptr;
+	MouseOverActive = false;
 	Destroy = nullptr;
 	Refresh = nullptr;
 	Parent = nullptr;
 	Child = nullptr;
 	OnDrawActive = nullptr;
-	OnNewClick = false;
+	OnNewClick = nullptr;
 	MouseOver = false;
 	MouseOverActive = false;
 	Active = false;
@@ -4946,6 +4962,9 @@ void SimpleDialog::AssignSound( char* Name, int Usage )
 //----copy rectangle to screen----//
 void CopyToScreen(int zx, int zy, int zLx, int zLy) {
 	if (!bActive) return;
+	// On macOS/SDL2, RealScreenPtr == ScreenPtr (same offscreen buffer).
+	// No separate DirectDraw surface to copy to — skip to avoid in-place corruption.
+	if (RealScreenPtr == ScreenPtr) return;
 
 	int x = zx;
 	int y = zy;
@@ -4973,7 +4992,7 @@ void CopyToScreen(int zx, int zy, int zLx, int zLy) {
 
 	// Copy each line
 	for (int i = 0; i < Ly; ++i) {
-		std::memcpy(dst, src, Lx);
+		std::memmove(dst, src, Lx);
 		src += SCRSizeX;
 		dst += RSCRSizeX;
 	}
@@ -5303,20 +5322,29 @@ int mrand();
 
 extern int menu_x_off;
 
+int _pd_callcount = 0;
+int _pd_trace_enable = 0; // set in processMainMenu to _pd_callcount
 void DialogsSystem::ProcessDialogs()
 {
+	_pd_callcount++;
+	bool _pd_trace = (_pd_trace_enable > 0 && _pd_callcount >= _pd_trace_enable && _pd_callcount < _pd_trace_enable + 5);
+	if (_pd_trace) fprintf(stderr, "[PD:%d] Enter bActive=%d MUSTDRAW=%d\n", _pd_callcount, bActive, MUSTDRAW);
+
 	if (!bActive)
 	{
+		if (_pd_trace) fprintf(stderr, "[PD:%d] Exit: !bActive\n", _pd_callcount);
 		return;
 	}
 
 	if (MUSTDRAW)
 	{
+		if (_pd_trace) fprintf(stderr, "[PD:%d] MUSTDRAW -> RedrawGameBackground\n", _pd_callcount);
 		MUSTDRAW = false;
 
 		RedrawGameBackground();
 
 		MarkToDraw();
+		if (_pd_trace) fprintf(stderr, "[PD:%d] MUSTDRAW done\n", _pd_callcount);
 	}
 
 	bool UseMouse = true;
@@ -5349,11 +5377,13 @@ void DialogsSystem::ProcessDialogs()
 
 	SimpleDialog* SD_Hinted = nullptr;
 
+	if (_pd_trace) fprintf(stderr, "[PD:%d] Before main loop (MAXDLG=%d)\n", _pd_callcount, MAXDLG);
 	for (int i = 0; i < MAXDLG; i++)
 	{
 		SimpleDialog* SD = DSS[i];
 		if (SD&&SD->Enabled)
 		{
+			if (_pd_trace) fprintf(stderr, "[PD:%d] SD[%d] Enabled, OnDraw=%p Refresh=%p\n", _pd_callcount, i, (void*)SD->OnDraw, (void*)SD->Refresh);
 			int dd = 0;
 			if (SD->ParentSB && SD->ParentSB->Visible)
 			{
@@ -5406,7 +5436,7 @@ void DialogsSystem::ProcessDialogs()
 						Lpressed = false;
 						try
 						{
-							if (int( Hint ) == 0xdddddddd)
+							if ((int)(intptr_t)( Hint ) == 0xdddddddd)
 								return;
 						}
 						catch (...)
@@ -5451,7 +5481,9 @@ void DialogsSystem::ProcessDialogs()
 		}
 		if (SD && SD->OnDraw)
 		{
+			if (_pd_trace) fprintf(stderr, "[PD:%d] DrawSD[%d]\n", _pd_callcount, i);
 			DrawSD( SD );
+			if (_pd_trace) fprintf(stderr, "[PD:%d] DrawSD[%d] done\n", _pd_callcount, i);
 		}
 
 		if (SD && SD->NeedRedrawAll)
@@ -5464,6 +5496,7 @@ void DialogsSystem::ProcessDialogs()
 		}
 	}
 
+	if (_pd_trace) fprintf(stderr, "[PD:%d] Main loop done, entering hint loop\n", _pd_callcount);
 	Hint = nullptr;
 	for (int i = 0; i < MAXDLG; i++)
 	{
@@ -5672,6 +5705,7 @@ void DialogsSystem::ProcessDialogs()
 	PopWindow( &TW );
 
 	MFix();
+	if (_pd_trace) fprintf(stderr, "[PD:%d] Exit\n", _pd_callcount);
 }
 
 void RedrawOffScreenMouse();

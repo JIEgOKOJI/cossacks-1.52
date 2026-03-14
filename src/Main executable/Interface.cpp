@@ -39,7 +39,7 @@
 #include "Recorder.h"
 #include "GSINC.H"
 #include "TopoGraf.h"
-#include "CEngine\goaceng.h"
+#include "CEngine/goaceng.h"
 #include "StrategyResearch.h"
 #include "Safety.h"
 #include "EinfoClass.h"
@@ -583,7 +583,7 @@ void SFLB_LoadMEDButtons();
 void SFLB_InitDialogs()
 {
 	SFLB_ReadFirstPlayerName(PlName);
-	unsigned long dws = 20;
+	DWORD dws = 20;
 	if (!PlName[0])
 	{
 		GetComputerName(PlName, &dws);
@@ -816,7 +816,7 @@ bool NatChoose(SimpleDialog* SD)
 	BpxTextButton* TB = (BpxTextButton*)SD;
 	char* qq = TB->Message;
 
-	if (qq[0] == 'О')
+	if (memcmp(qq, "О", sizeof("О") - 1) == 0)
 	{
 		strcpy(TB->Message, "ЛЮДИ");
 	}
@@ -1062,6 +1062,12 @@ RetryConn:
 	{
 		DoNewInet = 1;
 	}
+#ifndef _MSC_VER
+	else if (selected_network_protocol == 1)//LAN — use CommCore on macOS (no DirectPlay)
+	{
+		DoNewInet = 1;
+	}
+#endif
 
 	if (!DoNewInet)
 	{
@@ -1574,6 +1580,8 @@ bool SelectSingleMission();
 
 int MM_ProcessSinglePlayer()
 {
+	extern void dbglog(const char* fmt, ...);
+	dbglog("MM_ProcessSinglePlayer: enter\n");
 	use_gsc_network_protocol = false;
 	SFLB_LoadPlayerData();
 	LoadFog(2);
@@ -1636,18 +1644,21 @@ int MM_ProcessSinglePlayer()
 
 	if (ItemChoose == 3)
 	{
+		dbglog("MM_ProcessSinglePlayer: SingleOptions (Random)\n");
 		SlowUnLoadPalette("2\\agew_1.pal");
 		SingleOptions();
 	}
 
 	if (ItemChoose == 1)
 	{
+		dbglog("MM_ProcessSinglePlayer: ProcessCampagins (Campaign)\n");
 		SlowUnLoadPalette("2\\agew_1.pal");
 		ProcessCampagins(-1);
 	}
 
 	if (ItemChoose == 2)
 	{
+		dbglog("MM_ProcessSinglePlayer: SelectSingleMission (Mission)\n");
 		SlowUnLoadPalette("2\\agew_1.pal");
 		SelectSingleMission();
 	}
@@ -2288,15 +2299,15 @@ void AddPrimitiveChat(char* Nick, char* str,
 	if (NCHATS >= MAXCHATS)
 	{
 		MAXCHATS += 32;
-		ChatMess = (char**)realloc(ChatMess, 4 * MAXCHATS);
-		ChatSender = (char**)realloc(ChatSender, 4 * MAXCHATS);
+		ChatMess = (char**)realloc(ChatMess, sizeof(char*) * MAXCHATS);
+		ChatSender = (char**)realloc(ChatSender, sizeof(char*) * MAXCHATS);
 	};
 	if (NCHATS > 512)
 	{
 		free(ChatMess[0]);
 		free(ChatSender[0]);
-		memcpy(ChatMess, ChatMess + 1, NCHATS * 4);
-		memcpy(ChatSender, ChatSender + 1, NCHATS * 4);
+		memcpy(ChatMess, ChatMess + 1, NCHATS * sizeof(char*));
+		memcpy(ChatSender, ChatSender + 1, NCHATS * sizeof(char*));
 		NCHATS--;
 	};
 	ChatMess[NCHATS] = new char[strlen(str) + 1];
@@ -2568,7 +2579,10 @@ extern bool RejectThisPlayer;
 
 bool INSIDE1 = 0;
 
-__declspec(dllimport) void SendPrivateMessage(char* Nick, char* MESSAGE);
+#ifdef _MSC_VER
+__declspec(dllimport)
+#endif
+void SendPrivateMessage(char* Nick, char* MESSAGE);
 
 bool CheckForPersonalChat(char* STR)
 {
@@ -2703,7 +2717,10 @@ void DeepDeletePeer(DWORD ID);
 
 int GetMyProfile();
 
-__declspec(dllimport) void ChatProcess();
+#ifdef _MSC_VER
+__declspec(dllimport)
+#endif
+void ChatProcess();
 
 //Shows lobby interface for multiplayer deathmatch and single player random map
 bool MPL_WaitingGame(bool Host, bool SINGLE)
@@ -2735,7 +2752,7 @@ bool MPL_WaitingGame(bool Host, bool SINGLE)
 	char** ChatMess = nullptr;
 	char** ChatSender = nullptr;
 	PlayerInfo MYPINF;
-	memset(&MYPINF, 0, sizeof MYPINF);
+	memset(&MYPINF, 0, sizeof(MYPINF));
 
 	byte* Preview = new byte[(292 * 190) + 4];
 	char Currand[200];
@@ -2815,7 +2832,7 @@ bool MPL_WaitingGame(bool Host, bool SINGLE)
 	ComboBox* ADD_OPT;
 	ComboBox* ADD_OPT_VAL;
 	bool COMPPREV[8];
-	memset(COMPPREV, 0, sizeof COMPPREV);
+	memset(COMPPREV, 0, sizeof(COMPPREV));
 
 	TextButton* AliasID[8];
 	InputBox* MNAME[8];
@@ -2829,9 +2846,9 @@ bool MPL_WaitingGame(bool Host, bool SINGLE)
 	byte COMNATION[8];
 	byte COMALLY[8];
 	int NComp = 0;
-	memset(COMCOLOR, 0, sizeof COMCOLOR);
-	memset(COMNATION, 0, sizeof COMNATION);
-	memset(COMALLY, 0, sizeof COMALLY);
+	memset(COMCOLOR, 0, sizeof(COMCOLOR));
+	memset(COMNATION, 0, sizeof(COMNATION));
+	memset(COMALLY, 0, sizeof(COMALLY));
 	int HostID = -1;
 	char* ADDCOM = "Add a Computer";
 
@@ -3222,7 +3239,7 @@ ffe2:
 
 	ItemChoose = -1;
 
-	memset(PINFO, 0, sizeof PINFO);
+	memset(PINFO, 0, sizeof(PINFO));
 
 
 
@@ -3234,7 +3251,7 @@ ffe2:
 	if (SINGLE)
 	{
 		NPlayers = 1;
-		memset(&PINFO[0], 0, sizeof PINFO[0]);
+		memset(&PINFO[0], 0, sizeof(PINFO)[0]);
 		PINFO[0].PlayerID = 0x12345678;
 		MyDPID = 0x12345678;
 		PINFO[0].ColorID = 0;
@@ -3300,7 +3317,7 @@ ffe2:
 		}
 		else
 		{
-			memset(PINFO + i, 0, sizeof PlayerInfo);
+			memset(PINFO + i, 0, sizeof(PlayerInfo));
 		}
 	}
 
@@ -3566,6 +3583,7 @@ ffe2:
 		int CLY = 19;
 		int NCL = 4;
 		bool AddChat = 0;
+		bool settings_were_changed = false;
 
 		ProcessMessages();
 
@@ -3830,7 +3848,7 @@ ffe2:
 
 		if (Host)
 		{
-			int HostID = -1;
+			HostID = -1;
 			byte CMask = 0;
 			for (int i = 0; i < NPlayers; i++)
 			{
@@ -4130,7 +4148,7 @@ ffe2:
 				}
 				for (int q = NPlayers; q < 8; q++)
 				{
-					if (PINFO[HostID].COMPINFO[q])
+					if (HostID >= 0 && HostID < 8 && PINFO[HostID].COMPINFO[q])
 					{
 						word W = PINFO[HostID].COMPINFO[q];
 						int Nat = W >> 11;
@@ -4224,7 +4242,7 @@ ffe2:
 						PINFO[i].Page = GPP->CurPage;
 					}
 
-					bool ch = memcmp(&MYPINF, PINFO + i, sizeof MYPINF) != 0;
+					bool ch = memcmp(&MYPINF, PINFO + i, sizeof(MYPINF)) != 0;
 
 					if (ch || GetTickCount() - PREVSD > 5000)
 					{
@@ -4232,7 +4250,7 @@ ffe2:
 						{
 							SETPLAYERDATA(MyDPID, (void*)&PINFO[i].NationID, sizeof(PlayerInfo) - 36, ch);
 						}
-						memcpy(&MYPINF, PINFO + i, sizeof MYPINF);
+						memcpy(&MYPINF, PINFO + i, sizeof(MYPINF));
 						PREVSD = GetTickCount();
 					}
 
@@ -4530,7 +4548,7 @@ ffe2:
 		}
 
 		//If true, ready flag will be zeroed
-		bool settings_were_changed = false;
+		settings_were_changed = false;
 
 		//Get settings from host
 		if (!Host)
@@ -4963,7 +4981,7 @@ ffe2:
 			int ntm = 0;
 			byte ams = 0;
 			int cur_tm[8];
-			memset(cur_tm, 0xFF, sizeof cur_tm);
+			memset(cur_tm, 0xFF, sizeof(cur_tm));
 			for (int i = 0; i < 8; i++)
 			{
 				if (AliasID[i]->Visible)
@@ -5331,7 +5349,7 @@ bool MPL_WaitingBattleGame(bool Host, int BattleID)
 	LocalGP INCHAT("Interface\\IButtons");
 	PSUMM.ClearPingInfo();
 	PlayerInfo MYPINF;
-	memset(&MYPINF, 0, sizeof MYPINF);
+	memset(&MYPINF, 0, sizeof(MYPINF));
 
 	SQPicture Back("Interface\\Background_Historical_Create.bmp");
 	SQPicture Prev(WARS.Battles[BattleID].MiniMap);
@@ -5468,7 +5486,7 @@ bool MPL_WaitingBattleGame(bool Host, int BattleID)
 
 	ItemChoose = -1;
 
-	memset(PINFO, 0, sizeof PINFO);
+	memset(PINFO, 0, sizeof(PINFO));
 
 	GameInProgress = 0;
 
@@ -5516,7 +5534,7 @@ bool MPL_WaitingBattleGame(bool Host, int BattleID)
 		}
 		else
 		{
-			memset(PINFO + i, 0, sizeof PlayerInfo);
+			memset(PINFO + i, 0, sizeof(PlayerInfo));
 		}
 	}
 
@@ -5735,11 +5753,11 @@ bool MPL_WaitingBattleGame(bool Host, int BattleID)
 				{
 					PINFO[i].NationID = MNATION[i]->CurLine;
 					PINFO[i].ColorID = ColorBack[i]->Nation;
-					bool change = (memcmp(&MYPINF, PINFO + i, sizeof MYPINF) != 0);
+					bool change = (memcmp(&MYPINF, PINFO + i, sizeof(MYPINF)) != 0);
 					if (change || GetTickCount() - PREVSD > 3000)
 					{
 						SETPLAYERDATA(MyDPID, (void*)&PINFO[i].NationID, sizeof(PlayerInfo) - 36, change);
-						memcpy(&MYPINF, PINFO + i, sizeof MYPINF);
+						memcpy(&MYPINF, PINFO + i, sizeof(MYPINF));
 						PREVSD = GetTickCount();
 					}
 					if (change && Host)
@@ -6028,7 +6046,10 @@ bool SingleOptions()
 int ProcessWars();
 void processBattleMultiplayer();
 
-__declspec(dllimport) void GoHomeAnyway();
+#ifdef _MSC_VER
+__declspec(dllimport)
+#endif
+void GoHomeAnyway();
 
 int MM_ProcessMultiPlayer()
 {
@@ -6660,9 +6681,13 @@ int processMainMenu()
 	MMenu.addTextButton(nullptr, 1024 - GetRLCStrWidth(BuildVersion, &SmallYellowFont1), 748, BuildVersion, &SmallYellowFont1, &SmallYellowFont1, &SmallYellowFont1, 0);
 
 	int nn = 0;
+	extern int _pd_trace_enable;
+	extern int _pd_callcount;
 
 	while (true)
 	{
+		fprintf(stderr, "[MENU] Top of while(true), nn=%d, ItemChoose=%d\n", nn, ItemChoose);
+		fflush(stderr);
 		if (CurrentCampagin != -1 && CurrentMission != -1)
 		{
 			ProcessCampagins(CurrentCampagin);
@@ -6686,6 +6711,7 @@ int processMainMenu()
 
 		LastKey = 0;
 		KeyPressed = 0;
+		Lpressed = false;
 		RejectThisPlayer = 0;
 
 		do
@@ -6726,17 +6752,23 @@ int processMainMenu()
 
 			InMainMenuLoop = 1;
 
+			if(nn==0) { _pd_trace_enable = _pd_callcount + 1; fprintf(stderr, "[MENU-LOOP] Before ProcessMessages (nn=%d)\n", nn); fflush(stderr); }
 			ProcessMessages();
 
+			if(nn==0) { fprintf(stderr, "[MENU-LOOP] Before ProcessDialogs\n"); fflush(stderr); }
 			MMenu.ProcessDialogs();
 
+			if(nn==0) { fprintf(stderr, "[MENU-LOOP] After ProcessDialogs\n"); fflush(stderr); }
 			MMenu.RefreshView();
+			if(nn==0) { fprintf(stderr, "[MENU-LOOP] After RefreshView\n"); fflush(stderr); }
 
 			InMainMenuLoop = 0;
 			if (!nn)
 			{
+				fprintf(stderr, "[MENU] SlowLoadPalette + LoadFog (nn=0)\n"); fflush(stderr);
 				SlowLoadPalette("2\\agew_1.pal");
 				LoadFog(2);
+				fprintf(stderr, "[MENU] SlowLoadPalette + LoadFog done\n"); fflush(stderr);
 			}
 			nn++;
 
@@ -6756,17 +6788,24 @@ int processMainMenu()
 			}
 		} while (ItemChoose == -1);
 
+		fprintf(stderr, "[MENU] ItemChoose=%d\n", ItemChoose);
+
 		if (ItemChoose == mcmSingle)
 		{
 			SlowUnLoadPalette("2\\agew_1.pal");
-			if (EnterName())
+			bool enr = EnterName();
+			fprintf(stderr, "[MENU] EnterName returned %d\n", enr);
+			if (enr)
 			{
 				int res = MM_ProcessSinglePlayer();
+				fprintf(stderr, "[MENU] MM_ProcessSinglePlayer returned %d\n", res);
 				if (res == 5)
 				{
+					fprintf(stderr, "[MENU] Back from Single Player, continue\n");
 					continue;
 				}
 			}
+			fprintf(stderr, "[MENU] mcmSingle: falling through (will break)\n");
 		}
 
 		if (ItemChoose == mcmMulti)
@@ -6789,8 +6828,10 @@ int processMainMenu()
 
 		if (ItemChoose == mcmEdit)
 		{
+			fprintf(stderr, "[MENU] Entering Options submenu\n");
 			SlowUnLoadPalette("2\\agew_1.pal");
 			ProcessMenuOptions();
+			fprintf(stderr, "[MENU] Returned from Options, continue to main loop\n");
 			continue;
 		}
 
@@ -6818,7 +6859,7 @@ int processMainMenu()
 			{
 				strcpy(PlName, "Player");
 			}
-			memset(PINFO, 0, sizeof PINFO);
+			memset(PINFO, 0, sizeof(PINFO));
 			strcpy(PINFO[0].name, PlName);
 			EditMapMode = 0;
 			ItemChoose = mcmSingle;
@@ -6946,7 +6987,7 @@ void SFLB_CreateGamesList(ListBox* LB)
 	WIN32_FIND_DATA FD;
 	ClearNames();
 	// Определяем режим /reloaded
-	LPSTR cmdRaw = GetCommandLineA();
+	LPCSTR cmdRaw = GetCommandLineA();
 	std::string cmdLine = cmdRaw ? cmdRaw : "";
 	std::string cmdLower = cmdLine;
 	for (char& c : cmdLower) c = static_cast<char>(tolower(c));
@@ -8641,30 +8682,68 @@ void GlobalHandleMouse(bool process_scrolling);
 //Load palettes
 void DrawAllScreen()
 {
+	extern int _wallShowPostCreate;
+	HANDLE _hHeap = GetProcessHeap();
+
 	//Draw a lot of stuff on screen
 	GFieldShow();
+
+	if (_wallShowPostCreate > 0) {
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) { fprintf(wlog, "DAS: GFieldShow done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
+	}
 
 	//Copy minimap into screen buffer
 	GMiniShow();
 
+	if (_wallShowPostCreate > 0) {
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) { fprintf(wlog, "DAS: GMiniShow done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
+	}
+
 	//Draw units?
 	ShowProp();
 
+	if (_wallShowPostCreate > 0) {
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) { fprintf(wlog, "DAS: ShowProp done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
+	}
+
 	//Draw upgrades / unit command buttons?
 	ShowAbility();
+
+	if (_wallShowPostCreate > 0) {
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) { fprintf(wlog, "DAS: ShowAbility done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
+	}
 
 	memset(ZoneOpt, 0, 128);
 
 	//Draw UI elements?
 	DrawZones();
 
+	if (_wallShowPostCreate > 0) {
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) { fprintf(wlog, "DAS: DrawZones done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
+	}
+
 	CopyToScreen(0, 0, RealLx, RSCRSizeY);
 
 	//Check SpecCmd, read from MouseStack
 	GlobalHandleMouse(true);
 
+	if (_wallShowPostCreate > 0) {
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) { fprintf(wlog, "DAS: GlobalHandleMouse done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
+	}
+
 	//Mouse bug fix?
 	MFix();
+
+	if (_wallShowPostCreate > 0) {
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) { fprintf(wlog, "DAS: END, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
+	}
 
 	if (NeedLoadGamePalette)
 	{
@@ -8685,7 +8764,15 @@ void DrawAllScreen()
 
 void FastScreenProcess()
 {
+	extern int _wallShowPostCreate;
+	HANDLE _hHeap = GetProcessHeap();
+
 	GFieldShow();
+
+	if (_wallShowPostCreate > 0) {
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) { fprintf(wlog, "FSP: GFieldShow done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
+	}
 
 	ProcessMessages();
 
@@ -8693,19 +8780,55 @@ void FastScreenProcess()
 	{
 		GMiniShow();
 
+		if (_wallShowPostCreate > 0) {
+			FILE* wlog = fopen("dmcr_wall.log", "a");
+			if (wlog) { fprintf(wlog, "FSP: GMiniShow done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
+		}
+
 		ShowProp();
+
+		if (_wallShowPostCreate > 0) {
+			FILE* wlog = fopen("dmcr_wall.log", "a");
+			if (wlog) { fprintf(wlog, "FSP: ShowProp done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
+		}
 
 		ShowAbility();
 
+		if (_wallShowPostCreate > 0) {
+			FILE* wlog = fopen("dmcr_wall.log", "a");
+			if (wlog) { fprintf(wlog, "FSP: ShowAbility done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
+		}
+
 		DrawZones();
 
+		if (_wallShowPostCreate > 0) {
+			FILE* wlog = fopen("dmcr_wall.log", "a");
+			if (wlog) { fprintf(wlog, "FSP: DrawZones done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
+		}
+
 		GSYS.ProcessDialogs();
+
+		if (_wallShowPostCreate > 0) {
+			FILE* wlog = fopen("dmcr_wall.log", "a");
+			if (wlog) { fprintf(wlog, "FSP: ProcessDialogs done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
+		}
 
 		GVPort->NeedToDraw = true;
 	}
 
 	GlobalHandleMouse(true);
+
+	if (_wallShowPostCreate > 0) {
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) { fprintf(wlog, "FSP: GlobalHandleMouse done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
+	}
+
 	MFix();
+
+	if (_wallShowPostCreate > 0) {
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) { fprintf(wlog, "FSP: END, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
+	}
 
 	if (SHOWSLIDE)
 	{
@@ -8858,27 +8981,33 @@ extern int screen_height;
 void PlayGame()
 {
 	InGame = true;
+	fprintf(stderr, "[PG] PlayGame entered\n");
 
 	if (window_mode)
 	{//Explicit call in case if game starts at 1024x768
 		ResizeAndCenterWindow();
 	}
 
+	fprintf(stderr, "[PG] Calling GSSetup800\n");
 	GSSetup800();
 
+	fprintf(stderr, "[PG] Calling LoadFog\n");
 	LoadFog(0);
 
 	//Zero NucList, NucSN, NNuc
+	fprintf(stderr, "[PG] Calling InitGame\n");
 	InitGame();
 
 	if (exRealLx != RealLx)
 	{//Use last used game resoultion (loaded from settings)
+		fprintf(stderr, "[PG] Setting display mode %dx%d\n", exRealLx, exRealLy);
 		SetGameDisplayModeAnyway(exRealLx, exRealLy);
 	}
 
 	//Does what the name says
+	fprintf(stderr, "[PG] Calling DrawAllScreen\n");
 	DrawAllScreen();
-
+	fprintf(stderr, "[PG] DrawAllScreen done\n");
 	GameNeedToDraw = false;
 	GameExit = false;
 	MakeMenu = false;
@@ -8902,8 +9031,15 @@ StartPlay://IMPORTANT: Main game loop
 
 		if (bActive)
 		{
+			extern int _wallShowPostCreate;
+			HANDLE _hHeap = GetProcessHeap();
 			GameMode = 0;
 			PreDrawGameProcess();
+
+			if (_wallShowPostCreate > 0) {
+				FILE* wlog = fopen("dmcr_wall.log", "a");
+				if (wlog) { fprintf(wlog, "LOOP: PreDraw done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
+			}
 
 			ProcessMessages();
 
@@ -8917,11 +9053,21 @@ StartPlay://IMPORTANT: Main game loop
 				FastScreenProcess();
 			}
 
+			if (_wallShowPostCreate > 0) {
+				FILE* wlog = fopen("dmcr_wall.log", "a");
+				if (wlog) { fprintf(wlog, "LOOP: Screen done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
+			}
+
 			ProcessMessages();
 
 			time1 = GetRealTime();
 
 			PostDrawGameProcess();
+
+			if (_wallShowPostCreate > 0) {
+				FILE* wlog = fopen("dmcr_wall.log", "a");
+				if (wlog) { fprintf(wlog, "LOOP: PostDraw done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
+			}
 
 			if (MakeMenu)
 			{
@@ -9544,22 +9690,26 @@ void AllGame()
 	int menuChoice;
 	do
 	{
+		fprintf(stderr, "[ALLGAME] Calling processMainMenu\n");
 		menuChoice = processMainMenu();
+		fprintf(stderr, "[ALLGAME] processMainMenu returned %d\n", menuChoice);
 		if (menuChoice == mcmSingle)
 		{
 			if (EditMapMode)
 			{
-				//Map editor loop
+				fprintf(stderr, "[ALLGAME] Entering EditGame\n");
 				EditGame();
 			}
 			else
 			{
-				//Game loop
+				fprintf(stderr, "[ALLGAME] Entering PlayGame\n");
 				PlayGame();
 			}
-			//Zero variables and pointers
+			fprintf(stderr, "[ALLGAME] Calling UnLoading\n");
 			UnLoading();
+			fprintf(stderr, "[ALLGAME] UnLoading done\n");
 		}
+		fprintf(stderr, "[ALLGAME] Loop check: menuChoice=%d, mcmExit=%d\n", menuChoice, mcmExit);
 	} while (mcmExit != menuChoice);
 }
 
@@ -10385,7 +10535,7 @@ int winX;
 int winY;
 int winX1;
 int winY1;
-byte* HiMap;
+static byte* HiMap;
 byte* HiMap1;
 
 void SetupHiMap()
@@ -11717,10 +11867,10 @@ void PrepareGameMedia(byte myid, bool SaveNR)
 	RunData[1] = dwVersion;//version of the game
 	RunData[2] = MyNation;
 	RunDataSize = 3;
-	memcpy(RunData + RunDataSize, PINFO, sizeof PINFO);
-	RunDataSize += sizeof PINFO;
-	memcpy(RunData + RunDataSize, COMPSTART, sizeof COMPSTART);
-	RunDataSize += sizeof COMPSTART;
+	memcpy(RunData + RunDataSize, PINFO, sizeof(PINFO));
+	RunDataSize += sizeof(PINFO);
+	memcpy(RunData + RunDataSize, COMPSTART, sizeof(COMPSTART));
+	RunDataSize += sizeof(COMPSTART);
 	memcpy(RunData + RunDataSize, &RM_LandType, 4);
 	RunDataSize += 4;
 	memcpy(RunData + RunDataSize, &RM_Resstart, 4);
@@ -12138,6 +12288,8 @@ int CurrentMission = -1;
 
 bool ProcessSingleMission(int n, int Diff)
 {
+	extern void dbglog(const char* fmt, ...);
+	dbglog("ProcessSingleMission: enter, n=%d, Diff=%d, NMiss=%d\n", n, Diff, MISSLIST.NMiss);
 	MaxPingTime = 0;
 	SingleMission* SMS = MISSLIST.MISS + n;
 
@@ -12152,9 +12304,9 @@ bool ProcessSingleMission(int n, int Diff)
 			RBlockRead(f, buf, sz);
 			RClose(f);
 			f = RRewrite("tmp.txt");
-			RBlockWrite(f, crlf, sizeof crlf);
+			RBlockWrite(f, crlf, sizeof(crlf));
 			RBlockWrite(f, buf, sz);
-			RBlockWrite(f, crlf, sizeof crlf);
+			RBlockWrite(f, crlf, sizeof(crlf));
 			RClose(f);
 			free(buf);
 		}
@@ -12310,6 +12462,8 @@ bool ProcessSingleMission(int n, int Diff)
 
 bool ProcessSingleCampagin(int n)
 {
+	extern void dbglog(const char* fmt, ...);
+	dbglog("ProcessSingleCampagin: enter, n=%d, NCamp=%d\n", n, CAMPAGINS.NCamp);
 	KeyPressed = 0;
 	LastKey = 0;
 
@@ -12365,7 +12519,7 @@ bool ProcessSingleCampagin(int n)
 		if (SCM->OpenIndex[i] & 255)MaxMiss = i + 1;
 	};
 	bool VISMASK[64];
-	memset(VISMASK, 0, sizeof VISMASK);
+	memset(VISMASK, 0, sizeof(VISMASK));
 	for (int i = 0; i < MaxMiss; i++)
 	{
 		//if(SCM->OpenIndex[i]&255){
@@ -12583,7 +12737,7 @@ AddMissionsPack::AddMissionsPack()
 		if (!F) continue;
 
 		Pack = (OneAddMission*)realloc(Pack, sizeof(OneAddMission) * (NMiss + 1));
-		memset(Pack + NMiss, 0, sizeof OneAddMission);
+		memset(Pack + NMiss, 0, sizeof(OneAddMission));
 
 		ReadWinString(F, Pack[NMiss].Title, 127);
 		ReadWinString(F, Pack[NMiss].Map, 127);
@@ -12650,10 +12804,12 @@ AddMissionsPack::AddMissionsPack()
 AddMissionsPack::~AddMissionsPack()
 {
 	if (Pack)free(Pack);
-	memset(this, 0, sizeof AddMissionsPack);
+	memset(this, 0, sizeof(AddMissionsPack));
 };
 bool SelectSingleMission()
 {
+	extern void dbglog(const char* fmt, ...);
+	dbglog("SelectSingleMission: enter, MSMiss=%d\n", MISSLIST.MSMiss);
 	if (!MISSLIST.MSMiss)return false;
 	KeyPressed = 0;
 	LastKey = 0;
@@ -15605,7 +15761,7 @@ void AddPiece(char* str)
 	if (NPIECES >= MAX_PIECES)
 	{
 		MAX_PIECES += 256;
-		PIECES_NAMES = (char**)realloc(PIECES_NAMES, MAX_PIECES << 2);
+		PIECES_NAMES = (char**)realloc(PIECES_NAMES, MAX_PIECES * sizeof(char*));
 	};
 	for (int i = 0; i < NPIECES; i++)
 	{
@@ -16129,7 +16285,7 @@ void DrawHeightPen(byte* BUF, int v1, int v2)
 
 byte* TerrHI;
 byte* SoftArea;
-byte* TerrMap;
+static byte* TerrMap;
 byte* ResultMap;
 
 extern byte trans8[65536];
@@ -16196,7 +16352,7 @@ void PixUndo::OpenNewChunk()
 {
 	if ((!NChunks) || Chunks[NChunks - 1].Size)
 	{
-		Chunks = (UndoChunk*)realloc(Chunks, (NChunks + 1) * sizeof UndoChunk);
+		Chunks = (UndoChunk*)realloc(Chunks, (NChunks + 1) * sizeof(UndoChunk));
 		Chunks[NChunks].Size = 0;
 		Chunks[NChunks].MaxSize = 0;
 		Chunks[NChunks].UndoData = nullptr;
@@ -16963,8 +17119,8 @@ void ReadClanData()
 							P1.LoadPicture(ccc);
 							if (P1.GetLx() < 256 && P1.GetLy() == 20)
 							{
-								CLINFO = (ClanInfo*)realloc(CLINFO, (NClans + 1) * sizeof ClanInfo);
-								memset(CLINFO + NClans, 0, sizeof ClanInfo);
+								CLINFO = (ClanInfo*)realloc(CLINFO, (NClans + 1) * sizeof(ClanInfo));
+								memset(CLINFO + NClans, 0, sizeof(ClanInfo));
 								sprintf(ccc, "Clans\\%s", cc1);
 								CLINFO[NClans].Over.LoadPicture(ccc);
 								sprintf(ccc, "Clans\\%s", cc2);
@@ -17009,7 +17165,7 @@ void ReadClanData()
 		}
 	} while (change);
 
-	memset(&CIN, 0, sizeof CIN);
+	memset(&CIN, 0, sizeof(CIN));
 }
 
 __declspec(dllexport) void ShowClanString(int x, int y, char* s, byte State, RLCFont* Fn, RLCFont* Fn1, int DY)

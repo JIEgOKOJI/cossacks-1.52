@@ -1,5 +1,5 @@
 #include "UdpHolePuncher.h"
-#include "../CommCore.h"
+#include "CommCore.h"
 
 extern CCommCore IPCORE;
 
@@ -16,8 +16,14 @@ void UdpHolePuncher::Init( const char *server_addr, const unsigned short port,
 
 	interval_ = interval;
 
-	int res = InetPton( AF_INET, server_addr, &server_addr_.sin_addr );
+#if _WIN32_WINNT >= 0x0600
+	int res = InetPtonA( AF_INET, server_addr, &server_addr_.sin_addr );
 	if (1 != res)
+#else
+	unsigned long addr_val = inet_addr( server_addr );
+	server_addr_.sin_addr.s_addr = addr_val;
+	if (addr_val == INADDR_NONE)
+#endif
 	{//Invaild ip address string
 		return;
 	}

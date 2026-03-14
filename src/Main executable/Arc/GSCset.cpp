@@ -5,6 +5,7 @@
 //#include "stdafx.h"
 //#include "GSCset.h"
 #include <windows.h>
+#include <cstdint>
 #include <string>
 #include <stdio.h>
 #include "GSCtypes.h"
@@ -75,7 +76,7 @@ LPGSCfile CGSCset::gOpenFile(LPCSTR lpcsFileName, bool Only)
 		gFile->m_Position = 0;
 		gFile->m_Arch = NULL;
 
-		gFile->m_FileHandle = DWORD(CreateFile(lpcsFileName,
+		gFile->m_FileHandle = (uintptr_t)(CreateFile(lpcsFileName,
 			GENERIC_READ | GENERIC_WRITE,
 			FILE_SHARE_READ | FILE_SHARE_WRITE,
 			NULL,
@@ -83,7 +84,7 @@ LPGSCfile CGSCset::gOpenFile(LPCSTR lpcsFileName, bool Only)
 			FILE_ATTRIBUTE_NORMAL,
 			0));
 
-		if (gFile->m_FileHandle == (DWORD)INVALID_HANDLE_VALUE)
+		if (gFile->m_FileHandle == (uintptr_t)INVALID_HANDLE_VALUE)
 		{
 			delete gFile;
 			return NULL;
@@ -291,14 +292,14 @@ BOOL CGSCset::gFindNext(LPGSCFindInfo gFindInfo)
 void GSC_OpenError();
 static std::string GetCmdLineA_Safe()
 {
-	LPSTR cmd = GetCommandLineA();
+	LPCSTR cmd = GetCommandLineA();
 	return std::string(cmd ? cmd : "");
 }
 
 BOOL CGSCset::gOpen()
 {
 	// 1) Получаем полную ANSI-строку запуска
-	LPSTR cmdRaw = GetCommandLineA();
+	LPCSTR cmdRaw = GetCommandLineA();
 	std::string cmdLine = cmdRaw ? cmdRaw : "";
 
 	// 2) Приводим строку к нижнему регистру и ищем "/reloaded"
@@ -388,7 +389,7 @@ BOOL CGSCset::gOpen()
 			// Ошибка: не найдены ни reloaded.gsc, ни reloaded_<lang>.gsc
 			std::string errorMsg = "Error: Neither " + reloadedLangFile + " nor " + reloadedDefaultFile + " found when /reloaded parameter is specified.";
 			MessageBoxA(NULL, errorMsg.c_str(), "Error", MB_OK | MB_ICONERROR);
-			exit(1); // Завершаем программу с кодом ошибки
+			return FALSE; // Позволяем вызывающему коду обработать ошибку
 		}
 		FindClose(hFindFile);
 	}
@@ -435,12 +436,6 @@ BOOL CGSCset::gOpen()
 	FindClose(hFindFile);
 
 	// Если ни один файл не найден, выводим сообщение об ошибке и завершаем программу
-	if (!retval)
-	{
-		MessageBoxA(NULL, "No resource files found", "Error", MB_OK | MB_ICONERROR);
-		exit(1); // Завершаем программу с кодом ошибки 1
-	}
-
 	return retval;
 }
 
@@ -509,14 +504,14 @@ LPGSCfile CGSCset::gWriteOpen(LPCSTR lpcsFileName)
 	gFile->m_Position = 0;
 	gFile->m_Arch = NULL;
 
-	gFile->m_FileHandle = DWORD(CreateFile(lpcsFileName,
+	gFile->m_FileHandle = (uintptr_t)(CreateFile(lpcsFileName,
 		GENERIC_READ | GENERIC_WRITE,
 		FILE_SHARE_READ,
 		NULL,
 		CREATE_ALWAYS,
 		FILE_ATTRIBUTE_NORMAL,
 		0));
-	if (gFile->m_FileHandle == (DWORD)INVALID_HANDLE_VALUE)
+	if (gFile->m_FileHandle == (uintptr_t)INVALID_HANDLE_VALUE)
 	{
 		delete gFile;
 		return NULL;

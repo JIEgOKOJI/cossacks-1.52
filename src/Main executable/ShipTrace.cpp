@@ -85,6 +85,7 @@ void ShowBlob(int x, int y, byte* Blob, int Lx, int Ly) {
 		//assert(BLX>0&&BLY>0);
 		return;
 	};
+#ifdef _MSC_VER
 	int sof = int(ScreenPtr) + x + y * ScrWidth;
 	int bufo = int(bof);
 	int scadd = ScrWidth - BLX;
@@ -173,6 +174,22 @@ void ShowBlob(int x, int y, byte* Blob, int Lx, int Ly) {
 				pop		esi
 		};
 	};
+#else
+	// Apply gradient overlay: TraceGrd[blob_byte * 256 + screen_byte]
+	byte* screenPos = (byte*)ScreenPtr + x + y * ScrWidth;
+	int scadd = ScrWidth - BLX;
+	int badd = Lx - BLX;
+	for (int row = 0; row < BLY; row++) {
+		for (int col = 0; col < BLX; col++) {
+			unsigned int idx = ((unsigned int)bof[0] << 8) | screenPos[0];
+			screenPos[0] = TraceGrd[idx];
+			bof++;
+			screenPos++;
+		}
+		bof += badd;
+		screenPos += scadd;
+	}
+#endif
 };
 void Blob::Show(int x, int y, int m) {
 	if (m >= N || m < 0)return;
@@ -214,6 +231,7 @@ void ProcessBlobs() {
 	int MaxY = ((mapy + smaply) << 9) + 32 * 16;
 	memset(BlobVisible, 0, MaxBlob);
 	int ddd = !(tmtmt & 3);
+#ifdef _MSC_VER
 	__asm {
 		push	esi
 		push	edi
@@ -252,6 +270,25 @@ void ProcessBlobs() {
 		pop		edi
 			pop		esi
 	}
+#else
+	{
+		int remaining = NBlobs;
+		int i = 0;
+		while (remaining > 0) {
+			if (BlobTime[i] != 0) {
+				BlobX[i] += BlobVx[i];
+				BlobY[i] += BlobVy[i];
+				BlobTime[i]--;
+				if (BlobX[i] >= MinX && BlobX[i] <= MaxX &&
+					BlobY[i] >= MinY && BlobY[i] <= MaxY) {
+					BlobVisible[i] = 1;
+				}
+			}
+			i++;
+			remaining--;
+		}
+	}
+#endif
 
 	MinX = mapx * 32;
 	MinY = mapy * 16;
@@ -329,6 +366,7 @@ void AddBlob(int x, int y, byte Dir, bool dir2)
 	}
 	else
 	{
+#ifdef _MSC_VER
 		__asm
 		{
 			mov		eax, CurBlob
@@ -345,6 +383,21 @@ void AddBlob(int x, int y, byte Dir, bool dir2)
 			inc		eax
 			lpp3 : mov		CurBlob, eax
 		}
+#else
+		{
+			int i = CurBlob;
+			Cur = -1;
+			while (i < MaxBlob) {
+				if (BlobTime[i] == 0) {
+					Cur = i;
+					i++;
+					break;
+				}
+				i++;
+			}
+			CurBlob = i;
+		}
+#endif
 	}
 
 	if (CurBlob >= MaxBlob)

@@ -23,7 +23,7 @@
 #include "Gp_Draw.h"
 #include "Megapolis.h"
 #pragma pack(4)
-#include "CommCore.h"
+#include "CommCore_directplay.h"
 #include "Pinger.h"
 #pragma pack(1)
 #include "IR.h"
@@ -356,14 +356,14 @@ DPID PLIDS[8];
 int PLFRQ[8];
 void ClearPLIDS()
 {
-	memset( PLIDS, 0, sizeof PLIDS );
-	memset( PLFRQ, 0, sizeof PLFRQ );
+	memset( PLIDS, 0, sizeof(PLIDS) );
+	memset( PLFRQ, 0, sizeof(PLFRQ) );
 };
 void SortPLIDS()
 {
 	bool plprs[10];
 	int plidx[10];
-	memset( plprs, 0, sizeof plprs );
+	memset( plprs, 0, sizeof(plprs) );
 	for (int i = 0; i < NPlayers; i++)
 	{
 		DPID pid = PINFO[i].PlayerID;
@@ -402,8 +402,8 @@ void SortPLIDS()
 	};
 	SC.Sort();
 	PlayerInfo TPI[8];
-	memcpy( TPI, PINFO, sizeof TPI );
-	memset( PINFO, 0, sizeof PINFO );
+	memcpy( TPI, PINFO, sizeof(TPI) );
+	memset( PINFO, 0, sizeof(PINFO) );
 	for (int i = 0; i < NPlayers; i++)
 	{
 		PINFO[i] = TPI[SC.Uids[i]];
@@ -2058,7 +2058,7 @@ void NetCash::AddOne( byte* Data, int size, DPID idTo )
 	if (NCells >= MaxCells)
 	{
 		MaxCells += 100;
-		CELLS = (NetCell*) realloc( CELLS, MaxCells * sizeof NetCell );
+		CELLS = (NetCell*) realloc( CELLS, MaxCells * sizeof(NetCell) );
 	}
 
 	int T0 = int( 250 * ( sin( float( GetTickCount() ) / 20000 ) + 1 ) ) + ( idt + idf ) * 95;
@@ -2080,7 +2080,7 @@ void NetCash::AddWithDelay( byte* Data, int size, DPID idTo, int dt )
 	if (NCells >= MaxCells)
 	{
 		MaxCells += 100;
-		CELLS = (NetCell*) realloc( CELLS, MaxCells * sizeof NetCell );
+		CELLS = (NetCell*) realloc( CELLS, MaxCells * sizeof(NetCell) );
 	}
 
 	CELLS[NCells].Data = new byte[size];
@@ -2131,7 +2131,7 @@ void NetCash::Process()
 				free( CELLS[i].Data );
 				if (i < NCells - 1)
 				{
-					memcpy( CELLS + i, CELLS + i + 1, ( NCells - i - 1 ) * sizeof NetCell );
+					memcpy( CELLS + i, CELLS + i + 1, ( NCells - i - 1 ) * sizeof(NetCell) );
 				}
 				NCells--;
 				i--;
@@ -2291,12 +2291,18 @@ void ComeInGame()
 		}
 	}
 
+	// FIX: process network during loading so ALIV pings get answered
+	if (lpDirectPlay3A || DoNewInet) ReceiveMessage( lpDPInfo );
+
 	byte NRTBL[8];
 	memcpy( NRTBL, NatRefTBL, 8 );
 
 	PrepareGameMedia( myid, 1 );
 
 	memcpy( NatRefTBL, NRTBL, 8 );
+
+	// FIX: process network after heavy PrepareGameMedia
+	if (lpDirectPlay3A || DoNewInet) ReceiveMessage( lpDPInfo );
 
 	CenterScreen();
 
@@ -2406,7 +2412,7 @@ bool StartGame()
 int StartTime[8];
 void CreateStartTime()
 {
-	memset( StartTime, 0, sizeof StartTime );
+	memset( StartTime, 0, sizeof(StartTime) );
 	for (int i = 0; i < NPlayers; i++)
 	{
 		DWORD DPID = PINFO[i].PlayerID;
@@ -2435,7 +2441,7 @@ void ReCreateStartTime()
 		return;
 	}
 	int OLDSTART[8];
-	memset( OLDSTART, 0, sizeof StartTime );
+	memset( OLDSTART, 0, sizeof(StartTime) );
 	int DT0 = 0;
 	int ST0 = 0;
 	for (int i = 0; i < NPlayers; i++)
@@ -2521,7 +2527,7 @@ __declspec( dllexport ) bool StartIGame( bool SINGLE )
 	[59] 236 lpdata_buf_checksum 4 bytes
 	*/
 	DWORD BUF[48 + 8 + 8 + 1];
-	memset( BUF, 0, sizeof BUF );
+	memset( BUF, 0, sizeof(BUF) );
 
 	PrepareToGame();
 
@@ -2666,14 +2672,14 @@ void AnalyseMessages()
 						}
 
 						PlayerInfo PINFO2[8];
-						memcpy( PINFO2, PINFO, sizeof PINFO );
+						memcpy( PINFO2, PINFO, sizeof(PINFO) );
 						int crr = 0;
 						for (int j = 0; j < NPlayers; j++)
 						{
 							DPID id = PlayersID[j];
 							for (int i = 0; i < NPlayers&&id; i++)if (PINFO2[i].PlayerID == id)
 							{
-								memcpy( PINFO + j, PINFO2 + i, sizeof PlayerInfo );
+								memcpy( PINFO + j, PINFO2 + i, sizeof(PlayerInfo) );
 								id = 0;
 							}
 						}
@@ -2941,6 +2947,7 @@ void HandleMultiplayer()
 	for (int i = 0; i < NPlayers; i++)
 	{
 		PlState[i] = -1;
+		LastAccess[i] = GetRealTime(); // FIX: init to current time, not 0
 	}
 
 	LockPing = ( GetRealTime() - PREVTIME ) > 50;
@@ -3119,7 +3126,8 @@ void HandleMultiplayer()
 
 							if (PlState[i] == -1)
 							{
-								if (mpl_time_1 > 650 && GLOBALTIME > 40)
+								// FIX: increased timeout (was 650/40) for slow PCs
+							if (mpl_time_1 > 1500 && GLOBALTIME > 100)
 								{
 									int NS = 0;
 									byte ms = 0;
@@ -3217,9 +3225,9 @@ void HandleMultiplayer()
 				}
 
 				bool UseF3 = 0;
-				if (Problem == 4 && mpl_time_1 > 350)UseF3 = 1;
-				if (Problem == 3 && mpl_time_1 > 400)UseF3 = 1;
-				if (Problem == 2 && mpl_time_1 > 400)UseF3 = 1;
+				if (Problem == 4 && mpl_time_1 > 700)UseF3 = 1;
+				if (Problem == 3 && mpl_time_1 > 800)UseF3 = 1;
+				if (Problem == 2 && mpl_time_1 > 800)UseF3 = 1;
 				if (UseF3)
 				{
 					if (!MiniActive)
@@ -3943,7 +3951,7 @@ void PingSumm::AddPing( DWORD DPID, DWORD From, DWORD To, DWORD Back )
 	{
 		curr = NPL;
 		NPL++;
-		PSET = (PingsSet*) realloc( PSET, NPL * sizeof PingsSet );
+		PSET = (PingsSet*) realloc( PSET, NPL * sizeof(PingsSet) );
 		PSET[curr].DPID = DPID;
 		PSET[curr].NPings = 0;
 		PSET[curr].MaxPings = 0;
@@ -3953,7 +3961,7 @@ void PingSumm::AddPing( DWORD DPID, DWORD From, DWORD To, DWORD Back )
 	if (PSET[curr].NPings >= PSET[curr].MaxPings)
 	{
 		PSET[curr].MaxPings += 50;
-		PSET[curr].Pings = (OnePing*) realloc( PSET[curr].Pings, PSET[curr].MaxPings * sizeof OnePing );
+		PSET[curr].Pings = (OnePing*) realloc( PSET[curr].Pings, PSET[curr].MaxPings * sizeof(OnePing) );
 	};
 	int np = PSET[curr].NPings;
 	PSET[curr].Pings[np].BackTime = int( Back );
@@ -4063,7 +4071,7 @@ void PingSumm::AddPlayer( DWORD DPID )
 	}
 	int curr = NPL;
 	NPL++;
-	PSET = (PingsSet*) realloc( PSET, NPL * sizeof PingsSet );
+	PSET = (PingsSet*) realloc( PSET, NPL * sizeof(PingsSet) );
 	PSET[curr].DPID = DPID;
 	PSET[curr].NPings = 0;
 	PSET[curr].MaxPings = 0;
@@ -4433,7 +4441,7 @@ void PLAYERSBACKUP::AddInf( byte* BUF, int L, DPID ID, int RT )
 	if (NBDATA == 32)
 	{
 		free( BSTR[0].Data );
-		memcpy( BSTR, BSTR + 1, 31 * sizeof BACKUPSTR );
+		memcpy( BSTR, BSTR + 1, 31 * sizeof(BACKUPSTR) );
 		NBDATA--;
 	}
 	BSTR[NBDATA].Data = new byte[L];
@@ -4483,7 +4491,7 @@ void RETRANS::AddOneRet( DWORD TO, DWORD FROM, DWORD RT )
 	for (int i = 0; i < NRET; i++)if (TOT[i].IDFROM == FROM&&TOT[i].IDTO == TO&&TOT[i].RT == RT)return;
 	if (NRET >= MaxRET)
 	{
-		TOT = (SingleRetr*) realloc( TOT, ( MaxRET + 64 ) * sizeof SingleRetr );
+		TOT = (SingleRetr*) realloc( TOT, ( MaxRET + 64 ) * sizeof(SingleRetr) );
 		MaxRET += 64;
 	};
 	TOT[NRET].IDFROM = FROM;
@@ -4502,7 +4510,7 @@ void RETRANS::CheckRetr( DWORD From, DWORD RT )
 		PBACK.SendInfoAboutTo( From, TOT[i].IDTO, RT );
 		if (i < NRET - 1)
 		{
-			memcpy( TOT + i, TOT + i + 1, ( NRET - i - 1 ) * sizeof SingleRetr );
+			memcpy( TOT + i, TOT + i + 1, ( NRET - i - 1 ) * sizeof(SingleRetr) );
 		};
 		NRET--;
 		i--;
@@ -4543,7 +4551,7 @@ public:
 };
 LoosedPack::LoosedPack()
 {
-	memset( OLID, 0, 16 * sizeof OneLostID );
+	memset( OLID, 0, 16 * sizeof(OneLostID) );
 };
 LoosedPack::~LoosedPack()
 {
@@ -4573,7 +4581,7 @@ void LoosedPack::DeleteBadPlayers()
 				{
 					free( OLID[i].PING );
 				}
-				memset( OLID + i, 0, sizeof OneLostID );
+				memset( OLID + i, 0, sizeof(OneLostID) );
 			}
 		}
 	}
@@ -4595,7 +4603,7 @@ void LoosedPack::Clear()
 			free( OLID[i].PING );
 		};
 	};
-	memset( OLID, 0, 8 * sizeof OneLostID );
+	memset( OLID, 0, 8 * sizeof(OneLostID) );
 };
 void LoosedPack::Add( DWORD DPID, int ID )
 {
@@ -4645,7 +4653,7 @@ void LoosedPack::Add( DWORD DPID, int ID )
 	if (idx != -1)
 	{
 		OLID[idx].DPID = DPID;
-		OLID[idx].PING = (OneLPing*) realloc( OLID[idx].PING, ( OLID[idx].NPings + 1 ) * sizeof OneLPing );
+		OLID[idx].PING = (OneLPing*) realloc( OLID[idx].PING, ( OLID[idx].NPings + 1 ) * sizeof(OneLPing) );
 		OneLPing* OP = OLID[idx].PING + OLID[idx].NPings;
 		OLID[idx].NPings++;
 		OLID[idx].LastAccessTime = CurTime;
@@ -4673,7 +4681,7 @@ void LoosedPack::Remove( int ID )
 				}
 				if (j < N - 1)
 				{
-					memcpy( OLID[i].PING + j, OLID[i].PING + j + 1, ( N - j - 1 ) * sizeof OneLPing );
+					memcpy( OLID[i].PING + j, OLID[i].PING + j + 1, ( N - j - 1 ) * sizeof(OneLPing) );
 				}
 				OLID[i].NPings--;
 				if (!OLID[i].NPings)
@@ -4698,7 +4706,7 @@ void LoosedPack::Process()
 				if (OLID[i].NReceived)OLID[i].NSent++;
 				if (j < N - 1)
 				{
-					memcpy( OLID[i].PING + j, OLID[i].PING + j + 1, ( N - j - 1 ) * sizeof OneLPing );
+					memcpy( OLID[i].PING + j, OLID[i].PING + j + 1, ( N - j - 1 ) * sizeof(OneLPing) );
 				};
 				OLID[i].NPings--;
 				if (!OLID[i].NPings)

@@ -148,7 +148,7 @@ void UnregisterSprite( int N )
 		{
 			if (i < nsp - 1)
 			{
-				memcpy( SPR + i, SPR + i + 1, ( nsp - i - 1 ) << 2 );
+				memmove( SPR + i, SPR + i + 1, ( nsp - i - 1 ) << 2 );
 			}
 			NSpri[nn]--;
 			if (!NSpri[nn])
@@ -300,8 +300,8 @@ void addSprite( int x, int y, SprGroup* SG, word id )
 	{
 		int psp = MaxSprt;
 		MaxSprt += 32768;
-		Sprites = (OneSprite*) realloc( Sprites, MaxSprt * sizeof OneSprite );
-		memset( Sprites + psp, 0, ( MaxSprt - psp ) * sizeof OneSprite );
+		Sprites = (OneSprite*) realloc( Sprites, MaxSprt * sizeof(OneSprite) );
+		memset( Sprites + psp, 0, ( MaxSprt - psp ) * sizeof(OneSprite) );
 	};
 	//int i=0;
 	while (Sprites[i].Enabled&&i < MaxSprt)i++;
@@ -357,8 +357,8 @@ void addSpriteAnyway( int x, int y, SprGroup* SG, word id )
 	{
 		int psp = MaxSprt;
 		MaxSprt += 32768;
-		Sprites = (OneSprite*) realloc( Sprites, MaxSprt * sizeof OneSprite );
-		memset( Sprites + psp, 0, ( MaxSprt - psp ) * sizeof OneSprite );
+		Sprites = (OneSprite*) realloc( Sprites, MaxSprt * sizeof(OneSprite) );
+		memset( Sprites + psp, 0, ( MaxSprt - psp ) * sizeof(OneSprite) );
 	};
 	while (Sprites[i].Enabled&&i < MaxSprt)i++;
 	if (i >= MaxSprt)
@@ -1652,7 +1652,7 @@ int OneObject::TakeResource( int px, int py, byte ResID, int Prio, byte OrdType 
 	RStage = 0;
 	Order1* Or1 = CreateOrder( OrdType );
 
-	if (!int( Or1 ))
+	if (!(intptr_t)( Or1 ))
 		return INITBEST;
 
 	Or1->PrioryLevel = Prio & 127;

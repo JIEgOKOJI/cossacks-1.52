@@ -44,7 +44,7 @@ struct xRLCTable
 	int Size;
 	int sign;
 	int	SCount;
-	int OfsTable[32768000];
+	intptr_t OfsTable[32768000];
 };
 
 typedef xRLCTable* RLCTable;
@@ -74,7 +74,7 @@ public:
 
 	void SetStdShadow()
 	{
-		ShadowGP = int(RLC);
+		ShadowGP = (int)(intptr_t)(RLC);
 		ShadowDx = 1;
 		ShadowDy = 1;
 	};

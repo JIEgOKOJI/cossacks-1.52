@@ -3,6 +3,7 @@ extern NewMonster NewMon[2048];
 extern char* MonNames[2048];
 int CheckPt(int x, int y);
 bool CheckBar(int x, int y, int Lx, int Ly);
+#ifdef _MSC_VER
 #pragma warning(disable : 4035)
 
 //returns (2|x| + |y|) / 2 if x > y
@@ -30,6 +31,15 @@ inline int Norma(int x, int y)
 	}
 }
 #pragma warning(default : 4035)
+#else
+inline int Norma(int x, int y)
+{
+	int ax = x < 0 ? -x : x;
+	int ay = y < 0 ? -y : y;
+	int c = (ax > ay) ? ax : ay;
+	return (c + ax + ay) / 2;
+}
+#endif
 
 void TryToStand(OneObject* OB, bool rest);
 void BSetPt(int x, int y);
@@ -43,7 +53,7 @@ void BClrBar(int x, int y, int Lx);
 #define FP_FIND_DAMPOINT  8
 #define FP_CONCENTRATION  16
 void MakeRoundDamage(int x, int y, int r, word Damage, OneObject* Sender, word Attr);
-void AddToVisual(short uy, short x, short y, OneObject* OB, word FileID, word Sprite, int Param1, int Param2);
+void AddToVisual(short uy, short x, short y, OneObject* OB, word FileID, word Sprite, int Param1, intptr_t Param2);
 void AddToVisual(short uy, short x, short y, OneObject* OB, word FileID, word Sprite, int Options);
 //Adding to visual options:
 #define AV_NORMAL      0x00000000

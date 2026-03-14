@@ -78,8 +78,8 @@ public:
 					if (NVal >= MaxVal)
 					{
 						MaxVal += 32;
-						Vars = (char**) realloc( Vars, MaxVal << 2 );
-						Values = (char**) realloc( Values, MaxVal << 2 );
+						Vars = (char**) realloc( Vars, MaxVal * sizeof(char*) );
+						Values = (char**) realloc( Values, MaxVal * sizeof(char*) );
 					}
 					sscanf( ccc, "%s", ccc1 );
 					char* ssv = ccc + strlen( ccc1 ) + 1;
@@ -151,15 +151,15 @@ void AddPrimitiveChat( char* Nick, char* str,
 	if (NCHATS >= MAXCHATS)
 	{
 		MAXCHATS += 32;
-		ChatMess = (char**) realloc( ChatMess, 4 * MAXCHATS );
-		ChatSender = (char**) realloc( ChatSender, 4 * MAXCHATS );
+		ChatMess = (char**) realloc( ChatMess, sizeof(char*) * MAXCHATS );
+		ChatSender = (char**) realloc( ChatSender, sizeof(char*) * MAXCHATS );
 	}
 	if (NCHATS > 512)
 	{
 		free( ChatMess[0] );
 		free( ChatSender[0] );
-		memcpy( ChatMess, ChatMess + 1, NCHATS * 4 );
-		memcpy( ChatSender, ChatSender + 1, NCHATS * 4 );
+		memcpy( ChatMess, ChatMess + 1, NCHATS * sizeof(char*) );
+		memcpy( ChatSender, ChatSender + 1, NCHATS * sizeof(char*) );
 		NCHATS--;
 	}
 	ChatMess[NCHATS] = new char[strlen( str ) + 1];

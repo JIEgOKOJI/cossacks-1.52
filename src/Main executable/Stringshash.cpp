@@ -4,6 +4,7 @@
 typedef unsigned char byte;
 #include "StringHash.h"
 
+#ifdef _MSC_VER
 __forceinline byte CalcHash(char* s) {
 	__asm {
 		mov esi, s
@@ -17,8 +18,19 @@ __forceinline byte CalcHash(char* s) {
 		mov al, bl
 	};
 };
+#else
+inline byte CalcHash(char* s) {
+	byte hash = 0;
+	while (*s) {
+		hash += (byte)*s;
+		s++;
+	}
+	return hash;
+}
+#endif
 StrHash::StrHash(){
-	memset(this,0,sizeof StrHash);
+	memset(SHI,0,sizeof(SHI));
+	LastIndex=0;
 };
 void StrHash::Clear(){
 	for(int i=0;i<256;i++){
@@ -29,7 +41,8 @@ void StrHash::Clear(){
 			free(lpSHI->Value);
 		};
 	};
-	memset(this,0,sizeof StrHash);
+	memset(SHI,0,sizeof(SHI));
+	LastIndex=0;
 };
 StrHash::~StrHash(){
 	Clear();
@@ -40,7 +53,7 @@ void StrHash::AddString(char* s){
 	int nv=lpSHI->NStr;
 	if(lpSHI->NStr>=lpSHI->MaxStr){
 		lpSHI->MaxStr+=16;
-		lpSHI->Str=(char**)realloc(lpSHI->Str,lpSHI->MaxStr<<2);
+		lpSHI->Str=(char**)realloc(lpSHI->Str,lpSHI->MaxStr*sizeof(char*));
 		lpSHI->Value=(int*)realloc(lpSHI->Value,lpSHI->MaxStr<<2);
 	};
 	lpSHI->Str[nv]=(char*)malloc(strlen(s)+1);

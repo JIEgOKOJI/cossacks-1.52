@@ -1,0 +1,2 @@
+/opt/homebrew/bin/i686-w64-mingw32-ar qc libplatform_compat.a CMakeFiles/platform_compat.dir/platform.cpp.obj CMakeFiles/platform_compat.dir/msvcrt_compat.c.obj CMakeFiles/platform_compat.dir/win32_pthread.c.obj
+/opt/homebrew/bin/i686-w64-mingw32-ranlib libplatform_compat.a

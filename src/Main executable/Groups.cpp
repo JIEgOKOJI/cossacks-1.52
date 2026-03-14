@@ -27,6 +27,7 @@ SortClass::~SortClass() {
 };
 void SortClass::Sort() {
 	if (NUids < 2)return;
+#ifdef _MSC_VER
 	int uids = int(Uids);
 	//int sns=int(Usn);
 	//int snsn;
@@ -75,6 +76,24 @@ void SortClass::Sort() {
 			pop     esi
 			pop     edi
 	};
+#else
+	// Bubble sort: parallel arrays Parms (sort key) and Uids (payload)
+	bool fault;
+	do {
+		fault = false;
+		for (int i = 0; i < NUids - 1; i++) {
+			if (Parms[i] > Parms[i + 1]) {
+				int tmpP = Parms[i];
+				Parms[i] = Parms[i + 1];
+				Parms[i + 1] = tmpP;
+				word tmpU = Uids[i];
+				Uids[i] = Uids[i + 1];
+				Uids[i + 1] = tmpU;
+				fault = true;
+			}
+		}
+	} while (fault);
+#endif
 };
 void SortClass::CheckSize(int Size) {
 	if (!Size)return;

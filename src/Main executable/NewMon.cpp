@@ -271,9 +271,9 @@ void InitAllGame()
 {
 	ClearMaps();
 
-	memset( Group, 0, sizeof Group );
-	memset( Sprites, 0, sizeof Sprites );
-	memset( NSL, 0, sizeof NSL );
+	memset( Group, 0, sizeof(Group) );
+	memset( Sprites, 0, sizeof(Sprites) );
+	memset( NSL, 0, sizeof(NSL) );
 }
 
 void DosToWin( char* Str )
@@ -400,7 +400,7 @@ NewAnimation::NewAnimation()
 
 NewMonster::NewMonster()
 {
-	memset( &MotionL, 0, sizeof NewMonster );
+	memset( &MotionL, 0, sizeof(NewMonster) );
 }
 
 //--------------------Icons------------------
@@ -473,7 +473,7 @@ VK_F1,VK_F2,VK_F3,VK_F4,VK_F5,VK_F6,VK_F7,VK_F8,VK_F9,VK_F10,VK_NEXT,VK_PRIOR,VK
 bool ReadWinString( GFILE* F, char* STR, int Max );
 void ReadKeyCodes()
 {
-	memset( &KeyCodes[0][0], 0, sizeof KeyCodes );
+	memset( &KeyCodes[0][0], 0, sizeof(KeyCodes) );
 	GFILE* F = Gopen( "Data\\Keyboard.dat", "r" );
 	if ( F )
 	{
@@ -3237,7 +3237,7 @@ bool NewMonster::CreateFromFile( char* name )
 																																																																																																									if ( !CompxCraft )
 																																																																																																									{
 																																																																																																										CompxCraft = new ComplexBuilding;
-																																																																																																										memset( CompxCraft, 0, sizeof ComplexBuilding );
+																																																																																																										memset( CompxCraft, 0, sizeof(ComplexBuilding) );
 																																																																																																									};
 																																																																																																									if ( Idx >= MaxAStages )
 																																																																																																									{
@@ -3567,7 +3567,7 @@ bool CreateGOByName( GeneralObject* GO, char* name, char* newName )
 {
 	Visuals* VS = (Visuals*) GO;
 
-	memset( GO, 0, sizeof Visuals );
+	memset( GO, 0, sizeof(Visuals) );
 
 	for ( int i = 0; i < NNewMon; i++ )
 	{
@@ -3669,7 +3669,7 @@ void SprGroup::LoadSprites( char* fname )
 		Dy = new short[nl];
 		Radius = new short[nl];
 		ObjChar = new ObjCharacter[nl];
-		memset( ObjChar, 0, nl * sizeof ObjCharacter );
+		memset( ObjChar, 0, nl * sizeof(ObjCharacter) );
 		NLine( f1 );
 		Line++;
 		UpConv( gy );
@@ -3962,6 +3962,7 @@ byte* TmpMC; //amount of monsters in 4x4 cell,
 word* BLDList;
 void ZMem(byte* pntr, int siz)
 {
+#ifdef _MSC_VER
 	__asm {
 		push	edi
 		cld
@@ -3976,6 +3977,9 @@ void ZMem(byte* pntr, int siz)
 		//sti
 		www : pop		edi
 	};
+#else
+	memset(pntr, 0, siz);
+#endif
 };
 
 
@@ -4192,7 +4196,7 @@ word  UFileID[4096];
 word  USpriteID[4096];
 word  NURef[4096];
 int   UParam1[4096];
-int   UParam2[4096];
+intptr_t   UParam2[4096];
 OneObject* OBJS[4096];
 word NVUnits;
 word FirstUN;
@@ -4203,9 +4207,9 @@ word Hash64[1024];
 word Hash256[256];
 void InitHash()
 {
-	memset( Hash16, 0, sizeof Hash16 );
-	memset( Hash64, 0, sizeof Hash64 );
-	memset( Hash256, 0, sizeof Hash256 );
+	memset( Hash16, 0, sizeof(Hash16) );
+	memset( Hash64, 0, sizeof(Hash64) );
+	memset( Hash256, 0, sizeof(Hash256) );
 };
 
 //----------//-------\\----------
@@ -4358,7 +4362,7 @@ void AddToVisual( short uy, short x, short y, OneObject* OB, word FileID, word S
 		} while ( true );
 	};
 };
-void AddToVisual( short uy, short x, short y, OneObject* OB, word FileID, word Sprite, int Param1, int Param2 )
+void AddToVisual( short uy, short x, short y, OneObject* OB, word FileID, word Sprite, int Param1, intptr_t Param2 )
 {
 	if ( !NVUnits )
 	{
@@ -4460,20 +4464,20 @@ void AddToVisual( short uy, short x, short y, OneObject* OB, word FileID, word S
 	int CType = Options & 0x0F;
 	int CProp = Options & 0xF0;
 	int Param1 = CType;
-	int Param2 = 0;
+	intptr_t Param2 = 0;
 	switch ( CType )
 	{
 	case AV_PULSING:
 		switch ( CProp )
 		{
 		case AV_RED:
-			Param2 = int( yfog );
+			Param2 = (intptr_t)( yfog );
 			break;
 		case AV_WHITE:
-			Param2 = int( wfog );
+			Param2 = (intptr_t)( wfog );
 			break;
 		case AV_DARK:
-			Param2 = int( fog + 1024 );
+			Param2 = (intptr_t)( fog + 1024 );
 			break;
 		default:
 			Param1 = 0;
@@ -4485,13 +4489,13 @@ void AddToVisual( short uy, short x, short y, OneObject* OB, word FileID, word S
 		switch ( CProp )
 		{
 		case AV_RED:
-			Param2 = int( yfog + 2048 );
+			Param2 = (intptr_t)( yfog + 2048 );
 			break;
 		case AV_WHITE:
-			Param2 = int( wfog + 2048 );
+			Param2 = (intptr_t)( wfog + 2048 );
 			break;
 		case AV_DARK:
-			Param2 = int( fog + 1024 + 2048 );
+			Param2 = (intptr_t)( fog + 1024 + 2048 );
 			break;
 		default:
 			Param1 = 0;
@@ -4501,13 +4505,13 @@ void AddToVisual( short uy, short x, short y, OneObject* OB, word FileID, word S
 		switch ( CProp )
 		{
 		case AV_RED:
-			Param2 = int( yfog );
+			Param2 = (intptr_t)( yfog );
 			break;
 		case AV_WHITE:
-			Param2 = int( wfog );
+			Param2 = (intptr_t)( wfog );
 			break;
 		case AV_DARK:
-			Param2 = int( fog + 1024 );
+			Param2 = (intptr_t)( fog + 1024 );
 			break;
 		default:
 			Param1 = 0;
@@ -4592,7 +4596,7 @@ void ShowVisualLess( int yend )
 			FID = UFileID[fu];
 			//if(spr>=RLCNSpr[FID])spr=RLCNSpr[FID]-1;
 			int par1 = UParam1[fu];
-			int par2 = UParam2[fu];
+			intptr_t par2 = UParam2[fu];
 			byte nat = 0;
 			//Shadows
 			LocTrans = false;
@@ -7953,8 +7957,76 @@ void CheckArmies( City* );
 
 void EliminateBuilding( OneObject* OB );
 
+// === STATE HASH DIAGNOSTIC ===
+// Logs a hash of all unit positions at each tick to detect when state diverges
+static FILE* stateHashFile = nullptr;
+#define STATE_HASH_START 0
+#define STATE_HASH_END   160
+
+static void LogStateHash()
+{
+	if (tmtmt < STATE_HASH_START || tmtmt > STATE_HASH_END)
+	{
+		if (stateHashFile && tmtmt > STATE_HASH_END)
+		{
+			fclose(stateHashFile);
+			stateHashFile = nullptr;
+		}
+		return;
+	}
+	if (!stateHashFile)
+	{
+		stateHashFile = fopen("state_hash.log", "w");
+		if (stateHashFile) fprintf(stateHashFile, "tmtmt\thash\tunits\n");
+	}
+	if (!stateHashFile) return;
+
+	unsigned int hash = 0;
+	int nUnits = 0;
+	for (int i = 0; i < MAXOBJECT; i++)
+	{
+		OneObject* OB = Group[i];
+		if (OB && !OB->Sdoxlo)
+		{
+			nUnits++;
+			// Mix in key state fields
+			unsigned int h = (unsigned int)i;
+			h = h * 2654435761u ^ (unsigned int)OB->RealX;
+			h = h * 2654435761u ^ (unsigned int)OB->RealY;
+			h = h * 2654435761u ^ (unsigned int)OB->DestX;
+			h = h * 2654435761u ^ (unsigned int)OB->DestY;
+			h = h * 2654435761u ^ (unsigned int)OB->NewCurSprite;
+			h = h * 2654435761u ^ (unsigned int)(unsigned char)OB->RealDir;
+			h = h * 2654435761u ^ (unsigned int)OB->InMotion;
+			hash ^= h;
+		}
+	}
+	fprintf(stateHashFile, "%d\t%08x\t%d\n", tmtmt, hash, nUnits);
+
+	// Detailed per-unit dump at specific ticks (every 2 ticks in range)
+	if (tmtmt >= 130 && tmtmt <= 155 && (tmtmt % 2 == 0))
+	{
+		for (int i = 0; i < MAXOBJECT; i++)
+		{
+			OneObject* OB = Group[i];
+			if (OB && !OB->Sdoxlo && (OB->DestX > 0 || OB->InMotion))
+			{
+				fprintf(stateHashFile, "  u%d\tRX=%d\tRY=%d\tDX=%d\tDY=%d\tSpr=%d\tDir=%d\tMot=%d\tMS=%d\n",
+					i, OB->RealX, OB->RealY, OB->DestX, OB->DestY,
+					OB->NewCurSprite, (int)(unsigned char)OB->RealDir,
+					OB->InMotion, OB->MoveStage);
+			}
+		}
+	}
+
+	fflush(stateHashFile);
+}
+// === END STATE HASH DIAGNOSTIC ===
+
 void CalculateMotion()
 {
+	LogStateHash();
+
 	byte MyNT = NatRefTBL[MyNation];
 
 	LongProcesses();
@@ -9108,7 +9180,7 @@ int Nation::CreateNewMonsterAt( int rx, int ry, int n, bool Anyway )
 
 
 	int i;
-	for ( i = 0; i < MaxObj && int( Group[i] ); i++ );
+	for ( i = 0; i < MaxObj && (intptr_t)( Group[i] ); i++ );
 
 	if ( i >= MaxObj )
 	{
@@ -9130,7 +9202,7 @@ int Nation::CreateNewMonsterAt( int rx, int ry, int n, bool Anyway )
 	}
 
 	Group[i] = OBJECTS + i;
-	memset( Group[i], 0, sizeof OneObject );
+	memset( Group[i], 0, sizeof(OneObject) );
 	LastObject = i;
 	//Cell8x8* CELL=&TCInf[NNUM][y>>11][x>>11];
 	OneObject* G = Group[i];
@@ -9493,7 +9565,7 @@ void OneObject::NewMonsterSendTo( int px, int py, byte Prio, byte OrdType )
 	}
 
 	Order1* Or1 = CreateOrder( OrdType );
-	if ( !int( Or1 ) )
+	if ( !(intptr_t)( Or1 ) )
 	{
 		return;
 	}
@@ -9526,7 +9598,7 @@ void NewMonsterSendToLink( OneObject* OB )
 {
 	if ( OB->PathDelay&&OB->StandTime > 64 )
 	{
-		if ( int( OB->LocalOrder ) )
+		if ( (intptr_t)( OB->LocalOrder ) )
 		{
 			OB->DeleteLastOrder();
 			return;
@@ -9550,7 +9622,7 @@ void NewMonsterSendToLink( OneObject* OB )
 
 	if ( OB->DistTo( xx1, yy1 ) <= 1 )
 	{
-		if ( int( OB->LocalOrder ) )
+		if ( (intptr_t)( OB->LocalOrder ) )
 		{
 			OB->DeleteLastOrder();
 		}
@@ -9589,7 +9661,7 @@ void OneObject::NewMonsterPreciseSendTo( int px, int py, byte Prio, byte OrdType
 		return;
 	}
 	Order1* Or1 = CreateOrder( OrdType );
-	if ( !int( Or1 ) )
+	if ( !(intptr_t)( Or1 ) )
 	{
 		return;
 	}
@@ -9615,7 +9687,7 @@ void NewMonsterPreciseSendToLink( OneObject* OB )
 {
 	if ( OB->PathDelay&&OB->StandTime > 64 )
 	{
-		if ( int( OB->LocalOrder ) )
+		if ( (intptr_t)( OB->LocalOrder ) )
 		{
 			OB->DeleteLastOrder();
 			return;
@@ -9652,7 +9724,7 @@ void NewMonsterPreciseSendToLink( OneObject* OB )
 			};
 		}
 		else
-			if ( int( OB->LocalOrder ) )
+			if ( (intptr_t)( OB->LocalOrder ) )
 			{
 				OB->DestX = -1;
 				OB->DeleteLastOrder();
@@ -10893,7 +10965,7 @@ bool OneObject::AttackObj( word OID, int Prio1, byte OrdType, word NTimes )
 	{
 		Attack = false;
 	}
-	if ( !int( OB ) || OB->Sdoxlo )
+	if ( !(intptr_t)( OB ) || OB->Sdoxlo )
 	{
 		return false;
 	}
@@ -10936,7 +11008,7 @@ bool OneObject::AttackObj( word OID, int Prio1, byte OrdType, word NTimes )
 		OrdType = 1;
 	}
 	Order1* Or1 = CreateOrder( OrdType );
-	if ( !int( Or1 ) )
+	if ( !(intptr_t)( Or1 ) )
 	{
 		return false;
 	}
@@ -11042,7 +11114,7 @@ bool OneObject::NewAttackPoint( int px, int py, int Prio1, byte OrdType, word NT
 		GroundState = 0;
 	}
 	Order1* Or1 = CreateOrder( OrdType );
-	if ( !int( Or1 ) )
+	if ( !(intptr_t)( Or1 ) )
 	{
 		return false;
 	}
@@ -11230,7 +11302,7 @@ void AttackObjLink( OneObject* OBJ )
 	OneObject* OB;
 	if ( AttGroundMod )
 	{
-		memset( &TMPOBJ, 0, sizeof OneObject );
+		memset( &TMPOBJ, 0, sizeof(OneObject) );
 		OB = &TMPOBJ;
 		TMPOBJ.RealX = OBJ->DstX;
 		TMPOBJ.RealY = OBJ->DstY;
@@ -12478,10 +12550,10 @@ void MakeOneShot( OneObject* OB, int xd, int yd, int zd )
 	MakeOneShotLink( OB );
 };
 void NewMonsterSmartSendToLink( OneObject* OBJ );
-int SmartLink = 0x153829;
+intptr_t SmartLink = 0x153829;
 void __stdcall CDGINIT_INIT1()
 {
-	SmartLink = int( &NewMonsterSmartSendToLink ) + 0x7654391;
+	SmartLink = (intptr_t)( &NewMonsterSmartSendToLink ) + 0x7654391;
 };
 void WaterAttackLink( OneObject* OBJ )
 {
@@ -13328,7 +13400,7 @@ bool OneObject::BuildObj( word OID, int Prio, bool LockPoint, byte OrdType )
 	NewMonster* NM = newMons;
 	if ( !NM->Work.Enabled )return false;
 	OneObject* OB = Group[OID];
-	if ( !int( OB ) || OB->Sdoxlo )return false;
+	if ( !(intptr_t)( OB ) || OB->Sdoxlo )return false;
 	if ( !OB->NewBuilding )return false;
 	if ( !( OB->NMask&NMask ) )return false;
 	if ( OB->Life == OB->MaxLife )return false;
@@ -13346,7 +13418,7 @@ bool OneObject::BuildObj( word OID, int Prio, bool LockPoint, byte OrdType )
 		Order1* Or1;
 		if ( !OrdType )Or1 = CreateOrder( 2 );
 		else Or1 = CreateOrder( OrdType );
-		if ( !int( Or1 ) )return false;
+		if ( !(intptr_t)( Or1 ) )return false;
 		Or1->OrderType = 89;//Build
 		Or1->OrderTime = 0;
 		Or1->DoLink = &BuildObjLink;
@@ -14588,7 +14660,7 @@ void OneObject::SetOrderedUnlimitedMotion( byte OrdType )
 {
 	if ( CheckOrderAbility() )return;
 	Order1* Or1 = CreateOrder( OrdType );
-	if ( !int( Or1 ) )return;
+	if ( !(intptr_t)( Or1 ) )return;
 	Or1->OrderType = 57;
 	Or1->OrderTime = 0;
 	Or1->PrioryLevel = 0;
@@ -14657,7 +14729,7 @@ void OneObject::ClearOrderedUnlimitedMotion( byte OrdType, word GroupID )
 
 	Order1* Or1 = CreateOrder( OrdType );
 
-	if ( !int( Or1 ) )
+	if ( !(intptr_t)( Or1 ) )
 		return;
 
 	Or1->OrderType = 57;
@@ -16136,7 +16208,7 @@ void OneObject::NewMonsterSmartSendTo( int px, int py, int dx, int dy, byte Prio
 	{
 		return;
 	}
-	OR1->DoLink = (ReportFn*) ( SmartLink - 0x7654391 );//&NewMonsterSmartSendToLink;
+	OR1->DoLink = (ReportFn*)(intptr_t)( SmartLink - 0x7654391 );//&NewMonsterSmartSendToLink;
 	OR1->PrioryLevel = Prio & 127;
 	OR1->info.SmartSend.x = px;
 	OR1->info.SmartSend.y = py;

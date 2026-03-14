@@ -1,0 +1,2263 @@
+
+---
+events:
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineSystem.cmake:12 (find_program)"
+      - "CMakeLists.txt:6 (project)"
+    mode: "program"
+    variable: "CMAKE_UNAME"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "uname"
+    candidate_directories:
+      - "/opt/homebrew/opt/curl/bin/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/System/Cryptexes/App/usr/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/go/bin/"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/"
+    searched_directories:
+      - "/opt/homebrew/opt/curl/bin/uname"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/uname"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/uname"
+      - "/opt/homebrew/bin/uname"
+      - "/opt/homebrew/sbin/uname"
+      - "/usr/local/bin/uname"
+      - "/usr/local/sbin/uname"
+      - "/System/Cryptexes/App/usr/bin/uname"
+    found: "/usr/bin/uname"
+    search_context:
+      ENV{PATH}:
+        - "/opt/homebrew/opt/curl/bin"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/local/sbin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/go/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+        - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineSystem.cmake:207 (message)"
+      - "CMakeLists.txt:6 (project)"
+    message: |
+      The target system is: Windows -  - x86_64
+      The host system is: Darwin - 23.3.0 - arm64
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeUnixFindMake.cmake:5 (find_program)"
+      - "CMakeLists.txt:6 (project)"
+    mode: "program"
+    variable: "CMAKE_MAKE_PROGRAM"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "gmake"
+      - "make"
+      - "smake"
+    candidate_directories:
+      - "/opt/homebrew/opt/curl/bin/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/System/Cryptexes/App/usr/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/go/bin/"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/"
+    searched_directories:
+      - "/opt/homebrew/opt/curl/bin/gmake"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/gmake"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/gmake"
+      - "/opt/homebrew/bin/gmake"
+      - "/opt/homebrew/sbin/gmake"
+      - "/usr/local/bin/gmake"
+      - "/usr/local/sbin/gmake"
+      - "/System/Cryptexes/App/usr/bin/gmake"
+      - "/usr/bin/gmake"
+      - "/bin/gmake"
+      - "/usr/sbin/gmake"
+      - "/sbin/gmake"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/gmake"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/gmake"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/gmake"
+      - "/Library/Apple/usr/bin/gmake"
+      - "/usr/local/go/bin/gmake"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/gmake"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/gmake"
+      - "/opt/homebrew/opt/curl/bin/make"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/make"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/make"
+      - "/opt/homebrew/bin/make"
+      - "/opt/homebrew/sbin/make"
+      - "/usr/local/bin/make"
+      - "/usr/local/sbin/make"
+      - "/System/Cryptexes/App/usr/bin/make"
+    found: "/usr/bin/make"
+    search_context:
+      ENV{PATH}:
+        - "/opt/homebrew/opt/curl/bin"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/local/sbin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/go/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+        - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+      CMAKE_FIND_ROOT_PATH: "/opt/homebrew/x86_64-w64-mingw32"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompiler.cmake:115 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:67 (_cmake_find_compiler_path)"
+      - "CMakeLists.txt:6 (project)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER_WITH_PATH"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-gcc"
+    candidate_directories:
+      - "/opt/homebrew/opt/curl/bin/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/System/Cryptexes/App/usr/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/go/bin/"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/"
+    searched_directories:
+      - "/opt/homebrew/opt/curl/bin/x86_64-w64-mingw32-gcc"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/x86_64-w64-mingw32-gcc"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/x86_64-w64-mingw32-gcc"
+    found: "/opt/homebrew/bin/x86_64-w64-mingw32-gcc"
+    search_context:
+      ENV{PATH}:
+        - "/opt/homebrew/opt/curl/bin"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/local/sbin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/go/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+        - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+      CMAKE_FIND_ROOT_PATH: "/opt/homebrew/x86_64-w64-mingw32"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerId.cmake:462 (find_file)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerId.cmake:500 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:6 (project)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCCompilerId.c.in"
+    candidate_directories:
+      - "/opt/homebrew/share/cmake/Modules/"
+    found: "/opt/homebrew/share/cmake/Modules/CMakeCCompilerId.c.in"
+    search_context:
+      ENV{PATH}:
+        - "/opt/homebrew/opt/curl/bin"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/local/sbin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/go/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+        - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+      CMAKE_FIND_ROOT_PATH: "/opt/homebrew/x86_64-w64-mingw32"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:6 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: /opt/homebrew/bin/x86_64-w64-mingw32-gcc 
+      Build flags: -mcrtdll=msvcrt-os;-no-pthread
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.exe"
+      
+      The C compiler identification is GNU, found in:
+        /Users/ildarkarimov/Documents/cossacks-1.52/src/build-win64/CMakeFiles/4.2.3/CompilerIdC/a.exe
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:6 (project)"
+    mode: "program"
+    variable: "CMAKE_AR"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-ar"
+      - "ar"
+    candidate_directories:
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/opt/curl/bin/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/System/Cryptexes/App/usr/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/go/bin/"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/"
+    found: "/opt/homebrew/bin/x86_64-w64-mingw32-ar"
+    search_context:
+      ENV{PATH}:
+        - "/opt/homebrew/opt/curl/bin"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/local/sbin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/go/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+        - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+      CMAKE_FIND_ROOT_PATH: "/opt/homebrew/x86_64-w64-mingw32"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:6 (project)"
+    mode: "program"
+    variable: "CMAKE_RANLIB"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-ranlib"
+      - "ranlib"
+    candidate_directories:
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/opt/curl/bin/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/System/Cryptexes/App/usr/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/go/bin/"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/"
+    found: "/opt/homebrew/bin/x86_64-w64-mingw32-ranlib"
+    search_context:
+      ENV{PATH}:
+        - "/opt/homebrew/opt/curl/bin"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/local/sbin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/go/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+        - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+      CMAKE_FIND_ROOT_PATH: "/opt/homebrew/x86_64-w64-mingw32"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:6 (project)"
+    mode: "program"
+    variable: "CMAKE_STRIP"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-strip"
+      - "strip"
+    candidate_directories:
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/opt/curl/bin/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/System/Cryptexes/App/usr/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/go/bin/"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/"
+    found: "/opt/homebrew/bin/x86_64-w64-mingw32-strip"
+    search_context:
+      ENV{PATH}:
+        - "/opt/homebrew/opt/curl/bin"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/local/sbin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/go/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+        - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+      CMAKE_FIND_ROOT_PATH: "/opt/homebrew/x86_64-w64-mingw32"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:6 (project)"
+    mode: "program"
+    variable: "CMAKE_LINKER"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-ld"
+      - "ld"
+    candidate_directories:
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/opt/curl/bin/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/System/Cryptexes/App/usr/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/go/bin/"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/"
+    found: "/opt/homebrew/bin/x86_64-w64-mingw32-ld"
+    search_context:
+      ENV{PATH}:
+        - "/opt/homebrew/opt/curl/bin"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/local/sbin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/go/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+        - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+      CMAKE_FIND_ROOT_PATH: "/opt/homebrew/x86_64-w64-mingw32"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:6 (project)"
+    mode: "program"
+    variable: "CMAKE_NM"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-nm"
+      - "nm"
+    candidate_directories:
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/opt/curl/bin/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/System/Cryptexes/App/usr/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/go/bin/"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/"
+    found: "/opt/homebrew/bin/x86_64-w64-mingw32-nm"
+    search_context:
+      ENV{PATH}:
+        - "/opt/homebrew/opt/curl/bin"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/local/sbin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/go/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+        - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+      CMAKE_FIND_ROOT_PATH: "/opt/homebrew/x86_64-w64-mingw32"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:6 (project)"
+    mode: "program"
+    variable: "CMAKE_OBJDUMP"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-objdump"
+      - "objdump"
+    candidate_directories:
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/opt/curl/bin/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/System/Cryptexes/App/usr/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/go/bin/"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/"
+    found: "/opt/homebrew/bin/x86_64-w64-mingw32-objdump"
+    search_context:
+      ENV{PATH}:
+        - "/opt/homebrew/opt/curl/bin"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/local/sbin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/go/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+        - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+      CMAKE_FIND_ROOT_PATH: "/opt/homebrew/x86_64-w64-mingw32"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:6 (project)"
+    mode: "program"
+    variable: "CMAKE_OBJCOPY"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-objcopy"
+      - "objcopy"
+    candidate_directories:
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/opt/curl/bin/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/System/Cryptexes/App/usr/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/go/bin/"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/"
+    found: "/opt/homebrew/bin/x86_64-w64-mingw32-objcopy"
+    search_context:
+      ENV{PATH}:
+        - "/opt/homebrew/opt/curl/bin"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/local/sbin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/go/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+        - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+      CMAKE_FIND_ROOT_PATH: "/opt/homebrew/x86_64-w64-mingw32"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:6 (project)"
+    mode: "program"
+    variable: "CMAKE_READELF"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-readelf"
+      - "readelf"
+    candidate_directories:
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/opt/curl/bin/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/System/Cryptexes/App/usr/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/go/bin/"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/"
+    found: "/opt/homebrew/bin/x86_64-w64-mingw32-readelf"
+    search_context:
+      ENV{PATH}:
+        - "/opt/homebrew/opt/curl/bin"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/local/sbin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/go/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+        - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+      CMAKE_FIND_ROOT_PATH: "/opt/homebrew/x86_64-w64-mingw32"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:6 (project)"
+    mode: "program"
+    variable: "CMAKE_DLLTOOL"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-dlltool"
+      - "dlltool"
+    candidate_directories:
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/opt/curl/bin/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/System/Cryptexes/App/usr/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/go/bin/"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/"
+    found: "/opt/homebrew/bin/x86_64-w64-mingw32-dlltool"
+    search_context:
+      ENV{PATH}:
+        - "/opt/homebrew/opt/curl/bin"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/local/sbin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/go/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+        - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+      CMAKE_FIND_ROOT_PATH: "/opt/homebrew/x86_64-w64-mingw32"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:6 (project)"
+    mode: "program"
+    variable: "CMAKE_ADDR2LINE"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-addr2line"
+      - "addr2line"
+    candidate_directories:
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/opt/curl/bin/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/System/Cryptexes/App/usr/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/go/bin/"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/"
+    found: "/opt/homebrew/bin/x86_64-w64-mingw32-addr2line"
+    search_context:
+      ENV{PATH}:
+        - "/opt/homebrew/opt/curl/bin"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/local/sbin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/go/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+        - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+      CMAKE_FIND_ROOT_PATH: "/opt/homebrew/x86_64-w64-mingw32"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:6 (project)"
+    mode: "program"
+    variable: "CMAKE_TAPI"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-tapi"
+      - "tapi"
+    candidate_directories:
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/opt/curl/bin/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/System/Cryptexes/App/usr/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/go/bin/"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/"
+    searched_directories:
+      - "/opt/homebrew/bin/x86_64-w64-mingw32-tapi"
+      - "/opt/homebrew/opt/curl/bin/x86_64-w64-mingw32-tapi"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/x86_64-w64-mingw32-tapi"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/x86_64-w64-mingw32-tapi"
+      - "/opt/homebrew/sbin/x86_64-w64-mingw32-tapi"
+      - "/usr/local/bin/x86_64-w64-mingw32-tapi"
+      - "/usr/local/sbin/x86_64-w64-mingw32-tapi"
+      - "/System/Cryptexes/App/usr/bin/x86_64-w64-mingw32-tapi"
+      - "/usr/bin/x86_64-w64-mingw32-tapi"
+      - "/bin/x86_64-w64-mingw32-tapi"
+      - "/usr/sbin/x86_64-w64-mingw32-tapi"
+      - "/sbin/x86_64-w64-mingw32-tapi"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/x86_64-w64-mingw32-tapi"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/x86_64-w64-mingw32-tapi"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/x86_64-w64-mingw32-tapi"
+      - "/Library/Apple/usr/bin/x86_64-w64-mingw32-tapi"
+      - "/usr/local/go/bin/x86_64-w64-mingw32-tapi"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/x86_64-w64-mingw32-tapi"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/x86_64-w64-mingw32-tapi"
+      - "/opt/homebrew/bin/tapi"
+      - "/opt/homebrew/opt/curl/bin/tapi"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/tapi"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/tapi"
+      - "/opt/homebrew/sbin/tapi"
+      - "/usr/local/bin/tapi"
+      - "/usr/local/sbin/tapi"
+      - "/System/Cryptexes/App/usr/bin/tapi"
+      - "/usr/bin/tapi"
+      - "/bin/tapi"
+      - "/usr/sbin/tapi"
+      - "/sbin/tapi"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/tapi"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/tapi"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/tapi"
+      - "/Library/Apple/usr/bin/tapi"
+      - "/usr/local/go/bin/tapi"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/tapi"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/tapi"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "/opt/homebrew/opt/curl/bin"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/local/sbin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/go/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+        - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+      CMAKE_FIND_ROOT_PATH: "/opt/homebrew/x86_64-w64-mingw32"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
+      - "CMakeLists.txt:6 (project)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER_AR"
+    description: "A wrapper around 'ar' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-gcc-ar-15.2"
+      - "x86_64-w64-mingw32-gcc-ar-15"
+      - "x86_64-w64-mingw32-gcc-ar15"
+      - "x86_64-w64-mingw32-gcc-ar"
+    candidate_directories:
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/opt/curl/bin/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/System/Cryptexes/App/usr/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/go/bin/"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/"
+    searched_directories:
+      - "/opt/homebrew/bin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/opt/homebrew/opt/curl/bin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/opt/homebrew/sbin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/usr/local/sbin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/System/Cryptexes/App/usr/bin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/usr/bin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/bin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/usr/sbin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/sbin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/Library/Apple/usr/bin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/usr/local/go/bin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/opt/homebrew/bin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/opt/homebrew/opt/curl/bin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/x86_64-w64-mingw32-gcc-ar-15"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/x86_64-w64-mingw32-gcc-ar-15"
+      - "/opt/homebrew/sbin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/usr/local/sbin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/System/Cryptexes/App/usr/bin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/usr/bin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/bin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/usr/sbin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/sbin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/Library/Apple/usr/bin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/usr/local/go/bin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/x86_64-w64-mingw32-gcc-ar-15"
+      - "/opt/homebrew/bin/x86_64-w64-mingw32-gcc-ar15"
+      - "/opt/homebrew/opt/curl/bin/x86_64-w64-mingw32-gcc-ar15"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/x86_64-w64-mingw32-gcc-ar15"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/x86_64-w64-mingw32-gcc-ar15"
+      - "/opt/homebrew/sbin/x86_64-w64-mingw32-gcc-ar15"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ar15"
+      - "/usr/local/sbin/x86_64-w64-mingw32-gcc-ar15"
+      - "/System/Cryptexes/App/usr/bin/x86_64-w64-mingw32-gcc-ar15"
+      - "/usr/bin/x86_64-w64-mingw32-gcc-ar15"
+      - "/bin/x86_64-w64-mingw32-gcc-ar15"
+      - "/usr/sbin/x86_64-w64-mingw32-gcc-ar15"
+      - "/sbin/x86_64-w64-mingw32-gcc-ar15"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/x86_64-w64-mingw32-gcc-ar15"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/x86_64-w64-mingw32-gcc-ar15"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/x86_64-w64-mingw32-gcc-ar15"
+      - "/Library/Apple/usr/bin/x86_64-w64-mingw32-gcc-ar15"
+      - "/usr/local/go/bin/x86_64-w64-mingw32-gcc-ar15"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/x86_64-w64-mingw32-gcc-ar15"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/x86_64-w64-mingw32-gcc-ar15"
+    found: "/opt/homebrew/bin/x86_64-w64-mingw32-gcc-ar"
+    search_context:
+      ENV{PATH}:
+        - "/opt/homebrew/opt/curl/bin"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/local/sbin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/go/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+        - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+      CMAKE_FIND_ROOT_PATH: "/opt/homebrew/x86_64-w64-mingw32"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
+      - "CMakeLists.txt:6 (project)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER_RANLIB"
+    description: "A wrapper around 'ranlib' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "x86_64-w64-mingw32-gcc-ranlib-15"
+      - "x86_64-w64-mingw32-gcc-ranlib15"
+      - "x86_64-w64-mingw32-gcc-ranlib"
+    candidate_directories:
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/opt/curl/bin/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/System/Cryptexes/App/usr/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/go/bin/"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/"
+    searched_directories:
+      - "/opt/homebrew/bin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/opt/homebrew/opt/curl/bin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/opt/homebrew/sbin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/usr/local/sbin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/System/Cryptexes/App/usr/bin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/usr/bin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/bin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/usr/sbin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/sbin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/Library/Apple/usr/bin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/usr/local/go/bin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/opt/homebrew/bin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/opt/homebrew/opt/curl/bin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/opt/homebrew/sbin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/usr/local/sbin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/System/Cryptexes/App/usr/bin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/usr/bin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/bin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/usr/sbin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/sbin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/Library/Apple/usr/bin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/usr/local/go/bin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/opt/homebrew/bin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/opt/homebrew/opt/curl/bin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/opt/homebrew/sbin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/usr/local/sbin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/System/Cryptexes/App/usr/bin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/usr/bin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/bin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/usr/sbin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/sbin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/Library/Apple/usr/bin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/usr/local/go/bin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/x86_64-w64-mingw32-gcc-ranlib15"
+    found: "/opt/homebrew/bin/x86_64-w64-mingw32-gcc-ranlib"
+    search_context:
+      ENV{PATH}:
+        - "/opt/homebrew/opt/curl/bin"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/local/sbin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/go/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+        - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+      CMAKE_FIND_ROOT_PATH: "/opt/homebrew/x86_64-w64-mingw32"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompiler.cmake:115 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:71 (_cmake_find_compiler_path)"
+      - "CMakeLists.txt:6 (project)"
+    mode: "program"
+    variable: "CMAKE_CXX_COMPILER_WITH_PATH"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-g++"
+    candidate_directories:
+      - "/opt/homebrew/opt/curl/bin/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/System/Cryptexes/App/usr/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/go/bin/"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/"
+    searched_directories:
+      - "/opt/homebrew/opt/curl/bin/x86_64-w64-mingw32-g++"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/x86_64-w64-mingw32-g++"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/x86_64-w64-mingw32-g++"
+    found: "/opt/homebrew/bin/x86_64-w64-mingw32-g++"
+    search_context:
+      ENV{PATH}:
+        - "/opt/homebrew/opt/curl/bin"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/local/sbin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/go/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+        - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+      CMAKE_FIND_ROOT_PATH: "/opt/homebrew/x86_64-w64-mingw32"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerId.cmake:462 (find_file)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerId.cmake:500 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:6 (project)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCXXCompilerId.cpp.in"
+    candidate_directories:
+      - "/opt/homebrew/share/cmake/Modules/"
+    found: "/opt/homebrew/share/cmake/Modules/CMakeCXXCompilerId.cpp.in"
+    search_context:
+      ENV{PATH}:
+        - "/opt/homebrew/opt/curl/bin"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/local/sbin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/go/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+        - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+      CMAKE_FIND_ROOT_PATH: "/opt/homebrew/x86_64-w64-mingw32"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:6 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: /opt/homebrew/bin/x86_64-w64-mingw32-g++ 
+      Build flags: -mcrtdll=msvcrt-os;-no-pthread;-include;/Users/ildarkarimov/Documents/cossacks-1.52/src/cmake/../platform/msvcrt_compat.h
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.exe"
+      
+      The CXX compiler identification is GNU, found in:
+        /Users/ildarkarimov/Documents/cossacks-1.52/src/build-win64/CMakeFiles/4.2.3/CompilerIdCXX/a.exe
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:207 (include)"
+      - "CMakeLists.txt:6 (project)"
+    mode: "program"
+    variable: "CMAKE_CXX_COMPILER_AR"
+    description: "A wrapper around 'ar' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-gcc-ar-15.2"
+      - "x86_64-w64-mingw32-gcc-ar-15"
+      - "x86_64-w64-mingw32-gcc-ar15"
+      - "x86_64-w64-mingw32-gcc-ar"
+    candidate_directories:
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/opt/curl/bin/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/System/Cryptexes/App/usr/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/go/bin/"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/"
+    searched_directories:
+      - "/opt/homebrew/bin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/opt/homebrew/opt/curl/bin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/opt/homebrew/sbin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/usr/local/sbin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/System/Cryptexes/App/usr/bin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/usr/bin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/bin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/usr/sbin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/sbin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/Library/Apple/usr/bin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/usr/local/go/bin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/x86_64-w64-mingw32-gcc-ar-15.2"
+      - "/opt/homebrew/bin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/opt/homebrew/opt/curl/bin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/x86_64-w64-mingw32-gcc-ar-15"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/x86_64-w64-mingw32-gcc-ar-15"
+      - "/opt/homebrew/sbin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/usr/local/sbin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/System/Cryptexes/App/usr/bin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/usr/bin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/bin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/usr/sbin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/sbin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/Library/Apple/usr/bin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/usr/local/go/bin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/x86_64-w64-mingw32-gcc-ar-15"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/x86_64-w64-mingw32-gcc-ar-15"
+      - "/opt/homebrew/bin/x86_64-w64-mingw32-gcc-ar15"
+      - "/opt/homebrew/opt/curl/bin/x86_64-w64-mingw32-gcc-ar15"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/x86_64-w64-mingw32-gcc-ar15"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/x86_64-w64-mingw32-gcc-ar15"
+      - "/opt/homebrew/sbin/x86_64-w64-mingw32-gcc-ar15"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ar15"
+      - "/usr/local/sbin/x86_64-w64-mingw32-gcc-ar15"
+      - "/System/Cryptexes/App/usr/bin/x86_64-w64-mingw32-gcc-ar15"
+      - "/usr/bin/x86_64-w64-mingw32-gcc-ar15"
+      - "/bin/x86_64-w64-mingw32-gcc-ar15"
+      - "/usr/sbin/x86_64-w64-mingw32-gcc-ar15"
+      - "/sbin/x86_64-w64-mingw32-gcc-ar15"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/x86_64-w64-mingw32-gcc-ar15"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/x86_64-w64-mingw32-gcc-ar15"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/x86_64-w64-mingw32-gcc-ar15"
+      - "/Library/Apple/usr/bin/x86_64-w64-mingw32-gcc-ar15"
+      - "/usr/local/go/bin/x86_64-w64-mingw32-gcc-ar15"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/x86_64-w64-mingw32-gcc-ar15"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/x86_64-w64-mingw32-gcc-ar15"
+    found: "/opt/homebrew/bin/x86_64-w64-mingw32-gcc-ar"
+    search_context:
+      ENV{PATH}:
+        - "/opt/homebrew/opt/curl/bin"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/local/sbin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/go/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+        - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+      CMAKE_FIND_ROOT_PATH: "/opt/homebrew/x86_64-w64-mingw32"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:207 (include)"
+      - "CMakeLists.txt:6 (project)"
+    mode: "program"
+    variable: "CMAKE_CXX_COMPILER_RANLIB"
+    description: "A wrapper around 'ranlib' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "x86_64-w64-mingw32-gcc-ranlib-15"
+      - "x86_64-w64-mingw32-gcc-ranlib15"
+      - "x86_64-w64-mingw32-gcc-ranlib"
+    candidate_directories:
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/opt/curl/bin/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/System/Cryptexes/App/usr/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/go/bin/"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/"
+    searched_directories:
+      - "/opt/homebrew/bin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/opt/homebrew/opt/curl/bin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/opt/homebrew/sbin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/usr/local/sbin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/System/Cryptexes/App/usr/bin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/usr/bin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/bin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/usr/sbin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/sbin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/Library/Apple/usr/bin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/usr/local/go/bin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/x86_64-w64-mingw32-gcc-ranlib-15.2"
+      - "/opt/homebrew/bin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/opt/homebrew/opt/curl/bin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/opt/homebrew/sbin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/usr/local/sbin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/System/Cryptexes/App/usr/bin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/usr/bin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/bin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/usr/sbin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/sbin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/Library/Apple/usr/bin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/usr/local/go/bin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/x86_64-w64-mingw32-gcc-ranlib-15"
+      - "/opt/homebrew/bin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/opt/homebrew/opt/curl/bin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/opt/homebrew/sbin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/usr/local/sbin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/System/Cryptexes/App/usr/bin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/usr/bin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/bin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/usr/sbin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/sbin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/Library/Apple/usr/bin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/usr/local/go/bin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/Users/ildarkarimov/.spoof-dpi/bin/x86_64-w64-mingw32-gcc-ranlib15"
+      - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts/x86_64-w64-mingw32-gcc-ranlib15"
+    found: "/opt/homebrew/bin/x86_64-w64-mingw32-gcc-ranlib"
+    search_context:
+      ENV{PATH}:
+        - "/opt/homebrew/opt/curl/bin"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/local/sbin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/go/bin"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/ildarkarimov/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/opt/curl/bin"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+        - "/Users/ildarkarimov/.vscode/extensions/ms-python.debugpy-2025.18.0/bundled/scripts/noConfigScripts"
+        - "/Users/ildarkarimov/.spoof-dpi/bin"
+      CMAKE_FIND_ROOT_PATH: "/opt/homebrew/x86_64-w64-mingw32"
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:6 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "/Users/ildarkarimov/Documents/cossacks-1.52/src/build-win64/CMakeFiles/CMakeScratch/TryCompile-gP4AxD"
+      binary: "/Users/ildarkarimov/Documents/cossacks-1.52/src/build-win64/CMakeFiles/CMakeScratch/TryCompile-gP4AxD"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "-mcrtdll=msvcrt-os -no-pthread"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/ildarkarimov/Documents/cossacks-1.52/src/build-win64/CMakeFiles/CMakeScratch/TryCompile-gP4AxD'
+        
+        Run Build Command(s): /opt/homebrew/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_bf147/fast
+        /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_bf147.dir/build.make CMakeFiles/cmTC_bf147.dir/build
+        Building C object CMakeFiles/cmTC_bf147.dir/CMakeCCompilerABI.c.obj
+        /opt/homebrew/bin/x86_64-w64-mingw32-gcc   -mcrtdll=msvcrt-os -no-pthread    -v -o CMakeFiles/cmTC_bf147.dir/CMakeCCompilerABI.c.obj -c /opt/homebrew/share/cmake/Modules/CMakeCCompilerABI.c
+        Using built-in specs.
+        COLLECT_GCC=/opt/homebrew/bin/x86_64-w64-mingw32-gcc
+        Target: x86_64-w64-mingw32
+        Configured with: ../configure --target=x86_64-w64-mingw32 --with-sysroot=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64 --prefix=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64 --with-bugurl=https://github.com/Homebrew/homebrew-core/issues --enable-languages=c,c++,objc,obj-c++,fortran --with-ld=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/bin/x86_64-w64-mingw32-ld --with-as=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/bin/x86_64-w64-mingw32-as --with-gmp=/opt/homebrew/opt/gmp --with-mpfr=/opt/homebrew/opt/mpfr --with-mpc=/opt/homebrew/opt/libmpc --with-isl=/opt/homebrew/opt/isl --with-system-zlib --with-zstd --disable-multilib --disable-nls --enable-threads=posix
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 15.2.0 (GCC) 
+        COLLECT_GCC_OPTIONS='-mcrtdll=msvcrt-os' '-no-pthread' '-v' '-o' 'CMakeFiles/cmTC_bf147.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_bf147.dir/'
+         /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/cc1 -quiet -v -D__MSVCRT_VERSION__=0x700 /opt/homebrew/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_bf147.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mcrtdll=msvcrt-os -mtune=generic -march=x86-64 -version -o /var/folders/mr/vb93w9b90f5ch92f25_qfsfh0000gn/T//ccxdPa0T.s
+        GNU C23 (GCC) version 15.2.0 (x86_64-w64-mingw32)
+        	compiled by GNU C version Apple LLVM 16.0.0 (clang-1600.0.26.6), GMP version 6.3.0, MPFR version 4.2.2, MPC version 1.3.1, isl version isl-0.27-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring nonexistent directory "/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/usr/local/include"
+        ignoring duplicate directory "/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/include
+         /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed
+         /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/include
+        End of search list.
+        Compiler executable checksum: be8e0c2979d85f24de4d987427ddb474
+        COLLECT_GCC_OPTIONS='-mcrtdll=msvcrt-os' '-no-pthread' '-v' '-o' 'CMakeFiles/cmTC_bf147.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_bf147.dir/'
+         /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/bin/x86_64-w64-mingw32-as -v -o CMakeFiles/cmTC_bf147.dir/CMakeCCompilerABI.c.obj /var/folders/mr/vb93w9b90f5ch92f25_qfsfh0000gn/T//ccxdPa0T.s
+        GNU assembler version 2.45 (x86_64-w64-mingw32) using BFD version (GNU Binutils) 2.45
+        COMPILER_PATH=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/bin/
+        LIBRARY_PATH=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/../lib/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/
+        COLLECT_GCC_OPTIONS='-mcrtdll=msvcrt-os' '-no-pthread' '-v' '-o' 'CMakeFiles/cmTC_bf147.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_bf147.dir/CMakeCCompilerABI.c.'
+        Linking C executable cmTC_bf147.exe
+        /opt/homebrew/bin/cmake -E cmake_link_script CMakeFiles/cmTC_bf147.dir/link.txt --verbose=1
+        Using built-in specs.
+        COLLECT_GCC=/opt/homebrew/bin/x86_64-w64-mingw32-gcc
+        COLLECT_LTO_WRAPPER=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/lto-wrapper
+        Target: x86_64-w64-mingw32
+        Configured with: ../configure --target=x86_64-w64-mingw32 --with-sysroot=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64 --prefix=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64 --with-bugurl=https://github.com/Homebrew/homebrew-core/issues --enable-languages=c,c++,objc,obj-c++,fortran --with-ld=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/bin/x86_64-w64-mingw32-ld --with-as=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/bin/x86_64-w64-mingw32-as --with-gmp=/opt/homebrew/opt/gmp --with-mpfr=/opt/homebrew/opt/mpfr --with-mpc=/opt/homebrew/opt/libmpc --with-isl=/opt/homebrew/opt/isl --with-system-zlib --with-zstd --disable-multilib --disable-nls --enable-threads=posix
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 15.2.0 (GCC) 
+        COMPILER_PATH=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/bin/
+        LIBRARY_PATH=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/../lib/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/
+        COLLECT_GCC_OPTIONS='-mcrtdll=msvcrt-os' '-no-pthread' '-v' '-o' 'cmTC_bf147.exe' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_bf147.'
+         /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/collect2 -plugin /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/liblto_plugin.so -plugin-opt=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/lto-wrapper -plugin-opt=-fresolution=/var/folders/mr/vb93w9b90f5ch92f25_qfsfh0000gn/T//ccypzC8U.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt-os -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt-os -plugin-opt=-pass-through=-lkernel32 --sysroot=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64 -m i386pep -Bdynamic -o cmTC_bf147.exe /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0 -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/../lib -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib -v --whole-archive CMakeFiles/cmTC_bf147.dir/objects.a --no-whole-archive --out-implib libcmTC_bf147.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmingwex -lmsvcrt-os -lkernel32 -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lgcc_eh -lmingwex -lmsvcrt-os -lkernel32 /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o
+        collect2 version 15.2.0
+        /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/bin/x86_64-w64-mingw32-ld -plugin /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/liblto_plugin.so -plugin-opt=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/lto-wrapper -plugin-opt=-fresolution=/var/folders/mr/vb93w9b90f5ch92f25_qfsfh0000gn/T//ccypzC8U.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt-os -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt-os -plugin-opt=-pass-through=-lkernel32 --sysroot=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64 -m i386pep -Bdynamic -o cmTC_bf147.exe /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0 -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/../lib -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib -v --whole-archive CMakeFiles/cmTC_bf147.dir/objects.a --no-whole-archive --out-implib libcmTC_bf147.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmingwex -lmsvcrt-os -lkernel32 -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lgcc_eh -lmingwex -lmsvcrt-os -lkernel32 /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o
+        GNU ld (GNU Binutils) 2.45
+        COLLECT_GCC_OPTIONS='-mcrtdll=msvcrt-os' '-no-pthread' '-v' '-o' 'cmTC_bf147.exe' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_bf147.'
+        /opt/homebrew/bin/cmake -E rm -f CMakeFiles/cmTC_bf147.dir/objects.a
+        /opt/homebrew/bin/x86_64-w64-mingw32-ar qc CMakeFiles/cmTC_bf147.dir/objects.a @CMakeFiles/cmTC_bf147.dir/objects1.rsp
+        /opt/homebrew/bin/x86_64-w64-mingw32-gcc -mcrtdll=msvcrt-os -no-pthread   -v -Wl,-v -Wl,--whole-archive CMakeFiles/cmTC_bf147.dir/objects.a -Wl,--no-whole-archive -o cmTC_bf147.exe -Wl,--out-implib,libcmTC_bf147.dll.a -Wl,--major-image-version,0,--minor-image-version,0
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:217 (message)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:6 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/include]
+          add: [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed]
+          add: [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/include]
+        end of search list found
+        collapse include dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/include] ==> [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/include]
+        collapse include dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed] ==> [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed]
+        collapse include dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/include] ==> [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include]
+        implicit include dirs: [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/include;/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed;/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:6 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
+        ignore line: [Change Dir: '/Users/ildarkarimov/Documents/cossacks-1.52/src/build-win64/CMakeFiles/CMakeScratch/TryCompile-gP4AxD']
+        ignore line: []
+        ignore line: [Run Build Command(s): /opt/homebrew/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_bf147/fast]
+        ignore line: [/Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_bf147.dir/build.make CMakeFiles/cmTC_bf147.dir/build]
+        ignore line: [Building C object CMakeFiles/cmTC_bf147.dir/CMakeCCompilerABI.c.obj]
+        ignore line: [/opt/homebrew/bin/x86_64-w64-mingw32-gcc   -mcrtdll=msvcrt-os -no-pthread    -v -o CMakeFiles/cmTC_bf147.dir/CMakeCCompilerABI.c.obj -c /opt/homebrew/share/cmake/Modules/CMakeCCompilerABI.c]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/opt/homebrew/bin/x86_64-w64-mingw32-gcc]
+        ignore line: [Target: x86_64-w64-mingw32]
+        ignore line: [Configured with: ../configure --target=x86_64-w64-mingw32 --with-sysroot=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64 --prefix=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64 --with-bugurl=https://github.com/Homebrew/homebrew-core/issues --enable-languages=c,c++,objc,obj-c++,fortran --with-ld=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/bin/x86_64-w64-mingw32-ld --with-as=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/bin/x86_64-w64-mingw32-as --with-gmp=/opt/homebrew/opt/gmp --with-mpfr=/opt/homebrew/opt/mpfr --with-mpc=/opt/homebrew/opt/libmpc --with-isl=/opt/homebrew/opt/isl --with-system-zlib --with-zstd --disable-multilib --disable-nls --enable-threads=posix]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 15.2.0 (GCC) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcrtdll=msvcrt-os' '-no-pthread' '-v' '-o' 'CMakeFiles/cmTC_bf147.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_bf147.dir/']
+        ignore line: [ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/cc1 -quiet -v -D__MSVCRT_VERSION__=0x700 /opt/homebrew/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_bf147.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mcrtdll=msvcrt-os -mtune=generic -march=x86-64 -version -o /var/folders/mr/vb93w9b90f5ch92f25_qfsfh0000gn/T//ccxdPa0T.s]
+        ignore line: [GNU C23 (GCC) version 15.2.0 (x86_64-w64-mingw32)]
+        ignore line: [	compiled by GNU C version Apple LLVM 16.0.0 (clang-1600.0.26.6)  GMP version 6.3.0  MPFR version 4.2.2  MPC version 1.3.1  isl version isl-0.27-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring nonexistent directory "/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/usr/local/include"]
+        ignore line: [ignoring duplicate directory "/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/include]
+        ignore line: [ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed]
+        ignore line: [ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/include]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: be8e0c2979d85f24de4d987427ddb474]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcrtdll=msvcrt-os' '-no-pthread' '-v' '-o' 'CMakeFiles/cmTC_bf147.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_bf147.dir/']
+        ignore line: [ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/bin/x86_64-w64-mingw32-as -v -o CMakeFiles/cmTC_bf147.dir/CMakeCCompilerABI.c.obj /var/folders/mr/vb93w9b90f5ch92f25_qfsfh0000gn/T//ccxdPa0T.s]
+        ignore line: [GNU assembler version 2.45 (x86_64-w64-mingw32) using BFD version (GNU Binutils) 2.45]
+        ignore line: [COMPILER_PATH=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/bin/]
+        ignore line: [LIBRARY_PATH=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/../lib/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcrtdll=msvcrt-os' '-no-pthread' '-v' '-o' 'CMakeFiles/cmTC_bf147.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_bf147.dir/CMakeCCompilerABI.c.']
+        ignore line: [Linking C executable cmTC_bf147.exe]
+        ignore line: [/opt/homebrew/bin/cmake -E cmake_link_script CMakeFiles/cmTC_bf147.dir/link.txt --verbose=1]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/opt/homebrew/bin/x86_64-w64-mingw32-gcc]
+        ignore line: [COLLECT_LTO_WRAPPER=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/lto-wrapper]
+        ignore line: [Target: x86_64-w64-mingw32]
+        ignore line: [Configured with: ../configure --target=x86_64-w64-mingw32 --with-sysroot=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64 --prefix=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64 --with-bugurl=https://github.com/Homebrew/homebrew-core/issues --enable-languages=c,c++,objc,obj-c++,fortran --with-ld=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/bin/x86_64-w64-mingw32-ld --with-as=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/bin/x86_64-w64-mingw32-as --with-gmp=/opt/homebrew/opt/gmp --with-mpfr=/opt/homebrew/opt/mpfr --with-mpc=/opt/homebrew/opt/libmpc --with-isl=/opt/homebrew/opt/isl --with-system-zlib --with-zstd --disable-multilib --disable-nls --enable-threads=posix]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 15.2.0 (GCC) ]
+        ignore line: [COMPILER_PATH=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/bin/]
+        ignore line: [LIBRARY_PATH=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/../lib/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcrtdll=msvcrt-os' '-no-pthread' '-v' '-o' 'cmTC_bf147.exe' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_bf147.']
+        link line: [ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/collect2 -plugin /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/liblto_plugin.so -plugin-opt=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/lto-wrapper -plugin-opt=-fresolution=/var/folders/mr/vb93w9b90f5ch92f25_qfsfh0000gn/T//ccypzC8U.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt-os -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt-os -plugin-opt=-pass-through=-lkernel32 --sysroot=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64 -m i386pep -Bdynamic -o cmTC_bf147.exe /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0 -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/../lib -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib -v --whole-archive CMakeFiles/cmTC_bf147.dir/objects.a --no-whole-archive --out-implib libcmTC_bf147.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmingwex -lmsvcrt-os -lkernel32 -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lgcc_eh -lmingwex -lmsvcrt-os -lkernel32 /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o]
+          arg [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/var/folders/mr/vb93w9b90f5ch92f25_qfsfh0000gn/T//ccypzC8U.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmingw32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_eh] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmingwex] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmsvcrt-os] ==> ignore
+          arg [-plugin-opt=-pass-through=-lkernel32] ==> ignore
+          arg [-plugin-opt=-pass-through=-ladvapi32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lshell32] ==> ignore
+          arg [-plugin-opt=-pass-through=-luser32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lkernel32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmingw32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_eh] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmingwex] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmsvcrt-os] ==> ignore
+          arg [-plugin-opt=-pass-through=-lkernel32] ==> ignore
+          arg [--sysroot=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64] ==> ignore
+          arg [-m] ==> ignore
+          arg [i386pep] ==> ignore
+          arg [-Bdynamic] ==> search dynamic
+          arg [-o] ==> ignore
+          arg [cmTC_bf147.exe] ==> ignore
+          arg [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o] ==> obj [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o]
+          arg [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o] ==> obj [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o]
+          arg [-L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0] ==> dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0]
+          arg [-L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib] ==> dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib]
+          arg [-L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/../lib] ==> dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/../lib]
+          arg [-L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib] ==> dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib]
+          arg [-L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib] ==> dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib]
+          arg [-v] ==> ignore
+          arg [--whole-archive] ==> ignore
+          arg [CMakeFiles/cmTC_bf147.dir/objects.a] ==> ignore
+          arg [--no-whole-archive] ==> ignore
+          arg [--out-implib] ==> ignore
+          arg [libcmTC_bf147.dll.a] ==> ignore
+          arg [--major-image-version] ==> ignore
+          arg [0] ==> ignore
+          arg [--minor-image-version] ==> ignore
+          arg [0] ==> ignore
+          arg [-lmingw32] ==> lib [mingw32]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lgcc_eh] ==> lib [gcc_eh]
+          arg [-lmingwex] ==> lib [mingwex]
+          arg [-lmsvcrt-os] ==> lib [msvcrt-os]
+          arg [-lkernel32] ==> lib [kernel32]
+          arg [-ladvapi32] ==> lib [advapi32]
+          arg [-lshell32] ==> lib [shell32]
+          arg [-luser32] ==> lib [user32]
+          arg [-lkernel32] ==> lib [kernel32]
+          arg [-lmingw32] ==> lib [mingw32]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lgcc_eh] ==> lib [gcc_eh]
+          arg [-lmingwex] ==> lib [mingwex]
+          arg [-lmsvcrt-os] ==> lib [msvcrt-os]
+          arg [-lkernel32] ==> lib [kernel32]
+          arg [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o] ==> obj [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o]
+        ignore line: [collect2 version 15.2.0]
+        ignore line: [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/bin/x86_64-w64-mingw32-ld -plugin /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/liblto_plugin.so -plugin-opt=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/lto-wrapper -plugin-opt=-fresolution=/var/folders/mr/vb93w9b90f5ch92f25_qfsfh0000gn/T//ccypzC8U.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt-os -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt-os -plugin-opt=-pass-through=-lkernel32 --sysroot=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64 -m i386pep -Bdynamic -o cmTC_bf147.exe /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0 -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/../lib -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib -v --whole-archive CMakeFiles/cmTC_bf147.dir/objects.a --no-whole-archive --out-implib libcmTC_bf147.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmingwex -lmsvcrt-os -lkernel32 -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lgcc_eh -lmingwex -lmsvcrt-os -lkernel32 /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o]
+        ignore line: [GNU ld (GNU Binutils) 2.45]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcrtdll=msvcrt-os' '-no-pthread' '-v' '-o' 'cmTC_bf147.exe' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_bf147.']
+        ignore line: [/opt/homebrew/bin/cmake -E rm -f CMakeFiles/cmTC_bf147.dir/objects.a]
+        ignore line: [/opt/homebrew/bin/x86_64-w64-mingw32-ar qc CMakeFiles/cmTC_bf147.dir/objects.a @CMakeFiles/cmTC_bf147.dir/objects1.rsp]
+        ignore line: [/opt/homebrew/bin/x86_64-w64-mingw32-gcc -mcrtdll=msvcrt-os -no-pthread   -v -Wl -v -Wl --whole-archive CMakeFiles/cmTC_bf147.dir/objects.a -Wl --no-whole-archive -o cmTC_bf147.exe -Wl --out-implib libcmTC_bf147.dll.a -Wl --major-image-version 0 --minor-image-version 0]
+        ignore line: []
+        ignore line: []
+        remove lib [gcc_eh]
+        remove lib [msvcrt-os]
+        remove lib [gcc_eh]
+        remove lib [msvcrt-os]
+        collapse obj [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o] ==> [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/lib/crt2.o]
+        collapse library dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0] ==> [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0]
+        collapse library dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib] ==> [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/lib]
+        collapse library dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/../lib] ==> [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib]
+        collapse library dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib] ==> [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/lib]
+        collapse library dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib] ==> [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib]
+        implicit libs: [mingw32;gcc;mingwex;kernel32;advapi32;shell32;user32;kernel32;mingw32;gcc;mingwex;kernel32]
+        implicit objs: [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/lib/crt2.o;/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o;/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o]
+        implicit dirs: [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0;/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/lib;/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:6 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "/Users/ildarkarimov/Documents/cossacks-1.52/src/build-win64/CMakeFiles/CMakeScratch/TryCompile-YRYCrh"
+      binary: "/Users/ildarkarimov/Documents/cossacks-1.52/src/build-win64/CMakeFiles/CMakeScratch/TryCompile-YRYCrh"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "-mcrtdll=msvcrt-os -no-pthread -include /Users/ildarkarimov/Documents/cossacks-1.52/src/cmake/../platform/msvcrt_compat.h"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/ildarkarimov/Documents/cossacks-1.52/src/build-win64/CMakeFiles/CMakeScratch/TryCompile-YRYCrh'
+        
+        Run Build Command(s): /opt/homebrew/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_ce2f0/fast
+        /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_ce2f0.dir/build.make CMakeFiles/cmTC_ce2f0.dir/build
+        Building CXX object CMakeFiles/cmTC_ce2f0.dir/CMakeCXXCompilerABI.cpp.obj
+        /opt/homebrew/bin/x86_64-w64-mingw32-g++   -mcrtdll=msvcrt-os -no-pthread -include /Users/ildarkarimov/Documents/cossacks-1.52/src/cmake/../platform/msvcrt_compat.h    -v -o CMakeFiles/cmTC_ce2f0.dir/CMakeCXXCompilerABI.cpp.obj -c /opt/homebrew/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        Using built-in specs.
+        COLLECT_GCC=/opt/homebrew/bin/x86_64-w64-mingw32-g++
+        Target: x86_64-w64-mingw32
+        Configured with: ../configure --target=x86_64-w64-mingw32 --with-sysroot=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64 --prefix=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64 --with-bugurl=https://github.com/Homebrew/homebrew-core/issues --enable-languages=c,c++,objc,obj-c++,fortran --with-ld=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/bin/x86_64-w64-mingw32-ld --with-as=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/bin/x86_64-w64-mingw32-as --with-gmp=/opt/homebrew/opt/gmp --with-mpfr=/opt/homebrew/opt/mpfr --with-mpc=/opt/homebrew/opt/libmpc --with-isl=/opt/homebrew/opt/isl --with-system-zlib --with-zstd --disable-multilib --disable-nls --enable-threads=posix
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 15.2.0 (GCC) 
+        COLLECT_GCC_OPTIONS='-mcrtdll=msvcrt-os' '-no-pthread' '-include' '/Users/ildarkarimov/Documents/cossacks-1.52/src/cmake/../platform/msvcrt_compat.h' '-v' '-o' 'CMakeFiles/cmTC_ce2f0.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_ce2f0.dir/'
+         /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/cc1plus -quiet -v -D__MSVCRT_VERSION__=0x700 -include /Users/ildarkarimov/Documents/cossacks-1.52/src/cmake/../platform/msvcrt_compat.h /opt/homebrew/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_ce2f0.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mcrtdll=msvcrt-os -mtune=generic -march=x86-64 -version -o /var/folders/mr/vb93w9b90f5ch92f25_qfsfh0000gn/T//ccmvaiAR.s
+        GNU C++17 (GCC) version 15.2.0 (x86_64-w64-mingw32)
+        	compiled by GNU C version Apple LLVM 16.0.0 (clang-1600.0.26.6), GMP version 6.3.0, MPFR version 4.2.2, MPC version 1.3.1, isl version isl-0.27-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring nonexistent directory "/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/usr/local/include"
+        ignoring duplicate directory "/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/include/c++/15.2.0
+         /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/include/c++/15.2.0/x86_64-w64-mingw32
+         /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/include/c++/15.2.0/backward
+         /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/include
+         /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed
+         /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/include
+        End of search list.
+        Compiler executable checksum: c59474ff8c4b1f8bdec05bb83887aa69
+        COLLECT_GCC_OPTIONS='-mcrtdll=msvcrt-os' '-no-pthread' '-include' '/Users/ildarkarimov/Documents/cossacks-1.52/src/cmake/../platform/msvcrt_compat.h' '-v' '-o' 'CMakeFiles/cmTC_ce2f0.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_ce2f0.dir/'
+         /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/bin/x86_64-w64-mingw32-as -v -o CMakeFiles/cmTC_ce2f0.dir/CMakeCXXCompilerABI.cpp.obj /var/folders/mr/vb93w9b90f5ch92f25_qfsfh0000gn/T//ccmvaiAR.s
+        GNU assembler version 2.45 (x86_64-w64-mingw32) using BFD version (GNU Binutils) 2.45
+        COMPILER_PATH=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/bin/
+        LIBRARY_PATH=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/../lib/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/
+        COLLECT_GCC_OPTIONS='-mcrtdll=msvcrt-os' '-no-pthread' '-include' '/Users/ildarkarimov/Documents/cossacks-1.52/src/cmake/../platform/msvcrt_compat.h' '-v' '-o' 'CMakeFiles/cmTC_ce2f0.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_ce2f0.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_ce2f0.exe
+        /opt/homebrew/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ce2f0.dir/link.txt --verbose=1
+        Using built-in specs.
+        COLLECT_GCC=/opt/homebrew/bin/x86_64-w64-mingw32-g++
+        COLLECT_LTO_WRAPPER=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/lto-wrapper
+        Target: x86_64-w64-mingw32
+        Configured with: ../configure --target=x86_64-w64-mingw32 --with-sysroot=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64 --prefix=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64 --with-bugurl=https://github.com/Homebrew/homebrew-core/issues --enable-languages=c,c++,objc,obj-c++,fortran --with-ld=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/bin/x86_64-w64-mingw32-ld --with-as=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/bin/x86_64-w64-mingw32-as --with-gmp=/opt/homebrew/opt/gmp --with-mpfr=/opt/homebrew/opt/mpfr --with-mpc=/opt/homebrew/opt/libmpc --with-isl=/opt/homebrew/opt/isl --with-system-zlib --with-zstd --disable-multilib --disable-nls --enable-threads=posix
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 15.2.0 (GCC) 
+        COMPILER_PATH=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/bin/
+        LIBRARY_PATH=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/../lib/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/
+        COLLECT_GCC_OPTIONS='-mcrtdll=msvcrt-os' '-no-pthread' '-include' '/Users/ildarkarimov/Documents/cossacks-1.52/src/cmake/../platform/msvcrt_compat.h' '-v' '-o' 'cmTC_ce2f0.exe' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_ce2f0.'
+         /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/collect2 -plugin /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/liblto_plugin.so -plugin-opt=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/lto-wrapper -plugin-opt=-fresolution=/var/folders/mr/vb93w9b90f5ch92f25_qfsfh0000gn/T//ccdmGWcK.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt-os -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt-os -plugin-opt=-pass-through=-lkernel32 --sysroot=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64 -m i386pep -Bdynamic -o cmTC_ce2f0.exe /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0 -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/../lib -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib -v --whole-archive CMakeFiles/cmTC_ce2f0.dir/objects.a --no-whole-archive --out-implib libcmTC_ce2f0.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lmingw32 -lgcc_s -lgcc -lmingwex -lmsvcrt-os -lkernel32 -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc_s -lgcc -lmingwex -lmsvcrt-os -lkernel32 /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o
+        collect2 version 15.2.0
+        /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/bin/x86_64-w64-mingw32-ld -plugin /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/liblto_plugin.so -plugin-opt=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/lto-wrapper -plugin-opt=-fresolution=/var/folders/mr/vb93w9b90f5ch92f25_qfsfh0000gn/T//ccdmGWcK.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt-os -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt-os -plugin-opt=-pass-through=-lkernel32 --sysroot=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64 -m i386pep -Bdynamic -o cmTC_ce2f0.exe /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0 -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/../lib -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib -v --whole-archive CMakeFiles/cmTC_ce2f0.dir/objects.a --no-whole-archive --out-implib libcmTC_ce2f0.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lmingw32 -lgcc_s -lgcc -lmingwex -lmsvcrt-os -lkernel32 -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc_s -lgcc -lmingwex -lmsvcrt-os -lkernel32 /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o
+        GNU ld (GNU Binutils) 2.45
+        COLLECT_GCC_OPTIONS='-mcrtdll=msvcrt-os' '-no-pthread' '-include' '/Users/ildarkarimov/Documents/cossacks-1.52/src/cmake/../platform/msvcrt_compat.h' '-v' '-o' 'cmTC_ce2f0.exe' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_ce2f0.'
+        /opt/homebrew/bin/cmake -E rm -f CMakeFiles/cmTC_ce2f0.dir/objects.a
+        /opt/homebrew/bin/x86_64-w64-mingw32-ar qc CMakeFiles/cmTC_ce2f0.dir/objects.a @CMakeFiles/cmTC_ce2f0.dir/objects1.rsp
+        /opt/homebrew/bin/x86_64-w64-mingw32-g++ -mcrtdll=msvcrt-os -no-pthread -include /Users/ildarkarimov/Documents/cossacks-1.52/src/cmake/../platform/msvcrt_compat.h   -v -Wl,-v -Wl,--whole-archive CMakeFiles/cmTC_ce2f0.dir/objects.a -Wl,--no-whole-archive -o cmTC_ce2f0.exe -Wl,--out-implib,libcmTC_ce2f0.dll.a -Wl,--major-image-version,0,--minor-image-version,0
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:217 (message)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:6 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/include/c++/15.2.0]
+          add: [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/include/c++/15.2.0/x86_64-w64-mingw32]
+          add: [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/include/c++/15.2.0/backward]
+          add: [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/include]
+          add: [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed]
+          add: [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/include]
+        end of search list found
+        collapse include dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/include/c++/15.2.0] ==> [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include/c++/15.2.0]
+        collapse include dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/include/c++/15.2.0/x86_64-w64-mingw32] ==> [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include/c++/15.2.0/x86_64-w64-mingw32]
+        collapse include dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/include/c++/15.2.0/backward] ==> [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include/c++/15.2.0/backward]
+        collapse include dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/include] ==> [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/include]
+        collapse include dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed] ==> [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed]
+        collapse include dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/include] ==> [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include]
+        implicit include dirs: [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include/c++/15.2.0;/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include/c++/15.2.0/x86_64-w64-mingw32;/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include/c++/15.2.0/backward;/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/include;/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed;/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:6 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
+        ignore line: [Change Dir: '/Users/ildarkarimov/Documents/cossacks-1.52/src/build-win64/CMakeFiles/CMakeScratch/TryCompile-YRYCrh']
+        ignore line: []
+        ignore line: [Run Build Command(s): /opt/homebrew/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_ce2f0/fast]
+        ignore line: [/Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_ce2f0.dir/build.make CMakeFiles/cmTC_ce2f0.dir/build]
+        ignore line: [Building CXX object CMakeFiles/cmTC_ce2f0.dir/CMakeCXXCompilerABI.cpp.obj]
+        ignore line: [/opt/homebrew/bin/x86_64-w64-mingw32-g++   -mcrtdll=msvcrt-os -no-pthread -include /Users/ildarkarimov/Documents/cossacks-1.52/src/cmake/../platform/msvcrt_compat.h    -v -o CMakeFiles/cmTC_ce2f0.dir/CMakeCXXCompilerABI.cpp.obj -c /opt/homebrew/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/opt/homebrew/bin/x86_64-w64-mingw32-g++]
+        ignore line: [Target: x86_64-w64-mingw32]
+        ignore line: [Configured with: ../configure --target=x86_64-w64-mingw32 --with-sysroot=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64 --prefix=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64 --with-bugurl=https://github.com/Homebrew/homebrew-core/issues --enable-languages=c,c++,objc,obj-c++,fortran --with-ld=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/bin/x86_64-w64-mingw32-ld --with-as=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/bin/x86_64-w64-mingw32-as --with-gmp=/opt/homebrew/opt/gmp --with-mpfr=/opt/homebrew/opt/mpfr --with-mpc=/opt/homebrew/opt/libmpc --with-isl=/opt/homebrew/opt/isl --with-system-zlib --with-zstd --disable-multilib --disable-nls --enable-threads=posix]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 15.2.0 (GCC) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcrtdll=msvcrt-os' '-no-pthread' '-include' '/Users/ildarkarimov/Documents/cossacks-1.52/src/cmake/../platform/msvcrt_compat.h' '-v' '-o' 'CMakeFiles/cmTC_ce2f0.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_ce2f0.dir/']
+        ignore line: [ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/cc1plus -quiet -v -D__MSVCRT_VERSION__=0x700 -include /Users/ildarkarimov/Documents/cossacks-1.52/src/cmake/../platform/msvcrt_compat.h /opt/homebrew/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_ce2f0.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mcrtdll=msvcrt-os -mtune=generic -march=x86-64 -version -o /var/folders/mr/vb93w9b90f5ch92f25_qfsfh0000gn/T//ccmvaiAR.s]
+        ignore line: [GNU C++17 (GCC) version 15.2.0 (x86_64-w64-mingw32)]
+        ignore line: [	compiled by GNU C version Apple LLVM 16.0.0 (clang-1600.0.26.6)  GMP version 6.3.0  MPFR version 4.2.2  MPC version 1.3.1  isl version isl-0.27-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring nonexistent directory "/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/usr/local/include"]
+        ignore line: [ignoring duplicate directory "/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/include/c++/15.2.0]
+        ignore line: [ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/include/c++/15.2.0/x86_64-w64-mingw32]
+        ignore line: [ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/include/c++/15.2.0/backward]
+        ignore line: [ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/include]
+        ignore line: [ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/include-fixed]
+        ignore line: [ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/include]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: c59474ff8c4b1f8bdec05bb83887aa69]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcrtdll=msvcrt-os' '-no-pthread' '-include' '/Users/ildarkarimov/Documents/cossacks-1.52/src/cmake/../platform/msvcrt_compat.h' '-v' '-o' 'CMakeFiles/cmTC_ce2f0.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_ce2f0.dir/']
+        ignore line: [ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/bin/x86_64-w64-mingw32-as -v -o CMakeFiles/cmTC_ce2f0.dir/CMakeCXXCompilerABI.cpp.obj /var/folders/mr/vb93w9b90f5ch92f25_qfsfh0000gn/T//ccmvaiAR.s]
+        ignore line: [GNU assembler version 2.45 (x86_64-w64-mingw32) using BFD version (GNU Binutils) 2.45]
+        ignore line: [COMPILER_PATH=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/bin/]
+        ignore line: [LIBRARY_PATH=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/../lib/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcrtdll=msvcrt-os' '-no-pthread' '-include' '/Users/ildarkarimov/Documents/cossacks-1.52/src/cmake/../platform/msvcrt_compat.h' '-v' '-o' 'CMakeFiles/cmTC_ce2f0.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_ce2f0.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX executable cmTC_ce2f0.exe]
+        ignore line: [/opt/homebrew/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ce2f0.dir/link.txt --verbose=1]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/opt/homebrew/bin/x86_64-w64-mingw32-g++]
+        ignore line: [COLLECT_LTO_WRAPPER=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/lto-wrapper]
+        ignore line: [Target: x86_64-w64-mingw32]
+        ignore line: [Configured with: ../configure --target=x86_64-w64-mingw32 --with-sysroot=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64 --prefix=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64 --with-bugurl=https://github.com/Homebrew/homebrew-core/issues --enable-languages=c,c++,objc,obj-c++,fortran --with-ld=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/bin/x86_64-w64-mingw32-ld --with-as=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/bin/x86_64-w64-mingw32-as --with-gmp=/opt/homebrew/opt/gmp --with-mpfr=/opt/homebrew/opt/mpfr --with-mpc=/opt/homebrew/opt/libmpc --with-isl=/opt/homebrew/opt/isl --with-system-zlib --with-zstd --disable-multilib --disable-nls --enable-threads=posix]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 15.2.0 (GCC) ]
+        ignore line: [COMPILER_PATH=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/bin/]
+        ignore line: [LIBRARY_PATH=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/../lib/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/:/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcrtdll=msvcrt-os' '-no-pthread' '-include' '/Users/ildarkarimov/Documents/cossacks-1.52/src/cmake/../platform/msvcrt_compat.h' '-v' '-o' 'cmTC_ce2f0.exe' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_ce2f0.']
+        link line: [ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/collect2 -plugin /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/liblto_plugin.so -plugin-opt=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/lto-wrapper -plugin-opt=-fresolution=/var/folders/mr/vb93w9b90f5ch92f25_qfsfh0000gn/T//ccdmGWcK.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt-os -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt-os -plugin-opt=-pass-through=-lkernel32 --sysroot=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64 -m i386pep -Bdynamic -o cmTC_ce2f0.exe /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0 -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/../lib -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib -v --whole-archive CMakeFiles/cmTC_ce2f0.dir/objects.a --no-whole-archive --out-implib libcmTC_ce2f0.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lmingw32 -lgcc_s -lgcc -lmingwex -lmsvcrt-os -lkernel32 -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc_s -lgcc -lmingwex -lmsvcrt-os -lkernel32 /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o]
+          arg [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/var/folders/mr/vb93w9b90f5ch92f25_qfsfh0000gn/T//ccdmGWcK.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmingw32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmingwex] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmsvcrt-os] ==> ignore
+          arg [-plugin-opt=-pass-through=-lkernel32] ==> ignore
+          arg [-plugin-opt=-pass-through=-ladvapi32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lshell32] ==> ignore
+          arg [-plugin-opt=-pass-through=-luser32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lkernel32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmingw32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmingwex] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmsvcrt-os] ==> ignore
+          arg [-plugin-opt=-pass-through=-lkernel32] ==> ignore
+          arg [--sysroot=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64] ==> ignore
+          arg [-m] ==> ignore
+          arg [i386pep] ==> ignore
+          arg [-Bdynamic] ==> search dynamic
+          arg [-o] ==> ignore
+          arg [cmTC_ce2f0.exe] ==> ignore
+          arg [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o] ==> obj [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o]
+          arg [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o] ==> obj [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o]
+          arg [-L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0] ==> dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0]
+          arg [-L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib] ==> dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib]
+          arg [-L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/../lib] ==> dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/../lib]
+          arg [-L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib] ==> dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib]
+          arg [-L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib] ==> dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib]
+          arg [-v] ==> ignore
+          arg [--whole-archive] ==> ignore
+          arg [CMakeFiles/cmTC_ce2f0.dir/objects.a] ==> ignore
+          arg [--no-whole-archive] ==> ignore
+          arg [--out-implib] ==> ignore
+          arg [libcmTC_ce2f0.dll.a] ==> ignore
+          arg [--major-image-version] ==> ignore
+          arg [0] ==> ignore
+          arg [--minor-image-version] ==> ignore
+          arg [0] ==> ignore
+          arg [-lstdc++] ==> lib [stdc++]
+          arg [-lmingw32] ==> lib [mingw32]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lmingwex] ==> lib [mingwex]
+          arg [-lmsvcrt-os] ==> lib [msvcrt-os]
+          arg [-lkernel32] ==> lib [kernel32]
+          arg [-ladvapi32] ==> lib [advapi32]
+          arg [-lshell32] ==> lib [shell32]
+          arg [-luser32] ==> lib [user32]
+          arg [-lkernel32] ==> lib [kernel32]
+          arg [-lmingw32] ==> lib [mingw32]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lmingwex] ==> lib [mingwex]
+          arg [-lmsvcrt-os] ==> lib [msvcrt-os]
+          arg [-lkernel32] ==> lib [kernel32]
+          arg [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o] ==> obj [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o]
+        ignore line: [collect2 version 15.2.0]
+        ignore line: [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/bin/x86_64-w64-mingw32-ld -plugin /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/liblto_plugin.so -plugin-opt=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/libexec/gcc/x86_64-w64-mingw32/15.2.0/lto-wrapper -plugin-opt=-fresolution=/var/folders/mr/vb93w9b90f5ch92f25_qfsfh0000gn/T//ccdmGWcK.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt-os -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt-os -plugin-opt=-pass-through=-lkernel32 --sysroot=/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64 -m i386pep -Bdynamic -o cmTC_ce2f0.exe /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0 -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/../lib -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib -L/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib -v --whole-archive CMakeFiles/cmTC_ce2f0.dir/objects.a --no-whole-archive --out-implib libcmTC_ce2f0.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lmingw32 -lgcc_s -lgcc -lmingwex -lmsvcrt-os -lkernel32 -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc_s -lgcc -lmingwex -lmsvcrt-os -lkernel32 /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o]
+        ignore line: [GNU ld (GNU Binutils) 2.45]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcrtdll=msvcrt-os' '-no-pthread' '-include' '/Users/ildarkarimov/Documents/cossacks-1.52/src/cmake/../platform/msvcrt_compat.h' '-v' '-o' 'cmTC_ce2f0.exe' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_ce2f0.']
+        ignore line: [/opt/homebrew/bin/cmake -E rm -f CMakeFiles/cmTC_ce2f0.dir/objects.a]
+        ignore line: [/opt/homebrew/bin/x86_64-w64-mingw32-ar qc CMakeFiles/cmTC_ce2f0.dir/objects.a @CMakeFiles/cmTC_ce2f0.dir/objects1.rsp]
+        ignore line: [/opt/homebrew/bin/x86_64-w64-mingw32-g++ -mcrtdll=msvcrt-os -no-pthread -include /Users/ildarkarimov/Documents/cossacks-1.52/src/cmake/../platform/msvcrt_compat.h   -v -Wl -v -Wl --whole-archive CMakeFiles/cmTC_ce2f0.dir/objects.a -Wl --no-whole-archive -o cmTC_ce2f0.exe -Wl --out-implib libcmTC_ce2f0.dll.a -Wl --major-image-version 0 --minor-image-version 0]
+        ignore line: []
+        ignore line: []
+        remove lib [msvcrt-os]
+        remove lib [msvcrt-os]
+        collapse obj [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib/crt2.o] ==> [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/lib/crt2.o]
+        collapse library dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0] ==> [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0]
+        collapse library dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib/../lib] ==> [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/lib]
+        collapse library dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib/../lib] ==> [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib]
+        collapse library dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/../../../../x86_64-w64-mingw32/lib] ==> [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/lib]
+        collapse library dir [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib] ==> [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib]
+        implicit libs: [stdc++;mingw32;gcc_s;gcc;mingwex;kernel32;advapi32;shell32;user32;kernel32;mingw32;gcc_s;gcc;mingwex;kernel32]
+        implicit objs: [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/lib/crt2.o;/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtbegin.o;/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/crtend.o]
+        implicit dirs: [/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0;/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/lib;/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/mingw/lib]
+        implicit fwks: []
+      
+      
+...

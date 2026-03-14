@@ -1,3 +1,4 @@
+#include <cstdint>
 #include "ddini.h"
 #include <stdlib.h>
 #include "ResFile.h"
@@ -411,6 +412,7 @@ void RedSquare(int x, int y)
 		return;
 	}
 
+#ifdef _MSC_VER
 	int sco = int(ScreenPtr) + smapx + ((x - mapx) << 5) +
 		(((y - mapy) << 5) + smapy) * SCRSizeX;
 
@@ -430,6 +432,20 @@ void RedSquare(int x, int y)
 
 		pop		edi
 	}
+#else
+	{
+		byte* dst = (byte*)ScreenPtr + smapx + ((x - mapx) << 5) +
+			(((y - mapy) << 5) + smapy) * SCRSizeX;
+		int ddx = SCRSizeX + SCRSizeX - 32;
+		for (int row = 0; row < 16; row++) {
+			for (int col = 0; col < 16; col++) {
+				*dst = clrRed;
+				dst += 2;
+			}
+			dst += ddx;
+		}
+	}
+#endif
 }
 
 void RedMiniSquare(int x, int y)
@@ -439,6 +455,7 @@ void RedMiniSquare(int x, int y)
 		return;
 	}
 
+#ifdef _MSC_VER
 	int sco = int(ScreenPtr) + smapx + ((x - mapx) << 4) +
 		(((y - mapy) << 4) + smapy) * SCRSizeX;
 
@@ -458,6 +475,20 @@ void RedMiniSquare(int x, int y)
 
 		pop		edi
 	}
+#else
+	{
+		byte* dst = (byte*)ScreenPtr + smapx + ((x - mapx) << 4) +
+			(((y - mapy) << 4) + smapy) * SCRSizeX;
+		int ddx = SCRSizeX + SCRSizeX - 16;
+		for (int row = 0; row < 8; row++) {
+			for (int col = 0; col < 8; col++) {
+				*dst = clrRed;
+				dst += 2;
+			}
+			dst += ddx;
+		}
+	}
+#endif
 }
 
 void RedBar(int x, int y, int lx, int ly)
@@ -477,6 +508,7 @@ void RedMiniBar(int x, int y, int lx, int ly)
 void WhiteSquare(int x, int y)
 {
 	if (x < mapx || x >= mapx + smaplx || y < mapy || y >= mapy + smaply)return;
+#ifdef _MSC_VER
 	int sco = int(ScreenPtr) + smapx + ((x - mapx) << 5) +
 		(((y - mapy) << 5) + smapy) * SCRSizeX;
 	int ddx = SCRSizeX + SCRSizeX - 32;
@@ -494,11 +526,26 @@ void WhiteSquare(int x, int y)
 
 		pop		edi
 	}
+#else
+	{
+		byte* dst = (byte*)ScreenPtr + smapx + ((x - mapx) << 5) +
+			(((y - mapy) << 5) + smapy) * SCRSizeX;
+		int ddx = SCRSizeX + SCRSizeX - 32;
+		for (int row = 0; row < 16; row++) {
+			for (int col = 0; col < 16; col++) {
+				*dst = 255;
+				dst += 2;
+			}
+			dst += ddx;
+		}
+	}
+#endif
 }
 
 void WhiteMiniSquare(int x, int y)
 {
 	if (x < mapx || x >= mapx + smaplx || y < mapy || y >= mapy + smaply)return;
+#ifdef _MSC_VER
 	int sco = int(ScreenPtr) + smapx + ((x - mapx) << 4) +
 		(((y - mapy) << 4) + smapy) * SCRSizeX;
 	int ddx = SCRSizeX + SCRSizeX - 16;
@@ -516,6 +563,20 @@ void WhiteMiniSquare(int x, int y)
 
 		pop		edi
 	};
+#else
+	{
+		byte* dst = (byte*)ScreenPtr + smapx + ((x - mapx) << 4) +
+			(((y - mapy) << 4) + smapy) * SCRSizeX;
+		int ddx = SCRSizeX + SCRSizeX - 16;
+		for (int row = 0; row < 8; row++) {
+			for (int col = 0; col < 8; col++) {
+				*dst = 255;
+				dst += 2;
+			}
+			dst += ddx;
+		}
+	}
+#endif
 };
 void WhiteBar(int x, int y, int lx, int ly)
 {
@@ -564,14 +625,14 @@ char* GetAsmBlock()
 };
 void FreeAsmBlock(char* p)
 {
-	int i = (int(p) - int(AsmBuf)) >> OneAShift;
+	int i = ((intptr_t)(p) - (intptr_t)(AsmBuf)) >> OneAShift;
 	AsmUsage[i] = false;
 	LastAsmRequest = i;
 };
 void InitAsmBuf()
 {
-	memset(AsmUsage, 0, sizeof AsmUsage);
-	memset(AsmBuf, 0, sizeof AsmBuf);
+	memset(AsmUsage, 0, sizeof(AsmUsage));
+	memset(AsmBuf, 0, sizeof(AsmBuf));
 	LastAsmRequest = 0;
 };
 //Получить блок для LocalOrder
@@ -580,7 +641,7 @@ int CHSM1;
 Order1* GetOrdBlock()
 {
 	Order1* OR1 = new Order1;
-	memset(OR1, 0, sizeof Order1);
+	memset(OR1, 0, sizeof(Order1));
 	return OR1;
 }
 
@@ -592,8 +653,8 @@ void OneObject::FreeOrdBlock(Order1* p)
 
 void InitOrdBuf()
 {
-	memset(OrdUsage, 0, sizeof OrdUsage);
-	memset(OrdBuf, 0, sizeof OrdBuf);
+	memset(OrdUsage, 0, sizeof(OrdUsage));
+	memset(OrdBuf, 0, sizeof(OrdBuf));
 	//LastOrdRequest=0;
 };
 
@@ -678,14 +739,14 @@ void NewMap(int szX, int szY)//Standard map size is 480x480
 	MAXOBJECT = 0;
 	MAXSPR = 0;
 
-	memset(Group, 0, sizeof Group);
-	memset(NLocks, 0, sizeof NLocks);
+	memset(Group, 0, sizeof(Group));
+	memset(NLocks, 0, sizeof(NLocks));
 
 	ClearMaps();
 
 	BuildMode = false;
 
-	memset(&HiMap[0][0], 0, sizeof HiMap);
+	memset(&HiMap[0][0], 0, sizeof(HiMap));
 
 	MFIELDS[0].ClearMaps();
 	MFIELDS[1].ClearMaps();
@@ -1178,6 +1239,12 @@ void ShowCentralText0(char* sss)
 
 void ShowWinner()
 {
+	static int _sw_traced = 0;
+	if (!_sw_traced) {
+		fprintf(stderr, "[SW] ShowWinner: NoWinner=%d PlayGameMode=%d hLib=%p StdVict=%d LooseGame=%d Victory=%d NMyUnits=%d NThemUnits=%d MyNation=%d VictState=%d\n",
+			NoWinner, PlayGameMode, (void*)SCENINF.hLib, SCENINF.StandartVictory, (int)SCENINF.LooseGame, (int)SCENINF.Victory, NMyUnits, NThemUnits, MyNation, (int)NATIONS[MyNation].VictState);
+		_sw_traced = 1;
+	}
 	if (NoWinner || PlayGameMode == 1)
 	{
 		return;
@@ -1580,6 +1647,7 @@ void ProcessHints();
 //Draw a lot of stuff on screen
 void GFieldShow()
 {
+	fprintf(stderr, "[GFS] GFieldShow entered, SHOWSLIDE=%d\n", SHOWSLIDE);
 	PrepareSound();
 
 	int uuu = (tmt & 31);
@@ -1592,20 +1660,42 @@ void GFieldShow()
 
 	if (SHOWSLIDE)
 	{
+		fprintf(stderr, "[GFS] SetRLCWindow\n");
 		SetRLCWindow(smapx, smapy, smaplx << 5, mul3(smaply) << 3, SCRSizeX);
+		fprintf(stderr, "[GFS] TestTriangle\n");
 		TestTriangle();
+		fprintf(stderr, "[GFS] TestBlob\n");
 		TestBlob();
 		time6 = GetRealTime() - time0;
 		time0 = GetRealTime();
+		fprintf(stderr, "[GFS] ShowNewMonsters\n");
 		ShowNewMonsters();
 		time0 = GetRealTime();
+		{
+			extern int _wallShowPostCreate;
+			if (_wallShowPostCreate > 0) {
+				FILE* wlog = fopen("dmcr_wall.log", "a");
+				if (wlog) { fprintf(wlog, "GFS: before WallHandleDraw\n"); fflush(wlog); fclose(wlog); }
+			}
+		}
+		fprintf(stderr, "[GFS] WallHandleDraw\n");
 		WallHandleDraw();
+		{
+			extern int _wallShowPostCreate;
+			if (_wallShowPostCreate > 0) {
+				FILE* wlog = fopen("dmcr_wall.log", "a");
+				if (wlog) { fprintf(wlog, "GFS: after WallHandleDraw\n"); fflush(wlog); fclose(wlog); }
+			}
+		}
 	}
 
+	fprintf(stderr, "[GFS] ShowExpl\n");
 	ShowExpl();
+	fprintf(stderr, "[GFS] DrawShar\n");
 
 	for (int v = 0; v < 8; v++)
 		DrawShar(NATIONS + v);
+	fprintf(stderr, "[GFS] DrawShar done\n");
 
 	if (SHOWSLIDE)
 	{
@@ -1626,18 +1716,111 @@ void GFieldShow()
 				}
 			}
 		}
+		{
+			extern int _wallShowPostCreate;
+			if (_wallShowPostCreate > 0) {
+				FILE* wlog = fopen("dmcr_wall.log", "a");
+				if (wlog) { fprintf(wlog, "GFS: before ShowZBuffer\n"); fflush(wlog); fclose(wlog); }
+			}
+		}
 		ShowZBuffer();
+		{
+			extern int _wallShowPostCreate;
+			if (_wallShowPostCreate > 0) {
+				FILE* wlog = fopen("dmcr_wall.log", "a");
+				if (wlog) {
+					fprintf(wlog, "GFS: after ShowZBuffer\n");
+					fprintf(wlog, "GFS: HEAP_CHECK after ShowZBuffer: %s\n", HeapValidate(GetProcessHeap(), 0, NULL) ? "OK" : "CORRUPTED");
+					fflush(wlog); fclose(wlog);
+				}
+			}
+		}
+		fprintf(stderr, "[GFS] ShowPulse\n");
+		{
+			extern int _wallShowPostCreate;
+			if (_wallShowPostCreate > 0) {
+				FILE* wlog = fopen("dmcr_wall.log", "a");
+				if (wlog) { fprintf(wlog, "GFS: before ShowPulse\n"); fflush(wlog); fclose(wlog); }
+			}
+		}
 		ShowPulse();
+		{
+			extern int _wallShowPostCreate;
+			if (_wallShowPostCreate > 0) {
+				FILE* wlog = fopen("dmcr_wall.log", "a");
+				if (wlog) {
+					fprintf(wlog, "GFS: after ShowPulse\n");
+					fprintf(wlog, "GFS: HEAP_CHECK after ShowPulse: %s\n", HeapValidate(GetProcessHeap(), 0, NULL) ? "OK" : "CORRUPTED");
+					fflush(wlog); fclose(wlog);
+				}
+			}
+		}
 
 		if (CINFMOD)
+		{
+			{
+				extern int _wallShowPostCreate;
+				if (_wallShowPostCreate > 0) {
+					FILE* wlog = fopen("dmcr_wall.log", "a");
+					if (wlog) { fprintf(wlog, "GFS: before ShowAllBars\n"); fflush(wlog); fclose(wlog); }
+				}
+			}
 			ShowAllBars();
+			{
+				extern int _wallShowPostCreate;
+				if (_wallShowPostCreate > 0) {
+					FILE* wlog = fopen("dmcr_wall.log", "a");
+					if (wlog) {
+						fprintf(wlog, "GFS: after ShowAllBars\n");
+						fprintf(wlog, "GFS: HEAP_CHECK after ShowAllBars: %s\n", HeapValidate(GetProcessHeap(), 0, NULL) ? "OK" : "CORRUPTED");
+						fflush(wlog); fclose(wlog);
+					}
+				}
+			}
+		}
 
 		if (!NoText)
+		{
+			{
+				extern int _wallShowPostCreate;
+				if (_wallShowPostCreate > 0) {
+					FILE* wlog = fopen("dmcr_wall.log", "a");
+					if (wlog) { fprintf(wlog, "GFS: before LShow\n"); fflush(wlog); fclose(wlog); }
+				}
+			}
 			LShow();
+			{
+				extern int _wallShowPostCreate;
+				if (_wallShowPostCreate > 0) {
+					FILE* wlog = fopen("dmcr_wall.log", "a");
+					if (wlog) {
+						fprintf(wlog, "GFS: after LShow\n");
+						fprintf(wlog, "GFS: HEAP_CHECK after LShow: %s\n", HeapValidate(GetProcessHeap(), 0, NULL) ? "OK" : "CORRUPTED");
+						fflush(wlog); fclose(wlog);
+					}
+				}
+			}
+		}
 	}
 
 	if (!SHOWSLIDE)
+	{
+		{
+			extern int _wallShowPostCreate;
+			if (_wallShowPostCreate > 0) {
+				FILE* wlog = fopen("dmcr_wall.log", "a");
+				if (wlog) { fprintf(wlog, "GFS2: !SHOWSLIDE, returning early\n"); fflush(wlog); fclose(wlog); }
+			}
+		}
 		return;
+	}
+	{
+		extern int _wallShowPostCreate;
+		if (_wallShowPostCreate > 0) {
+			FILE* wlog = fopen("dmcr_wall.log", "a");
+			if (wlog) { fprintf(wlog, "GFS2: SHOWSLIDE=true, continuing\n"); fflush(wlog); fclose(wlog); }
+		}
+	}
 
 	if (EditMapMode)
 	{
@@ -1916,10 +2099,31 @@ void GFieldShow()
 	}
 
 	SetRLCWindow(0, 0, COPYSizeX, RSCRSizeY, SCRSizeX);
+	{
+		extern int _wallShowPostCreate;
+		if (_wallShowPostCreate > 0) {
+			FILE* wlog = fopen("dmcr_wall.log", "a");
+			if (wlog) { fprintf(wlog, "GFS2: SetRLCWindow2 done\n"); fflush(wlog); fclose(wlog); }
+		}
+	}
 
 	ProcessSelectedTower();
+	{
+		extern int _wallShowPostCreate;
+		if (_wallShowPostCreate > 0) {
+			FILE* wlog = fopen("dmcr_wall.log", "a");
+			if (wlog) { fprintf(wlog, "GFS2: ProcessSelectedTower done\n"); fflush(wlog); fclose(wlog); }
+		}
+	}
 
 	ScenaryLights();
+	{
+		extern int _wallShowPostCreate;
+		if (_wallShowPostCreate > 0) {
+			FILE* wlog = fopen("dmcr_wall.log", "a");
+			if (wlog) { fprintf(wlog, "GFS2: ScenaryLights done\n"); fflush(wlog); fclose(wlog); }
+		}
+	}
 
 	if (SHOWSLIDE && FogMode && BalloonState != 2 && (!NATIONS[NatRefTBL[MyNation]].Vision) && !NoText)
 	{
@@ -1929,19 +2133,44 @@ void GFieldShow()
 		{
 			ProcessFog1();
 		}
-
 		CreateFogImage();
-
 		DrawFog();
-
 		time4 = GetRealTime() - time0;
+	}
+	{
+		extern int _wallShowPostCreate;
+		if (_wallShowPostCreate > 0) {
+			FILE* wlog = fopen("dmcr_wall.log", "a");
+			if (wlog) { fprintf(wlog, "GFS2: Fog done\n"); fflush(wlog); fclose(wlog); }
+		}
 	}
 
 	DrawCurves();
+	{
+		extern int _wallShowPostCreate;
+		if (_wallShowPostCreate > 0) {
+			FILE* wlog = fopen("dmcr_wall.log", "a");
+			if (wlog) { fprintf(wlog, "GFS2: DrawCurves done\n"); fflush(wlog); fclose(wlog); }
+		}
+	}
 
 	ShowCostPlaces();
+	{
+		extern int _wallShowPostCreate;
+		if (_wallShowPostCreate > 0) {
+			FILE* wlog = fopen("dmcr_wall.log", "a");
+			if (wlog) { fprintf(wlog, "GFS2: ShowCostPlaces done\n"); fflush(wlog); fclose(wlog); }
+		}
+	}
 
 	GenShow();
+	{
+		extern int _wallShowPostCreate;
+		if (_wallShowPostCreate > 0) {
+			FILE* wlog = fopen("dmcr_wall.log", "a");
+			if (wlog) { fprintf(wlog, "GFS2: GenShow done\n"); fflush(wlog); fclose(wlog); }
+		}
+	}
 
 	if (GridMode)
 	{
@@ -1951,16 +2180,44 @@ void GFieldShow()
 	ProcessVotingView();
 
 	ShowChat();
+	{
+		extern int _wallShowPostCreate;
+		if (_wallShowPostCreate > 0) {
+			FILE* wlog = fopen("dmcr_wall.log", "a");
+			if (wlog) { fprintf(wlog, "GFS2: ShowChat done\n"); fflush(wlog); fclose(wlog); }
+		}
+	}
 
 	if (NoText)
 	{
+		{
+			extern int _wallShowPostCreate;
+			if (_wallShowPostCreate > 0) {
+				FILE* wlog = fopen("dmcr_wall.log", "a");
+				if (wlog) { fprintf(wlog, "GFS2: NoText=true, returning\n"); fflush(wlog); fclose(wlog); }
+			}
+		}
 		return;
 	}
 
 	//Adjust timestamps for all hints
 	ProcessHints();
+	{
+		extern int _wallShowPostCreate;
+		if (_wallShowPostCreate > 0) {
+			FILE* wlog = fopen("dmcr_wall.log", "a");
+			if (wlog) { fprintf(wlog, "GFS2: ProcessHints done\n"); fflush(wlog); fclose(wlog); }
+		}
+	}
 
 	ShowDestn();
+	{
+		extern int _wallShowPostCreate;
+		if (_wallShowPostCreate > 0) {
+			FILE* wlog = fopen("dmcr_wall.log", "a");
+			if (wlog) { fprintf(wlog, "GFS2: ShowDestn done\n"); fflush(wlog); fclose(wlog); }
+		}
+	}
 
 	time7 = GetRealTime() - time0;
 
@@ -1978,6 +2235,13 @@ void GFieldShow()
 		SeqErrorsCount = 0;
 		SyncroDoctor();
 	}
+	{
+		extern int _wallShowPostCreate;
+		if (_wallShowPostCreate > 0) {
+			FILE* wlog = fopen("dmcr_wall.log", "a");
+			if (wlog) { fprintf(wlog, "GFS2: SeqErrors done\n"); fflush(wlog); fclose(wlog); }
+		}
+	}
 
 	if (EditMapMode)
 	{
@@ -1991,10 +2255,31 @@ void GFieldShow()
 	{
 		ShowWinner();
 	}
+	{
+		extern int _wallShowPostCreate;
+		if (_wallShowPostCreate > 0) {
+			FILE* wlog = fopen("dmcr_wall.log", "a");
+			if (wlog) { fprintf(wlog, "GFS2: ShowWinner done\n"); fflush(wlog); fclose(wlog); }
+		}
+	}
 
 	DrawSMS();
+	{
+		extern int _wallShowPostCreate;
+		if (_wallShowPostCreate > 0) {
+			FILE* wlog = fopen("dmcr_wall.log", "a");
+			if (wlog) { fprintf(wlog, "GFS3: DrawSMS done, heap=%s\n", HeapValidate(GetProcessHeap(),0,NULL)?"OK":"BAD"); fflush(wlog); fclose(wlog); }
+		}
+	}
 
 	ShowRMap();
+	{
+		extern int _wallShowPostCreate;
+		if (_wallShowPostCreate > 0) {
+			FILE* wlog = fopen("dmcr_wall.log", "a");
+			if (wlog) { fprintf(wlog, "GFS3: ShowRMap done, heap=%s\n", HeapValidate(GetProcessHeap(),0,NULL)?"OK":"BAD"); fflush(wlog); fclose(wlog); }
+		}
+	}
 
 	int xxx0 = RealLx - 400;
 	int yyy0 = smapy + RealLy - 170;
@@ -2083,6 +2368,13 @@ void GFieldShow()
 			}
 		}
 
+	}
+	{
+		extern int _wallShowPostCreate;
+		if (_wallShowPostCreate > 0) {
+			FILE* wlog = fopen("dmcr_wall.log", "a");
+			if (wlog) { fprintf(wlog, "GFS3: NGidot block done, heap=%s\n", HeapValidate(GetProcessHeap(),0,NULL)?"OK":"BAD"); fflush(wlog); fclose(wlog); }
+		}
 	}
 
 	if (tmtmt > 20 && !Inform)
@@ -2291,7 +2583,22 @@ void GFieldShow()
 		PRVGT = t0;
 	}
 
+	{
+		extern int _wallShowPostCreate;
+		if (_wallShowPostCreate > 0) {
+			FILE* wlog = fopen("dmcr_wall.log", "a");
+			if (wlog) { fprintf(wlog, "GFS3: time/score block done, heap=%s\n", HeapValidate(GetProcessHeap(),0,NULL)?"OK":"BAD"); fflush(wlog); fclose(wlog); }
+		}
+	}
+
 	DrawAllGrp();
+	{
+		extern int _wallShowPostCreate;
+		if (_wallShowPostCreate > 0) {
+			FILE* wlog = fopen("dmcr_wall.log", "a");
+			if (wlog) { fprintf(wlog, "GFS3: DrawAllGrp done, heap=%s\n", HeapValidate(GetProcessHeap(),0,NULL)?"OK":"BAD"); fflush(wlog); fclose(wlog); }
+		}
+	}
 
 	int uxxx = mapx + ((mouseX - smapx) >> 5);
 	int uyyy = mapy + div24(mouseY - smapy);
@@ -2301,6 +2608,13 @@ void GFieldShow()
 
 	if (InfoMode)
 	{
+		{
+			extern int _wallShowPostCreate;
+			if (_wallShowPostCreate > 0) {
+				FILE* wlog = fopen("dmcr_wall.log", "a");
+				if (wlog) { fprintf(wlog, "GFS3: InfoMode return, heap=%s\n", HeapValidate(GetProcessHeap(),0,NULL)?"OK":"BAD"); fflush(wlog); fclose(wlog); }
+			}
+		}
 		return;
 	}
 	int ssy = smapy + 3;
@@ -2374,6 +2688,17 @@ void GFieldShow()
 					ShowString(smapx, ssy, OSTR, &WhiteFont);
 					ssy += 16;
 				}
+			}
+		}
+	}
+	{
+		extern int _wallShowPostCreate;
+		if (_wallShowPostCreate > 0) {
+			FILE* wlog = fopen("dmcr_wall.log", "a");
+			if (wlog) {
+				fprintf(wlog, "GFS: END of GFieldShow\n");
+				fprintf(wlog, "GFS: HEAP_CHECK end of GFieldShow: %s\n", HeapValidate(GetProcessHeap(), 0, NULL) ? "OK" : "CORRUPTED");
+				fflush(wlog); fclose(wlog);
 			}
 		}
 	}
@@ -2452,6 +2777,11 @@ void GMiniShow()
 	if (MiniY + MiniLy >= MaxMLY)
 		MiniY = MaxMLY - MiniLy - 1;
 
+	if (MiniX < 0) MiniX = 0;
+	if (MiniY < 0) MiniY = 0;
+	if (MiniX + MiniLx > maxmap) MiniLx = maxmap - MiniX;
+	if (MiniY + MiniLy > maxmap) MiniLy = maxmap - MiniY;
+
 	minix = RealLx - MiniLx - 12;
 	miniy = RealLy - MiniLy - 16;
 
@@ -2478,8 +2808,8 @@ void GMiniShow()
 	*/
 
 	//Copy data from minimap buffer into the screen buffer
-	int scr = (int)ScreenPtr + minix + (miniy * SCRSizeX);
-	int til = (int)&minimap + MiniX + (MiniY * maxmap);
+	intptr_t scr = (intptr_t)ScreenPtr + minix + (miniy * SCRSizeX);
+	intptr_t til = (intptr_t)&minimap + MiniX + (MiniY * maxmap);
 	for (int i = 0; i < MiniLy; i++)
 	{
 		memcpy((void*)scr, (void*)til, MiniLx);//REFACTORED: __asm
@@ -2493,7 +2823,7 @@ void GMiniShow()
 	byte val;
 	byte mycl = CLRT[MyNation];
 
-	memset(BMASK, 0, sizeof BMASK);
+	memset(BMASK, 0, sizeof(BMASK));
 
 	byte mmsk = GM(MyNation);
 
@@ -2507,7 +2837,7 @@ void GMiniShow()
 			if (mxx >= 0 && myy >= 0 && mxx < MiniLx && myy < MiniLy)
 			{
 				val = CLRT[OO->NNUM];
-				int scr = (int)ScreenPtr + minix + mxx + ((myy + miniy) * SCRSizeX);
+				intptr_t scr = (intptr_t)ScreenPtr + minix + mxx + ((myy + miniy) * SCRSizeX);
 				if (OO->ImSelected & mmsk)
 				{
 					val = 0xFF;
@@ -2786,16 +3116,50 @@ void GameKeyCheck();
 
 void ProcessScreen()
 {
+	extern int _wallShowPostCreate;
+	HANDLE _hHeap = GetProcessHeap();
 	GameKeyCheck();
+	if (_wallShowPostCreate > 0) {
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) { fprintf(wlog, "PS: before GFieldShow, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "BAD"); fflush(wlog); fclose(wlog); }
+	}
 	NoPFOG = 1;
 	GFieldShow();
 	NoPFOG = 0;
+	if (_wallShowPostCreate > 0) {
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) { fprintf(wlog, "PS: after GFieldShow, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "BAD"); fflush(wlog); fclose(wlog); }
+	}
 	GMiniShow();
+	if (_wallShowPostCreate > 0) {
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) { fprintf(wlog, "PS: after GMiniShow, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "BAD"); fflush(wlog); fclose(wlog); }
+	}
 	ShowProp();
+	if (_wallShowPostCreate > 0) {
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) { fprintf(wlog, "PS: after ShowProp, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "BAD"); fflush(wlog); fclose(wlog); }
+	}
 	ShowAbility();
+	if (_wallShowPostCreate > 0) {
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) { fprintf(wlog, "PS: after ShowAbility, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "BAD"); fflush(wlog); fclose(wlog); }
+	}
 	DrawZones();
+	if (_wallShowPostCreate > 0) {
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) { fprintf(wlog, "PS: after DrawZones, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "BAD"); fflush(wlog); fclose(wlog); }
+	}
 	GlobalHandleMouse(false);//BUGFIX: call rate was way to high
+	if (_wallShowPostCreate > 0) {
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) { fprintf(wlog, "PS: after GlobalHandleMouse, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "BAD"); fflush(wlog); fclose(wlog); }
+	}
 	MFix();
+	if (_wallShowPostCreate > 0) {
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) { fprintf(wlog, "PS: after MFix, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "BAD"); fflush(wlog); fclose(wlog); }
+	}
 }
 
 void HandleSMSChat(char* Mess);
@@ -2814,6 +3178,9 @@ extern int ExitNI;
 //Check SpecCmd, read from MouseStack
 void GlobalHandleMouse(bool process_scrolling)
 {
+	extern int _wallShowPostCreate;
+	HANDLE _hHeap = GetProcessHeap();
+
 	if (ExitNI != -1)
 	{
 		CmdEndGame(ExitNI, 1, 0);
@@ -2840,10 +3207,25 @@ void GlobalHandleMouse(bool process_scrolling)
 
 	DRAWLOCK = 0;
 
+	if (_wallShowPostCreate > 0) {
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) { fprintf(wlog, "GHM: entry, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
+	}
+
 	ProcessInformation();
+
+	if (_wallShowPostCreate > 0) {
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) { fprintf(wlog, "GHM: ProcessInformation done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
+	}
 
 	//Handle resource transfer dialog if necessary
 	ProcessRESSEND();
+
+	if (_wallShowPostCreate > 0) {
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) { fprintf(wlog, "GHM: ProcessRESSEND done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
+	}
 
 	if (NPlayers > 1)
 	{
@@ -3050,7 +3432,7 @@ void HandleMouse(int x, int y)
 		}
 
 		HaveExComm = 0;
-		memset(EXCOMM, 0, sizeof EXCOMM);
+		memset(EXCOMM, 0, sizeof(EXCOMM));
 	}
 
 	HandlwSMSMouse();
@@ -4070,7 +4452,7 @@ void HandleMouse(int x, int y)
 					if (Att != 0xFFFF && Nr <= 30)
 					{
 						OneObject* AOBJ = Group[Att];
-						if (int(AOBJ))
+						if ((intptr_t)(AOBJ))
 						{
 							if (!(AOBJ->NMask & MyMask))
 							{
@@ -5068,7 +5450,7 @@ public:
 };
 UnitInfo::UnitInfo()
 {
-	memset(this, 0, sizeof UnitInfo);
+	memset(this, 0, sizeof(UnitInfo));
 };
 void UnitInfo::Close()
 {
@@ -5079,14 +5461,14 @@ void UnitInfo::Close()
 		free(Hints);
 	};
 	if (SDS)free(SDS);
-	memset(this, 0, sizeof UnitInfo);
+	memset(this, 0, sizeof(UnitInfo));
 };
 char* UnitInfo::AddHint(char* Hint)
 {
 	if (NHints >= MaxHints)
 	{
 		MaxHints += 64;
-		Hints = (char**)realloc(Hints, MaxHints * 4);
+		Hints = (char**)realloc(Hints, MaxHints * sizeof(char*));
 	};
 	Hints[NHints] = new char[strlen(Hint) + 1];
 	strcpy(Hints[NHints], Hint);
@@ -5102,7 +5484,7 @@ void UnitInfo::AddSD(SimpleDialog* SD, int Page)
 	if (N_SD >= MaxSD)
 	{
 		MaxSD += 32;
-		SDS = (SD_Strip*)realloc(SDS, MaxSD * sizeof SD_Strip);
+		SDS = (SD_Strip*)realloc(SDS, MaxSD * sizeof(SD_Strip));
 	};
 	SDS[N_SD].SD = SD;
 	SDS[N_SD].Page = Page;
@@ -5987,7 +6369,7 @@ int GetFinPower(int* Fin, int Nation);
 char* GetPName(int i);
 void GetSquare()
 {
-	memset(NatSquare, 0, sizeof NatSquare);
+	memset(NatSquare, 0, sizeof(NatSquare));
 	for (int i = 0; i < MAXOBJECT; i++)
 	{
 		OneObject* OB = Group[i];
@@ -6282,7 +6664,7 @@ void NamesHash::AddString(char* Str, int Parm1, int Parm2)
 	if (NHash >= MaxHash)
 	{
 		MaxHash += 32;
-		HASH = (HashItem*)realloc(HASH, MaxHash * sizeof HashItem);
+		HASH = (HashItem*)realloc(HASH, MaxHash * sizeof(HashItem));
 	};
 	HASH[NHash].Param1 = Parm1;
 	HASH[NHash].Param2 = Parm2;

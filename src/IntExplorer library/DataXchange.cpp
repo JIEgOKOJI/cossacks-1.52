@@ -1188,7 +1188,7 @@ void exec_LW_dtbl( int Np, char** par, int* size )
 					};
 					if (i < SXT->NLines - 1)
 					{
-						memmove( SXT->Lines + pos0, SXT->Lines + pos0 + nc, ( ( SXT->NLines - 1 - i )*nc ) << 2 );
+						memmove( SXT->Lines + pos0, SXT->Lines + pos0 + nc, ( ( SXT->NLines - 1 - i )*nc ) * sizeof(char*) );
 					};
 					i--;
 					SXT->NLines--;
@@ -1213,7 +1213,7 @@ void exec_LW_tbl( int Np, char** par, int* size )
 			int Nne = 0;
 			Nne = atoi( par[1] );
 			if (Np < 2 + nc*Nne)return;
-			SXT->Lines = (char**) realloc( SXT->Lines, ( SXT->NLines + Nne ) * 4 * SXT->NCol );
+			SXT->Lines = (char**) realloc( SXT->Lines, ( SXT->NLines + Nne ) * sizeof(char*) * SXT->NCol );
 			SXT->Refs = (int*) realloc( SXT->Refs, ( SXT->NLines + Nne ) << 2 );
 			int p0 = SXT->NLines*nc;
 			for (int i = 0; i < Nne; i++)

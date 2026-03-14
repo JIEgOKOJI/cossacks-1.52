@@ -1,0 +1,11 @@
+/Users/ildarkarimov/Documents/cossacks-1.52/src/build-win32/CMakeFiles/edit_cache.dir
+/Users/ildarkarimov/Documents/cossacks-1.52/src/build-win32/CMakeFiles/rebuild_cache.dir
+/Users/ildarkarimov/Documents/cossacks-1.52/src/build-win32/platform/CMakeFiles/platform_compat.dir
+/Users/ildarkarimov/Documents/cossacks-1.52/src/build-win32/platform/CMakeFiles/edit_cache.dir
+/Users/ildarkarimov/Documents/cossacks-1.52/src/build-win32/platform/CMakeFiles/rebuild_cache.dir
+/Users/ildarkarimov/Documents/cossacks-1.52/src/build-win32/CommCore library/CMakeFiles/CommCore.dir
+/Users/ildarkarimov/Documents/cossacks-1.52/src/build-win32/CommCore library/CMakeFiles/edit_cache.dir
+/Users/ildarkarimov/Documents/cossacks-1.52/src/build-win32/CommCore library/CMakeFiles/rebuild_cache.dir
+/Users/ildarkarimov/Documents/cossacks-1.52/src/build-win32/Main executable/CMakeFiles/dmcr.dir
+/Users/ildarkarimov/Documents/cossacks-1.52/src/build-win32/Main executable/CMakeFiles/edit_cache.dir
+/Users/ildarkarimov/Documents/cossacks-1.52/src/build-win32/Main executable/CMakeFiles/rebuild_cache.dir

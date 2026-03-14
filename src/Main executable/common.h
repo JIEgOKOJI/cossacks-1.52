@@ -1,4 +1,8 @@
-#include <windows.h>
+#ifdef _WIN32
+    #include <windows.h>
+#else
+    #include "platform.h"
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <memory.h>
@@ -19,7 +23,7 @@ typedef unsigned short word;
 #include "gp_draw.h"
 #include "dialogs.h"
 #include "fonts.h"
-#include "arc\gscarch.h"
+#include "arc/gscarch.h"
 #include "resfile.h"
 #include "gfile.h"
 

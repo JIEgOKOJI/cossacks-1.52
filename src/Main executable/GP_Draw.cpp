@@ -5,6 +5,7 @@
 #include "Lines.h"
 #include <stdio.h>
 #include <assert.h>
+#include <cstdint>
 #include <CrtDbg.h>
 #include "CTables.h"
 #include "GP_Draw.h"
@@ -15,6 +16,8 @@
 #include "GSINC.h"
 bool NewGPImage;
 #define INTV(x) (((int*)(x))[0])
+#define PTRV(x) (((intptr_t*)(x))[0])
+#define CASH_HDR 16  // 8 (intptr_t back-ptr) + 4 (int size) + 4 (pad)
 
 //What are you?
 extern int XShift[512];
@@ -27,15 +30,15 @@ int LOADED = 0;
 
 extern int COUNTER;
 typedef short* lpShort;
-typedef DWORD* lpDWORD;
+typedef uintptr_t* lpCashRef;
 GP_System::GP_System()
 {
 	CashSize = 4200000;
 	PackCash = new byte[CashSize + 4];
 	PackCash[CashSize] = 0x37;
 	PackCash[CashSize + 1] = 0x42;
-	INTV(PackCash) = 0;
-	INTV(PackCash + 4) = CashSize;
+	PTRV(PackCash) = 0;
+	INTV(PackCash + sizeof(intptr_t)) = CashSize;
 	CashPos = 0;
 	NGP = 0;
 	NGPReady = MaxGPIdx;
@@ -44,28 +47,28 @@ GP_System::GP_System()
 	GPSize = new int[NGPReady];
 	GPLastTime = new int[NGPReady];
 	RLCImage = new RLCTable[NGPReady];
-	memset(RLCImage, 0, (sizeof RLCImage) * NGPReady);
+	memset(RLCImage, 0, (sizeof(RLCImage)) * NGPReady);
 	RLCShadow = new RLCTable[NGPReady];
-	memset(RLCShadow, 0, (sizeof RLCShadow) * NGPReady);
+	memset(RLCShadow, 0, (sizeof(RLCShadow)) * NGPReady);
 	GPNFrames = new word[NGPReady];
 	ImageType = new byte[NGPReady];
-	UNITBL = (UNICODETABLE**)malloc(NGPReady << 2);
+	UNITBL = (UNICODETABLE**)malloc(NGPReady * sizeof(UNICODETABLE*));
 	memset(ImageType, 0, NGPReady);
-	memset(UNITBL, 0, NGPReady << 2);
+	memset(UNITBL, 0, NGPReady * sizeof(UNICODETABLE*));
 	ImLx = new lpShort[NGPReady];
 	ImLy = new lpShort[NGPReady];
-	ItDX = (char**)malloc(4 * NGPReady);
-	ItLX = (char**)malloc(4 * NGPReady);
-	memset(ImLx, 0, 4 * NGPReady);
-	memset(ImLy, 0, 4 * NGPReady);
-	memset(ItDX, 0, 4 * NGPReady);
-	memset(ItLX, 0, 4 * NGPReady);
-	CASHREF = new lpDWORD[NGPReady];
+	ItDX = (char**)malloc(sizeof(char*) * NGPReady);
+	ItLX = (char**)malloc(sizeof(char*) * NGPReady);
+	memset(ImLx, 0, sizeof(lpShort) * NGPReady);
+	memset(ImLy, 0, sizeof(lpShort) * NGPReady);
+	memset(ItDX, 0, sizeof(char*) * NGPReady);
+	memset(ItLX, 0, sizeof(char*) * NGPReady);
+	CASHREF = new lpCashRef[NGPReady];
 	Mapping = new byte[NGPReady];
-	memset(CASHREF, 0, NGPReady << 2);
+	memset(CASHREF, 0, NGPReady * sizeof(lpCashRef));
 	memset(Mapping, 0, NGPReady);
 	//PreLoadGPImage("gets2");
-	memset(GP_L_IDXS, 0, sizeof GP_L_IDXS);
+	memset(GP_L_IDXS, 0, sizeof(GP_L_IDXS));
 };
 GP_System::~GP_System()
 {
@@ -92,7 +95,7 @@ int  GP_System::GetGPWidth(int i, int n)
 {
 	if (LoadGP(i))
 	{
-		if (n >= GPS.GPNFrames[i])
+		if (n < 0 || n >= GPS.GPNFrames[i])
 			return 0;
 		if (ItLX[i])
 			return ItLX[i][n];
@@ -105,7 +108,7 @@ int  GP_System::GetGPShift(int i, int n)
 {
 	if (LoadGP(i))
 	{
-		if (n >= GPS.GPNFrames[i])return 0;
+		if (n < 0 || n >= GPS.GPNFrames[i])return 0;
 		if (ItDX[i])return ItDX[i][n];
 		else return 0;
 	}
@@ -116,7 +119,7 @@ int  GP_System::GetGPHeight(int i, int n)
 {
 	if (LoadGP(i))
 	{
-		if (n >= GPS.GPNFrames[i])
+		if (n < 0 || n >= GPS.GPNFrames[i])
 		{
 			return 0;
 		}
@@ -134,7 +137,7 @@ bool GP_System::GetGPSize(int i, int n, int* Lx, int* Ly)
 	*Ly = 0;
 	if (LoadGP(i))
 	{
-		if (n >= GPS.GPNFrames[i])return false;
+		if (n < 0 || n >= GPS.GPNFrames[i])return false;
 		*Lx = ImLx[i][n];
 		*Ly = ImLy[i][n];
 		return true;
@@ -143,7 +146,7 @@ bool GP_System::GetGPSize(int i, int n, int* Lx, int* Ly)
 };
 byte* GP_System::GetCash(int Size)
 {
-	int UsedSize = -8;
+	int UsedSize = -CASH_HDR;
 	int NSeg = 0;
 	int tpos = CashPos;
 	int cas = CashSize;
@@ -152,7 +155,7 @@ byte* GP_System::GetCash(int Size)
 	//assert(Cash[CashSize]==0x37&&Cash[CashSize+1]==0x42);
 	while (tpos < cas && UsedSize < Size)
 	{
-		int sz = INTV(Cash + tpos + 4);
+		int sz = INTV(Cash + tpos + sizeof(intptr_t));
 		UsedSize += sz;
 		tpos += sz;
 		NSeg++;
@@ -160,12 +163,12 @@ byte* GP_System::GetCash(int Size)
 	if (UsedSize < Size)
 	{
 		tpos = 0;
-		UsedSize = -8;
+		UsedSize = -CASH_HDR;
 		NSeg = 0;
 		CashPos = 0;
 		while (UsedSize < Size)
 		{
-			int sz = INTV(Cash + tpos + 4);
+			int sz = INTV(Cash + tpos + sizeof(intptr_t));
 			UsedSize += sz;
 			tpos += sz;
 			NSeg++;
@@ -175,25 +178,25 @@ byte* GP_System::GetCash(int Size)
 	tpos = CashPos;
 	for (int i = 0; i < NSeg; i++)
 	{
-		int sz = INTV(Cash + tpos + 4);
-		int* ptr = (int*)INTV(Cash + tpos);
+		int sz = INTV(Cash + tpos + sizeof(intptr_t));
+		uintptr_t* ptr = (uintptr_t*)PTRV(Cash + tpos);
 		if (ptr)
 		{
-			ptr[0] = 0xFFFFFFFF;
-			INTV(Cash + tpos) = NULL;
+			*ptr = (uintptr_t)-1;
+			PTRV(Cash + tpos) = 0;
 		};
 		tpos += sz;
 	};
 	if (UsedSize - Size > 32)
 	{
-		INTV(Cash + CashPos + Size + 8) = 0;
-		INTV(Cash + CashPos + Size + 12) = UsedSize - Size;
+		PTRV(Cash + CashPos + Size + CASH_HDR) = 0;
+		INTV(Cash + CashPos + Size + CASH_HDR + sizeof(intptr_t)) = UsedSize - Size;
 		UsedSize = Size;
 	};
-	INTV(Cash + CashPos) = 0;
-	INTV(Cash + CashPos + 4) = UsedSize + 8;
+	PTRV(Cash + CashPos) = 0;
+	INTV(Cash + CashPos + sizeof(intptr_t)) = UsedSize + CASH_HDR;
 	byte* cps = Cash + CashPos;
-	CashPos += UsedSize + 8;
+	CashPos += UsedSize + CASH_HDR;
 	return cps;
 };
 
@@ -327,11 +330,15 @@ int GP_Header::GetLx()
 		DIFF = GPH->NextPict;
 		int Lxx = GPH->dx + GPH->Lx;
 		if (Lxx > LxMax)LxMax = Lxx;
+		#ifdef _MSC_VER
 		__asm {
 			mov	eax, GPS
 			add	eax, DIFF
 			mov	GPH, eax
 		};
+		#else
+			GPH = (GP_Header*)((char*)GPS + DIFF);
+		#endif
 	} while (DIFF != -1);
 	return LxMax;
 };
@@ -346,11 +353,15 @@ int GP_Header::GetLy()
 		DIFF = GPH->NextPict;
 		int Lyy = GPH->dy + GPH->Ly;
 		if (Lyy > LyMax)LyMax = Lyy;
+		#ifdef _MSC_VER
 		__asm {
 			mov	eax, GPS
 			add	eax, DIFF
 			mov	GPH, eax
 		};
+		#else
+			GPH = (GP_Header*)((char*)GPS + DIFF);
+		#endif
 	} while (DIFF != -1);
 	return LyMax;
 };
@@ -365,11 +376,15 @@ int GP_Header::GetDx()
 		DIFF = GPH->NextPict;
 		int Lxx = GPH->dx;
 		if (Lxx < LxMax)LxMax = Lxx;
+		#ifdef _MSC_VER
 		__asm {
 			mov	eax, GPS
 			add	eax, DIFF
 			mov	GPH, eax
 		};
+		#else
+			GPH = (GP_Header*)((char*)GPS + DIFF);
+		#endif
 	} while (DIFF != -1);
 	return LxMax;
 };
@@ -384,11 +399,15 @@ int GP_Header::GetDy()
 		DIFF = GPH->NextPict;
 		int Lxx = GPH->dy;
 		if (Lxx < LxMax)LxMax = Lxx;
+		#ifdef _MSC_VER
 		__asm {
 			mov	eax, GPS
 			add	eax, DIFF
 			mov	GPH, eax
 		};
+		#else
+			GPH = (GP_Header*)((char*)GPS + DIFF);
+		#endif
 	} while (DIFF != -1);
 	return LxMax;
 }
@@ -495,7 +514,7 @@ int GP_System::PreLoadGPImage(char* Name)
 	return fidx;
 }
 
-#define GPX(x,y) ((GP_Header*)(int(x)+x##->##y))
+#define GPX(x,y) ((GP_Header*)((intptr_t)(x) + (x)->y))
 
 bool GP_System::LoadGP(int i)
 {
@@ -542,7 +561,9 @@ bool GP_System::LoadGP(int i)
 			int np = lpGPH->NPictures;
 			for (int n = 0; n < np; n++)
 			{
+				#ifdef _MSC_VER
 				//lpint[n]+=int(lpGPH);         //----------!new!----------//
+				#endif
 				ImLx[i][n] = GPX(lpGPH, LGPH[n])->GetLx();
 				ImLy[i][n] = GPX(lpGPH, LGPH[n])->GetLy();
 			};
@@ -569,16 +590,20 @@ bool GP_System::LoadGP(int i)
 				{
 					DIFF = LGP->NextPict;
 					csz++;
+					#ifdef _MSC_VER
 					__asm {
 						mov	eax, LGP0
 						add	eax, DIFF
 						mov	LGP, eax
 					};
+					#else
+						LGP = (GP_Header*)((char*)LGP0 + DIFF);
+					#endif
 				} while (DIFF != -1);
 			};
-			CASHREF[i] = new DWORD[csz + 1];
-			DWORD* CREF = CASHREF[i];
-			memset(CREF, 0xFF, (csz + 1) << 2);
+			CASHREF[i] = new uintptr_t[csz + 1];
+			uintptr_t* CREF = CASHREF[i];
+			memset(CREF, 0xFF, (csz + 1) * sizeof(uintptr_t));
 			csz = np;
 			for (int n = 0; n < np; n++)
 			{
@@ -591,11 +616,15 @@ bool GP_System::LoadGP(int i)
 				{
 					DIFF = LGP->NextPict;
 					csz++;
+					#ifdef _MSC_VER
 					__asm {
 						mov	eax, LGP0;
 						add	eax, DIFF
 							mov	LGP, eax
 					};
+					#else
+						LGP = (GP_Header*)((char*)LGP0 + DIFF);
+					#endif
 				} while (DIFF != -1);
 			};
 			return true;
@@ -650,19 +679,106 @@ void GP_ShowMaskedPict(int x, int y, GP_Header* Pic, byte* CData, byte* Encoder)
 	y += Pic->dy;
 	int Lx = Pic->Lx;
 	int NLines = Pic->NLines;
+	#ifdef _MSC_VER
 	int ofst = int(Pic) + 23;
+	#endif
 
 	if (y + NLines <= WindY || x + Lx <= WindX || x > WindX1 || y > WindY1)
 	{
 		return;
 	}
 
+#ifndef _MSC_VER
+	{
+		byte* mask = (byte*)Pic + 23;
+		byte* cdata = CData;
+		byte* screen = (byte*)ScreenPtr;
+
+		// Top clipping: skip scanlines
+		if (y < WindY) {
+			int skip = WindY - y;
+			NLines -= skip;
+			y += skip;
+			for (int i = 0; i < skip; i++) {
+				byte m = *mask++;
+				if (m == 0) continue;
+				if (m & 0x80) {
+					int pixMask = (m & 0x20) ? 16 : 0;
+					int nsegs = m & 31;
+					for (int s = 0; s < nsegs; s++) {
+						int draw = (*mask >> 4) | pixMask;
+						mask++;
+						cdata += draw;
+					}
+				} else {
+					int nsegs = m;
+					for (int s = 0; s < nsegs; s++) {
+						cdata += mask[1];
+						mask += 2;
+					}
+				}
+			}
+		}
+
+		// Bottom clipping
+		if (y + NLines > WindY1) NLines = WindY1 - y + 1;
+
+		// Render scanlines with per-pixel horizontal clipping
+		for (int line = 0; line < NLines; line++) {
+			byte* ls = screen + x + (y + line) * ScrWidth;
+			byte m = *mask++;
+			if (m == 0) continue;
+
+			int xpos = 0;
+			if (m & 0x80) {
+				// Complex line
+				int spaceMask = (m & 0x40) ? 16 : 0;
+				int pixMask = (m & 0x20) ? 16 : 0;
+				int nsegs = m & 31;
+				for (int s = 0; s < nsegs; s++) {
+					byte seg = *mask++;
+					int skip = (seg & 0xF) | spaceMask;
+					int draw = (seg >> 4) | pixMask;
+					xpos += skip;
+					for (int p = 0; p < draw; p++) {
+						int sx = x + xpos;
+						if (sx >= WindX && sx <= WindX1)
+							ls[xpos] = *cdata;
+						cdata++;
+						xpos++;
+					}
+				}
+			} else {
+				// Simple line
+				int nsegs = m;
+				for (int s = 0; s < nsegs; s++) {
+					int skip = mask[0];
+					int draw = mask[1];
+					mask += 2;
+					xpos += skip;
+					for (int p = 0; p < draw; p++) {
+						int sx = x + xpos;
+						if (sx >= WindX && sx <= WindX1)
+							ls[xpos] = *cdata;
+						cdata++;
+						xpos++;
+					}
+				}
+			}
+		}
+		return;
+	}
+#endif
+
 	//vertical clipping
 	//top clipper
+	#ifdef _MSC_VER
 	int CDPOS = int(CData);
+	#endif
 
 	if (y < WindY)
 	{
+		#ifdef _MSC_VER
 		__asm
 		{
 			mov		ecx, WindY
@@ -708,6 +824,9 @@ void GP_ShowMaskedPict(int x, int y, GP_Header* Pic, byte* CData, byte* Encoder)
 				jnz		NLINE
 				END_VCLIP : mov		ofst, ebx
 		}
+		#else
+			// TODO: C fallback for GP_ShowMaskedPict
+		#endif
 	}
 	//bottom clipper
 
@@ -718,7 +837,9 @@ void GP_ShowMaskedPict(int x, int y, GP_Header* Pic, byte* CData, byte* Encoder)
 
 	//horisontal clipper
 	int x1 = x + Lx - 1;
+	#ifdef _MSC_VER
 	int scrofs = int(ScreenPtr) + x + y * ScrWidth;
+	#endif
 	int TEMP1;
 	int LineStart;
 	int CLIP;
@@ -734,6 +855,7 @@ void GP_ShowMaskedPict(int x, int y, GP_Header* Pic, byte* CData, byte* Encoder)
 		//******************(((((((((((())))))))))))*****************//
 		//***********************************************************//
 				//no clipping
+		#ifdef _MSC_VER
 		__asm
 		{
 			pushf
@@ -833,6 +955,9 @@ void GP_ShowMaskedPict(int x, int y, GP_Header* Pic, byte* CData, byte* Encoder)
 				pop		esi
 				popf
 		}
+		#else
+			// TODO: C fallback for GP_ShowMaskedPict
+		#endif
 	}
 	else
 	{
@@ -847,6 +972,7 @@ void GP_ShowMaskedPict(int x, int y, GP_Header* Pic, byte* CData, byte* Encoder)
 			//****************************************************************//
 			//****************************************************************//
 			CLIP = WindX - x;
+			#ifdef _MSC_VER
 			__asm
 			{
 				pushf
@@ -989,6 +1115,9 @@ void GP_ShowMaskedPict(int x, int y, GP_Header* Pic, byte* CData, byte* Encoder)
 					pop		esi
 					popf
 			}
+			#else
+				// TODO: C fallback for GP_ShowMaskedPict
+			#endif
 		}
 		else
 		{
@@ -1003,6 +1132,7 @@ void GP_ShowMaskedPict(int x, int y, GP_Header* Pic, byte* CData, byte* Encoder)
 				//****************************************************************//
 				CLIP = WindX1 - x + 1;
 				int ADDESI;
+				#ifdef _MSC_VER
 				__asm
 				{
 					pushf
@@ -1151,6 +1281,9 @@ void GP_ShowMaskedPict(int x, int y, GP_Header* Pic, byte* CData, byte* Encoder)
 						pop		esi
 						popf
 				}
+				#else
+					// TODO: C fallback for GP_ShowMaskedPict
+				#endif
 			}
 		}
 	}
@@ -1162,13 +1295,96 @@ void GP_ShowMaskedPictInv(int x, int y, GP_Header* Pic, byte* CData, byte* Encod
 	y += Pic->dy;
 	int Lx = Pic->Lx;
 	int NLines = Pic->NLines;
+	#ifdef _MSC_VER
 	int ofst = int(Pic) + 23;
+	#endif
 	if (y + NLines <= WindY || x - Lx >= WindX1 || x<WindX || y>WindY1)return;
+
+#ifndef _MSC_VER
+	{
+		byte* mask = (byte*)Pic + 23;
+		byte* cdata = CData;
+		byte* screen = (byte*)ScreenPtr;
+
+		if (y < WindY) {
+			int skip = WindY - y;
+			NLines -= skip;
+			y += skip;
+			for (int i = 0; i < skip; i++) {
+				byte m = *mask++;
+				if (m == 0) continue;
+				if (m & 0x80) {
+					int pixMask = (m & 0x20) ? 16 : 0;
+					int nsegs = m & 31;
+					for (int s = 0; s < nsegs; s++) {
+						int draw = (*mask >> 4) | pixMask;
+						mask++;
+						cdata += draw;
+					}
+				} else {
+					int nsegs = m;
+					for (int s = 0; s < nsegs; s++) {
+						cdata += mask[1];
+						mask += 2;
+					}
+				}
+			}
+		}
+
+		if (y + NLines > WindY1) NLines = WindY1 - y + 1;
+
+		for (int line = 0; line < NLines; line++) {
+			byte* ls = screen + x + (y + line) * ScrWidth;
+			byte m = *mask++;
+			if (m == 0) continue;
+
+			int xpos = 0;
+			if (m & 0x80) {
+				int spaceMask = (m & 0x40) ? 16 : 0;
+				int pixMask = (m & 0x20) ? 16 : 0;
+				int nsegs = m & 31;
+				for (int s = 0; s < nsegs; s++) {
+					byte seg = *mask++;
+					int skip = (seg & 0xF) | spaceMask;
+					int draw = (seg >> 4) | pixMask;
+					xpos += skip;
+					for (int p = 0; p < draw; p++) {
+						int sx = x - xpos;
+						if (sx >= WindX && sx <= WindX1)
+							ls[-xpos] = *cdata;
+						cdata++;
+						xpos++;
+					}
+				}
+			} else {
+				int nsegs = m;
+				for (int s = 0; s < nsegs; s++) {
+					int skip = mask[0];
+					int draw = mask[1];
+					mask += 2;
+					xpos += skip;
+					for (int p = 0; p < draw; p++) {
+						int sx = x - xpos;
+						if (sx >= WindX && sx <= WindX1)
+							ls[-xpos] = *cdata;
+						cdata++;
+						xpos++;
+					}
+				}
+			}
+		}
+		return;
+	}
+#endif
+
 	//vertical clipping
 	//top clipper
+	#ifdef _MSC_VER
 	int CDPOS = int(CData);
+	#endif
 	if (y < WindY)
 	{
+		#ifdef _MSC_VER
 		__asm {
 			mov		ecx, WindY
 			sub		ecx, y
@@ -1213,12 +1429,17 @@ void GP_ShowMaskedPictInv(int x, int y, GP_Header* Pic, byte* CData, byte* Encod
 				jnz		NLINE
 				END_VCLIP : mov		ofst, ebx
 		};
+		#else
+			// TODO: C fallback for GP_ShowMaskedPictInv
+		#endif
 	};
 	//bottom clipper
 	if (y + NLines > WindY1)NLines = WindY1 - y + 1;
 	//horisontal clipper
 	int x1 = x - Lx + 1;
+	#ifdef _MSC_VER
 	int scrofs = int(ScreenPtr) + x + y * ScrWidth;
+	#endif
 	int TEMP1;
 	int LineStart;
 	int CLIP;
@@ -1233,6 +1454,7 @@ void GP_ShowMaskedPictInv(int x, int y, GP_Header* Pic, byte* CData, byte* Encod
 		//******************(((((((((((())))))))))))*****************//
 		//***********************************************************//
 				//no clipping
+		#ifdef _MSC_VER
 		__asm {
 			pushf
 			push	esi
@@ -1333,6 +1555,9 @@ void GP_ShowMaskedPictInv(int x, int y, GP_Header* Pic, byte* CData, byte* Encod
 				pop		esi
 				popf
 		};
+		#else
+			// TODO: C fallback for GP_ShowMaskedPictInv
+		#endif
 	}
 	else
 	{
@@ -1347,6 +1572,7 @@ void GP_ShowMaskedPictInv(int x, int y, GP_Header* Pic, byte* CData, byte* Encod
 			//****************************************************************//
 			//****************************************************************//
 			CLIP = x - WindX1;
+			#ifdef _MSC_VER
 			__asm {
 				pushf
 				push	esi
@@ -1490,6 +1716,9 @@ void GP_ShowMaskedPictInv(int x, int y, GP_Header* Pic, byte* CData, byte* Encod
 					pop		esi
 					popf
 			};
+			#else
+				// TODO: C fallback for GP_ShowMaskedPictInv
+			#endif
 		}
 		else
 		{
@@ -1504,6 +1733,7 @@ void GP_ShowMaskedPictInv(int x, int y, GP_Header* Pic, byte* CData, byte* Encod
 				//****************************************************************//
 				CLIP = x - WindX + 1;
 				int ADDESI;
+				#ifdef _MSC_VER
 				__asm {
 					pushf
 					push	esi
@@ -1653,6 +1883,9 @@ void GP_ShowMaskedPictInv(int x, int y, GP_Header* Pic, byte* CData, byte* Encod
 						pop		esi
 						popf
 				};
+				#else
+					// TODO: C fallback for GP_ShowMaskedPictInv
+				#endif
 			};
 		};
 	};
@@ -1675,13 +1908,96 @@ void GP_ShowMaskedPictShadow(int x, int y, GP_Header* Pic, byte* CData, byte* En
 	y += Pic->dy;
 	int Lx = Pic->Lx;
 	int NLines = Pic->NLines;
+	#ifdef _MSC_VER
 	int ofst = int(Pic) + 23;
+	#endif
 	if (y + NLines <= WindY || x + Lx <= WindX || x > WindX1 || y > WindY1)return;
+
+#ifndef _MSC_VER
+	{
+		byte* mask = (byte*)Pic + 23;
+		byte* cdata = CData;
+		byte* screen = (byte*)ScreenPtr;
+
+		if (y < WindY) {
+			int skip = WindY - y;
+			NLines -= skip;
+			y += skip;
+			for (int i = 0; i < skip; i++) {
+				byte m = *mask++;
+				if (m == 0) continue;
+				if (m & 0x80) {
+					int pixMask = (m & 0x20) ? 16 : 0;
+					int nsegs = m & 31;
+					for (int s = 0; s < nsegs; s++) {
+						int draw = (*mask >> 4) | pixMask;
+						mask++;
+						cdata += draw;
+					}
+				} else {
+					int nsegs = m;
+					for (int s = 0; s < nsegs; s++) {
+						cdata += mask[1];
+						mask += 2;
+					}
+				}
+			}
+		}
+
+		if (y + NLines > WindY1) NLines = WindY1 - y + 1;
+
+		for (int line = 0; line < NLines; line++) {
+			byte* ls = screen + x + (y + line) * ScrWidth;
+			byte m = *mask++;
+			if (m == 0) continue;
+
+			int xpos = 0;
+			if (m & 0x80) {
+				int spaceMask = (m & 0x40) ? 16 : 0;
+				int pixMask = (m & 0x20) ? 16 : 0;
+				int nsegs = m & 31;
+				for (int s = 0; s < nsegs; s++) {
+					byte seg = *mask++;
+					int skip = (seg & 0xF) | spaceMask;
+					int draw = (seg >> 4) | pixMask;
+					xpos += skip;
+					for (int p = 0; p < draw; p++) {
+						int sx = x + xpos;
+						if (sx >= WindX && sx <= WindX1)
+							ls[xpos] = Encoder[ls[xpos]];
+						cdata++;
+						xpos++;
+					}
+				}
+			} else {
+				int nsegs = m;
+				for (int s = 0; s < nsegs; s++) {
+					int skip = mask[0];
+					int draw = mask[1];
+					mask += 2;
+					xpos += skip;
+					for (int p = 0; p < draw; p++) {
+						int sx = x + xpos;
+						if (sx >= WindX && sx <= WindX1)
+							ls[xpos] = Encoder[ls[xpos]];
+						cdata++;
+						xpos++;
+					}
+				}
+			}
+		}
+		return;
+	}
+#endif
+
 	//vertical clipping
 	//top clipper
+	#ifdef _MSC_VER
 	int CDPOS = int(CData);
+	#endif
 	if (y < WindY)
 	{
+		#ifdef _MSC_VER
 		__asm {
 			mov		ecx, WindY
 			sub		ecx, y
@@ -1726,12 +2042,17 @@ void GP_ShowMaskedPictShadow(int x, int y, GP_Header* Pic, byte* CData, byte* En
 				jnz		NLINE
 				END_VCLIP : mov		ofst, ebx
 		};
+		#else
+			// TODO: C fallback for GP_ShowMaskedPictShadow
+		#endif
 	};
 	//bottom clipper
 	if (y + NLines > WindY1)NLines = WindY1 - y + 1;
 	//horisontal clipper
 	int x1 = x + Lx - 1;
+	#ifdef _MSC_VER
 	int scrofs = int(ScreenPtr) + x + y * ScrWidth;
+	#endif
 	int TEMP1;
 	int LineStart;
 	int CLIP;
@@ -1746,6 +2067,7 @@ void GP_ShowMaskedPictShadow(int x, int y, GP_Header* Pic, byte* CData, byte* En
 		//******************(((((((((((())))))))))))*****************//
 		//***********************************************************//
 				//no clipping
+		#ifdef _MSC_VER
 		__asm {
 			pushf
 			push	esi
@@ -1852,6 +2174,9 @@ void GP_ShowMaskedPictShadow(int x, int y, GP_Header* Pic, byte* CData, byte* En
 				pop		esi
 				popf
 		};
+		#else
+			// TODO: C fallback for GP_ShowMaskedPictShadow
+		#endif
 	}
 	else
 	{
@@ -1866,6 +2191,7 @@ void GP_ShowMaskedPictShadow(int x, int y, GP_Header* Pic, byte* CData, byte* En
 			//****************************************************************//
 			//****************************************************************//
 			CLIP = WindX - x;
+			#ifdef _MSC_VER
 			__asm {
 				pushf
 				push	esi
@@ -2015,6 +2341,9 @@ void GP_ShowMaskedPictShadow(int x, int y, GP_Header* Pic, byte* CData, byte* En
 					pop		esi
 					popf
 			};
+			#else
+				// TODO: C fallback for GP_ShowMaskedPictShadow
+			#endif
 		}
 		else
 		{
@@ -2029,6 +2358,7 @@ void GP_ShowMaskedPictShadow(int x, int y, GP_Header* Pic, byte* CData, byte* En
 				//****************************************************************//
 				CLIP = WindX1 - x + 1;
 				int ADDESI;
+				#ifdef _MSC_VER
 				__asm {
 					pushf
 					push	esi
@@ -2184,6 +2514,9 @@ void GP_ShowMaskedPictShadow(int x, int y, GP_Header* Pic, byte* CData, byte* En
 						pop		esi
 						popf
 				};
+				#else
+					// TODO: C fallback for GP_ShowMaskedPictShadow
+				#endif
 			};
 		};
 	};
@@ -2194,13 +2527,96 @@ void GP_ShowMaskedPictShadowInv(int x, int y, GP_Header* Pic, byte* CData, byte*
 	y += Pic->dy;
 	int Lx = Pic->Lx;
 	int NLines = Pic->NLines;
+	#ifdef _MSC_VER
 	int ofst = int(Pic) + 23;
+	#endif
 	if (y + NLines <= WindY || x - Lx >= WindX1 || x<WindX || y>WindY1)return;
+
+#ifndef _MSC_VER
+	{
+		byte* mask = (byte*)Pic + 23;
+		byte* cdata = CData;
+		byte* screen = (byte*)ScreenPtr;
+
+		if (y < WindY) {
+			int skip = WindY - y;
+			NLines -= skip;
+			y += skip;
+			for (int i = 0; i < skip; i++) {
+				byte m = *mask++;
+				if (m == 0) continue;
+				if (m & 0x80) {
+					int pixMask = (m & 0x20) ? 16 : 0;
+					int nsegs = m & 31;
+					for (int s = 0; s < nsegs; s++) {
+						int draw = (*mask >> 4) | pixMask;
+						mask++;
+						cdata += draw;
+					}
+				} else {
+					int nsegs = m;
+					for (int s = 0; s < nsegs; s++) {
+						cdata += mask[1];
+						mask += 2;
+					}
+				}
+			}
+		}
+
+		if (y + NLines > WindY1) NLines = WindY1 - y + 1;
+
+		for (int line = 0; line < NLines; line++) {
+			byte* ls = screen + x + (y + line) * ScrWidth;
+			byte m = *mask++;
+			if (m == 0) continue;
+
+			int xpos = 0;
+			if (m & 0x80) {
+				int spaceMask = (m & 0x40) ? 16 : 0;
+				int pixMask = (m & 0x20) ? 16 : 0;
+				int nsegs = m & 31;
+				for (int s = 0; s < nsegs; s++) {
+					byte seg = *mask++;
+					int skip = (seg & 0xF) | spaceMask;
+					int draw = (seg >> 4) | pixMask;
+					xpos += skip;
+					for (int p = 0; p < draw; p++) {
+						int sx = x - xpos;
+						if (sx >= WindX && sx <= WindX1)
+							ls[-xpos] = Encoder[ls[-xpos]];
+						cdata++;
+						xpos++;
+					}
+				}
+			} else {
+				int nsegs = m;
+				for (int s = 0; s < nsegs; s++) {
+					int skip = mask[0];
+					int draw = mask[1];
+					mask += 2;
+					xpos += skip;
+					for (int p = 0; p < draw; p++) {
+						int sx = x - xpos;
+						if (sx >= WindX && sx <= WindX1)
+							ls[-xpos] = Encoder[ls[-xpos]];
+						cdata++;
+						xpos++;
+					}
+				}
+			}
+		}
+		return;
+	}
+#endif
+
 	//vertical clipping
 	//top clipper
+	#ifdef _MSC_VER
 	int CDPOS = int(CData);
+	#endif
 	if (y < WindY)
 	{
+		#ifdef _MSC_VER
 		__asm {
 			mov		ecx, WindY
 			sub		ecx, y
@@ -2245,12 +2661,17 @@ void GP_ShowMaskedPictShadowInv(int x, int y, GP_Header* Pic, byte* CData, byte*
 				jnz		NLINE
 				END_VCLIP : mov		ofst, ebx
 		};
+		#else
+			// TODO: C fallback for GP_ShowMaskedPictShadowInv
+		#endif
 	};
 	//bottom clipper
 	if (y + NLines > WindY1)NLines = WindY1 - y + 1;
 	//horisontal clipper
 	int x1 = x - Lx + 1;
+	#ifdef _MSC_VER
 	int scrofs = int(ScreenPtr) + x + y * ScrWidth;
+	#endif
 	int TEMP1;
 	int LineStart;
 	int CLIP;
@@ -2265,6 +2686,7 @@ void GP_ShowMaskedPictShadowInv(int x, int y, GP_Header* Pic, byte* CData, byte*
 		//******************(((((((((((())))))))))))*****************//
 		//***********************************************************//
 				//no clipping
+		#ifdef _MSC_VER
 		__asm {
 			pushf
 			push	esi
@@ -2371,6 +2793,9 @@ void GP_ShowMaskedPictShadowInv(int x, int y, GP_Header* Pic, byte* CData, byte*
 				pop		esi
 				popf
 		};
+		#else
+			// TODO: C fallback for GP_ShowMaskedPictShadowInv
+		#endif
 	}
 	else
 	{
@@ -2385,6 +2810,7 @@ void GP_ShowMaskedPictShadowInv(int x, int y, GP_Header* Pic, byte* CData, byte*
 			//****************************************************************//
 			//****************************************************************//
 			CLIP = x - WindX1;
+			#ifdef _MSC_VER
 			__asm {
 				pushf
 				push	esi
@@ -2534,6 +2960,9 @@ void GP_ShowMaskedPictShadowInv(int x, int y, GP_Header* Pic, byte* CData, byte*
 					pop		esi
 					popf
 			};
+			#else
+				// TODO: C fallback for GP_ShowMaskedPictShadowInv
+			#endif
 		}
 		else
 		{
@@ -2548,6 +2977,7 @@ void GP_ShowMaskedPictShadowInv(int x, int y, GP_Header* Pic, byte* CData, byte*
 				//****************************************************************//
 				CLIP = x - WindX + 1;
 				int ADDESI;
+				#ifdef _MSC_VER
 				__asm {
 					pushf
 					push	esi
@@ -2703,6 +3133,9 @@ void GP_ShowMaskedPictShadowInv(int x, int y, GP_Header* Pic, byte* CData, byte*
 						pop		esi
 						popf
 				};
+				#else
+					// TODO: C fallback for GP_ShowMaskedPictShadowInv
+				#endif
 			};
 		};
 	};
@@ -2725,14 +3158,101 @@ void GP_ShowMaskedPictOverpoint(int x, int y, GP_Header* Pic, byte* CData, byte*
 	y += Pic->dy;
 	int Lx = Pic->Lx;
 	int NLines = Pic->NLines;
+	#ifdef _MSC_VER
 	int ofst = int(Pic) + 23;
+	#endif
 	int OCNTR = y;
 	if (y + NLines <= WindY || x + Lx <= WindX || x > WindX1 || y > WindY1)return;
+
+#ifndef _MSC_VER
+	{
+		byte* mask = (byte*)Pic + 23;
+		byte* cdata = CData;
+		byte* screen = (byte*)ScreenPtr;
+
+		if (y < WindY) {
+			int skip = WindY - y;
+			NLines -= skip;
+			y += skip;
+			OCNTR += skip;
+			for (int i = 0; i < skip; i++) {
+				byte m = *mask++;
+				if (m == 0) continue;
+				if (m & 0x80) {
+					int pixMask = (m & 0x20) ? 16 : 0;
+					int nsegs = m & 31;
+					for (int s = 0; s < nsegs; s++) {
+						int draw = (*mask >> 4) | pixMask;
+						mask++;
+						cdata += draw;
+					}
+				} else {
+					int nsegs = m;
+					for (int s = 0; s < nsegs; s++) {
+						cdata += mask[1];
+						mask += 2;
+					}
+				}
+			}
+		}
+
+		if (y + NLines > WindY1) NLines = WindY1 - y + 1;
+
+		for (int line = 0; line < NLines; line++) {
+			byte* ls = screen + x + (y + line) * ScrWidth;
+			byte m = *mask++;
+			if (m == 0) { OCNTR++; continue; }
+
+			int xpos = 0;
+			if (m & 0x80) {
+				int spaceMask = (m & 0x40) ? 16 : 0;
+				int pixMask = (m & 0x20) ? 16 : 0;
+				int nsegs = m & 31;
+				for (int s = 0; s < nsegs; s++) {
+					byte seg = *mask++;
+					int skip = (seg & 0xF) | spaceMask;
+					int draw = (seg >> 4) | pixMask;
+					xpos += skip;
+					for (int p = 0; p < draw; p++) {
+						int sx = x + xpos;
+						if (sx >= WindX && sx <= WindX1) {
+							if ((OCNTR + sx) & 1)
+								ls[xpos] = 0;
+						}
+						xpos++;
+					}
+				}
+			} else {
+				int nsegs = m;
+				for (int s = 0; s < nsegs; s++) {
+					int skip = mask[0];
+					int draw = mask[1];
+					mask += 2;
+					xpos += skip;
+					for (int p = 0; p < draw; p++) {
+						int sx = x + xpos;
+						if (sx >= WindX && sx <= WindX1) {
+							if ((OCNTR + sx) & 1)
+								ls[xpos] = 0;
+						}
+						xpos++;
+					}
+				}
+			}
+			OCNTR++;
+		}
+		return;
+	}
+#endif
+
 	//vertical clipping
 	//top clipper
+	#ifdef _MSC_VER
 	int CDPOS = int(CData);
+	#endif
 	if (y < WindY)
 	{
+		#ifdef _MSC_VER
 		__asm {
 			mov		ecx, WindY
 			sub		ecx, y
@@ -2777,13 +3297,18 @@ void GP_ShowMaskedPictOverpoint(int x, int y, GP_Header* Pic, byte* CData, byte*
 				jnz		NLINE
 				END_VCLIP : mov		ofst, ebx
 		};
+		#else
+			// TODO: C fallback for GP_ShowMaskedPictOverpoint
+		#endif
 		OCNTR = WindY;
 	};
 	//bottom clipper
 	if (y + NLines > WindY1)NLines = WindY1 - y + 1;
 	//horisontal clipper
 	int x1 = x + Lx - 1;
+	#ifdef _MSC_VER
 	int scrofs = int(ScreenPtr) + x + y * ScrWidth;
+	#endif
 	int TEMP1;
 	int LineStart;
 	int CLIP;
@@ -2798,6 +3323,7 @@ void GP_ShowMaskedPictOverpoint(int x, int y, GP_Header* Pic, byte* CData, byte*
 		//******************(((((((((((())))))))))))*****************//
 		//***********************************************************//
 				//no clipping
+		#ifdef _MSC_VER
 		__asm {
 			pushf
 			push	esi
@@ -2910,6 +3436,9 @@ void GP_ShowMaskedPictOverpoint(int x, int y, GP_Header* Pic, byte* CData, byte*
 				pop		esi
 				popf
 		};
+		#else
+			// TODO: C fallback for GP_ShowMaskedPictOverpoint
+		#endif
 	}
 	else
 	{
@@ -2924,6 +3453,7 @@ void GP_ShowMaskedPictOverpoint(int x, int y, GP_Header* Pic, byte* CData, byte*
 			//****************************************************************//
 			//****************************************************************//
 			CLIP = WindX - x;
+			#ifdef _MSC_VER
 			__asm {
 				pushf
 				push	esi
@@ -3079,6 +3609,9 @@ void GP_ShowMaskedPictOverpoint(int x, int y, GP_Header* Pic, byte* CData, byte*
 					pop		esi
 					popf
 			};
+			#else
+				// TODO: C fallback for GP_ShowMaskedPictOverpoint
+			#endif
 		}
 		else
 		{
@@ -3093,6 +3626,7 @@ void GP_ShowMaskedPictOverpoint(int x, int y, GP_Header* Pic, byte* CData, byte*
 				//****************************************************************//
 				CLIP = WindX1 - x + 1;
 				int ADDESI;
+				#ifdef _MSC_VER
 				__asm {
 					pushf
 					push	esi
@@ -3254,6 +3788,9 @@ void GP_ShowMaskedPictOverpoint(int x, int y, GP_Header* Pic, byte* CData, byte*
 						pop		esi
 						popf
 				};
+				#else
+					// TODO: C fallback for GP_ShowMaskedPictOverpoint
+				#endif
 			};
 		};
 	};
@@ -3264,13 +3801,94 @@ void GP_ShowMaskedPictOverpointInv(int x, int y, GP_Header* Pic, byte* CData, by
 	y += Pic->dy;
 	int Lx = Pic->Lx;
 	int NLines = Pic->NLines;
+	#ifdef _MSC_VER
 	int ofst = int(Pic) + 23;
+	#endif
 	if (y + NLines <= WindY || x - Lx >= WindX1 || x<WindX || y>WindY1)return;
+
+#ifndef _MSC_VER
+	{
+		byte* mask = (byte*)Pic + 23;
+		byte* cdata = CData;
+		byte* screen = (byte*)ScreenPtr;
+
+		if (y < WindY) {
+			int skip = WindY - y;
+			NLines -= skip;
+			y += skip;
+			for (int i = 0; i < skip; i++) {
+				byte m = *mask++;
+				if (m == 0) continue;
+				if (m & 0x80) {
+					int pixMask = (m & 0x20) ? 16 : 0;
+					int nsegs = m & 31;
+					for (int s = 0; s < nsegs; s++) {
+						int draw = (*mask >> 4) | pixMask;
+						mask++;
+						cdata += draw;
+					}
+				} else {
+					int nsegs = m;
+					for (int s = 0; s < nsegs; s++) {
+						cdata += mask[1];
+						mask += 2;
+					}
+				}
+			}
+		}
+
+		if (y + NLines > WindY1) NLines = WindY1 - y + 1;
+
+		for (int line = 0; line < NLines; line++) {
+			byte* ls = screen + x + (y + line) * ScrWidth;
+			byte m = *mask++;
+			if (m == 0) continue;
+
+			int xpos = 0;
+			if (m & 0x80) {
+				int spaceMask = (m & 0x40) ? 16 : 0;
+				int pixMask = (m & 0x20) ? 16 : 0;
+				int nsegs = m & 31;
+				for (int s = 0; s < nsegs; s++) {
+					byte seg = *mask++;
+					int skip = (seg & 0xF) | spaceMask;
+					int draw = (seg >> 4) | pixMask;
+					xpos += skip;
+					for (int p = 0; p < draw; p++) {
+						int sx = x - xpos;
+						if (sx >= WindX && sx <= WindX1)
+							ls[-xpos] = Encoder[ls[-xpos]];
+						xpos++;
+					}
+				}
+			} else {
+				int nsegs = m;
+				for (int s = 0; s < nsegs; s++) {
+					int skip = mask[0];
+					int draw = mask[1];
+					mask += 2;
+					xpos += skip;
+					for (int p = 0; p < draw; p++) {
+						int sx = x - xpos;
+						if (sx >= WindX && sx <= WindX1)
+							ls[-xpos] = Encoder[ls[-xpos]];
+						xpos++;
+					}
+				}
+			}
+		}
+		return;
+	}
+#endif
+
 	//vertical clipping
 	//top clipper
+	#ifdef _MSC_VER
 	int CDPOS = int(CData);
+	#endif
 	if (y < WindY)
 	{
+		#ifdef _MSC_VER
 		__asm {
 			mov		ecx, WindY
 			sub		ecx, y
@@ -3315,12 +3933,17 @@ void GP_ShowMaskedPictOverpointInv(int x, int y, GP_Header* Pic, byte* CData, by
 				jnz		NLINE
 				END_VCLIP : mov		ofst, ebx
 		};
+		#else
+			// TODO: C fallback for GP_ShowMaskedPictOverpointInv
+		#endif
 	};
 	//bottom clipper
 	if (y + NLines > WindY1)NLines = WindY1 - y + 1;
 	//horisontal clipper
 	int x1 = x - Lx + 1;
+	#ifdef _MSC_VER
 	int scrofs = int(ScreenPtr) + x + y * ScrWidth;
+	#endif
 	int TEMP1;
 	int LineStart;
 	int CLIP;
@@ -3335,6 +3958,7 @@ void GP_ShowMaskedPictOverpointInv(int x, int y, GP_Header* Pic, byte* CData, by
 		//******************(((((((((((())))))))))))*****************//
 		//***********************************************************//
 				//no clipping
+		#ifdef _MSC_VER
 		__asm {
 			pushf
 			push	esi
@@ -3441,6 +4065,9 @@ void GP_ShowMaskedPictOverpointInv(int x, int y, GP_Header* Pic, byte* CData, by
 				pop		esi
 				popf
 		};
+		#else
+			// TODO: C fallback for GP_ShowMaskedPictOverpointInv
+		#endif
 	}
 	else
 	{
@@ -3455,6 +4082,7 @@ void GP_ShowMaskedPictOverpointInv(int x, int y, GP_Header* Pic, byte* CData, by
 			//****************************************************************//
 			//****************************************************************//
 			CLIP = x - WindX1;
+			#ifdef _MSC_VER
 			__asm {
 				pushf
 				push	esi
@@ -3604,6 +4232,9 @@ void GP_ShowMaskedPictOverpointInv(int x, int y, GP_Header* Pic, byte* CData, by
 					pop		esi
 					popf
 			};
+			#else
+				// TODO: C fallback for GP_ShowMaskedPictOverpointInv
+			#endif
 		}
 		else
 		{
@@ -3618,6 +4249,7 @@ void GP_ShowMaskedPictOverpointInv(int x, int y, GP_Header* Pic, byte* CData, by
 				//****************************************************************//
 				CLIP = x - WindX + 1;
 				int ADDESI;
+				#ifdef _MSC_VER
 				__asm {
 					pushf
 					push	esi
@@ -3773,6 +4405,9 @@ void GP_ShowMaskedPictOverpointInv(int x, int y, GP_Header* Pic, byte* CData, by
 						pop		esi
 						popf
 				};
+				#else
+					// TODO: C fallback for GP_ShowMaskedPictOverpointInv
+				#endif
 			};
 		};
 	};
@@ -3790,19 +4425,106 @@ void GP_ShowMaskedPictOverpointInv(int x, int y, GP_Header* Pic, byte* CData, by
 //******************************************************************************//
 //******************************************************************************//
 //******************************************************************************//
+#ifdef __GNUC__
+__attribute__((noinline))
+#endif
 void GP_ShowMaskedPalPict(int x, int y, GP_Header* Pic, byte* CData, byte* Encoder)
 {
+	if (!Encoder || !CData || !Pic) return;
 	x += Pic->dx;
 	y += Pic->dy;
 	int Lx = Pic->Lx;
 	int NLines = Pic->NLines;
+	#ifdef _MSC_VER
 	int ofst = int(Pic) + 23;
+	#endif
 	if (y + NLines <= WindY || x + Lx <= WindX || x > WindX1 || y > WindY1)return;
+
+#ifndef _MSC_VER
+	{
+		byte* mask = (byte*)Pic + 23;
+		byte* cdata = CData;
+		byte* screen = (byte*)ScreenPtr;
+
+		if (y < WindY) {
+			int skip = WindY - y;
+			NLines -= skip;
+			y += skip;
+			for (int i = 0; i < skip; i++) {
+				byte m = *mask++;
+				if (m == 0) continue;
+				if (m & 0x80) {
+					int pixMask = (m & 0x20) ? 16 : 0;
+					int nsegs = m & 31;
+					for (int s = 0; s < nsegs; s++) {
+						int draw = (*mask >> 4) | pixMask;
+						mask++;
+						cdata += draw;
+					}
+				} else {
+					int nsegs = m;
+					for (int s = 0; s < nsegs; s++) {
+						cdata += mask[1];
+						mask += 2;
+					}
+				}
+			}
+		}
+
+		if (y + NLines > WindY1) NLines = WindY1 - y + 1;
+
+		for (int line = 0; line < NLines; line++) {
+			byte* ls = screen + x + (y + line) * ScrWidth;
+			byte m = *mask++;
+			if (m == 0) continue;
+
+			int xpos = 0;
+			if (m & 0x80) {
+				int spaceMask = (m & 0x40) ? 16 : 0;
+				int pixMask = (m & 0x20) ? 16 : 0;
+				int nsegs = m & 31;
+				for (int s = 0; s < nsegs; s++) {
+					byte seg = *mask++;
+					int skip = (seg & 0xF) | spaceMask;
+					int draw = (seg >> 4) | pixMask;
+					xpos += skip;
+					for (int p = 0; p < draw; p++) {
+						int sx = x + xpos;
+						if (sx >= WindX && sx <= WindX1)
+							ls[xpos] = Encoder[*cdata];
+						cdata++;
+						xpos++;
+					}
+				}
+			} else {
+				int nsegs = m;
+				for (int s = 0; s < nsegs; s++) {
+					int skip = mask[0];
+					int draw = mask[1];
+					mask += 2;
+					xpos += skip;
+					for (int p = 0; p < draw; p++) {
+						int sx = x + xpos;
+						if (sx >= WindX && sx <= WindX1)
+							ls[xpos] = Encoder[*cdata];
+						cdata++;
+						xpos++;
+					}
+				}
+			}
+		}
+		return;
+	}
+#endif
+
 	//vertical clipping
 	//top clipper
+	#ifdef _MSC_VER
 	int CDPOS = int(CData);
+	#endif
 	if (y < WindY)
 	{
+		#ifdef _MSC_VER
 		__asm {
 			mov		ecx, WindY
 			sub		ecx, y
@@ -3847,12 +4569,17 @@ void GP_ShowMaskedPalPict(int x, int y, GP_Header* Pic, byte* CData, byte* Encod
 				jnz		NLINE
 				END_VCLIP : mov		ofst, ebx
 		};
+		#else
+			// TODO: C fallback for GP_ShowMaskedPalPict
+		#endif
 	};
 	//bottom clipper
 	if (y + NLines > WindY1)NLines = WindY1 - y + 1;
 	//horisontal clipper
 	int x1 = x + Lx - 1;
+	#ifdef _MSC_VER
 	int scrofs = int(ScreenPtr) + x + y * ScrWidth;
+	#endif
 	int TEMP1;
 	int LineStart;
 	int CLIP;
@@ -3867,6 +4594,7 @@ void GP_ShowMaskedPalPict(int x, int y, GP_Header* Pic, byte* CData, byte* Encod
 		//******************(((((((((((())))))))))))*****************//
 		//***********************************************************//
 				//no clipping
+		#ifdef _MSC_VER
 		__asm {
 			pushf
 			push	esi
@@ -3971,6 +4699,9 @@ void GP_ShowMaskedPalPict(int x, int y, GP_Header* Pic, byte* CData, byte* Encod
 				pop		esi
 				popf
 		};
+		#else
+			// TODO: C fallback for GP_ShowMaskedPalPict
+		#endif
 	}
 	else
 	{
@@ -3985,6 +4716,7 @@ void GP_ShowMaskedPalPict(int x, int y, GP_Header* Pic, byte* CData, byte* Encod
 			//****************************************************************//
 			//****************************************************************//
 			CLIP = WindX - x;
+			#ifdef _MSC_VER
 			__asm {
 				pushf
 				push	esi
@@ -4132,6 +4864,9 @@ void GP_ShowMaskedPalPict(int x, int y, GP_Header* Pic, byte* CData, byte* Encod
 					pop		esi
 					popf
 			};
+			#else
+				// TODO: C fallback for GP_ShowMaskedPalPict
+			#endif
 		}
 		else
 		{
@@ -4146,6 +4881,7 @@ void GP_ShowMaskedPalPict(int x, int y, GP_Header* Pic, byte* CData, byte* Encod
 				//****************************************************************//
 				CLIP = WindX1 - x + 1;
 				int ADDESI;
+				#ifdef _MSC_VER
 				__asm {
 					pushf
 					push	esi
@@ -4299,23 +5035,113 @@ void GP_ShowMaskedPalPict(int x, int y, GP_Header* Pic, byte* CData, byte* Encod
 						pop		esi
 						popf
 				};
+				#else
+					// TODO: C fallback for GP_ShowMaskedPalPict
+				#endif
 			};
 		};
 	};
 };
+#ifdef __GNUC__
+__attribute__((noinline))
+#endif
 void GP_ShowMaskedPalPictInv(int x, int y, GP_Header* Pic, byte* CData, byte* Encoder)
 {
+	if (!Encoder || !CData || !Pic) return;
 	x -= Pic->dx;
 	y += Pic->dy;
 	int Lx = Pic->Lx;
 	int NLines = Pic->NLines;
+	#ifdef _MSC_VER
 	int ofst = int(Pic) + 23;
+	#endif
 	if (y + NLines <= WindY || x - Lx >= WindX1 || x<WindX || y>WindY1)return;
+
+#ifndef _MSC_VER
+	{
+		byte* mask = (byte*)Pic + 23;
+		byte* cdata = CData;
+		byte* screen = (byte*)ScreenPtr;
+
+		if (y < WindY) {
+			int skip = WindY - y;
+			NLines -= skip;
+			y += skip;
+			for (int i = 0; i < skip; i++) {
+				byte m = *mask++;
+				if (m == 0) continue;
+				if (m & 0x80) {
+					int pixMask = (m & 0x20) ? 16 : 0;
+					int nsegs = m & 31;
+					for (int s = 0; s < nsegs; s++) {
+						int draw = (*mask >> 4) | pixMask;
+						mask++;
+						cdata += draw;
+					}
+				} else {
+					int nsegs = m;
+					for (int s = 0; s < nsegs; s++) {
+						cdata += mask[1];
+						mask += 2;
+					}
+				}
+			}
+		}
+
+		if (y + NLines > WindY1) NLines = WindY1 - y + 1;
+
+		for (int line = 0; line < NLines; line++) {
+			byte* ls = screen + x + (y + line) * ScrWidth;
+			byte m = *mask++;
+			if (m == 0) continue;
+
+			int xpos = 0;
+			if (m & 0x80) {
+				int spaceMask = (m & 0x40) ? 16 : 0;
+				int pixMask = (m & 0x20) ? 16 : 0;
+				int nsegs = m & 31;
+				for (int s = 0; s < nsegs; s++) {
+					byte seg = *mask++;
+					int skip = (seg & 0xF) | spaceMask;
+					int draw = (seg >> 4) | pixMask;
+					xpos += skip;
+					for (int p = 0; p < draw; p++) {
+						int sx = x - xpos;
+						if (sx >= WindX && sx <= WindX1)
+							ls[-xpos] = Encoder[*cdata];
+						cdata++;
+						xpos++;
+					}
+				}
+			} else {
+				int nsegs = m;
+				for (int s = 0; s < nsegs; s++) {
+					int skip = mask[0];
+					int draw = mask[1];
+					mask += 2;
+					xpos += skip;
+					for (int p = 0; p < draw; p++) {
+						int sx = x - xpos;
+						if (sx >= WindX && sx <= WindX1)
+							ls[-xpos] = Encoder[*cdata];
+						cdata++;
+						xpos++;
+					}
+				}
+			}
+		}
+		return;
+	}
+#endif
+
 	//vertical clipping
 	//top clipper
+	#ifdef _MSC_VER
 	int CDPOS = int(CData);
+	#endif
 	if (y < WindY)
 	{
+		#ifdef _MSC_VER
 		__asm {
 			mov		ecx, WindY
 			sub		ecx, y
@@ -4360,12 +5186,17 @@ void GP_ShowMaskedPalPictInv(int x, int y, GP_Header* Pic, byte* CData, byte* En
 				jnz		NLINE
 				END_VCLIP : mov		ofst, ebx
 		};
+		#else
+			// TODO: C fallback for GP_ShowMaskedPalPictInv
+		#endif
 	};
 	//bottom clipper
 	if (y + NLines > WindY1)NLines = WindY1 - y + 1;
 	//horisontal clipper
 	int x1 = x - Lx + 1;
+	#ifdef _MSC_VER
 	int scrofs = int(ScreenPtr) + x + y * ScrWidth;
+	#endif
 	int TEMP1;
 	int LineStart;
 	int CLIP;
@@ -4380,6 +5211,7 @@ void GP_ShowMaskedPalPictInv(int x, int y, GP_Header* Pic, byte* CData, byte* En
 		//******************(((((((((((())))))))))))*****************//
 		//***********************************************************//
 				//no clipping
+		#ifdef _MSC_VER
 		__asm {
 			pushf
 			push	esi
@@ -4486,6 +5318,9 @@ void GP_ShowMaskedPalPictInv(int x, int y, GP_Header* Pic, byte* CData, byte* En
 				pop		esi
 				popf
 		};
+		#else
+			// TODO: C fallback for GP_ShowMaskedPalPictInv
+		#endif
 	}
 	else
 	{
@@ -4500,6 +5335,7 @@ void GP_ShowMaskedPalPictInv(int x, int y, GP_Header* Pic, byte* CData, byte* En
 			//****************************************************************//
 			//****************************************************************//
 			CLIP = x - WindX1;
+			#ifdef _MSC_VER
 			__asm {
 				pushf
 				push	esi
@@ -4649,6 +5485,9 @@ void GP_ShowMaskedPalPictInv(int x, int y, GP_Header* Pic, byte* CData, byte* En
 					pop		esi
 					popf
 			};
+			#else
+				// TODO: C fallback for GP_ShowMaskedPalPictInv
+			#endif
 		}
 		else
 		{
@@ -4663,6 +5502,7 @@ void GP_ShowMaskedPalPictInv(int x, int y, GP_Header* Pic, byte* CData, byte* En
 				//****************************************************************//
 				CLIP = x - WindX + 1;
 				int ADDESI;
+				#ifdef _MSC_VER
 				__asm {
 					pushf
 					push	esi
@@ -4818,6 +5658,9 @@ void GP_ShowMaskedPalPictInv(int x, int y, GP_Header* Pic, byte* CData, byte* En
 						pop		esi
 						popf
 				};
+				#else
+					// TODO: C fallback for GP_ShowMaskedPalPictInv
+				#endif
 			};
 		};
 	};
@@ -4840,13 +5683,101 @@ void GP_ShowMaskedMultiPalPict(int x, int y, GP_Header* Pic, byte* CData, byte* 
 	y += Pic->dy;
 	int Lx = Pic->Lx;
 	int NLines = Pic->NLines;
+	#ifdef _MSC_VER
 	int ofst = int(Pic) + 23;
+	#endif
 	if (y + NLines <= WindY || x + Lx <= WindX || x > WindX1 || y > WindY1)return;
+
+#ifndef _MSC_VER
+	{
+		byte* mask = (byte*)Pic + 23;
+		byte* cdata = CData;
+		byte* screen = (byte*)ScreenPtr;
+
+		// Top clipping: skip scanlines
+		if (y < WindY) {
+			int skip = WindY - y;
+			NLines -= skip;
+			y += skip;
+			for (int i = 0; i < skip; i++) {
+				byte m = *mask++;
+				if (m == 0) continue;
+				if (m & 0x80) {
+					int pixMask = (m & 0x20) ? 16 : 0;
+					int nsegs = m & 31;
+					for (int s = 0; s < nsegs; s++) {
+						int draw = (*mask >> 4) | pixMask;
+						mask++;
+						cdata += draw;
+					}
+				} else {
+					int nsegs = m;
+					for (int s = 0; s < nsegs; s++) {
+						cdata += mask[1];
+						mask += 2;
+					}
+				}
+			}
+		}
+
+		// Bottom clipping
+		if (y + NLines > WindY1) NLines = WindY1 - y + 1;
+
+		// Render scanlines — pixel op: screen = Encoder[cdata*256 + screen]
+		for (int line = 0; line < NLines; line++) {
+			byte* ls = screen + x + (y + line) * ScrWidth;
+			byte m = *mask++;
+			if (m == 0) continue;
+
+			int xpos = 0;
+			if (m & 0x80) {
+				// Complex line
+				int spaceMask = (m & 0x40) ? 16 : 0;
+				int pixMask = (m & 0x20) ? 16 : 0;
+				int nsegs = m & 31;
+				for (int s = 0; s < nsegs; s++) {
+					byte seg = *mask++;
+					int skip = (seg & 0xF) | spaceMask;
+					int draw = (seg >> 4) | pixMask;
+					xpos += skip;
+					for (int p = 0; p < draw; p++) {
+						int sx = x + xpos;
+						if (sx >= WindX && sx <= WindX1)
+							ls[xpos] = Encoder[((int)*cdata << 8) | ls[xpos]];
+						cdata++;
+						xpos++;
+					}
+				}
+			} else {
+				// Simple line
+				int nsegs = m;
+				for (int s = 0; s < nsegs; s++) {
+					int skip = mask[0];
+					int draw = mask[1];
+					mask += 2;
+					xpos += skip;
+					for (int p = 0; p < draw; p++) {
+						int sx = x + xpos;
+						if (sx >= WindX && sx <= WindX1)
+							ls[xpos] = Encoder[((int)*cdata << 8) | ls[xpos]];
+						cdata++;
+						xpos++;
+					}
+				}
+			}
+		}
+		return;
+	}
+#endif
+
 	//vertical clipping
 	//top clipper
+	#ifdef _MSC_VER
 	int CDPOS = int(CData);
+	#endif
 	if (y < WindY)
 	{
+		#ifdef _MSC_VER
 		__asm {
 			mov		ecx, WindY
 			sub		ecx, y
@@ -4891,12 +5822,17 @@ void GP_ShowMaskedMultiPalPict(int x, int y, GP_Header* Pic, byte* CData, byte* 
 				jnz		NLINE
 				END_VCLIP : mov		ofst, ebx
 		};
+		#else
+			// TODO: C fallback for GP_ShowMaskedMultiPalPict
+		#endif
 	};
 	//bottom clipper
 	if (y + NLines > WindY1)NLines = WindY1 - y + 1;
 	//horisontal clipper
 	int x1 = x + Lx - 1;
+	#ifdef _MSC_VER
 	int scrofs = int(ScreenPtr) + x + y * ScrWidth;
+	#endif
 	int TEMP1;
 	int LineStart;
 	int CLIP;
@@ -4911,6 +5847,7 @@ void GP_ShowMaskedMultiPalPict(int x, int y, GP_Header* Pic, byte* CData, byte* 
 		//******************(((((((((((())))))))))))*****************//
 		//***********************************************************//
 				//no clipping
+		#ifdef _MSC_VER
 		__asm {
 			pushf
 			push	esi
@@ -5019,6 +5956,9 @@ void GP_ShowMaskedMultiPalPict(int x, int y, GP_Header* Pic, byte* CData, byte* 
 				pop		esi
 				popf
 		};
+		#else
+			// TODO: C fallback for GP_ShowMaskedMultiPalPict
+		#endif
 	}
 	else
 	{
@@ -5033,6 +5973,7 @@ void GP_ShowMaskedMultiPalPict(int x, int y, GP_Header* Pic, byte* CData, byte* 
 			//****************************************************************//
 			//****************************************************************//
 			CLIP = WindX - x;
+			#ifdef _MSC_VER
 			__asm {
 				pushf
 				push	esi
@@ -5184,6 +6125,9 @@ void GP_ShowMaskedMultiPalPict(int x, int y, GP_Header* Pic, byte* CData, byte* 
 					pop		esi
 					popf
 			};
+			#else
+				// TODO: C fallback for GP_ShowMaskedMultiPalPict
+			#endif
 		}
 		else
 		{
@@ -5198,6 +6142,7 @@ void GP_ShowMaskedMultiPalPict(int x, int y, GP_Header* Pic, byte* CData, byte* 
 				//****************************************************************//
 				CLIP = WindX1 - x + 1;
 				int ADDESI;
+				#ifdef _MSC_VER
 				__asm {
 					pushf
 					push	esi
@@ -5355,6 +6300,9 @@ void GP_ShowMaskedMultiPalPict(int x, int y, GP_Header* Pic, byte* CData, byte* 
 						pop		esi
 						popf
 				};
+				#else
+					// TODO: C fallback for GP_ShowMaskedMultiPalPict
+				#endif
 			};
 		};
 	};
@@ -5365,13 +6313,96 @@ void GP_ShowMaskedMultiPalPictInv(int x, int y, GP_Header* Pic, byte* CData, byt
 	y += Pic->dy;
 	int Lx = Pic->Lx;
 	int NLines = Pic->NLines;
+	#ifdef _MSC_VER
 	int ofst = int(Pic) + 23;
+	#endif
 	if (y + NLines <= WindY || x - Lx >= WindX1 || x<WindX || y>WindY1)return;
+
+#ifndef _MSC_VER
+	{
+		byte* mask = (byte*)Pic + 23;
+		byte* cdata = CData;
+		byte* screen = (byte*)ScreenPtr;
+
+		if (y < WindY) {
+			int skip = WindY - y;
+			NLines -= skip;
+			y += skip;
+			for (int i = 0; i < skip; i++) {
+				byte m = *mask++;
+				if (m == 0) continue;
+				if (m & 0x80) {
+					int pixMask = (m & 0x20) ? 16 : 0;
+					int nsegs = m & 31;
+					for (int s = 0; s < nsegs; s++) {
+						int draw = (*mask >> 4) | pixMask;
+						mask++;
+						cdata += draw;
+					}
+				} else {
+					int nsegs = m;
+					for (int s = 0; s < nsegs; s++) {
+						cdata += mask[1];
+						mask += 2;
+					}
+				}
+			}
+		}
+
+		if (y + NLines > WindY1) NLines = WindY1 - y + 1;
+
+		for (int line = 0; line < NLines; line++) {
+			byte* ls = screen + x + (y + line) * ScrWidth;
+			byte m = *mask++;
+			if (m == 0) continue;
+
+			int xpos = 0;
+			if (m & 0x80) {
+				int spaceMask = (m & 0x40) ? 16 : 0;
+				int pixMask = (m & 0x20) ? 16 : 0;
+				int nsegs = m & 31;
+				for (int s = 0; s < nsegs; s++) {
+					byte seg = *mask++;
+					int skip = (seg & 0xF) | spaceMask;
+					int draw = (seg >> 4) | pixMask;
+					xpos += skip;
+					for (int p = 0; p < draw; p++) {
+						int sx = x - xpos;
+						if (sx >= WindX && sx <= WindX1)
+							ls[-xpos] = Encoder[((int)*cdata << 8) | ls[-xpos]];
+						cdata++;
+						xpos++;
+					}
+				}
+			} else {
+				int nsegs = m;
+				for (int s = 0; s < nsegs; s++) {
+					int skip = mask[0];
+					int draw = mask[1];
+					mask += 2;
+					xpos += skip;
+					for (int p = 0; p < draw; p++) {
+						int sx = x - xpos;
+						if (sx >= WindX && sx <= WindX1)
+							ls[-xpos] = Encoder[((int)*cdata << 8) | ls[-xpos]];
+						cdata++;
+						xpos++;
+					}
+				}
+			}
+		}
+		return;
+	}
+#endif
+
 	//vertical clipping
 	//top clipper
+	#ifdef _MSC_VER
 	int CDPOS = int(CData);
+	#endif
 	if (y < WindY)
 	{
+		#ifdef _MSC_VER
 		__asm {
 			mov		ecx, WindY
 			sub		ecx, y
@@ -5416,12 +6447,17 @@ void GP_ShowMaskedMultiPalPictInv(int x, int y, GP_Header* Pic, byte* CData, byt
 				jnz		NLINE
 				END_VCLIP : mov		ofst, ebx
 		};
+		#else
+			// TODO: C fallback for GP_ShowMaskedMultiPalPictInv
+		#endif
 	};
 	//bottom clipper
 	if (y + NLines > WindY1)NLines = WindY1 - y + 1;
 	//horisontal clipper
 	int x1 = x - Lx + 1;
+	#ifdef _MSC_VER
 	int scrofs = int(ScreenPtr) + x + y * ScrWidth;
+	#endif
 	int TEMP1;
 	int LineStart;
 	int CLIP;
@@ -5436,6 +6472,7 @@ void GP_ShowMaskedMultiPalPictInv(int x, int y, GP_Header* Pic, byte* CData, byt
 		//******************(((((((((((())))))))))))*****************//
 		//***********************************************************//
 				//no clipping
+		#ifdef _MSC_VER
 		__asm {
 			pushf
 			push	esi
@@ -5546,6 +6583,9 @@ void GP_ShowMaskedMultiPalPictInv(int x, int y, GP_Header* Pic, byte* CData, byt
 				pop		esi
 				popf
 		};
+		#else
+			// TODO: C fallback for GP_ShowMaskedMultiPalPictInv
+		#endif
 	}
 	else
 	{
@@ -5560,6 +6600,7 @@ void GP_ShowMaskedMultiPalPictInv(int x, int y, GP_Header* Pic, byte* CData, byt
 			//****************************************************************//
 			//****************************************************************//
 			CLIP = x - WindX1;
+			#ifdef _MSC_VER
 			__asm {
 				pushf
 				push	esi
@@ -5713,6 +6754,9 @@ void GP_ShowMaskedMultiPalPictInv(int x, int y, GP_Header* Pic, byte* CData, byt
 					pop		esi
 					popf
 			};
+			#else
+				// TODO: C fallback for GP_ShowMaskedMultiPalPictInv
+			#endif
 		}
 		else
 		{
@@ -5727,6 +6771,7 @@ void GP_ShowMaskedMultiPalPictInv(int x, int y, GP_Header* Pic, byte* CData, byt
 				//****************************************************************//
 				CLIP = x - WindX + 1;
 				int ADDESI;
+				#ifdef _MSC_VER
 				__asm {
 					pushf
 					push	esi
@@ -5886,6 +6931,9 @@ void GP_ShowMaskedMultiPalPictInv(int x, int y, GP_Header* Pic, byte* CData, byt
 						pop		esi
 						popf
 				};
+				#else
+					// TODO: C fallback for GP_ShowMaskedMultiPalPictInv
+				#endif
 			};
 		};
 	};
@@ -5908,13 +6956,96 @@ void GP_ShowMaskedMultiPalTPict(int x, int y, GP_Header* Pic, byte* CData, byte*
 	y += Pic->dy;
 	int Lx = Pic->Lx;
 	int NLines = Pic->NLines;
+	#ifdef _MSC_VER
 	int ofst = int(Pic) + 23;
+	#endif
 	if (y + NLines <= WindY || x + Lx <= WindX || x > WindX1 || y > WindY1)return;
+
+#ifndef _MSC_VER
+	{
+		byte* mask = (byte*)Pic + 23;
+		byte* cdata = CData;
+		byte* screen = (byte*)ScreenPtr;
+
+		if (y < WindY) {
+			int skip = WindY - y;
+			NLines -= skip;
+			y += skip;
+			for (int i = 0; i < skip; i++) {
+				byte m = *mask++;
+				if (m == 0) continue;
+				if (m & 0x80) {
+					int pixMask = (m & 0x20) ? 16 : 0;
+					int nsegs = m & 31;
+					for (int s = 0; s < nsegs; s++) {
+						int draw = (*mask >> 4) | pixMask;
+						mask++;
+						cdata += draw;
+					}
+				} else {
+					int nsegs = m;
+					for (int s = 0; s < nsegs; s++) {
+						cdata += mask[1];
+						mask += 2;
+					}
+				}
+			}
+		}
+
+		if (y + NLines > WindY1) NLines = WindY1 - y + 1;
+
+		for (int line = 0; line < NLines; line++) {
+			byte* ls = screen + x + (y + line) * ScrWidth;
+			byte m = *mask++;
+			if (m == 0) continue;
+
+			int xpos = 0;
+			if (m & 0x80) {
+				int spaceMask = (m & 0x40) ? 16 : 0;
+				int pixMask = (m & 0x20) ? 16 : 0;
+				int nsegs = m & 31;
+				for (int s = 0; s < nsegs; s++) {
+					byte seg = *mask++;
+					int skip = (seg & 0xF) | spaceMask;
+					int draw = (seg >> 4) | pixMask;
+					xpos += skip;
+					for (int p = 0; p < draw; p++) {
+						int sx = x + xpos;
+						if (sx >= WindX && sx <= WindX1)
+							ls[xpos] = Encoder[((int)ls[xpos] << 8) | (int)*cdata];
+						cdata++;
+						xpos++;
+					}
+				}
+			} else {
+				int nsegs = m;
+				for (int s = 0; s < nsegs; s++) {
+					int skip = mask[0];
+					int draw = mask[1];
+					mask += 2;
+					xpos += skip;
+					for (int p = 0; p < draw; p++) {
+						int sx = x + xpos;
+						if (sx >= WindX && sx <= WindX1)
+							ls[xpos] = Encoder[((int)ls[xpos] << 8) | (int)*cdata];
+						cdata++;
+						xpos++;
+					}
+				}
+			}
+		}
+		return;
+	}
+#endif
+
 	//vertical clipping
 	//top clipper
+	#ifdef _MSC_VER
 	int CDPOS = int(CData);
+	#endif
 	if (y < WindY)
 	{
+		#ifdef _MSC_VER
 		__asm {
 			mov		ecx, WindY
 			sub		ecx, y
@@ -5959,12 +7090,17 @@ void GP_ShowMaskedMultiPalTPict(int x, int y, GP_Header* Pic, byte* CData, byte*
 				jnz		NLINE
 				END_VCLIP : mov		ofst, ebx
 		};
+		#else
+			// TODO: C fallback for GP_ShowMaskedMultiPalTPict
+		#endif
 	};
 	//bottom clipper
 	if (y + NLines > WindY1)NLines = WindY1 - y + 1;
 	//horisontal clipper
 	int x1 = x + Lx - 1;
+	#ifdef _MSC_VER
 	int scrofs = int(ScreenPtr) + x + y * ScrWidth;
+	#endif
 	int TEMP1;
 	int LineStart;
 	int CLIP;
@@ -5979,6 +7115,7 @@ void GP_ShowMaskedMultiPalTPict(int x, int y, GP_Header* Pic, byte* CData, byte*
 		//******************(((((((((((())))))))))))*****************//
 		//***********************************************************//
 				//no clipping
+		#ifdef _MSC_VER
 		__asm {
 			pushf
 			push	esi
@@ -6085,6 +7222,9 @@ void GP_ShowMaskedMultiPalTPict(int x, int y, GP_Header* Pic, byte* CData, byte*
 				pop		esi
 				popf
 		};
+		#else
+			// TODO: C fallback for GP_ShowMaskedMultiPalTPict
+		#endif
 	}
 	else
 	{
@@ -6099,6 +7239,7 @@ void GP_ShowMaskedMultiPalTPict(int x, int y, GP_Header* Pic, byte* CData, byte*
 			//****************************************************************//
 			//****************************************************************//
 			CLIP = WindX - x;
+			#ifdef _MSC_VER
 			__asm {
 				pushf
 				push	esi
@@ -6248,6 +7389,9 @@ void GP_ShowMaskedMultiPalTPict(int x, int y, GP_Header* Pic, byte* CData, byte*
 					pop		esi
 					popf
 			};
+			#else
+				// TODO: C fallback for GP_ShowMaskedMultiPalTPict
+			#endif
 		}
 		else
 		{
@@ -6262,6 +7406,7 @@ void GP_ShowMaskedMultiPalTPict(int x, int y, GP_Header* Pic, byte* CData, byte*
 				//****************************************************************//
 				CLIP = WindX1 - x + 1;
 				int ADDESI;
+				#ifdef _MSC_VER
 				__asm {
 					pushf
 					push	esi
@@ -6417,6 +7562,9 @@ void GP_ShowMaskedMultiPalTPict(int x, int y, GP_Header* Pic, byte* CData, byte*
 						pop		esi
 						popf
 				};
+				#else
+					// TODO: C fallback for GP_ShowMaskedMultiPalTPict
+				#endif
 			};
 		};
 	};
@@ -6428,13 +7576,96 @@ void GP_ShowMaskedMultiPalTPictInv(int x, int y, GP_Header* Pic, byte* CData, by
 	y += Pic->dy;
 	int Lx = Pic->Lx;
 	int NLines = Pic->NLines;
+	#ifdef _MSC_VER
 	int ofst = int(Pic) + 23;
+	#endif
 	if (y + NLines <= WindY || x - Lx >= WindX1 || x<WindX || y>WindY1)return;
+
+#ifndef _MSC_VER
+	{
+		byte* mask = (byte*)Pic + 23;
+		byte* cdata = CData;
+		byte* screen = (byte*)ScreenPtr;
+
+		if (y < WindY) {
+			int skip = WindY - y;
+			NLines -= skip;
+			y += skip;
+			for (int i = 0; i < skip; i++) {
+				byte m = *mask++;
+				if (m == 0) continue;
+				if (m & 0x80) {
+					int pixMask = (m & 0x20) ? 16 : 0;
+					int nsegs = m & 31;
+					for (int s = 0; s < nsegs; s++) {
+						int draw = (*mask >> 4) | pixMask;
+						mask++;
+						cdata += draw;
+					}
+				} else {
+					int nsegs = m;
+					for (int s = 0; s < nsegs; s++) {
+						cdata += mask[1];
+						mask += 2;
+					}
+				}
+			}
+		}
+
+		if (y + NLines > WindY1) NLines = WindY1 - y + 1;
+
+		for (int line = 0; line < NLines; line++) {
+			byte* ls = screen + x + (y + line) * ScrWidth;
+			byte m = *mask++;
+			if (m == 0) continue;
+
+			int xpos = 0;
+			if (m & 0x80) {
+				int spaceMask = (m & 0x40) ? 16 : 0;
+				int pixMask = (m & 0x20) ? 16 : 0;
+				int nsegs = m & 31;
+				for (int s = 0; s < nsegs; s++) {
+					byte seg = *mask++;
+					int skip = (seg & 0xF) | spaceMask;
+					int draw = (seg >> 4) | pixMask;
+					xpos += skip;
+					for (int p = 0; p < draw; p++) {
+						int sx = x - xpos;
+						if (sx >= WindX && sx <= WindX1)
+							ls[-xpos] = Encoder[((int)ls[-xpos] << 8) | (int)*cdata];
+						cdata++;
+						xpos++;
+					}
+				}
+			} else {
+				int nsegs = m;
+				for (int s = 0; s < nsegs; s++) {
+					int skip = mask[0];
+					int draw = mask[1];
+					mask += 2;
+					xpos += skip;
+					for (int p = 0; p < draw; p++) {
+						int sx = x - xpos;
+						if (sx >= WindX && sx <= WindX1)
+							ls[-xpos] = Encoder[((int)ls[-xpos] << 8) | (int)*cdata];
+						cdata++;
+						xpos++;
+					}
+				}
+			}
+		}
+		return;
+	}
+#endif
+
 	//vertical clipping
 	//top clipper
+	#ifdef _MSC_VER
 	int CDPOS = int(CData);
+	#endif
 	if (y < WindY)
 	{
+		#ifdef _MSC_VER
 		__asm {
 			mov		ecx, WindY
 			sub		ecx, y
@@ -6479,12 +7710,17 @@ void GP_ShowMaskedMultiPalTPictInv(int x, int y, GP_Header* Pic, byte* CData, by
 				jnz		NLINE
 				END_VCLIP : mov		ofst, ebx
 		};
+		#else
+			// TODO: C fallback for GP_ShowMaskedMultiPalTPictInv
+		#endif
 	};
 	//bottom clipper
 	if (y + NLines > WindY1)NLines = WindY1 - y + 1;
 	//horisontal clipper
 	int x1 = x - Lx + 1;
+	#ifdef _MSC_VER
 	int scrofs = int(ScreenPtr) + x + y * ScrWidth;
+	#endif
 	int TEMP1;
 	int LineStart;
 	int CLIP;
@@ -6499,6 +7735,7 @@ void GP_ShowMaskedMultiPalTPictInv(int x, int y, GP_Header* Pic, byte* CData, by
 		//******************(((((((((((())))))))))))*****************//
 		//***********************************************************//
 				//no clipping
+		#ifdef _MSC_VER
 		__asm {
 			pushf
 			push	esi
@@ -6607,6 +7844,9 @@ void GP_ShowMaskedMultiPalTPictInv(int x, int y, GP_Header* Pic, byte* CData, by
 				pop		esi
 				popf
 		};
+		#else
+			// TODO: C fallback for GP_ShowMaskedMultiPalTPictInv
+		#endif
 	}
 	else
 	{
@@ -6621,6 +7861,7 @@ void GP_ShowMaskedMultiPalTPictInv(int x, int y, GP_Header* Pic, byte* CData, by
 			//****************************************************************//
 			//****************************************************************//
 			CLIP = x - WindX1;
+			#ifdef _MSC_VER
 			__asm {
 				pushf
 				push	esi
@@ -6772,6 +8013,9 @@ void GP_ShowMaskedMultiPalTPictInv(int x, int y, GP_Header* Pic, byte* CData, by
 					pop		esi
 					popf
 			};
+			#else
+				// TODO: C fallback for GP_ShowMaskedMultiPalTPictInv
+			#endif
 		}
 		else
 		{
@@ -6786,6 +8030,7 @@ void GP_ShowMaskedMultiPalTPictInv(int x, int y, GP_Header* Pic, byte* CData, by
 				//****************************************************************//
 				CLIP = x - WindX + 1;
 				int ADDESI;
+				#ifdef _MSC_VER
 				__asm {
 					pushf
 					push	esi
@@ -6943,6 +8188,9 @@ void GP_ShowMaskedMultiPalTPictInv(int x, int y, GP_Header* Pic, byte* CData, by
 						pop		esi
 						popf
 				};
+				#else
+					// TODO: C fallback for GP_ShowMaskedMultiPalTPictInv
+				#endif
 			};
 		};
 	};
@@ -6966,16 +8214,106 @@ void GP_ShowMaskedMirrorPict(int x, int y, GP_Header* Pic, byte* CData, int* WSH
 	y += Pic->dy;
 	int Lx = Pic->Lx;
 	int NLines = Pic->NLines;
+	#ifdef _MSC_VER
 	int ofst = int(Pic) + 23;
+	#endif
 
 	if (y + NLines <= WindY || x + Lx <= WindX || x > WindX1 || y > WindY1)
 		return;
 
+#ifndef _MSC_VER
+	{
+		byte* mask = (byte*)Pic + 23;
+		byte* cdata = CData;
+		byte* screen = (byte*)ScreenPtr;
+		int* wshift = WSHIFT;
+
+		if (y < WindY) {
+			int skip = WindY - y;
+			NLines -= skip;
+			y += skip;
+			wshift += skip;
+			for (int i = 0; i < skip; i++) {
+				byte m = *mask++;
+				if (m == 0) continue;
+				if (m & 0x80) {
+					int pixMask = (m & 0x20) ? 16 : 0;
+					int nsegs = m & 31;
+					for (int s = 0; s < nsegs; s++) {
+						int draw = (*mask >> 4) | pixMask;
+						mask++;
+						cdata += draw;
+					}
+				} else {
+					int nsegs = m;
+					for (int s = 0; s < nsegs; s++) {
+						cdata += mask[1];
+						mask += 2;
+					}
+				}
+			}
+		}
+
+		if (y + NLines > WindY1) NLines = WindY1 - y + 1;
+
+		for (int line = 0; line < NLines; line++) {
+			byte* ls = screen + x + wshift[line] + (y + line) * ScrWidth;
+			byte m = *mask++;
+			if (m == 0) continue;
+
+			int xpos = 0;
+			if (m & 0x80) {
+				int spaceMask = (m & 0x40) ? 16 : 0;
+				int pixMask = (m & 0x20) ? 16 : 0;
+				int nsegs = m & 31;
+				for (int s = 0; s < nsegs; s++) {
+					byte seg = *mask++;
+					int skip = (seg & 0xF) | spaceMask;
+					int draw = (seg >> 4) | pixMask;
+					xpos += skip;
+					for (int p = 0; p < draw; p++) {
+						int sx = x + wshift[line] + xpos;
+						if (sx >= WindX && sx <= WindX1) {
+							byte scr = ls[xpos];
+							if (scr >= 0xB0 && scr <= 0xBA)
+								ls[xpos] = refl[(scr - 0xB0) * 256 + *cdata];
+						}
+						cdata++;
+						xpos++;
+					}
+				}
+			} else {
+				int nsegs = m;
+				for (int s = 0; s < nsegs; s++) {
+					int skip = mask[0];
+					int draw = mask[1];
+					mask += 2;
+					xpos += skip;
+					for (int p = 0; p < draw; p++) {
+						int sx = x + wshift[line] + xpos;
+						if (sx >= WindX && sx <= WindX1) {
+							byte scr = ls[xpos];
+							if (scr >= 0xB0 && scr <= 0xBA)
+								ls[xpos] = refl[(scr - 0xB0) * 256 + *cdata];
+						}
+						cdata++;
+						xpos++;
+					}
+				}
+			}
+		}
+		return;
+	}
+#endif
+
 	//vertical clipping
 	//top clipper
+	#ifdef _MSC_VER
 	int CDPOS = int(CData);
+	#endif
 	if (y < WindY)
 	{
+		#ifdef _MSC_VER
 		__asm
 		{
 			mov		ecx, WindY
@@ -7021,12 +8359,17 @@ void GP_ShowMaskedMirrorPict(int x, int y, GP_Header* Pic, byte* CData, int* WSH
 				jnz		NLINE
 				END_VCLIP : mov		ofst, ebx
 		};
+		#else
+			// TODO: C fallback for GP_ShowMaskedMirrorPict
+		#endif
 	};
 	//bottom clipper
 	if (y + NLines > WindY1)NLines = WindY1 - y + 1;
 	//horisontal clipper
 	int x1 = x + Lx - 1;
+	#ifdef _MSC_VER
 	int scrofs = int(ScreenPtr) + x + y * ScrWidth;
+	#endif
 	int TEMP1;
 	int LineStart;
 	int CLIP;
@@ -7041,6 +8384,7 @@ void GP_ShowMaskedMirrorPict(int x, int y, GP_Header* Pic, byte* CData, int* WSH
 		//******************(((((((((((())))))))))))*****************//
 		//***********************************************************//
 				//no clipping
+		#ifdef _MSC_VER
 		__asm {
 			pushf
 			push	esi
@@ -7164,6 +8508,9 @@ void GP_ShowMaskedMirrorPict(int x, int y, GP_Header* Pic, byte* CData, int* WSH
 				pop		esi
 				popf
 		};
+		#else
+			// TODO: C fallback for GP_ShowMaskedMirrorPict
+		#endif
 	}
 	else
 	{
@@ -7178,6 +8525,7 @@ void GP_ShowMaskedMirrorPict(int x, int y, GP_Header* Pic, byte* CData, int* WSH
 			//****************************************************************//
 			//****************************************************************//
 			CLIP = WindX - x;
+			#ifdef _MSC_VER
 			__asm {
 				pushf
 				push	esi
@@ -7345,6 +8693,9 @@ void GP_ShowMaskedMirrorPict(int x, int y, GP_Header* Pic, byte* CData, int* WSH
 					pop		esi
 					popf
 			};
+			#else
+				// TODO: C fallback for GP_ShowMaskedMirrorPict
+			#endif
 		}
 		else
 		{
@@ -7359,6 +8710,7 @@ void GP_ShowMaskedMirrorPict(int x, int y, GP_Header* Pic, byte* CData, int* WSH
 				//****************************************************************//
 				CLIP = WindX1 - x + 1;
 				int ADDESI;
+				#ifdef _MSC_VER
 				__asm {
 					pushf
 					push	esi
@@ -7534,6 +8886,9 @@ void GP_ShowMaskedMirrorPict(int x, int y, GP_Header* Pic, byte* CData, int* WSH
 						pop		esi
 						popf
 				};
+				#else
+					// TODO: C fallback for GP_ShowMaskedMirrorPict
+				#endif
 			};
 		};
 	};
@@ -7544,13 +8899,104 @@ void GP_ShowMaskedMirrorPictInv(int x, int y, GP_Header* Pic, byte* CData, int* 
 	y += Pic->dy;
 	int Lx = Pic->Lx;
 	int NLines = Pic->NLines;
+	#ifdef _MSC_VER
 	int ofst = int(Pic) + 23;
+	#endif
 	if (y + NLines <= WindY || x - Lx >= WindX1 || x<WindX || y>WindY1)return;
+
+#ifndef _MSC_VER
+	{
+		byte* mask = (byte*)Pic + 23;
+		byte* cdata = CData;
+		byte* screen = (byte*)ScreenPtr;
+		int* wshift = WSHIFT;
+
+		if (y < WindY) {
+			int skip = WindY - y;
+			NLines -= skip;
+			y += skip;
+			wshift += skip;
+			for (int i = 0; i < skip; i++) {
+				byte m = *mask++;
+				if (m == 0) continue;
+				if (m & 0x80) {
+					int pixMask = (m & 0x20) ? 16 : 0;
+					int nsegs = m & 31;
+					for (int s = 0; s < nsegs; s++) {
+						int draw = (*mask >> 4) | pixMask;
+						mask++;
+						cdata += draw;
+					}
+				} else {
+					int nsegs = m;
+					for (int s = 0; s < nsegs; s++) {
+						cdata += mask[1];
+						mask += 2;
+					}
+				}
+			}
+		}
+
+		if (y + NLines > WindY1) NLines = WindY1 - y + 1;
+
+		for (int line = 0; line < NLines; line++) {
+			byte* ls = screen + x + wshift[line] + (y + line) * ScrWidth;
+			byte m = *mask++;
+			if (m == 0) continue;
+
+			int xpos = 0;
+			if (m & 0x80) {
+				int spaceMask = (m & 0x40) ? 16 : 0;
+				int pixMask = (m & 0x20) ? 16 : 0;
+				int nsegs = m & 31;
+				for (int s = 0; s < nsegs; s++) {
+					byte seg = *mask++;
+					int skip = (seg & 0xF) | spaceMask;
+					int draw = (seg >> 4) | pixMask;
+					xpos += skip;
+					for (int p = 0; p < draw; p++) {
+						int sx = x + wshift[line] - xpos;
+						if (sx >= WindX && sx <= WindX1) {
+							byte scr = ls[-xpos];
+							if (scr >= 0xB0 && scr <= 0xBA)
+								ls[-xpos] = refl[(scr - 0xB0) * 256 + *cdata];
+						}
+						cdata++;
+						xpos++;
+					}
+				}
+			} else {
+				int nsegs = m;
+				for (int s = 0; s < nsegs; s++) {
+					int skip = mask[0];
+					int draw = mask[1];
+					mask += 2;
+					xpos += skip;
+					for (int p = 0; p < draw; p++) {
+						int sx = x + wshift[line] - xpos;
+						if (sx >= WindX && sx <= WindX1) {
+							byte scr = ls[-xpos];
+							if (scr >= 0xB0 && scr <= 0xBA)
+								ls[-xpos] = refl[(scr - 0xB0) * 256 + *cdata];
+						}
+						cdata++;
+						xpos++;
+					}
+				}
+			}
+		}
+		return;
+	}
+#endif
+
 	//vertical clipping
 	//top clipper
+	#ifdef _MSC_VER
 	int CDPOS = int(CData);
+	#endif
 	if (y < WindY)
 	{
+		#ifdef _MSC_VER
 		__asm {
 			mov		ecx, WindY
 			sub		ecx, y
@@ -7595,12 +9041,17 @@ void GP_ShowMaskedMirrorPictInv(int x, int y, GP_Header* Pic, byte* CData, int* 
 				jnz		NLINE
 				END_VCLIP : mov		ofst, ebx
 		};
+		#else
+			// TODO: C fallback for GP_ShowMaskedMirrorPictInv
+		#endif
 	};
 	//bottom clipper
 	if (y + NLines > WindY1)NLines = WindY1 - y + 1;
 	//horisontal clipper
 	int x1 = x - Lx + 1;
+	#ifdef _MSC_VER
 	int scrofs = int(ScreenPtr) + x + y * ScrWidth;
+	#endif
 	int TEMP1;
 	int LineStart;
 	int CLIP;
@@ -7615,6 +9066,7 @@ void GP_ShowMaskedMirrorPictInv(int x, int y, GP_Header* Pic, byte* CData, int* 
 		//******************(((((((((((())))))))))))*****************//
 		//***********************************************************//
 				//no clipping
+		#ifdef _MSC_VER
 		__asm {
 			pushf
 			push	esi
@@ -7738,6 +9190,9 @@ void GP_ShowMaskedMirrorPictInv(int x, int y, GP_Header* Pic, byte* CData, int* 
 				pop		esi
 				popf
 		};
+		#else
+			// TODO: C fallback for GP_ShowMaskedMirrorPictInv
+		#endif
 	}
 	else
 	{
@@ -7752,6 +9207,7 @@ void GP_ShowMaskedMirrorPictInv(int x, int y, GP_Header* Pic, byte* CData, int* 
 			//****************************************************************//
 			//****************************************************************//
 			CLIP = x - WindX1;
+			#ifdef _MSC_VER
 			__asm {
 				pushf
 				push	esi
@@ -7917,6 +9373,9 @@ void GP_ShowMaskedMirrorPictInv(int x, int y, GP_Header* Pic, byte* CData, int* 
 					pop		esi
 					popf
 			};
+			#else
+				// TODO: C fallback for GP_ShowMaskedMirrorPictInv
+			#endif
 		}
 		else
 		{
@@ -7931,6 +9390,7 @@ void GP_ShowMaskedMirrorPictInv(int x, int y, GP_Header* Pic, byte* CData, int* 
 				//****************************************************************//
 				CLIP = x - WindX + 1;
 				int ADDESI;
+				#ifdef _MSC_VER
 				__asm {
 					pushf
 					push	esi
@@ -8101,12 +9561,16 @@ void GP_ShowMaskedMirrorPictInv(int x, int y, GP_Header* Pic, byte* CData, int* 
 						pop		esi
 						popf
 				};
+				#else
+					// TODO: C fallback for GP_ShowMaskedMirrorPictInv
+				#endif
 			};
 		};
 	};
 };
 inline void NatUnpack(byte* Dest, byte* Src, int Len)
 {
+	#ifdef _MSC_VER
 	__asm {
 		push	esi
 		push	edi
@@ -8138,10 +9602,22 @@ inline void NatUnpack(byte* Dest, byte* Src, int Len)
 		pop		edi
 		pop		esi
 	};
+	#else
+	// Each source byte encodes 4 destination bytes (2-bit values)
+	int count = Len >> 2;
+	for (int i = 0; i < count; i++) {
+		byte val = Src[i];
+		Dest[i * 4 + 0] = val & 0x03;
+		Dest[i * 4 + 1] = (val >> 2) & 0x03;
+		Dest[i * 4 + 2] = (val >> 4) & 0x03;
+		Dest[i * 4 + 3] = (val >> 6) & 0x03;
+	}
+	#endif
 };
 inline void GreyUnpack(byte* Dest, byte* Src, int Len)
 {
 	Len >>= 1;
+	#ifdef _MSC_VER
 	__asm {
 		push	esi
 		push	edi
@@ -8167,11 +9643,21 @@ inline void GreyUnpack(byte* Dest, byte* Src, int Len)
 		pop		edi
 		pop		esi
 	};
+	#else
+	// Each source byte encodes 2 destination bytes (4-bit values, shifted)
+	int count = Len >> 1;  // Len is already halved before this block
+	for (int i = 0; i < count; i++) {
+		byte val = Src[i];
+		Dest[i * 2 + 0] = (val & 0x0F) << 1;
+		Dest[i * 2 + 1] = (val >> 4) << 1;
+	}
+	#endif
 };
 inline void StdUnpack(byte* Dest, byte* Src, int Len, byte* Voc)
 {
 	//COUNTER++;
 	byte Calc;
+	#ifdef _MSC_VER
 	__asm {
 		push	esi
 		push	edi
@@ -8218,10 +9704,37 @@ inline void StdUnpack(byte* Dest, byte* Src, int Len, byte* Voc)
 			pop		edi
 			pop		esi
 	};
+	#else
+	// LZSS-like decompression with vocabulary
+	int remaining = Len;
+	int si = 0; // source index
+	int di = 0; // dest index
+	while (remaining > 0) {
+		byte flags = Src[si++];
+		for (int bit = 7; bit >= 0 && remaining > 0; bit--) {
+			if (flags & (1 << bit)) {
+				// Match: 2-byte reference into vocabulary
+				uint16_t ref = Src[si] | (Src[si + 1] << 8);
+				si += 2;
+				int matchLen = (ref >> 12) + 3;
+				int vocOfs = ref & 0xFFF;
+				for (int j = 0; j < matchLen && remaining > 0; j++) {
+					Dest[di++] = Voc[vocOfs + j];
+					remaining--;
+				}
+			} else {
+				// Literal byte
+				Dest[di++] = Src[si++];
+				remaining--;
+			}
+		}
+	}
+	#endif
 };
 inline void LZUnpack(byte* Dest, byte* Src, int Len)
 {
 	byte Calc;
+	#ifdef _MSC_VER
 	__asm {
 		push	esi
 		push	edi
@@ -8270,6 +9783,33 @@ inline void LZUnpack(byte* Dest, byte* Src, int Len)
 			pop		edi
 			pop		esi
 	};
+	#else
+	// LZ decompression with back-references into output
+	int remaining = Len;
+	int si = 0; // source index
+	int di = 0; // dest index
+	while (remaining > 0) {
+		byte flags = Src[si++];
+		for (int bit = 0; bit < 8 && remaining > 0; bit++) {
+			if (flags & (1 << bit)) {
+				// Match: back-reference into already-decoded output
+				uint16_t ref = Src[si] | (Src[si + 1] << 8);
+				si += 2;
+				int matchLen = (ref >> 13) + 3;
+				int offset = ref & 0x1FFF;
+				int srcPos = di - offset - 1;
+				for (int j = 0; j < matchLen && remaining > 0; j++) {
+					Dest[di++] = Dest[srcPos + j];
+					remaining--;
+				}
+			} else {
+				// Literal byte
+				Dest[di++] = Src[si++];
+				remaining--;
+			}
+		}
+	}
+	#endif
 };
 extern byte Bright[8192];
 
@@ -8318,8 +9858,12 @@ extern byte Optional3[8192];
 int startTrans = 0;
 
 //FIX MEMORY
+extern int _pd_trace_enable;
+extern int _pd_callcount;
 void GP_System::ShowGP(int x, int y, int FileIndex, int SprIndex, byte Nation)
 {
+	bool _sgp_trace = (_pd_trace_enable > 0 && _pd_callcount >= _pd_trace_enable && _pd_callcount < _pd_trace_enable + 5);
+	if (_sgp_trace) fprintf(stderr, "[SGP] ShowGP(x=%d,y=%d,F=%d,S=%d,N=%d)\n", x, y, FileIndex, SprIndex, Nation);
 	if (!(FileIndex < NGP && (SprIndex & 4095) < GPNFrames[FileIndex]))
 	{
 		return;
@@ -8344,6 +9888,7 @@ void GP_System::ShowGP(int x, int y, int FileIndex, int SprIndex, byte Nation)
 
 	if (!GPH[FileIndex])
 	{
+		if (_sgp_trace) fprintf(stderr, "[SGP] LoadGP(%d)\n", FileIndex);
 		LoadGP(FileIndex);
 	}
 
@@ -8352,6 +9897,7 @@ void GP_System::ShowGP(int x, int y, int FileIndex, int SprIndex, byte Nation)
 	// Проверка на валидность lpGH
 	if (!lpGH)
 	{
+		if (_sgp_trace) fprintf(stderr, "[SGP] lpGH==NULL, return\n");
 		return; // Выход, чтобы избежать сбоя
 	}
 
@@ -8361,10 +9907,12 @@ void GP_System::ShowGP(int x, int y, int FileIndex, int SprIndex, byte Nation)
 		RSprIndex &= 4095;
 	}
 
+	if (_sgp_trace) fprintf(stderr, "[SGP] RSprIndex=%d, ImageType=%d\n", RSprIndex, (int)(ImageType[FileIndex] & 7));
+
 	GP_Header* lpGP = GPX(lpGH, LGPH[RSprIndex]);
 	GP_Header* lpGPCUR = lpGP;
 
-	DWORD* PAK = CASHREF[FileIndex];
+	uintptr_t* PAK = CASHREF[FileIndex];
 	PAK += PAK[RSprIndex];
 
 	if (ItDX[FileIndex])
@@ -8402,15 +9950,16 @@ void GP_System::ShowGP(int x, int y, int FileIndex, int SprIndex, byte Nation)
 	do
 	{
 		byte Opt = lpGPCUR->Options & 63;
+		if (_sgp_trace) fprintf(stderr, "[SGP] do-loop: Opt=%d DIFF=%d PACKOFS=%p NO_PACK=%p\n", Opt, DIFF, PACKOFS, NO_PACK);
 		switch (Opt)
 		{
 		case 0: // standart packing
 			if (PACKOFS == NO_PACK)
 			{
 				PACKOFS = GetCash(UnpackLen + 18);
-				INTV(PACKOFS) = (int)(PAK);
-				PACKOFS += 8;
-				*PAK = (DWORD)PACKOFS;
+				PTRV(PACKOFS) = (intptr_t)(PAK);
+				PACKOFS += CASH_HDR;
+				*PAK = (uintptr_t)PACKOFS;
 				StdUnpack(PACKOFS, ((byte*)lpGPCUR) + CDOffs, UnpackLen, ((byte*)lpGH) + lpGH->VocOffset);
 			}
 
@@ -8423,9 +9972,9 @@ void GP_System::ShowGP(int x, int y, int FileIndex, int SprIndex, byte Nation)
 			if (PACKOFS == NO_PACK)
 			{
 				PACKOFS = GetCash(UnpackLen + 8);
-				INTV(PACKOFS) = (int)PAK;
-				PACKOFS += 8;
-				*PAK = (DWORD)PACKOFS;
+				PTRV(PACKOFS) = (intptr_t)PAK;
+				PACKOFS += CASH_HDR;
+				*PAK = (uintptr_t)PACKOFS;
 				NatUnpack(PACKOFS, ((byte*)lpGPCUR) + CDOffs, UnpackLen);
 			}
 
@@ -8503,9 +10052,9 @@ void GP_System::ShowGP(int x, int y, int FileIndex, int SprIndex, byte Nation)
 			if (PACKOFS == NO_PACK)
 			{
 				PACKOFS = GetCash(UnpackLen + 8);
-				INTV(PACKOFS) = (int)PAK;
-				PACKOFS += 8;
-				*PAK = (DWORD)PACKOFS;
+				PTRV(PACKOFS) = (intptr_t)PAK;
+				PACKOFS += CASH_HDR;
+				*PAK = (uintptr_t)PACKOFS;
 				GreyUnpack(PACKOFS, ((byte*)lpGPCUR) + CDOffs, UnpackLen);
 			}
 			switch (imt)
@@ -8607,9 +10156,9 @@ void GP_System::ShowGP(int x, int y, int FileIndex, int SprIndex, byte Nation)
 			if (PACKOFS == NO_PACK)
 			{
 				PACKOFS = GetCash(UnpackLen + 18);
-				INTV(PACKOFS) = (int)PAK;
-				PACKOFS += 8;
-				*PAK = (DWORD)PACKOFS;
+				PTRV(PACKOFS) = (intptr_t)PAK;
+				PACKOFS += CASH_HDR;
+				*PAK = (uintptr_t)PACKOFS;
 				LZUnpack(PACKOFS, ((byte*)lpGPCUR) + CDOffs, UnpackLen);
 			}
 			if (SprIndex >= 4096)
@@ -8619,11 +10168,16 @@ void GP_System::ShowGP(int x, int y, int FileIndex, int SprIndex, byte Nation)
 			break;
 		}
 		DIFF = lpGPCUR->NextPict;
+		if (_sgp_trace) fprintf(stderr, "[SGP] NextPict=%d\n", DIFF);
+		#ifdef _MSC_VER
 		__asm {
 			mov     eax, lpGP
 			add     eax, DIFF
 			mov     lpGPCUR, eax
 		}
+		#else
+			lpGPCUR = (GP_Header*)((char*)lpGP + DIFF);
+		#endif
 		UnpackLen = lpGPCUR->CData >> 14;
 		CDOffs = lpGPCUR->CData & 16383;
 		byte Optx = lpGPCUR->Options;
@@ -8672,7 +10226,7 @@ void GP_System::ShowGPLayers(//IMPORTANT: color masking for units and buildings
 	GP_GlobalHeader* lpGH = GPH[FileIndex];
 	GP_Header* lpGP = GPX(lpGH, LGPH[SprIndex & 4095]);
 	GP_Header* lpGPCUR = lpGP;
-	DWORD* PAK = CASHREF[FileIndex];
+	uintptr_t* PAK = CASHREF[FileIndex];
 	PAK += PAK[SprIndex & 4095];
 	int DIFF = -1;
 	int UnpackLen = lpGP->CData >> 14;
@@ -8706,10 +10260,10 @@ void GP_System::ShowGPLayers(//IMPORTANT: color masking for units and buildings
 				if (PACKOFS == NO_PACK)
 				{
 					PACKOFS = GetCash(UnpackLen + 18);
-					INTV(PACKOFS) = (int)PAK;//&lpGPCUR->Pack);
-					PACKOFS += 8;
+					PTRV(PACKOFS) = (intptr_t)PAK;//&lpGPCUR->Pack);
+					PACKOFS += CASH_HDR;
 					//lpGPCUR->Pack=PACKOFS;
-					*PAK = (DWORD)PACKOFS;
+					*PAK = (uintptr_t)PACKOFS;
 					StdUnpack(PACKOFS, ((byte*)lpGPCUR) + CDOffs, UnpackLen, ((byte*)lpGH) + lpGH->VocOffset);
 				};
 				if (mask & 512)
@@ -8730,10 +10284,10 @@ void GP_System::ShowGPLayers(//IMPORTANT: color masking for units and buildings
 				if (PACKOFS == NO_PACK)
 				{
 					PACKOFS = GetCash(UnpackLen + 8);
-					INTV(PACKOFS) = (int)PAK;//&lpGPCUR->Pack);
-					PACKOFS += 8;
+					PTRV(PACKOFS) = (intptr_t)PAK;//&lpGPCUR->Pack);
+					PACKOFS += CASH_HDR;
 					//lpGPCUR->Pack=PACKOFS;
-					*PAK = (DWORD)PACKOFS;
+					*PAK = (uintptr_t)PACKOFS;
 					NatUnpack(PACKOFS, ((byte*)lpGPCUR) + CDOffs, UnpackLen);
 				};
 				if (SprIndex >= 4096)GP_ShowMaskedPalPictInv(x, y, lpGPCUR, PACKOFS, (byte*)(NatPal + (Nation << 2)));
@@ -8801,10 +10355,10 @@ void GP_System::ShowGPLayers(//IMPORTANT: color masking for units and buildings
 				if (PACKOFS == NO_PACK)
 				{
 					PACKOFS = GetCash(UnpackLen + 8);
-					INTV(PACKOFS) = (int)PAK;//&lpGPCUR->Pack);
-					PACKOFS += 8;
+					PTRV(PACKOFS) = (intptr_t)PAK;//&lpGPCUR->Pack);
+					PACKOFS += CASH_HDR;
 					//lpGPCUR->Pack=PACKOFS;
-					*PAK = (DWORD)PACKOFS;
+					*PAK = (uintptr_t)PACKOFS;
 					GreyUnpack(PACKOFS, ((byte*)lpGPCUR) + CDOffs, UnpackLen);
 				};
 				switch (imt)
@@ -8898,10 +10452,10 @@ void GP_System::ShowGPLayers(//IMPORTANT: color masking for units and buildings
 				if (PACKOFS == NO_PACK)
 				{
 					PACKOFS = GetCash(UnpackLen + 18);
-					INTV(PACKOFS) = (int)PAK;//&lpGPCUR->Pack);
-					PACKOFS += 8;
+					PTRV(PACKOFS) = (intptr_t)PAK;//&lpGPCUR->Pack);
+					PACKOFS += CASH_HDR;
 					//lpGPCUR->Pack=PACKOFS;
-					*PAK = (DWORD)PACKOFS;
+					*PAK = (uintptr_t)PACKOFS;
 					LZUnpack(PACKOFS, ((byte*)lpGPCUR) + CDOffs, UnpackLen);
 				};
 				if (mask & 512)
@@ -8918,11 +10472,15 @@ void GP_System::ShowGPLayers(//IMPORTANT: color masking for units and buildings
 			break;
 		};
 		DIFF = lpGPCUR->NextPict;
+		#ifdef _MSC_VER
 		__asm {
 			mov		eax, lpGP
 			add		eax, DIFF
 			mov		lpGPCUR, eax
 		};
+		#else
+			lpGPCUR = (GP_Header*)((char*)lpGP + DIFF);
+		#endif
 		UnpackLen = lpGPCUR->CData >> 14;
 		CDOffs = lpGPCUR->CData & 16383;
 		byte Optx = lpGPCUR->Options;
@@ -8960,7 +10518,7 @@ void GP_System::ShowGPTransparent(int x, int y, int FileIndex, int SprIndex, byt
 	GP_GlobalHeader* lpGH = GPH[FileIndex];
 	GP_Header* lpGP = GPX(lpGH, LGPH[SprIndex & 4095]);
 	GP_Header* lpGPCUR = lpGP;
-	DWORD* PAK = CASHREF[FileIndex];
+	uintptr_t* PAK = CASHREF[FileIndex];
 	PAK += PAK[SprIndex & 4095];
 	int DIFF = -1;
 	int UnpackLen = lpGP->CData >> 14;
@@ -8980,10 +10538,10 @@ void GP_System::ShowGPTransparent(int x, int y, int FileIndex, int SprIndex, byt
 			if (PACKOFS == NO_PACK)
 			{
 				PACKOFS = GetCash(UnpackLen + 18);
-				INTV(PACKOFS) = (int)PAK;//&lpGPCUR->Pack);
-				PACKOFS += 8;
+				PTRV(PACKOFS) = (intptr_t)PAK;//&lpGPCUR->Pack);
+				PACKOFS += CASH_HDR;
 				//lpGPCUR->Pack=PACKOFS;
-				*PAK = (DWORD)PACKOFS;
+				*PAK = (uintptr_t)PACKOFS;
 				StdUnpack(PACKOFS, ((byte*)lpGPCUR) + CDOffs, UnpackLen, ((byte*)lpGH) + lpGH->VocOffset);
 			};
 			if (SprIndex >= 4096)GP_ShowMaskedMultiPalPictInv(x, y, lpGPCUR, PACKOFS, trans8);
@@ -8993,10 +10551,10 @@ void GP_System::ShowGPTransparent(int x, int y, int FileIndex, int SprIndex, byt
 			if (PACKOFS == NO_PACK)
 			{
 				PACKOFS = GetCash(UnpackLen + 8);
-				INTV(PACKOFS) = (int)PAK;//&lpGPCUR->Pack);
-				PACKOFS += 8;
+				PTRV(PACKOFS) = (intptr_t)PAK;//&lpGPCUR->Pack);
+				PACKOFS += CASH_HDR;
 				//lpGPCUR->Pack=PACKOFS;
-				*PAK = (DWORD)PACKOFS;
+				*PAK = (uintptr_t)PACKOFS;
 				NatUnpack(PACKOFS, ((byte*)lpGPCUR) + CDOffs, UnpackLen);
 			};
 			if (SprIndex >= 4096)GP_ShowMaskedPalPictInv(x, y, lpGPCUR, PACKOFS, (byte*)(NatPal + (Nation << 2)));
@@ -9023,10 +10581,10 @@ void GP_System::ShowGPTransparent(int x, int y, int FileIndex, int SprIndex, byt
 			if (PACKOFS == NO_PACK)
 			{
 				PACKOFS = GetCash(UnpackLen + 18);
-				INTV(PACKOFS) = (int)PAK;//&lpGPCUR->Pack);
-				PACKOFS += 8;
+				PTRV(PACKOFS) = (intptr_t)PAK;//&lpGPCUR->Pack);
+				PACKOFS += CASH_HDR;
 				//lpGPCUR->Pack=PACKOFS;
-				*PAK = (DWORD)PACKOFS;
+				*PAK = (uintptr_t)PACKOFS;
 				LZUnpack(PACKOFS, ((byte*)lpGPCUR) + CDOffs, UnpackLen);
 			};
 			if (SprIndex >= 4096)GP_ShowMaskedMultiPalPictInv(x, y, lpGPCUR, PACKOFS, trans8);
@@ -9034,11 +10592,15 @@ void GP_System::ShowGPTransparent(int x, int y, int FileIndex, int SprIndex, byt
 			break;
 		};
 		DIFF = lpGPCUR->NextPict;
+		#ifdef _MSC_VER
 		__asm {
 			mov		eax, lpGP
 			add		eax, DIFF
 			mov		lpGPCUR, eax
 		};
+		#else
+			lpGPCUR = (GP_Header*)((char*)lpGP + DIFF);
+		#endif
 		UnpackLen = lpGPCUR->CData >> 14;
 		CDOffs = lpGPCUR->CData & 16383;
 		byte Optx = lpGPCUR->Options;
@@ -9078,7 +10640,7 @@ void GP_System::ShowGPTransparentLayers(int x, int y, int FileIndex, int SprInde
 	GP_GlobalHeader* lpGH = GPH[FileIndex];
 	GP_Header* lpGP = GPX(lpGH, LGPH[SprIndex & 4095]);
 	GP_Header* lpGPCUR = lpGP;
-	DWORD* PAK = CASHREF[FileIndex];
+	uintptr_t* PAK = CASHREF[FileIndex];
 	PAK += PAK[SprIndex & 4095];
 	int DIFF = -1;
 	int UnpackLen = lpGP->CData >> 14;
@@ -9100,10 +10662,10 @@ void GP_System::ShowGPTransparentLayers(int x, int y, int FileIndex, int SprInde
 				if (PACKOFS == NO_PACK)
 				{
 					PACKOFS = GetCash(UnpackLen + 18);
-					INTV(PACKOFS) = (int)PAK;//&lpGPCUR->Pack);
-					PACKOFS += 8;
+					PTRV(PACKOFS) = (intptr_t)PAK;//&lpGPCUR->Pack);
+					PACKOFS += CASH_HDR;
 					//lpGPCUR->Pack=PACKOFS;
-					*PAK = (DWORD)PACKOFS;
+					*PAK = (uintptr_t)PACKOFS;
 					StdUnpack(PACKOFS, ((byte*)lpGPCUR) + CDOffs, UnpackLen, ((byte*)lpGH) + lpGH->VocOffset);
 				};
 				if (SprIndex >= 4096)GP_ShowMaskedMultiPalPictInv(x, y, lpGPCUR, PACKOFS, trans8);
@@ -9116,10 +10678,10 @@ void GP_System::ShowGPTransparentLayers(int x, int y, int FileIndex, int SprInde
 				if (PACKOFS == NO_PACK)
 				{
 					PACKOFS = GetCash(UnpackLen + 8);
-					INTV(PACKOFS) = (int)PAK;//&lpGPCUR->Pack);
-					PACKOFS += 8;
+					PTRV(PACKOFS) = (intptr_t)PAK;//&lpGPCUR->Pack);
+					PACKOFS += CASH_HDR;
 					//lpGPCUR->Pack=PACKOFS;
-					*PAK = (DWORD)PACKOFS;
+					*PAK = (uintptr_t)PACKOFS;
 					NatUnpack(PACKOFS, ((byte*)lpGPCUR) + CDOffs, UnpackLen);
 				}
 
@@ -9178,10 +10740,10 @@ void GP_System::ShowGPTransparentLayers(int x, int y, int FileIndex, int SprInde
 				if (PACKOFS == NO_PACK)
 				{
 					PACKOFS = GetCash(UnpackLen + 18);
-					INTV(PACKOFS) = (int)PAK;//&lpGPCUR->Pack);
-					PACKOFS += 8;
+					PTRV(PACKOFS) = (intptr_t)PAK;//&lpGPCUR->Pack);
+					PACKOFS += CASH_HDR;
 					//lpGPCUR->Pack=PACKOFS;
-					*PAK = (DWORD)PACKOFS;
+					*PAK = (uintptr_t)PACKOFS;
 					LZUnpack(PACKOFS, ((byte*)lpGPCUR) + CDOffs, UnpackLen);
 				};
 				if (SprIndex >= 4096)GP_ShowMaskedMultiPalPictInv(x, y, lpGPCUR, PACKOFS, trans8);
@@ -9190,11 +10752,15 @@ void GP_System::ShowGPTransparentLayers(int x, int y, int FileIndex, int SprInde
 			break;
 		};
 		DIFF = lpGPCUR->NextPict;
+		#ifdef _MSC_VER
 		__asm {
 			mov		eax, lpGP
 			add		eax, DIFF
 			mov		lpGPCUR, eax
 		};
+		#else
+			lpGPCUR = (GP_Header*)((char*)lpGP + DIFF);
+		#endif
 		UnpackLen = lpGPCUR->CData >> 14;
 		CDOffs = lpGPCUR->CData & 16383;
 		byte Optx = lpGPCUR->Options;
@@ -9223,7 +10789,7 @@ void GP_System::FreeRefs(int FileIndex)
 	{
 		GP_Header* lpGP = GPX(lpGH, LGPH[SprIndex & 4095]);
 		GP_Header* lpGPCUR = lpGP;
-		DWORD* PAK = CASHREF[FileIndex];
+		uintptr_t* PAK = CASHREF[FileIndex];
 		PAK += PAK[SprIndex & 4095];
 
 		int DIFF = -1;
@@ -9251,12 +10817,16 @@ void GP_System::FreeRefs(int FileIndex)
 			*PAK = 0xFFFFFFFF;
 			DIFF = lpGPCUR->NextPict;
 
+			#ifdef _MSC_VER
 			__asm
 			{
 				mov		eax, lpGP
 				add		eax, DIFF
 				mov		lpGPCUR, eax
 			}
+			#else
+				lpGPCUR = (GP_Header*)((char*)lpGP + DIFF);
+			#endif
 
 			UnpackLen = lpGPCUR->CData >> 14;
 			CDOffs = lpGPCUR->CData & 16383;
@@ -9304,7 +10874,7 @@ void GP_System::ShowGPPal(//IMPORTANT: color masking for buildings (only in plac
 	GP_GlobalHeader* lpGH = GPH[FileIndex];
 	GP_Header* lpGP = GPX(lpGH, LGPH[SprIndex & 4095]);
 	GP_Header* lpGPCUR = lpGP;
-	DWORD* PAK = CASHREF[FileIndex];
+	uintptr_t* PAK = CASHREF[FileIndex];
 	PAK += PAK[SprIndex & 4095];
 	int imt = ImageType[FileIndex] >> 4;
 	int DIFF = -1;
@@ -9323,9 +10893,9 @@ void GP_System::ShowGPPal(//IMPORTANT: color masking for buildings (only in plac
 			if (PACKOFS == NO_PACK)
 			{
 				PACKOFS = GetCash(UnpackLen + 18);
-				INTV(PACKOFS) = (int)PAK;
-				PACKOFS += 8;
-				*PAK = (DWORD)PACKOFS;
+				PTRV(PACKOFS) = (intptr_t)PAK;
+				PACKOFS += CASH_HDR;
+				*PAK = (uintptr_t)PACKOFS;
 				StdUnpack(PACKOFS, ((byte*)lpGPCUR) + CDOffs, UnpackLen, ((byte*)lpGH) + lpGH->VocOffset);
 			}
 
@@ -9339,9 +10909,9 @@ void GP_System::ShowGPPal(//IMPORTANT: color masking for buildings (only in plac
 			if (PACKOFS == NO_PACK)
 			{
 				PACKOFS = GetCash(UnpackLen + 8);
-				INTV(PACKOFS) = (int)PAK;
-				PACKOFS += 8;
-				*PAK = (DWORD)PACKOFS;
+				PTRV(PACKOFS) = (intptr_t)PAK;
+				PACKOFS += CASH_HDR;
+				*PAK = (uintptr_t)PACKOFS;
 				NatUnpack(PACKOFS, ((byte*)lpGPCUR) + CDOffs, UnpackLen);
 			}
 
@@ -9385,9 +10955,9 @@ void GP_System::ShowGPPal(//IMPORTANT: color masking for buildings (only in plac
 			if (PACKOFS == NO_PACK)
 			{
 				PACKOFS = GetCash(UnpackLen + 18);
-				INTV(PACKOFS) = (int)PAK;
-				PACKOFS += 8;
-				*PAK = (DWORD)PACKOFS;
+				PTRV(PACKOFS) = (intptr_t)PAK;
+				PACKOFS += CASH_HDR;
+				*PAK = (uintptr_t)PACKOFS;
 				LZUnpack(PACKOFS, ((byte*)lpGPCUR) + CDOffs, UnpackLen);
 			}
 
@@ -9404,9 +10974,9 @@ void GP_System::ShowGPPal(//IMPORTANT: color masking for buildings (only in plac
 			if (PACKOFS == NO_PACK)
 			{
 				PACKOFS = GetCash(UnpackLen + 8);
-				INTV(PACKOFS) = (int)PAK;
-				PACKOFS += 8;
-				*PAK = (DWORD)PACKOFS;
+				PTRV(PACKOFS) = (intptr_t)PAK;
+				PACKOFS += CASH_HDR;
+				*PAK = (uintptr_t)PACKOFS;
 				GreyUnpack(PACKOFS, ((byte*)lpGPCUR) + CDOffs, UnpackLen);
 			}
 
@@ -9469,11 +11039,15 @@ void GP_System::ShowGPPal(//IMPORTANT: color masking for buildings (only in plac
 			break;
 		};
 		DIFF = lpGPCUR->NextPict;
+		#ifdef _MSC_VER
 		__asm {
 			mov		eax, lpGP
 			add		eax, DIFF
 			mov		lpGPCUR, eax
 		};
+		#else
+			lpGPCUR = (GP_Header*)((char*)lpGP + DIFF);
+		#endif
 		UnpackLen = lpGPCUR->CData >> 14;
 		CDOffs = lpGPCUR->CData & 16383;
 		byte Optx = lpGPCUR->Options;
@@ -9514,7 +11088,7 @@ void GP_System::ShowGPPalLayers(//IMPORTANT: color masking for buildings (only w
 	GP_GlobalHeader* lpGH = GPH[FileIndex];
 	GP_Header* lpGP = GPX(lpGH, LGPH[SprIndex & 4095]);
 	GP_Header* lpGPCUR = lpGP;
-	DWORD* PAK = CASHREF[FileIndex];
+	uintptr_t* PAK = CASHREF[FileIndex];
 	PAK += PAK[SprIndex & 4095];
 	int DIFF = -1;
 	int UnpackLen = lpGP->CData >> 14;
@@ -9534,10 +11108,10 @@ void GP_System::ShowGPPalLayers(//IMPORTANT: color masking for buildings (only w
 				if (PACKOFS == NO_PACK)
 				{
 					PACKOFS = GetCash(UnpackLen + 18);
-					INTV(PACKOFS) = (int)PAK;//&lpGPCUR->Pack);
-					PACKOFS += 8;
+					PTRV(PACKOFS) = (intptr_t)PAK;//&lpGPCUR->Pack);
+					PACKOFS += CASH_HDR;
 					//lpGPCUR->Pack=PACKOFS;
-					*PAK = (DWORD)PACKOFS;
+					*PAK = (uintptr_t)PACKOFS;
 					StdUnpack(PACKOFS, ((byte*)lpGPCUR) + CDOffs, UnpackLen, ((byte*)lpGH) + lpGH->VocOffset);
 				};
 				if (SprIndex >= 4096)GP_ShowMaskedPalPictInv(x, y, lpGPCUR, PACKOFS, Table);
@@ -9550,10 +11124,10 @@ void GP_System::ShowGPPalLayers(//IMPORTANT: color masking for buildings (only w
 				if (PACKOFS == NO_PACK)
 				{
 					PACKOFS = GetCash(UnpackLen + 8);
-					INTV(PACKOFS) = (int)PAK;//&lpGPCUR->Pack);
-					PACKOFS += 8;
+					PTRV(PACKOFS) = (intptr_t)PAK;//&lpGPCUR->Pack);
+					PACKOFS += CASH_HDR;
 					//lpGPCUR->Pack=PACKOFS;
-					*PAK = (DWORD)PACKOFS;
+					*PAK = (uintptr_t)PACKOFS;
 					NatUnpack(PACKOFS, ((byte*)lpGPCUR) + CDOffs, UnpackLen);
 				};
 				if (SprIndex >= 4096)GP_ShowMaskedPalPictInv(x, y, lpGPCUR, PACKOFS, (byte*)(NatPal + (Nation << 2)));
@@ -9611,10 +11185,10 @@ void GP_System::ShowGPPalLayers(//IMPORTANT: color masking for buildings (only w
 				if (PACKOFS == NO_PACK)
 				{
 					PACKOFS = GetCash(UnpackLen + 18);
-					INTV(PACKOFS) = (int)PAK;//&lpGPCUR->Pack);
-					PACKOFS += 8;
+					PTRV(PACKOFS) = (intptr_t)PAK;//&lpGPCUR->Pack);
+					PACKOFS += CASH_HDR;
 					//lpGPCUR->Pack=PACKOFS;
-					*PAK = (DWORD)PACKOFS;
+					*PAK = (uintptr_t)PACKOFS;
 					LZUnpack(PACKOFS, ((byte*)lpGPCUR) + CDOffs, UnpackLen);
 				};
 				if (SprIndex >= 4096)GP_ShowMaskedPalPictInv(x, y, lpGPCUR, PACKOFS, Table);
@@ -9627,10 +11201,10 @@ void GP_System::ShowGPPalLayers(//IMPORTANT: color masking for buildings (only w
 				if (PACKOFS == NO_PACK)
 				{
 					PACKOFS = GetCash(UnpackLen + 8);
-					INTV(PACKOFS) = (int)PAK;//&lpGPCUR->Pack);
-					PACKOFS += 8;
+					PTRV(PACKOFS) = (intptr_t)PAK;//&lpGPCUR->Pack);
+					PACKOFS += CASH_HDR;
 					//lpGPCUR->Pack=PACKOFS;
-					*PAK = (DWORD)PACKOFS;
+					*PAK = (uintptr_t)PACKOFS;
 					GreyUnpack(PACKOFS, ((byte*)lpGPCUR) + CDOffs, UnpackLen);
 				};
 				switch (imt)
@@ -9704,11 +11278,15 @@ void GP_System::ShowGPPalLayers(//IMPORTANT: color masking for buildings (only w
 			break;
 		};
 		DIFF = lpGPCUR->NextPict;
+		#ifdef _MSC_VER
 		__asm {
 			mov		eax, lpGP
 			add		eax, DIFF
 			mov		lpGPCUR, eax
 		};
+		#else
+			lpGPCUR = (GP_Header*)((char*)lpGP + DIFF);
+		#endif
 		UnpackLen = lpGPCUR->CData >> 14;
 		CDOffs = lpGPCUR->CData & 16383;
 		byte Optx = lpGPCUR->Options;
@@ -9770,6 +11348,7 @@ extern int mapy;
 static int npp = 0;
 void OvpBar1(int x, int y, int Lx, int Ly, byte c)
 {
+	#ifdef _MSC_VER
 	int ofst = int(ScreenPtr) + x + y * ScrWidth;
 	__asm {
 		push	edi
@@ -9790,9 +11369,22 @@ void OvpBar1(int x, int y, int Lx, int Ly, byte c)
 		jnz		lppy
 		pop		edi
 	};
+	#else
+	{
+		byte* dst = (byte*)ScreenPtr + x + y * ScrWidth;
+		for (int row = 0; row < Ly; row++) {
+			for (int col = 0; col < Lx; col++) {
+				dst[col * 2] = c;
+				dst[col * 2 + 1 + ScrWidth] = c;
+			}
+			dst += ScrWidth * 2;
+		}
+	}
+	#endif
 };
 void OvpBar2(int x, int y, int Lx, int Ly, byte c)
 {
+	#ifdef _MSC_VER
 	int ofst = int(ScreenPtr) + x + y * ScrWidth;
 	__asm {
 		push	edi
@@ -9813,6 +11405,18 @@ void OvpBar2(int x, int y, int Lx, int Ly, byte c)
 		jnz		lppy
 		pop		edi
 	};
+	#else
+	{
+		byte* dst = (byte*)ScreenPtr + x + y * ScrWidth;
+		for (int row = 0; row < Ly; row++) {
+			for (int col = 0; col < Lx; col++) {
+				dst[col * 2 + 1] = c;
+				dst[col * 2 + ScrWidth] = c;
+			}
+			dst += ScrWidth * 2;
+		}
+	}
+	#endif
 };
 extern byte WaterCost[65536];
 //Waves
@@ -9825,6 +11429,7 @@ void ShowGradPicture(int x, int y, int Lx, int Ly,
 	int b = div((z2 - z1) << 16, Lx).quot;
 	int c = div((z3 - z1) << 16, Ly).quot;
 	int d = div((z4 + z1 - z2 - z3) << 16, Lx * Ly).quot;
+	#ifdef _MSC_VER
 	int ofst = int(ScreenPtr) + x + y * ScrWidth;
 	int addo = ScrWidth - Lx;
 
@@ -9862,6 +11467,27 @@ void ShowGradPicture(int x, int y, int Lx, int Ly,
 		pop		edi
 		pop		esi
 	}
+	#else
+	{
+		byte* dst = (byte*)ScreenPtr + x + y * ScrWidth;
+		int p = a;
+		int step = b;
+		byte* bmp = Bitmap;
+		for (int row = 0; row < Ly; row++) {
+			int fog_val = p;
+			for (int col = 0; col < Lx; col++) {
+				int lo = ((fog_val >> 13) & 0xF8) | bmp[col];
+				int idx = ((int)dst[col] << 8) | (lo & 0xFF);
+				dst[col] = WaterCost[idx];
+				fog_val += step;
+			}
+			step += d;
+			p += c;
+			bmp += Lx + BMLx;
+			dst += ScrWidth;
+		}
+	}
+	#endif
 }
 
 class WaterSpot
@@ -10233,10 +11859,13 @@ bool CheckInsideMask(GP_Header* Pic, int x, int y)
 	int NLines = Pic->NLines;
 	if (x >= Pic->Lx)return false;
 	if (y >= Pic->Ly)return false;
+	#ifdef _MSC_VER
 	int ofst = int(Pic) + 23;
+	#endif
 	//skipping lines
 	if (y > 0)
 	{
+		#ifdef _MSC_VER
 		__asm
 		{
 			mov  ecx, y
@@ -10261,68 +11890,89 @@ bool CheckInsideMask(GP_Header* Pic, int x, int y)
 				END_SKIP :
 			mov  ofst, ebx
 		}
+		#else
+		{
+			byte* mask = (byte*)Pic + 23;
+			for (int line = 0; line < y; line++) {
+				byte hdr = *mask++;
+				if (hdr & 128) {
+					mask += (hdr & 31);
+				} else {
+					mask += hdr * 2;
+				}
+			}
+			// Now check the target line
+			byte hdr = *mask;
+			if (hdr & 128) {
+				int SPACE_MASK_V = (hdr & 64) ? 16 : 0;
+				int DATA_MASK_V = (hdr & 32) ? 16 : 0;
+				int nseg = hdr & 31;
+				mask++;
+				int pos = 0;
+				for (int s = 0; s < nseg; s++) {
+					int skip = (mask[s] & 0x0F) | SPACE_MASK_V;
+					int draw = (mask[s] >> 4) | DATA_MASK_V;
+					pos += skip;
+					if (x < pos) return false;
+					pos += draw;
+					if (x < pos) return true;
+				}
+				return false;
+			} else {
+				if (hdr == 0) return false;
+				mask++;
+				int pos = 0;
+				for (int s = 0; s < hdr; s++) {
+					int skip = mask[s * 2];
+					int draw = mask[s * 2 + 1];
+					pos += skip;
+					if (x < pos) return false;
+					pos += draw;
+					if (x < pos) return true;
+				}
+				return false;
+			}
+		}
+		#endif
 	}
-
-	int SPACE_MASK = 0;
-	int DATA_MASK = 0;
-
-	__asm
+#ifndef _MSC_VER
+	else
 	{
-		mov  ebx, ofst
-		mov  edx, x
-		xor eax, eax
-
-		mov  al, [ebx]
-		test al, 128
-		jz   SIMP_L_1
-		mov  SPACE_MASK, 0
-		mov  DATA_MASK, 0
-		test al, 64
-		jz   MSK1
-		mov  SPACE_MASK, 16
-		MSK1:	test al, 32
-		jz   MSK2
-		mov  DATA_MASK, 16
-		MSK2 : and al, 31
-		inc  ebx
-		CHK_1 :
-		mov  cl, [ebx]
-			and ecx, 15
-			or ecx, SPACE_MASK
-			sub  edx, ecx
-			jl   NOT_INSIDE
-			mov  cl, [ebx]
-			shr  ecx, 4
-			or ecx, DATA_MASK
-			sub  edx, ecx
-			jl   IS_INSIDE
-			inc  ebx
-			dec  al
-			jnz  CHK_1
-			NOT_INSIDE :
-		mov  eax, 0
-			jmp  DO_END
-			SIMP_L_1 :
-		or al, al
-			jz   NOT_INSIDE
-			inc  ebx
-			CHK_2 :
-		mov  cl, [ebx]
-			inc  ebx
-			sub  edx, ecx
-			jl   NOT_INSIDE
-			mov  cl, [ebx]
-			inc  ebx
-			sub  edx, ecx
-			jl   IS_INSIDE
-			dec  al
-			jnz  CHK_2
-			mov  eax, 0
-			jmp  DO_END
-			IS_INSIDE :
-		mov  eax, 1
-			DO_END :
+		// y == 0, check top line directly
+		byte* mask = (byte*)Pic + 23;
+		byte hdr = *mask;
+		if (hdr & 128) {
+			int SPACE_MASK_V = (hdr & 64) ? 16 : 0;
+			int DATA_MASK_V = (hdr & 32) ? 16 : 0;
+			int nseg = hdr & 31;
+			mask++;
+			int pos = 0;
+			for (int s = 0; s < nseg; s++) {
+				int skip = (mask[s] & 0x0F) | SPACE_MASK_V;
+				int draw = (mask[s] >> 4) | DATA_MASK_V;
+				pos += skip;
+				if (x < pos) return false;
+				pos += draw;
+				if (x < pos) return true;
+			}
+			return false;
+		} else {
+			if (hdr == 0) return false;
+			mask++;
+			int pos = 0;
+			for (int s = 0; s < hdr; s++) {
+				int skip = mask[s * 2];
+				int draw = mask[s * 2 + 1];
+				pos += skip;
+				if (x < pos) return false;
+				pos += draw;
+				if (x < pos) return true;
+			}
+			return false;
+		}
 	}
+	return false;
+#endif
 }
 
 __declspec(dllexport) bool CheckGP_Inside(int FileIndex, int SprIndex, int dx, int dy)
@@ -10375,12 +12025,16 @@ __declspec(dllexport) bool CheckGP_Inside(int FileIndex, int SprIndex, int dx, i
 		}
 
 		DIFF = lpGPCUR->NextPict;
+		#ifdef _MSC_VER
 		__asm
 		{
 			mov		eax, lpGP
 			add		eax, DIFF
 			mov		lpGPCUR, eax
 		}
+		#else
+			lpGPCUR = (GP_Header*)((char*)lpGP + DIFF);
+		#endif
 
 	} while (DIFF != -1);
 	return false;
@@ -10421,7 +12075,7 @@ void RegisterVisibleGP(word Index, int FileIndex, int SprIndex, int x, int y)
 	if (N_GP_Reg >= Max_GP_Reg)
 	{
 		Max_GP_Reg += 512;
-		GP_Reg = (GP_IMG*)realloc(GP_Reg, Max_GP_Reg * sizeof GP_IMG);
+		GP_Reg = (GP_IMG*)realloc(GP_Reg, Max_GP_Reg * sizeof(GP_IMG));
 	}
 
 	GP_Reg[N_GP_Reg].GPID = FileIndex;

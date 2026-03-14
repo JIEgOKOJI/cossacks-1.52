@@ -40,11 +40,13 @@ WallCluster::WallCluster()
 
 WallCluster::~WallCluster()
 {
-	if ( NCornPt )free( CornPt );
-	NCornPt = 0;
-	CornPt = NULL;
-	NCells = 0;
-	Cells = NULL;
+	Clear();
+}
+
+void WallCluster::Clear()
+{
+	if ( NCornPt ) { free( CornPt ); CornPt = NULL; NCornPt = 0; }
+	if ( NCells ) { free( Cells ); Cells = NULL; NCells = 0; }
 	WSys = NULL;
 	LastX = 0;
 	LastY = 0;
@@ -54,7 +56,7 @@ WallCluster::~WallCluster()
 
 void WallCluster::SetSize( int N )
 {
-	Cells = (WallCell*) realloc( (void*) Cells, ( NCells + 1 ) * sizeof WallCell );
+	Cells = (WallCell*) realloc( (void*) Cells, ( NCells + 1 ) * sizeof(WallCell) );
 	NCells = N;
 }
 
@@ -83,7 +85,7 @@ void WallCluster::ConnectToPoint( short x, short y, bool Vis )
 		FinalY = y;
 		AddPoint( x, y, Vis );
 		NCornPt = 1;
-		CornPt = new word;
+		CornPt = (word*) malloc( sizeof(word) );
 		CornPt[0] = 0;
 	}
 	else
@@ -393,7 +395,7 @@ WallSystem::WallSystem()
 {
 	WCL = NULL;
 	NClusters = 0;
-	memset( WRefs, 0, MaxLI * 4 );
+	memset( WRefs, 0, MaxLI * sizeof(WallCell*) );
 };
 WallSystem::~WallSystem()
 {
@@ -409,7 +411,7 @@ WallSystem::~WallSystem()
 	free( WCL );
 	WCL = NULL;
 	NClusters = 0;
-	memset( WRefs, 0, MaxLI * 4 );
+	memset( WRefs, 0, MaxLI * sizeof(WallCell*) );
 }
 
 void WallSystem::AddCluster( WallCluster* WC )
@@ -418,7 +420,12 @@ void WallSystem::AddCluster( WallCluster* WC )
 	{
 		return;
 	}
-	WCL = (WallCluster**) realloc( (void*) WCL, ( NClusters + 1 ) << 2 );
+	HANDLE _hHeap = GetProcessHeap();
+	{
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) { fprintf(wlog, "  AddCluster: NCells=%d NClusters=%d\n", WC->NCells, NClusters); fflush(wlog); fclose(wlog); }
+	}
+	WCL = (WallCluster**) realloc( (void*) WCL, ( NClusters + 1 ) * sizeof(WallCluster*) );
 	WCL[NClusters] = new WallCluster;
 	WallCluster* WCLUS = WCL[NClusters];
 	WCLUS->NCells = WC->NCells;
@@ -427,28 +434,58 @@ void WallSystem::AddCluster( WallCluster* WC )
 	WCLUS->NM = WC->NM;
 	WCLUS->NIndex = WC->NIndex;
 	WCLUS->NI = WC->NI;
-	memcpy( WCLUS->Cells, WC->Cells, WC->NCells * sizeof WallCell );
+	memcpy( WCLUS->Cells, WC->Cells, WC->NCells * sizeof(WallCell) );
 	WallCell* W1 = WCL[NClusters]->Cells;
 	NClusters++;
 	for ( int i = 0; i < WC->NCells; i++ )
 	{
 		if ( W1[i].Visible )
 		{
+			{
+				FILE* wlog = fopen("dmcr_wall.log", "a");
+				if (wlog) { fprintf(wlog, "    StandOnLand cell %d: x=%d y=%d\n", i, W1[i].x, W1[i].y); fflush(wlog); fclose(wlog); }
+			}
 			if ( !W1[i].StandOnLand( WCLUS ) )
 			{
 				W1[i].Visible = 0;
+			}
+			{
+				FILE* wlog = fopen("dmcr_wall.log", "a");
+				if (wlog) {
+					fprintf(wlog, "    StandOnLand cell %d done, Visible=%d\n", i, W1[i].Visible);
+					fprintf(wlog, "    HEAP_CHECK after StandOnLand[%d]: %s\n", i, HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED");
+					fflush(wlog); fclose(wlog);
+				}
 			}
 		}
 	}
 }
 
+int _wallShowPostCreate = 0;
+
 void WallSystem::Show()
 {
+	if (_wallShowPostCreate > 0) {
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) { fprintf(wlog, "RENDER: WallSystem::Show NClusters=%d (post-create #%d)\n", NClusters, _wallShowPostCreate); fflush(wlog); fclose(wlog); }
+	}
 	for ( int i = 0; i < NClusters; i++ )
 	{
-		if ( WCL[i] )WCL[i]->View();
+		if ( WCL[i] ) {
+			if (_wallShowPostCreate > 0) {
+				FILE* wlog = fopen("dmcr_wall.log", "a");
+				if (wlog) { fprintf(wlog, "  RENDER: cluster %d NCells=%d\n", i, WCL[i]->NCells); fflush(wlog); fclose(wlog); }
+			}
+			WCL[i]->View();
+			if (_wallShowPostCreate > 0) {
+				FILE* wlog = fopen("dmcr_wall.log", "a");
+				if (wlog) { fprintf(wlog, "  RENDER: cluster %d done\n", i); fflush(wlog); fclose(wlog); }
+			}
+		}
 	};
+	//if (_wallShowPostCreate > 0) _wallShowPostCreate--; // disabled: keep logging active
 };
+void _WallNotifyCreated() { _wallShowPostCreate = 5; }
 //###----------------<   CLASS: WallCell   >----------------###
 static char* Clu1 = "   ** "
 "  ****"
@@ -663,6 +700,7 @@ WallCell** WRefs;
 void SetTexturedRound( int x, int y, int rx, byte Tex );
 bool WallCell::StandOnLand( WallCluster* WC )
 {
+	HANDLE _hHeap = GetProcessHeap();
 	NewMonster* NM = WC->NM;
 	if ( !( CheckPosition() && ApplyCost( WC->NI, WC->NIndex ) ) )
 	{
@@ -670,7 +708,19 @@ bool WallCell::StandOnLand( WallCluster* WC )
 		return false;
 	};
 	Nation* NT = &NATIONS[WC->NI];
+	{
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) { fprintf(wlog, "      StandOnLand: calling CreateNewMonsterAt x=%d y=%d NIndex=%d\n", (int(x)<<10)+512, (int(y)<<10)+512, WC->NIndex); fflush(wlog); fclose(wlog); }
+	}
 	int ID = NT->CreateNewMonsterAt( ( int( x ) << 10 ) + 512, ( int( y ) << 10 ) + 512, WC->NIndex, true );
+	{
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) {
+			fprintf(wlog, "      StandOnLand: CreateNewMonsterAt returned ID=%d\n", ID);
+			fprintf(wlog, "      HEAP_CHECK after CreateNewMonsterAt: %s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED");
+			fflush(wlog); fclose(wlog);
+		}
+	}
 	if ( ID < 0 )return false;
 	OneObject* OB = Group[ID];
 	if ( !OB )return false;
@@ -721,6 +771,14 @@ bool WallCell::StandOnLand( WallCluster* WC )
 	};
 	DynamicalLockTopCell( x, y );
 	NI = WC->NI;
+	{
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) {
+			fprintf(wlog, "      StandOnLand: completed OK\n");
+			fprintf(wlog, "      HEAP_CHECK after LockCells: %s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED");
+			fflush(wlog); fclose(wlog);
+		}
+	}
 	return true;
 };
 
@@ -998,7 +1056,7 @@ void LoadAllWalls()
 						sprintf( gy, "Walls.lst : incorrect parameters for %s (GATE_COST)", gx );
 						ErrM( gy );
 					};
-					memset( WChar[NChar].GateCost, 0, sizeof WChar[NChar].GateCost );
+					memset( WChar[NChar].GateCost, 0, sizeof(WChar)[NChar].GateCost );
 					for ( int j = 0; j < p1; j++ )
 					{
 						zz = Gscanf( f1, "%s%d", ic1, &p2 );
@@ -1289,7 +1347,17 @@ bool BuildWall;
 bool FirstWall;
 void SetWallBuildMode( byte NI, word NIndex )
 {
-	TMPCluster.~WallCluster();
+	if (_wallShowPostCreate > 0) {
+		HANDLE _hHeap = GetProcessHeap();
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) {
+			fprintf(wlog, "SWBM: NI=%d NIndex=%d NCornPt=%d CornPt=%p NCells=%d Cells=%p heap=%s\n",
+				NI, NIndex, TMPCluster.NCornPt, (void*)TMPCluster.CornPt, TMPCluster.NCells, (void*)TMPCluster.Cells,
+				HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED");
+			fflush(wlog); fclose(wlog);
+		}
+	}
+	TMPCluster.Clear();
 	if ( NI != 0xFF )
 	{
 		NewMonster* NM = NATIONS[NI].Mon[NIndex]->newMons;
@@ -2246,7 +2314,7 @@ int AddGate( short x, short y, byte NI )
 		if ( NGates == MaxGates )
 		{
 			MaxGates += 32;
-			Gates = (Gate*) realloc( Gates, MaxGates * sizeof Gate );
+			Gates = (Gate*) realloc( Gates, MaxGates * sizeof(Gate) );
 		};
 		curg = NGates;
 		NGates++;

@@ -10,7 +10,276 @@
 #define NAME "CEW_KERNEL"
 #define TITLE "Cossacks"
 
+#include <SDL.h>
 #include "ddini.h"
+#include <stdio.h>
+#include <stdarg.h>
+
+#ifdef _WIN32
+#include <windows.h>
+#include <signal.h>
+
+static char _dmcr_exe_dir[MAX_PATH];
+
+static void _dmcr_get_exe_dir(void) {
+	DWORD len = GetModuleFileNameA(NULL, _dmcr_exe_dir, MAX_PATH);
+	if (len > 0 && len < MAX_PATH) {
+		char* s = strrchr(_dmcr_exe_dir, '\\');
+		if (s) *(s + 1) = '\0';
+	}
+}
+
+static void _dmcr_write_crash_log(const char* msg, void* addr) {
+	char path[MAX_PATH];
+	strcpy(path, _dmcr_exe_dir);
+	strcat(path, "dmcr_crash.log");
+	FILE* f = fopen(path, "w");
+	if (f) {
+		fprintf(f, "CRASH: %s at address %p\n", msg, addr);
+		fclose(f);
+	}
+}
+
+static LONG WINAPI _dmcr_exception_filter(EXCEPTION_POINTERS* ep) {
+	char path[MAX_PATH];
+	strcpy(path, _dmcr_exe_dir);
+	strcat(path, "dmcr_crash.log");
+	FILE* f = fopen(path, "w");
+	if (f) {
+		fprintf(f, "Unhandled exception 0x%08lX at address %p\n",
+			ep->ExceptionRecord->ExceptionCode,
+			ep->ExceptionRecord->ExceptionAddress);
+#ifdef _WIN64
+		fprintf(f, "RIP=%p RSP=%p RCX=%p RDX=%p\n",
+			(void*)ep->ContextRecord->Rip,
+			(void*)ep->ContextRecord->Rsp,
+			(void*)ep->ContextRecord->Rcx,
+			(void*)ep->ContextRecord->Rdx);
+#else
+		fprintf(f, "EIP=%p ESP=%p ECX=%p EDX=%p\n",
+			(void*)ep->ContextRecord->Eip,
+			(void*)ep->ContextRecord->Esp,
+			(void*)ep->ContextRecord->Ecx,
+			(void*)ep->ContextRecord->Edx);
+#endif
+		// Print exe base address for symbol resolution
+		HMODULE hExe = GetModuleHandleA(NULL);
+		fprintf(f, "exe_base=%p\n", (void*)(DWORD_PTR)hExe);
+
+		// Stack trace with per-frame module info
+		void* stack[64];
+		USHORT frames = CaptureStackBackTrace(0, 64, stack, NULL);
+		fprintf(f, "frames=%d\n", frames);
+		for (int i = 0; i < frames && i < 64; i++) {
+			HMODULE hMod = NULL;
+			GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS |
+				GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
+				(LPCSTR)stack[i], &hMod);
+			char modname[MAX_PATH] = {0};
+			if (hMod) GetModuleFileNameA(hMod, modname, MAX_PATH);
+			const char* basename = modname;
+			for (const char* p = modname; *p; p++) {
+				if (*p == '\\' || *p == '/') basename = p + 1;
+			}
+			fprintf(f, "  [%d] %p %s+0x%lx\n", i, stack[i], basename,
+				(unsigned long)((DWORD_PTR)stack[i] - (DWORD_PTR)hMod));
+		}
+#ifndef _WIN64
+		// Manual EBP chain walk for 32-bit
+		fprintf(f, "EBP chain:\n");
+		fprintf(f, "  crash EIP=%p\n", ep->ExceptionRecord->ExceptionAddress);
+		DWORD* ebp = (DWORD*)ep->ContextRecord->Ebp;
+		for (int i = 0; i < 20 && ebp; i++) {
+			DWORD retAddr = 0;
+			if (!IsBadReadPtr(ebp, 8)) {
+				retAddr = ebp[1];
+				ebp = (DWORD*)ebp[0];
+			} else break;
+			if (retAddr == 0) break;
+			HMODULE hMod = NULL;
+			GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS |
+				GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
+				(LPCSTR)(DWORD_PTR)retAddr, &hMod);
+			char modname[MAX_PATH] = {0};
+			if (hMod) GetModuleFileNameA(hMod, modname, MAX_PATH);
+			const char* basename = modname;
+			for (const char* p = modname; *p; p++) {
+				if (*p == '\\' || *p == '/') basename = p + 1;
+			}
+			fprintf(f, "  [%d] ret=%p %s+0x%lx\n", i, (void*)(DWORD_PTR)retAddr, basename,
+				(unsigned long)(retAddr - (DWORD)(DWORD_PTR)hMod));
+		}
+#else
+		// RBP chain walk for 64-bit
+		fprintf(f, "RBP chain:\n");
+		fprintf(f, "  crash RIP=%p\n", ep->ExceptionRecord->ExceptionAddress);
+		DWORD64* rbp = (DWORD64*)ep->ContextRecord->Rbp;
+		for (int i = 0; i < 20 && rbp; i++) {
+			DWORD64 retAddr = 0;
+			if (!IsBadReadPtr(rbp, 16)) {
+				retAddr = rbp[1];
+				rbp = (DWORD64*)rbp[0];
+			} else break;
+			if (retAddr == 0) break;
+			HMODULE hMod = NULL;
+			GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS |
+				GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
+				(LPCSTR)retAddr, &hMod);
+			char modname[MAX_PATH] = {0};
+			if (hMod) GetModuleFileNameA(hMod, modname, MAX_PATH);
+			const char* basename = modname;
+			for (const char* p = modname; *p; p++) {
+				if (*p == '\\' || *p == '/') basename = p + 1;
+			}
+			fprintf(f, "  [%d] ret=%p %s+0x%lx\n", i, (void*)retAddr, basename,
+				(unsigned long)(retAddr - (DWORD64)(DWORD_PTR)hMod));
+		}
+#endif
+		fclose(f);
+	}
+	/* Also show a MessageBox so user sees the error */
+	char msg[256];
+	snprintf(msg, sizeof(msg), "DMCR crashed!\nException 0x%08lX at %p\nSee dmcr_crash.log",
+		ep->ExceptionRecord->ExceptionCode,
+		ep->ExceptionRecord->ExceptionAddress);
+	MessageBoxA(NULL, msg, "DMCR Crash", MB_OK | MB_ICONERROR);
+	return EXCEPTION_EXECUTE_HANDLER;
+}
+
+// Very early initializer — runs BEFORE C++ static constructors (priority 101).
+static FILE* _dmcr_early_log = NULL;
+
+static void _dmcr_atexit_handler(void) {
+	if (_dmcr_early_log) {
+		fprintf(_dmcr_early_log, "atexit called (normal exit)\n");
+		fclose(_dmcr_early_log);
+		_dmcr_early_log = NULL;
+	}
+}
+
+static LONG WINAPI _dmcr_vectored_handler(EXCEPTION_POINTERS* ep) {
+	DWORD code = ep->ExceptionRecord->ExceptionCode;
+	// Skip non-fatal exceptions (breakpoints, C++ exceptions, etc)
+	if (code == EXCEPTION_BREAKPOINT || code == 0xE06D7363 /* C++ exception */ ||
+	    code == EXCEPTION_SINGLE_STEP || code == DBG_PRINTEXCEPTION_C)
+		return EXCEPTION_CONTINUE_SEARCH;
+	char path[MAX_PATH];
+	strcpy(path, _dmcr_exe_dir);
+	strcat(path, "dmcr_crash.log");
+	FILE* f = fopen(path, "a");
+	if (f) {
+		fprintf(f, "[VECTORED] Exception 0x%08lX at %p\n", code, ep->ExceptionRecord->ExceptionAddress);
+#if defined(_WIN64)
+		fprintf(f, "RAX=%p RBX=%p RCX=%p RDX=%p\n",
+			(void*)ep->ContextRecord->Rax, (void*)ep->ContextRecord->Rbx,
+			(void*)ep->ContextRecord->Rcx, (void*)ep->ContextRecord->Rdx);
+		fprintf(f, "RSI=%p RDI=%p RBP=%p RSP=%p\n",
+			(void*)ep->ContextRecord->Rsi, (void*)ep->ContextRecord->Rdi,
+			(void*)ep->ContextRecord->Rbp, (void*)ep->ContextRecord->Rsp);
+		fprintf(f, "R8=%p R9=%p R10=%p R11=%p R12=%p\n",
+			(void*)ep->ContextRecord->R8, (void*)ep->ContextRecord->R9,
+			(void*)ep->ContextRecord->R10, (void*)ep->ContextRecord->R11,
+			(void*)ep->ContextRecord->R12);
+		fprintf(f, "RIP=%p\n", (void*)ep->ContextRecord->Rip);
+#else
+		fprintf(f, "EAX=%p EBX=%p ECX=%p EDX=%p\n",
+			(void*)(uintptr_t)ep->ContextRecord->Eax, (void*)(uintptr_t)ep->ContextRecord->Ebx,
+			(void*)(uintptr_t)ep->ContextRecord->Ecx, (void*)(uintptr_t)ep->ContextRecord->Edx);
+		fprintf(f, "ESI=%p EDI=%p EBP=%p ESP=%p\n",
+			(void*)(uintptr_t)ep->ContextRecord->Esi, (void*)(uintptr_t)ep->ContextRecord->Edi,
+			(void*)(uintptr_t)ep->ContextRecord->Ebp, (void*)(uintptr_t)ep->ContextRecord->Esp);
+		fprintf(f, "EIP=%p\n", (void*)(uintptr_t)ep->ContextRecord->Eip);
+#endif
+		// Get dmcr.exe module range from PE headers
+		HMODULE hExe = GetModuleHandleA(NULL);
+		uintptr_t exeBase = (uintptr_t)hExe;
+		uintptr_t exeSize = 0;
+		{
+			IMAGE_DOS_HEADER* dos = (IMAGE_DOS_HEADER*)hExe;
+			if (dos->e_magic == IMAGE_DOS_SIGNATURE) {
+				IMAGE_NT_HEADERS* nt = (IMAGE_NT_HEADERS*)((char*)hExe + dos->e_lfanew);
+				if (nt->Signature == IMAGE_NT_SIGNATURE)
+					exeSize = nt->OptionalHeader.SizeOfImage;
+			}
+		}
+		uintptr_t exeEnd = exeBase + exeSize;
+		fprintf(f, "EXE base=%p size=0x%lx\n", (void*)exeBase, (unsigned long)exeSize);
+		// Scan stack for return addresses in dmcr.exe
+#if defined(_WIN64)
+		uintptr_t sp = ep->ContextRecord->Rsp;
+#else
+		uintptr_t sp = ep->ContextRecord->Esp;
+#endif
+		fprintf(f, "Stack scan from SP=%p:\n", (void*)sp);
+		int found = 0;
+		for (uintptr_t addr = sp; addr < sp + 4096 && found < 30; addr += sizeof(uintptr_t)) {
+			if (IsBadReadPtr((void*)addr, sizeof(uintptr_t))) break;
+			uintptr_t val = *(uintptr_t*)addr;
+			if (val >= exeBase && val < exeEnd) {
+				fprintf(f, "  [SP+0x%lx] %p (exe+0x%lx)\n",
+					(unsigned long)(addr - sp), (void*)val, (unsigned long)(val - exeBase));
+				found++;
+			}
+		}
+		fclose(f);
+	}
+	return EXCEPTION_CONTINUE_SEARCH; // Let other handlers run too
+}
+
+static void _dmcr_sigabrt_handler(int sig) {
+	char path[MAX_PATH];
+	strcpy(path, _dmcr_exe_dir);
+	strcat(path, "dmcr_crash.log");
+	FILE* f = fopen(path, "a");
+	if (f) {
+		fprintf(f, "[SIGABRT] abort() called! Signal=%d\n", sig);
+		fclose(f);
+	}
+	_exit(99);
+}
+
+__attribute__((constructor(101)))
+static void _dmcr_early_init(void) {
+	_dmcr_get_exe_dir();
+	SetUnhandledExceptionFilter(_dmcr_exception_filter);
+	AddVectoredExceptionHandler(1, _dmcr_vectored_handler);
+	signal(SIGABRT, _dmcr_sigabrt_handler);
+	signal(SIGSEGV, _dmcr_sigabrt_handler);
+	char path[MAX_PATH];
+	strcpy(path, _dmcr_exe_dir);
+	strcat(path, "dmcr_early.log");
+	_dmcr_early_log = fopen(path, "w");
+	if (_dmcr_early_log) {
+		fprintf(_dmcr_early_log, "early_init OK (before C++ constructors)\n");
+		fflush(_dmcr_early_log);
+	}
+	atexit(_dmcr_atexit_handler);
+}
+#endif
+
+// Debug log file for startup diagnostics
+static FILE* g_debugLog = nullptr;
+void dbglog(const char* fmt, ...) {
+	if (!g_debugLog) {
+#ifdef _WIN32
+		// Use _dmcr_exe_dir set by early_init (proven to work)
+		if (_dmcr_exe_dir[0]) {
+			char logPath[MAX_PATH];
+			strcpy(logPath, _dmcr_exe_dir);
+			strcat(logPath, "dmcr_debug.log");
+			g_debugLog = fopen(logPath, "w");
+		}
+		if (!g_debugLog)
+#endif
+		g_debugLog = fopen("dmcr_debug.log", "w");
+		if (!g_debugLog) return;
+	}
+	va_list ap;
+	va_start(ap, fmt);
+	vfprintf(g_debugLog, fmt, ap);
+	va_end(ap);
+	fflush(g_debugLog);
+}
 
 bool window_mode;
 int screen_width;
@@ -38,7 +307,9 @@ DWORD window_style = WS_OVERLAPPED | WS_BORDER | WS_CAPTION | WS_SYSMENU | WS_MI
 #include "3DSurf.h"
 #include "CDirSnd.h"
 #include "GSound.h"
+#ifdef _WIN32
 #include "dplay.h"
+#endif
 #include "MapSprites.h"
 #include "VirtScreen.h"
 #include <crtdbg.h>
@@ -60,7 +331,7 @@ DWORD window_style = WS_OVERLAPPED | WS_BORDER | WS_CAPTION | WS_SYSMENU | WS_MI
 #include "3DmapEd.h"
 #include "ActiveScenary.h"
 #include "fonts.h"
-#include "Dialogs\InitFonts.h"
+#include "Dialogs/InitFonts.h"
 
 #include "PlayerInfo.h"
 extern PlayerInfo PINFO[8];
@@ -297,7 +568,7 @@ EventsTag Events[maxTask];
 int RegisterEventHandler( EventHandPro* pro, int Type, void* param )
 {
 	int i;
-	for (i = 0; int( Events[i].Pro ) && i < maxTask; i++);
+	for (i = 0; (intptr_t)( Events[i].Pro ) && i < maxTask; i++);
 	if (i >= maxTask)
 	{
 		return -1;
@@ -313,7 +584,7 @@ int RegisterEventHandler( EventHandPro* pro, int Type, void* param )
 
 void CloseEventHandler( int i )
 {
-	memset( &Events[i], 0, sizeof Events[i] );
+	memset( &Events[i], 0, sizeof(Events)[i] );
 }
 
 HWND hwnd;
@@ -470,6 +741,13 @@ bool Loading()
 	InitFonts();
 	LoadBorders();
 	LoadMessages();
+
+	// Initialize GlobalAI after LoadMessages() so GetTextByID() works for nation names
+	{
+		extern AI_Description GlobalAI;
+		GlobalAI.Init();
+	}
+
 	LoadNations();
 	LoadFon();
 	LoadRDS();
@@ -565,7 +843,7 @@ void SaveScreenShot( char* Name )
 	RBlockWrite( f, PAL, 1024 );
 	for (int i = 0; i < RealLy; i++)
 	{
-		char* pos = (char*) ( int( ScreenPtr ) + ( RealLy - i - 1 )*SCRSizeX );
+		char* pos = (char*) ( (intptr_t)( ScreenPtr ) + ( RealLy - i - 1 )*SCRSizeX );
 		RBlockWrite( f, pos, RealLx );
 	};
 	RClose( f );
@@ -613,7 +891,7 @@ void SaveBMP8( char* Name, int lx, int ly, byte* Data )
 	RBlockWrite( f, PAL, 1024 );
 	for (int i = 0; i < LY; i++)
 	{
-		char* pos = (char*) ( int( Data ) + ( ly - i - 1 )*lx );
+		char* pos = (char*) ( (intptr_t)( Data ) + ( ly - i - 1 )*lx );
 		RBlockWrite( f, pos, lx );
 	};
 	RClose( f );
@@ -659,7 +937,7 @@ void SaveMiniScreenShot( char* Name )
 	RBlockWrite( f, PAL, 1024 );
 	for (int i = 0; i < LY; i++)
 	{
-		char* pos = (char*) ( int( ScreenPtr ) + ( RealLy - i * 4 - 1 )*SCRSizeX );
+		char* pos = (char*) ( (intptr_t)( ScreenPtr ) + ( RealLy - i * 4 - 1 )*SCRSizeX );
 		for (int j = 0; j < LX; j++)RBlockWrite( f, pos + j * 4, 1 );
 	};
 	RClose( f );
@@ -788,7 +1066,7 @@ MouseStack* ReadMEvent()
 		CURMS = MSTC[0];
 		if (NInStack > 1)
 		{
-			memcpy( MSTC, MSTC + 1, ( NInStack - 1 ) * sizeof MouseStack );
+			memmove( MSTC, MSTC + 1, ( NInStack - 1 ) * sizeof(MouseStack) );
 		}
 		NInStack--;
 		return &CURMS;
@@ -816,7 +1094,7 @@ void UnPress()
 }
 
 extern int CurPalette;
-LRESULT CD_MCINotify( WPARAM wFlags, LONG lDevId );
+LRESULT CD_MCINotify( UINT wFlags, LONG lDevId );
 int SHIFT_VAL = 0;
 void HandleMouse( int x, int y );
 extern bool PalDone;
@@ -829,8 +1107,8 @@ void AddKey( byte Key, byte Ascii )
 {
 	if (32 <= NKeys)
 	{//Push the stack back by one element
-		memcpy( KeyStack, KeyStack + 1, 31 );
-		memcpy( AsciiStack, AsciiStack + 1, 31 );
+		memmove( KeyStack, KeyStack + 1, 31 );
+		memmove( AsciiStack, AsciiStack + 1, 31 );
 		NKeys--;
 	}
 	KeyStack[NKeys] = Key;
@@ -848,8 +1126,8 @@ int ReadKey()
 		LastAscii = AsciiStack[0];
 		if (NKeys)
 		{
-			memcpy( KeyStack, KeyStack + 1, NKeys - 1 );
-			memcpy( AsciiStack, AsciiStack + 1, NKeys - 1 );
+			memmove( KeyStack, KeyStack + 1, NKeys - 1 );
+			memmove( AsciiStack, AsciiStack + 1, NKeys - 1 );
 		}
 		NKeys--;
 		return c;
@@ -877,7 +1155,7 @@ void OnWTPacket( WPARAM wSerial, LPARAM hCtx );
 
 void CmdEndGame( byte NI, byte state, byte cause );
 
-long FAR PASCAL WindowProc( HWND hWnd, UINT message,
+LRESULT FAR PASCAL WindowProc( HWND hWnd, UINT message,
 	WPARAM wParam, LPARAM lParam )
 {
 	static BYTE phase = 0;
@@ -2217,6 +2495,8 @@ void FilesExit();
 //Register winapi window class, init DirectDraw, sounds and cursor
 static BOOL doInit( HINSTANCE hInstance, int nCmdShow )
 {
+	dbglog("  doInit: begin\n");
+	fprintf(stderr, "[DMCR] doInit() begin\n");
 	WNDCLASS wc;
 	char buf[256];
 
@@ -2231,10 +2511,13 @@ static BOOL doInit( HINSTANCE hInstance, int nCmdShow )
 	wc.hbrBackground = NULL;
 	wc.lpszMenuName = NULL;
 	wc.lpszClassName = NAME;
+	dbglog("  doInit: RegisterClass...\n");
 	RegisterClass( &wc );
+	dbglog("  doInit: RegisterClass done\n");
 
 	if (window_mode)
 	{
+		dbglog("  doInit: CreateWindow (windowed, %dx%d)...\n", RealLx, RealLy);
 		hwnd = CreateWindow(
 			NAME,
 			TITLE,
@@ -2251,6 +2534,7 @@ static BOOL doInit( HINSTANCE hInstance, int nCmdShow )
 	}
 	else
 	{
+		dbglog("  doInit: CreateWindowEx (fullscreen, %dx%d)...\n", screen_width, screen_height);
 		hwnd = CreateWindowEx(
 			WS_EX_APPWINDOW,
 			NAME,
@@ -2265,19 +2549,22 @@ static BOOL doInit( HINSTANCE hInstance, int nCmdShow )
 			NULL
 		);
 	}
+	dbglog("  doInit: hwnd = %p\n", (void*)hwnd);
 	if (!hwnd)
 	{
+		dbglog("  doInit: hwnd is NULL, FAILED\n");
 		return FALSE;
 	}
 
 	ShowWindow( hwnd, SW_SHOWNORMAL );
-
 	UpdateWindow( hwnd );
 
+	dbglog("  doInit: CreateDirSound...\n");
 	CDIRSND.CreateDirSound( hwnd );
 
 	CDS = &CDIRSND;
 
+	dbglog("  doInit: LoadSounds...\n");
 	LoadSounds( "SoundList.txt" );
 
 	ResFile F = RReset( "version.dat" );
@@ -2295,12 +2582,15 @@ static BOOL doInit( HINSTANCE hInstance, int nCmdShow )
 		}
 	}
 
+	dbglog("  doInit: Loading()...\n");
 	if (!Loading())
 	{
+		dbglog("  doInit: Loading() FAILED\n");
 		FilesExit();
 		PostMessage( hwnd, WM_CLOSE, 0, 0 );
 		return 0;
 	}
+	dbglog("  doInit: Loading() done\n");
 
 	CurrentSurface = FALSE;
 
@@ -2323,30 +2613,40 @@ static BOOL doInit( HINSTANCE hInstance, int nCmdShow )
 	}
 
 	//Create the screen object with RealLx x RealLy resolution
+	dbglog("  doInit: CreateDDObjects(hwnd=%p, %dx%d)...\n", (void*)hwnd, RealLx, RealLy);
+	fprintf(stderr, "[DMCR] About to call CreateDDObjects(hwnd=%p)\n", (void*)hwnd);
 	CreateDDObjects( hwnd );
+	dbglog("  doInit: CreateDDObjects done\n");
+	fprintf(stderr, "[DMCR] CreateDDObjects() returned\n");
 
-	CHKALL();
+	dbglog("  doInit: CHKALL, DDError=%d\n", DDError);
 
 	if (!DDError)
 	{
+		dbglog("  doInit: LockSurface/UnlockSurface...\n");
 		LockSurface();
 		UnlockSurface();
 
 		LockSurface();
 		UnlockSurface();
 
+		dbglog("  doInit: RealScreenPtr=%p\n", (void*)RealScreenPtr);
 		if (!RealScreenPtr)
 		{
+			dbglog("  doInit: RealScreenPtr is NULL - SDL init failed\n");
 			MessageBox( hwnd, "Unable to initialise SDL. It is possible that hardware acceleration is turned off.", "Loading error[2]", MB_ICONSTOP );
 			exit( 0 );
 		}
 
 		if (SetTimer( hwnd, TIMER_ID, 20, nullptr ))
 		{
+			dbglog("  doInit: SUCCESS, returning TRUE\n");
 			return TRUE;
 		}
+		dbglog("  doInit: SetTimer failed\n");
 	}
 
+	dbglog("  doInit: FAILED (DDError or SetTimer), SDL_GetError=%s\n", SDL_GetError());
 	wsprintf( buf, "SDL Init Failed\n" );
 	MessageBox( hwnd, buf, "ERROR", MB_OK );
 	finiObjects();
@@ -2529,11 +2829,15 @@ void PreDrawGameProcess()
 		tima = time( nullptr );
 	}
 
-	if (0 == tmtmt % 64)
-	{
-		LASTRAND = rando();
-		LASTIND = rpos;
-	}
+	// NOTE: LASTRAND/LASTIND are unused debug variables.
+	// The rando() call here was tied to visual frame count (tmtmt),
+	// not game ticks, causing desync in cross-platform multiplayer
+	// when FPS differs between players. Removed.
+	// if (0 == tmtmt % 64)
+	// {
+	// 	LASTRAND = rando();
+	// 	LASTIND = rpos;
+	// }
 
 	if (NOPAUSE)
 	{
@@ -2763,7 +3067,27 @@ void WaitToTime( int Time )
 			{
 				int tt = T0;
 				ProcessScreen();
+				{
+					extern int _wallShowPostCreate;
+					if (_wallShowPostCreate > 0) {
+						FILE* wlog = fopen("dmcr_wall.log", "a");
+						if (wlog) {
+							fprintf(wlog, "WTT: after ProcessScreen, heap=%s\n", HeapValidate(GetProcessHeap(), 0, NULL) ? "OK" : "BAD");
+							fflush(wlog); fclose(wlog);
+						}
+					}
+				}
 				GSYSDRAW();
+				{
+					extern int _wallShowPostCreate;
+					if (_wallShowPostCreate > 0) {
+						FILE* wlog = fopen("dmcr_wall.log", "a");
+						if (wlog) {
+							fprintf(wlog, "WTT: after GSYSDRAW, heap=%s\n", HeapValidate(GetProcessHeap(), 0, NULL) ? "OK" : "BAD");
+							fflush(wlog); fclose(wlog);
+						}
+					}
+				}
 				int dt = GetRealTime() - tt;
 				TAverage = ( TAverage + TAverage + TAverage + dt ) >> 2;
 				SUBTIME += GetRealTime() - T0;
@@ -2849,6 +3173,17 @@ void PostDrawGameProcess()
 		SYN.Copy( &SYN1 );
 		PreNoPause = 0;
 		ExecuteBuffer();
+		{
+			extern int _wallShowPostCreate;
+			FILE* wlog = fopen("dmcr_wall.log", "a");
+			if (wlog) {
+				fprintf(wlog, "POST_EXEC: ExecuteBuffer done\n");
+				if (_wallShowPostCreate > 0) {
+					fprintf(wlog, "POST_EXEC: HEAP_CHECK after ExecuteBuffer: %s\n", HeapValidate(GetProcessHeap(), 0, NULL) ? "OK" : "CORRUPTED");
+				}
+				fflush(wlog); fclose(wlog);
+			}
+		}
 
 		if (PreNoPause)
 		{
@@ -2899,7 +3234,21 @@ void PostDrawGameProcess()
 
 	int difTime = GetRealTime() - AutoTime;
 
+	{
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) { fprintf(wlog, "POST_EXEC: ProcessUpdate start\n"); fflush(wlog); fclose(wlog); }
+	}
 	ProcessUpdate();
+	{
+		extern int _wallShowPostCreate;
+		if (_wallShowPostCreate > 0) {
+			FILE* wlog = fopen("dmcr_wall.log", "a");
+			if (wlog) {
+				fprintf(wlog, "POST_EXEC: HEAP_CHECK after ProcessUpdate: %s\n", HeapValidate(GetProcessHeap(), 0, NULL) ? "OK" : "CORRUPTED");
+				fflush(wlog); fclose(wlog);
+			}
+		}
+	}
 
 	int MaxDT = 60000;
 
@@ -3078,7 +3427,7 @@ void PrepareToGame()
 	}
 
 	MI_Mode = 1;
-	memset( TIMECHANGE, 0, sizeof TIMECHANGE );
+	memset( TIMECHANGE, 0, sizeof(TIMECHANGE) );
 	AddTime = 0;
 	NeedAddTime = 0;
 
@@ -3143,7 +3492,7 @@ void EraseRND()
 			if (NRND >= MaxRND)
 			{
 				MaxRND += 300;
-				RNDF = (char**) realloc( RNDF, 4 * MaxRND );
+				RNDF = (char**) realloc( RNDF, sizeof(char*) * MaxRND );
 				RndData = (DWORD*) realloc( RndData, 2 * MaxRND );
 				Ridx = (word*) realloc( Ridx, 2 * MaxRND );
 			}
@@ -3251,8 +3600,67 @@ void __declspec( dllexport ) SFINIT2_InitLAND();
 int PASCAL WinMain(
 	HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine, int nCmdShow
+);
+
+#ifndef _WIN32
+#include <mach-o/dyld.h>
+#include <libgen.h>
+
+// Set CWD to executable's directory (for resource loading)
+void _dmcr_set_working_directory() {
+	char exePath[4096];
+	uint32_t exePathSize = sizeof(exePath);
+	if (_NSGetExecutablePath(exePath, &exePathSize) == 0) {
+		char realPath[4096];
+		if (realpath(exePath, realPath)) {
+			char dirBuf[4096];
+			strncpy(dirBuf, realPath, sizeof(dirBuf));
+			dirBuf[sizeof(dirBuf) - 1] = '\0';
+			char* dir = dirname(dirBuf);
+			chdir(dir);
+		}
+	}
+}
+
+int main(int argc, char* argv[]) {
+	_dmcr_set_working_directory();
+	SDL_SetMainReady();
+	char cmdLine[1024] = "";
+	for (int i = 1; i < argc; i++) {
+		if (i > 1) strcat(cmdLine, " ");
+		strncat(cmdLine, argv[i], sizeof(cmdLine) - strlen(cmdLine) - 1);
+	}
+	return WinMain(nullptr, nullptr, cmdLine, 0);
+}
+#endif
+
+int PASCAL WinMain(
+	HINSTANCE hInstance, HINSTANCE hPrevInstance,
+	LPSTR lpCmdLine, int nCmdShow
 )
 {
+#ifdef _WIN32
+	// Set CWD to exe directory FIRST — before any file I/O (including dbglog)
+	{
+		char exePath[MAX_PATH];
+		DWORD len = GetModuleFileNameA(NULL, exePath, MAX_PATH);
+		if (len > 0 && len < MAX_PATH) {
+			char* lastSlash = strrchr(exePath, '\\');
+			if (lastSlash) {
+				*lastSlash = '\0';
+				SetCurrentDirectoryA(exePath);
+			}
+		}
+	}
+#endif
+
+	SDL_SetMainReady();
+	dbglog("=== DMCR Startup ===\n");
+	dbglog("SDL_SetMainReady() called\n");
+	dbglog("SDL version: compiled %d.%d.%d\n", SDL_MAJOR_VERSION, SDL_MINOR_VERSION, SDL_PATCHLEVEL);
+	SDL_version linked;
+	SDL_GetVersion(&linked);
+	dbglog("SDL version: linked %d.%d.%d\n", linked.major, linked.minor, linked.patch);
 	window_mode = true; //Принудительно для стабильности эмуляции DirectDraw  в SDL2
 	char* ss = strstr(lpCmdLine, "/MAPEDITOR");
 	if (ss)
@@ -3286,17 +3694,24 @@ int PASCAL WinMain(
 	}*/
 
 	//Init DirectDraw and find possible resolutions
+	dbglog("EnumModesOnly()...\n");
 	EnumModesOnly();
+	dbglog("EnumModesOnly() done, NModes=%d\n", NModes);
 
 	//Create "Cossacks.reg" with Microsoft DirectPlay key
+	dbglog("CreateReg()...\n");
 	CreateReg();
+	dbglog("CreateReg() done\n");
 
 	//Load unrar.dll, call CGSCset::gOpen() to load archives
+	dbglog("FilesInit()...\n");
 	if (!FilesInit())
 	{
-		FilesExit();
-		PostMessage( hwnd, WM_CLOSE, 0, 0 );
+		dbglog("FilesInit() FAILED\n");
+		MessageBoxA(NULL, "No resource files found.\nPlease place the executable in the game directory.", "Error", MB_OK | MB_ICONERROR);
+		return 1;
 	}
+	dbglog("FilesInit() done\n");
 
 	//Delete random generated *.m3d map files
 	EraseRND();
@@ -3369,7 +3784,7 @@ int PASCAL WinMain(
 	GFILE *rec_settings_file = Gopen( "rec.dat", "rt" );
 	if (rec_settings_file)
 	{
-		Gscanf( rec_settings_file, "%d%s", &RecordMode, &RECFILE );
+		{ int tmpRecMode = 0; Gscanf( rec_settings_file, "%d%s", &tmpRecMode, &RECFILE ); RecordMode = (bool)tmpRecMode; }
 		Gclose( rec_settings_file );
 	}
 
@@ -3425,16 +3840,21 @@ int PASCAL WinMain(
 
 	LockGrid = false;
 
+#ifdef _WIN32
+	dbglog("Checking cew.dll...\n");
 	FILE* Fx = fopen( "cew.dll", "r" );
 	if (!Fx)
 	{
+		dbglog("cew.dll NOT FOUND - aborting\n");
 		MessageBox( nullptr, "CEW.DLL not found. Unable to run Cossacks.", "Error...", MB_ICONERROR );
 		return 0;
 	}
 	else
 	{
+		dbglog("cew.dll found OK\n");
 		fclose( Fx );
 	}
+#endif
 
 	//Init buffers for national units?
 	SetupNatList();
@@ -3469,28 +3889,47 @@ int PASCAL WinMain(
 	//Load fonts(?)
 	LoadRLC( "xrcross.rlc", &RCross );
 
-	memset( Events, 0, sizeof Events );
+	memset( Events, 0, sizeof(Events) );
 
 	//Probably just to define PREVT
 	GetRealTime();
 
 	//Register winapi window class, init DirectDraw, sounds and cursor
+	dbglog("doInit()...\n");
+	fprintf(stderr, "[DMCR] About to call doInit()\n");
 	if (!doInit( hInstance, nCmdShow ))
 	{
+		dbglog("doInit() FAILED\n");
+		fprintf(stderr, "[DMCR] doInit() FAILED\n");
 		return FALSE;
 	}
+	dbglog("doInit() succeeded\n");
+	fprintf(stderr, "[DMCR] doInit() succeeded\n");
 
 	//Load specific palette and fog resources (alphas etc)
+	dbglog("LoadFog(2)...\n");
+	fprintf(stderr, "[DMCR] LoadFog(2)\n");
 	LoadFog( 2 );
+	dbglog("LoadFog done\n");
+	fprintf(stderr, "[DMCR] LoadPalette\n");
+	dbglog("LoadPalette...\n");
 	LoadPalette( "2\\agew_1.pal" );
+	dbglog("LoadPalette done\n");
 
 	//Init DirectPlay and DPInfo structure
+	dbglog("SetupMultiplayer...\n");
+	fprintf(stderr, "[DMCR] SetupMultiplayer\n");
 	SetupMultiplayer( hInstance );
+	dbglog("SetupMultiplayer done\n");
 
 	//Init variables
+	dbglog("InitMultiDialogs...\n");
+	fprintf(stderr, "[DMCR] InitMultiDialogs\n");
 	InitMultiDialogs();
+	dbglog("InitMultiDialogs done\n");
 
 	//UI color masking?
+	fprintf(stderr, "[DMCR] SetupHint\n");
 	SetupHint();
 
 	//Main internal counter for intervals
@@ -3499,14 +3938,19 @@ int PASCAL WinMain(
 	REALTIME = 0;
 	KeyPressed = false;
 
+	fprintf(stderr, "[DMCR] OnMouseMoveRedraw\n");
 	OnMouseMoveRedraw();
+	fprintf(stderr, "[DMCR] OnMouseMoveRedraw done\n");
 
 	if (PlayMode)
 	{
+		fprintf(stderr, "[DMCR] PlayRandomTrack\n");
 		PlayRandomTrack();
+		fprintf(stderr, "[DMCR] PlayRandomTrack done\n");
 	}
 
 	//Program loop to handle WM_QUIT; everything else handles AllGame()
+	fprintf(stderr, "[DMCR] Entering main loop, bActive=%d\n", bActive);
 	while (true)
 	{
 		while (PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ))

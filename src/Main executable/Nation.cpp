@@ -11,9 +11,7 @@
   * Updated MR.CODERMAN 2025 
   * ********************************************
   */
-#include <thread>
-#include <mutex>
-#include <atomic>
+#include <cstdint>
 #include <vector>
 #include "ddini.h"
 #include "ResFile.h"
@@ -38,26 +36,7 @@
 #include "StrategyResearch.h"
 #include "Safety.h"
 #include "EinfoClass.h"
-  // Минимальный порог для многопоточности
-const int MULTITHREAD_THRESHOLD = 5000;
 
-// Мьютекс для синхронизации доступа к общим данным
-std::mutex globalMutex;
-
-// Структура для хранения промежуточных результатов подсчёта в WinnerControl
-struct WinnerControlResult {
-	int NMyPeasants = 0;
-	int NMyCenters = 0;
-	int NThemPeasants = 0;
-	int NThemCenters = 0;
-	std::atomic<int> NMyUnits{ 0 };
-	std::atomic<int> NThemUnits{ 0 };
-};
-
-// Структура для хранения промежуточных результатов подсчёта в EnumPopulation
-struct EnumPopulationResult {
-	int NMN[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
-};
 extern const int kSystemMessageDisplayTime;
 
 int NMyUnits;
@@ -188,6 +167,7 @@ void AddAsk(word ReqID, byte x, byte y, char zdx, char zdy)
 	OneObject* OB = Group[ReqID];
 	OB->AskMade = true;
 	//ENDDEBUG
+#ifdef _MSC_VER
 	__asm {
 		//		inc		NAsk
 		mov		eax, NAsk
@@ -204,46 +184,26 @@ void AddAsk(word ReqID, byte x, byte y, char zdx, char zdy)
 		mov		word ptr[eax + 6], bx
 		inc		NAsk
 	};
+#else
+	Ask[NAsk].ReqID = ReqID;
+	Ask[NAsk].PreID = 0xFFFF;
+	Ask[NAsk].x = x;
+	Ask[NAsk].y = y;
+	Ask[NAsk].dx = zdx;
+	Ask[NAsk].dy = zdy;
+	NAsk++;
+#endif
 };
 
 //Обработка запросов, сначала освобождаем все старые клетки
 //потом заполняем и проверяем
 void PrepareProcessing()
 {
-	// Сбрасываем счётчик запросов
 	NAsk = 0;
-
-	// Лямбда для обработки диапазона
-	auto processRange = [&](int start, int end) {
-		for (int i = start; i < end; ++i) {
-			OneObject* OB = Group[i];
-			if (OB) {
-				OB->AskMade = false;
-			}
-		}
-	};
-
-	int activeObjects = MAXOBJECT;
-	// Если объектов мало — однопоточно
-	if (activeObjects < MULTITHREAD_THRESHOLD) {
-		processRange(0, activeObjects);
-	}
-	else {
-		// Определяем число потоков
-		unsigned int numThreads = min(std::thread::hardware_concurrency(), 16);
-		if (numThreads == 0) numThreads = 1;
-		std::vector<std::thread> threads;
-		threads.reserve(numThreads);
-
-		int chunkSize = activeObjects / numThreads;
-		for (unsigned int t = 0; t < numThreads; ++t) {
-			int start = t * chunkSize;
-			int end = (t + 1 == numThreads) ? activeObjects : start + chunkSize;
-			threads.emplace_back(processRange, start, end);
-		}
-		// Ждём завершения
-		for (auto& th : threads) {
-			th.join();
+	for (int i = 0; i < MAXOBJECT; ++i) {
+		OneObject* OB = Group[i];
+		if (OB) {
+			OB->AskMade = false;
 		}
 	}
 }
@@ -256,7 +216,7 @@ inline void ChkOfst( int size )
 	if (Ofst >= OneAsmSize - size - 5 - 4)
 	{
 		char* NN = GetAsmBlock();
-		if (int( NN ))
+		if ((intptr_t)( NN ))
 		{
 			NowBuf[Ofst] = 7;
 			memcpy( &NowBuf[Ofst + 1], &NN, 4 );
@@ -360,14 +320,14 @@ typedef byte xxx[64];
 
 void COrd( Order1* ordr )
 {
-	if (!int( ordr ))
+	if (!(intptr_t)( ordr ))
 	{
 		return;
 	}
 
-	if (( int( ordr ) - int( OrdBuf ) ) / sizeof Order1 >= MaxOrdCount)
+	if (( (intptr_t)( ordr ) - (intptr_t)( OrdBuf ) ) / sizeof(Order1) >= MaxOrdCount)
 	{
-		int RRRR = ( int( ordr ) - int( OrdBuf ) ) / sizeof Order1;
+		int RRRR = ( (intptr_t)( ordr ) - (intptr_t)( OrdBuf ) ) / sizeof(Order1);
 	}
 }
 
@@ -402,7 +362,7 @@ void OneObject::AttackPoint( byte px, byte py, byte wep, int Prio )
 	if (Prio < PrioryLevel)return;
 	if (!Ready)return;
 	Order1* Or1 = GetOrdBlock();
-	if (!int( Or1 ))return;
+	if (!(intptr_t)( Or1 ))return;
 	Or1->PrioryLevel = Prio & 127;
 	Or1->NextOrder = LocalOrder;
 	Or1->OrderType = 33;//Атака
@@ -451,7 +411,7 @@ void OneObject::ContinueAttackPoint( byte px, byte py, int Prio )
 		return;
 	}
 	Order1* Or1 = GetOrdBlock();
-	if (!int( Or1 ))
+	if (!(intptr_t)( Or1 ))
 	{
 		return;
 	}
@@ -503,7 +463,7 @@ void OneObject::ContinueAttackWall( byte px, byte py, int Prio )
 		return;
 	}
 	Order1* Or1 = GetOrdBlock();
-	if (!int( Or1 ))
+	if (!(intptr_t)( Or1 ))
 	{
 		return;
 	}
@@ -1048,47 +1008,20 @@ void HealWalls() {
 	if ((tmtmt % 128) != 3)
 		return;
 
-	int activeObjects = MAXOBJECT;
-	int numThreads = (activeObjects >= MULTITHREAD_THRESHOLD) ? (std::thread::hardware_concurrency() < 16u ? static_cast<int>(std::thread::hardware_concurrency()) : 16) : 1;
-	std::vector<std::thread> threads;
-
-	// Разделяем массив Group на поддиапазоны
-	auto processRange = [&](int start, int end) {
-		for (int i = start; i < end; i++) {
-			OneObject* OB = Group[i];
-			if (OB && OB->Wall) {
-				int LI = GetLI(OB->WallX, OB->WallY);
-				WallCell* WCL = WRefs[LI];
-				if (!WCL) {
-					std::lock_guard<std::mutex> lock(globalMutex); // Синхронизация доступа к общим данным
-					DelObject(OB);
-					if (OB->Index < 8192) {
-						if (OB->newMons->NBars) {
-							Delete3DBar(OB->Index);
-						}
-						Group[OB->Index] = nullptr;
+	for (int i = 0; i < MAXOBJECT; i++) {
+		OneObject* OB = Group[i];
+		if (OB && OB->Wall) {
+			int LI = GetLI(OB->WallX, OB->WallY);
+			WallCell* WCL = WRefs[LI];
+			if (!WCL) {
+				DelObject(OB);
+				if (OB->Index < 8192) {
+					if (OB->newMons->NBars) {
+						Delete3DBar(OB->Index);
 					}
+					Group[OB->Index] = nullptr;
 				}
 			}
-		}
-	};
-
-	if (numThreads == 1) {
-		// Однопоточная обработка
-		processRange(0, MAXOBJECT);
-	}
-	else {
-		// Многопоточная обработка
-		int chunkSize = MAXOBJECT / numThreads;
-		for (int i = 0; i < numThreads; i++) {
-			int start = i * chunkSize;
-			int end = (i == numThreads - 1) ? MAXOBJECT : (i + 1) * chunkSize;
-			threads.emplace_back(processRange, start, end);
-		}
-
-		// Ожидаем завершения всех потоков
-		for (auto& thread : threads) {
-			thread.join();
 		}
 	}
 }
@@ -1294,12 +1227,6 @@ void OneObject::MakeDamage( int Fundam, int Persist, OneObject* Sender, byte Att
 
 //Count peasants and city centers?
 void WinnerControl(bool Anyway) {
-	// Проверяем количество активных объектов
-	int activeObjects = MAXOBJECT; // Предполагаем, что MAXOBJECT отражает общее количество объектов
-	int numThreads = (activeObjects >= MULTITHREAD_THRESHOLD) ? (std::thread::hardware_concurrency() < 16u ? static_cast<int>(std::thread::hardware_concurrency()) : 16) : 1;
-	std::vector<std::thread> threads;
-	std::vector<WinnerControlResult> results(numThreads);
-
 	int MyMask = 1 << NatRefTBL[MyNation];
 	byte UnLockN[8];
 	memset(UnLockN, 0, 8);
@@ -1310,87 +1237,55 @@ void WinnerControl(bool Anyway) {
 			UnLockN[NatRefTBL[i]] = 1;
 
 	if (Anyway || (tmtmt % 16) == 0) {
-		// Разделяем массив Group на поддиапазоны
-		auto processRange = [&](int start, int end, WinnerControlResult& result) {
-			for (int i = start; i < end; i++) {
-				OneObject* OB = Group[i];
-				if (OB && UnLockN[OB->NNUM] && OB->NNUM != 8 && !(OB->Sdoxlo && !OB->Hidden)) {
-					byte USE = OB->newMons->Usage;
-					if (USE == PeasantID) {
-						if (OB->Nat->AI_Enabled) {
-							if (!OB->Hidden) {
-								if (OB->NNUM == MyNT)
-									result.NMyPeasants++;
-								else if (!(OB->NMask & MyMask))
-									result.NThemPeasants++;
-							}
-						}
-						else {
-							if (OB->NNUM == MyNT)
-								result.NMyPeasants++;
-							else if (!(OB->NMask & MyMask))
-								result.NThemPeasants++;
-						}
-					}
-					else if (USE == CenterID) {
-						if (OB->NNUM == MyNT)
-							result.NMyCenters++;
-						else if (!(OB->NMask & MyMask))
-							result.NThemCenters++;
-					}
+		int totalNMyPeasants = 0, totalNMyCenters = 0;
+		int totalNThemPeasants = 0, totalNThemCenters = 0;
+		NMyUnits = 0;
+		NThemUnits = 0;
 
-					if (!(OB->LockType || OB->NewBuilding || OB->Wall)) {
-						if (OB->Nat->AI_Enabled) {
-							if (!OB->Hidden) {
-								if (OB->NNUM == MyNT)
-									result.NMyUnits++;
-								else if (!(OB->NMask & MyMask))
-									result.NThemUnits++;
-							}
-						}
-						else {
+		for (int i = 0; i < MAXOBJECT; i++) {
+			OneObject* OB = Group[i];
+			if (OB && UnLockN[OB->NNUM] && OB->NNUM != 8 && !(OB->Sdoxlo && !OB->Hidden)) {
+				byte USE = OB->newMons->Usage;
+				if (USE == PeasantID) {
+					if (OB->Nat->AI_Enabled) {
+						if (!OB->Hidden) {
 							if (OB->NNUM == MyNT)
-								result.NMyUnits++;
+								totalNMyPeasants++;
 							else if (!(OB->NMask & MyMask))
-								result.NThemUnits++;
+								totalNThemPeasants++;
 						}
+					}
+					else {
+						if (OB->NNUM == MyNT)
+							totalNMyPeasants++;
+						else if (!(OB->NMask & MyMask))
+							totalNThemPeasants++;
+					}
+				}
+				else if (USE == CenterID) {
+					if (OB->NNUM == MyNT)
+						totalNMyCenters++;
+					else if (!(OB->NMask & MyMask))
+						totalNThemCenters++;
+				}
+
+				if (!(OB->LockType || OB->NewBuilding || OB->Wall)) {
+					if (OB->Nat->AI_Enabled) {
+						if (!OB->Hidden) {
+							if (OB->NNUM == MyNT)
+								NMyUnits++;
+							else if (!(OB->NMask & MyMask))
+								NThemUnits++;
+						}
+					}
+					else {
+						if (OB->NNUM == MyNT)
+							NMyUnits++;
+						else if (!(OB->NMask & MyMask))
+							NThemUnits++;
 					}
 				}
 			}
-		};
-
-		if (numThreads == 1) {
-			// Однопоточная обработка
-			processRange(0, MAXOBJECT, results[0]);
-		}
-		else {
-			// Многопоточная обработка
-			int chunkSize = MAXOBJECT / numThreads;
-			for (int i = 0; i < numThreads; i++) {
-				int start = i * chunkSize;
-				int end = (i == numThreads - 1) ? MAXOBJECT : (i + 1) * chunkSize;
-				threads.emplace_back(processRange, start, end, std::ref(results[i]));
-			}
-
-			// Ожидаем завершения всех потоков
-			for (auto& thread : threads) {
-				thread.join();
-			}
-		}
-
-		// Агрегация результатов
-		NMyUnits = 0;
-		NThemUnits = 0;
-		int totalNMyPeasants = 0, totalNMyCenters = 0;
-		int totalNThemPeasants = 0, totalNThemCenters = 0;
-
-		for (const auto& result : results) {
-			totalNMyPeasants += result.NMyPeasants;
-			totalNMyCenters += result.NMyCenters;
-			totalNThemPeasants += result.NThemPeasants;
-			totalNThemCenters += result.NThemCenters;
-			NMyUnits += result.NMyUnits.load();
-			NThemUnits += result.NThemUnits.load();
 		}
 
 		if (totalNMyPeasants == 0 && totalNMyCenters == 0 && NMyUnits < 10)
@@ -1491,7 +1386,7 @@ void OneObject::Patrol( int px, int py, int x1, int y1, byte Prio )
 
 	Order1* Or1 = CreateOrder( 0 );
 
-	if (!int( Or1 ))
+	if (!(intptr_t)( Or1 ))
 		return;
 
 	Or1->PrioryLevel = 0;
@@ -1560,7 +1455,7 @@ void OneObject::WaitForRepair()
 
 	Order1* Or1 = GetOrdBlock();
 
-	if (!int( Or1 ))
+	if (!(intptr_t)( Or1 ))
 		return;
 
 	Or1->PrioryLevel = 0;
@@ -1593,8 +1488,8 @@ word NNuc;
 //Zero NucList, NucSN, NNuc
 void InitNucList()
 {
-	memset( NucList, 255, sizeof NucList );
-	memset( NucSN, 255, sizeof NucSN );
+	memset( NucList, 255, sizeof(NucList) );
+	memset( NucSN, 255, sizeof(NucSN) );
 	NNuc = 0;
 }
 
@@ -1798,49 +1693,13 @@ void Nation::AddUpgrade( word ID, int time )
 
 //Calculate population values for all players
 void EnumPopulation() {
-	int activeObjects = MAXOBJECT;
-	int numThreads = (activeObjects >= MULTITHREAD_THRESHOLD) ? (std::thread::hardware_concurrency() < 16u ? static_cast<int>(std::thread::hardware_concurrency()) : 16) : 1;
-	std::vector<std::thread> threads;
-	std::vector<EnumPopulationResult> results(numThreads);
-
-	// Разделяем массив Group на поддиапазоны
-	auto processRange = [&](int start, int end, EnumPopulationResult& result) {
-		for (int i = start; i < end; i++) {
-			OneObject* OB = Group[i];
-			if (OB && (OB->Hidden || !OB->Sdoxlo) && (!OB->NewBuilding)) {
-				result.NMN[OB->NNUM]++;
-			}
-		}
-	};
-
-	if (numThreads == 1) {
-		// Однопоточная обработка
-		processRange(0, MAXOBJECT, results[0]);
-	}
-	else {
-		// Многопоточная обработка
-		int chunkSize = MAXOBJECT / numThreads;
-		for (int i = 0; i < numThreads; i++) {
-			int start = i * chunkSize;
-			int end = (i == numThreads - 1) ? MAXOBJECT : (i + 1) * chunkSize;
-			threads.emplace_back(processRange, start, end, std::ref(results[i]));
-		}
-
-		// Ожидаем завершения всех потоков
-		for (auto& thread : threads) {
-			thread.join();
-		}
-	}
-
-	// Агрегация результатов
 	int NMN[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
-	for (const auto& result : results) {
-		for (int i = 0; i < 8; i++) {
-			NMN[i] += result.NMN[i];
+	for (int i = 0; i < MAXOBJECT; i++) {
+		OneObject* OB = Group[i];
+		if (OB && (OB->Hidden || !OB->Sdoxlo) && (!OB->NewBuilding)) {
+			NMN[OB->NNUM]++;
 		}
 	}
-
-	// Запись результатов в NATIONS
 	for (int i = 0; i < 8; i++) {
 		NATIONS[i].AddPopul(NMN[i]);
 	}

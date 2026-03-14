@@ -1,21 +1,29 @@
 // ==============================================
-// Эмулятор DirectSound на базе SDL2 Mixer
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ DirectSound пїЅпїЅ пїЅпїЅпїЅпїЅ SDL2 Mixer
 // MR.CODERMAN 2025
 // ==============================================
 #ifndef __CDIRSND_H
 #define __CDIRSND_H
 
-#include <windows.h>
+#ifdef _WIN32
+    #include <windows.h>
+#else
+    #include "platform.h"
+#endif
 #include "cwave.h"
 #include <mmsystem.h>
 #include <SDL.h>
 #include <SDL_mixer.h>
-#include <string>
 
 #define MAXSND 1024
 #define MAXSND1 2048
 #define MaxSlider 1000
 #define SDL_MAX 1024
+
+// Reset alignment to default вЂ” CDirSound must not inherit pack(1)
+// from MapDiscr.h which leaks #pragma pack(1) without pop.
+#pragma pack(push)
+#pragma pack()
 
 class CDirSound {
 protected:
@@ -50,12 +58,14 @@ public:
     void SetGlobalSoundVolume(int vol);
     void SetGlobalMusicVolume(int vol);
     void UpdateMusicVolume(int pos);
-    void InitAudio(const std::string& iniPath);
+    void InitAudio(const char* iniPath);
 
 protected:
     void ReleaseAll();
-    std::string m_iniPath;
+    char m_iniPath[260];
 };
+
+#pragma pack(pop)
 
 #endif
 

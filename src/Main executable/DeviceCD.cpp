@@ -85,7 +85,7 @@ bool CDeviceCD::Open()
     for (int i = 0; i < NTracks; ++i) {
         int trackNum = StartTrack + i;
         char filename[260];
-        sprintf(filename, "Tracks\\Track_%d.wav", trackNum);
+        sprintf(filename, "Tracks/Track_%d.wav", trackNum);
 
         // Если ранее уже загружен, освободить
         if (chunkTracks[i]) {
@@ -102,6 +102,7 @@ bool CDeviceCD::Open()
 
     // Успешно, если хотя бы один трек загружен
     FOpened = (loadedCount > 0);
+    fprintf(stderr, "[CD] Open: loadedCount=%d NTracks=%d StartTrack=%d FOpened=%d\n", loadedCount, NTracks, StartTrack, FOpened);
     return FOpened;
 }
 
@@ -166,15 +167,22 @@ bool CDeviceCD::SetVolume(DWORD Volume)
 
 bool CDeviceCD::Play(DWORD Track)
 {
+    fprintf(stderr, "[CD] Play: Track=%u FOpened=%d StartTrack=%d NTracks=%d\n", Track, FOpened, StartTrack, NTracks);
     if (!FOpened)
         return FALSE;
 
     if (Track < StartTrack || Track >= StartTrack + NTracks)
+    {
+        fprintf(stderr, "[CD] Play: Track %u out of range [%d..%d)\n", Track, StartTrack, StartTrack + NTracks);
         return FALSE;
+    }
 
     int idx = Track - StartTrack;
     if (!chunkTracks[idx])
+    {
+        fprintf(stderr, "[CD] Play: chunkTracks[%d] is NULL\n", idx);
         return FALSE;
+    }
 
     // Остановка предыдущего трека
     if (currentChannel != -1)
@@ -182,6 +190,7 @@ bool CDeviceCD::Play(DWORD Track)
 
     // Воспроизведение нового трека
     currentChannel = Mix_PlayChannel(-1, chunkTracks[idx], 0);
+    fprintf(stderr, "[CD] Play: Mix_PlayChannel returned %d\n", currentChannel);
     return (currentChannel >= 0);
 }
 
@@ -226,6 +235,7 @@ void PlayCDTrack(int Id)
 
 void PlayRandomTrack()
 {
+    fprintf(stderr, "[CD] PlayRandomTrack: PlayMode=%d CurrentNation=%d NTracks=%d StartTrack=%d\n", PlayMode, CurrentNation, NTracks, StartTrack);
     if (PlayMode == 1 && CurrentNation != -1) {
         PlayCDTrack(TracksMask[CurrentNation]);
         return;
@@ -240,6 +250,7 @@ void PlayRandomTrack()
     PrevTrack2 = PrevTrack1;
     PrevTrack1 = Track;
 
+    fprintf(stderr, "[CD] PlayRandomTrack: selected Track=%d\n", Track);
     PlayCDTrack(Track);
 }
 

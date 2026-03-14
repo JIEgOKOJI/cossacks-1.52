@@ -15,6 +15,7 @@
 #include "Fastdraw.h"
 #include "GP_Draw.h"
 #include "assert.h"
+#include <cstdint>
 extern int SCRSizeX;
 extern int SCRSizeY;
 extern int RSCRSizeX;
@@ -39,7 +40,7 @@ typedef xRLCTable* RLCTable;
 typedef RLCTable* lpRLCTable;
 RLCFont::RLCFont(int GP_Index)
 {
-	RLC = (RLCTable)GP_Index;
+	RLC = (RLCTable)(intptr_t)GP_Index;
 	FirstSymbol = 0;
 	LastSymbol = 0;
 	Options = 0;
@@ -47,7 +48,7 @@ RLCFont::RLCFont(int GP_Index)
 };
 void RLCFont::SetGPIndex(int n)
 {
-	RLC = (RLCTable)n;
+	RLC = (RLCTable)(intptr_t)n;
 	FirstSymbol = 0;
 	LastSymbol = 0;
 	Options = 0;
@@ -62,7 +63,11 @@ RLCFont::RLCFont()
 };
 RLCFont::~RLCFont()
 {
+	#ifdef _MSC_VER
 	if (RLC && int(RLC) > 4096)free(RLC);
+	#else
+	if (RLC && (intptr_t)(RLC) > 4096)free(RLC);
+	#endif
 	RLC = nullptr;
 };
 typedef RLCFont* lpRLCFont;
@@ -170,15 +175,59 @@ void ClearScreen();
 void ShowRLC(int x, int y, void* PicPtr)
 {
 	//for(int i=0;i<256;i++) precomp[i]=i;
+	#ifdef _MSC_VER
 	int ScrOfst = int(ScreenPtr) + y * ScrWidth + x;
+	#else
+	intptr_t ScrOfst = (intptr_t)(ScreenPtr) + y * ScrWidth + x;
+	#endif
 	int addofs = 0;
 	int subline = 0;
 	int PLY = (lpRLCHeader(PicPtr)->SizeY) & 65535;
 	int PLX = (lpRLCHeader(PicPtr)->SizeX) & 65535;
 	if ((y + PLY - 1 < WindY) | (y > WindY1) ||
 		((x + PLX <= WindX) || (x > WindX1) || !PLY)) return;
+#ifndef _MSC_VER
+	{
+		byte* ptr = (byte*)PicPtr + 4;
+		byte* screen = (byte*)ScreenPtr;
+		int startY = y;
+		if (y < WindY) {
+			int skip = WindY - y;
+			for (int i = 0; i < skip; i++) {
+				int nsegs = *ptr++;
+				for (int s = 0; s < nsegs; s++) {
+					int len = ptr[1];
+					ptr += 2 + len;
+				}
+			}
+			startY = WindY;
+		}
+		int endY = y + PLY - 1;
+		if (endY > WindY1) endY = WindY1;
+		for (int cy = startY; cy <= endY; cy++) {
+			byte* ls = screen + cy * ScrWidth + x;
+			int nsegs = *ptr++;
+			int xpos = 0;
+			for (int s = 0; s < nsegs; s++) {
+				int skip = ptr[0];
+				int draw = ptr[1];
+				ptr += 2;
+				xpos += skip;
+				for (int p = 0; p < draw; p++) {
+					int sx = x + xpos;
+					if (sx >= WindX && sx <= WindX1)
+						ls[xpos] = ptr[p];
+					xpos++;
+				}
+				ptr += draw;
+			}
+		}
+		return;
+	}
+#endif
 	if (y < WindY)
 	{
+		#ifdef _MSC_VER
 		__asm
 		{
 			mov		edx, PicPtr
@@ -205,6 +254,11 @@ void ShowRLC(int x, int y, void* PicPtr)
 		}
 		subline = WindY - y;
 		ScrOfst = int(ScreenPtr) + WindY * ScrWidth + x;
+		#else
+			// TODO: C fallback for ShowRLC (skip scanlines)
+		subline = WindY - y;
+		ScrOfst = (intptr_t)(ScreenPtr) + WindY * ScrWidth + x;
+		#endif
 	}
 	if (WindY1 < y + PLY - 1) subline += y + PLY - 1 - WindY1;
 	addofs += 4;
@@ -214,6 +268,7 @@ void ShowRLC(int x, int y, void* PicPtr)
 		if (x < WindX)
 		{
 			int roff = WindX - x;
+			#ifdef _MSC_VER
 			__asm {
 				push	esi
 				push	edi
@@ -279,11 +334,15 @@ void ShowRLC(int x, int y, void* PicPtr)
 				pop		edi
 					pop		esi
 			};
+			#else
+				// TODO: C fallback for ShowRLC (first clipping path)
+			#endif
 		}
 		else if (x + PLX >= WindX1)
 		{
 			int roff = WindX1 - x + 1;
 			int part;
+			#ifdef _MSC_VER
 			__asm {
 				push	esi
 				push	edi
@@ -357,8 +416,13 @@ void ShowRLC(int x, int y, void* PicPtr)
 				pop		edi
 					pop		esi
 			};
+			#else
+				// TODO: C fallback for ShowRLC (second clipping path)
+			#endif
 		}
 		else
+		{
+		#ifdef _MSC_VER
 			__asm
 		{
 			push	esi
@@ -405,6 +469,10 @@ void ShowRLC(int x, int y, void* PicPtr)
 			pop		edi
 				pop		esi
 		}
+		#else
+			// TODO: C fallback for ShowRLC (no clipping)
+		#endif
+		}
 	}
 }
 //End of RLC with clipping
@@ -412,15 +480,59 @@ void ShowRLC(int x, int y, void* PicPtr)
 void ShowRLCi(int x, int y, void* PicPtr)
 {
 	//for(int i=0;i<256;i++) precomp[i]=i;
+	#ifdef _MSC_VER
 	int ScrOfst = int(ScreenPtr) + y * ScrWidth + x;
+	#else
+	intptr_t ScrOfst = (intptr_t)(ScreenPtr) + y * ScrWidth + x;
+	#endif
 	int addofs = 0;
 	int subline = 0;
 	int PLY = (lpRLCHeader(PicPtr)->SizeY) & 65535;
 	int PLX = (lpRLCHeader(PicPtr)->SizeX) & 65535;
 	if ((y + PLY - 1 < WindY) | (y > WindY1) ||
 		((x < WindX) || (x - PLX + 1 >= WindX1) || !PLY)) return;
+#ifndef _MSC_VER
+	{
+		byte* ptr = (byte*)PicPtr + 4;
+		byte* screen = (byte*)ScreenPtr;
+		int startY = y;
+		if (y < WindY) {
+			int skip = WindY - y;
+			for (int i = 0; i < skip; i++) {
+				int nsegs = *ptr++;
+				for (int s = 0; s < nsegs; s++) {
+					int len = ptr[1];
+					ptr += 2 + len;
+				}
+			}
+			startY = WindY;
+		}
+		int endY = y + PLY - 1;
+		if (endY > WindY1) endY = WindY1;
+		for (int cy = startY; cy <= endY; cy++) {
+			byte* ls = screen + cy * ScrWidth + x;
+			int nsegs = *ptr++;
+			int xpos = 0;
+			for (int s = 0; s < nsegs; s++) {
+				int skip = ptr[0];
+				int draw = ptr[1];
+				ptr += 2;
+				xpos += skip;
+				for (int p = 0; p < draw; p++) {
+					int sx = x - xpos;
+					if (sx >= WindX && sx <= WindX1)
+						ls[-xpos] = ptr[p];
+					xpos++;
+				}
+				ptr += draw;
+			}
+		}
+		return;
+	}
+#endif
 	if (y < WindY)
 	{
+		#ifdef _MSC_VER
 		__asm
 		{
 			mov		edx, PicPtr
@@ -447,6 +559,11 @@ void ShowRLCi(int x, int y, void* PicPtr)
 		}
 		subline = WindY - y;
 		ScrOfst = int(ScreenPtr) + WindY * ScrWidth + x;
+		#else
+			// TODO: C fallback for ShowRLCi (skip scanlines)
+		subline = WindY - y;
+		ScrOfst = (intptr_t)(ScreenPtr) + WindY * ScrWidth + x;
+		#endif
 	}
 	if (WindY1 < y + PLY - 1) subline += y + PLY - 1 - WindY1;
 	addofs += 4;
@@ -456,6 +573,7 @@ void ShowRLCi(int x, int y, void* PicPtr)
 		if (x > WindX1)
 		{
 			int roff = x - WindX1;
+			#ifdef _MSC_VER
 			__asm {
 				push	esi
 				push	edi
@@ -518,11 +636,15 @@ void ShowRLCi(int x, int y, void* PicPtr)
 				pop		edi
 					pop		esi
 			};
+			#else
+				// TODO: C fallback for ShowRLCi (first clipping path)
+			#endif
 		}
 		else if (x - PLX + 1 < WindX)
 		{
 			int roff = x - WindX + 1;
 			int part;
+			#ifdef _MSC_VER
 			__asm {
 				push	esi
 				push	edi
@@ -590,8 +712,13 @@ void ShowRLCi(int x, int y, void* PicPtr)
 				pop		edi
 					pop		esi
 			};
+			#else
+				// TODO: C fallback for ShowRLCi (second clipping path)
+			#endif
 		}
 		else
+		{
+		#ifdef _MSC_VER
 			__asm
 		{
 			push	esi
@@ -629,6 +756,10 @@ void ShowRLCi(int x, int y, void* PicPtr)
 			pop		edi
 				pop		esi
 		}
+		#else
+			// TODO: C fallback for ShowRLCi (no clipping)
+		#endif
+		}
 	}
 }
 
@@ -636,15 +767,59 @@ void ShowRLCi(int x, int y, void* PicPtr)
 void ShowRLCpal(int x, int y, void* PicPtr, byte* pal)
 {
 	//for(int i=0;i<256;i++) precomp[i]=i;
+	#ifdef _MSC_VER
 	int ScrOfst = int(ScreenPtr) + y * ScrWidth + x;
+	#else
+	intptr_t ScrOfst = (intptr_t)(ScreenPtr) + y * ScrWidth + x;
+	#endif
 	int addofs = 0;
 	int subline = 0;
 	int PLY = (lpRLCHeader(PicPtr)->SizeY) & 65535;
 	int PLX = (lpRLCHeader(PicPtr)->SizeX) & 65535;
 	if ((y + PLY - 1 < WindY) | (y > WindY1) ||
 		((x + PLX <= WindX) || (x > WindX1) || !PLY)) return;
+#ifndef _MSC_VER
+	{
+		byte* ptr = (byte*)PicPtr + 4;
+		byte* screen = (byte*)ScreenPtr;
+		int startY = y;
+		if (y < WindY) {
+			int skip = WindY - y;
+			for (int i = 0; i < skip; i++) {
+				int nsegs = *ptr++;
+				for (int s = 0; s < nsegs; s++) {
+					int len = ptr[1];
+					ptr += 2 + len;
+				}
+			}
+			startY = WindY;
+		}
+		int endY = y + PLY - 1;
+		if (endY > WindY1) endY = WindY1;
+		for (int cy = startY; cy <= endY; cy++) {
+			byte* ls = screen + cy * ScrWidth + x;
+			int nsegs = *ptr++;
+			int xpos = 0;
+			for (int s = 0; s < nsegs; s++) {
+				int skip = ptr[0];
+				int draw = ptr[1];
+				ptr += 2;
+				xpos += skip;
+				for (int p = 0; p < draw; p++) {
+					int sx = x + xpos;
+					if (sx >= WindX && sx <= WindX1)
+						ls[xpos] = pal[ptr[p]];
+					xpos++;
+				}
+				ptr += draw;
+			}
+		}
+		return;
+	}
+#endif
 	if (y < WindY)
 	{
+		#ifdef _MSC_VER
 		__asm
 		{
 			mov		edx, PicPtr
@@ -671,6 +846,11 @@ void ShowRLCpal(int x, int y, void* PicPtr, byte* pal)
 		}
 		subline = WindY - y;
 		ScrOfst = int(ScreenPtr) + WindY * ScrWidth + x;
+		#else
+			// TODO: C fallback for ShowRLCpal (skip scanlines)
+		subline = WindY - y;
+		ScrOfst = (intptr_t)(ScreenPtr) + WindY * ScrWidth + x;
+		#endif
 	}
 	if (WindY1 < y + PLY - 1) subline += y + PLY - 1 - WindY1;
 	addofs += 4;
@@ -681,6 +861,7 @@ void ShowRLCpal(int x, int y, void* PicPtr, byte* pal)
 		if (x < WindX)
 		{
 			int roff = WindX - x;
+			#ifdef _MSC_VER
 			__asm {
 				push	esi
 				push	edi
@@ -747,11 +928,15 @@ void ShowRLCpal(int x, int y, void* PicPtr, byte* pal)
 				pop		edi
 					pop		esi
 			};
+			#else
+				// TODO: C fallback for ShowRLCpal (first clipping path)
+			#endif
 		}
 		else if (x + PLX >= WindX1)
 		{
 			int roff = WindX1 - x + 1;
 			int part;
+			#ifdef _MSC_VER
 			__asm {
 				push	esi
 				push	edi
@@ -824,8 +1009,13 @@ void ShowRLCpal(int x, int y, void* PicPtr, byte* pal)
 				pop		edi
 					pop		esi
 			};
+			#else
+				// TODO: C fallback for ShowRLCpal (second clipping path)
+			#endif
 		}
 		else
+		{
+		#ifdef _MSC_VER
 			__asm
 		{
 			push	esi
@@ -866,6 +1056,10 @@ void ShowRLCpal(int x, int y, void* PicPtr, byte* pal)
 			pop		edi
 				pop		esi
 		}
+		#else
+			// TODO: C fallback for ShowRLCpal (no clipping)
+		#endif
+		}
 	}
 }
 
@@ -874,15 +1068,59 @@ void ShowRLCpal(int x, int y, void* PicPtr, byte* pal)
 void ShowRLCipal(int x, int y, void* PicPtr, byte* pal)
 {
 	//for(int i=0;i<256;i++) precomp[i]=i;
+	#ifdef _MSC_VER
 	int ScrOfst = int(ScreenPtr) + y * ScrWidth + x;
+	#else
+	intptr_t ScrOfst = (intptr_t)(ScreenPtr) + y * ScrWidth + x;
+	#endif
 	int addofs = 0;
 	int subline = 0;
 	int PLY = (lpRLCHeader(PicPtr)->SizeY) & 65535;
 	int PLX = (lpRLCHeader(PicPtr)->SizeX) & 65535;
 	if ((y + PLY - 1 < WindY) | (y > WindY1) ||
 		((x < WindX) || (x - PLX + 1 >= WindX1) || !PLY)) return;
+#ifndef _MSC_VER
+	{
+		byte* ptr = (byte*)PicPtr + 4;
+		byte* screen = (byte*)ScreenPtr;
+		int startY = y;
+		if (y < WindY) {
+			int skip = WindY - y;
+			for (int i = 0; i < skip; i++) {
+				int nsegs = *ptr++;
+				for (int s = 0; s < nsegs; s++) {
+					int len = ptr[1];
+					ptr += 2 + len;
+				}
+			}
+			startY = WindY;
+		}
+		int endY = y + PLY - 1;
+		if (endY > WindY1) endY = WindY1;
+		for (int cy = startY; cy <= endY; cy++) {
+			byte* ls = screen + cy * ScrWidth + x;
+			int nsegs = *ptr++;
+			int xpos = 0;
+			for (int s = 0; s < nsegs; s++) {
+				int skip = ptr[0];
+				int draw = ptr[1];
+				ptr += 2;
+				xpos += skip;
+				for (int p = 0; p < draw; p++) {
+					int sx = x - xpos;
+					if (sx >= WindX && sx <= WindX1)
+						ls[-xpos] = pal[ptr[p]];
+					xpos++;
+				}
+				ptr += draw;
+			}
+		}
+		return;
+	}
+#endif
 	if (y < WindY)
 	{
+		#ifdef _MSC_VER
 		__asm
 		{
 			mov		edx, PicPtr
@@ -909,6 +1147,11 @@ void ShowRLCipal(int x, int y, void* PicPtr, byte* pal)
 		}
 		subline = WindY - y;
 		ScrOfst = int(ScreenPtr) + WindY * ScrWidth + x;
+		#else
+			// TODO: C fallback for ShowRLCipal (skip scanlines)
+		subline = WindY - y;
+		ScrOfst = (intptr_t)(ScreenPtr) + WindY * ScrWidth + x;
+		#endif
 	}
 	if (WindY1 < y + PLY - 1) subline += y + PLY - 1 - WindY1;
 	addofs += 4;
@@ -919,6 +1162,7 @@ void ShowRLCipal(int x, int y, void* PicPtr, byte* pal)
 		if (x > WindX1)
 		{
 			int roff = x - WindX1;
+			#ifdef _MSC_VER
 			__asm {
 				push	esi
 				push	edi
@@ -985,11 +1229,15 @@ void ShowRLCipal(int x, int y, void* PicPtr, byte* pal)
 				pop		edi
 					pop		esi
 			};
+			#else
+				// TODO: C fallback for ShowRLCipal (first clipping path)
+			#endif
 		}
 		else if (x - PLX + 1 < WindX)
 		{
 			int roff = x - WindX + 1;
 			int part;
+			#ifdef _MSC_VER
 			__asm {
 				push	esi
 				push	edi
@@ -1064,8 +1312,13 @@ void ShowRLCipal(int x, int y, void* PicPtr, byte* pal)
 				pop		edi
 					pop		esi
 			};
+			#else
+				// TODO: C fallback for ShowRLCipal (second clipping path)
+			#endif
 		}
 		else
+		{
+		#ifdef _MSC_VER
 			__asm
 		{
 			push	esi
@@ -1107,6 +1360,10 @@ void ShowRLCipal(int x, int y, void* PicPtr, byte* pal)
 			pop		edi
 				pop		esi
 		}
+		#else
+			// TODO: C fallback for ShowRLCipal (no clipping)
+		#endif
+		}
 	}
 }
 //End of inverted RLC with clipping & encoding
@@ -1116,15 +1373,59 @@ void ShowRLCfonpal(int x, int y, void* PicPtr, byte* pal)
 {
 	//for(int i=0;i<256;i++) precomp[i]=i;
 	if (!PicPtr)return;
+	#ifdef _MSC_VER
 	int ScrOfst = int(ScreenPtr) + y * ScrWidth + x;
+	#else
+	intptr_t ScrOfst = (intptr_t)(ScreenPtr) + y * ScrWidth + x;
+	#endif
 	int addofs = 0;
 	int subline = 0;
 	int PLY = (lpRLCHeader(PicPtr)->SizeY) & 65535;
 	int PLX = (lpRLCHeader(PicPtr)->SizeX) & 65535;
 	if ((y + PLY - 1 < WindY) | (y > WindY1) ||
 		((x + PLX <= WindX) || (x > WindX1) || !PLY)) return;
+#ifndef _MSC_VER
+	{
+		byte* ptr = (byte*)PicPtr + 4;
+		byte* screen = (byte*)ScreenPtr;
+		int startY = y;
+		if (y < WindY) {
+			int skip = WindY - y;
+			for (int i = 0; i < skip; i++) {
+				int nsegs = *ptr++;
+				for (int s = 0; s < nsegs; s++) {
+					int len = ptr[1];
+					ptr += 2 + len;
+				}
+			}
+			startY = WindY;
+		}
+		int endY = y + PLY - 1;
+		if (endY > WindY1) endY = WindY1;
+		for (int cy = startY; cy <= endY; cy++) {
+			byte* ls = screen + cy * ScrWidth + x;
+			int nsegs = *ptr++;
+			int xpos = 0;
+			for (int s = 0; s < nsegs; s++) {
+				int skip = ptr[0];
+				int draw = ptr[1];
+				ptr += 2;
+				xpos += skip;
+				for (int p = 0; p < draw; p++) {
+					int sx = x + xpos;
+					if (sx >= WindX && sx <= WindX1)
+						ls[xpos] = pal[ls[xpos]];
+					xpos++;
+				}
+				ptr += draw;
+			}
+		}
+		return;
+	}
+#endif
 	if (y < WindY)
 	{
+		#ifdef _MSC_VER
 		__asm
 		{
 			mov		edx, PicPtr
@@ -1151,6 +1452,11 @@ void ShowRLCfonpal(int x, int y, void* PicPtr, byte* pal)
 		}
 		subline = WindY - y;
 		ScrOfst = int(ScreenPtr) + WindY * ScrWidth + x;
+		#else
+			// TODO: C fallback for ShowRLCfonpal (skip scanlines)
+		subline = WindY - y;
+		ScrOfst = (intptr_t)(ScreenPtr) + WindY * ScrWidth + x;
+		#endif
 	}
 	if (WindY1 < y + PLY - 1) subline += y + PLY - 1 - WindY1;
 	addofs += 4;
@@ -1161,6 +1467,7 @@ void ShowRLCfonpal(int x, int y, void* PicPtr, byte* pal)
 		if (x < WindX)
 		{
 			int roff = WindX - x;
+			#ifdef _MSC_VER
 			__asm {
 				push	esi
 				push	edi
@@ -1227,11 +1534,15 @@ void ShowRLCfonpal(int x, int y, void* PicPtr, byte* pal)
 				pop		edi
 					pop		esi
 			};
+			#else
+				// TODO: C fallback for ShowRLCfonpal (first clipping path)
+			#endif
 		}
 		else if (x + PLX >= WindX1)
 		{
 			int roff = WindX1 - x + 1;
 			int part;
+			#ifdef _MSC_VER
 			__asm {
 				push	esi
 				push	edi
@@ -1306,8 +1617,13 @@ void ShowRLCfonpal(int x, int y, void* PicPtr, byte* pal)
 				pop		edi
 					pop		esi
 			};
+			#else
+				// TODO: C fallback for ShowRLCfonpal (second clipping path)
+			#endif
 		}
 		else
+		{
+		#ifdef _MSC_VER
 			__asm
 		{
 			push	esi
@@ -1349,6 +1665,10 @@ void ShowRLCfonpal(int x, int y, void* PicPtr, byte* pal)
 			pop		edi
 				pop		esi
 		}
+		#else
+			// TODO: C fallback for ShowRLCfonpal (no clipping)
+		#endif
+		}
 	}
 }
 //End of RLC with clipping & encoding
@@ -1356,15 +1676,59 @@ void ShowRLCfonpal(int x, int y, void* PicPtr, byte* pal)
 void ShowRLCifonpal(int x, int y, void* PicPtr, byte* pal)
 {
 	//for(int i=0;i<256;i++) precomp[i]=i;
+	#ifdef _MSC_VER
 	int ScrOfst = int(ScreenPtr) + y * ScrWidth + x;
+	#else
+	intptr_t ScrOfst = (intptr_t)(ScreenPtr) + y * ScrWidth + x;
+	#endif
 	int addofs = 0;
 	int subline = 0;
 	int PLY = (lpRLCHeader(PicPtr)->SizeY) & 65535;
 	int PLX = (lpRLCHeader(PicPtr)->SizeX) & 65535;
 	if ((y + PLY - 1 < WindY) | (y > WindY1) ||
 		((x < WindX) || (x - PLX + 1 >= WindX1) || !PLY)) return;
+#ifndef _MSC_VER
+	{
+		byte* ptr = (byte*)PicPtr + 4;
+		byte* screen = (byte*)ScreenPtr;
+		int startY = y;
+		if (y < WindY) {
+			int skip = WindY - y;
+			for (int i = 0; i < skip; i++) {
+				int nsegs = *ptr++;
+				for (int s = 0; s < nsegs; s++) {
+					int len = ptr[1];
+					ptr += 2 + len;
+				}
+			}
+			startY = WindY;
+		}
+		int endY = y + PLY - 1;
+		if (endY > WindY1) endY = WindY1;
+		for (int cy = startY; cy <= endY; cy++) {
+			byte* ls = screen + cy * ScrWidth + x;
+			int nsegs = *ptr++;
+			int xpos = 0;
+			for (int s = 0; s < nsegs; s++) {
+				int skip = ptr[0];
+				int draw = ptr[1];
+				ptr += 2;
+				xpos += skip;
+				for (int p = 0; p < draw; p++) {
+					int sx = x - xpos;
+					if (sx >= WindX && sx <= WindX1)
+						ls[-xpos] = pal[ls[-xpos]];
+					xpos++;
+				}
+				ptr += draw;
+			}
+		}
+		return;
+	}
+#endif
 	if (y < WindY)
 	{
+		#ifdef _MSC_VER
 		__asm
 		{
 			mov		edx, PicPtr
@@ -1391,6 +1755,11 @@ void ShowRLCifonpal(int x, int y, void* PicPtr, byte* pal)
 		}
 		subline = WindY - y;
 		ScrOfst = int(ScreenPtr) + WindY * ScrWidth + x;
+		#else
+			// TODO: C fallback for ShowRLCifonpal (skip scanlines)
+		subline = WindY - y;
+		ScrOfst = (intptr_t)(ScreenPtr) + WindY * ScrWidth + x;
+		#endif
 	}
 	if (WindY1 < y + PLY - 1) subline += y + PLY - 1 - WindY1;
 	addofs += 4;
@@ -1401,6 +1770,7 @@ void ShowRLCifonpal(int x, int y, void* PicPtr, byte* pal)
 		if (x > WindX1)
 		{
 			int roff = x - WindX1;
+			#ifdef _MSC_VER
 			__asm {
 				push	esi
 				push	edi
@@ -1470,11 +1840,15 @@ void ShowRLCifonpal(int x, int y, void* PicPtr, byte* pal)
 				pop		edi
 					pop		esi
 			};
+			#else
+				// TODO: C fallback for ShowRLCifonpal (first clipping path)
+			#endif
 		}
 		else if (x - PLX + 1 < WindX)
 		{
 			int roff = x - WindX + 1;
 			int part;
+			#ifdef _MSC_VER
 			__asm {
 				push	esi
 				push	edi
@@ -1550,8 +1924,13 @@ void ShowRLCifonpal(int x, int y, void* PicPtr, byte* pal)
 				pop		edi
 					pop		esi
 			};
+			#else
+				// TODO: C fallback for ShowRLCifonpal (second clipping path)
+			#endif
 		}
 		else
+		{
+		#ifdef _MSC_VER
 			__asm
 		{
 			push	esi
@@ -1594,6 +1973,10 @@ void ShowRLCifonpal(int x, int y, void* PicPtr, byte* pal)
 			pop		edi
 				pop		esi
 		}
+		#else
+			// TODO: C fallback for ShowRLCifonpal (no clipping)
+		#endif
+		}
 	}
 }
 //End of inverted RLC with clipping & encoding->fon
@@ -1602,15 +1985,59 @@ void ShowRLCifonpal(int x, int y, void* PicPtr, byte* pal)
 void ShowRLChtpal(int x, int y, void* PicPtr, byte* pal)
 {
 	//for(int i=0;i<256;i++) precomp[i]=i;
+	#ifdef _MSC_VER
 	int ScrOfst = int(ScreenPtr) + y * ScrWidth + x;
+	#else
+	intptr_t ScrOfst = (intptr_t)(ScreenPtr) + y * ScrWidth + x;
+	#endif
 	int addofs = 0;
 	int subline = 0;
 	int PLY = (lpRLCHeader(PicPtr)->SizeY) & 65535;
 	int PLX = (lpRLCHeader(PicPtr)->SizeX) & 65535;
 	if ((y + PLY - 1 < WindY) | (y > WindY1) ||
 		((x + PLX <= WindX) || (x > WindX1) || !PLY)) return;
+#ifndef _MSC_VER
+	{
+		byte* ptr = (byte*)PicPtr + 4;
+		byte* screen = (byte*)ScreenPtr;
+		int startY = y;
+		if (y < WindY) {
+			int skip = WindY - y;
+			for (int i = 0; i < skip; i++) {
+				int nsegs = *ptr++;
+				for (int s = 0; s < nsegs; s++) {
+					int len = ptr[1];
+					ptr += 2 + len;
+				}
+			}
+			startY = WindY;
+		}
+		int endY = y + PLY - 1;
+		if (endY > WindY1) endY = WindY1;
+		for (int cy = startY; cy <= endY; cy++) {
+			byte* ls = screen + cy * ScrWidth + x;
+			int nsegs = *ptr++;
+			int xpos = 0;
+			for (int s = 0; s < nsegs; s++) {
+				int skip = ptr[0];
+				int draw = ptr[1];
+				ptr += 2;
+				xpos += skip;
+				for (int p = 0; p < draw; p++) {
+					int sx = x + xpos;
+					if (sx >= WindX && sx <= WindX1)
+						ls[xpos] = pal[ptr[p] * 256 + ls[xpos]];
+					xpos++;
+				}
+				ptr += draw;
+			}
+		}
+		return;
+	}
+#endif
 	if (y < WindY)
 	{
+		#ifdef _MSC_VER
 		__asm
 		{
 			mov		edx, PicPtr
@@ -1637,6 +2064,11 @@ void ShowRLChtpal(int x, int y, void* PicPtr, byte* pal)
 		}
 		subline = WindY - y;
 		ScrOfst = int(ScreenPtr) + WindY * ScrWidth + x;
+		#else
+			// TODO: C fallback for ShowRLChtpal (skip scanlines)
+		subline = WindY - y;
+		ScrOfst = (intptr_t)(ScreenPtr) + WindY * ScrWidth + x;
+		#endif
 	}
 	if (WindY1 < y + PLY - 1) subline += y + PLY - 1 - WindY1;
 	addofs += 4;
@@ -1647,6 +2079,7 @@ void ShowRLChtpal(int x, int y, void* PicPtr, byte* pal)
 		if (x < WindX)
 		{
 			int roff = WindX - x;
+			#ifdef _MSC_VER
 			__asm {
 				push	esi
 				push	edi
@@ -1716,11 +2149,15 @@ void ShowRLChtpal(int x, int y, void* PicPtr, byte* pal)
 				pop		edi
 					pop		esi
 			};
+			#else
+				// TODO: C fallback for ShowRLChtpal (first clipping path)
+			#endif
 		}
 		else if (x + PLX >= WindX1)
 		{
 			int roff = WindX1 - x + 1;
 			int part;
+			#ifdef _MSC_VER
 			__asm {
 				push	esi
 				push	edi
@@ -1797,8 +2234,13 @@ void ShowRLChtpal(int x, int y, void* PicPtr, byte* pal)
 				pop		edi
 					pop		esi
 			};
+			#else
+				// TODO: C fallback for ShowRLChtpal (second clipping path)
+			#endif
 		}
 		else
+		{
+		#ifdef _MSC_VER
 			__asm
 		{
 			push	esi
@@ -1841,6 +2283,10 @@ void ShowRLChtpal(int x, int y, void* PicPtr, byte* pal)
 			pop		edi
 				pop		esi
 		}
+		#else
+			// TODO: C fallback for ShowRLChtpal (no clipping)
+		#endif
+		}
 	}
 }
 //End of RLC with clipping & encoding
@@ -1848,15 +2294,59 @@ void ShowRLChtpal(int x, int y, void* PicPtr, byte* pal)
 void ShowRLCihtpal(int x, int y, void* PicPtr, byte* pal)
 {
 	//for(int i=0;i<256;i++) precomp[i]=i;
+	#ifdef _MSC_VER
 	int ScrOfst = int(ScreenPtr) + y * ScrWidth + x;
+	#else
+	intptr_t ScrOfst = (intptr_t)(ScreenPtr) + y * ScrWidth + x;
+	#endif
 	int addofs = 0;
 	int subline = 0;
 	int PLY = (lpRLCHeader(PicPtr)->SizeY) & 65535;
 	int PLX = (lpRLCHeader(PicPtr)->SizeX) & 65535;
 	if ((y + PLY - 1 < WindY) | (y > WindY1) ||
 		((x < WindX) || (x - PLX + 1 >= WindX1) || !PLY)) return;
+#ifndef _MSC_VER
+	{
+		byte* ptr = (byte*)PicPtr + 4;
+		byte* screen = (byte*)ScreenPtr;
+		int startY = y;
+		if (y < WindY) {
+			int skip = WindY - y;
+			for (int i = 0; i < skip; i++) {
+				int nsegs = *ptr++;
+				for (int s = 0; s < nsegs; s++) {
+					int len = ptr[1];
+					ptr += 2 + len;
+				}
+			}
+			startY = WindY;
+		}
+		int endY = y + PLY - 1;
+		if (endY > WindY1) endY = WindY1;
+		for (int cy = startY; cy <= endY; cy++) {
+			byte* ls = screen + cy * ScrWidth + x;
+			int nsegs = *ptr++;
+			int xpos = 0;
+			for (int s = 0; s < nsegs; s++) {
+				int skip = ptr[0];
+				int draw = ptr[1];
+				ptr += 2;
+				xpos += skip;
+				for (int p = 0; p < draw; p++) {
+					int sx = x - xpos;
+					if (sx >= WindX && sx <= WindX1)
+						ls[-xpos] = pal[ptr[p] * 256 + ls[-xpos]];
+					xpos++;
+				}
+				ptr += draw;
+			}
+		}
+		return;
+	}
+#endif
 	if (y < WindY)
 	{
+		#ifdef _MSC_VER
 		__asm
 		{
 			mov		edx, PicPtr
@@ -1883,6 +2373,11 @@ void ShowRLCihtpal(int x, int y, void* PicPtr, byte* pal)
 		}
 		subline = WindY - y;
 		ScrOfst = int(ScreenPtr) + WindY * ScrWidth + x;
+		#else
+			// TODO: C fallback for ShowRLCihtpal (skip scanlines)
+		subline = WindY - y;
+		ScrOfst = (intptr_t)(ScreenPtr) + WindY * ScrWidth + x;
+		#endif
 	}
 	if (WindY1 < y + PLY - 1) subline += y + PLY - 1 - WindY1;
 	addofs += 4;
@@ -1893,6 +2388,7 @@ void ShowRLCihtpal(int x, int y, void* PicPtr, byte* pal)
 		if (x > WindX1)
 		{
 			int roff = x - WindX1;
+			#ifdef _MSC_VER
 			__asm {
 				push	esi
 				push	edi
@@ -1962,11 +2458,15 @@ void ShowRLCihtpal(int x, int y, void* PicPtr, byte* pal)
 				pop		edi
 					pop		esi
 			};
+			#else
+				// TODO: C fallback for ShowRLCihtpal (first clipping path)
+			#endif
 		}
 		else if (x - PLX + 1 < WindX)
 		{
 			int roff = x - WindX + 1;
 			int part;
+			#ifdef _MSC_VER
 			__asm {
 				push	esi
 				push	edi
@@ -2045,8 +2545,13 @@ void ShowRLCihtpal(int x, int y, void* PicPtr, byte* pal)
 				pop		edi
 					pop		esi
 			};
+			#else
+				// TODO: C fallback for ShowRLCihtpal (second clipping path)
+			#endif
 		}
 		else
+		{
+		#ifdef _MSC_VER
 			__asm
 		{
 			push	esi
@@ -2089,6 +2594,10 @@ void ShowRLCihtpal(int x, int y, void* PicPtr, byte* pal)
 				ScanLineLoopEnd :
 			pop		edi
 				pop		esi
+		}
+		#else
+			// TODO: C fallback for ShowRLCihtpal (no clipping)
+		#endif
 		}
 	}
 }
@@ -2283,19 +2792,55 @@ bool LoadRLC(LPCSTR lpFileName, RLCTable* RLCtbl)
 		DWORD fsz = RFileSize(f1);
 		LOADED += fsz;
 
-		*RLCtbl = (RLCTable)malloc(fsz + 4);
-		(*RLCtbl)->Size = fsz + 4;
-
-		RBlockRead(f1, &((*RLCtbl)->sign), fsz);
+		// Read raw file into temp buffer
+		// File layout: [sign:4][SCount:4][OfsTable:cnt*4][pixeldata...]
+		byte* raw = (byte*)malloc(fsz);
+		RBlockRead(f1, raw, fsz);
 		RClose(f1);
 
-		int shft = int(*RLCtbl) + 4;
-		int cnt = ((*RLCtbl)->SCount & 65535);
-		for (int i = 0; i < cnt; i++)
-		{
-			(*RLCtbl)->OfsTable[i] += shft;
+		int rawSign, rawSCount;
+		memcpy(&rawSign, raw, 4);
+		memcpy(&rawSCount, raw + 4, 4);
+		int cnt = rawSCount & 65535;
+
+		int rawOfsSize = cnt * 4;       // OfsTable in file: cnt * int32
+		int rawHeader  = 8 + rawOfsSize; // sign + SCount + offsets
+		int pixelSize  = (int)fsz - rawHeader;
+		if (pixelSize < 0) pixelSize = 0;
+
+		// Compute ofsShift: maps file-relative offsets (from sign) to memory-relative
+		// In file:   pixels are at (8 + rawOfsSize) bytes from sign  [SCount:4 + OfsTable:cnt*4]
+		// In memory: pixels are at (offsetof(OfsTable) - offsetof(sign) + newOfsSize) from sign
+		int newOfsSize = cnt * (int)sizeof(intptr_t);
+		int memPixelOfs = (int)(offsetof(xRLCTable, OfsTable) - offsetof(xRLCTable, sign)) + newOfsSize;
+		int filePixelOfs = 8 + rawOfsSize;  // from sign: SCount(4) + rawOfsTable(cnt*4)
+		int ofsShift = memPixelOfs - filePixelOfs;
+
+		// allocSize: original 32-bit was (fsz + 4). In 64-bit, rawOfs (from sign)
+		// are shifted by ofsShift, so we need ofsShift extra bytes.
+		// Add padding: original malloc alignment often gave extra bytes beyond
+		// allocation; some RLC consumers may read 1-2 bytes past the last sprite.
+		size_t allocSize = (size_t)fsz + 4 + ofsShift + 16;
+		*RLCtbl = (RLCTable)malloc(allocSize);
+		(*RLCtbl)->Size = (int)allocSize;
+		(*RLCtbl)->sign = rawSign;
+		(*RLCtbl)->SCount = rawSCount;
+
+		// Copy pixel data after intptr_t OfsTable
+		byte* destPixels = (byte*)(&(*RLCtbl)->OfsTable[0]) + newOfsSize;
+		if (pixelSize > 0) {
+			memcpy(destPixels, raw + rawHeader, pixelSize);
 		}
 
+		// Convert int32 offsets to absolute intptr_t pointers
+		intptr_t signAddr = (intptr_t)(&(*RLCtbl)->sign);
+		int* rawOfs = (int*)(raw + 8);
+		for (int i = 0; i < cnt; i++)
+		{
+			(*RLCtbl)->OfsTable[i] = signAddr + (intptr_t)rawOfs[i] + ofsShift;
+		}
+
+		free(raw);
 		return true;
 	}
 
@@ -2317,7 +2862,11 @@ void ShowRLCItem(int x, int y, lpRLCTable lprt, int n, byte nt)
 		cntr = 0;
 	}
 
+	#ifdef _MSC_VER
 	int GPID = int(*lprt);
+	#else
+	intptr_t GPID = (intptr_t)(*lprt);
+	#endif
 
 	if (GPID < 4096)
 	{
@@ -2443,7 +2992,11 @@ void ShowRLCItemFired(int x, int y, lpRLCTable lprt, int n)
 };
 int GetRLCWidth(RLCTable lpr, byte n)
 {
+	#ifdef _MSC_VER
 	int GPID = int(lpr);
+	#else
+	intptr_t GPID = (intptr_t)(lpr);
+	#endif
 	if (GPID < 4096)
 	{
 		if (n == 32)
@@ -2475,7 +3028,11 @@ int GetRLCWidthUNICODE(RLCTable lpr, byte* strptr, int* L)
 			(GetCHEX(strptr[2]) << 8) +
 			(GetCHEX(strptr[3]) << 4) +
 			GetCHEX(strptr[4]);
+		#ifdef _MSC_VER
 		int GPID = int(lpr);
+		#else
+		intptr_t GPID = (intptr_t)(lpr);
+		#endif
 		if (GPID < 4096)
 		{
 			UNICODETABLE* UT = GPS.UNITBL[GPID];
@@ -2511,7 +3068,11 @@ int GetRLCWidthUNICODE(RLCTable lpr, byte* strptr, int* L)
 
 __declspec(dllexport) int GetRLCHeight(RLCTable lpr, byte n)
 {
+	#ifdef _MSC_VER
 	int GPID = int(lpr);
+	#else
+	intptr_t GPID = (intptr_t)(lpr);
+	#endif
 	if (GPID < 4096)
 	{
 		return GPS.GetGPHeight(GPID, n);
@@ -2534,12 +3095,20 @@ void RegisterRLCFont(lpRLCFont lrf, RLCTable lpr, int fir)
 }
 void CheckFontColor(lpRLCFont lpf)
 {
+	#ifdef _MSC_VER
 	int GPID = int(lpf->RLC);
+	#else
+	intptr_t GPID = (intptr_t)(lpf->RLC);
+	#endif
 	if (GPID < 4096)GPS.ImageType[GPID] = (GPS.ImageType[GPID] & 7) | lpf->Options;
 };
 void ShowChar(int x, int y, char c, lpRLCFont lpf)
 {
+	#ifdef _MSC_VER
 	int GPID = int(lpf->RLC);
+	#else
+	intptr_t GPID = (intptr_t)(lpf->RLC);
+	#endif
 	if (GPID < 4096)
 	{
 		GPS.ImageType[GPID] = (GPS.ImageType[GPID] & 7) | lpf->Options;
@@ -2557,7 +3126,11 @@ __declspec(dllexport) void ShowCharUNICODE(int x, int y, byte* strptr, lpRLCFont
 			(GetCHEX(strptr[2]) << 8) +
 			(GetCHEX(strptr[3]) << 4) +
 			GetCHEX(strptr[4]);
+		#ifdef _MSC_VER
 		int GPID = int(lpr->RLC);
+		#else
+		intptr_t GPID = (intptr_t)(lpr->RLC);
+		#endif
 		if (GPID < 4096)
 		{
 			UNICODETABLE* UT = GPS.UNITBL[GPID];
@@ -2611,7 +3184,11 @@ void ShowString(int x, int y, LPCSTR lps, lpRLCFont lpf)
 		return;
 	}
 
+	#ifdef _MSC_VER
 	int GPID = int(lpf->RLC);
+	#else
+	intptr_t GPID = (intptr_t)(lpf->RLC);
+	#endif
 
 	if (GPID < 4096)
 	{

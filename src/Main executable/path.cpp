@@ -5,6 +5,7 @@
 #include "mouse.h"
 #include "MapDiscr.h"
 #include <assert.h>
+#include <stdint.h>
 #include "mode.h"
 #include "NewMon.h"
 #include <math.h>
@@ -93,6 +94,7 @@ void MotionField::ClearMaps()
 
 void MotionField::BSetPt(int x, int y)
 {
+	#ifdef _MSC_VER
 	int MAPV = int(MapV);
 	if (x >= 0 && x < MAPSX && y >= 0 && y < MAPSY) {
 		switch (ADDSH) {
@@ -188,10 +190,17 @@ void MotionField::BSetPt(int x, int y)
 			break;
 		};
 	};
+	#else
+	if (x >= 0 && x < MAPSX && y >= 0 && y < MAPSY) {
+		int byte_offset = (x << MAPSHF) + (y >> 3);
+		MapV[byte_offset] |= (byte)(1 << (y & 7));
+	}
+	#endif
 }
 
 void MotionField::BClrPt(int x, int y)
 {
+	#ifdef _MSC_VER
 	int MAPV = int(MapV);
 	if (x >= 0 && x < MAPSX && y >= 0 && y < MAPSY) {
 		switch (ADDSH) {
@@ -288,6 +297,12 @@ void MotionField::BClrPt(int x, int y)
 		};
 
 	};
+	#else
+	if (x >= 0 && x < MAPSX && y >= 0 && y < MAPSY) {
+		int byte_offset = (x << MAPSHF) + (y >> 3);
+		MapV[byte_offset] &= (byte)~(1 << (y & 7));
+	}
+	#endif
 }
 
 void MotionField::BSetBar(int x, int y, int Lx) {
@@ -334,6 +349,7 @@ void MotionField::BClrSQ(int x, int y, int Lx, int Ly) {
 //Possible return values: 0, 1, 2, 4, 8, 16, 32, 64, 128
 int MotionField::CheckPt(int x, int y)
 {
+	#ifdef _MSC_VER
 	int retval = 0;
 	int MAPV = int(MapV);
 	if (x >= 0 && x < MAPSX && y >= 0 && y < MAPSY)
@@ -403,6 +419,14 @@ int MotionField::CheckPt(int x, int y)
 	{
 		return 1;
 	}
+	#else
+	if (x >= 0 && x < MAPSX && y >= 0 && y < MAPSY) {
+		int byte_offset = (x << MAPSHF) + (y >> 3);
+		return MapV[byte_offset] & (1 << (y & 7));
+	} else {
+		return 1;
+	}
+	#endif
 }
 
 int MotionField::CheckHLine(int x, int y, int Lx)
@@ -419,6 +443,7 @@ int MotionField::CheckHLine(int x, int y, int Lx)
 
 int MotionField::CheckVLine(int x, int y, int Lx)
 {
+	#ifdef _MSC_VER
 	int retval = 0;
 	int MAPV = int(MapV);
 	if (x > 0 && y > 0 && y + Lx - 1 < MAPSY && x < MAPSX && Lx <= 24)
@@ -497,6 +522,17 @@ int MotionField::CheckVLine(int x, int y, int Lx)
 	{
 		return 1;
 	}
+	#else
+	if (x > 0 && y > 0 && y + Lx - 1 < MAPSY && x < MAPSX && Lx <= 24) {
+		int byte_offset = (x << MAPSHF) + (y >> 3);
+		uint32_t mask = ((1u << Lx) - 1) << (y & 7);
+		uint32_t val;
+		memcpy(&val, MapV + byte_offset, sizeof(val));
+		return (int)(val & mask);
+	} else {
+		return 1;
+	}
+	#endif
 }
 
 bool MotionField::CheckBar(int x, int y, int Lx, int Ly)
@@ -766,6 +802,7 @@ bool OneObject::CreatePrePath(int x1, int y1)
 
 	//соединяем линией начальную и конечную точки. 
 	//Оптимизация только по скорости
+	#ifdef _MSC_VER
 	__asm
 	{
 		mov		ax, word ptr Mdx
@@ -918,6 +955,31 @@ bool OneObject::CreatePrePath(int x1, int y1)
 		shr		edx, 1
 			mov		Pps, edx
 	}
+	#else
+	// C fallback for CreatePrePath (Bresenham): Bresenham line rasterization
+	{
+		int pps_i = 0;
+		int cx = Mx, cy = My;
+		int cum = 0;
+		pxx[pps_i] = (short)cx; pyy[pps_i] = (short)cy; pps_i++;
+		if (Mdx >= Mdy) {
+			for (int ii = 0; ii < Mdx; ii++) {
+				cx += sx;
+				cum += Mdy;
+				if (cum >= Mdx) { cum -= Mdx; cy += sy; }
+				pxx[pps_i] = (short)cx; pyy[pps_i] = (short)cy; pps_i++;
+			}
+		} else {
+			for (int ii = 0; ii < Mdy; ii++) {
+				cy += sy;
+				cum += Mdx;
+				if (cum >= (int)(short)dy) { cum -= (int)(short)dy; cx += sx; }
+				pxx[pps_i] = (short)cx; pyy[pps_i] = (short)cy; pps_i++;
+			}
+		}
+		Pps = pps_i;
+	}
+	#endif
 
 	Pps--;
 
@@ -1280,6 +1342,7 @@ bool OneObject::CreatePrePath2(int x1, int y1) {
 	NeedPath = false;
 	//соединяем линией начальную и конечную точки. 
 	//Оптимизация только по скорости
+	#ifdef _MSC_VER
 	__asm {
 		mov		ax, word ptr Mdx
 		mov		bx, word ptr Mdy
@@ -1431,6 +1494,31 @@ bool OneObject::CreatePrePath2(int x1, int y1) {
 		shr		edx, 1
 			mov		Pps, edx
 	};
+	#else
+	// C fallback for CreatePrePath2 (Bresenham): Bresenham line rasterization
+	{
+		int pps_i = 0;
+		int cx = Mx, cy = My;
+		int cum = 0;
+		pxx[pps_i] = (short)cx; pyy[pps_i] = (short)cy; pps_i++;
+		if (Mdx >= Mdy) {
+			for (int ii = 0; ii < Mdx; ii++) {
+				cx += sx;
+				cum += Mdy;
+				if (cum >= Mdx) { cum -= Mdx; cy += sy; }
+				pxx[pps_i] = (short)cx; pyy[pps_i] = (short)cy; pps_i++;
+			}
+		} else {
+			for (int ii = 0; ii < Mdy; ii++) {
+				cy += sy;
+				cum += Mdx;
+				if (cum >= (int)(short)dy) { cum -= (int)(short)dy; cx += sx; }
+				pxx[pps_i] = (short)cx; pyy[pps_i] = (short)cy; pps_i++;
+			}
+		}
+		Pps = pps_i;
+	}
+	#endif
 	Pps--;
 	if (InLocked)
 	{
@@ -1762,6 +1850,7 @@ bool OneObject::CreatePrePath4(int x1, int y1) {
 	NeedPath = false;
 	//соединяем линией начальную и конечную точки. 
 	//Оптимизация только по скорости
+	#ifdef _MSC_VER
 	__asm {
 		mov		ax, word ptr Mdx
 		mov		bx, word ptr Mdy
@@ -1913,6 +2002,31 @@ bool OneObject::CreatePrePath4(int x1, int y1) {
 		shr		edx, 1
 			mov		Pps, edx
 	};
+	#else
+	// C fallback for CreatePrePath4 (Bresenham): Bresenham line rasterization
+	{
+		int pps_i = 0;
+		int cx = Mx, cy = My;
+		int cum = 0;
+		pxx[pps_i] = (short)cx; pyy[pps_i] = (short)cy; pps_i++;
+		if (Mdx >= Mdy) {
+			for (int ii = 0; ii < Mdx; ii++) {
+				cx += sx;
+				cum += Mdy;
+				if (cum >= Mdx) { cum -= Mdx; cy += sy; }
+				pxx[pps_i] = (short)cx; pyy[pps_i] = (short)cy; pps_i++;
+			}
+		} else {
+			for (int ii = 0; ii < Mdy; ii++) {
+				cy += sy;
+				cum += Mdx;
+				if (cum >= (int)(short)dy) { cum -= (int)(short)dy; cx += sx; }
+				pxx[pps_i] = (short)cx; pyy[pps_i] = (short)cy; pps_i++;
+			}
+		}
+		Pps = pps_i;
+	}
+	#endif
 	Pps--;
 	if (InLocked)
 	{
@@ -2244,6 +2358,7 @@ bool OneObject::CreatePrePathBordered(int x1,int y1,int Border){
 	NeedPath=false;
 	//соединяем линией начальную и конечную точки.
 	//Оптимизация только по скорости
+	#ifdef _MSC_VER
 	__asm{
 		mov		ax,word ptr Mdx
 		mov		bx,word ptr Mdy
@@ -2395,6 +2510,31 @@ loopsEnd:
 		shr		edx,1
 		mov		Pps,edx
 	};
+	#else
+	// C fallback for CreatePrePathBordered (Bresenham): Bresenham line rasterization
+	{
+		int pps_i = 0;
+		int cx = Mx, cy = My;
+		int cum = 0;
+		pxx[pps_i] = (short)cx; pyy[pps_i] = (short)cy; pps_i++;
+		if (Mdx >= Mdy) {
+			for (int ii = 0; ii < Mdx; ii++) {
+				cx += sx;
+				cum += Mdy;
+				if (cum >= Mdx) { cum -= Mdx; cy += sy; }
+				pxx[pps_i] = (short)cx; pyy[pps_i] = (short)cy; pps_i++;
+			}
+		} else {
+			for (int ii = 0; ii < Mdy; ii++) {
+				cy += sy;
+				cum += Mdx;
+				if (cum >= (int)(short)dy) { cum -= (int)(short)dy; cx += sx; }
+				pxx[pps_i] = (short)cx; pyy[pps_i] = (short)cy; pps_i++;
+			}
+		}
+		Pps = pps_i;
+	}
+	#endif
 	Pps--;
 	assert(Pps<MaxP);
 	if(InLocked){

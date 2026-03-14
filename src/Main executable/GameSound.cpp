@@ -48,6 +48,7 @@ bool IsSound;
 void normstr(char* str);
 void NLine(GFILE* f);
 void LoadSounds(char* fn) {
+	fprintf(stderr, "[SND] LoadSounds(%s) DirectSoundOK=%d\n", fn, CDS ? CDS->DirectSoundOK() : -1);
 	char sss[128];
 	char idn[128];
 	int srpos = 0;
@@ -55,6 +56,7 @@ void LoadSounds(char* fn) {
 	NSounds = 0;
 	SoundOK = CDS->DirectSoundOK() != 0;
 	GFILE* f1 = Gopen(fn, "rt");
+	fprintf(stderr, "[SND] Gopen(%s) = %p\n", fn, (void*)f1);
 
 	char ccpr[128];
 	ccpr[0] = 0;
@@ -91,6 +93,10 @@ void LoadSounds(char* fn) {
 									goto uuu;
 								};
 								normstr(sss);
+#ifndef _MSC_VER
+								// Convert backslashes to forward slashes for macOS
+								for (char* p = sss; *p; p++) if (*p == '\\') *p = '/';
+#endif
 								if (SoundOK) {
 									if (!strcmp(ccpr, sss)) {
 										SndTable[NSounds][i] = CDS->DuplicateSoundBuffer(CDS->m_currentBufferNum);
@@ -98,6 +104,7 @@ void LoadSounds(char* fn) {
 									}
 									else {
 										CWave CW(sss);
+										fprintf(stderr, "[SND] Loading wav: '%s' OK=%d\n", sss, CW.WaveOK());
 
 										int sdid;
 										if (CW.WaveOK()) {
@@ -133,6 +140,7 @@ void LoadSounds(char* fn) {
 	};
 	//NSounds=0;
 	Gclose(f1);
+	fprintf(stderr, "[SND] LoadSounds done: NSounds=%d SoundOK=%d\n", NSounds, SoundOK);
 	//if(!CDS->DirectSoundOK()){
 	//	NSounds=0;
 	//};

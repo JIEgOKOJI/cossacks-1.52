@@ -1,0 +1,118 @@
+
+# Consider dependencies only in project.
+set(CMAKE_DEPENDS_IN_PROJECT_ONLY OFF)
+
+# The set of languages for which implicit dependencies are needed:
+set(CMAKE_DEPENDS_LANGUAGES
+  )
+
+# The set of dependency files which are needed:
+set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/3DBars.cpp" "Main executable/CMakeFiles/dmcr.dir/3DBars.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/3DBars.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/3DGraph.cpp" "Main executable/CMakeFiles/dmcr.dir/3DGraph.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/3DGraph.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/3DMapEd.cpp" "Main executable/CMakeFiles/dmcr.dir/3DMapEd.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/3DMapEd.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/3DRandMap.cpp" "Main executable/CMakeFiles/dmcr.dir/3DRandMap.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/3DRandMap.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/3DSurf.cpp" "Main executable/CMakeFiles/dmcr.dir/3DSurf.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/3DSurf.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/ActiveScenary.cpp" "Main executable/CMakeFiles/dmcr.dir/ActiveScenary.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/ActiveScenary.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/ActiveZone.cpp" "Main executable/CMakeFiles/dmcr.dir/ActiveZone.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/ActiveZone.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/AntiBug.cpp" "Main executable/CMakeFiles/dmcr.dir/AntiBug.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/AntiBug.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Arc/GSCarch.cpp" "Main executable/CMakeFiles/dmcr.dir/Arc/GSCarch.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Arc/GSCarch.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Arc/GSCset.cpp" "Main executable/CMakeFiles/dmcr.dir/Arc/GSCset.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Arc/GSCset.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Arc/isiMasks.cpp" "Main executable/CMakeFiles/dmcr.dir/Arc/isiMasks.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Arc/isiMasks.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/ArchTool.cpp" "Main executable/CMakeFiles/dmcr.dir/ArchTool.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/ArchTool.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Brigade.cpp" "Main executable/CMakeFiles/dmcr.dir/Brigade.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Brigade.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Build.cpp" "Main executable/CMakeFiles/dmcr.dir/Build.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Build.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Cdirsnd.cpp" "Main executable/CMakeFiles/dmcr.dir/Cdirsnd.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Cdirsnd.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Chkinet.cpp" "Main executable/CMakeFiles/dmcr.dir/Chkinet.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Chkinet.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/ConstStr.cpp" "Main executable/CMakeFiles/dmcr.dir/ConstStr.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/ConstStr.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Cwave.cpp" "Main executable/CMakeFiles/dmcr.dir/Cwave.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Cwave.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Danger.cpp" "Main executable/CMakeFiles/dmcr.dir/Danger.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Danger.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Ddex1.cpp" "Main executable/CMakeFiles/dmcr.dir/Ddex1.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Ddex1.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Ddini.cpp" "Main executable/CMakeFiles/dmcr.dir/Ddini.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Ddini.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/DeviceCD.cpp" "Main executable/CMakeFiles/dmcr.dir/DeviceCD.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/DeviceCD.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Dialogs.cpp" "Main executable/CMakeFiles/dmcr.dir/Dialogs.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Dialogs.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/DrawForms.cpp" "Main executable/CMakeFiles/dmcr.dir/DrawForms.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/DrawForms.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Economy.cpp" "Main executable/CMakeFiles/dmcr.dir/Economy.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Economy.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/EinfoClass.cpp" "Main executable/CMakeFiles/dmcr.dir/EinfoClass.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/EinfoClass.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/ExConst.cpp" "Main executable/CMakeFiles/dmcr.dir/ExConst.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/ExConst.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Fastdraw.cpp" "Main executable/CMakeFiles/dmcr.dir/Fastdraw.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Fastdraw.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Fractal.cpp" "Main executable/CMakeFiles/dmcr.dir/Fractal.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Fractal.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/GP_Draw.cpp" "Main executable/CMakeFiles/dmcr.dir/GP_Draw.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/GP_Draw.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/GVClass.cpp" "Main executable/CMakeFiles/dmcr.dir/GVClass.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/GVClass.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/GameSound.cpp" "Main executable/CMakeFiles/dmcr.dir/GameSound.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/GameSound.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Graphs.cpp" "Main executable/CMakeFiles/dmcr.dir/Graphs.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Graphs.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Groups.cpp" "Main executable/CMakeFiles/dmcr.dir/Groups.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Groups.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/HTTP/HttpComm.cpp" "Main executable/CMakeFiles/dmcr.dir/HTTP/HttpComm.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/HTTP/HttpComm.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Hint.cpp" "Main executable/CMakeFiles/dmcr.dir/Hint.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Hint.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/IR_Main.cpp" "Main executable/CMakeFiles/dmcr.dir/IR_Main.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/IR_Main.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Icontool.cpp" "Main executable/CMakeFiles/dmcr.dir/Icontool.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Icontool.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Interface.cpp" "Main executable/CMakeFiles/dmcr.dir/Interface.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Interface.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Lines.cpp" "Main executable/CMakeFiles/dmcr.dir/Lines.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Lines.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/LoadSave.cpp" "Main executable/CMakeFiles/dmcr.dir/LoadSave.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/LoadSave.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/MPlayerStub.cpp" "Main executable/CMakeFiles/dmcr.dir/MPlayerStub.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/MPlayerStub.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/MapSprites.cpp" "Main executable/CMakeFiles/dmcr.dir/MapSprites.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/MapSprites.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Masks.cpp" "Main executable/CMakeFiles/dmcr.dir/Masks.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Masks.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Megapolis.cpp" "Main executable/CMakeFiles/dmcr.dir/Megapolis.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Megapolis.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Mine.cpp" "Main executable/CMakeFiles/dmcr.dir/Mine.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Mine.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Motion.cpp" "Main executable/CMakeFiles/dmcr.dir/Motion.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Motion.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/MousZone.cpp" "Main executable/CMakeFiles/dmcr.dir/MousZone.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/MousZone.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Mouse_X.cpp" "Main executable/CMakeFiles/dmcr.dir/Mouse_X.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Mouse_X.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Multi.cpp" "Main executable/CMakeFiles/dmcr.dir/Multi.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Multi.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Nation.cpp" "Main executable/CMakeFiles/dmcr.dir/Nation.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Nation.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Nature.cpp" "Main executable/CMakeFiles/dmcr.dir/Nature.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Nature.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Navorots.cpp" "Main executable/CMakeFiles/dmcr.dir/Navorots.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Navorots.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/NewAI.cpp" "Main executable/CMakeFiles/dmcr.dir/NewAI.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/NewAI.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/NewCode/MapOptionsEncoder.cpp" "Main executable/CMakeFiles/dmcr.dir/NewCode/MapOptionsEncoder.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/NewCode/MapOptionsEncoder.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/NewCode/QueueManagement.cpp" "Main executable/CMakeFiles/dmcr.dir/NewCode/QueueManagement.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/NewCode/QueueManagement.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/NewCode/SecureDivision.cpp" "Main executable/CMakeFiles/dmcr.dir/NewCode/SecureDivision.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/NewCode/SecureDivision.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/NewCode/UdpHolePuncher.cpp" "Main executable/CMakeFiles/dmcr.dir/NewCode/UdpHolePuncher.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/NewCode/UdpHolePuncher.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/NewILogin.cpp" "Main executable/CMakeFiles/dmcr.dir/NewILogin.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/NewILogin.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/NewMon.cpp" "Main executable/CMakeFiles/dmcr.dir/NewMon.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/NewMon.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/NewUpgrade.cpp" "Main executable/CMakeFiles/dmcr.dir/NewUpgrade.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/NewUpgrade.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Nuclear.cpp" "Main executable/CMakeFiles/dmcr.dir/Nuclear.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Nuclear.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/OnWater.cpp" "Main executable/CMakeFiles/dmcr.dir/OnWater.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/OnWater.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/RealWater.cpp" "Main executable/CMakeFiles/dmcr.dir/RealWater.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/RealWater.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Recorder.cpp" "Main executable/CMakeFiles/dmcr.dir/Recorder.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Recorder.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Report.cpp" "Main executable/CMakeFiles/dmcr.dir/Report.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Report.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Resfile.cpp" "Main executable/CMakeFiles/dmcr.dir/Resfile.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Resfile.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/River.cpp" "Main executable/CMakeFiles/dmcr.dir/River.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/River.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/SafeNet.cpp" "Main executable/CMakeFiles/dmcr.dir/SafeNet.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/SafeNet.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/SaveNewMap.cpp" "Main executable/CMakeFiles/dmcr.dir/SaveNewMap.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/SaveNewMap.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/SelProp.cpp" "Main executable/CMakeFiles/dmcr.dir/SelProp.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/SelProp.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Select.cpp" "Main executable/CMakeFiles/dmcr.dir/Select.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Select.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/ShipTrace.cpp" "Main executable/CMakeFiles/dmcr.dir/ShipTrace.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/ShipTrace.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Source.cpp" "Main executable/CMakeFiles/dmcr.dir/Source.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Source.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/StrategyResearch.cpp" "Main executable/CMakeFiles/dmcr.dir/StrategyResearch.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/StrategyResearch.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Stringshash.cpp" "Main executable/CMakeFiles/dmcr.dir/Stringshash.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Stringshash.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Timing.cpp" "Main executable/CMakeFiles/dmcr.dir/Timing.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Timing.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Tmixer.cpp" "Main executable/CMakeFiles/dmcr.dir/Tmixer.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Tmixer.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/TopoGraf.cpp" "Main executable/CMakeFiles/dmcr.dir/TopoGraf.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/TopoGraf.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Transport.cpp" "Main executable/CMakeFiles/dmcr.dir/Transport.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Transport.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/UnRar.cpp" "Main executable/CMakeFiles/dmcr.dir/UnRar.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/UnRar.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/UnSyncro.cpp" "Main executable/CMakeFiles/dmcr.dir/UnSyncro.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/UnSyncro.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Upgrade.cpp" "Main executable/CMakeFiles/dmcr.dir/Upgrade.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Upgrade.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/VirtScr.cpp" "Main executable/CMakeFiles/dmcr.dir/VirtScr.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/VirtScr.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Waves.cpp" "Main executable/CMakeFiles/dmcr.dir/Waves.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Waves.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/Weapon.cpp" "Main executable/CMakeFiles/dmcr.dir/Weapon.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/Weapon.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/ZBuffer.cpp" "Main executable/CMakeFiles/dmcr.dir/ZBuffer.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/ZBuffer.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/bmptool.cpp" "Main executable/CMakeFiles/dmcr.dir/bmptool.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/bmptool.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/fog.cpp" "Main executable/CMakeFiles/dmcr.dir/fog.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/fog.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/gText.cpp" "Main executable/CMakeFiles/dmcr.dir/gText.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/gText.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/mapa.cpp" "Main executable/CMakeFiles/dmcr.dir/mapa.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/mapa.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/menu.cpp" "Main executable/CMakeFiles/dmcr.dir/menu.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/menu.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/path.cpp" "Main executable/CMakeFiles/dmcr.dir/path.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/path.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/stRecog.cpp" "Main executable/CMakeFiles/dmcr.dir/stRecog.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/stRecog.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/testserver.cpp" "Main executable/CMakeFiles/dmcr.dir/testserver.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/testserver.cpp.obj.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/Main executable/walls.cpp" "Main executable/CMakeFiles/dmcr.dir/walls.cpp.obj" "gcc" "Main executable/CMakeFiles/dmcr.dir/walls.cpp.obj.d"
+  )
+
+# Targets to which this target links which contain Fortran sources.
+set(CMAKE_Fortran_TARGET_LINKED_INFO_FILES
+  )
+
+# Targets to which this target links which contain Fortran sources.
+set(CMAKE_Fortran_TARGET_FORWARD_LINKED_INFO_FILES
+  )
+
+# Fortran module output directory.
+set(CMAKE_Fortran_TARGET_MODULE_DIR "")

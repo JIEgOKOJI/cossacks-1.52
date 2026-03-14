@@ -1,3 +1,4 @@
+#include <cstdint>
 #include "ddini.h"
 #include "ResFile.h"
 #include "FastDraw.h"
@@ -186,7 +187,7 @@ bool ParkWaterNewMonster(OneObject* OB, int x, int y, byte Prio, byte OrdType)
 	}
 
 	Order1* Or1 = OB->CreateOrder(OrdType);
-	if (!int(Or1))
+	if (!(intptr_t)(Or1))
 	{
 		return false;
 	}
@@ -374,12 +375,12 @@ public:
 	bool CheckUnloadAbility();
 	bool CheckAbsorbAbility();
 	//-------------checking&disconnection routines
-	bool CheckDisconnectionAbility(OneObject* OB, int LParam, int RParam);
-	bool Disconnect(OneObject* OB, int LParam, int RParam);
+	bool CheckDisconnectionAbility(OneObject* OB, intptr_t LParam, intptr_t RParam);
+	bool Disconnect(OneObject* OB, intptr_t LParam, intptr_t RParam);
 	void KillAnyway();
 };
 
-bool TransProcess::CheckDisconnectionAbility(OneObject* OB, int LParam, int RParam) {
+bool TransProcess::CheckDisconnectionAbility(OneObject* OB, intptr_t LParam, intptr_t RParam) {
 	if (OB->Index == TransportID) {
 		if (OB->delay)return false;
 		int OnWay = 0;
@@ -402,7 +403,7 @@ bool TransProcess::CheckDisconnectionAbility(OneObject* OB, int LParam, int RPar
 		return true;
 	};
 };
-bool TransProcess::Disconnect(OneObject* OB, int LParam, int RParam) {
+bool TransProcess::Disconnect(OneObject* OB, intptr_t LParam, intptr_t RParam) {
 	if (LParam == 0x1234)return true;
 	if (OB->Index == TransportID) {
 		KillAnyway();
@@ -448,25 +449,25 @@ void TransProcess::KillAnyway() {
 	GLOB->Data = NULL;
 	free(GLOB);
 };
-bool TRP_CheckDisconnectionAbility(OneObject* OB, GOrder* GOR, int LParam, int RParam) {
+bool TRP_CheckDisconnectionAbility(OneObject* OB, GOrder* GOR, intptr_t LParam, intptr_t RParam) {
 	TransProcess* TRP = (TransProcess*)GOR->Data;
 	return TRP->CheckDisconnectionAbility(OB, LParam, RParam);
 };
-bool TRP_Disconnect(OneObject* OB, GOrder* GOR, int LParam, int RParam) {
+bool TRP_Disconnect(OneObject* OB, GOrder* GOR, intptr_t LParam, intptr_t RParam) {
 	TransProcess* TRP = (TransProcess*)GOR->Data;
 	return TRP->Disconnect(OB, LParam, RParam);
 };
-bool TRP_KillOrder(OneObject* OB, GOrder* GOR, int LParam, int RParam) {
+bool TRP_KillOrder(OneObject* OB, GOrder* GOR, intptr_t LParam, intptr_t RParam) {
 	TransProcess* TRP = (TransProcess*)GOR->Data;
 	TRP->KillAnyway();
 	return true;
 };
 TransProcess::TransProcess() {
 	Used = false;
-	GLOB = false;
+	GLOB = NULL;
 };
 void TRP_LHandle(int Param) {
-	TransProcess* TRP = (TransProcess*)Param;
+	TransProcess* TRP = (TransProcess*)(intptr_t)Param;
 	if (TRP->Used)TRP->KillAnyway();
 };
 int TRP_IconInfo(GOrder* GOR, int IcoIndex, OneObject* OB, GlobalIconInfo* GIN) {
@@ -475,7 +476,7 @@ int TRP_IconInfo(GOrder* GOR, int IcoIndex, OneObject* OB, GlobalIconInfo* GIN) 
 		GIN->IconSpriteID = -1;
 		GIN->HPLeft = &TRP_LHandle;
 		GIN->HPRight = NULL;
-		GIN->LParam = int(TRP);
+		GIN->LParam = (intptr_t)(TRP);
 		GIN->RParam = 0;
 		GIN->Hint = TransHint;
 		return 1;
@@ -1169,7 +1170,7 @@ bool OneObject::GoToTransport(word ID, byte Prio) {
 	if (LocalOrder&&LocalOrder->OrderType == 243
 		&& LocalOrder->info.BuildObj.ObjIndex == ID)return true;
 	Order1* Or1 = CreateOrder(0);
-	if (!int(Or1))return false;
+	if (!(intptr_t)(Or1))return false;
 	Or1->PrioryLevel = Prio & 127;
 	Or1->OrderType = 243;
 	Or1->OrderTime = 0;

@@ -20,15 +20,21 @@ void Hline(int x, int y, int xend, byte c) {
 		if (xend < WindX)xr = WindX; else xr = xend;
 		if (x > WindX1)Lxr = WindX1 - xr + 1; else Lxr = x - xr + 1;
 	};
-	int scr = int(ScreenPtr) + xr + y * ScrWidth;
 	if (Lxr <= 0)return;
-	__asm {
-		mov		edi, scr
-		mov		al, c
-		mov		ecx, Lxr
-		cld
-		rep		stosb
-	};
+#ifdef _MSC_VER
+	{
+		int scr = int(ScreenPtr) + xr + y * ScrWidth;
+		__asm {
+			mov		edi, scr
+			mov		al, c
+			mov		ecx, Lxr
+			cld
+			rep		stosb
+		};
+	}
+#else
+	memset((byte*)ScreenPtr + xr + y * ScrWidth, c, Lxr);
+#endif
 };
 void Vline(int x, int y, int yend, byte c) {
 	if (x<WindX || x>WindX1)return;
@@ -45,19 +51,31 @@ void Vline(int x, int y, int yend, byte c) {
 		if (yend < WindY)yr = WindY; else yr = yend;
 		if (y > WindY1)Lyr = WindY1 - yr + 1; else Lyr = y - yr + 1;
 	};
-	int scr = int(ScreenPtr) + x + yr * ScrWidth;
 	if (Lyr <= 0)return;
-	__asm {
-		mov		edi, scr
-		mov		al, c
-		mov		ecx, Lyr
-		mov		edx, ScrWidth
-		dec		edx
-		cld
-		uuuuu : stosb
-		add		edi, edx
-		loop	uuuuu
-	};
+#ifdef _MSC_VER
+	{
+		int scr = int(ScreenPtr) + x + yr * ScrWidth;
+		__asm {
+			mov		edi, scr
+			mov		al, c
+			mov		ecx, Lyr
+			mov		edx, ScrWidth
+			dec		edx
+			cld
+			uuuuu : stosb
+			add		edi, edx
+			loop	uuuuu
+		};
+	}
+#else
+	{
+		byte* dst = (byte*)ScreenPtr + x + yr * ScrWidth;
+		for (int i = 0; i < Lyr; i++) {
+			*dst = c;
+			dst += ScrWidth;
+		}
+	}
+#endif
 };
 void Xbar(int x, int y, int lx, int ly, byte c) {
 	Hline(x, y, x + lx - 1, c);
@@ -119,6 +137,7 @@ void DrawLine(int x, int y, int x1, int y1, byte c) {
 	if (GetXKind(x) | GetXKind(x1) | GetYKind(y) | GetYKind(y1))return;
 	int Lx = x1 - x;
 	int Ly;
+#ifdef _MSC_VER
 	int ofst = int(ScreenPtr) + x + y * ScrWidth;
 	if (y < y1) {
 		Ly = y1 - y;
@@ -210,4 +229,48 @@ void DrawLine(int x, int y, int x1, int y1, byte c) {
 			};
 		};
 	};
+#else
+	{
+		byte* pDst = (byte*)ScreenPtr + x + y * ScrWidth;
+		if (y < y1) {
+			Ly = y1 - y;
+			if (Lx < Ly) {
+				int error = Ly >> 1;
+				for (int i = 0; i <= Ly; i++) {
+					*pDst = c;
+					pDst += ScrWidth;
+					error -= Lx;
+					if (error <= 0) { error += Ly; pDst++; }
+				}
+			} else {
+				int error = Lx >> 1;
+				for (int i = 0; i <= Lx; i++) {
+					*pDst = c;
+					pDst++;
+					error -= Ly;
+					if (error <= 0) { error += Lx; pDst += ScrWidth; }
+				}
+			}
+		} else {
+			Ly = y - y1;
+			if (Lx < Ly) {
+				int error = Ly >> 1;
+				for (int i = 0; i <= Ly; i++) {
+					*pDst = c;
+					pDst -= ScrWidth;
+					error -= Lx;
+					if (error <= 0) { error += Ly; pDst++; }
+				}
+			} else {
+				int error = Lx >> 1;
+				for (int i = 0; i <= Lx; i++) {
+					*pDst = c;
+					pDst++;
+					error -= Ly;
+					if (error <= 0) { error += Lx; pDst -= ScrWidth; }
+				}
+			}
+		}
+	}
+#endif
 };

@@ -3,6 +3,9 @@
 #include "CommCore.h"
 #include <stdlib.h>
 #include <stdio.h>
+#ifndef _WIN32
+    #include "platform.h"
+#endif
 
 // ---------------------------------------------------------------------------------------------
 
@@ -130,6 +133,17 @@ BOOL CCommCore::SetUserData( const LPBYTE lpcbUserData, u_short uUserDataSize )
 
 	memcpy( m_lpbUserData, lpcbUserData, uUserDataSize );
 
+	// Keep m_PeerList[0] in sync so SendServerList() sends current data
+	if (m_bServer && m_uPeerCount > 0)
+	{
+		if (m_PeerList[0].m_lpbUserData)
+			free( m_PeerList[0].m_lpbUserData );
+		m_PeerList[0].m_lpbUserData = (LPBYTE) malloc( uUserDataSize );
+		m_PeerList[0].m_uUserDataSize = uUserDataSize;
+		m_PeerList[0].m_dwUserDataTag = uUserDataSize ? 1 : 0;
+		memcpy( m_PeerList[0].m_lpbUserData, lpcbUserData, uUserDataSize );
+	}
+
 	return TRUE;//SendUserData();
 }
 
@@ -155,6 +169,7 @@ BOOL CCommCore::SendUserData()
 
 		memcpy( m_PeerList[0].m_lpbUserData, m_lpbUserData, m_uUserDataSize );
 		m_PeerList[0].m_uUserDataSize = m_uUserDataSize;
+		m_PeerList[0].m_dwUserDataTag = m_uUserDataSize ? 1 : 0;  // non-zero tag signals "has data" on wire
 
 		//		return SendServerList();
 		return SendNewData( m_piNumber );
@@ -263,7 +278,7 @@ BOOL CCommCore::SendToPeer( PEER_ID piNumber, LPBYTE lpbBuffer, u_short uSize, B
 
 // ---------------------------------------------------------------------------------------------
 
-BOOL CCommCore::SendConfirmDataPacket( sockaddr_in *lpSender, u_long lStamp )
+BOOL CCommCore::SendConfirmDataPacket( sockaddr_in *lpSender, wire_u32 lStamp )
 {
 	_log_message( "SendConfirmDataPacket()" );
 
@@ -310,6 +325,10 @@ BOOL CCommCore::SendConnectReject( sockaddr_in *lpSender, u_short uReason )
 BOOL CCommCore::SendConnectOk( sockaddr_in *lpSender, PEER_ID PeerId )
 {
 	_log_message( "SendConnectOk()" );
+
+	fprintf(stderr, "[CC] SendConnectOk to %s:%u peerId=%u session='%s' options=%u\n",
+		inet_ntoa(lpSender->sin_addr), ntohs(lpSender->sin_port),
+		PeerId, m_szSessionName, m_dwOptions);
 
 	CC_PK_CONNECT_OK	ConnectOkPacket;
 
@@ -358,6 +377,7 @@ VOID CCommCore::SetCommCoreUID( LPCSTR lpcszCCUID )
 {
 	_log_message( "SetCommCoreUID()" );
 
+#ifdef _WIN32
 	HKEY	hKey;
 
 	RegCreateKeyEx( HKEY_CURRENT_USER,
@@ -367,6 +387,9 @@ VOID CCommCore::SetCommCoreUID( LPCSTR lpcszCCUID )
 	RegSetValueEx( hKey, "CCUID", 0, REG_SZ, (unsigned char*) lpcszCCUID, strlen( lpcszCCUID ) + 1 );
 
 	RegCloseKey( hKey );
+#else
+	platform_config_write( "CCUID", lpcszCCUID );
+#endif
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -392,13 +415,14 @@ VOID CCommCore::NewCommCoreUID( LPSTR lpszCCUID )
 
 	srand( dwTicks );
 
-	iRand = rand();
+	iRand = rand() & 0xFFFF;
 
 	sprintf( szCCUID, "%-8.8s-%8.8X-%4.4X", szComputerName, dwTicks, iRand );
 
 	SetCommCoreUID( szCCUID );
 
-	strcpy( lpszCCUID, szCCUID );
+	strncpy( lpszCCUID, szCCUID, 22 );
+	lpszCCUID[22] = '\0';
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -407,6 +431,7 @@ VOID CCommCore::GetCommCoreUID( LPSTR lpszCCUID )
 {
 	_log_message( "GetCommCoreUID()" );
 
+#ifdef _WIN32
 	HKEY	hKey;
 	CHAR	szCCUID[64];
 	DWORD	dwSize = 64;
@@ -435,7 +460,18 @@ VOID CCommCore::GetCommCoreUID( LPSTR lpszCCUID )
 
 	RegCloseKey( hKey );
 
-	strcpy( lpszCCUID, szCCUID );
+	strncpy( lpszCCUID, szCCUID, 22 );
+	lpszCCUID[22] = '\0';
+#else
+	CHAR	szCCUID[64];
+	if (!platform_config_read( "CCUID", szCCUID, 64 ))
+	{
+		NewCommCoreUID( lpszCCUID );
+		return;
+	}
+	strncpy( lpszCCUID, szCCUID, 22 );
+	lpszCCUID[22] = '\0';
+#endif
 }
 
 // ---------------------------------------------------------------------------------------------

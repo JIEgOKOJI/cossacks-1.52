@@ -5,7 +5,13 @@
 #include "cdirsnd.h"
 #include <stdio.h>
 #include <math.h>
-#include <windows.h>
+#ifdef _WIN32
+    #include <windows.h>
+#else
+    #include "platform.h"
+#endif
+
+extern void dbglog(const char* fmt, ...);
 #include <string>
 
 static void ConvertUTF8ToWindows1251(const char* utf8Str, char* outBuf, int outBufSize) {
@@ -43,10 +49,15 @@ static void CreateWAVHeader(LPWAVEFORMATEX format, DWORD dataSize, char* headerB
 }
 
 void CDirSound::CreateDirSound(HWND hWnd) {
+    dbglog("    CreateDirSound: entered, this=%p, sizeof(CDirSound)=%u\n", (void*)this, (unsigned)sizeof(CDirSound));
     m_hWindow = hWnd;
+    dbglog("    CreateDirSound: m_hWindow set\n");
     m_pDirectSoundObj = NULL;
     m_currentBufferNum = 0;
-    m_iniPath = "dd.ini";
+    dbglog("    CreateDirSound: before m_iniPath assignment\n");
+    strncpy(m_iniPath, "dd.ini", sizeof(m_iniPath) - 1);
+    m_iniPath[sizeof(m_iniPath) - 1] = '\0';
+    dbglog("    CreateDirSound: m_iniPath set, starting array init (%d elements)\n", MAXSND1);
 
     for (UINT x = 0; x < MAXSND1; ++x) {
         m_bufferPointers[x] = NULL;
@@ -57,23 +68,32 @@ void CDirSound::CreateDirSound(HWND hWnd) {
         SrcX[x] = 0;
         SrcY[x] = 0;
     }
+    dbglog("    CreateDirSound: arrays init done\n");
 
+    dbglog("    CreateDirSound: SDL_Init(SDL_INIT_AUDIO)...\n");
     if (SDL_Init(SDL_INIT_AUDIO) < 0) {
+        dbglog("    CreateDirSound: SDL_Init(AUDIO) failed: %s, trying dummy...\n", SDL_GetError());
         SDL_setenv("SDL_AUDIODRIVER", "dummy", 1);
         if (SDL_Init(SDL_INIT_AUDIO) < 0) {
+            dbglog("    CreateDirSound: SDL_Init(AUDIO) dummy also failed: %s\n", SDL_GetError());
             return;
         }
     }
+    dbglog("    CreateDirSound: SDL_Init(AUDIO) OK\n");
 
+    dbglog("    CreateDirSound: Mix_OpenAudio...\n");
     if (Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 2048) < 0) {
+        dbglog("    CreateDirSound: Mix_OpenAudio failed: %s, trying dummy...\n", Mix_GetError());
         SDL_QuitSubSystem(SDL_INIT_AUDIO);
         SDL_setenv("SDL_AUDIODRIVER", "dummy", 1);
         if (SDL_InitSubSystem(SDL_INIT_AUDIO) < 0 ||
             Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 2048) < 0) {
+            dbglog("    CreateDirSound: dummy audio also failed\n");
             SDL_Quit();
             return;
         }
     }
+    dbglog("    CreateDirSound: Mix_OpenAudio OK\n");
 
     m_pDirectSoundObj = (void*)1;
     Mix_AllocateChannels(MAXSND1);
@@ -81,8 +101,8 @@ void CDirSound::CreateDirSound(HWND hWnd) {
 }
 
 
-void CDirSound::InitAudio(const std::string& iniPath) {
-    int pos = GetPrivateProfileIntA("Audio Options", "MusicVolume", MaxSlider, iniPath.c_str());
+void CDirSound::InitAudio(const char* iniPath) {
+    int pos = GetPrivateProfileIntA("Audio Options", "MusicVolume", MaxSlider, iniPath);
     UpdateMusicVolume(pos);
 }
 
@@ -463,7 +483,7 @@ void CDirSound::SetGlobalSoundVolume(int vol) {
 }
 
 void CDirSound::SetGlobalMusicVolume(int vol) {
-    WritePrivateProfileStringA("Audio Options", "MusicVolume", std::to_string(vol).c_str(), m_iniPath.c_str());
+    WritePrivateProfileStringA("Audio Options", "MusicVolume", std::to_string(vol).c_str(), m_iniPath);
     UpdateMusicVolume(vol);
 }
 

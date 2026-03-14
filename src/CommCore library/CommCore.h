@@ -23,21 +23,34 @@
 #ifndef _COMM_CORE_H_INCLUDED_
 #define _COMM_CORE_H_INCLUDED_
 
-#if _MSC_VER > 1000
+#if defined(_MSC_VER) && _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
+#endif
 
-#include <Winsock2.h>
-#include <WS2tcpip.h>
-#include <Windows.h>
+#ifdef _WIN32
+    #include <Winsock2.h>
+    #include <WS2tcpip.h>
+    #include <Windows.h>
+#else
+    #include "platform.h"
+#endif
+
 #include <assert.h>
+#include <stdint.h>
 #ifdef CC_DEBUG
 #include <stdio.h>
 #endif //CC_DEBUG
 
-#pragma warning (disable : 4200)
+#ifdef _MSC_VER
+    #pragma warning (disable : 4200)
+#endif
 
 #pragma pack(1)
+
+// Fixed-width types for wire format — ensures identical layout on all platforms.
+// u_long is 4 bytes on Windows (LLP64) but 8 bytes on macOS/Linux 64-bit (LP64).
+// All network structures MUST use these types instead of u_long.
+typedef uint32_t wire_u32;  // replaces u_long in packet headers
 
 // ---------------------------------------------------------------------------------------------
 
@@ -74,14 +87,24 @@ typedef struct PEER_ENTRY
 	PEER_ADDR	m_ex_Addr;						// Внешний адрес хоста (или NAT-а)
 	PEER_PORT	m_ex_Port;						// Внешний порт хоста (или NAT-а)
 	PEER_ID		m_Id;							// Идентификатор хоста в списке сервера
-	BOOL		m_bAlive;						// Доступен ли хост на данный момент
-	BOOL		m_bOverNAT;						// Находится ли хост за NAT-ом по отношению к серверу
+	int32_t		m_bAlive;						// Доступен ли хост на данный момент (wire: fixed 4 bytes)
+	int32_t		m_bOverNAT;						// Находится ли хост за NAT-ом по отношению к серверу (wire: fixed 4 bytes)
 	u_short		m_uLatency;						// Время ответа хоста
 	CHAR		m_szUserName[MAX_HOST_NAME];	// Название хоста / пользователя
 	u_short		m_uUserDataSize;				// Размер пользовательских данных
-	LPBYTE		m_lpbUserData;					// Указатель на пользовательские данные
+	uint32_t	m_dwUserDataTag;				// Reserved tag (was pointer; NOT serialized as pointer — fixed 4 bytes on wire)
 	CHAR		m_szCCUID[23];					// Глобальный идентификатор хоста
+	// Runtime-only pointer, NOT part of wire format:
+	LPBYTE		m_lpbUserData;					// Указатель на пользовательские данные
 } *LPPEER_ENTRY;
+
+// Wire sizes: fixed constants independent of sizeof(pointer)
+// PEER_ENTRY wire = everything up to and including m_szCCUID, excluding m_lpbUserData pointer.
+// Layout: m_ex_Addr(4) + m_ex_Port(2) + m_Id(2) + m_bAlive(4) + m_bOverNAT(4) +
+//         m_uLatency(2) + m_szUserName(32) + m_uUserDataSize(2) + m_dwUserDataTag(4) + m_szCCUID(23) = 79
+#define PEER_ENTRY_WIRE_SIZE  79
+// CC_PK_RAW_FRAME header = m_lProto(4) + m_uType(2) + m_lStamp(4) + m_PeerId(2) = 12
+#define RAW_FRAME_HEADER_SIZE  12
 
 // ---------------------------------------------------------------------------------------------
 // Типы пакетов (указываются в заголовке)
@@ -133,9 +156,9 @@ enum SessionState
 // Общий вид кадра для протокола
 typedef struct CC_PK_RAW_FRAME
 {
-	u_long	m_lProto;				// Тип протокола
+	wire_u32	m_lProto;				// Тип протокола
 	u_short	m_uType;				// Тип пакета
-	u_long	m_lStamp;				// Уникальный номер пакета; 0, если не требуется подтверждение
+	wire_u32	m_lStamp;				// Уникальный номер пакета; 0, если не требуется подтверждение
 	PEER_ID	m_PeerId;				// Идентификатор отправителя
 // ----------------------------------
 	BYTE	m_bData[];				// Специфические для пакета данные переменной длины
@@ -144,7 +167,7 @@ typedef struct CC_PK_RAW_FRAME
 // CC_PT_FRAME_CONFIRM
 typedef struct CC_PK_FRAME_CONFIRM
 {
-	u_long	m_lConfirmStamp;		// Уникальный номер пакета, подтверждающий прием
+	wire_u32	m_lConfirmStamp;		// Уникальный номер пакета, подтверждающий прием
 } *LPCC_PK_FRAME_CONFIRM;
 
 // CC_PT_SEND_DATA
@@ -432,7 +455,7 @@ protected:
 
 	SOCKET		m_DataSocket;						// Сокет, обслуживающий пользовательские сообщения
 
-	u_long		m_lStamp;							// Автоинкрементный счетчик пакетов
+	wire_u32	m_lStamp;							// Автоинкрементный счетчик пакетов
 
 	BOOL		m_bServer;							// Является ли хост сервером
 	PEER_ID		m_piNumber;							// Идентификатор хоста в списке сервера
@@ -481,11 +504,11 @@ protected:
 	VOID Cleanup();
 
 	BOOL QueueDropPacket( int iFrameNum );
-	BOOL QueueDropConfirmedPacket( u_long lStamp );
+	BOOL QueueDropConfirmedPacket( wire_u32 lStamp );
 	BOOL QueueClearAll();
-	BOOL QueuePacketExists( u_long lStamp );
+	BOOL QueuePacketExists( wire_u32 lStamp );
 
-	BOOL SendConfirmDataPacket( sockaddr_in * lpSender, u_long lStamp );
+	BOOL SendConfirmDataPacket( sockaddr_in * lpSender, wire_u32 lStamp );
 	BOOL SendConnectReject( sockaddr_in *lpSender, u_short uReason );
 	BOOL SendConnectOk( sockaddr_in *lpSender, PEER_ID PeerId );
 	BOOL SendDropOk( sockaddr_in *lpSender );
@@ -500,6 +523,8 @@ protected:
 	// ---------------------------------------------------------------------------------------------
 };
 
-#pragma warning (default : 4200)
+#ifdef _MSC_VER
+    #pragma warning (default : 4200)
+#endif
 
 #endif // _COMM_CORE_H_INCLUDED_

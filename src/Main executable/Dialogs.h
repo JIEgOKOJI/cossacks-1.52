@@ -58,7 +58,7 @@ public:
 	short MouseSound;
 	short ClickSound;
 	int x, y, x1, y1;
-	int UserParam;
+	intptr_t UserParam;
 	char* Hint;
 	char* AllocPtr;
 	SimpleDialog* Parent;
@@ -93,7 +93,7 @@ public:
 	SQPicture* ActivePicture;
 	SQPicture* DisabledPicture;
 	bool Transparent : 1;
-	Picture() { SimpleDialog; };
+	Picture() {};
 };
 class DIALOGS_API RLCPicture :public SimpleDialog {
 public:
@@ -586,7 +586,7 @@ public:
 	CustomBox* addCustomBox(int x, int y, int Lx, int Ly, procDrawBoxElement* PDRAW);
 	InputBox* addInputBox(SimpleDialog* Parent, int x, int y, char* str, int Len, SQPicture* Panel, RLCFont* RFont, RLCFont* AFont);
 	InputBox* addInputBox(SimpleDialog* Parent, int x, int y, char* str, int Len, int Lx, int Ly, RLCFont* RFont, RLCFont* AFont, bool Centering);
-	InputBox* DialogsSystem::addInputBox(SimpleDialog* Parent,
+	InputBox* addInputBox(SimpleDialog* Parent,
 		int x, int y, char* str,
 		int Len,
 		int Lx, int Ly,
@@ -598,7 +598,7 @@ public:
 		SQPicture* OffPict,
 		RLCFont* Font,
 		RLCFont* AFont);
-	CheckBox* DialogsSystem::addGP_CheckBox(SimpleDialog* Parent,
+	CheckBox* addGP_CheckBox(SimpleDialog* Parent,
 		int x, int y, char* message, RLCFont* a_font, RLCFont* p_font,
 		int group, bool State,
 		int GP, int active, int passive, int mouseover);

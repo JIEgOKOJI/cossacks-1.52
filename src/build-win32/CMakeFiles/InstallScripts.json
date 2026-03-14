@@ -1,0 +1,10 @@
+{
+	"InstallScripts" : 
+	[
+		"/Users/ildarkarimov/Documents/cossacks-1.52/src/build-win32/cmake_install.cmake",
+		"/Users/ildarkarimov/Documents/cossacks-1.52/src/build-win32/platform/cmake_install.cmake",
+		"/Users/ildarkarimov/Documents/cossacks-1.52/src/build-win32/CommCore library/cmake_install.cmake",
+		"/Users/ildarkarimov/Documents/cossacks-1.52/src/build-win32/Main executable/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

@@ -1,6 +1,10 @@
 // Packet receiveing & processing routines
 //
 #include "CommCore.h"
+#include <stdio.h>
+#ifndef _WIN32
+#include <errno.h>
+#endif
 
 // ---------------------------------------------------------------------------------------------
 
@@ -9,7 +13,11 @@ u_short CCommCore::ReceiveData(LPBYTE lpbBuffer, LPPEER_ID lpPeerId)
 	sockaddr_in					SenderAddr;
 	LPCC_PK_RAW_FRAME			lpFrame;
 	u_short						uPeer;
+#ifdef _WIN32
 	int							SenderLength=sizeof(sockaddr_in);
+#else
+	socklen_t					SenderLength=sizeof(sockaddr_in);
+#endif
 	u_short						PeerNum;
 	int							i;
 
@@ -25,8 +33,8 @@ u_short CCommCore::ReceiveData(LPBYTE lpbBuffer, LPPEER_ID lpPeerId)
 	LPCC_PK_SEND_NEW_NAME		lpSendNewName;
 	LPCC_PK_SEND_NEW_DATA		lpSendNewData;
 
+#ifdef _WIN32
 	u_long		lDataSize;
-
 	ioctlsocket(m_DataSocket,FIONREAD,&lDataSize);
 
 	if(!lDataSize)
@@ -41,6 +49,33 @@ u_short CCommCore::ReceiveData(LPBYTE lpbBuffer, LPPEER_ID lpPeerId)
 					(sockaddr *)&SenderAddr,
 					&SenderLength)==SOCKET_ERROR)
 		return 0x00;
+#else
+	if (m_DataSocket <= 0)
+		return 0x00;
+
+	memset(&SenderAddr, 0, sizeof(SenderAddr));
+	SenderLength = sizeof(sockaddr_in);
+
+	ssize_t recvResult = recvfrom(m_DataSocket,
+					(char *)m_lpbRecvBuffer,
+					RECV_BUFFER_LENGTH,
+					0x00,
+					(sockaddr *)&SenderAddr,
+					&SenderLength);
+	if(recvResult < 0) {
+		int e = errno;
+		if (e != EAGAIN && e != EWOULDBLOCK)
+			fprintf(stderr, "[CC] recvfrom error: errno=%d (%s)\n", e, strerror(e));
+		return 0x00;
+	}
+	if(recvResult == 0)
+		return 0x00;
+
+	fprintf(stderr, "[CC] RECV %zd bytes from %s:%u\n",
+		recvResult, inet_ntoa(SenderAddr.sin_addr), ntohs(SenderAddr.sin_port));
+
+	m_dwRxBytes += recvResult;
+#endif
 
 	m_dwLastPacketTime=GetTickCount();
 
@@ -77,18 +112,24 @@ u_short CCommCore::ReceiveData(LPBYTE lpbBuffer, LPPEER_ID lpPeerId)
 
 	sprintf(szMsg,"     PeerId:	%u",lpFrame->m_PeerId);
 	DebugMessage(szMsg);
-
-	sprintf(szMsg,"     Size:	%u",lDataSize);
-	DebugMessage(szMsg);
 #endif //CC_DEBUG
 
-	if(lpFrame->m_lProto!=PROTO_ID)
+	fprintf(stderr, "[CC] RECV type=0x%02x proto=0x%08x stamp=%u peerid=%u from=%s:%u\n",
+		lpFrame->m_uType, lpFrame->m_lProto, lpFrame->m_lStamp,
+		lpFrame->m_PeerId, inet_ntoa(SenderAddr.sin_addr), ntohs(SenderAddr.sin_port));
+
+	if(lpFrame->m_lProto!=PROTO_ID) {
+		fprintf(stderr, "[CC] REJECT: bad proto 0x%08x (expected 0x%08x)\n", lpFrame->m_lProto, PROTO_ID);
 		return 0x00;
+	}
 
 	if(	(lpFrame->m_PeerId!=BAD_PEER_ID)&&
 		(GetPeerById(lpFrame->m_PeerId)==BAD_PEER_ID)&&
 		(m_uPeerCount!=0)
-	)	return 0x00;
+	) {
+		fprintf(stderr, "[CC] REJECT: unknown peer %u (peerCount=%u)\n", lpFrame->m_PeerId, m_uPeerCount);
+		return 0x00;
+	}
 
 	if(lpFrame->m_lStamp)
 		SendConfirmDataPacket(&SenderAddr,lpFrame->m_lStamp);
@@ -113,6 +154,7 @@ u_short CCommCore::ReceiveData(LPBYTE lpbBuffer, LPPEER_ID lpPeerId)
 				return 0x00;
 
 			lpConnectReject=(LPCC_PK_CONNECT_REJECT)lpFrame->m_bData;
+			fprintf(stderr, "[CC] CONNECT_REJECT received! reason=%u\n", lpConnectReject->m_uReason);
 			m_csState=csRejected;
 			m_uRejectReason=lpConnectReject->m_uReason;
 			return 0x00;
@@ -126,10 +168,15 @@ u_short CCommCore::ReceiveData(LPBYTE lpbBuffer, LPPEER_ID lpPeerId)
 			m_piNumber=lpConnectOk->m_Id;
 			strcpy(m_szSessionName,lpConnectOk->m_szSessionName);
 			m_dwOptions=lpConnectOk->m_dwOptions;
+			fprintf(stderr, "[CC] CONNECT_OK received! id=%u session='%s' options=%u\n",
+				lpConnectOk->m_Id, lpConnectOk->m_szSessionName, lpConnectOk->m_dwOptions);
 			return 0x00;
 			break;			
 		case CC_PT_TRY_CONNECT		:
 			lpTryConnect=(LPCC_PK_TRY_CONNECT)lpFrame->m_bData;
+			fprintf(stderr, "[CC] TRY_CONNECT from %s:%u user='%s' proto=%d addrs=%u\n",
+				inet_ntoa(SenderAddr.sin_addr), ntohs(SenderAddr.sin_port),
+				lpTryConnect->m_szUserName, lpTryConnect->m_cProtoVersion, lpTryConnect->m_uAddrCount);
 			if(!m_bServer){
 				SendConnectReject(&SenderAddr,CE_NOT_SERVER);
 				return 0x00;
@@ -161,6 +208,7 @@ u_short CCommCore::ReceiveData(LPBYTE lpbBuffer, LPPEER_ID lpPeerId)
 			m_PeerList[m_uPeerCount].m_ex_Port=SenderAddr.sin_port;
 			m_PeerList[m_uPeerCount].m_Id=++m_piAutoInc;
 			m_PeerList[m_uPeerCount].m_uLatency=0;
+			m_PeerList[m_uPeerCount].m_dwUserDataTag=0;
 			m_PeerList[m_uPeerCount].m_lpbUserData=NULL;
 			m_PeerList[m_uPeerCount].m_uUserDataSize=0;
 			strcpy(m_PeerList[m_uPeerCount].m_szUserName,lpTryConnect->m_szUserName);
@@ -256,6 +304,7 @@ u_short CCommCore::ReceiveData(LPBYTE lpbBuffer, LPPEER_ID lpPeerId)
 
 			memcpy(m_PeerList[uPeer].m_lpbUserData,lpUserData->m_UserData,lpUserData->m_uUserDataSize);
 			m_PeerList[uPeer].m_uUserDataSize=lpUserData->m_uUserDataSize;
+			m_PeerList[uPeer].m_dwUserDataTag=lpUserData->m_uUserDataSize ? 1 : 0;
 //LOOK->SendNewData()
 //			SendServerList();
 			SendNewData(lpFrame->m_PeerId);
@@ -296,6 +345,7 @@ u_short CCommCore::ReceiveData(LPBYTE lpbBuffer, LPPEER_ID lpPeerId)
 			assert(m_PeerList[uPeer].m_lpbUserData);
 
 			m_PeerList[uPeer].m_uUserDataSize=lpSendNewData->m_uUserDataSize;
+			m_PeerList[uPeer].m_dwUserDataTag=lpSendNewData->m_uUserDataSize ? 1 : 0;
 
 			memcpy(	m_PeerList[uPeer].m_lpbUserData,
 					lpSendNewData->m_UserData,

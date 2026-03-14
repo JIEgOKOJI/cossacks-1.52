@@ -37,7 +37,7 @@
 #include "GSINC.H"
 #include "TopoGraf.h"
 
-#include "CEngine\goaceng.h"
+#include "CEngine/goaceng.h"
 #include "StrategyResearch.h"
 #include "Safety.h"
 #include "EinfoClass.h"
@@ -86,6 +86,15 @@ void InitDipFunctions();
 
 __declspec( dllexport ) void StartExplorer()
 {
+	// IntExplorer.dll is for GameSpy internet browser (no longer operational).
+	// Original MSVC-compiled DLL imports symbols from dmcr.exe that may not
+	// match our MinGW build, causing "entry point not found" errors.
+	// Skip loading entirely — LAN multiplayer works without it.
+#ifndef _MSC_VER
+	InitDipFunctions();
+	return;
+#endif
+
 	//attempt to use advanced version
 	ResFile F = RReset( "Internet\\Cash\\IntExplorerNew.dll" );
 	if (F != INVALID_HANDLE_VALUE)

@@ -45,5 +45,6 @@ public:
 	SingleAI_Desc* Ai;
 	AI_Description();
 	~AI_Description();
+	void Init();
 };
 extern AI_Description GlobalAI;

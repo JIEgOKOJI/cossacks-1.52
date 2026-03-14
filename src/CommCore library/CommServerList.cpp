@@ -1,6 +1,7 @@
 // Server list processing, sending and receiving
 //
 #include "CommCore.h"
+#include <string.h>
 
 // ---------------------------------------------------------------------------------------------
 
@@ -19,7 +20,7 @@ BOOL CCommCore::SendServerList()
 	for (i = 0; i < m_uPeerCount; i++)
 		iUserDataSize += m_PeerList[i].m_uUserDataSize;
 
-	iServerListSize = sizeof(CC_PK_SERVER_LIST) + m_uPeerCount * sizeof(PEER_ENTRY) + iUserDataSize;
+	iServerListSize = sizeof(CC_PK_SERVER_LIST) + m_uPeerCount * PEER_ENTRY_WIRE_SIZE + iUserDataSize;
 
 	lpServerList = (LPCC_PK_SERVER_LIST)malloc(iServerListSize);
 	assert(lpServerList);
@@ -30,10 +31,11 @@ BOOL CCommCore::SendServerList()
 	lpbOffset = lpServerList->m_PeerList;
 
 	for (i = 0; i < m_uPeerCount; i++) {
-		memcpy(lpbOffset, &m_PeerList[i], sizeof(PEER_ENTRY));
+		// Serialize PEER_ENTRY to wire format (fixed 79 bytes, no pointer)
+		memcpy(lpbOffset, &m_PeerList[i], PEER_ENTRY_WIRE_SIZE);
 		if (m_PeerList[i].m_lpbUserData)
-			memcpy(lpbOffset + sizeof(PEER_ENTRY), m_PeerList[i].m_lpbUserData, m_PeerList[i].m_uUserDataSize);
-		lpbOffset += sizeof(PEER_ENTRY) + m_PeerList[i].m_uUserDataSize;
+			memcpy(lpbOffset + PEER_ENTRY_WIRE_SIZE, m_PeerList[i].m_lpbUserData, m_PeerList[i].m_uUserDataSize);
+		lpbOffset += PEER_ENTRY_WIRE_SIZE + m_PeerList[i].m_uUserDataSize;
 	};
 
 	for (i = 1; i < m_uPeerCount; i++)
@@ -84,14 +86,17 @@ BOOL CCommCore::ProcessServerList(LPCC_PK_SERVER_LIST lpServerList)
 	lpbOffset = lpServerList->m_PeerList;
 
 	for (i = 0; i < m_uPeerCount; i++) {
-		memcpy(&m_PeerList[i], lpbOffset, sizeof(PEER_ENTRY));
-		if (m_PeerList[i].m_lpbUserData) {
+		// Deserialize wire format (79 bytes) into PEER_ENTRY
+		memset(&m_PeerList[i], 0, sizeof(PEER_ENTRY));
+		memcpy(&m_PeerList[i], lpbOffset, PEER_ENTRY_WIRE_SIZE);
+		m_PeerList[i].m_lpbUserData = NULL;
+		if (m_PeerList[i].m_uUserDataSize > 0 && m_PeerList[i].m_dwUserDataTag != 0) {
 			m_PeerList[i].m_lpbUserData = (LPBYTE)malloc(m_PeerList[i].m_uUserDataSize);
 			assert(m_PeerList[i].m_lpbUserData);
-			memcpy(m_PeerList[i].m_lpbUserData, lpbOffset + sizeof(PEER_ENTRY), m_PeerList[i].m_uUserDataSize);
+			memcpy(m_PeerList[i].m_lpbUserData, lpbOffset + PEER_ENTRY_WIRE_SIZE, m_PeerList[i].m_uUserDataSize);
 		};
 
-		lpbOffset += sizeof(PEER_ENTRY) + m_PeerList[i].m_uUserDataSize;
+		lpbOffset += PEER_ENTRY_WIRE_SIZE + m_PeerList[i].m_uUserDataSize;
 	};
 
 	// ----------------------------------------------------------------------

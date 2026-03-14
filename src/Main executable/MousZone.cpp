@@ -1,3 +1,4 @@
+#include <cstdint>
 #include "ddini.h"
 #include "ResFile.h"
 #include "FastDraw.h"
@@ -62,7 +63,7 @@ int CreateRZone(int x, int y, int lx, int ly, HandlePro* HPro, HandlePro* RHPro,
 		Z->MoveOver = NULL;
 		Z->Index = Index;
 		Z->Pressed = false;
-		if (int(Z->Hint))
+		if ((intptr_t)(Z->Hint))
 			free(Z->Hint);
 		Z->Hint = new char[strlen(Hint) + 1];
 		strcpy(Z->Hint, Hint);
@@ -146,7 +147,7 @@ int CreateZone(int x, int y, int lx, int ly, HandlePro* HPro, int Index, char* H
 		Z->Pressed = false;
 		Z->KeyState = 0;
 		Z->ScanCode = 0xFF;
-		if (int(Z->Hint))
+		if ((intptr_t)(Z->Hint))
 			free(Z->Hint);
 		Z->Hint = new char[strlen(Hint) + 1];
 		strcpy(Z->Hint, Hint);
@@ -191,11 +192,11 @@ int CreateZone(int x, int y, int lx, int ly, HandlePro* HPro, int Index, char* H
 		Z->Pressed = false;
 		Z->KeyState = 0;
 		Z->ScanCode = 0xFF;
-		if (int(Z->Hint)) {
+		if ((intptr_t)(Z->Hint)) {
 			free(Z->Hint);
 			Z->Hint = NULL;
 		};
-		if (int(Z->HintLo)) {
+		if ((intptr_t)(Z->HintLo)) {
 			free(Z->HintLo);
 			Z->HintLo = NULL;
 		};
@@ -320,7 +321,7 @@ void ControlZones()
 			{
 				Z->Pressed = true;
 			}
-			if (int(Z->Hint))
+			if ((intptr_t)(Z->Hint))
 			{
 				AssignHint(Z->Hint, 3);
 			}
@@ -328,7 +329,7 @@ void ControlZones()
 			{
 				AssignHintLo(Z->HintLo, 3);
 			}
-			if ((Lpressed || Z->Pressed == 2) && int(Z->Pro))
+			if ((Lpressed || Z->Pressed == 2) && (intptr_t)(Z->Pro))
 			{//Handle mouse clicks?
 				(*Z->Pro)(Z->Index);
 			}

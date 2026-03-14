@@ -1,0 +1,22 @@
+platform/CMakeFiles/platform_compat.dir/msvcrt_compat.c.obj: \
+ /Users/ildarkarimov/Documents/cossacks-1.52/src/platform/msvcrt_compat.c \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/stdlib.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/corecrt.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/_mingw.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/_mingw_mac.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/_mingw_secapi.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/vadefs.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/sdks/_mingw_ddk.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/corecrt_wstdlib.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/lib/gcc/i686-w64-mingw32/15.2.0/include/limits.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/lib/gcc/i686-w64-mingw32/15.2.0/include/syslimits.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/limits.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/crtdefs.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/sec_api/stdlib_s.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/malloc.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/lib/gcc/i686-w64-mingw32/15.2.0/include/mm_malloc.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/errno.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/process.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/corecrt_startup.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/sys/types.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/_mingw_off_t.h

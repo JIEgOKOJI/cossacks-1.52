@@ -20,6 +20,7 @@
 #include "GSINC.H"
 #include "ActiveScenary.h"
 
+#include <cstdint>
 #include <cstring>
 
 extern const int kImportantMessageDisplayTime;
@@ -428,7 +429,7 @@ void ShowProp()
 			if (MID != 0xFFFF)
 			{
 				OBJ = Group[MID];
-				if (int( OBJ ) && !OBJ->Sdoxlo)
+				if ((intptr_t)( OBJ ) && !OBJ->Sdoxlo)
 				{
 					if (OBJ->newMons->Usage == TowerID)
 					{
@@ -1937,8 +1938,8 @@ void LoadMessagesFromFile( char* Name )
 			if (NMess >= MaxMess)
 			{
 				MaxMess += 256;
-				GMessIDS = (lpCHAR*) realloc( GMessIDS, MaxMess * 4 );
-				GMessage = (lpCHAR*) realloc( GMessage, MaxMess * 4 );
+				GMessIDS = (lpCHAR*) realloc( GMessIDS, MaxMess * sizeof(lpCHAR) );
+				GMessage = (lpCHAR*) realloc( GMessage, MaxMess * sizeof(lpCHAR) );
 			}
 
 			Ggetch( f );

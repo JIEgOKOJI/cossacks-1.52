@@ -69,6 +69,7 @@ void ExtrapolateCell(int x, int y)
 		yn = rand() & 63;
 	} while (!(xn > 1 && yn > 1 && xn < smaplx - 1 && yn < smaply - 1 && x != xn && y != yn));
 	//copy
+	#ifdef _MSC_VER
 	int xxx = (x + mapx) & 31;
 	int yyy = (y + mapy) & 31;
 	int src = (xxx << 4) + ((yyy << 9));
@@ -146,6 +147,23 @@ void ExtrapolateCell(int x, int y)
 			pop		esi
 
 	};
+	#else
+	// C fallback for ExtrapolateCell
+	// Copy 8x8 tile from ScWave arrays (256-wide) to Wave arrays (WaveLx-wide)
+	int xxx = (x + mapx) & 31;
+	int yyy = (y + mapy) & 31;
+	int srcBase = (xxx << 3) + (yyy << 8); // element offset in ScWave (256-wide)
+	int dstBase = 8 + (x << 3) + ((y << 3) + 8) * WaveLx; // element offset in Wave (WaveLx-wide)
+	for (int row = 0; row < 8; row++) {
+		for (int col = 0; col < 8; col++) {
+			Wave0[dstBase + col] = ScWave0[srcBase + col];
+			Wave1[dstBase + col] = ScWave1[srcBase + col];
+			Wave2[dstBase + col] = ScWave2[srcBase + col];
+		}
+		srcBase += 256;
+		dstBase += WaveLx;
+	}
+	#endif
 	//for(int i=0;i<8;i++){
 		/*
 		memcpy(Wave0+dst,Wave0+src,16);
@@ -290,9 +308,9 @@ void InitWater()
 			}
 		}
 	}
-	memset(Wave0, WaterLevel, sizeof Wave0);
-	memset(Wave1, WaterLevel, sizeof Wave1);
-	memset(Wave2, WaterLevel, sizeof Wave2);
+	memset(Wave0, WaterLevel, sizeof(Wave0));
+	memset(Wave1, WaterLevel, sizeof(Wave1));
+	memset(Wave2, WaterLevel, sizeof(Wave2));
 	InitWatt();
 	OldMapx = 0;
 	OldMapy = 0;
@@ -300,6 +318,7 @@ void InitWater()
 	CurStage = 0;
 }
 
+#ifdef _MSC_VER
 void ProcessWaves1(short* wave0, short* wave1, short* wave2, int xx, int yy, int Lx, int Ly) {
 	int StWave = (xx + yy * WaveLx) << 1;
 	int DWave = (WaveLx - Lx) << 1;
@@ -340,10 +359,29 @@ void ProcessWaves1(short* wave0, short* wave1, short* wave2, int xx, int yy, int
 		pop		edi
 		pop		esi
 	};
-};
+}
+#else
+void ProcessWaves1(short* wave0, short* wave1, short* wave2, int xx, int yy, int Lx, int Ly) {
+	int pos = xx + yy * WaveLx;
+	for (int row = 0; row < Ly; row++) {
+		for (int col = 0; col < Lx; col++) {
+			int neighbors = (int)wave1[pos + 1] + (int)wave1[pos - 1] +
+			                (int)wave1[pos - WaveLx] + (int)wave1[pos + WaveLx];
+			int center2 = (int)wave1[pos] << 1;
+			short ax = (short)(((short)(neighbors - center2 - center2) >> 3) + center2 - wave0[pos]);
+			// rounding correction: add 1 if negative
+			if (ax < 0) ax++;
+			wave2[pos] = ax;
+			pos++;
+		}
+		pos += WaveLx - Lx;
+	}
+}
+#endif
 void ProcessWaves(short* wave0, short* wave1, short* wave2, int xx, int yy, int Lx, int Ly) {
 	ProcessWaves1(wave0, wave1, wave2, xx, yy, Lx, Ly);
 	return;
+	#ifdef _MSC_VER
 	int StWave = (xx + yy * WaveLx) << 1;
 	int DWave = (WaveLx - Lx) << 1;
 	int cyc = Ly;
@@ -379,6 +417,9 @@ void ProcessWaves(short* wave0, short* wave1, short* wave2, int xx, int yy, int 
 		pop		edi
 		pop		esi
 	};
+	#else
+	// Dead code — unreachable after ProcessWaves1 call above
+	#endif
 };
 
 void ProcessWaveFrame(short* Wave, int x, int y, int x1, int y1) {
@@ -673,6 +714,7 @@ void DrawCost(int x, int y, short* Wave, int z1, int z2, int z3, int z4, int Msh
 	if (z1 < 128 && z2 < 128 && z3 < 128 && z4 < 128)return;
 	if (z1 > 143 && z2 > 143 && z3 > 143 && z4 > 143) {
 		//simple copy
+		#ifdef _MSC_VER
 		int ofst = int(ScreenPtr) + x + y * ScrWidth;
 		__asm {
 			push	esi
@@ -710,10 +752,26 @@ void DrawCost(int x, int y, short* Wave, int z1, int z2, int z3, int z4, int Msh
 			pop		edi
 			pop		esi
 		};
+		#else
+		// C fallback for DrawCost (simple copy)
+		byte* dst = (byte*)ScreenPtr + x + y * ScrWidth;
+		for (int row = 0; row < 8; row++) {
+			for (int col = 0; col < 8; col++) {
+				int grad = (int)(short)(Wave[col + WaveLx] - Wave[col - WaveLx]);
+				grad >>= ashift;
+				grad += ASHI;
+				int color4 = Colors4[grad];
+				byte* p = dst + col * 4;
+				memcpy(p, &color4, 4);
+				memcpy(p + ScrWidth + 2, &color4, 4);
+			}
+			Wave += WaveLx;
+			dst += ScrWidth * 2;
+		}
+		#endif
 	}
 	else {
 		;
-		int ofst = int(ScreenPtr) + x + y * ScrWidth;
 		z1 <<= 16;
 		z2 <<= 16;
 		z3 <<= 16;
@@ -723,6 +781,8 @@ void DrawCost(int x, int y, short* Wave, int z1, int z2, int z3, int z4, int Msh
 		int a0 = a;
 		int c = (z3 - z1) >> 3;
 		int d = (z1 + z4 - z2 - z3) >> 8;
+		#ifdef _MSC_VER
+		int ofst = int(ScreenPtr) + x + y * ScrWidth;
 		int cyc2 = 8;
 		int cyc1;
 		__asm {
@@ -852,6 +912,49 @@ void DrawCost(int x, int y, short* Wave, int z1, int z2, int z3, int z4, int Msh
 			pop		edi
 			pop		esi
 		}
+		#else
+		// C fallback for DrawCost (clipped)
+		byte* dst = (byte*)ScreenPtr + x + y * ScrWidth;
+		for (int row = 0; row < 8; row++) {
+			int zv = a;
+			for (int col = 0; col < 8; col++) {
+				int grad = (int)(short)(Wave[col + WaveLx] - Wave[col - WaveLx]);
+				grad >>= ashift;
+				grad += ASHI;
+				int color4 = Colors4[grad];
+				byte ch_color = (byte)((color4 >> 8) & 0xFF);
+				byte cl_blend = (byte)((color4 & 0xFF) - 0xB0) & 0xF;
+				byte* p = dst + col * 4;
+				for (int sub = 0; sub < 4; sub++) {
+					int zz = zv;
+					if (sub & 1) zz += 0x10000; else if (sub > 0) zz -= 0; // even sub-pixels get +0x10000 on odd iteration
+					// Actual pattern: sub0=zv, sub1=zv+b+0x10000, sub2=zv+2b, sub3=zv+3b+0x10000
+					// But we already advance zv by b each sub-pixel:
+					if (zv >= 0x800000 && zv < 0x900000) {
+						// transparent blend
+						int blend = ((zv - 0x800000) >> 12) & 0xF0;
+						blend |= cl_blend;
+						byte screen_pix = p[sub];
+						byte result = WaterCost[screen_pix * 256 + blend];
+						p[sub] = result;
+						p[sub + ScrWidth + 2] = result;
+					} else if (zv >= 0x900000) {
+						// solid water
+						p[sub] = ch_color;
+						p[sub + ScrWidth + 2] = ch_color;
+					}
+					// else: below water level, skip (land)
+					zv += b;
+					if (sub & 1) zv -= 0x10000; else zv += 0x10000;
+				}
+			}
+			dst += ScrWidth * 2;
+			Wave += WaveLx;
+			a0 += c;
+			a = a0;
+			b += d;
+		}
+		#endif
 	}
 }
 
@@ -869,6 +972,7 @@ void DrawCost2(int x, int y, short* Wave, int z1, int z2, int z3, int z4, int Ms
 	if (z1 > 143 && z2 > 143 && z3 > 143 && z4 > 143)
 	{
 		//simple copy
+		#ifdef _MSC_VER
 		int ofst = int(ScreenPtr) + x + y * ScrWidth;
 		__asm {
 			push	esi
@@ -947,10 +1051,48 @@ void DrawCost2(int x, int y, short* Wave, int z1, int z2, int z3, int z4, int Ms
 			pop		edi
 			pop		esi
 		}
+		#else
+		// C fallback for DrawCost2 (simple copy)
+		byte* dst = (byte*)ScreenPtr + x + y * ScrWidth;
+		for (int outerRow = 0; outerRow < 4; outerRow++) {
+			// First row: 8 elements with ASHI
+			for (int col = 0; col < 8; col++) {
+				int grad = (int)(short)(Wave[col + WaveLx] - Wave[col - WaveLx]);
+				grad >>= ashift;
+				grad += ASHI;
+				int color4 = Colors4[grad];
+				byte* p = dst + col * 4;
+				memcpy(p, &color4, 4);
+				memcpy(p + ScrWidth + 2, &color4, 4);
+			}
+			Wave += WaveLx;
+			dst += ScrWidth * 2;
+			// Second row: first 4 with ASHI, next 4 with ASHI1
+			for (int col = 0; col < 4; col++) {
+				int grad = (int)(short)(Wave[col + WaveLx] - Wave[col - WaveLx]);
+				grad >>= ashift;
+				grad += ASHI;
+				int color4 = Colors4[grad];
+				byte* p = dst + col * 4;
+				memcpy(p, &color4, 4);
+				memcpy(p + ScrWidth + 2, &color4, 4);
+			}
+			for (int col = 4; col < 8; col++) {
+				int grad = (int)(short)(Wave[col + WaveLx] - Wave[col - WaveLx]);
+				grad >>= ashift;
+				grad += ASHI1;
+				int color4 = Colors4[grad];
+				byte* p = dst + col * 4;
+				memcpy(p, &color4, 4);
+				memcpy(p + ScrWidth + 2, &color4, 4);
+			}
+			Wave += WaveLx;
+			dst += ScrWidth * 2;
+		}
+		#endif
 	}
 	else
 	{
-		int ofst = int(ScreenPtr) + x + y * ScrWidth;
 		z1 <<= 16;
 		z2 <<= 16;
 		z3 <<= 16;
@@ -960,6 +1102,8 @@ void DrawCost2(int x, int y, short* Wave, int z1, int z2, int z3, int z4, int Ms
 		int a0 = a;
 		int c = (z3 - z1) >> 3;
 		int d = (z1 + z4 - z2 - z3) >> 8;
+		#ifdef _MSC_VER
+		int ofst = int(ScreenPtr) + x + y * ScrWidth;
 		int cyc2 = 8;
 		int cyc1;
 		__asm
@@ -1090,6 +1234,41 @@ void DrawCost2(int x, int y, short* Wave, int z1, int z2, int z3, int z4, int Ms
 			pop		edi
 			pop		esi
 		}
+		#else
+		// C fallback for DrawCost2 (clipped)
+		byte* dst = (byte*)ScreenPtr + x + y * ScrWidth;
+		for (int row = 0; row < 8; row++) {
+			int zv = a;
+			for (int col = 0; col < 8; col++) {
+				int grad = (int)(short)(Wave[col + WaveLx] - Wave[col - WaveLx]);
+				grad >>= ashift;
+				grad += ASHI;
+				int color4 = Colors4[grad];
+				byte ch_color = (byte)((color4 >> 8) & 0xFF);
+				byte cl_blend = (byte)((color4 & 0xFF) - 0xB0) & 0xF;
+				byte* p = dst + col * 4;
+				for (int sub = 0; sub < 4; sub++) {
+					if (zv >= 0x800000 && zv < 0x900000) {
+						int blend = ((zv - 0x800000) >> 12) & 0xF0;
+						blend |= cl_blend;
+						byte result = WaterCost[CostCL * 256 + blend];
+						p[sub] = result;
+						p[sub + ScrWidth + 2] = result;
+					} else if (zv >= 0x900000) {
+						p[sub] = ch_color;
+						p[sub + ScrWidth + 2] = ch_color;
+					}
+					zv += b;
+					if (sub & 1) zv -= 0x10000; else zv += 0x10000;
+				}
+			}
+			dst += ScrWidth * 2;
+			Wave += WaveLx;
+			a0 += c;
+			a = a0;
+			b += d;
+		}
+		#endif
 	}
 }
 
@@ -1105,6 +1284,7 @@ void DrawCost1(int x, int y, short* Wave, int z1, int z2, int z3, int z4, int Ms
 	if (z1 > 143 && z2 > 143 && z3 > 143 && z4 > 143)
 	{
 		//simple copy
+		#ifdef _MSC_VER
 		int ofst = int(ScreenPtr) + x + y * ScrWidth;
 		__asm
 		{
@@ -1178,10 +1358,48 @@ void DrawCost1(int x, int y, short* Wave, int z1, int z2, int z3, int z4, int Ms
 			pop		edi
 			pop		esi
 		}
+		#else
+		// C fallback for DrawCost1 (simple copy) — same structure as DrawCost2
+		byte* dst = (byte*)ScreenPtr + x + y * ScrWidth;
+		for (int outerRow = 0; outerRow < 4; outerRow++) {
+			// First row: 8 elements with ASHI
+			for (int col = 0; col < 8; col++) {
+				int grad = (int)(short)(Wave[col + WaveLx] - Wave[col - WaveLx]);
+				grad >>= ashift;
+				grad += ASHI;
+				int color4 = Colors4[grad];
+				byte* p = dst + col * 4;
+				memcpy(p, &color4, 4);
+				memcpy(p + ScrWidth + 2, &color4, 4);
+			}
+			Wave += WaveLx;
+			dst += ScrWidth * 2;
+			// Second row: first 4 with ASHI, next 4 with ASHI1
+			for (int col = 0; col < 4; col++) {
+				int grad = (int)(short)(Wave[col + WaveLx] - Wave[col - WaveLx]);
+				grad >>= ashift;
+				grad += ASHI;
+				int color4 = Colors4[grad];
+				byte* p = dst + col * 4;
+				memcpy(p, &color4, 4);
+				memcpy(p + ScrWidth + 2, &color4, 4);
+			}
+			for (int col = 4; col < 8; col++) {
+				int grad = (int)(short)(Wave[col + WaveLx] - Wave[col - WaveLx]);
+				grad >>= ashift;
+				grad += ASHI1;
+				int color4 = Colors4[grad];
+				byte* p = dst + col * 4;
+				memcpy(p, &color4, 4);
+				memcpy(p + ScrWidth + 2, &color4, 4);
+			}
+			Wave += WaveLx;
+			dst += ScrWidth * 2;
+		}
+		#endif
 	}
 	else
 	{
-		int ofst = int(ScreenPtr) + x + y * ScrWidth;
 		z1 <<= 16;
 		z2 <<= 16;
 		z3 <<= 16;
@@ -1191,6 +1409,8 @@ void DrawCost1(int x, int y, short* Wave, int z1, int z2, int z3, int z4, int Ms
 		int a0 = a;
 		int c = (z3 - z1) >> 3;
 		int d = (z1 + z4 - z2 - z3) >> 8;
+		#ifdef _MSC_VER
+		int ofst = int(ScreenPtr) + x + y * ScrWidth;
 		int cyc2 = 8;
 		int cyc1;
 		__asm
@@ -1321,6 +1541,42 @@ void DrawCost1(int x, int y, short* Wave, int z1, int z2, int z3, int z4, int Ms
 			pop		edi
 			pop		esi
 		}
+		#else
+		// C fallback for DrawCost1 (clipped) — reads screen pixel for blend
+		byte* dst = (byte*)ScreenPtr + x + y * ScrWidth;
+		for (int row = 0; row < 8; row++) {
+			int zv = a;
+			for (int col = 0; col < 8; col++) {
+				int grad = (int)(short)(Wave[col + WaveLx] - Wave[col - WaveLx]);
+				grad >>= ashift;
+				grad += ASHI;
+				int color4 = Colors4[grad];
+				byte ch_color = (byte)((color4 >> 8) & 0xFF);
+				byte cl_blend = (byte)((color4 & 0xFF) - 0xB0) & 0xF;
+				byte* p = dst + col * 4;
+				for (int sub = 0; sub < 4; sub++) {
+					if (zv >= 0x800000 && zv < 0x900000) {
+						int blend = ((zv - 0x800000) >> 12) & 0xF0;
+						blend |= cl_blend;
+						byte screen_pix = p[sub];
+						byte result = WaterCost[screen_pix * 256 + blend];
+						p[sub] = result;
+						p[sub + ScrWidth + 2] = result;
+					} else if (zv >= 0x900000) {
+						p[sub] = ch_color;
+						p[sub + ScrWidth + 2] = ch_color;
+					}
+					zv += b;
+					if (sub & 1) zv -= 0x10000; else zv += 0x10000;
+				}
+			}
+			dst += ScrWidth * 2;
+			Wave += WaveLx;
+			a0 += c;
+			a = a0;
+			b += d;
+		}
+		#endif
 	}
 }
 
@@ -1429,6 +1685,7 @@ void CopyWaves(short* wave, int SrcOfs, int DstOfs, int Lx, int Ly)
 	if (SrcOfs > DstOfs)
 	{
 		//direct copy
+		#ifdef _MSC_VER
 		int addo = (WaveLx - Lx) << 1;
 		int Lx1 = Lx >> 1;
 		__asm
@@ -1452,10 +1709,22 @@ void CopyWaves(short* wave, int SrcOfs, int DstOfs, int Lx, int Ly)
 			pop		edi
 			pop		esi
 		}
+		#else
+		// C fallback for CopyWaves (forward)
+		int addo = (WaveLx - Lx);
+		short* src_ptr = (short*)((byte*)wave + SrcOfs);
+		short* dst_ptr = (short*)((byte*)wave + DstOfs);
+		for (int row = 0; row < Ly; row++) {
+			memcpy(dst_ptr, src_ptr, Lx * 2);
+			src_ptr += WaveLx;
+			dst_ptr += WaveLx;
+		}
+		#endif
 	}
 	else
 	{
 		//inverse copy
+		#ifdef _MSC_VER
 		int addo = (WaveLx - Lx) << 1;
 		int add1 = (Lx + Ly * WaveLx - 1) << 1;
 		int Lx1 = Lx >> 1;
@@ -1482,6 +1751,15 @@ void CopyWaves(short* wave, int SrcOfs, int DstOfs, int Lx, int Ly)
 			pop		edi
 			pop		esi
 		}
+		#else
+		// C fallback for CopyWaves (reverse)
+		short* src_ptr = (short*)((byte*)wave + SrcOfs);
+		short* dst_ptr = (short*)((byte*)wave + DstOfs);
+		// Copy from last row to first to handle overlapping regions
+		for (int row = Ly - 1; row >= 0; row--) {
+			memmove(dst_ptr + row * WaveLx, src_ptr + row * WaveLx, Lx * 2);
+		}
+		#endif
 	}
 }
 
@@ -1693,6 +1971,7 @@ void ConditionalProcessWaves(short* Wave0, short* Wave1, short* Wave2, int x0, i
 
 void FastProcess1(short* Wave0, short* Wave1, short* Wave2)
 {
+	#ifdef _MSC_VER
 	int cyc = WaveLy - 2;
 	int	cyc1;
 	__asm
@@ -1727,10 +2006,25 @@ void FastProcess1(short* Wave0, short* Wave1, short* Wave2)
 		pop		edi
 		pop		esi
 	}
+	#else
+	// C fallback for FastProcess1
+	for (int row = 0; row < WaveLy - 2; row++) {
+		int pos = (row + 1) * WaveLx + 1;
+		for (int col = 0; col < WaveLx - 2; col++) {
+			int neighbors = (int)Wave1[pos + 1] + (int)Wave1[pos - 1] +
+			                (int)Wave1[pos - WaveLx] + (int)Wave1[pos + WaveLx];
+			int center2 = (int)Wave1[pos] << 1;
+			short result = (short)(((short)(neighbors - center2 - center2) >> 6) + center2 - Wave0[pos]);
+			Wave2[pos] = result;
+			pos++;
+		}
+	}
+	#endif
 }
 
 void FastProcess1_0(short* Wave0, short* Wave1, short* Wave2)
 {
+	#ifdef _MSC_VER
 	int cyc = (WaveLy - 2) >> 1;
 	int	cyc1;
 	__asm
@@ -1763,10 +2057,26 @@ void FastProcess1_0(short* Wave0, short* Wave1, short* Wave2)
 		pop		edi
 		pop		esi
 	}
+	#else
+	// C fallback for FastProcess1_0 — first half of rows, >>4 damping
+	int numRows = (WaveLy - 2) >> 1;
+	for (int row = 0; row < numRows; row++) {
+		int pos = (row + 1) * WaveLx + 1;
+		for (int col = 0; col < WaveLx - 2; col++) {
+			int neighbors = (int)Wave1[pos + 1] + (int)Wave1[pos - 1] +
+			                (int)Wave1[pos - WaveLx] + (int)Wave1[pos + WaveLx];
+			int center2 = (int)Wave1[pos] << 1;
+			short result = (short)(((short)(neighbors - center2 - center2) >> 4) + center2 - Wave0[pos]);
+			Wave2[pos] = result;
+			pos++;
+		}
+	}
+	#endif
 }
 
 void FastProcess1_1(short* Wave0, short* Wave1, short* Wave2)
 {
+	#ifdef _MSC_VER
 	int cyc = (WaveLy - 2) >> 1;
 	int	cyc1;
 	__asm
@@ -1799,6 +2109,22 @@ void FastProcess1_1(short* Wave0, short* Wave1, short* Wave2)
 		pop		edi
 		pop		esi
 	}
+	#else
+	// C fallback for FastProcess1_1 — second half of rows, >>4 damping
+	int numRows = (WaveLy - 2) >> 1;
+	int startRow = WaveLy / 2;
+	for (int row = 0; row < numRows; row++) {
+		int pos = (startRow + row) * WaveLx + 1;
+		for (int col = 0; col < WaveLx - 2; col++) {
+			int neighbors = (int)Wave1[pos + 1] + (int)Wave1[pos - 1] +
+			                (int)Wave1[pos - WaveLx] + (int)Wave1[pos + WaveLx];
+			int center2 = (int)Wave1[pos] << 1;
+			short result = (short)(((short)(neighbors - center2 - center2) >> 4) + center2 - Wave0[pos]);
+			Wave2[pos] = result;
+			pos++;
+		}
+	}
+	#endif
 }
 
 static int tttx;
@@ -1833,6 +2159,7 @@ void ProcessWaves(short* Wave0, short* Wave1, short* Wave2)
 
 void DisturbWater(short* Wave)
 {
+	#ifdef _MSC_VER
 	int ofst = int(Wave + ((1 + WaveLx) << 1));
 	__asm {
 		push	esi
@@ -1841,6 +2168,9 @@ void DisturbWater(short* Wave)
 		pop		esi
 		pop		edi
 	};
+	#else
+	// C fallback for DisturbWater — no-op (original ASM only does push/pop)
+	#endif
 }
 
 void CorrectLeftWaves();

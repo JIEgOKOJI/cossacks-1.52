@@ -1,3 +1,4 @@
+#include <cstdint>
 #include "ddini.h"
 #include "ResFile.h"
 #include "FastDraw.h"
@@ -69,7 +70,7 @@ char tmpstr[1000];
 int Menu::GetAmount() {
 	int j = 0;
 	int	i;
-	if (!int(items)) return 0;
+	if (!(intptr_t)(items)) return 0;
 	for (i = 0; items[i] != 0; i++)if (items[i] == '|')j++;
 	return j + 1;
 };
@@ -77,7 +78,7 @@ LPCSTR Menu::GetNstr(int n) {
 	int j = 0;
 	int i;
 	tmpstr[0] = 0;
-	if (!int(items))return LPCSTR(&tmpstr);
+	if (!(intptr_t)(items))return LPCSTR(&tmpstr);
 	for (i = 0; j < n&&items[i] != 0; i++)
 	{
 		if (items[i] == '|')j++;
@@ -92,7 +93,7 @@ LPCSTR Menu::GetNstr(int n) {
 	return LPCSTR(&tmpstr);
 };
 int Menu::GetLen(LPCSTR s) {
-	if (!int(s))return 0;
+	if (!(intptr_t)(s))return 0;
 	int x = 0;
 	for (int i = 0; s[i] != 0; i++) {
 		int L = 1;
@@ -102,7 +103,7 @@ int Menu::GetLen(LPCSTR s) {
 	return x;
 };
 void Menu::CreateMenu(LPCSTR s, lpRLCFont f, lpRLCFont f1, fnc* ff, int style) {
-	if (!int(items))delete((void*)items);
+	if (!(intptr_t)(items))delete((void*)items);
 	items = new(char[strlen(s) + 1]);
 	memcpy((void*)items, s, strlen(s) + 1);
 	NItems = GetAmount();
@@ -129,8 +130,8 @@ void Menu::CreateMenu(LPCSTR s, lpRLCFont f, lpRLCFont f1, fnc* ff, int style) {
 	EraseOnChoose = style & 8 ? true : false;
 };
 void Menu::Show(int n) {
-	if (!int(items)) return;
-	if (int(RedrawBackground))(*RedrawBackground)();
+	if (!(intptr_t)(items)) return;
+	if ((intptr_t)(RedrawBackground))(*RedrawBackground)();
 	for (int i = 0; i < NItems; i++) {
 		LPCSTR s = GetNstr(i);
 		int x = Zone[i].x;

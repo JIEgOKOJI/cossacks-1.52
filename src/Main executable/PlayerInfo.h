@@ -1,5 +1,9 @@
 #pragma once
-#include <Windows.h>
+#ifdef _WIN32
+    #include <Windows.h>
+#else
+    #include "platform.h"
+#endif
 
 typedef DWORD DPID1, FAR *LPDPID;
 typedef unsigned short word;

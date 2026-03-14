@@ -1,9 +1,7 @@
 // City organization module
-#include <thread>
+#include <cstdint>
 #include <vector>
-#include <atomic>
 #include <algorithm>
-#include <mutex>
 #include "ddini.h"
 #include "ResFile.h"
 #include "FastDraw.h"
@@ -155,7 +153,7 @@ void FreeCell(int x, int y, byte NI)
 };
 void City::CreateCity(byte N)
 {
-	memset(this, 0, sizeof City);
+	memset(this, 0, sizeof(City));
 	NATIONS[N].CITY = this;
 	Nat = &NATIONS[N];
 	NI = N;
@@ -336,7 +334,7 @@ int  City::GetFreeBrigade()
 {
 	for (int i = 0; i < MaxBrig - 9; i++)if (!Brigs[i].Enabled)
 	{
-		memset(Brigs + i, 0, sizeof Brigade);
+		memset(Brigs + i, 0, sizeof(Brigade));
 		Brigs[i].CT = this;
 		Brigs[i].ID = i;
 		Brigs[i].SN = rando();
@@ -670,7 +668,7 @@ void City::CloseCity()
 	for (int i = 0; i < MaxArm; i++)if (ARMS[i].Enabled)ARMS[i].ClearArmy();
 	DelInform();
 	DelIdeas();
-	memset(this, 0, sizeof City);
+	memset(this, 0, sizeof(City));
 	if (NDefn)
 	{
 		for (int i = 0; i < NDefn; i++)
@@ -833,12 +831,12 @@ void City::UnRegisterNewUnit(OneObject* OB)
 			}
 			else
 			{
-				memcpy(Memb + Index, Memb + Index + 1, (NMemb - Index - 1) << 1);
-				memcpy(MembSN + Index, MembSN + Index + 1, (NMemb - Index - 1) << 1);
+				memmove(Memb + Index, Memb + Index + 1, (NMemb - Index - 1) << 1);
+				memmove(MembSN + Index, MembSN + Index + 1, (NMemb - Index - 1) << 1);
 				if (BR->PosCreated)
 				{
-					memcpy(BR->posX + Index, BR->posX + Index + 1, (NMemb - Index - 1) << 2);
-					memcpy(BR->posY + Index, BR->posY + Index + 1, (NMemb - Index - 1) << 2);
+					memmove(BR->posX + Index, BR->posX + Index + 1, (NMemb - Index - 1) << 2);
+					memmove(BR->posY + Index, BR->posY + Index + 1, (NMemb - Index - 1) << 2);
 				};
 				BR->NMemb--;
 			};
@@ -878,7 +876,7 @@ void City::UnRegisterNewUnit(OneObject* OB)
 				BR->MaxMemb = 0;
 				BR->NMemb = 0;
 				BR->Enabled = false;
-				memset(&BR->BM, 0, sizeof BR->BM);
+				memset(&BR->BM, 0, sizeof(BR)->BM);
 			};
 		};
 	};
@@ -894,11 +892,11 @@ void City::EnumUnits()
 
 	OneObject* OB;
 
-	memset(UnitAmount, 0, sizeof UnitAmount);
-	memset(ReadyAmount, 0, sizeof ReadyAmount);
-	memset(UnBusyAmount, 0, sizeof UnBusyAmount);
-	memset(PRPIndex, 255, sizeof PRPIndex);
-	memset(UPGIndex, 255, sizeof UPGIndex);
+	memset(UnitAmount, 0, sizeof(UnitAmount));
+	memset(ReadyAmount, 0, sizeof(ReadyAmount));
+	memset(UnBusyAmount, 0, sizeof(UnBusyAmount));
+	memset(PRPIndex, 255, sizeof(PRPIndex));
+	memset(UPGIndex, 255, sizeof(UPGIndex));
 
 	Amount = 0;
 	Nat->NFarms = 0; // Сбрасываем NFarms для всех наций перед подсчётом
@@ -986,7 +984,7 @@ void City::EnumUnits()
 			Nat->ResSpeed[NM->ResConsID] += NM->ResConsumer;
 			word NIND = OB->NIndex;
 
-			if (OB->Ready && !int(OB->LocalOrder))
+			if (OB->Ready && !(intptr_t)(OB->LocalOrder))
 			{
 				UnBusyAmount[NIND]++;
 				Producer[NIND] = i;
@@ -2678,7 +2676,7 @@ void Branch::Check(byte NI)
 };
 void Branch::Init()
 {
-	memset(this, 0, sizeof Branch);
+	memset(this, 0, sizeof(Branch));
 };
 int Branch::GetMonsterCostPercent(byte NI, word NIndex)
 {
@@ -2848,7 +2846,6 @@ int GetBMIndex(OneObject* OB)
 void EraseBrigade(Brigade* BR);
 void MakeStandGround(Brigade* BR);
 void CalculateFreeUnits(AI_Army* AIR);
-static std::mutex aiMutex;
 void City::ExecuteBrigades()
 {
 	try
@@ -2917,40 +2914,22 @@ void City::ExecuteBrigades()
 		}
 
 		rando();
-		// ---- Параллельный AI-цикл по армиям ----
-		unsigned numThreads = std::thread::hardware_concurrency() ? (std::thread::hardware_concurrency() < 16u ? std::thread::hardware_concurrency() : 16u) : 2;
-		if (numThreads == 0) numThreads = 4;
-		int chunk = (MaxArm + numThreads - 1) / numThreads;
-		std::vector<std::thread> threads;
-
-		auto worker = [this](int start, int end) {
-			for (int i = start; i < end; ++i)
-			{
-				AI_Army* AR = ARMS + i;
-				if (!AR || !AR->Enabled) continue;
-
-				// Защищаем критические вызовы
-				std::lock_guard<std::mutex> guard(aiMutex);
-				if (AR->AOrder && AR->AOrder->ALink)
-				{
-					try { AR->AOrder->ALink(AR); }
-					catch (...) {}
-				}
-				else
-				{
-					AR->MakeBattle();
-				}
-				CalculateFreeUnits(AR);
-			}
-		};
-
-		for (unsigned t = 0; t < numThreads; ++t)
+		// Sequential AI army processing (threading removed for lockstep determinism)
+		for (int i = 0; i < MaxArm; ++i)
 		{
-			int start = t * chunk;
-			int end = (MaxArm < start + chunk ? MaxArm : start + chunk);
-			threads.emplace_back(worker, start, end);
+			AI_Army* AR = ARMS + i;
+			if (!AR || !AR->Enabled) continue;
+			if (AR->AOrder && AR->AOrder->ALink)
+			{
+				try { AR->AOrder->ALink(AR); }
+				catch (...) {}
+			}
+			else
+			{
+				AR->MakeBattle();
+			}
+			CalculateFreeUnits(AR);
 		}
-		for (auto& th : threads) th.join();
 		rando();
 
 	}
@@ -3128,7 +3107,7 @@ BeginMine:
 			Brigade* BR = CT->Brigs + N;
 			BR->Enabled = true;
 			BrigMemb BMEM;
-			memset(&BMEM, 0, sizeof BrigMemb);
+			memset(&BMEM, 0, sizeof(BrigMemb));
 			BMEM.Peons = Npeons;
 			BMEM.Infantry = Ninf;
 			BMEM.Strelkov = Nstrel;
@@ -3149,7 +3128,7 @@ BeginMine:
 			SendPInform* IN1 = new SendPInform;
 			IN1->ID = 0x1256;
 			IN1->time = tmtmt;
-			IN1->Size = sizeof SendPInform;
+			IN1->Size = sizeof(SendPInform);
 			IN1->Essence = SID;
 			CT->AddInform(IN1, NULL);
 			return;
@@ -3606,7 +3585,7 @@ void City::ProtectMine()
 		Brigade* BR = Brigs + N1;
 		BR->Enabled = true;
 		BrigMemb BMEM;
-		memset(&BMEM, 0, sizeof BrigMemb);
+		memset(&BMEM, 0, sizeof(BrigMemb));
 		BMEM.Peons = 9;
 		BMEM.Infantry = 6;
 		BMEM.Strelkov = 2;
@@ -3727,7 +3706,8 @@ void HandleGeology()
 				int y = (OSP->y >> (5 + ADDSH)) - MiniY;
 				if (x > 0 && x < MiniLx && y>0 && y < MiniLy)
 				{
-					int ofst = int(ScreenPtr) + x + minix + (miniy + y) * ScrWidth;
+	#ifdef _MSC_VER
+				int ofst = int(ScreenPtr) + x + minix + (miniy + y) * ScrWidth;
 					__asm {
 						push	edi
 						mov		edi, ofst
@@ -3741,6 +3721,14 @@ void HandleGeology()
 						mov[edi + edx], al
 						pop		edi
 					};
+#else
+					byte* ptr = (byte*)ScreenPtr + x + minix + (miniy + y) * ScrWidth;
+					ptr[0] = 0xFB;
+					ptr[1] = 0xFB;
+					ptr[-1] = 0xFB;
+					ptr[ScrWidth] = 0xFB;
+					ptr[-(int)ScrWidth] = 0xFB;
+#endif
 				};
 			};
 		};
@@ -3846,7 +3834,7 @@ void City::AddDefending(byte x, byte y, byte Imp)
 	if (NDefn >= MaxDefn)
 	{
 		MaxDefn += 32;
-		DefInf = (DefendInfo*)realloc(DefInf, MaxDefn * sizeof DefendInfo);
+		DefInf = (DefendInfo*)realloc(DefInf, MaxDefn * sizeof(DefendInfo));
 	};
 	DefendInfo* DI = DefInf + NDefn;
 	DI->x = x;
@@ -3919,7 +3907,7 @@ word DefBriMin[MaxBT] = { 4 ,16 , 16, 16, 16, 1, 16,16, 25,  4 };
 
 void AI_Army::InitArmy(City* C)
 {
-	memset(this, 0, sizeof AI_Army);
+	memset(this, 0, sizeof(AI_Army));
 	CT = C;
 	NT = C->Nat;
 	NI = C->NI;
@@ -3942,7 +3930,7 @@ int CheckMinArmyCreationAbility(Brigade* BR)
 	int N = BR->NMemb;
 	word* Mem = BR->Memb;
 	word NBMEM[MaxBT + 4];
-	memset(NBMEM, 0, sizeof NBMEM);
+	memset(NBMEM, 0, sizeof(NBMEM));
 
 	for (int i = 0; i < N; i++)
 	{
@@ -3984,7 +3972,7 @@ int CheckSuperMinArmyCreationAbility(Brigade* BR)
 	int N = BR->NMemb;
 	word* Mem = BR->Memb;
 	word NBMEM[MaxBT + 4];
-	memset(NBMEM, 0, sizeof NBMEM);
+	memset(NBMEM, 0, sizeof(NBMEM));
 	for (int i = 0; i < N; i++)
 	{
 		word MID = Mem[i];
@@ -4018,116 +4006,71 @@ void AI_Army::CreateMinimalArmyFromBrigade(Brigade* BR, int Type)
 	int N = BR->NMemb;
 	if (N <= 0) return;
 
-	// Атомарные счётчики для синхронизации
-	std::atomic<int> Nu(0);
-	std::atomic<int> NExBrigsAtomic(NExBrigs);
+	int Nu = 0;
 	const int NuMax = BriMax[Type];
 
-	// Инициализация BriInd
 	std::vector<word> BriInd(MaxBT, 0xFFFF);
 
-	// Мьютекс для защиты ExBrigs и BriInd
-	std::mutex exBrigsMutex;
+	for (int i = 0; i < N; ++i) {
+		if (Nu >= NuMax) break;
 
-	// Определяем количество потоков
-	const int numThreads = min((N / 1000 + 1), min(static_cast<int>(std::thread::hardware_concurrency()), 16));
-	std::vector<std::thread> threads;
-	threads.reserve(numThreads);
-
-	// Функция для обработки диапазона юнитов
-	auto processRange = [&](int start, int end) {
-		for (int i = start; i < end; ++i) {
-			if (Nu.load() >= NuMax) break; // Ранний выход, если достигнут лимит
-
-			word MID = BR->Memb[i];
-			if (MID != 0xFFFF) {
-				OneObject* OB = Group[MID];
-				if (OB) {
-					int AT = ArmType[OB->Usage];
-					if (AT == Type) {
-						// Проверяем и обновляем BriInd с блокировкой
-						word localBriInd;
-						{
-							std::lock_guard<std::mutex> lock(exBrigsMutex);
-							localBriInd = BriInd[AT];
-							if (localBriInd != 0xFFFF && ExBrigs[localBriInd].Brig->NMemb >= BriMax[AT]) {
-								localBriInd = 0xFFFF;
-								BriInd[AT] = 0xFFFF;
-							}
-						}
-
-						if (localBriInd == 0xFFFF) {
-							bool found = false;
-							{
-								std::lock_guard<std::mutex> lock(exBrigsMutex);
-								for (int j = 0; j < NExBrigsAtomic.load(); ++j) {
-									if (ExBrigs[j].BrigadeType == AT && ExBrigs[j].Brig->NMemb < BriMax[AT]) {
-										localBriInd = j;
-										found = true;
-										break;
-									}
-								}
-								if (!found) {
-									// Атомарно увеличиваем NExBrigs и получаем индекс
-									int newNExBrigs = NExBrigsAtomic.fetch_add(1) + 1;
-									if (newNExBrigs >= MaxExBrigs) {
-										// Расширяем ExBrigs с блокировкой
-										MaxExBrigs += 32;
-										ExtendedBrigade* newExBrigs = static_cast<ExtendedBrigade*>(
-											realloc(ExBrigs, MaxExBrigs * sizeof(ExtendedBrigade)));
-										if (!newExBrigs) return; // Ошибка выделения памяти
-										ExBrigs = newExBrigs;
-									}
-									int BIN = CT->GetFreeBrigade(); // Предполагаем, что потокобезопасно
-									if (BIN == -1) return;
-									localBriInd = newNExBrigs - 1;
-									ExtendedBrigade* EXB = ExBrigs + localBriInd;
-									EXB->Brig = CT->Brigs + BIN;
-									EXB->Brig->Enabled = 1;
-									EXB->BrigadeType = AT;
-									EXB->Brig->ArmyID = ArmyID;
-									EXB->Force = 0;
-									EXB->NeedMembers = 0;
-									EXB->NextBrigade = 0;
-									BriInd[AT] = localBriInd;
-								}
-							}
-						}
-
-						// Перенос юнита в бригаду
-						{
-							std::lock_guard<std::mutex> lock(exBrigsMutex);
-							ExtendedBrigade* EXB = ExBrigs + localBriInd;
-							BR->RemoveOne(OB->BrIndex, EXB->Brig);
-							OB->Zombi = 1;
-							OB->DoNotCall = true;
-							OB->NoBuilder = true;
-							OB->DoWalls = false;
-						}
-
-						// Атомарно увеличиваем счётчик
-						Nu.fetch_add(1);
+		word MID = BR->Memb[i];
+		if (MID != 0xFFFF) {
+			OneObject* OB = Group[MID];
+			if (OB) {
+				int AT = ArmType[OB->Usage];
+				if (AT == Type) {
+					word localBriInd = BriInd[AT];
+					if (localBriInd != 0xFFFF && ExBrigs[localBriInd].Brig->NMemb >= BriMax[AT]) {
+						localBriInd = 0xFFFF;
+						BriInd[AT] = 0xFFFF;
 					}
+
+					if (localBriInd == 0xFFFF) {
+						bool found = false;
+						for (int j = 0; j < NExBrigs; ++j) {
+							if (ExBrigs[j].BrigadeType == AT && ExBrigs[j].Brig->NMemb < BriMax[AT]) {
+								localBriInd = j;
+								found = true;
+								break;
+							}
+						}
+						if (!found) {
+							NExBrigs++;
+							if (NExBrigs >= MaxExBrigs) {
+								MaxExBrigs += 32;
+								ExtendedBrigade* newExBrigs = static_cast<ExtendedBrigade*>(
+									realloc(ExBrigs, MaxExBrigs * sizeof(ExtendedBrigade)));
+								if (!newExBrigs) return;
+								ExBrigs = newExBrigs;
+							}
+							int BIN = CT->GetFreeBrigade();
+							if (BIN == -1) return;
+							localBriInd = NExBrigs - 1;
+							ExtendedBrigade* EXB = ExBrigs + localBriInd;
+							EXB->Brig = CT->Brigs + BIN;
+							EXB->Brig->Enabled = 1;
+							EXB->BrigadeType = AT;
+							EXB->Brig->ArmyID = ArmyID;
+							EXB->Force = 0;
+							EXB->NeedMembers = 0;
+							EXB->NextBrigade = 0;
+							BriInd[AT] = localBriInd;
+						}
+					}
+
+					ExtendedBrigade* EXB = ExBrigs + localBriInd;
+					BR->RemoveOne(OB->BrIndex, EXB->Brig);
+					OB->Zombi = 1;
+					OB->DoNotCall = true;
+					OB->NoBuilder = true;
+					OB->DoWalls = false;
+
+					Nu++;
 				}
 			}
 		}
-	};
-
-	// Разделяем работу между потоками
-	int chunkSize = N / numThreads;
-	for (int i = 0; i < numThreads; ++i) {
-		int start = i * chunkSize;
-		int end = (i == numThreads - 1) ? N : start + chunkSize;
-		threads.emplace_back(processRange, start, end);
 	}
-
-	// Ждём завершения всех потоков
-	for (auto& t : threads) {
-		t.join();
-	}
-
-	// Обновляем глобальный NExBrigs
-	NExBrigs = NExBrigsAtomic.load();
 }
 
 
@@ -4161,117 +4104,70 @@ void AI_Army::AddBrigade(Brigade* BR)
 	int N = BR->NMemb;
 	if (N <= 0) return;
 
-	// Атомарный счётчик для NExBrigs
-	std::atomic<int> NExBrigsAtomic(NExBrigs);
-
-	// Копируем IDS в vector вместо фиксированного массива
 	std::vector<word> IDS(BR->Memb, BR->Memb + N);
-
-	// Инициализация BriInd
 	std::vector<word> BriInd(MaxBT, 0xFFFF);
 
-	// Определяем количество потоков
-	const int numThreads = (N > 5000) ? min((N / 1000 + 1), min(static_cast<int>(std::thread::hardware_concurrency()), 16)) : 1;
-	std::vector<std::thread> threads;
-	threads.reserve(numThreads);
-
-	// Функция для обработки диапазона юнитов
-	auto processRange = [&](int start, int end) {
-		std::vector<word> localBriInd(MaxBT, 0xFFFF); // Локальная копия BriInd для потока
-		for (int i = start; i < end; ++i)
+	for (int i = 0; i < N; ++i)
+	{
+		word MID = IDS[i];
+		if (MID != 0xFFFF)
 		{
-			word MID = IDS[i];
-			if (MID != 0xFFFF)
+			OneObject* OB = Group[MID];
+			if (OB)
 			{
-				OneObject* OB = Group[MID];
-				if (OB)
+				int AT = ArmType[OB->Usage];
+				if (AT != 0xFF)
 				{
-					int AT = ArmType[OB->Usage];
-					if (AT != 0xFF)
-					{
-						if (localBriInd[AT] != 0xFFFF && ExBrigs[localBriInd[AT]].Brig->NMemb >= BriMax[AT])
-							localBriInd[AT] = 0xFFFF;
+					if (BriInd[AT] != 0xFFFF && ExBrigs[BriInd[AT]].Brig->NMemb >= BriMax[AT])
+						BriInd[AT] = 0xFFFF;
 
-						if (localBriInd[AT] == 0xFFFF)
+					if (BriInd[AT] == 0xFFFF)
+					{
+						bool found = false;
+						for (int j = 0; j < NExBrigs; ++j)
 						{
-							bool found = false;
-							for (int j = 0; j < NExBrigsAtomic.load(); ++j)
+							if (ExBrigs[j].BrigadeType == AT && ExBrigs[j].Brig->NMemb < BriMax[AT] && ExBrigs[j].Brig->WarType == 0)
 							{
-								if (ExBrigs[j].BrigadeType == AT && ExBrigs[j].Brig->NMemb < BriMax[AT] && ExBrigs[j].Brig->WarType == 0)
-								{
-									localBriInd[AT] = j;
-									found = true;
-									break;
-								}
-							}
-							if (!found)
-							{
-								int newNExBrigs = NExBrigsAtomic.fetch_add(1) + 1;
-								if (newNExBrigs >= MaxExBrigs)
-								{
-									// Предполагаем, что realloc потокобезопасен
-									MaxExBrigs += 32;
-									ExBrigs = static_cast<ExtendedBrigade*>(realloc(ExBrigs, MaxExBrigs * sizeof(ExtendedBrigade)));
-									if (!ExBrigs) return; // Ошибка выделения памяти
-								}
-								int BIN = CT->GetFreeBrigade(); // Предполагаем потокобезопасность
-								if (BIN == -1) return;
-								localBriInd[AT] = newNExBrigs - 1;
-								ExtendedBrigade* EXB = ExBrigs + localBriInd[AT];
-								EXB->Brig = CT->Brigs + BIN;
-								EXB->Brig->Enabled = 1;
-								EXB->Brig->ArmyID = ArmyID;
-								EXB->BrigadeType = AT;
-								EXB->Force = 0;
-								EXB->NeedMembers = 0;
-								EXB->NextBrigade = 0;
+								BriInd[AT] = j;
+								found = true;
+								break;
 							}
 						}
-
-						// Перенос юнита в бригаду
-						ExtendedBrigade* EXB = ExBrigs + localBriInd[AT];
-						Brigade* NBR = EXB->Brig;
-						BR->RemoveOne(OB->BrIndex, NBR);
-						OB->Zombi = 1;
-						OB->DoNotCall = true;
-						OB->NoBuilder = true;
-						OB->DoWalls = false;
-						OB->InArmy = 0;
-
-						// Синхронизация BriInd
-						if (BriInd[AT] == 0xFFFF || localBriInd[AT] < BriInd[AT])
-							BriInd[AT] = localBriInd[AT];
+						if (!found)
+						{
+							NExBrigs++;
+							if (NExBrigs >= MaxExBrigs)
+							{
+								MaxExBrigs += 32;
+								ExBrigs = static_cast<ExtendedBrigade*>(realloc(ExBrigs, MaxExBrigs * sizeof(ExtendedBrigade)));
+								if (!ExBrigs) return;
+							}
+							int BIN = CT->GetFreeBrigade();
+							if (BIN == -1) return;
+							BriInd[AT] = NExBrigs - 1;
+							ExtendedBrigade* EXB = ExBrigs + BriInd[AT];
+							EXB->Brig = CT->Brigs + BIN;
+							EXB->Brig->Enabled = 1;
+							EXB->Brig->ArmyID = ArmyID;
+							EXB->BrigadeType = AT;
+							EXB->Force = 0;
+							EXB->NeedMembers = 0;
+							EXB->NextBrigade = 0;
+						}
 					}
+
+					ExtendedBrigade* EXB = ExBrigs + BriInd[AT];
+					Brigade* NBR = EXB->Brig;
+					BR->RemoveOne(OB->BrIndex, NBR);
+					OB->Zombi = 1;
+					OB->DoNotCall = true;
+					OB->NoBuilder = true;
+					OB->DoWalls = false;
+					OB->InArmy = 0;
 				}
 			}
 		}
-	};
-
-	// Разделяем работу между потоками
-	if (N > 5000)
-	{
-		int chunkSize = N / numThreads;
-		for (int i = 0; i < numThreads; ++i)
-		{
-			int start = i * chunkSize;
-			int end = (i == numThreads - 1) ? N : start + chunkSize;
-			threads.emplace_back(processRange, start, end);
-		}
-
-		// Ждём завершения всех потоков
-		for (auto& t : threads)
-		{
-			t.join();
-		}
 	}
-	else
-	{
-		// Для малых N выполняем последовательно
-		processRange(0, N);
-	}
-
-	// Обновляем глобальный NExBrigs
-	NExBrigs = NExBrigsAtomic.load();
 }
 ArmyOrder* AI_Army::CreateOrder(byte OrdType, int Size)
 {
@@ -4673,7 +4569,7 @@ void ArmyConnectToArmyLink(AI_Army* ARM)
 };
 void AI_Army::ConnectToArmy(int ID, byte Prio, byte OrdType)
 {
-	ACTA_Order* AOR = (ACTA_Order*)CreateOrder(OrdType, sizeof ACTA_Order);
+	ACTA_Order* AOR = (ACTA_Order*)CreateOrder(OrdType, sizeof(ACTA_Order));
 	AOR->Message = ACTA_Message;
 	AOR->Prio = Prio;
 	AOR->ID = ID;
@@ -4906,9 +4802,6 @@ bool CheckArmyDanger(AI_Army* ARM)
 };
 void ArmyMakeBattleLink(AI_Army* ARM)
 {
-	static std::mutex armyMutex; // Мьютекс для синхронизации доступа к армии
-	static std::mutex cityMutex; // Мьютекс для синхронизации доступа к городу
-	static std::mutex resultMutex; // Мьютекс для синхронизации результатов
 
 	if (PeaceTimeLeft) return;
 	if (HandleArchers(ARM, 18)) {
@@ -4921,7 +4814,6 @@ void ArmyMakeBattleLink(AI_Army* ARM)
 	if ((tmtmt - OR1->time) < 64) return;
 	OR1->time = tmtmt;
 	if (!ARM->NExBrigs) {
-		std::lock_guard<std::mutex> lock(armyMutex);
 		ARM->ClearArmy();
 		ARM->Enabled = false;
 		return;
@@ -4945,42 +4837,13 @@ void ArmyMakeBattleLink(AI_Army* ARM)
 	int MinArmDist = 1600;
 	int MySize = ARM->NExBrigs;
 
-	// Параллелизация проверки соседних армий, если юнитов > 5000
+	// Проверка соседних армий (sequential for determinism)
 	if (MyTop != -1 && MyTop != 0xFFFF) {
-		if (MySize > 5000) {
-			std::vector<std::thread> threads;
-			std::vector<bool> connect(Na, false);
-			std::vector<int> nearestTops(Na, -1);
-			std::vector<int> minDists(Na, 1600);
-
-			for (int i = 0; i < Na; i++) {
-				threads.emplace_back([&, i]() {
-					AI_Army* AIAR = CT->ARMS + Amid[i];
-					int Atop = AIAR->TopPos;
-					if ((ARM->Spec == AIAR->Spec) && (!AIAR->SpecialOrder) && Atop >= 0 && Atop < NAreas && AIAR != ARM) {
-						if (Atop == MyTop || MotionLinks[MTPM + Atop] == Atop) {
-							connect[i] = true;
-						}
-						else if (AIAR->NExBrigs >= MySize) {
-							int d = LinksDist[MTPM + Atop];
-							if (d < minDists[i]) {
-								minDists[i] = d;
-								nearestTops[i] = Atop;
-							}
-						}
-					}
-					});
-			}
-
-			for (auto& t : threads) {
-				t.join();
-			}
-
-			// Обработка результатов
-			for (int i = 0; i < Na; i++) {
-				if (connect[i]) {
-					std::lock_guard<std::mutex> lock(armyMutex);
-					AI_Army* AIAR = CT->ARMS + Amid[i];
+		for (int i = 0; i < Na; i++) {
+			AI_Army* AIAR = CT->ARMS + Amid[i];
+			int Atop = AIAR->TopPos;
+			if ((ARM->Spec == AIAR->Spec) && (!AIAR->SpecialOrder) && Atop >= 0 && Atop < NAreas && AIAR != ARM) {
+				if (Atop == MyTop || MotionLinks[MTPM + Atop] == Atop) {
 					AIAR->ClearAOrders();
 					int N = AIAR->NExBrigs;
 					for (int j = 0; j < N; j++) {
@@ -4997,98 +4860,27 @@ void ArmyMakeBattleLink(AI_Army* ARM)
 					AIAR->NExBrigs = 0;
 					AIAR->ClearArmy();
 					AIAR->Enabled = false;
-					std::lock_guard<std::mutex> cityLock(cityMutex);
 					if (i < Na - 1) {
 						memcpy(Amid + i, Amid + i + 1, (Na - i - 1) << 1);
 					}
 					CT->NDefArms--;
 					return;
 				}
-				std::lock_guard<std::mutex> resultLock(resultMutex);
-				if (minDists[i] < MinArmDist) {
-					MinArmDist = minDists[i];
-					NearestGreatArmyTop = nearestTops[i];
-				}
-			}
-		}
-		else {
-			// Последовательная версия
-			for (int i = 0; i < Na; i++) {
-				AI_Army* AIAR = CT->ARMS + Amid[i];
-				int Atop = AIAR->TopPos;
-				if ((ARM->Spec == AIAR->Spec) && (!AIAR->SpecialOrder) && Atop >= 0 && Atop < NAreas && AIAR != ARM) {
-					if (Atop == MyTop || MotionLinks[MTPM + Atop] == Atop) {
-						std::lock_guard<std::mutex> lock(armyMutex);
-						AIAR->ClearAOrders();
-						int N = AIAR->NExBrigs;
-						for (int j = 0; j < N; j++) {
-							Brigade* BR = AIAR->ExBrigs[j].Brig;
-							ARM->AddBrigade(BR);
-							if (!BR->WarType) {
-								if (BR->NMemb) {
-									BR->RemoveObjects(BR->NMemb, &ARM->CT->Defenders);
-								}
-								BR->DeleteAll();
-								BR->Enabled = 0;
-							}
-						}
-						AIAR->NExBrigs = 0;
-						AIAR->ClearArmy();
-						AIAR->Enabled = false;
-						std::lock_guard<std::mutex> cityLock(cityMutex);
-						if (i < Na - 1) {
-							memcpy(Amid + i, Amid + i + 1, (Na - i - 1) << 1);
-						}
-						CT->NDefArms--;
-						return;
-					}
-					else if (AIAR->NExBrigs >= MySize) {
-						int d = LinksDist[MTPM + Atop];
-						std::lock_guard<std::mutex> resultLock(resultMutex);
-						if (d < MinArmDist) {
-							MinArmDist = d;
-							NearestGreatArmyTop = Atop;
-						}
+				else if (AIAR->NExBrigs >= MySize) {
+					int d = LinksDist[MTPM + Atop];
+					if (d < MinArmDist) {
+						MinArmDist = d;
+						NearestGreatArmyTop = Atop;
 					}
 				}
 			}
 		}
 	}
 
-	// Параллельное вычисление силы армии
-	std::atomic<int> MyForce{ 0 };
-	std::atomic<int> NMEM{ 0 };
-	if (MySize > 5000) {
-		std::vector<std::thread> threads;
-		for (int i = 0; i < ARM->NExBrigs; i++) {
-			threads.emplace_back([&, i]() {
-				Brigade* BR = ARM->ExBrigs[i].Brig;
-				if (BR && BR->NMemb) {
-					int N = BR->NMemb;
-					word* Mem = BR->Memb;
-					word* MemSN = BR->MembSN;
-					int localForce = 0;
-					int localNMEM = 0;
-					for (int j = 0; j < N; j++) {
-						word MID = Mem[j];
-						if (MID != 0xFFFF) {
-							OneObject* OB = Group[MID];
-							if (OB && OB->Serial == MemSN[j] && !OB->Sdoxlo) {
-								localForce += OB->newMons->Force;
-								localNMEM++;
-							}
-						}
-					}
-					MyForce += localForce;
-					NMEM += localNMEM;
-				}
-				});
-		}
-		for (auto& t : threads) {
-			t.join();
-		}
-	}
-	else {
+	// Вычисление силы армии (sequential for determinism)
+	int MyForce = 0;
+	int NMEM = 0;
+	{
 		for (int i = 0; i < ARM->NExBrigs; i++) {
 			Brigade* BR = ARM->ExBrigs[i].Brig;
 			if (BR && BR->NMemb) {
@@ -5116,11 +4908,11 @@ void ArmyMakeBattleLink(AI_Army* ARM)
 	Na = GNFO.EINF[ARM->CT->NI]->GAINF.NArmy;
 	int MyX = (ARM->x) >> 8;
 	int MyY = (ARM->y) >> 8;
-	std::atomic<int> EnForces{ 0 };
-	std::atomic<int> MaxForce{ 0 };
+	int EnForces = 0;
+	int MaxForce = 0;
 	int MaxForceX = 10000000;
 	int MaxForceY = 10000000;
-	std::atomic<bool> DoBitva{ false };
+	bool DoBitva = false;
 	int rmin = 4;
 	int Endst = 7;
 	if (ARM->Spec == 2) {
@@ -5128,56 +4920,7 @@ void ArmyMakeBattleLink(AI_Army* ARM)
 		rmin = 2;
 	}
 
-	if (Na > 5000) {
-		std::vector<std::thread> threads;
-		std::vector<int> maxForceXs(Na, 10000000);
-		std::vector<int> maxForceYs(Na, 10000000);
-		std::vector<int> maxForces(Na, 0);
-		std::vector<bool> doBitvas(Na, false);
-
-		for (int i = 0; i < Na; i++) {
-			threads.emplace_back([&, i]() {
-				ArmyInfo* curAINF = AINF + i;
-				int rr = Norma(int(curAINF->MaxX) - MyX, int(curAINF->MaxY) - MyY);
-				int rr1 = Norma(int(curAINF->MaxX) - MyX, int(curAINF->MinY) - MyY);
-				if (rr1 < rr) rr = rr1;
-				rr1 = Norma(int(curAINF->MinX) - MyX, int(curAINF->MaxY) - MyY);
-				if (rr1 < rr) rr = rr1;
-				rr1 = Norma(int(curAINF->MinX) - MyX, int(curAINF->MinY) - MyY);
-				if (rr1 < rr) rr = rr1;
-
-				if (rr < Endst) {
-					int curforce = curAINF->N;
-					EnForces += curforce;
-					if (curforce > maxForces[i]) {
-						maxForces[i] = curforce;
-						maxForceXs[i] = (int(curAINF->MaxX) + int(curAINF->MinX)) >> 1;
-						maxForceYs[i] = (int(curAINF->MaxY) + int(curAINF->MinY)) >> 1;
-					}
-				}
-				if (rr < rmin) {
-					doBitvas[i] = true;
-				}
-				});
-		}
-
-		for (auto& t : threads) {
-			t.join();
-		}
-
-		for (int i = 0; i < Na; i++) {
-			std::lock_guard<std::mutex> lock(resultMutex);
-			if (maxForces[i] > MaxForce) {
-				MaxForce = maxForces[i];
-				MaxForceX = maxForceXs[i];
-				MaxForceY = maxForceYs[i];
-			}
-			if (doBitvas[i]) {
-				DoBitva = true;
-			}
-		}
-	}
-	else {
+	{
 		for (int i = 0; i < Na; i++) {
 			int rr = Norma(int(AINF->MaxX) - MyX, int(AINF->MaxY) - MyY);
 			int rr1 = Norma(int(AINF->MaxX) - MyX, int(AINF->MinY) - MyY);
@@ -5236,14 +4979,12 @@ void ArmyMakeBattleLink(AI_Army* ARM)
 			word NextTop = MotionLinks[MyTop * NAreas + FinTop];
 			if (NextTop != 0xFFFF) {
 				Area* AR = TopMap + NextTop;
-				std::lock_guard<std::mutex> lock(armyMutex);
 				ARM->LocalSendTo((AR->x << 6) + 32, (AR->y << 6) + 32, 128 + 64, 1);
 				return;
 			}
 		}
 	}
 	else if (DoBitva) {
-		std::lock_guard<std::mutex> lock(armyMutex);
 		ARM->Bitva();
 		if (ARM->AOrder && ARM->AOrder->ALink == &A_BitvaLink) return;
 	}
@@ -5286,7 +5027,6 @@ void ArmyMakeBattleLink(AI_Army* ARM)
 		int tpx = (int(AR->x) << 6) + 32;
 		int tpy = (int(AR->y) << 6) + 32;
 		if (ARM->GetArmyDanger(tpx, tpy) > 2) {
-			std::lock_guard<std::mutex> lock(armyMutex);
 			ARM->SendToMostSafePosition();
 		}
 		return;
@@ -5299,7 +5039,6 @@ void ArmyMakeBattleLink(AI_Army* ARM)
 
 	word Top1 = ARM->TopPos;
 	if (Top1 == 0xFFFF) {
-		std::lock_guard<std::mutex> lock(armyMutex);
 		ARM->DeleteAOrder();
 		return;
 	}
@@ -5310,7 +5049,6 @@ void ArmyMakeBattleLink(AI_Army* ARM)
 		int tpx = (int(AR->x) << 6) + 32;
 		int tpy = (int(AR->y) << 6) + 32;
 		if (ARM->GetArmyDanger(tpx, tpy) > 2) {
-			std::lock_guard<std::mutex> lock(armyMutex);
 			ARM->SendToMostSafePosition();
 		}
 		return;
@@ -5332,7 +5070,6 @@ void ArmyMakeBattleLink(AI_Army* ARM)
 	int tpx = (int(MAR->x) << 6) + 32;
 	int tpy = (int(MAR->y) << 6) + 32;
 	if (ARM->GetArmyDanger(tpx, tpy) > 1) {
-		std::lock_guard<std::mutex> lock(armyMutex);
 		ARM->SendToMostSafePosition();
 		return;
 	}
@@ -5341,7 +5078,6 @@ void ArmyMakeBattleLink(AI_Army* ARM)
 	tpy = (int(AR->y) << 6) + 32;
 	if (ARM->GetArmyDanger(tpx, tpy) > 2) {
 		if (rando() < 4096) {
-			std::lock_guard<std::mutex> lock(armyMutex);
 			ARM->Parad();
 		}
 		for (int n = 0; n < ARM->NExBrigs; n++) {
@@ -5350,7 +5086,6 @@ void ArmyMakeBattleLink(AI_Army* ARM)
 		return;
 	}
 
-	std::lock_guard<std::mutex> lock(armyMutex);
 	if (NextTop == Top) {
 		ARM->LocalSendTo(Dsx, Dsy, 128, 1);
 	}
@@ -5391,105 +5126,38 @@ void ArmyMakeDiversiaLink(AI_Army* ARM)
 
 	if (MyTop != -1)
 	{
-		if (Na > 5000)
+		// Sequential version (threading removed for determinism)
+		for (int i = 0; i < Na; i++)
 		{
-			std::atomic<bool> foundDirect(false);
-			std::atomic<int> foundIdx(-1);
-			std::atomic<AI_Army*> foundAIAR(nullptr);
-			std::mutex mtx;
-			unsigned numThreads = std::thread::hardware_concurrency() ? (std::thread::hardware_concurrency() < 16u ? std::thread::hardware_concurrency() : 16u) : 2;
-			if (numThreads == 0) numThreads = 4;
-			int chunk = (Na + numThreads - 1) / numThreads;
-			std::vector<std::thread> threads;
-
-			for (unsigned t = 0; t < numThreads; ++t)
-				threads.emplace_back([&, t]() {
-				int start = t * chunk;
-				int end = (Na < start + chunk) ? Na : (start + chunk);
-				for (int i = start; i < end && !foundDirect.load(); ++i)
-				{
-					AI_Army* AIAR = CT->ARMS + Amid[i];
-					int Atop = AIAR->TopPos;
-					if ((ARM->Spec == AIAR->Spec) && !AIAR->SpecialOrder && Atop >= 0 && Atop < NAreas && AIAR != ARM)
-					{
-						if (Atop == MyTop || MotionLinks[MyTop * NAreas + Atop] == Atop)
-						{
-							if (!foundDirect.exchange(true)) {
-								foundIdx.store(i);
-								foundAIAR.store(AIAR);
-							}
-							break;
-						}
-						else {
-							int R = LinksDist[MyTop * NAreas + Atop];
-							std::lock_guard<std::mutex> lock(mtx);
-							if (R < HisMinDis) {
-								HisMinDis = R;
-								HisTop = Atop;
-							}
-						}
-					}
-				}
-					});
-
-			for (auto& th : threads) th.join();
-
-			if (foundDirect.load())
+			AI_Army* AIAR = CT->ARMS + Amid[i];
+			int Atop = AIAR->TopPos;
+			if ((ARM->Spec == AIAR->Spec) && !AIAR->SpecialOrder && Atop >= 0 && Atop < NAreas && AIAR != ARM)
 			{
-				AI_Army* AIAR = foundAIAR.load();
-				int i = foundIdx.load();
-				AIAR->ClearAOrders();
-				int N = AIAR->NExBrigs;
-				for (int j = 0; j < N; j++)
+				if (Atop == MyTop || MotionLinks[MyTop * NAreas + Atop] == Atop)
 				{
-					Brigade* BR = AIAR->ExBrigs[j].Brig;
-					ARM->AddBrigade(BR);
-					if (BR->NMemb) BR->RemoveObjects(BR->NMemb, &ARM->CT->Defenders);
-					BR->DeleteAll();
-					BR->Enabled = true;
-				}
-				AIAR->ClearArmy();
-				AIAR->Enabled = false;
-				if (i < Na - 1)
-					memcpy(Amid + i, Amid + i + 1, (Na - i - 1) << 1);
-				CT->NDefArms--;
-				return;
-			}
-		}
-		else
-		{
-			for (int i = 0; i < Na; i++)
-			{
-				AI_Army* AIAR = CT->ARMS + Amid[i];
-				int Atop = AIAR->TopPos;
-				if ((ARM->Spec == AIAR->Spec) && !AIAR->SpecialOrder && Atop >= 0 && Atop < NAreas && AIAR != ARM)
-				{
-					if (Atop == MyTop || MotionLinks[MyTop * NAreas + Atop] == Atop)
+					AIAR->ClearAOrders();
+					int N = AIAR->NExBrigs;
+					for (int j = 0; j < N; j++)
 					{
-						AIAR->ClearAOrders();
-						int N = AIAR->NExBrigs;
-						for (int j = 0; j < N; j++)
-						{
-							Brigade* BR = AIAR->ExBrigs[j].Brig;
-							ARM->AddBrigade(BR);
-							if (BR->NMemb) BR->RemoveObjects(BR->NMemb, &ARM->CT->Defenders);
-							BR->DeleteAll();
-							BR->Enabled = true;
-						}
-						AIAR->ClearArmy();
-						AIAR->Enabled = false;
-						if (i < Na - 1)
-							memcpy(Amid + i, Amid + i + 1, (Na - i - 1) << 1);
-						CT->NDefArms--;
-						return;
+						Brigade* BR = AIAR->ExBrigs[j].Brig;
+						ARM->AddBrigade(BR);
+						if (BR->NMemb) BR->RemoveObjects(BR->NMemb, &ARM->CT->Defenders);
+						BR->DeleteAll();
+						BR->Enabled = true;
 					}
-					else
-					{
-						int R = LinksDist[MyTop * NAreas + Atop];
-						if (R < HisMinDis) {
-							HisMinDis = R;
-							HisTop = Atop;
-						}
+					AIAR->ClearArmy();
+					AIAR->Enabled = false;
+					if (i < Na - 1)
+						memcpy(Amid + i, Amid + i + 1, (Na - i - 1) << 1);
+					CT->NDefArms--;
+					return;
+				}
+				else
+				{
+					int R = LinksDist[MyTop * NAreas + Atop];
+					if (R < HisMinDis) {
+						HisMinDis = R;
+						HisTop = Atop;
 					}
 				}
 			}
@@ -5839,8 +5507,8 @@ void A_BitvaLink(AI_Army* ARM)
 	}
 
 	int MaxAttServ = 64;
-	std::atomic<bool> InBattle(false);
-	std::atomic<bool> MorPresent(false);
+	bool InBattle = false;
+	bool MorPresent = false;
 
 	// 3. Adding new units to battle
 	int MinX = OR1->MinX;
@@ -5864,135 +5532,8 @@ void A_BitvaLink(AI_Army* ARM)
 		if (BR) totalUnits += BR->NMemb;
 	}
 
-	if (totalUnits > 5000)
+	// Sequential processing (threading removed for determinism)
 	{
-		// Распараллеливание
-		const int numThreads = min(std::thread::hardware_concurrency(), 16);
-		std::vector<std::thread> threads;
-		int brigadesPerThread = ARM->NExBrigs / numThreads;
-		if (brigadesPerThread == 0) brigadesPerThread = 1;
-
-		for (int t = 0; t < numThreads && t < ARM->NExBrigs; t++)
-		{
-			int startIdx = t * brigadesPerThread;
-			int endIdx = (t == numThreads - 1) ? ARM->NExBrigs : startIdx + brigadesPerThread;
-			threads.emplace_back([ARM, OR1, startIdx, endIdx, &InBattle, &MorPresent]()
-				{
-					for (int i = startIdx; i < endIdx; i++)
-					{
-						Brigade* BR = ARM->ExBrigs[i].Brig;
-						if (!BR) continue;
-						int N = BR->NMemb;
-						word* Mem = BR->Memb;
-						word* MSN = BR->MembSN;
-						for (int j = 0; j < N; j++)
-						{
-							word MID = Mem[j];
-							if (MID != 0xFFFF)
-							{
-								OneObject* OB = Group[MID];
-								if (OB && OB->Serial == MSN[j] && OB->newMons && OB->Ref.General && OB->Ref.General->MoreCharacter)
-								{
-									if (!(OB->newMons->Artilery || OB->newMons->Archer))
-									{
-										if (!(OB->LocalOrder) || (OB->EnemyID == 0xFFFF))
-										{
-											NewMonster* NM = OB->newMons;
-											AdvCharacter* ADC = OB->Ref.General->MoreCharacter;
-											byte mms = NM->KillMask;
-											int MinR = ADC->MinR_Attack;
-											int MaxR = ADC->MaxR_Attack;
-											int myx = OB->RealX;
-											int myy = OB->RealY;
-											if (MaxR)
-											{
-												int NearDist = 1000000;
-												int ReadyDist = 1000000;
-												word NearMID = 0xFFFF;
-												word ReadyMID = 0xFFFF;
-												int NEn = OR1->NEn;
-												word* MemEn = OR1->Enm;
-												word* MSNEn = OR1->EnSN;
-												byte* DANG = OR1->NDang;
-												char mdr = OB->RealDir;
-												for (int t = 0; t < NEn; t++)
-												{
-													word MID = MemEn[t];
-													OneObject* EOB = Group[MID];
-													int dan = DANG[t];
-													if (EOB && EOB->newMons && !EOB->Sdoxlo && EOB->Serial == MSNEn[t])
-													{
-														NewMonster* ENM = EOB->newMons;
-														int Eusage = ENM->Usage;
-														if (Eusage == MortiraID) MorPresent = true;
-														if (ENM->MathMask & mms)
-														{
-															int R = Norma(myx - EOB->RealX, myy - EOB->RealY) >> 4;
-															if (R > MinR)
-															{
-																if (R < NearDist)
-																{
-																	if (EOB->InMotion)
-																	{
-																		int dr1 = GetDir(EOB->RealX - myx, EOB->RealY - myy);
-																		char dr = EOB->RealDir - dr1;
-																		if (abs(dr) > 64)
-																		{
-																			NearMID = MID;
-																			NearDist = R;
-																		}
-																	}
-																	else
-																	{
-																		NearMID = MID;
-																		NearDist = R;
-																	}
-																}
-																if (R < MaxR && R < ReadyDist)
-																{
-																	ReadyMID = MID;
-																	ReadyDist = R;
-																}
-															}
-														}
-													}
-												}
-												if (ReadyMID == 0xFFFF) ReadyMID = NearMID;
-												if (ReadyMID != 0xFFFF)
-												{
-													OB->AttackObj(ReadyMID, 128 + 64);
-													if (OB->LocalOrder && OB->LocalOrder->DoLink == &AttackObjLink)
-													{
-														OB->LocalOrder->DoLink(OB);
-														if (OB->LocalOrder && OB->LocalOrder->DoLink == &AttackObjLink)
-														{
-															InBattle = true;
-														}
-													}
-												}
-											}
-										}
-										else
-										{
-											InBattle = true;
-										}
-									}
-								}
-							}
-						}
-					}
-				});
-		}
-
-		// Ожидание завершения всех потоков
-		for (auto& thread : threads)
-		{
-			thread.join();
-		}
-	}
-	else
-	{
-		// Обычная обработка для малого числа юнитов
 		for (int i = 0; i < ARM->NExBrigs; i++)
 		{
 			Brigade* BR = ARM->ExBrigs[i].Brig;
@@ -6134,10 +5675,10 @@ void AI_Army::Bitva()
 	if (SpecialOrder)return;
 	if (tmtmt - LastBitvaTime < 64 || (AOrder && AOrder->ALink == &A_BitvaLink))return;
 	LastBitvaTime = tmtmt;
-	Army_Bitva* OR1 = (Army_Bitva*)CreateOrder(1, sizeof Army_Bitva);
+	Army_Bitva* OR1 = (Army_Bitva*)CreateOrder(1, sizeof(Army_Bitva));
 	OR1->Message = ABIT_Message;
-	OR1->Size = sizeof Army_Bitva;
-	memset(OR1->BitMask, 0, sizeof OR1->BitMask);
+	OR1->Size = sizeof(Army_Bitva);
+	memset(OR1->BitMask, 0, sizeof(OR1)->BitMask);
 	OR1->NEn = 0;
 
 	int MinX = 10000000;
@@ -6466,39 +6007,6 @@ void A_DiversiaLink(AI_Army* ARM)
 		if (ARM->ExBrigs[i].Brig) total += ARM->ExBrigs[i].Brig->NMemb;
 
 	int NAlive = 0;
-	if (total > 5000)
-	{
-		std::atomic<int> aliveCount(0);
-		unsigned threadsNum = min(std::thread::hardware_concurrency(), 16u);
-		if (threadsNum == 0) threadsNum = 4;
-		int chunk = (ARM->NExBrigs + threadsNum - 1) / threadsNum;
-		std::vector<std::thread> thr;
-		for (unsigned t = 0; t < threadsNum; ++t)
-		{
-			int start = t * chunk;
-			int end = (ARM->NExBrigs < start + chunk) ? ARM->NExBrigs : (start + chunk);
-			if (start >= end) break;
-			thr.emplace_back([&, start, end]() {
-				for (int i = start; i < end; ++i)
-				{
-					Brigade* BR = ARM->ExBrigs[i].Brig;
-					if (!BR) continue;
-					int M = BR->NMemb;
-					word* memb = BR->Memb;
-					word* msn = BR->MembSN;
-					for (int j = 0; j < M; ++j)
-					{
-						OneObject* OB = Group[memb[j]];
-						if (OB && OB->Serial == msn[j])
-							aliveCount.fetch_add(1, std::memory_order_relaxed);
-					}
-				}
-				});
-		}
-		for (auto& th : thr) th.join();
-		NAlive = aliveCount.load();
-	}
-	else
 	{
 		for (int i = 0; i < ARM->NExBrigs; i++)
 		{
@@ -6527,12 +6035,12 @@ void A_DiversiaLink(AI_Army* ARM)
 
 void AI_Army::Diversia()
 {
-	DiversionOrder* OR1 = (DiversionOrder*)CreateOrder(0, sizeof DiversionOrder);
+	DiversionOrder* OR1 = (DiversionOrder*)CreateOrder(0, sizeof(DiversionOrder));
 	OR1->ALink = &A_DiversiaLink;
 	OR1->EnMID = 0xFFFF;
 	OR1->LastEnemyTime = tmtmt;
 	OR1->Message = ADIV_Message;
-	OR1->Size = sizeof DiversionOrder;
+	OR1->Size = sizeof(DiversionOrder);
 	OR1->MotionMethod = 0;
 	SpecialOrder = true;
 };
@@ -6651,7 +6159,7 @@ void SmartGamer(City* CT)
 		word* units = NatList[NNUM];
 		int NDanger = 0;
 		byte UseFlags[512];
-		memset(UseFlags, 0, sizeof UseFlags);
+		memset(UseFlags, 0, sizeof(UseFlags));
 		word Danger[128];
 		if (N)
 		{
@@ -7179,7 +6687,7 @@ void DeleteFromGroups(byte NI, word ID)
 
 					if (i < N - 1)
 					{
-						memcpy(CT->GroupsSet + i, CT->GroupsSet + i + 1, (N - 1 - i) << 2);
+						memcpy(CT->GroupsSet + i, CT->GroupsSet + i + 1, (N - 1 - i) * sizeof(word*));
 					}
 
 					N--;
@@ -7269,7 +6777,7 @@ void GroupSelectedFormations(byte NI)
 
 	if (NForms)
 	{
-		CT->GroupsSet = (word**)realloc(CT->GroupsSet, CT->NGroups * 4 + 4);
+		CT->GroupsSet = (word**)realloc(CT->GroupsSet, (CT->NGroups + 1) * sizeof(word*));
 		CT->NGroupsInSet = (word*)realloc(CT->NGroupsInSet, CT->NGroups * 2 + 2);
 		CT->GroupsSet[CT->NGroups] = new word[NForms];
 		memcpy(CT->GroupsSet[CT->NGroups], FormsIDS, NForms * 2);
@@ -7464,13 +6972,11 @@ int GetBestVictimForArchers(byte NI, int x, int y, int R, int MyTop)
 	if (MyTop < 0 || MyTop >= NAreas)
 		return 0xFFFF;
 
-	// глобальные буферы
 	char ARRAY[64 * 64];
 	word BESTID[64 * 64];
-	memset(ARRAY, 0, sizeof ARRAY);
-	memset(BESTID, 0xFF, sizeof BESTID);
+	memset(ARRAY, 0, sizeof(ARRAY));
+	memset(BESTID, 0xFF, sizeof(BESTID));
 
-	const int totalObjs = MAXOBJECT;
 	int minx = (x - 1024 + 64) << 4;
 	int miny = (y - 1024 + 64) << 4;
 	int maxx = (x + 1024 - 64) << 4;
@@ -7479,132 +6985,87 @@ int GetBestVictimForArchers(byte NI, int x, int y, int R, int MyTop)
 	int y0 = (y - 1024) << 4;
 	byte Mask = 1 << NI;
 
-	unsigned numThreads = std::thread::hardware_concurrency() ? (std::thread::hardware_concurrency() < 16u ? std::thread::hardware_concurrency() : 16u) : 2;
-	if (!numThreads) numThreads = 4;
-	int chunk = (totalObjs + numThreads - 1) / numThreads;
+	// 1) Scan all objects
+	for (int i = 0; i < MAXOBJECT; ++i) {
+		OneObject* OB = Group[i];
+		if (!OB) continue;
+		int rx = OB->RealX, ry = OB->RealY;
+		if (rx <= minx || rx >= maxx || ry <= miny || ry >= maxy) continue;
+		if (OB->Sdoxlo) continue;
 
-	// локальные буферы на каждый поток
-	std::vector<std::vector<char>>  localARRAY(numThreads, std::vector<char>(4096, 0));
-	std::vector<std::vector<word>>  localBESTID(numThreads, std::vector<word>(4096, 0xFFFF));
-	std::vector<std::thread> threads;
+		int ofs = ((rx - x0) >> 9) + (((ry - y0) >> 9) << 6);
+		if (ofs < 0 || ofs >= 4096) continue;
 
-	// 1) распараллеливаем первый большой цикл
-	for (unsigned t = 0; t < numThreads; ++t) {
-		int start = t * chunk;
-		int end = (totalObjs < start + chunk ? totalObjs : start + chunk);
-		threads.emplace_back([&, start, end, t]() {
-			auto& arr = localARRAY[t];
-			auto& bid = localBESTID[t];
+		if (OB->newMons->Artilery) continue;
 
-			for (int i = start; i < end; ++i) {
-				OneObject* OB = Group[i];
-				if (!OB) continue;
-				int rx = OB->RealX, ry = OB->RealY;
-				if (rx <= minx || rx >= maxx || ry <= miny || ry >= maxy) continue;
-				if (OB->Sdoxlo) continue;
-
-				int ofs = ((rx - x0) >> 9) + (((ry - y0) >> 9) << 6);
-				if (ofs < 0 || ofs >= 4096) continue;
-
-				if (OB->newMons->Artilery) continue;
-
-				if (OB->Wall && !(OB->NMask & Mask)) {
-					if (!CheckWallForKilling(OB)) continue;
-					int life = OB->Life;
-					arr[ofs] += (life < 4000 ? 30 : life < 8000 ? 20 : life < 20000 ? 8 : 3);
-					bid[ofs] = OB->Index;
-				}
-				else if (OB->NewBuilding && !(OB->NMask & Mask)) {
-					byte use = OB->newMons->Usage;
-					arr[ofs] += (use == TowerID || use == MineID || use == CenterID
-						? 50
-						: OB->Life < 4000 ? 30
-						: OB->Life < 8000 ? 20
-						: OB->Life < 20000 ? 8 : 3);
-					bid[ofs] = OB->Index;
-				}
-				else {
-					if (OB->NMask & Mask) {
-						static const int off9[9] = { 0,1,-1,64,-64,63,-63,65,-65 };
-						for (int d : off9) arr[ofs + d]--;
-					}
-					else {
-						static const int off9[9] = { 0,1,-1,64,-64,63,-63,65,-65 };
-						for (int d : off9) arr[ofs + d]++;
-						bid[ofs] = OB->Index;
-					}
+		if (OB->Wall && !(OB->NMask & Mask)) {
+			if (!CheckWallForKilling(OB)) continue;
+			int life = OB->Life;
+			ARRAY[ofs] += (life < 4000 ? 30 : life < 8000 ? 20 : life < 20000 ? 8 : 3);
+			BESTID[ofs] = OB->Index;
+		}
+		else if (OB->NewBuilding && !(OB->NMask & Mask)) {
+			byte use = OB->newMons->Usage;
+			ARRAY[ofs] += (use == TowerID || use == MineID || use == CenterID
+				? 50
+				: OB->Life < 4000 ? 30
+				: OB->Life < 8000 ? 20
+				: OB->Life < 20000 ? 8 : 3);
+			BESTID[ofs] = OB->Index;
+		}
+		else {
+			if (OB->NMask & Mask) {
+				static const int off9[9] = { 0,1,-1,64,-64,63,-63,65,-65 };
+				for (int d : off9) {
+					int idx = ofs + d;
+					if (idx >= 0 && idx < 4096) ARRAY[idx]--;
 				}
 			}
-			});
-	}
-	for (auto& th : threads) th.join();
-
-	// 2) сливаем локальные буферы в глобальные
-	for (unsigned t = 0; t < numThreads; ++t) {
-		for (int i = 0; i < 4096; ++i) {
-			if (localARRAY[t][i] != 0) {
-				ARRAY[i] += localARRAY[t][i];
-				BESTID[i] = localBESTID[t][i];
+			else {
+				static const int off9[9] = { 0,1,-1,64,-64,63,-63,65,-65 };
+				for (int d : off9) {
+					int idx = ofs + d;
+					if (idx >= 0 && idx < 4096) ARRAY[idx]++;
+				}
+				BESTID[ofs] = OB->Index;
 			}
 		}
 	}
 
-	// 3) распараллеливаем второй цикл по 4096 клеткам
-	struct LocalBest { int value; word id; };
-	std::vector<LocalBest> localBests(numThreads, { 0, 0xFFFF });
-	threads.clear();
-
-	int cells = 4096;
-	int chunk2 = (cells + numThreads - 1) / numThreads;
+	// 2) Find best target
 	int tx0 = x >> 6;
 	int ty0 = y >> 6;
-
-	for (unsigned t = 0; t < numThreads; ++t) {
-		int start = t * chunk2;
-		int end = (cells < start + chunk2 ? cells : start + chunk2);
-		threads.emplace_back([&, start, end, t]() {
-			auto& lb = localBests[t];
-			for (int i = start; i < end; ++i) {
-				word bid = BESTID[i];
-				int  v = ARRAY[i];
-				if (bid == 0xFFFF || v <= 0) continue;
-
-				int ix = (i & 63) - 32;
-				int iy = (i >> 6) - 32;
-				int Ndist = Norma(ix, iy);
-				if (Ndist < 8) Ndist = 8;
-				if (Ndist > R) Ndist = INT_MAX;
-
-				int score = (v << 8) / Ndist;
-				if (score <= lb.value) continue;
-
-				int tx = tx0 + (ix >> 1);
-				int ty = ty0 + (iy >> 1);
-				OneObject* OB = Group[bid];
-
-				bool ok = false;
-				if (OB->Wall) ok = true;
-				else if (tx > 0 && tx < TopLx && ty > 0 && ty < TopLy) {
-					int FTOP = TopRef[tx + (ty << TopSH)];
-					ok = (FTOP < NAreas) &&
-						(FTOP == MyTop || LinksDist[FTOP * NAreas + MyTop] < 40);
-				}
-				if (ok) {
-					lb.value = score;
-					lb.id = bid;
-				}
-			}
-			});
-	}
-	for (auto& th : threads) th.join();
-
-	// 4) выбираем лучший из локальных
-	int  MAXVAL = 0;
+	int MAXVAL = 0;
 	word BESTENID = 0xFFFF;
-	for (auto& lb : localBests) {
-		if (lb.value > MAXVAL) {
-			MAXVAL = lb.value;
-			BESTENID = lb.id;
+
+	for (int i = 0; i < 4096; ++i) {
+		word bid = BESTID[i];
+		int  v = ARRAY[i];
+		if (bid == 0xFFFF || v <= 0) continue;
+
+		int ix = (i & 63) - 32;
+		int iy = (i >> 6) - 32;
+		int Ndist = Norma(ix, iy);
+		if (Ndist < 8) Ndist = 8;
+		if (Ndist > R) continue;
+
+		int score = (v << 8) / Ndist;
+		if (score <= MAXVAL) continue;
+
+		int tx = tx0 + (ix >> 1);
+		int ty = ty0 + (iy >> 1);
+		OneObject* OB = Group[bid];
+
+		bool ok = false;
+		if (OB->Wall) ok = true;
+		else if (tx > 0 && tx < TopLx && ty > 0 && ty < TopLy) {
+			int FTOP = TopRef[tx + (ty << TopSH)];
+			ok = (FTOP < NAreas) &&
+				(FTOP == MyTop || LinksDist[FTOP * NAreas + MyTop] < 40);
+		}
+		if (ok) {
+			MAXVAL = score;
+			BESTENID = bid;
 		}
 	}
 

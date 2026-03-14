@@ -1,3 +1,4 @@
+#include <cstdint>
 #include "ddini.h"
 #include "ResFile.h"
 #include "FastDraw.h"
@@ -7,7 +8,7 @@
 #include "MapDiscr.h"
 
 
-extern word SelCenter[8];
+extern word SelCenterFlags[8];
 SelGroup SelSet[80];
 
 SelGroup::SelGroup()
@@ -23,7 +24,7 @@ SelGroup::SelGroup()
 
 void SelGroup::CreateFromSelection(byte NI)
 {
-	if (int(Member))
+	if ((intptr_t)(Member))
 	{
 		DeleteMembers();
 	}
@@ -70,12 +71,12 @@ void SelGroup::DeleteMembers()
 		}
 	}
 
-	if (int(Member))
+	if ((intptr_t)(Member))
 	{
 		free(Member);
 	}
 
-	if (int(SerialN))
+	if ((intptr_t)(SerialN))
 	{
 		free(SerialN);
 	}
@@ -85,7 +86,7 @@ void SelGroup::DeleteMembers()
 
 void SelGroup::SelectMembers(byte NI, bool Shift)
 {
-	SelCenter[NI] = 0;
+	SelCenterFlags[NI] = 0;
 	word MID;
 	OneObject* OB;
 	word Nsel = NSL[NI];
@@ -123,7 +124,7 @@ void SelGroup::SelectMembers(byte NI, bool Shift)
 		MID = Member[i];
 		if (MID != 0xFFFF) {
 			OB = Group[MID];
-			if (int(OB) && OB->Serial == SerialN[i] && OB->NNUM == NeedNI && !OB->Sdoxlo) {
+			if ((intptr_t)(OB) && OB->Serial == SerialN[i] && OB->NNUM == NeedNI && !OB->Sdoxlo) {
 				if (!(OB->Selected&GM(NI))) {
 					SMon[NR] = MID;
 					ser[NR] = SerialN[i];
@@ -136,7 +137,7 @@ void SelGroup::SelectMembers(byte NI, bool Shift)
 	NSL[NI] = NR;
 };
 void SelGroup::ImSelectMembers(byte NI, bool Shift) {
-	SelCenter[NI] = 0;
+	SelCenterFlags[NI] = 0;
 	word MID;
 	OneObject* OB;
 	word Nsel = ImNSL[NI];

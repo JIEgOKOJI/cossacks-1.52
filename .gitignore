@@ -2,3 +2,5 @@
 src/Temp/
 src/.vs/
 src/Testing/
+src/transformed/*.o
+src/docs

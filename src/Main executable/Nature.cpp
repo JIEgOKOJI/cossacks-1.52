@@ -1,4 +1,5 @@
 #include "ddini.h"
+#include <cstdint>
 #include "ResFile.h"
 #include "FastDraw.h"
 #include "mgraph.h"
@@ -156,7 +157,7 @@ void LoadRDS()
 	GFILE* f = Gopen( "nres.dat", "r" );
 	ProtectionMode = 0;
 
-	if (!int( f ))
+	if (!(intptr_t)( f ))
 	{
 		Errr( "Could not find NRES.DAT" );
 		return;
@@ -1176,8 +1177,8 @@ void LoadOrders()
 							}
 							int nL = ODE->NLines;
 							ODE->NLines++;
-							ODE->LineNU = (word*) realloc( ODE->LineNU, ( nL + 1 ) << 2 );
-							ODE->Lines = (short**) realloc( ODE->Lines, ( nL + 1 ) << 2 );
+							ODE->LineNU = (word*) realloc( ODE->LineNU, ( nL + 1 ) * sizeof(word) );
+							ODE->Lines = (short**) realloc( ODE->Lines, ( nL + 1 ) * sizeof(short*) );
 							ODE->LineNU[nL] = nz;
 							ODE->Lines[nL] = NULL;
 							if (nz)
@@ -1243,8 +1244,15 @@ void LoadMessages();
 
 AI_Description::AI_Description()
 {
-	LoadMessages();
 	NAi = 0;
+	NComp = 0;
+	Ai = nullptr;
+	memset(DiffP, 0, sizeof(DiffP));
+}
+
+void AI_Description::Init()
+{
+	if (NAi > 0) return; // already initialized
 	GFILE* f = Gopen( "Ai\\Ai.dat", "r" );
 	char cc[128];
 	if (f)
@@ -1272,8 +1280,8 @@ AI_Description::AI_Description()
 
 			z = Gscanf( f, "%d%d%d", &Ai[i].NPeas, &Ai[i].NLandAI, &Ai[i].NWaterAI );
 			if (z != 3)InvAI();
-			Ai[i].LandAI = (char**) malloc( 4 * Ai[i].NLandAI );
-			Ai[i].WaterAI = (char**) malloc( 4 * Ai[i].NWaterAI );
+			Ai[i].LandAI = (char**) malloc( sizeof(char*) * Ai[i].NLandAI );
+			Ai[i].WaterAI = (char**) malloc( sizeof(char*) * Ai[i].NWaterAI );
 			for (int j = 0; j < Ai[i].NLandAI; j++)
 			{
 				Gscanf( f, "%s", cc );

@@ -76,6 +76,7 @@ public:
 	//------------------//
 	WallCluster();
 	~WallCluster();
+	void Clear();
 	void SetSize( int N );
 	void ConnectToPoint( short x, short y );
 	void ConnectToPoint( short x, short y, bool Vis );
@@ -100,7 +101,7 @@ public:
 	WallSystem();
 	~WallSystem();
 	void AddCluster( WallCluster* );
-	void WallSystem::Show();
+	void Show();
 };
 
 void WallHandleDraw();

@@ -1,5 +1,6 @@
-#include <cstring>  // для std::memset
-#include <climits>  // для INT_MAX
+#include <cstdint>
+#include <cstring>  // пїЅпїЅпїЅ std::memset
+#include <climits>  // пїЅпїЅпїЅ INT_MAX
 //MULTIPLAYER ORGANIZATION
 #include "ddini.h"
 #include "ResFile.h"
@@ -61,7 +62,7 @@ word* ImSelm[8];
 word* ImSerN[8];
 word NSL[8];
 word ImNSL[8];
-word SelCenter[8];
+word SelCenterFlags[8];
 bool CmdDone[ULIMIT];
 extern bool GodMode;
 typedef  bool CHOBJ( OneObject* OB, int N );
@@ -911,7 +912,10 @@ void CmdSelAllShips( byte NI )
 
 extern word NPlayers;
 
-__declspec( dllimport ) void SendVictoryState( int ID, byte State );
+#ifdef _MSC_VER
+__declspec( dllimport )
+#endif
+void SendVictoryState( int ID, byte State );
 
 bool ProcessMessages();
 
@@ -978,20 +982,20 @@ void DoCmdMoney( byte NI )
 bool GodMode = false;
 void DoCmdGodmode(byte NI)
 {
-	// 1) даём ресурсы
-	const int cap = INT_MAX / 2;      // безопасный максимум
+	// 1) пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	const int cap = INT_MAX / 2;      // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	for (int i = 0; i < 6; ++i)
 	{
-		int cur = XRESRC(NI, i);      // текущее количество ресурса :contentReference[oaicite:0]{index=0}:contentReference[oaicite:1]{index=1}
+		int cur = XRESRC(NI, i);      // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ :contentReference[oaicite:0]{index=0}:contentReference[oaicite:1]{index=1}
 		int toAdd = cap - cur;
 		if (toAdd > 0)
 			AddXRESRC(NI, i, toAdd);
 	}
 
-	// 2) включаем «бог-режим» и форсируем вместимость
+	// 2) пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	GodMode = true;
 //	NATIONS[NI].NFarms = INT_MAX;
-	NATIONS[NI].NFarms = 1000000; // Устанавливаем фиксированное значение 1 миллион
+	NATIONS[NI].NFarms = 1000000; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 1 пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	//NATIONS[NI].NGidot = INT_MAX;
 }
 bool House0 = false;
@@ -1010,19 +1014,19 @@ void GetHouse0()
 extern bool PeaceMode;
 extern int  PeaceTimeLeft;
 
-// Переключение режима перемирия «на лету» без таймера
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 void Getpeace()
 {
 	PeaceMode = !PeaceMode;
 
 	if (PeaceMode)
 	{
-		// Включаем мир — ставим бесконечно большой счётчик
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		PeaceTimeLeft = 0x7FFFFFFF;
 	}
 	else
 	{
-		// Выключаем мир — обнуляем счётчик
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		PeaceTimeLeft = 0;
 	}
 }
@@ -1184,22 +1188,22 @@ void CmdAddMoney( byte NI, DWORD Value )
 //GOD MODE
 void CmdGodmode(byte NI)
 {
-	ExBuf[EBPos] = 205; // Уникальный код команды
+	ExBuf[EBPos] = 205; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	ExBuf[EBPos + 1] = NI;
 	EBPos += 2;
 }
 //House0 
 void DoGetHouse0 ()
 {
-	ExBuf[EBPos] = 206; // Уникальный код команды
+	ExBuf[EBPos] = 206; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 }
 void DoGetnocost()
 {
-	ExBuf[EBPos] = 207; // Уникальный код команды
+	ExBuf[EBPos] = 207; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 }
 void DoGetpeace()
 {
-	ExBuf[EBPos] = 208; // Уникальный код команды
+	ExBuf[EBPos] = 208; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 }
 extern int MaxPeaceTime;
 extern int PeaceTimeStage;
@@ -1738,6 +1742,7 @@ void InitSelection()
 {
 	int sz = (MAXOBJECT >> 2) + 128;
 	if (sz > 16384)sz = 16384;
+#ifdef _MSC_VER
 	__asm {
 		push	edi
 		mov		ecx, sz
@@ -1747,6 +1752,9 @@ void InitSelection()
 		rep		stosd
 		pop		edi
 	};
+#else
+	memset(CmdDone, 0, (size_t)sz * 4);
+#endif
 };
 
 
@@ -1995,7 +2003,7 @@ void ImCorrectShipsSelection( byte NI )
 void SmartSelectionCorrector( byte NI, word* Mon, int N );
 void CreateGoodSelection( byte NI, word xx, word yy, word xx1, word yy1, CHOBJ* FN, int NN, bool Addon )
 {
-	SelCenter[NI] = 0;
+	SelCenterFlags[NI] = 0;
 	int x = xx >> 5;
 	int y = yy >> 5;
 	int x1 = xx1 >> 5;
@@ -2032,15 +2040,15 @@ void CreateGoodSelection( byte NI, word xx, word yy, word xx1, word yy1, CHOBJ* 
 			if ( MID != 0xFFFF )
 			{
 				OB = Group[MID];
-				if ( int( OB ) && OB->NNUM == NatRefTBL[NI] && ser[i] == OB->Serial )OB->ImSelected &= ~GM( NI );
+				if ( (intptr_t)( OB ) && OB->NNUM == NatRefTBL[NI] && ser[i] == OB->Serial )OB->ImSelected &= ~GM( NI );
 			};
 		};
-		if ( int( ImSelm[NI] ) )
+		if ( (intptr_t)( ImSelm[NI] ) )
 		{
 			free( ImSelm[NI] );
 			ImSelm[NI] = nullptr;
 		};
-		if ( int( ImSerN[NI] ) )
+		if ( (intptr_t)( ImSerN[NI] ) )
 		{
 			free( ImSerN[NI] );
 			ImSerN[NI] = nullptr;
@@ -2287,7 +2295,7 @@ void AttackToXY( byte NI, byte x, byte y )
 			zx = gx1; zy++;
 		};
 		MID = SMon[i];
-		if ( !( CmdDone[MID] || MID == 0xFFFF ) && int( Group[MID] ) )
+		if ( !( CmdDone[MID] || MID == 0xFFFF ) && (intptr_t)( Group[MID] ) )
 			//Group[SMon[i]]->SendTo(zx,zy,129);
 			zx++;
 	};
@@ -2306,7 +2314,7 @@ void AttackSelected( byte NI, word ObjID, byte OrdType, short DIR )
 	for ( int i = 0; i < Nsel; i++ )
 	{
 		MID = SMon[i];
-		if ( MID != 0xFFFF && int( Group[MID] ) )
+		if ( MID != 0xFFFF && (intptr_t)( Group[MID] ) )
 		{
 			if ( Group[MID]->AttackObj( ObjID, 126 + 128, OrdType ) )CmdDone[MID] = 1;
 		};
@@ -2334,7 +2342,7 @@ void BuildWithSelected( byte NI, word ObjID, byte OrdType )
 	for ( int i = 0; i < Nsel; i++ )
 	{
 		MID = SMon[i];
-		if ( ( !( MID == 0xFFFF/*||CmdDone[MID]*/ ) ) && int( Group[MID] ) )
+		if ( ( !( MID == 0xFFFF/*||CmdDone[MID]*/ ) ) && (intptr_t)( Group[MID] ) )
 			if ( OrdType != 1 )
 			{
 				rando();
@@ -2461,7 +2469,7 @@ void ProduceObject( byte NI, word Type )
 		if ( !( MID == 0xFFFF/*||CmdDone[MID]*/ ) )
 		{
 			OneObject* OB = Group[SMon[k]];
-			if ( int( OB ) )
+			if ( (intptr_t)( OB ) )
 			{
 				int pp = OB->CheckAbility( Type & 8191, false );
 				if ( pp == -1 && OB->Ready )
@@ -2668,11 +2676,54 @@ void RememSelection( byte NI, byte Index )
 
 int CreateWall( byte NI, byte* lp )
 {
+	HANDLE _hHeap = GetProcessHeap();
+	{
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) {
+			fprintf(wlog, "CreateWall: NI=%d size=%d\n", NI, ((word*)lp)[0]);
+			fprintf(wlog, "  HEAP_CHECK entry: %s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED");
+			fflush(wlog); fclose(wlog);
+		}
+	}
 	WallCluster WCLT;
 	WCLT.CreateByData( (word*) lp );
+	{
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) {
+			fprintf(wlog, "  CreateByData done: NCells=%d Type=%d NIndex=%d\n", WCLT.NCells, WCLT.Type, WCLT.NIndex);
+			fprintf(wlog, "  HEAP_CHECK after CreateByData: %s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED");
+			fflush(wlog); fclose(wlog);
+		}
+	}
 	WCLT.CreateSprites();
+	{
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) {
+			fprintf(wlog, "  CreateSprites done\n");
+			fprintf(wlog, "  HEAP_CHECK after CreateSprites: %s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED");
+			fflush(wlog); fclose(wlog);
+		}
+	}
 	WSys.AddCluster( &WCLT );
+	{
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) {
+			fprintf(wlog, "  AddCluster done\n");
+			fprintf(wlog, "  HEAP_CHECK after AddCluster: %s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED");
+			fflush(wlog); fclose(wlog);
+		}
+	}
 	WCLT.SendSelectedToWork( NI, 0 );
+	{
+		extern void _WallNotifyCreated();
+		_WallNotifyCreated();
+		FILE* wlog = fopen("dmcr_wall.log", "a");
+		if (wlog) {
+			fprintf(wlog, "  SendSelectedToWork done, returning %d\n", ((word*)lp)[0]);
+			fprintf(wlog, "  HEAP_CHECK after SendSelectedToWork: %s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED");
+			fflush(wlog); fclose(wlog);
+		}
+	}
 
 	return ( (word*) lp )[0];
 }
@@ -2692,7 +2743,7 @@ void RepairWall( byte NI, short xx, short yy, byte OrdType )
 	for ( int i = 0; i < Nsel; i++ )
 	{
 		MID = SMon[i];
-		if ( ( !( MID == 0xFFFF || CmdDone[MID] ) ) && int( Group[MID] ) )
+		if ( ( !( MID == 0xFFFF || CmdDone[MID] ) ) && (intptr_t)( Group[MID] ) )
 			if ( Group[MID]->BuildWall( xx, yy, 16, OrdType, true ) )
 				CanAct = true;
 	};
@@ -2719,7 +2770,7 @@ void PerformUpgr( byte NI, word UI )
 	for ( int i = 0; i < Nsel; i++ )
 	{
 		MID = SMon[i];
-		if ( MID != 0xFFFF && int( Group[MID] ) )
+		if ( MID != 0xFFFF && (intptr_t)( Group[MID] ) )
 			Group[SMon[i]]->PerformUpgrade( UI, MID );
 	};
 };
@@ -2734,7 +2785,7 @@ void SetDestination( byte NI, int x, int y )
 	for ( int i = 0; i < Nsel; i++ )
 	{
 		MID = SMon[i];
-		if ( MID != 0xFFFF && int( Group[MID] ) )
+		if ( MID != 0xFFFF && (intptr_t)( Group[MID] ) )
 			Group[MID]->SetDstPoint( x, y );
 	};
 };
@@ -2748,7 +2799,7 @@ void Stopp( byte NI )
 	for ( int i = 0; i < Nsel; i++ )
 	{
 		MID = SMon[i];
-		if ( MID != 0xFFFF && int( Group[MID] ) )
+		if ( MID != 0xFFFF && (intptr_t)( Group[MID] ) )
 		{
 			OneObject* OB = Group[MID];
 			if ( OB )
@@ -2768,7 +2819,7 @@ void StandGround( byte NI )
 	for ( int i = 0; i < Nsel; i++ )
 	{
 		MID = SMon[i];
-		if ( MID != 0xFFFF && int( Group[MID] ) )
+		if ( MID != 0xFFFF && (intptr_t)( Group[MID] ) )
 		{
 			OneObject* OB = Group[MID];
 			OB->StandGround = true;
@@ -2792,7 +2843,7 @@ void GroupAttackPoint( byte NI, byte x, byte y, byte kind )
 	for ( int i = 0; i < Nsel; i++ )
 	{
 		MID = SMon[i];
-		if ( MID != 0xFFFF && int( Group[MID] ) )
+		if ( MID != 0xFFFF && (intptr_t)( Group[MID] ) )
 		{
 			OneObject* OB = Group[MID];
 			if ( OB )OB->AttackPoint( x, y, kind, 16 );
@@ -2818,7 +2869,7 @@ void DieSelected( byte NI )
 	for ( int i = 0; i < Nsel; i++ )
 	{
 		MID = SMon[i];
-		if ( MID != 0xFFFF && int( Group[MID] ) )
+		if ( MID != 0xFFFF && (intptr_t)( Group[MID] ) )
 		{
 			OneObject* OB = Group[MID];
 			if ( OB )
@@ -2872,7 +2923,7 @@ void ContinueAttPoint( byte NI, byte x, byte y )
 	for ( int i = 0; i < Nsel; i++ )
 	{
 		MID = SMon[i];
-		if ( MID != 0xFFFF && int( Group[MID] ) )
+		if ( MID != 0xFFFF && (intptr_t)( Group[MID] ) )
 			Group[MID]->ContinueAttackPoint( x, y, 16 );
 	};
 };
@@ -2886,7 +2937,7 @@ void ContinueAttWall( byte NI, byte x, byte y )
 	for ( int i = 0; i < Nsel; i++ )
 	{
 		MID = SMon[i];
-		if ( MID != 0xFFFF && int( Group[MID] ) )
+		if ( MID != 0xFFFF && (intptr_t)( Group[MID] ) )
 			Group[MID]->ContinueAttackWall( x, y, 16 );
 	};
 };
@@ -2900,7 +2951,7 @@ void SitDown( byte NI )
 	for ( int i = 0; i < Nsel; i++ )
 	{
 		MID = SMon[i];
-		if ( MID != 0xFFFF && int( Group[MID] ) )
+		if ( MID != 0xFFFF && (intptr_t)( Group[MID] ) )
 		{
 			OneObject* OB = Group[MID];
 			//if(OB)OB->MakeMeSit();
@@ -3084,7 +3135,7 @@ void LoadNetworkGame( char* Name )
 	}
 
 	PlayerInfo LOC_PINFO[8];
-	memcpy( LOC_PINFO, PINFO, sizeof LOC_PINFO );
+	memcpy( LOC_PINFO, PINFO, sizeof(LOC_PINFO) );
 
 	byte mm[8];
 	memcpy( mm, NatRefTBL, 8 );
@@ -3129,7 +3180,7 @@ void LoadNetworkGame( char* Name )
 
 	if ( NPlayers > 1 )
 	{
-		memcpy( PINFO, LOC_PINFO, sizeof LOC_PINFO );
+		memcpy( PINFO, LOC_PINFO, sizeof(LOC_PINFO) );
 		byte MyExNation = MyNation;
 		for ( int i = 0; i < NPlayers; i++ )
 		{
@@ -3426,7 +3477,7 @@ void EraseBrigs( byte NI )
 	for ( int i = 0; i < Nsel; i++ )
 	{
 		MID = SMon[i];
-		if ( MID != 0xFFFF && int( Group[MID] ) )
+		if ( MID != 0xFFFF && (intptr_t)( Group[MID] ) )
 		{
 			OneObject* OB = Group[MID];
 			if ( OB && !OB->Sdoxlo&&OB->BrigadeID != 0xFFFF )
@@ -4822,6 +4873,10 @@ void ExecuteBuffer()
 	while ( pos < EBPos )
 	{
 		byte cmd = ExBuf[pos];
+		{
+			FILE* wlog = fopen("dmcr_wall.log", "a");
+			if (wlog) { fprintf(wlog, "ExBuf cmd=%d pos=%d EBPos=%d\n", cmd, pos, EBPos); fflush(wlog); fclose(wlog); }
+		}
 		pos++;
 		switch ( cmd )
 		{

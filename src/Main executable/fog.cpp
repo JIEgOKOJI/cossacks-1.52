@@ -1,3 +1,4 @@
+#include <cstdint>
 #include "ddini.h"
 #include "ResFile.h"
 #include "FastDraw.h"
@@ -84,6 +85,7 @@ void ProcessFog1_1()
 
 	byte z = 1;
 
+#ifdef _MSC_VER
 	__asm
 	{
 		push	esi
@@ -121,6 +123,26 @@ void ProcessFog1_1()
 		pop		edi
 		pop		esi
 	}
+#else
+	// C fallback for ProcessFog1_1
+	{
+		short* src = (short*)fmap1;
+		short* dst = (short*)fmap;
+		int cols = mlx - 1;
+		int rows = mly - 1;
+		int stride = FMSX_C; // words per row
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < cols; c++) {
+				int idx = (r + 1) * stride + (c + 1);
+				int sum = (unsigned short)src[idx - stride] + (unsigned short)src[idx + stride] +
+				          (unsigned short)src[idx - 1] + (unsigned short)src[idx + 1];
+				int avg = sum >> 2;
+				avg -= (sum >> 10);
+				dst[idx] = (short)avg;
+			}
+		}
+	}
+#endif
 }
 
 #undef FMSX_C
@@ -137,6 +159,7 @@ void ProcessFog1_2()
 	int fDV = (mlx * mly) << 1;
 	int fDH = (mlx << 1) - 2;
 	byte z = 1;
+#ifdef _MSC_VER
 	__asm {
 		push	esi
 		push	edi
@@ -175,6 +198,26 @@ void ProcessFog1_2()
 		pop		edi
 		pop		esi
 	};
+#else
+	// C fallback for ProcessFog1_2
+	{
+		short* src = (short*)fmap1;
+		short* dst = (short*)fmap;
+		int cols = mlx - 1;
+		int rows = mly - 1;
+		int stride = FMSX_C; // words per row
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < cols; c++) {
+				int idx = (r + 1) * stride + (c + 1);
+				int sum = (unsigned short)src[idx - stride] + (unsigned short)src[idx + stride] +
+				          (unsigned short)src[idx - 1] + (unsigned short)src[idx + 1];
+				int avg = sum >> 2;
+				avg -= (sum >> 10);
+				dst[idx] = (short)avg;
+			}
+		}
+	}
+#endif
 };
 
 
@@ -192,6 +235,7 @@ void ProcessFog1_3()
 	int fDV = (mlx * mly) << 1;
 	int fDH = (mlx << 1) - 2;
 	byte z = 1;
+#ifdef _MSC_VER
 	__asm {
 		push	esi
 		push	edi
@@ -229,6 +273,26 @@ void ProcessFog1_3()
 		pop		edi
 		pop		esi
 	};
+#else
+	// C fallback for ProcessFog1_3
+	{
+		short* src = (short*)fmap1;
+		short* dst = (short*)fmap;
+		int cols = mlx - 1;
+		int rows = mly - 1;
+		int stride = FMSX_C; // words per row
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < cols; c++) {
+				int idx = (r + 1) * stride + (c + 1);
+				int sum = (unsigned short)src[idx - stride] + (unsigned short)src[idx + stride] +
+				          (unsigned short)src[idx - 1] + (unsigned short)src[idx + 1];
+				int avg = sum >> 2;
+				avg -= (sum >> 10);
+				dst[idx] = (short)avg;
+			}
+		}
+	}
+#endif
 };
 
 void ProcessFog1()
@@ -338,6 +402,7 @@ void SetScreenFog16x16()
 {
 	smaplx++;
 	smaply++;
+#ifdef _MSC_VER
 	int fofs = int(fmap) + ((((mapy - 1) << 8) + (mapx - 1)) << 1);
 	int Saddy = (256 - smaplx) << 1;
 	int Daddy = (64 - smaplx) << 1;
@@ -380,6 +445,32 @@ void SetScreenFog16x16()
 			pop		edi
 			pop		esi
 	}
+#else
+	// C fallback for SetScreenFog16x16
+	{
+		short* fm = (short*)fmap;
+		int fofs = (mapy - 1) * 256 + (mapx - 1);
+		int Saddy = 256 - smaplx;
+		word MinShad = (MaxShad - (32 << Shifter));
+		byte* dst = &BFog[1][1];
+		for (int row = 0; row < smaply; row++) {
+			for (int col = 0; col < smaplx; col++) {
+				unsigned short val = (unsigned short)fm[fofs++];
+				byte fog_level;
+				if (val >= MaxShad) fog_level = 0;
+				else if (val <= MinShad) fog_level = 32;
+				else fog_level = (byte)((MaxShad - val) >> Shifter);
+				dst[0] = fog_level;
+				dst[1] = fog_level;
+				dst[64] = fog_level;
+				dst[64 + 1] = fog_level;
+				dst += 2;
+			}
+			fofs += Saddy;
+			dst += (64 - smaplx) * 2;
+		}
+	}
+#endif
 
 	smaplx--;
 	smaply--;
@@ -390,6 +481,7 @@ void ProcessScreenFog16x16()
 	smaplx++;
 	smaply++;
 	int	ads = 64 - (smaplx << 1);
+#ifdef _MSC_VER
 	__asm
 	{
 		push	esi
@@ -412,6 +504,27 @@ void ProcessScreenFog16x16()
 		jnz		gt0
 		pop		esi
 	}
+#else
+	// C fallback for ProcessScreenFog16x16
+	{
+		byte* ptr = &BFog[1][1];
+		int rows = smaply * 2;
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < smaplx; c++) {
+				int idx = (r + 1) * 64 + (c * 2 + 1);
+				byte* p = &BFog[0][0] + idx;
+				unsigned short left = *(unsigned short*)(p - 1);
+				unsigned short right = *(unsigned short*)(p + 1);
+				unsigned short up = *(unsigned short*)(p - 64);
+				unsigned short down = *(unsigned short*)(p + 64);
+				unsigned short sum = left + right + up + down;
+				sum >>= 2;
+				sum &= 0x1F1F;
+				*(unsigned short*)p = sum;
+			}
+		}
+	}
+#endif
 	smaplx--;
 	smaply--;
 }
@@ -431,7 +544,7 @@ void ShowSuperFluentFog32_160_16(int x, int y, int z1x, int z2x, int z3x, int z4
 	int z3 = z3x * 65536;
 	int	z4 = z4x * 65536;
 
-	int scrof = int(ScreenPtr) + x + y * SCRSizeX;
+	intptr_t scrof = (intptr_t)(ScreenPtr) + x + y * SCRSizeX;
 	int adds = SCRSizeX - 32;
 
 	if (z1x <= 63 && z2x <= 63 && z3x <= 63 && z4x <= 63)
@@ -441,6 +554,7 @@ void ShowSuperFluentFog32_160_16(int x, int y, int z1x, int z2x, int z3x, int z4
 
 	if (z1x >= 96 && z2x >= 96 && z3x >= 96 && z4x >= 96)
 	{
+#ifdef _MSC_VER
 		__asm
 		{
 			push	edi
@@ -456,6 +570,16 @@ void ShowSuperFluentFog32_160_16(int x, int y, int z1x, int z2x, int z3x, int z4
 			jnz		iug
 			pop		edi
 		}
+#else
+		// C fallback for ShowSuperFluentFog32_160_16 (fill black)
+		{
+			byte* dst = (byte*)scrof;
+			for (int r = 0; r < 16; r++) {
+				memset(dst, 0, 32);
+				dst += SCRSizeX;
+			}
+		}
+#endif
 		return;
 	}
 	else
@@ -463,6 +587,7 @@ void ShowSuperFluentFog32_160_16(int x, int y, int z1x, int z2x, int z3x, int z4
 		int a, b, p;
 		int c = (z3 - z1) >> 4;
 		int d = (z1 + z4 - z3 - z2) >> 9;
+#ifdef _MSC_VER
 		__asm
 		{
 			push	edi
@@ -719,6 +844,26 @@ void ShowSuperFluentFog32_160_16(int x, int y, int z1x, int z2x, int z3x, int z4
 			pop		esi
 			pop		edi
 		}
+#else
+		{
+			byte* dst = (byte*)scrof;
+			int a_val = z1;
+			int b_val = (z2 - z1) >> 5;
+			p = a_val;
+			for (int row = 0; row < 16; row++) {
+				int fog_val = p;
+				int fog_step = b_val;
+				for (int col = 0; col < 32; col++) {
+					int idx = ((fog_val >> 8) & 0xFF00) | dst[col];
+					dst[col] = darkfog[idx];
+					fog_val += fog_step;
+				}
+				dst += SCRSizeX;
+				b_val += d;
+				p += c;
+			}
+		}
+#endif
 	}
 }
 
@@ -728,7 +873,7 @@ void ShowSuperFluentFog16_160(int x, int y, int z1x, int z2x, int z3x, int z4x)
 	int	z2 = z2x << 16;
 	int z3 = z3x << 16;
 	int	z4 = z4x << 16;
-	int scrof = int(ScreenPtr) + x + y * SCRSizeX;
+	intptr_t scrof = (intptr_t)(ScreenPtr) + x + y * SCRSizeX;
 	int adds = SCRSizeX - 16;
 
 	if (z1x <= 63 && z2x <= 63 && z3x <= 63 && z4x <= 63)
@@ -738,6 +883,7 @@ void ShowSuperFluentFog16_160(int x, int y, int z1x, int z2x, int z3x, int z4x)
 
 	if (z1x >= 96 && z2x >= 96 && z3x >= 96 && z4x >= 96)
 	{
+#ifdef _MSC_VER
 		__asm
 		{
 			push	edi
@@ -753,11 +899,21 @@ void ShowSuperFluentFog16_160(int x, int y, int z1x, int z2x, int z3x, int z4x)
 			jnz		iug
 			pop		edi
 		}
+#else
+		{
+			byte* dst = (byte*)scrof;
+			for (int row = 0; row < 16; row++) {
+				memset(dst, 0, 16);
+				dst += SCRSizeX;
+			}
+		}
+#endif
 		return;
 	}
 	else
 	{
 		int a, b, c, d, p;
+#ifdef _MSC_VER
 		__asm
 		{
 			push	edi
@@ -914,6 +1070,28 @@ void ShowSuperFluentFog16_160(int x, int y, int z1x, int z2x, int z3x, int z4x)
 			pop		esi
 			pop		edi
 		}
+#else
+		{
+			byte* dst = (byte*)scrof;
+			a = z1;
+			b = (z2 - z1) >> 4;
+			c = (z3 - z1) >> 4;
+			d = (z1 + z4 - z3 - z2) >> 8;
+			p = a;
+			for (int row = 0; row < 16; row++) {
+				int fog_val = p;
+				int fog_step = b;
+				for (int col = 0; col < 16; col++) {
+					int idx = ((fog_val >> 8) & 0xFF00) | dst[col];
+					dst[col] = darkfog[idx];
+					fog_val += fog_step;
+				}
+				dst += SCRSizeX;
+				b += d;
+				p += c;
+			}
+		}
+#endif
 	}
 }
 
@@ -923,11 +1101,12 @@ void ShowSuperFluentFog12_160(int x, int y, int z1x, int z2x, int z3x, int z4x)
 	int	z2 = z2x << 16;
 	int z3 = z3x << 16;
 	int	z4 = z4x << 16;
-	int scrof = int(ScreenPtr) + x + y * SCRSizeX;
+	intptr_t scrof = (intptr_t)(ScreenPtr) + x + y * SCRSizeX;
 	int adds = SCRSizeX - 16;
 	if (z1x <= 63 && z2x <= 63 && z3x <= 63 && z4x <= 63)return;
 	if (z1x >= 96 && z2x >= 96 && z3x >= 96 && z4x >= 96)
 	{
+#ifdef _MSC_VER
 		__asm {
 			push	edi
 			mov		ebx, adds
@@ -942,6 +1121,15 @@ void ShowSuperFluentFog12_160(int x, int y, int z1x, int z2x, int z3x, int z4x)
 			jnz		iug
 			pop		edi
 		};
+#else
+		{
+			byte* dst = (byte*)scrof;
+			for (int row = 0; row < 12; row++) {
+				memset(dst, 0, 16);
+				dst += SCRSizeX;
+			}
+		}
+#endif
 		return;
 	}
 	else
@@ -950,6 +1138,7 @@ void ShowSuperFluentFog12_160(int x, int y, int z1x, int z2x, int z3x, int z4x)
 		int c = div(z3 - z1, 12).quot;
 		int d = div(z1 + z4 - z3 - z2, 192).quot;
 		int p;
+#ifdef _MSC_VER
 		__asm {
 			push	edi
 			push	esi
@@ -1105,6 +1294,26 @@ void ShowSuperFluentFog12_160(int x, int y, int z1x, int z2x, int z3x, int z4x)
 			pop		esi
 			pop		edi
 		};
+#else
+		{
+			byte* dst = (byte*)scrof;
+			a = z1;
+			b = (z2 - z1) >> 4;
+			p = a;
+			for (int row = 0; row < 12; row++) {
+				int fog_val = p;
+				int fog_step = b;
+				for (int col = 0; col < 16; col++) {
+					int idx = ((fog_val >> 8) & 0xFF00) | dst[col];
+					dst[col] = darkfog[idx];
+					fog_val += fog_step;
+				}
+				dst += SCRSizeX;
+				b += d;
+				p += c;
+			}
+		}
+#endif
 	};
 };
 #define shf 300
@@ -1153,6 +1362,7 @@ void SetLightPoint(int x, int y)
 	yy1 = y >> 5;
 	if (yy1 < 0)yy1 = 0;
 	if (yy1 >= msy)yy1 = msy - 1;
+#ifdef _MSC_VER
 	__asm
 	{
 		xor eax, eax
@@ -1161,6 +1371,12 @@ void SetLightPoint(int x, int y)
 		shl		eax, 1
 		mov		word ptr[fmap + eax], 16383;
 	}
+#else
+	{
+		unsigned int idx = (unsigned char)xx1 | ((unsigned char)yy1 << 8);
+		fmap[idx] = 16383;
+	}
+#endif
 }
 
 void FogSpot(int x, int y);
@@ -1462,6 +1678,7 @@ extern int MiniX, MiniY;
 
 void DrawMiniFog()
 {
+#ifdef _MSC_VER
 	int sofs = int(ScreenPtr) + minix + miniy * ScrWidth;
 	int fofs = int(fmap) + ((((MiniX >> 1) << (ADDSH - 1)) + kFogOffset + 1 + FMSX * (((MiniY >> 1) << (ADDSH - 1)) + kFogOffset + 1)) << 1);
 
@@ -1501,4 +1718,34 @@ void DrawMiniFog()
 			pop		edi
 			pop		esi
 	}
+#else
+	{
+		int MMSX = (MiniLx / 2);
+		int MMSY = (MiniLy / 2);
+		int addscr = ScrWidth + ScrWidth - MMSX - MMSX;
+		int DDDX = 1 << ADDSH;
+		int F_add = (FMSX2 << (ADDSH - 1)) - (MMSX << ADDSH);
+
+		word* fptr = fmap + ((((MiniX >> 1) << (ADDSH - 1)) + kFogOffset + 1) + FMSX * (((MiniY >> 1) << (ADDSH - 1)) + kFogOffset + 1));
+		byte* sptr = (byte*)ScreenPtr + minix + miniy * ScrWidth;
+		int fstep = DDDX / 2;
+		int frow_add = F_add / 2;
+
+		for (int row = 0; row < MMSY; row++) {
+			word* fp = fptr;
+			for (int col = 0; col < MMSX; col++) {
+				unsigned short val = (unsigned short)*fp;
+				fp += fstep;
+				if (val <= 1300) {
+					sptr[col * 2] = 0;
+					sptr[col * 2 + 1] = 0;
+					sptr[col * 2 + ScrWidth] = 0;
+					sptr[col * 2 + ScrWidth + 1] = 0;
+				}
+			}
+			fptr += frow_add + MMSX * fstep;
+			sptr += addscr + MMSX * 2;
+		}
+	}
+#endif
 }

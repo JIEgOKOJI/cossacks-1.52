@@ -1,11 +1,13 @@
 // Client/Server initialization & finalization
 //
 #include "CommCore.h"
+#include <stdio.h>
 
 // ---------------------------------------------------------------------------------------------
 #ifdef CC_DEBUG
 VOID CCommCore::DebugMessage( LPCSTR lpcszMessage )
 {
+#ifdef _WIN32
 	SYSTEMTIME		SysTime;
 	GetLocalTime( &SysTime );
 
@@ -17,6 +19,10 @@ VOID CCommCore::DebugMessage( LPCSTR lpcszMessage )
 		SysTime.wSecond,
 		SysTime.wMilliseconds,
 		lpcszMessage );
+#else
+	m_DebugStream = fopen( "/tmp/CommCore.log", "a+" );
+	fprintf( m_DebugStream, "%s\n", lpcszMessage );
+#endif
 
 	fclose( m_DebugStream );
 }
@@ -36,6 +42,8 @@ CCommCore::CCommCore()
 	m_piAutoInc = 0;
 	m_lpbRecvBuffer = (LPBYTE) malloc( RECV_BUFFER_LENGTH );
 	assert( m_lpbRecvBuffer );
+	fprintf(stderr, "[CC] CCommCore() this=%p m_lpbRecvBuffer=%p (malloc %d bytes)\n",
+		(void*)this, (void*)m_lpbRecvBuffer, RECV_BUFFER_LENGTH);
 	m_uMaxMsgSize = 0;
 	lpIdleProc = NULL;
 	lpEnumProc = NULL;
@@ -66,8 +74,10 @@ CCommCore::~CCommCore()
 #ifdef CC_DEBUG
 	DebugMessage( "-- Log Stopped ---------------------------------" );
 #endif //CC_DEBUG
-	if (m_lpbRecvBuffer)
+	if (m_lpbRecvBuffer) {
 		free( m_lpbRecvBuffer );
+		m_lpbRecvBuffer = nullptr;
+	}
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -96,6 +106,7 @@ BOOL CCommCore::InitServer( LPCSTR lpcszSessionName, LPCSTR lpcszUserName )
 	m_PeerList[0].m_ex_Port = htons( DATA_PORT );
 	m_PeerList[0].m_lpbUserData = m_lpbUserData;
 	m_PeerList[0].m_uUserDataSize = m_uUserDataSize;
+	m_PeerList[0].m_dwUserDataTag = m_uUserDataSize ? 1 : 0;
 	strcpy( m_PeerList[0].m_szUserName, m_szUserName );
 	strcpy( m_szSessionName, lpcszSessionName );
 	memcpy( m_PeerList[0].m_szCCUID, m_szCCUID, 22 );
@@ -146,6 +157,9 @@ BOOL CCommCore::InitClient( LPCSTR lpcszServerIP, LPCSTR lpcszUserName, unsigned
 		m_paServPort = htons( DATA_PORT );
 	}
 
+	fprintf(stderr, "[CC] InitClient: connecting to %s:%u as '%s' (addrCount=%u)\n",
+		lpcszServerIP, port ? port : DATA_PORT, lpcszUserName, m_uAddrCount);
+
 	m_csState = csWait;
 
 	if (!SendRawPacket( m_paServAddr, m_paServPort,
@@ -162,6 +176,7 @@ BOOL CCommCore::InitClient( LPCSTR lpcszServerIP, LPCSTR lpcszUserName, unsigned
 	free( lpConnectPacket );
 
 	DWORD dwTime = GetTickCount();
+	int loopCount = 0;
 
 	while (( ( GetTickCount() - dwTime ) < ( RETRY_TIME*( RETRY_COUNT + 3 ) ) ) && m_csState == csWait)
 	{
@@ -170,7 +185,11 @@ BOOL CCommCore::InitClient( LPCSTR lpcszServerIP, LPCSTR lpcszUserName, unsigned
 		QueueProcess();
 		if (lpIdleProc)
 			lpIdleProc();
+		loopCount++;
 	};
+
+	fprintf(stderr, "[CC] InitClient: loop done after %u ms, %d iterations, state=%d (2=rejected,3=connected)\n",
+		GetTickCount() - dwTime, loopCount, (int)m_csState);
 
 	if (m_csState != csConnected)
 		return FALSE;
@@ -243,6 +262,7 @@ VOID CCommCore::Cleanup()
 			free( m_PeerList[i].m_lpbUserData );
 			m_PeerList[i].m_lpbUserData = NULL;
 			m_PeerList[i].m_uUserDataSize = 0;
+			m_PeerList[i].m_dwUserDataTag = 0;
 		}
 
 	m_uPeerCount = 0;

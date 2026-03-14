@@ -1,0 +1,3 @@
+/opt/homebrew/bin/cmake -E rm -f CMakeFiles/dmcr.dir/objects.a
+/opt/homebrew/bin/x86_64-w64-mingw32-ar qc CMakeFiles/dmcr.dir/objects.a @CMakeFiles/dmcr.dir/objects1.rsp
+/opt/homebrew/bin/x86_64-w64-mingw32-g++ -mcrtdll=msvcrt-os -no-pthread -include /Users/ildarkarimov/Documents/cossacks-1.52/src/cmake/../platform/msvcrt_compat.h -O3 -DNDEBUG -static-libgcc -static-libstdc++ -mwindows -Wl,--major-subsystem-version,6,--minor-subsystem-version,1 -Wl,--whole-archive CMakeFiles/dmcr.dir/objects.a -Wl,--no-whole-archive -o dmcr.exe -Wl,--out-implib,libdmcr.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/dmcr.dir/linkLibs.rsp

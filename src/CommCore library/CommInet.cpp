@@ -1,19 +1,28 @@
 // Network initialization part
 //
 #include "CommCore.h"
-#include <iphlpapi.h>
-#pragma comment(lib, "Iphlpapi.lib")
+#include <stdio.h>
+#include <errno.h>
+#ifdef _WIN32
+    #include <iphlpapi.h>
+    #pragma comment(lib, "Iphlpapi.lib")
+#else
+    #include "platform.h"
+#endif
 
 // ---------------------------------------------------------------------------------------------
 
 BOOL CCommCore::InitNetwork()
 {
 	_log_message("InitNetwork()");
+	fprintf(stderr, "[CC] InitNetwork() called\n");
 
+#ifdef _WIN32
 	WSADATA WSAData;
 
 	if(WSAStartup(MAKEWORD(2,2),&WSAData)!=0)
 		return FALSE;
+#endif
 
 	if(!InitSocket())
 		return FALSE;
@@ -32,6 +41,7 @@ BOOL CCommCore::InitHost()
 
 	m_uAddrCount = 0;
 
+#ifdef _WIN32
 	ULONG bufLen = 15000;
 	PIP_ADAPTER_ADDRESSES pAddresses = NULL;
 	ULONG ret;
@@ -74,6 +84,10 @@ BOOL CCommCore::InitHost()
 	}
 
 	free(pAddresses);
+#else
+	m_uAddrCount = (u_short)platform_get_local_addresses(m_dwAddrList, 8);
+#endif
+
 	return (m_uAddrCount > 0);
 }
 
@@ -86,8 +100,10 @@ BOOL CCommCore::CloseNetwork()
 	if(!CloseSocket())
 		return FALSE;
 
+#ifdef _WIN32
 	if(WSACleanup()==SOCKET_ERROR)
 		return FALSE;
+#endif
 
 	return TRUE;
 }
@@ -102,6 +118,7 @@ BOOL CCommCore::InitSocket()
 	if(m_DataSocket==INVALID_SOCKET)
 		return FALSE;
 
+#ifdef _WIN32
 	u_long	lArgP=0x01;
 	if(ioctlsocket(m_DataSocket,FIONBIO,&lArgP)==SOCKET_ERROR)
 		return FALSE;
@@ -112,6 +129,12 @@ BOOL CCommCore::InitSocket()
 		return FALSE;
 
 	m_uMaxMsgSize=(u_short)lMaxSize;
+#else
+	if(platform_set_nonblocking(m_DataSocket, 1) != 0)
+		return FALSE;
+
+	m_uMaxMsgSize = 65507; // Max UDP payload size
+#endif
 
 	sockaddr_in locaddr;
 
@@ -119,9 +142,12 @@ BOOL CCommCore::InitSocket()
 	locaddr.sin_addr.s_addr=htonl(INADDR_ANY);
 	locaddr.sin_port=htons(DATA_PORT);
 
-	if(bind(m_DataSocket,(sockaddr *)&locaddr,sizeof(sockaddr_in))==SOCKET_ERROR)
+	if(bind(m_DataSocket,(sockaddr *)&locaddr,sizeof(sockaddr_in))==SOCKET_ERROR) {
+		fprintf(stderr, "[CC] bind(port=%d) FAILED errno=%d\n", DATA_PORT, errno);
 		return FALSE;
+	}
 
+	fprintf(stderr, "[CC] InitSocket OK: socket=%d bound to port %d\n", (int)m_DataSocket, DATA_PORT);
 	return TRUE;
 }
 
@@ -130,6 +156,7 @@ BOOL CCommCore::InitSocket()
 BOOL CCommCore::CloseSocket()
 {
 	_log_message("CloseSocket()");
+	fprintf(stderr, "[CC] CloseSocket() socket=%d\n", (int)m_DataSocket);
 
 	if(closesocket(m_DataSocket)==SOCKET_ERROR)
 		return FALSE;
