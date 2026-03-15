@@ -1582,11 +1582,16 @@ int MM_ProcessSinglePlayer()
 {
 	extern void dbglog(const char* fmt, ...);
 	dbglog("MM_ProcessSinglePlayer: enter\n");
+	fprintf(stderr, "[MENU] MM_ProcessSinglePlayer: enter\n");
 	use_gsc_network_protocol = false;
 	SFLB_LoadPlayerData();
+	fprintf(stderr, "[MENU] MM_ProcessSinglePlayer: LoadPlayerData done\n");
 	LoadFog(2);
+	fprintf(stderr, "[MENU] MM_ProcessSinglePlayer: LoadFog done\n");
 	LocalGP BTNS("Interface\\Single_Player");
+	fprintf(stderr, "[MENU] MM_ProcessSinglePlayer: BTNS loaded\n");
 	SQPicture MnPanel("Interface\\Background_Single_Player.bmp");
+	fprintf(stderr, "[MENU] MM_ProcessSinglePlayer: MnPanel loaded\n");
 	DialogsSystem MMenu(menu_x_off, menu_y_off);
 	LocalGP HFONT("rom10");
 	RLCFont hfnt(HFONT.GPID);
@@ -2725,6 +2730,7 @@ void ChatProcess();
 //Shows lobby interface for multiplayer deathmatch and single player random map
 bool MPL_WaitingGame(bool Host, bool SINGLE)
 {
+	fprintf(stderr, "[MENU] MPL_WaitingGame: enter (Host=%d, SINGLE=%d)\n", Host, SINGLE);
 	if (SINGLE)
 	{
 		use_gsc_network_protocol = false;
@@ -5249,7 +5255,9 @@ ffe2:
 		}
 	}
 
+	fprintf(stderr, "[MENU] MPL_WaitingGame: about to free Preview=%p\n", (void*)Preview);
 	free(Preview);
+	fprintf(stderr, "[MENU] MPL_WaitingGame: freed Preview OK\n");
 
 	if (mcmCancel == ItemChoose)
 	{
@@ -5260,6 +5268,7 @@ ffe2:
 	SpeedSh = exFMode;
 	FrmDec = exFMode + 1;
 
+	fprintf(stderr, "[MENU] MPL_WaitingGame: returning (ItemChoose=%d)\n", ItemChoose);
 	return (ItemChoose == mcmOk) || PlayerMenuMode != 1;
 }
 
@@ -6032,13 +6041,17 @@ extern int RunMethod;
 
 bool SingleOptions()
 {
+	fprintf(stderr, "[MENU] SingleOptions: enter\n");
 	if (MPL_WaitingGame(1, 1))
 	{
+		fprintf(stderr, "[MENU] SingleOptions: MPL_WaitingGame returned true, calling StartIGame\n");
 		StartIGame(1);
+		fprintf(stderr, "[MENU] SingleOptions: StartIGame returned\n");
 		return true;
 	}
 	else
 	{
+		fprintf(stderr, "[MENU] SingleOptions: MPL_WaitingGame returned false\n");
 		return false;
 	}
 }

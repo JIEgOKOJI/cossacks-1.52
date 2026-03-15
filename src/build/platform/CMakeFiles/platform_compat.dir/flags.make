@@ -6,7 +6,7 @@ CXX_DEFINES = -DNODDRAW -DPLATFORM_MACOS
 
 CXX_INCLUDES = -I/Users/ildarkarimov/Documents/cossacks-1.52/src/platform
 
-CXX_FLAGSarm64 = -O3 -DNDEBUG -std=gnu++11 -arch arm64
+CXX_FLAGSarm64 = -isystem /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
 
-CXX_FLAGS = -O3 -DNDEBUG -std=gnu++11 -arch arm64
+CXX_FLAGS = -isystem /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1 -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
 

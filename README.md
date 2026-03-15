@@ -1,5 +1,25 @@
 *[Информация на русском языке](#rus)*
 
+## Текущее состояние совместимости подсистем
+
+| Подсистема | Windows | macOS | Статус |
+|---|---|---|---|
+| Графика (SDL2) | ✅ | ✅ 95% | Все 14 GP_Show* + 4 Unpack реализованы в C |
+| Звук (SDL2_mixer) | ✅ | ✅ 90% | CD музыка + 60 эффектов, баг: SetCDVolume на все каналы |
+| Ввод (SDL events) | ✅ | ✅ 100% | SdlEventBridge: полный маппинг событий, клавиатура + мышь + текст |
+| CommCore (UDP) | ✅ | ✅ 90% | Wire format исправлен (wire_u32, PEER_ENTRY_WIRE_SIZE=79) |
+| DirectPlay | ✅ | ✅ replaced | MPlayerStub.cpp: 1896 строк, ~30 функций, StartIGame полный |
+| Platform HAL | ✅ | ✅ 100% | 18 файлов, полная абстракция Win32 → POSIX/macOS |
+| GameSpy | ❌ мёртв | ❌ | Не нужен |
+| IChat | ❌ мёртв | ❌ | Не нужен |
+| Архивы (Arc/GSC) | ✅ | ✅ | Gopen/Gread работают, SoundList.txt + ресурсы загружаются |
+| GP спрайты | ✅ | ✅ 95% | Полный C рендеринг, кэш 64-bit, GP_Header::Pack исправлен |
+| Реестр | ✅ | ✅ | config_compat.h → ~/Library/Application Support/GSC/ |
+| Игровая логика | ✅ | ✅ 90% | Single-player работает; 21 threaded block удалён |
+| 64-bit porting | ✅ | ✅ 95% | 90+ pointer-size багов исправлено, ZBuffer intptr_t |
+| CMake / сборка | ✅ | ✅ 100% | 3 платформы (macOS, Win32, Win64), toolchain-файлы |
+| Мультиплеер sync | ✅ | ⚠️ 70% | TSin/TCos/TAtg исправлены; FPU-риски + double-rando() остаются |
+| AI DLL | ✅ | ✅ 100% | 20 AI .dylib (Mach-O bundle arm64) собраны, dist/macOS-arm64/ai/ |
 
 # 🌟 Cossacks: Back to War 1.52
 

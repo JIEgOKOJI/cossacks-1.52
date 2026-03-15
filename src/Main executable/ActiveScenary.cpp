@@ -5899,7 +5899,30 @@ void LoadAIFromDLL( byte Nat, char* Name )
 	CNAT = NATIONS + Nat;
 	CCIT = CNAT->CITY;
 	CurAINation = Nat;
+#ifndef _MSC_VER
+	// On non-Windows, fix path separators and extension
+	char altName[512];
+	strncpy(altName, Name, sizeof(altName) - 1);
+	altName[sizeof(altName) - 1] = '\0';
+	// Replace backslashes with forward slashes
+	for (char* p = altName; *p; p++) {
+		if (*p == '\\') *p = '/';
+	}
+	// Replace .dll with platform-specific extension
+	char* dot = strrchr(altName, '.');
+	if (dot && _stricmp(dot, ".dll") == 0) {
+#ifdef __APPLE__
+		strcpy(dot, ".dylib");
+#else
+		strcpy(dot, ".so");
+#endif
+	}
+	NT->hLibAI = LoadLibrary( altName );
+	if ( !NT->hLibAI )
+		NT->hLibAI = LoadLibrary( Name );
+#else
 	NT->hLibAI = LoadLibrary( Name );
+#endif
 	AiIsRunNow = false;
 	if ( NT->hLibAI )
 	{
@@ -5930,13 +5953,16 @@ void LoadAIFromDLL( byte Nat, char* Name )
 	else
 	{
 #ifndef STARFORCE
+		char cc[256];
 #ifdef _MSC_VER
-		char cc[128];
 		sprintf( cc, "Could not load %s", Name );
 		MessageBox( NULL, cc, "AI loadind from DLL", MB_TOPMOST );
 		assert( 0 );
 #else
-		fprintf(stderr, "[AI] Could not load %s (DLLs not supported on this platform)\n", Name);
+		const char* err = dlerror();
+		sprintf( cc, "Could not load %s: %s", Name, err ? err : "unknown error" );
+		fprintf(stderr, "[AI] %s\n", cc);
+		assert( 0 );
 #endif
 #endif
 	}

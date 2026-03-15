@@ -3973,10 +3973,15 @@ int PASCAL WinMain(
 			//Main game loop (runs until Exit button is clicked)
 			AllGame();
 
+			fprintf(stderr, "[EXIT] AllGame returned, calling ClearScreen\n");
 			ClearScreen();
+			fprintf(stderr, "[EXIT] ClearScreen done, calling UnLoading\n");
 			UnLoading();
+			fprintf(stderr, "[EXIT] UnLoading done, calling CloseExplosions\n");
 			CloseExplosions();
+			fprintf(stderr, "[EXIT] CloseExplosions done, calling ShutdownMultiplayer\n");
 			ShutdownMultiplayer( 1 );
+			fprintf(stderr, "[EXIT] ShutdownMultiplayer done\n");
 
 			//Distinguish between last window adn fullscreen resolutions
 			int ex_window_x, ex_window_y, ex_x, ex_y;
@@ -4015,11 +4020,19 @@ int PASCAL WinMain(
 				Gclose( rec_settings_file );
 			}
 
+			fprintf(stderr, "[EXIT] Saving settings done, calling FilesExit\n");
 			FilesExit();
+			fprintf(stderr, "[EXIT] FilesExit done, calling StopPlayCD\n");
 			StopPlayCD();
+			fprintf(stderr, "[EXIT] StopPlayCD done, posting WM_CLOSE\n");
 			PostMessage( hwnd, WM_CLOSE, 0, 0 );
+			fprintf(stderr, "[EXIT] WM_CLOSE posted, calling FinExplorer\n");
 			FinExplorer();
+			fprintf(stderr, "[EXIT] FinExplorer done, breaking out of main loop\n");
+			break;
 		}
 	}
+	fprintf(stderr, "[EXIT] Exiting process\n");
+	_exit(0);
 	return msg.wParam;
 }

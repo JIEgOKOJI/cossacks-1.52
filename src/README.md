@@ -137,6 +137,46 @@ bash build_all_dlls.sh
 
 ---
 
+## Сборка AI DLL
+
+Каждая нация в игре имеет свою AI-логику в виде DLL-плагина (20 штук). Исходники декомпилированы
+через Ghidra и трансформированы скриптом `transform_ai_dll.py`.
+
+### macOS (ARM64)
+
+```bash
+cd src/tools/dll_build
+bash build_ai_dlls_macos.sh
+```
+
+Результат: 20 `.dylib` файлов в `dist/macOS-arm64/ai/` (Mach-O 64-bit bundle arm64).
+
+Используется `-bundle -bundle_loader dmcr` — бандлы резолвят API-символы из хост-исполняемого
+файла dmcr при загрузке через `dlopen()`.
+
+### Windows x64 (кросс-компиляция)
+
+```bash
+cd src/tools/dll_build
+GAME_DIR=/path/to/cossacks bash build_ai_dlls.sh
+```
+
+Результат: 20 `.dll` файлов в `dist/Windows-x64/ai/`.
+
+`GAME_DIR` должен указывать на каталог с оригинальными 32-битными DLL (нужны для трансформации).
+
+### Структура каталога tools/dll_build/
+
+| Файл | Назначение |
+|------|------------|
+| `game_api.h` | Общий заголовок API (42+ функций экспортируемых dmcr) |
+| `transform_ai_dll.py` | Трансформация Ghidra C → компилируемый C для AI DLL |
+| `build_ai_dlls.sh` | Сборка AI DLL для Windows x64 |
+| `build_ai_dlls_macos.sh` | Сборка AI DLL для macOS ARM64 |
+| `dmcr.def` / `libdmcr.a` | Import library для линковки DLL → exe (Windows) |
+
+---
+
 ## Установка и запуск
 
 Скопируйте собранный бинарник (`dmcr` / `dmcr.exe`) в каталог с данными игры.
@@ -152,6 +192,7 @@ cossacks/
   all_ru.gsc        # русская локализация (опционально)
   mode.dat          # настройки (разрешение, звук и т.д.)
   Tracks/           # музыка (Track_10.wav .. Track_20.wav)
+  ai/               # AI DLL (.dylib на macOS, .dll на Windows) — из dist/
   missions/         # DLL миссий — из dist/ (x64) или оригинальные (x86)
 ```
 
@@ -198,13 +239,17 @@ src/
 │   ├── dll_build/
 │   │   ├── build_all_dlls.sh   # Скрипт сборки всех DLL
 │   │   ├── transform_dll.py    # Трансформация Ghidra C → компилируемый C
+│   │   ├── transform_ai_dll.py # Трансформация AI DLL (20 наций)
+│   │   ├── build_ai_dlls.sh    # Сборка AI DLL (Windows x64)
+│   │   ├── build_ai_dlls_macos.sh # Сборка AI DLL (macOS ARM64)
+│   │   ├── game_api.h          # API-заголовок для AI DLL
 │   │   ├── dmcr.def            # Экспортируемые символы exe
 │   │   └── libdmcr.a           # Import library для линковки DLL → exe
 │   └── decompile_all.sh        # Пакетная декомпиляция через Ghidra
 ├── dist/                       # Готовые бинарники
-│   ├── macOS-arm64/            # dmcr (Mach-O)
+│   ├── macOS-arm64/            # dmcr (Mach-O) + ai/*.dylib (20 AI DLL)
 │   ├── Windows-x86/            # dmcr.exe (PE32) + SDL2.dll, SDL2_mixer.dll
-│   └── Windows-x64/            # dmcr.exe (PE32+) + SDL2/SDL2_mixer/unrar.dll + ~220 DLL миссий
+│   └── Windows-x64/            # dmcr.exe (PE32+) + SDL2/SDL2_mixer/unrar.dll + ai/*.dll + ~220 DLL миссий
 ├── IChat library/              # GameSpy чат (опционально, серверы закрыты)
 └── IntExplorer library/        # GameSpy браузер (опционально)
 ```
