@@ -317,29 +317,155 @@ def cleanup_ghidra_types(code):
 def collect_remaining_dats(code, api_mapping, pe):
     """Collect DAT_ references that are NOT API function pointers.
     These are AI state variables. Read initial values from PE binary.
-    Also declares API DATs that are still referenced (used as values, not just calls)."""
+
+    Key fix: variables used with & may be data ARRAYS (e.g. word[] for
+    SetMineBalanse, int[] for SetMinesBuildingRules). We detect array size
+    from API call context and read all bytes from the original PE binary
+    to preserve correct initial values.
+    """
     import struct
     api_dats = set(api_mapping.keys())
     all_dats = set(re.findall(r'_?(DAT_[0-9a-f]+)', code))
     state_dats = sorted(all_dats - api_dats, key=lambda x: int(x[4:], 16))
 
+    # Build sorted list of ALL DAT_ addresses (including API ones) to measure gaps
+    all_addrs = sorted(int(d[4:], 16) for d in all_dats)
+
+    def get_extent(va):
+        """Get the byte extent from va to the next DAT_ address."""
+        for a in all_addrs:
+            if a > va:
+                return a - va
+        return 8  # default: GAMEOBJ size
+
+    # Detect array sizes from API call context:
+    # SetMineBalanse(N, &DAT_xxx) → word[N*2] (N pairs of threshold,value)
+    # SetMinesBuildingRules(&DAT_xxx, NElm) → int[NElm]
+    # SetMinesUpgradeRules(&DAT_xxx) → int[6] (always reads Table[0..5])
+    array_sizes = {}  # dat_name → byte_size
+
+    for m in re.finditer(r'SetMineBalanse\s*\(\s*(\w+)\s*,\s*&(DAT_[0-9a-f]+)\)', code):
+        n_str, dat = m.group(1), m.group(2)
+        try:
+            n = int(n_str, 0)
+            byte_size = n * 2 * 2  # N pairs × 2 words × 2 bytes/word
+            array_sizes[dat] = max(array_sizes.get(dat, 0), byte_size)
+        except ValueError:
+            pass
+
+    for m in re.finditer(r'SetMinesBuildingRules\s*\(\s*&(DAT_[0-9a-f]+)\s*,\s*(\w+)\)', code):
+        dat, n_str = m.group(1), m.group(2)
+        try:
+            n = int(n_str, 0)
+            byte_size = n * 4  # N ints × 4 bytes
+            array_sizes[dat] = max(array_sizes.get(dat, 0), byte_size)
+        except ValueError:
+            pass
+
+    for m in re.finditer(r'SetMinesUpgradeRules\s*\(\s*&(DAT_[0-9a-f]+)\)', code):
+        dat = m.group(1)
+        array_sizes[dat] = max(array_sizes.get(dat, 0), 6 * 4)  # 6 ints
+
+    # Detect stride-based access patterns for per-nation arrays:
+    # Pattern: iVar = expr * STRIDE; ... &DAT_xxx + iVar  (indirect stride)
+    # Pattern: &DAT_xxx + expr * STRIDE  (direct stride)
+    # These variables need at least MAX_PLAYERS * STRIDE bytes.
+    MAX_PLAYERS = 8
+    stride_sizes = {}  # dat_name → min byte size needed
+
+    # Find stride constants from assignments like: iVar1 = DAT_xxx * 0x4b8
+    stride_vars = {}  # var_name → stride_value
+    for m in re.finditer(r'(\w+)\s*=\s*\w+\s*\*\s*(0x[0-9a-fA-F]+|\d+)\s*;', code):
+        var_name, stride_str = m.group(1), m.group(2)
+        stride = int(stride_str, 0)
+        if stride > 8:
+            stride_vars[var_name] = stride
+
+    # Find &DAT_xxx + stride_var (indirect pattern)
+    for m in re.finditer(r'&(DAT_[0-9a-f]+)\s*[+\-]\s*(\w+)\b', code):
+        dat, var_name = m.group(1), m.group(2)
+        if var_name in stride_vars:
+            needed = MAX_PLAYERS * stride_vars[var_name]
+            stride_sizes[dat] = max(stride_sizes.get(dat, 0), needed)
+
+    # Find &DAT_xxx + expr * STRIDE (direct pattern)
+    for m in re.finditer(r'&(DAT_[0-9a-f]+)\s*[+\-]\s*\w+\s*\*\s*(0x[0-9a-fA-F]+|\d+)', code):
+        dat, stride_str = m.group(1), m.group(2)
+        stride = int(stride_str, 0)
+        if stride > 8:
+            needed = MAX_PLAYERS * stride
+            stride_sizes[dat] = max(stride_sizes.get(dat, 0), needed)
+
+    # Merge stride_sizes into array_sizes (take max of both)
+    for dat, size in stride_sizes.items():
+        array_sizes[dat] = max(array_sizes.get(dat, 0), size)
+
+    # Find DAT_ variables that overlap with known arrays
+    # (e.g. DAT_X+4 is inside a known array starting at DAT_X)
+    # Process from lowest address first so inner DATs always overlap
+    # into the outermost (lowest-address) array.
+    # Skip variables already in overlaps to prevent cascading #defines.
+    overlaps = {}  # inner_dat → (outer_dat, offset)
+    for dat in sorted(array_sizes.keys(), key=lambda d: int(d[4:], 16)):
+        if dat in overlaps:
+            continue  # Don't use an overlapped variable as outer base
+        byte_size = array_sizes[dat]
+        base_va = int(dat[4:], 16)
+        for inner_dat in state_dats:
+            inner_va = int(inner_dat[4:], 16)
+            if base_va < inner_va < base_va + byte_size:
+                if inner_dat not in overlaps:
+                    overlaps[inner_dat] = (dat, inner_va - base_va)
+
     lines = []
     for dat in state_dats:
         va = int(dat[4:], 16)
-        # Check if used as &DAT_ (GAMEOBJ or string)
+
+        # Skip overlapping vars — they'll be aliased via #define
+        if dat in overlaps:
+            outer_dat, offset = overlaps[dat]
+            # Check how it's used: as int assignment or as pointer
+            assigned = bool(re.search(r'_?' + dat + r'\s*=', code))
+            if assigned:
+                lines.append(f'#define {dat} (*(int*)({outer_dat} + {offset}))')
+            else:
+                lines.append(f'#define {dat} (*(int*)({outer_dat} + {offset}))')
+            continue
+
+        # Check usage patterns
         used_with_amp = bool(re.search(r'&' + dat + r'\b', code))
         used_as_value = bool(re.search(r'[<>=!+\-*/]\s*_?' + dat + r'\b', code))
         assigned = bool(re.search(r'_?' + dat + r'\s*=', code))
-        # Check if &DAT_ is used with pointer arithmetic (&DAT_ + expr)
         used_as_array_base = bool(re.search(r'&' + dat + r'\s*[+\-]', code))
 
-        if used_with_amp and not assigned and not used_as_value:
-            if used_as_array_base:
-                # Array base: use char for byte-level pointer arithmetic
-                lines.append(f'char {dat} = 0;')
+        if dat in array_sizes:
+            # Known array from API call context — use exact size
+            byte_size = array_sizes[dat]
+            raw = pe.read_bytes_at_va(va, byte_size)
+            if raw and len(raw) == byte_size:
+                hex_vals = ', '.join(f'0x{b:02X}' for b in raw)
+                lines.append(f'unsigned char {dat}[{byte_size}] = {{{hex_vals}}};')
             else:
-                # Likely a GAMEOBJ passed by pointer
-                lines.append(f'long long {dat} = 0;')
+                lines.append(f'unsigned char {dat}[{byte_size}] = {{0}};')
+        elif used_with_amp and not assigned and not used_as_value:
+            extent = get_extent(va)
+
+            if used_as_array_base or extent > 8:
+                # Data array: read full extent from PE binary and emit as byte array
+                raw = pe.read_bytes_at_va(va, extent)
+                if raw and len(raw) == extent:
+                    hex_vals = ', '.join(f'0x{b:02X}' for b in raw)
+                    lines.append(f'unsigned char {dat}[{extent}] = {{{hex_vals}}};')
+                else:
+                    lines.append(f'unsigned char {dat}[{extent}] = {{0}};')
+            else:
+                # GAMEOBJ (8 bytes) — read initial value from PE
+                raw = pe.read_bytes_at_va(va, 8)
+                if raw and len(raw) == 8:
+                    hex_vals = ', '.join(f'0x{b:02X}' for b in raw)
+                    lines.append(f'unsigned char {dat}[8] = {{{hex_vals}}};')
+                else:
+                    lines.append(f'long long {dat} = 0;')
         else:
             # Regular int variable - read initial value from PE
             raw = pe.read_bytes_at_va(va, 4)
@@ -433,6 +559,15 @@ def main():
     raw_code = remove_stack_fill(raw_code)
     raw_code = cleanup_ghidra_types(raw_code)
 
+    # Fix extraout_ECX Ghidra artifacts: these represent x86 ECX register
+    # output from function calls. On ARM64/non-x86, they're meaningless.
+    # Initialize all extraout_ECX* declarations to 0.
+    raw_code = re.sub(
+        r'^(\s*int\s+extraout_ECX\w*)\s*;',
+        r'\1 = 0;',
+        raw_code, flags=re.MULTILINE
+    )
+
     # Remove _DAT_ prefix (normalize to DAT_)
     raw_code = re.sub(r'\b_DAT_', 'DAT_', raw_code)
 
@@ -460,6 +595,17 @@ def main():
 
     # Collect remaining DAT_ variables (AI state)
     var_decls = collect_remaining_dats(raw_code, api_mapping, pe)
+
+    # Fix &DAT_xxx pointer arithmetic: when a DAT_ is declared as an array
+    # (unsigned char DAT_xxx[N]), &DAT_xxx gives unsigned char(*)[N] and
+    # arithmetic scales by N instead of 1. Cast to (unsigned char *) to
+    # ensure byte-level arithmetic matching original Ghidra semantics.
+    # Must run AFTER collect_remaining_dats() which scans for &DAT_xxx patterns.
+    raw_code = re.sub(
+        r'&(DAT_[0-9a-f]+)\s*(\+|-)',
+        r'((unsigned char *)&\1) \2',
+        raw_code
+    )
 
     # Add __declspec(dllexport) to InitAI and ProcessAI
     raw_code = re.sub(

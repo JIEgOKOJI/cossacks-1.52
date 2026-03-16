@@ -244,6 +244,13 @@ __declspec(dllimport) void SetUpgradeLock();
 __declspec(dllimport) int  GetDied();
 __declspec(dllimport) BOOL IsUpgradeDoing();
 __declspec(dllimport) BOOL IsUpgradeEnabled();
+__declspec(dllimport) void SetMinesBuildingRules();
+__declspec(dllimport) void SetMinesUpgradeRules();
+__declspec(dllimport) void SetDefenseState();
+__declspec(dllimport) int  GetTorgResult();
+__declspec(dllimport) int  GetExtraction();
+__declspec(dllimport) int  GetMaxPeaceTime();
+__declspec(dllimport) int  GetPeaceTimeLeft();
 
 /* Nation */
 __declspec(dllimport) void AssignNation();
