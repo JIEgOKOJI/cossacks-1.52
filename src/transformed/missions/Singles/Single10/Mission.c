@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 char DAT_10029048[] = "G3";
@@ -25,13 +26,73 @@ long long DAT_1002e440 = 0;
 int DAT_1002e44c = 0;
 
 /* Forward declarations */
-void FUN_100014a0(void);
+void FUN_10001370(int param_1);
 
 void OnInit();
 void ProcessScenary();
 
 
-void FUN_100014a0(void)
+void __cdecl FUN_10001370(int param_1)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_8;
+iVar1 = GetTotalAmount1(&DAT_1002e438,0);
+  if (0 < iVar1) {
+    for (local_8 = 1; local_8 < param_1 + 1; local_8 = local_8 + 1) {
+      CreateObject0(&DAT_1002e3f0,&DAT_1002e440,&DAT_1002e428,2,&DAT_1002e408,0);
+      SelectUnits(&DAT_1002e3f0,0);
+      SelSendAndKill(2,&DAT_1002e410,0,0);
+    }
+  }
+  SetTrigg(2,0);
+  SetTrigg(3,0);
+  return;
+}
+
+
+
+
+
+void OnInit(void)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_44 [15];
+  int uStack_8;
+SetPlayerName(0,"SVEDES");
+  SetPlayerName(1,DAT_10029078);
+  SetPlayerName(2,"BANDITS");
+  SetStandartVictory();
+  RegisterUnitType(&DAT_1002e438,"shahta(SV)");
+  RegisterZone(&DAT_1002e408,DAT_10029058);
+  RegisterZone(&DAT_1002e410,DAT_10029054);
+  RegisterZone(&DAT_1002e418,DAT_10029050);
+  RegisterZone(&DAT_1002e420,DAT_1002904c);
+  RegisterUnits(&DAT_1002e400,DAT_10029048);
+  RegisterFormation(&DAT_1002e440,"#LINEMORB15");
+  RegisterUnitType(&DAT_1002e428,"Pehota_turki_DIP(VE)");
+  RegisterDynGroup(&DAT_1002e3f0);
+  RegisterDynGroup(&DAT_1002e3f8);
+  RunTimer(1,5000);
+  RegisterVar(&DAT_1002ca30,4);
+  RegisterVar(&DAT_1002e44c,4);
+  SetTrigg(1,0);
+  SetTrigg(2,0);
+  SetTrigg(3,0);
+  SetTrigg(4,0);
+  RegisterVar(&DAT_1002e430,4);
+  uStack_8 = 0x100012d9;
+  return;
+}
+
+
+
+
+
+void ProcessScenary(void)
 
 {
   unsigned int uVar1;
@@ -67,7 +128,7 @@ uVar1 = Trigg(99);
     if ((uVar1 & 0xff) != 0) {
       iVar3 = GetUnitsAmount0(&DAT_1002e408,2);
       if (10 < iVar3) {
-        ProcessScenary(DAT_1002ca30);
+        FUN_10001370(DAT_1002ca30);
         RunTimer(1,10000);
         if (DAT_1002ca30 == 1) {
           ShowPage("#PAGE2");
@@ -127,66 +188,6 @@ uVar1 = Trigg(99);
     }
   }
   uStack_8 = 0x10001a59;
-  return;
-}
-
-
-
-
-
-void OnInit(void)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-SetPlayerName(0,"SVEDES");
-  SetPlayerName(1,DAT_10029078);
-  SetPlayerName(2,"BANDITS");
-  SetStandartVictory();
-  RegisterUnitType(&DAT_1002e438,"shahta(SV)");
-  RegisterZone(&DAT_1002e408,DAT_10029058);
-  RegisterZone(&DAT_1002e410,DAT_10029054);
-  RegisterZone(&DAT_1002e418,DAT_10029050);
-  RegisterZone(&DAT_1002e420,DAT_1002904c);
-  RegisterUnits(&DAT_1002e400,DAT_10029048);
-  RegisterFormation(&DAT_1002e440,"#LINEMORB15");
-  RegisterUnitType(&DAT_1002e428,"Pehota_turki_DIP(VE)");
-  RegisterDynGroup(&DAT_1002e3f0);
-  RegisterDynGroup(&DAT_1002e3f8);
-  RunTimer(1,5000);
-  RegisterVar(&DAT_1002ca30,4);
-  RegisterVar(&DAT_1002e44c,4);
-  SetTrigg(1,0);
-  SetTrigg(2,0);
-  SetTrigg(3,0);
-  SetTrigg(4,0);
-  RegisterVar(&DAT_1002e430,4);
-  uStack_8 = 0x100012d9;
-  return;
-}
-
-
-
-
-
-__declspec(dllexport) void ProcessScenary()
-{
-  int param_1 = 0;
-  int iVar1;
-  int *puVar2;
-  int local_8;
-iVar1 = GetTotalAmount1(&DAT_1002e438,0);
-  if (0 < iVar1) {
-    for (local_8 = 1; local_8 < param_1 + 1; local_8 = local_8 + 1) {
-      CreateObject0(&DAT_1002e3f0,&DAT_1002e440,&DAT_1002e428,2,&DAT_1002e408,0);
-      SelectUnits(&DAT_1002e3f0,0);
-      SelSendAndKill(2,&DAT_1002e410,0,0);
-    }
-  }
-  SetTrigg(2,0);
-  SetTrigg(3,0);
   return;
 }
 

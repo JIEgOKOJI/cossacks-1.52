@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 char DAT_10007088[] = "Z54";
@@ -455,7 +456,7 @@ LAB_10001669:
           goto LAB_10001b54;
         }
 LAB_10001b02:
-        SetTrigg(0x1e);
+        SetTrigg(0x1e,0);
       }
     }
     else {
@@ -579,7 +580,7 @@ LAB_10001b54:
           goto LAB_10001f4b;
         }
 LAB_10001ef9:
-        SetTrigg(0x28);
+        SetTrigg(0x28,0);
       }
     }
     else {

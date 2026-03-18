@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 long long DAT_100363e0 = 0;
@@ -140,31 +141,8 @@ int DAT_100365e0_ovl = 0;
 int DAT_10036638_ovl = 0;
 int DAT_10036698_ovl = 0;
 int DAT_100366d8_ovl = 0;
-
-/* Stubs for missing internal functions */
-int FUN_100084c0() { return 0; }
-int FUN_100089f0() { return 0; }
-
-
-/* Forward declarations */
-void FUN_10008470(DWORD param_1);
-
 void OnInit();
 void ProcessScenary();
-
-
-
-void __cdecl FUN_10008470(DWORD param_1)
-
-{
-  DWORD *pDVar1;
-  
-  pDVar1 = FUN_100089f0();
-  pDVar1[5] = param_1;
-  return;
-}
-
-
 
 
 
@@ -349,8 +327,8 @@ RegisterUnits(&DAT_10036458,"Ghetman");
   EnableUnit(0,&DAT_10036500,0);
   EnableUnit(0,&DAT_10036510,0);
   DisableUpgrade(0,&DAT_100364b0);
-  DVar1 = FUN_100084c0((int *)0x0);
-  FUN_10008470(DVar1);
+  DVar1 = time(NULL);
+  srand(DVar1);
   uStack_8 = 0x10002273;
   return;
 }

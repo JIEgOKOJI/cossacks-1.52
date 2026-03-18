@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 char DAT_1002d200[] = "Ggal";
@@ -84,31 +85,8 @@ long long DAT_10032650 = 0;
 long long DAT_10032658 = 0;
 long long DAT_10032668 = 0;
 long long DAT_10032670 = 0;
-
-/* Stubs for missing internal functions */
-int FUN_100050c0() { return 0; }
-int FUN_10005d60() { return 0; }
-
-
-/* Forward declarations */
-void FUN_10005070(DWORD param_1);
-
 void OnInit();
 void ProcessScenary();
-
-
-void __cdecl FUN_10005070(DWORD param_1)
-
-{
-  DWORD *pDVar1;
-  
-  pDVar1 = FUN_10005d60();
-  pDVar1[5] = param_1;
-  return;
-}
-
-
-
 
 
 void OnInit(void)
@@ -327,8 +305,8 @@ uVar1 = Trigg(99);
     InitialUpgrade("Ghetman","AKA28SA");
     InitialUpgrade("Gport1","AKA04EN");
     InitialUpgrade("Gport1","KUZ01EN");
-    DVar2 = FUN_100050c0((int *)0x0);
-    FUN_10005070(DVar2);
+    DVar2 = time(NULL);
+    srand(DVar2);
     uVar1 = rand();
     if ((uVar1 & 1) == 0) {
       SelectUnits(&DAT_100325c0,0);

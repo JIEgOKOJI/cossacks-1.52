@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 int this_ptr = 0;
@@ -119,6 +120,7 @@ int FUN_10008dd8() { return 0; }
 
 
 /* Forward declarations */
+void FUN_10001b70(int param_1,int param_2,int param_3,int param_4);
 void FUN_10001c50(int param_1);
 void FUN_10001d10(int param_1);
 void FUN_10001dd0(int param_1,int param_2);
@@ -131,7 +133,6 @@ void FUN_100024d0(void *param_1,int param_2,int param_3,int param_4);
 void FUN_10002660(int param_1,void *param_2,void *param_3,int param_4,int param_5);
 void FUN_10002770(int param_1,int param_2,double param_3,int param_4);
 void FUN_100029f0(void *param_1,int param_2);
-void FUN_10002ab0(void);
 void FUN_10003960(int param_1);
 void  FUN_10003a00(int param_1);
 void  FUN_10003a60(int param_1);
@@ -210,6 +211,33 @@ void FUN_10006460(void);
 
 void OnInit();
 void ProcessScenary();
+
+
+void __cdecl
+FUN_10001b70(int param_1,int param_2,int param_3,int param_4)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_70 [16];
+  char local_30 [20];
+  int local_1c;
+  int local_18;
+  int uStack_8;
+GetUnitInfo(&DAT_10039d48,0,local_30);
+  local_1c = param_2;
+  local_18 = param_3;
+  SetUnitInfo(local_30);
+  CreateZoneNearGroup(param_1,&DAT_10039da8,&DAT_10039d48,param_4);
+  local_1c = 400;
+  local_18 = 400;
+  SetUnitInfo(local_30);
+  uStack_8 = 0x10001c1c;
+  return;
+}
+
+
+
 
 
 void __cdecl FUN_10001c50(int param_1)
@@ -457,7 +485,7 @@ local_3c = GetTotalAmount0(0);
   local_78 = (double)param_3;
   FUN_100063c4((void *)local_5c,(int)(void *)local_5c);
   lVar4 = 0;
-  ProcessScenary(local_c,(int)lVar4,unaff_ESI,unaff_EBX);
+  FUN_10001b70(local_c,(int)lVar4,unaff_ESI,unaff_EBX);
   SelectUnits(param_1,0);
   local_60 = local_60 + 0x80;
   SelSendTo(0,0,0,0);
@@ -520,7 +548,7 @@ FUN_10005d40(param_2,local_30);
   local_50 = (double)param_3;
   FUN_100063c4(*(int*)((char*)&local_24 + 4),(intptr_t)local_24);
   lVar5 = 0;
-  ProcessScenary((intptr_t)param_1 + 0x14,(int)lVar5,unaff_ESI,unaff_EBX);
+  FUN_10001b70((intptr_t)param_1 + 0x14,(int)lVar5,unaff_ESI,unaff_EBX);
   *(int *)((intptr_t)param_1 + 8) = local_28 + 0x80;
   FUN_10005b10((intptr_t)param_1);
   return;
@@ -580,7 +608,7 @@ local_c = param_2;
   local_48 = (double)param_4;
   FUN_100063c4(this_ptr,(int)(*(int*)&local_24));
   lVar5 = 0;
-  ProcessScenary((intptr_t)param_1 + 0x14,(int)lVar5,unaff_ESI,unaff_EBX);
+  FUN_10001b70((intptr_t)param_1 + 0x14,(int)lVar5,unaff_ESI,unaff_EBX);
   *(int *)((intptr_t)param_1 + 8) = local_28 + 0x80;
   FUN_10005b10((intptr_t)param_1);
   return;
@@ -621,7 +649,7 @@ FUN_10005d40(param_2,local_20);
   local_34 = (double)param_5;
   FUN_10006474(this_ptr,(intptr_t)param_3);
   lVar3 = 0;
-  ProcessScenary(param_1 + 0x14,(int)lVar3,unaff_EDI,unaff_ESI);
+  FUN_10001b70(param_1 + 0x14,(int)lVar3,unaff_EDI,unaff_ESI);
   lVar3 = 0;
   local_18 = (int)lVar3;
   *(int *)(param_1 + 8) = local_18 + 0x80;
@@ -691,7 +719,7 @@ local_3c = GetTotalAmount0(param_2);
   local_6c = (double)param_4;
   FUN_10006474(this_ptr,(int)(*(int*)&param_3));
   lVar3 = 0;
-  ProcessScenary(local_c,(int)lVar3,unaff_EDI,unaff_ESI);
+  FUN_10001b70(local_c,(int)lVar3,unaff_EDI,unaff_ESI);
   SelectUnits(param_1,0);
   SelSendTo(0,local_c,local_58 & 0xff,0);
   return;
@@ -722,211 +750,6 @@ FUN_10005f10((intptr_t)param_1);
     DAT_10039f14 = param_1;
   }
   local_c[1] = 0x10002a7c;
-  return;
-}
-
-
-
-
-
-
-
-void FUN_10002ab0(void)
-
-{
-  double dVar1;
-  int uVar2;
-  void *pvVar3;
-  unsigned int uVar4;
-  int iVar5;
-  int iVar6;
-  int *puVar7;
-  long double fVar8;
-  long long lVar9;
-  int local_74 [16];
-  int local_34;
-  void *local_30;
-  int local_2c;
-  int local_28;
-  long long local_24;
-  int local_1c;
-  int local_18;
-  int local_14;
-  int local_10;
-  long long local_c;
-uVar4 = Trigg(0);
-  if ((uVar4 & 0xff) != 0) {
-    DAT_10039ed8 = GetDiff(0);
-    InitialUpgrade("GMain",0);
-    InitialUpgrade("GMain",0);
-    InitialUpgrade("GMain",0);
-    InitialUpgrade("GMain",0);
-    if (DAT_10039ed8 < 1) {
-      InitialUpgrade("GMain",0);
-      InitialUpgrade("GMain",0);
-      InitialUpgrade("GMain",0);
-      InitialUpgrade("GMain",0);
-    }
-    if (DAT_10039ed8 < 2) {
-      InitialUpgrade("GMain",0);
-      InitialUpgrade("GMain",0);
-      InitialUpgrade("GMain",0);
-      InitialUpgrade("GMain",0);
-      InitialUpgrade("GMain",0);
-    }
-    if (DAT_10039ed8 < 3) {
-      InitialUpgrade("GMain",0);
-      InitialUpgrade("GMain",0);
-      InitialUpgrade("GMain",0);
-      InitialUpgrade("GMain",0);
-    }
-    InitialUpgrade("GMain",0);
-    InitialUpgrade("GMain",0);
-    InitialUpgrade("GMain",0);
-    InitialUpgrade("GMain",0);
-    InitialUpgrade("GMain",0);
-    InitialUpgrade("GMain",0);
-    SetLightSpot(&DAT_10039db0,3,0);
-    ChangeFriends(0,0);
-    RunTimer(1,0);
-    RunTimer(2,0);
-    RunTimer(3,0);
-    SelectUnits(&DAT_10039d50,0);
-    SelectUnits(&DAT_10039d58,0);
-    SelectUnits(&DAT_10039d68,0);
-    SelectUnits(&DAT_10039d70,0);
-    Patrol(1,&DAT_10039db0,0);
-    DAT_10039ee8 = 600;
-    DAT_10039eec = 600;
-    RunTimer(0x1e,0);
-    SetTrigg(99);
-  }
-  uVar4 = TimerDoneFirst(0);
-  if ((uVar4 & 0xff) != 0) {
-    ShowPage(0);
-    SelectUnits(&DAT_10039f08,0);
-    InitialUpgrade("GMain",0);
-  }
-  uVar4 = Trigg(0);
-  if ((uVar4 & 0xff) != 0) {
-    uVar4 = TimerDoneFirst(0);
-    if ((uVar4 & 0xff) != 0) {
-      DAT_10039f14 = 0;
-      FUN_100029f0(&DAT_10039b1a,200);
-      FUN_100029f0(&DAT_10039d78,200);
-      FUN_100029f0(&DAT_10039c88,100);
-      FUN_100029f0(&DAT_10039b78,100);
-      FUN_100029f0(&DAT_10039b96,100);
-      FUN_100029f0(&DAT_10039ca6,100);
-      FUN_100029f0(&DAT_10039bb4,100);
-      FUN_100029f0(&DAT_10039bd2,100);
-      FUN_100029f0(&DAT_10039cc4,100);
-      FUN_100029f0(&DAT_10039bf0,100);
-      FUN_100029f0(&DAT_10039c0e,100);
-      FUN_100029f0(&DAT_10039ce2,100);
-      FUN_100029f0(&DAT_10039b56,200);
-      FUN_10001f90(DAT_10039ee8,DAT_10039eec,DAT_10039ef8,DAT_10039efc);
-      dVar1 = (double)fVar8;
-      *(int*)((char*)&local_c + 4) = (int)((unsigned long long)dVar1 >> 0x20);
-      uVar2 = *(int*)((char*)&local_c + 4);
-      (*(int*)&local_c) = (int)(dVar1);
-      pvVar3 = (void *)local_c;
-      local_c = dVar1;
-      FUN_10002660(0x10039afc,&DAT_10039b1a,pvVar3,uVar2,-600);
-      FUN_10002660(0x10039b38,&DAT_10039b1a,(void *)local_c,*(int*)((char*)&local_c + 4),600);
-      FUN_10002660(0x100399d0,&DAT_10039c88,(void *)local_c,*(int*)((char*)&local_c + 4),-600);
-      FUN_10002660(0x100399ee,&DAT_10039c88,(void *)local_c,*(int*)((char*)&local_c + 4),600);
-      FUN_10002660(0x10039a48,&DAT_10039ca6,(void *)local_c,*(int*)((char*)&local_c + 4),-600);
-      FUN_10002660(0x10039a66,&DAT_10039ca6,(void *)local_c,*(int*)((char*)&local_c + 4),600);
-      FUN_10002660(0x10039a84,&DAT_10039cc4,(void *)local_c,*(int*)((char*)&local_c + 4),-600);
-      FUN_10002660(0x10039aa2,&DAT_10039cc4,(void *)local_c,*(int*)((char*)&local_c + 4),600);
-      FUN_10002660(0x10039a0c,&DAT_10039ce2,(void *)local_c,*(int*)((char*)&local_c + 4),-600);
-      FUN_10002660(0x10039a2a,&DAT_10039ce2,(void *)local_c,*(int*)((char*)&local_c + 4),600);
-      FUN_10002660(0x10039ac0,&DAT_10039b56,(void *)local_c,*(int*)((char*)&local_c + 4),-600);
-      FUN_10002660(0x10039ade,&DAT_10039b56,(void *)local_c,*(int*)((char*)&local_c + 4),600);
-      iVar6 = FUN_10005f80(0x10039b1a);
-      SelectUnits(iVar6,0);
-      RunTimer(1,0);
-    }
-  }
-  uVar4 = Trigg(0);
-  if ((uVar4 & 0xff) != 0) {
-    uVar4 = TimerDoneFirst(0);
-    if ((uVar4 & 0xff) != 0) {
-      ProcessScenary(&DAT_10039df8,DAT_10039ee8,DAT_10039eec,2000);
-      iVar6 = GetUnitsAmount0(&DAT_10039df8,0);
-      iVar5 = GetUnitsAmount0(&DAT_10039df8,0);
-      if (iVar6 + iVar5 < 8) {
-        DAT_1003a084 = (int *)0x0;
-      }
-      else {
-        DAT_1003a084 = &DAT_10039df8;
-      }
-      RunTimer(2,0);
-    }
-  }
-  uVar4 = Trigg(0);
-  if ((uVar4 & 0xff) == 0) goto LAB_100034d4;
-  uVar4 = TimerDoneFirst(0);
-  if ((uVar4 & 0xff) == 0) goto LAB_100034d4;
-  local_10 = DAT_10039ee8;
-  local_14 = DAT_10039eec;
-  local_18 = DAT_10039ef8;
-  local_1c = DAT_10039efc;
-  local_30 = (void *)(DAT_10039efc - DAT_10039eec);
-  local_34 = DAT_10039ef8 - DAT_10039ee8;
-  fVar8 = (long double)FUN_100062f4(local_30,(int)((double)(intptr_t)local_30 / (double)local_34));
-  local_24 = (double)fVar8;
-  if (local_18 - local_10 < 0) {
-    local_24 = DAT_10034100_ovl + local_24;
-  }
-  FUN_100063c4(*(int*)((char*)&local_24 + 4),(int)(local_24));
-  lVar9 = 0;
-  DAT_10039ee8 = (int)lVar9;
-  FUN_10006474((void *)local_24,(int)(void *)local_24);
-  lVar9 = 0;
-  DAT_10039eec = (int)lVar9;
-  local_28 = 0;
-  RunTimer(3,1000);
-  for (local_2c = 0; local_2c < 6; local_2c = local_2c + 1) {
-    FUN_10005f80((int)(((unsigned char *)&DAT_10039b78) + local_2c * 0x1e));
-    iVar6 = GetTotalAmount0(0);
-    local_28 = local_28 + iVar6;
-  }
-  if (0 < local_28) {
-    iVar6 = GetUnitsAmount2(&DAT_10039db0,&DAT_10039da0,0);
-    if (local_28 != iVar6) {
-      iVar6 = GetTotalAmount0(0);
-      if (iVar6 != 0) goto LAB_100034a9;
-    }
-    SetTrigg(1);
-    LooseGame();
-  }
-LAB_100034a9:
-  if (local_28 == 0) {
-    SetTrigg(1);
-    ShowVictory();
-  }
-LAB_100034d4:
-  uVar4 = Trigg(0);
-  if ((uVar4 & 0xff) != 0) {
-    SaveSelectedUnits(0,&DAT_10039df0,0);
-    SelectUnits(&DAT_10039d40,0);
-    SelChangeNation(0,0);
-    iVar6 = GetTotalAmount0(0);
-    if (iVar6 == 1) {
-      CreateZoneNearGroup(&DAT_10039eb8,&DAT_10039da8,&DAT_10039f08,0);
-      SelectUnitsInZone(&DAT_10039eb8,3,0);
-      SelChangeNation(3,0);
-    }
-    SelectUnits(&DAT_10039df0,0);
-  }
-  GetTotalAmount0(&DAT_10039f08);
-  if (iVar6 < 1) {
-    ShowPage(0);
-    LooseGame();
-  }
-  local_c = (double)(int)(void *)local_c;
   return;
 }
 
@@ -2584,28 +2407,204 @@ SetPlayerName(0,"PRUSSIA");
 
 
 
-__declspec(dllexport) void ProcessScenary()
+
+
+void ProcessScenary(void)
+
 {
-  int param_1 = 0;
-  int param_2 = 0;
-  int param_3 = 0;
-  int param_4 = 0;
-  int iVar1;
-  int *puVar2;
-  int local_70 [16];
-  char local_30 [20];
+  double dVar1;
+  int uVar2;
+  void *pvVar3;
+  unsigned int uVar4;
+  int iVar5;
+  int iVar6;
+  int *puVar7;
+  long double fVar8;
+  long long lVar9;
+  int local_74 [16];
+  int local_34;
+  void *local_30;
+  int local_2c;
+  int local_28;
+  long long local_24;
   int local_1c;
   int local_18;
-  int uStack_8;
-GetUnitInfo(&DAT_10039d48,0,local_30);
-  local_1c = param_2;
-  local_18 = param_3;
-  SetUnitInfo(local_30);
-  CreateZoneNearGroup(param_1,&DAT_10039da8,&DAT_10039d48,param_4);
-  local_1c = 400;
-  local_18 = 400;
-  SetUnitInfo(local_30);
-  uStack_8 = 0x10001c1c;
+  int local_14;
+  int local_10;
+  long long local_c;
+uVar4 = Trigg(0);
+  if ((uVar4 & 0xff) != 0) {
+    DAT_10039ed8 = GetDiff(0);
+    InitialUpgrade("GMain",0);
+    InitialUpgrade("GMain",0);
+    InitialUpgrade("GMain",0);
+    InitialUpgrade("GMain",0);
+    if (DAT_10039ed8 < 1) {
+      InitialUpgrade("GMain",0);
+      InitialUpgrade("GMain",0);
+      InitialUpgrade("GMain",0);
+      InitialUpgrade("GMain",0);
+    }
+    if (DAT_10039ed8 < 2) {
+      InitialUpgrade("GMain",0);
+      InitialUpgrade("GMain",0);
+      InitialUpgrade("GMain",0);
+      InitialUpgrade("GMain",0);
+      InitialUpgrade("GMain",0);
+    }
+    if (DAT_10039ed8 < 3) {
+      InitialUpgrade("GMain",0);
+      InitialUpgrade("GMain",0);
+      InitialUpgrade("GMain",0);
+      InitialUpgrade("GMain",0);
+    }
+    InitialUpgrade("GMain",0);
+    InitialUpgrade("GMain",0);
+    InitialUpgrade("GMain",0);
+    InitialUpgrade("GMain",0);
+    InitialUpgrade("GMain",0);
+    InitialUpgrade("GMain",0);
+    SetLightSpot(&DAT_10039db0,3,0);
+    ChangeFriends(0,0);
+    RunTimer(1,0);
+    RunTimer(2,0);
+    RunTimer(3,0);
+    SelectUnits(&DAT_10039d50,0);
+    SelectUnits(&DAT_10039d58,0);
+    SelectUnits(&DAT_10039d68,0);
+    SelectUnits(&DAT_10039d70,0);
+    Patrol(1,&DAT_10039db0,0);
+    DAT_10039ee8 = 600;
+    DAT_10039eec = 600;
+    RunTimer(0x1e,0);
+    SetTrigg(99,0);
+  }
+  uVar4 = TimerDoneFirst(0);
+  if ((uVar4 & 0xff) != 0) {
+    ShowPage(0);
+    SelectUnits(&DAT_10039f08,0);
+    InitialUpgrade("GMain",0);
+  }
+  uVar4 = Trigg(0);
+  if ((uVar4 & 0xff) != 0) {
+    uVar4 = TimerDoneFirst(0);
+    if ((uVar4 & 0xff) != 0) {
+      DAT_10039f14 = 0;
+      FUN_100029f0(&DAT_10039b1a,200);
+      FUN_100029f0(&DAT_10039d78,200);
+      FUN_100029f0(&DAT_10039c88,100);
+      FUN_100029f0(&DAT_10039b78,100);
+      FUN_100029f0(&DAT_10039b96,100);
+      FUN_100029f0(&DAT_10039ca6,100);
+      FUN_100029f0(&DAT_10039bb4,100);
+      FUN_100029f0(&DAT_10039bd2,100);
+      FUN_100029f0(&DAT_10039cc4,100);
+      FUN_100029f0(&DAT_10039bf0,100);
+      FUN_100029f0(&DAT_10039c0e,100);
+      FUN_100029f0(&DAT_10039ce2,100);
+      FUN_100029f0(&DAT_10039b56,200);
+      FUN_10001f90(DAT_10039ee8,DAT_10039eec,DAT_10039ef8,DAT_10039efc);
+      dVar1 = (double)fVar8;
+      *(int*)((char*)&local_c + 4) = (int)((unsigned long long)dVar1 >> 0x20);
+      uVar2 = *(int*)((char*)&local_c + 4);
+      (*(int*)&local_c) = (int)(dVar1);
+      pvVar3 = (void *)local_c;
+      local_c = dVar1;
+      FUN_10002660(0x10039afc,&DAT_10039b1a,pvVar3,uVar2,-600);
+      FUN_10002660(0x10039b38,&DAT_10039b1a,(void *)local_c,*(int*)((char*)&local_c + 4),600);
+      FUN_10002660(0x100399d0,&DAT_10039c88,(void *)local_c,*(int*)((char*)&local_c + 4),-600);
+      FUN_10002660(0x100399ee,&DAT_10039c88,(void *)local_c,*(int*)((char*)&local_c + 4),600);
+      FUN_10002660(0x10039a48,&DAT_10039ca6,(void *)local_c,*(int*)((char*)&local_c + 4),-600);
+      FUN_10002660(0x10039a66,&DAT_10039ca6,(void *)local_c,*(int*)((char*)&local_c + 4),600);
+      FUN_10002660(0x10039a84,&DAT_10039cc4,(void *)local_c,*(int*)((char*)&local_c + 4),-600);
+      FUN_10002660(0x10039aa2,&DAT_10039cc4,(void *)local_c,*(int*)((char*)&local_c + 4),600);
+      FUN_10002660(0x10039a0c,&DAT_10039ce2,(void *)local_c,*(int*)((char*)&local_c + 4),-600);
+      FUN_10002660(0x10039a2a,&DAT_10039ce2,(void *)local_c,*(int*)((char*)&local_c + 4),600);
+      FUN_10002660(0x10039ac0,&DAT_10039b56,(void *)local_c,*(int*)((char*)&local_c + 4),-600);
+      FUN_10002660(0x10039ade,&DAT_10039b56,(void *)local_c,*(int*)((char*)&local_c + 4),600);
+      iVar6 = FUN_10005f80(0x10039b1a);
+      SelectUnits(iVar6,0);
+      RunTimer(1,0);
+    }
+  }
+  uVar4 = Trigg(0);
+  if ((uVar4 & 0xff) != 0) {
+    uVar4 = TimerDoneFirst(0);
+    if ((uVar4 & 0xff) != 0) {
+      FUN_10001b70(&DAT_10039df8,DAT_10039ee8,DAT_10039eec,2000);
+      iVar6 = GetUnitsAmount0(&DAT_10039df8,0);
+      iVar5 = GetUnitsAmount0(&DAT_10039df8,0);
+      if (iVar6 + iVar5 < 8) {
+        DAT_1003a084 = (int *)0x0;
+      }
+      else {
+        DAT_1003a084 = &DAT_10039df8;
+      }
+      RunTimer(2,0);
+    }
+  }
+  uVar4 = Trigg(0);
+  if ((uVar4 & 0xff) == 0) goto LAB_100034d4;
+  uVar4 = TimerDoneFirst(0);
+  if ((uVar4 & 0xff) == 0) goto LAB_100034d4;
+  local_10 = DAT_10039ee8;
+  local_14 = DAT_10039eec;
+  local_18 = DAT_10039ef8;
+  local_1c = DAT_10039efc;
+  local_30 = (void *)(DAT_10039efc - DAT_10039eec);
+  local_34 = DAT_10039ef8 - DAT_10039ee8;
+  fVar8 = (long double)FUN_100062f4(local_30,(int)((double)(intptr_t)local_30 / (double)local_34));
+  local_24 = (double)fVar8;
+  if (local_18 - local_10 < 0) {
+    local_24 = DAT_10034100_ovl + local_24;
+  }
+  FUN_100063c4(*(int*)((char*)&local_24 + 4),(int)(local_24));
+  lVar9 = 0;
+  DAT_10039ee8 = (int)lVar9;
+  FUN_10006474((void *)local_24,(int)(void *)local_24);
+  lVar9 = 0;
+  DAT_10039eec = (int)lVar9;
+  local_28 = 0;
+  RunTimer(3,1000);
+  for (local_2c = 0; local_2c < 6; local_2c = local_2c + 1) {
+    FUN_10005f80((int)(((unsigned char *)&DAT_10039b78) + local_2c * 0x1e));
+    iVar6 = GetTotalAmount0(0);
+    local_28 = local_28 + iVar6;
+  }
+  if (0 < local_28) {
+    iVar6 = GetUnitsAmount2(&DAT_10039db0,&DAT_10039da0,0);
+    if (local_28 != iVar6) {
+      iVar6 = GetTotalAmount0(0);
+      if (iVar6 != 0) goto LAB_100034a9;
+    }
+    SetTrigg(1,0);
+    LooseGame();
+  }
+LAB_100034a9:
+  if (local_28 == 0) {
+    SetTrigg(1,0);
+    ShowVictory();
+  }
+LAB_100034d4:
+  uVar4 = Trigg(0);
+  if ((uVar4 & 0xff) != 0) {
+    SaveSelectedUnits(0,&DAT_10039df0,0);
+    SelectUnits(&DAT_10039d40,0);
+    SelChangeNation(0,0);
+    iVar6 = GetTotalAmount0(0);
+    if (iVar6 == 1) {
+      CreateZoneNearGroup(&DAT_10039eb8,&DAT_10039da8,&DAT_10039f08,0);
+      SelectUnitsInZone(&DAT_10039eb8,3,0);
+      SelChangeNation(3,0);
+    }
+    SelectUnits(&DAT_10039df0,0);
+  }
+  GetTotalAmount0(&DAT_10039f08);
+  if (iVar6 < 1) {
+    ShowPage(0);
+    LooseGame();
+  }
+  local_c = (double)(int)(void *)local_c;
   return;
 }
 

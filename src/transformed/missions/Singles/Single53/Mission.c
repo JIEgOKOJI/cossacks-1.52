@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 int this_ptr = 0;
@@ -73,14 +74,12 @@ int DAT_100293f4_ovl = 0;
 
 /* Stubs for missing internal functions */
 int FUN_1000482d() { return 0; }
-int FUN_100048db() { return 0; }
 int FUN_10004b60() { return 0; }
 int FUN_10004bb0() { return 0; }
 int FUN_100050f1() { return 0; }
 int FUN_100050fa() { return 0; }
 int FUN_1000511d() { return 0; }
 int FUN_1000544c() { return 0; }
-int FUN_100056f9() { return 0; }
 int FUN_10005ab8() { return 0; }
 int FUN_1000cc81() { return 0; }
 
@@ -181,7 +180,6 @@ void FUN_10004698(void);
 int FUN_100046f7(int param_1,int param_2);
 int FUN_1000471c(int param_1);
 int FUN_1000479a(int param_1);
-void FUN_100047db(DWORD param_1);
 void FUN_10004810(void);
 
 void OnInit();
@@ -2175,20 +2173,6 @@ int __cdecl FUN_1000479a(int param_1)
 
 
 
-void __cdecl FUN_100047db(DWORD param_1)
-
-{
-  DWORD *pDVar1;
-  
-  pDVar1 = FUN_100056f9();
-  pDVar1[5] = param_1;
-  return;
-}
-
-
-
-
-
 void FUN_10004810(void)
 
 {
@@ -2228,8 +2212,8 @@ void OnInit(void)
     SelectUnits(&DAT_10015790,1);
   }
   SelErase(0);
-  DVar2 = FUN_100048db((int *)0x0);
-  FUN_100047db(DVar2);
+  DVar2 = time(NULL);
+  srand(DVar2);
   RegisterDynGroup(&DAT_100156c0);
   RegisterZone(&DAT_10015780,"Z_way0");
   RegisterZone(&DAT_10015778,"Z_way1");

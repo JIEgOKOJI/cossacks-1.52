@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 int DAT_1002e3e0 = 0;
@@ -11,14 +12,59 @@ long long DAT_1002e410 = 0;
 long long DAT_1002e418 = 0;
 
 /* Forward declarations */
-void FUN_100011b0(void);
-void FUN_100012e0(void);
+void FUN_100010b0(void);
+void FUN_10001130(void);
 
 void OnInit();
 void ProcessScenary();
 
 
-void FUN_100011b0(void)
+void FUN_100010b0(void)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_44 [15];
+  int uStack_8;
+iVar1 = GetMyNation();
+  if (iVar1 == 0) {
+    ShowVictory();
+  }
+  else {
+    LooseGame();
+  }
+  uStack_8 = 0x10001108;
+  return;
+}
+
+
+
+
+
+void FUN_10001130(void)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_44 [15];
+  int uStack_8;
+iVar1 = GetMyNation();
+  if (iVar1 == 1) {
+    ShowVictory();
+  }
+  else {
+    LooseGame();
+  }
+  uStack_8 = 0x10001189;
+  return;
+}
+
+
+
+
+
+
+void OnInit(void)
 
 {
   int iVar1;
@@ -42,7 +88,7 @@ RegisterUnits(&DAT_1002e410,"Group1");
 
 
 
-void FUN_100012e0(void)
+void ProcessScenary(void)
 
 {
   unsigned int uVar1;
@@ -84,62 +130,17 @@ uVar1 = Trigg(0x15);
   }
   iVar2 = GetGlobalTime();
   if (40000 < iVar2) {
-    ProcessScenary();
+    FUN_10001130();
   }
   GetTotalAmount0(&DAT_1002e410);
   if (iVar2 < 0xc9) {
-    ProcessScenary();
+    FUN_10001130();
   }
   GetTotalAmount0(&DAT_1002e418);
   if (iVar2 < 0x173) {
-    OnInit();
+    FUN_100010b0();
   }
   uStack_8 = 0x100014eb;
-  return;
-}
-
-
-
-
-
-
-void OnInit(void)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-iVar1 = GetMyNation();
-  if (iVar1 == 0) {
-    ShowVictory();
-  }
-  else {
-    LooseGame();
-  }
-  uStack_8 = 0x10001108;
-  return;
-}
-
-
-
-
-
-void ProcessScenary(void)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-iVar1 = GetMyNation();
-  if (iVar1 == 1) {
-    ShowVictory();
-  }
-  else {
-    LooseGame();
-  }
-  uStack_8 = 0x10001189;
   return;
 }
 

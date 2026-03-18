@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 char DAT_1002d04c[] = "GTu";
@@ -140,6 +141,8 @@ long long DAT_100326e8 = 0;
 long long DAT_100326f0 = 0;
 
 /* Forward declarations */
+void FUN_10001120(char param_1);
+void FUN_100011d0(char param_1,char param_2);
 void FUN_10001260(char param_1);
 void FUN_100012d0(int param_1);
 void FUN_10001350(int param_1,int param_2,char param_3,char param_4);
@@ -152,11 +155,48 @@ void FUN_10001650(int param_1,int param_2);
 void FUN_100016a0(int param_1,int param_2,char param_3);
 void FUN_100016f0(int param_1,int param_2,int param_3,char param_4);
 void FUN_100017f0(int param_1,int param_2,int param_3);
-void FUN_100018b0(void);
-void FUN_100027d0(void);
 
 void OnInit();
 void ProcessScenary();
+
+
+void __cdecl FUN_10001120(char param_1)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_48 [16];
+  unsigned int local_8;
+for (local_8 = 0; (intptr_t)local_8 < 6; local_8 = local_8 + 1) {
+    iVar1 = GetResource(param_1,local_8 & 0xff);
+    if (iVar1 < DAT_10030a30) {
+      AddResource(param_1,local_8 & 0xff,DAT_10030a30);
+    }
+  }
+  return;
+}
+
+
+
+
+
+void __cdecl FUN_100011d0(char param_1,char param_2)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_44 [15];
+  int uStack_8;
+iVar1 = GetResource(param_1,(intptr_t)param_2);
+  if (iVar1 < 100000) {
+    SetResource(param_1,param_2,10000000);
+  }
+  uStack_8 = 0x10001235;
+  return;
+}
+
+
+
 
 
 void __cdecl FUN_10001260(char param_1)
@@ -167,7 +207,7 @@ void __cdecl FUN_10001260(char param_1)
   int local_48 [16];
   int local_8;
 for (local_8 = 0; local_8 < 6; local_8 = local_8 + 1) {
-    ProcessScenary(param_1,(char)local_8);
+    FUN_100011d0(param_1,(char)local_8);
   }
   return;
 }
@@ -372,7 +412,7 @@ FUN_100012d0(param_1);
 
 
 
-void FUN_100018b0(void)
+void OnInit(void)
 
 {
   int iVar1;
@@ -503,7 +543,7 @@ RegisterVar(&DAT_100323f8,4);
 
 
 
-void FUN_100027d0(void)
+void ProcessScenary(void)
 
 {
   unsigned int uVar1;
@@ -521,8 +561,8 @@ void FUN_100027d0(void)
   int local_8;
 uVar1 = TimerDone(10);
   if ((uVar1 & 0xff) != 0) {
-    OnInit(1);
-    OnInit(2);
+    FUN_10001120(1);
+    FUN_10001120(2);
     FUN_10001260(3);
     FUN_10001260(4);
     RunTimer(10,500);
@@ -1001,46 +1041,6 @@ LAB_100038e4:
       ShowVictory();
     }
   }
-  return;
-}
-
-
-
-
-
-__declspec(dllexport) void OnInit()
-{
-  int param_1 = 0;
-  int iVar1;
-  int *puVar2;
-  int local_48 [16];
-  unsigned int local_8;
-for (local_8 = 0; (intptr_t)local_8 < 6; local_8 = local_8 + 1) {
-    iVar1 = GetResource(param_1,local_8 & 0xff);
-    if (iVar1 < DAT_10030a30) {
-      AddResource(param_1,local_8 & 0xff,DAT_10030a30);
-    }
-  }
-  return;
-}
-
-
-
-
-
-__declspec(dllexport) void ProcessScenary()
-{
-  int param_1 = 0;
-  int param_2 = 0;
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-iVar1 = GetResource(param_1,(intptr_t)param_2);
-  if (iVar1 < 100000) {
-    SetResource(param_1,param_2,10000000);
-  }
-  uStack_8 = 0x10001235;
   return;
 }
 

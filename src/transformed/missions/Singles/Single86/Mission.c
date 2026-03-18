@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 int this_ptr = 0;
@@ -65,8 +66,6 @@ long long DAT_1000f7d4 = 0;
 int DAT_1000f7d4_ovl = 0;
 
 /* Stubs for missing internal functions */
-int FUN_100022ff() { return 0; }
-int FUN_100026d6() { return 0; }
 int FUN_10002d2a() { return 0; }
 int FUN_10002d7a() { return 0; }
 
@@ -87,7 +86,6 @@ void FUN_10002050(int param_1,int param_2,int param_3,unsigned int param_4,int p
 int FUN_100020d0(int param_1,int param_2);
 void  FUN_10002110(void *this_ptr,char param_1);
 int  FUN_10002280(void *this_ptr,int param_1);
-void FUN_100022d0(DWORD param_1);
 void FUN_10002458(void);
 void FUN_10002470(void);
 
@@ -570,20 +568,6 @@ int  FUN_10002280(void *this_ptr,int param_1)
 
 
 
-void __cdecl FUN_100022d0(DWORD param_1)
-
-{
-  DWORD *pDVar1;
-  
-  pDVar1 = FUN_100026d6();
-  pDVar1[5] = param_1;
-  return;
-}
-
-
-
-
-
 
 
 void FUN_10002458(void)
@@ -691,8 +675,8 @@ void OnInit(void)
   ChangeFriends(2,0xc);
   SetPlayerName(2,"MECENARY");
   SetPlayerName(3,"POLAND");
-  DVar1 = FUN_100022ff((int *)0x0);
-  FUN_100022d0(DVar1);
+  DVar1 = time(NULL);
+  srand(DVar1);
   return;
 }
 

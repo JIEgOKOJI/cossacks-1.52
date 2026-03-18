@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 int this_ptr = 0;
@@ -110,11 +111,9 @@ int DAT_10031d38 = 0;
 long long DAT_10031d40 = 0;
 long long DAT_10031d78 = 0;
 
-/* Stubs for missing internal functions */
-int FUN_10005780() { return 0; }
-
-
 /* Forward declarations */
+void FUN_100011e0(int param_1);
+void FUN_10001280(int param_1,int param_2,int param_3);
 void  FUN_100012f0(void *this_ptr,int param_1,int param_2,int param_3);
 int  FUN_10001380(int param_1);
 void  FUN_100013c0(void *this_ptr,int param_1,int param_2);
@@ -147,14 +146,54 @@ void  FUN_10002820(void *this_ptr,int param_1,int param_2,int param_3);
 void  FUN_100028c0(void *this_ptr,int param_1);
 void  FUN_10002940(void *this_ptr,int param_1);
 int  FUN_100029d0(int param_1);
-void FUN_10002a00(void);
 void FUN_100034b0(void *param_1,int param_2);
 void FUN_100037f0(void);
-void FUN_100038c0(void);
-void FUN_10004c20(DWORD param_1);
 
 void OnInit();
 void ProcessScenary();
+
+
+void __cdecl FUN_100011e0(int param_1)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_4c [16];
+  unsigned int local_c;
+  unsigned int local_8;
+local_8 = 0;
+  for (local_c = 0; (intptr_t)local_c < 8; local_c = local_c + 1) {
+    iVar1 = GetUnitsByNation(param_1,local_c & 0xff);
+    if (0 < iVar1) {
+      local_8 = local_c;
+      local_c = 8;
+    }
+  }
+  return;
+}
+
+
+
+
+
+void __cdecl FUN_10001280(int param_1,int param_2,int param_3)
+
+{
+  BOOL bVar1;
+  int iVar2;
+  int *puVar3;
+  int local_44 [15];
+  int uStack_8;
+bVar1 = FUN_10001e30(0x10031b70);
+  if (bVar1) {
+    FUN_10001e80(&DAT_10031b70,param_1,param_2,param_3);
+  }
+  uStack_8 = 0x100012ce;
+  return;
+}
+
+
+
 
 
 void  FUN_100012f0(void *this_ptr,int param_1,int param_2,int param_3)
@@ -284,7 +323,7 @@ local_8 = param_1;
                                           ((intptr_t)local_8 + *(int *)((intptr_t)local_8 + 0x1c) * 8 + 0x28))
       ;
       if (cVar1 != '\0') {
-        ProcessScenary((intptr_t)local_8 + 0xc,
+        FUN_10001280((intptr_t)local_8 + 0xc,
                            *(int *)((intptr_t)local_8 + *(int *)((intptr_t)local_8 + 0x1c) * 8 + 0x28),
                            *(int *)((intptr_t)local_8 + *(int *)((intptr_t)local_8 + 0x1c) * 8 + 0x30))
         ;
@@ -486,7 +525,7 @@ void  FUN_10001d90(void *this_ptr,int param_1,int param_2)
   void *local_8;
 local_8 = this_ptr;
   RegisterUnits((int)this_ptr + 0xc,param_1);
-  OnInit((intptr_t)local_8 + 0xc);
+  FUN_100011e0((intptr_t)local_8 + 0xc);
   *(int *)((intptr_t)local_8 + 0x18) = uVar1;
   *(int *)((intptr_t)local_8 + 0x14) = 0;
   *(int *)((intptr_t)local_8 + 0x1c) = param_2;
@@ -667,7 +706,7 @@ FUN_10002330(void *this_ptr,int param_1,int param_2,char param_3,int param_4)
 *(int *)((int)this_ptr + 6) = param_1;
   *(int *)((int)this_ptr + 10) = param_2;
   local_8 = this_ptr;
-  OnInit(param_1);
+  FUN_100011e0(param_1);
   local_8[1] = uVar1;
   *local_8 = param_3;
   *(int *)(local_8 + 2) = param_4;
@@ -865,7 +904,101 @@ return param_1;
 
 
 
-void FUN_10002a00(void)
+void __cdecl FUN_100034b0(void *param_1,int param_2)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_44 [15];
+  int uStack_8;
+if (param_2 == 1) {
+    FUN_10001b10(param_1,&DAT_10031cf0,5);
+    FUN_10001990(param_1,&DAT_10031cf0,0);
+    FUN_10001a00(param_1,&DAT_10031cd8);
+    FUN_10001990(param_1,&DAT_10031cb0,1);
+    FUN_10001990(param_1,&DAT_10031ba0,0);
+    FUN_10001a00(param_1,&DAT_10031ba8);
+    FUN_10001a00(param_1,&DAT_10031bb0);
+    FUN_10001a00(param_1,&DAT_10031bb8);
+    FUN_10001a00(param_1,&DAT_10031bc0);
+    FUN_10001a00(param_1,&DAT_10031bc8);
+    FUN_10001a00(param_1,&DAT_10031bd0);
+    FUN_10001a00(param_1,&DAT_10031bd8);
+    FUN_10001a00(param_1,&DAT_10031be0);
+    FUN_10001a00(param_1,&DAT_10031c60);
+    FUN_10001a00(param_1,&DAT_10031c68);
+    FUN_10001a00(param_1,&DAT_10031c70);
+    FUN_10001a00(param_1,&DAT_10031c78);
+    FUN_10001a00(param_1,&DAT_10031c88);
+    FUN_10001a00(param_1,&DAT_10031c98);
+    FUN_10001a00(param_1,&DAT_10031ca8);
+    FUN_10001a00(param_1,&DAT_10031cb8);
+    FUN_10001a00(param_1,&DAT_10031d10);
+    FUN_10001a00(param_1,&DAT_10031d20);
+    FUN_10001a00(param_1,&DAT_10031cd0);
+    FUN_10001a00(param_1,&DAT_10031cc0);
+  }
+  if (param_2 == 2) {
+    FUN_10001b10(param_1,&DAT_10031d20,4);
+    FUN_10001a00(param_1,&DAT_10031d10);
+    FUN_10001a00(param_1,&DAT_10031cb8);
+    FUN_10001a00(param_1,&DAT_10031ca8);
+    FUN_10001a00(param_1,&DAT_10031c98);
+    FUN_10001a00(param_1,&DAT_10031c88);
+    FUN_10001a00(param_1,&DAT_10031c78);
+    FUN_10001a00(param_1,&DAT_10031ca0);
+    FUN_10001a00(param_1,&DAT_10031c90);
+    FUN_10001a00(param_1,&DAT_10031c80);
+    FUN_10001a00(param_1,&DAT_10031ce0);
+    FUN_10001a00(param_1,&DAT_10031cc8);
+    FUN_10001a00(param_1,&DAT_10031bb8);
+    FUN_10001a00(param_1,&DAT_10031bb0);
+    FUN_10001a00(param_1,&DAT_10031ba8);
+    FUN_10001990(param_1,&DAT_10031ba0,1);
+    FUN_10001990(param_1,&DAT_10031cb0,0);
+    FUN_10001a00(param_1,&DAT_10031cd8);
+    FUN_10001a00(param_1,&DAT_10031cf0);
+    FUN_10001a00(param_1,&DAT_10031d00);
+  }
+  uStack_8 = 0x10003740;
+  return;
+}
+
+
+
+
+
+void FUN_100037f0(void)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_4c [16];
+  int local_c;
+  int local_8;
+local_c = rand();
+  local_c = local_c % 6;
+  switch(local_c) {
+  case 0:
+    break;
+  case 1:
+    break;
+  case 2:
+    break;
+  case 3:
+    break;
+  case 4:
+    break;
+  case 5:
+  }
+  return;
+}
+
+
+
+
+
+void OnInit(void)
 
 {
   int iVar1;
@@ -964,101 +1097,7 @@ SetPlayerName(0,"AUSTRIANS");
 
 
 
-void __cdecl FUN_100034b0(void *param_1,int param_2)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-if (param_2 == 1) {
-    FUN_10001b10(param_1,&DAT_10031cf0,5);
-    FUN_10001990(param_1,&DAT_10031cf0,0);
-    FUN_10001a00(param_1,&DAT_10031cd8);
-    FUN_10001990(param_1,&DAT_10031cb0,1);
-    FUN_10001990(param_1,&DAT_10031ba0,0);
-    FUN_10001a00(param_1,&DAT_10031ba8);
-    FUN_10001a00(param_1,&DAT_10031bb0);
-    FUN_10001a00(param_1,&DAT_10031bb8);
-    FUN_10001a00(param_1,&DAT_10031bc0);
-    FUN_10001a00(param_1,&DAT_10031bc8);
-    FUN_10001a00(param_1,&DAT_10031bd0);
-    FUN_10001a00(param_1,&DAT_10031bd8);
-    FUN_10001a00(param_1,&DAT_10031be0);
-    FUN_10001a00(param_1,&DAT_10031c60);
-    FUN_10001a00(param_1,&DAT_10031c68);
-    FUN_10001a00(param_1,&DAT_10031c70);
-    FUN_10001a00(param_1,&DAT_10031c78);
-    FUN_10001a00(param_1,&DAT_10031c88);
-    FUN_10001a00(param_1,&DAT_10031c98);
-    FUN_10001a00(param_1,&DAT_10031ca8);
-    FUN_10001a00(param_1,&DAT_10031cb8);
-    FUN_10001a00(param_1,&DAT_10031d10);
-    FUN_10001a00(param_1,&DAT_10031d20);
-    FUN_10001a00(param_1,&DAT_10031cd0);
-    FUN_10001a00(param_1,&DAT_10031cc0);
-  }
-  if (param_2 == 2) {
-    FUN_10001b10(param_1,&DAT_10031d20,4);
-    FUN_10001a00(param_1,&DAT_10031d10);
-    FUN_10001a00(param_1,&DAT_10031cb8);
-    FUN_10001a00(param_1,&DAT_10031ca8);
-    FUN_10001a00(param_1,&DAT_10031c98);
-    FUN_10001a00(param_1,&DAT_10031c88);
-    FUN_10001a00(param_1,&DAT_10031c78);
-    FUN_10001a00(param_1,&DAT_10031ca0);
-    FUN_10001a00(param_1,&DAT_10031c90);
-    FUN_10001a00(param_1,&DAT_10031c80);
-    FUN_10001a00(param_1,&DAT_10031ce0);
-    FUN_10001a00(param_1,&DAT_10031cc8);
-    FUN_10001a00(param_1,&DAT_10031bb8);
-    FUN_10001a00(param_1,&DAT_10031bb0);
-    FUN_10001a00(param_1,&DAT_10031ba8);
-    FUN_10001990(param_1,&DAT_10031ba0,1);
-    FUN_10001990(param_1,&DAT_10031cb0,0);
-    FUN_10001a00(param_1,&DAT_10031cd8);
-    FUN_10001a00(param_1,&DAT_10031cf0);
-    FUN_10001a00(param_1,&DAT_10031d00);
-  }
-  uStack_8 = 0x10003740;
-  return;
-}
-
-
-
-
-
-void FUN_100037f0(void)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_4c [16];
-  int local_c;
-  int local_8;
-local_c = rand();
-  local_c = local_c % 6;
-  switch(local_c) {
-  case 0:
-    break;
-  case 1:
-    break;
-  case 2:
-    break;
-  case 3:
-    break;
-  case 4:
-    break;
-  case 5:
-  }
-  return;
-}
-
-
-
-
-
-void FUN_100038c0(void)
+void ProcessScenary(void)
 
 {
   unsigned int uVar1;
@@ -1299,65 +1338,6 @@ uVar1 = Trigg(99);
       ShowVictory();
     }
   }
-  return;
-}
-
-
-
-
-
-void __cdecl FUN_10004c20(DWORD param_1)
-
-{
-  DWORD *pDVar1;
-  
-  pDVar1 = FUN_10005780();
-  pDVar1[5] = param_1;
-  return;
-}
-
-
-
-
-
-__declspec(dllexport) void OnInit()
-{
-  int param_1 = 0;
-  int iVar1;
-  int *puVar2;
-  int local_4c [16];
-  unsigned int local_c;
-  unsigned int local_8;
-local_8 = 0;
-  for (local_c = 0; (intptr_t)local_c < 8; local_c = local_c + 1) {
-    iVar1 = GetUnitsByNation(param_1,local_c & 0xff);
-    if (0 < iVar1) {
-      local_8 = local_c;
-      local_c = 8;
-    }
-  }
-  return;
-}
-
-
-
-
-
-__declspec(dllexport) void ProcessScenary()
-{
-  int param_1 = 0;
-  int param_2 = 0;
-  int param_3 = 0;
-  BOOL bVar1;
-  int iVar2;
-  int *puVar3;
-  int local_44 [15];
-  int uStack_8;
-bVar1 = FUN_10001e30(0x10031b70);
-  if (bVar1) {
-    FUN_10001e80(&DAT_10031b70,param_1,param_2,param_3);
-  }
-  uStack_8 = 0x100012ce;
   return;
 }
 

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 int DAT_1002f3e0 = 0;
@@ -18,14 +19,59 @@ int DAT_1002f448 = 0;
 int DAT_1002f44c = 0;
 
 /* Forward declarations */
-void FUN_100011b0(void);
-void FUN_10002200(void);
+void FUN_100010b0(void);
+void FUN_10001130(void);
 
 void OnInit();
 void ProcessScenary();
 
 
-void FUN_100011b0(void)
+void FUN_100010b0(void)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_44 [15];
+  int uStack_8;
+iVar1 = GetMyNation();
+  if (iVar1 == 0) {
+    ShowVictory();
+  }
+  else {
+    LooseGame();
+  }
+  uStack_8 = 0x10001108;
+  return;
+}
+
+
+
+
+
+void FUN_10001130(void)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_44 [15];
+  int uStack_8;
+iVar1 = GetMyNation();
+  if (iVar1 == 1) {
+    ShowVictory();
+  }
+  else {
+    LooseGame();
+  }
+  uStack_8 = 0x10001189;
+  return;
+}
+
+
+
+
+
+
+void OnInit(void)
 
 {
   int iVar1;
@@ -160,7 +206,7 @@ RegisterVisibleZone(&DAT_1002f420,"Zone1");
 
 
 
-void FUN_10002200(void)
+void ProcessScenary(void)
 
 {
   unsigned int uVar1;
@@ -193,7 +239,7 @@ for (DAT_1002f3e0 = 0; DAT_1002f3e0 < 5; DAT_1002f3e0 = DAT_1002f3e0 + 1) {
     DAT_1002f44c = DAT_1002f44c + ((long long *)&DAT_1002f3f8)[DAT_1002f3e0];
   }
   if ((DAT_1002f448 < 3) && (2 < DAT_1002f44c)) {
-    ProcessScenary();
+    FUN_10001130();
   }
   uVar1 = Trigg(10);
   if ((uVar1 & 0xff) != 0) {
@@ -205,7 +251,7 @@ for (DAT_1002f3e0 = 0; DAT_1002f3e0 < 5; DAT_1002f3e0 = DAT_1002f3e0 + 1) {
   }
   iVar2 = GetGlobalTime();
   if (50000 < iVar2) {
-    OnInit();
+    FUN_100010b0();
   }
   uVar1 = Trigg(0xf);
   if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_1002f410), iVar2 < 0x14)) {
@@ -225,58 +271,13 @@ for (DAT_1002f3e0 = 0; DAT_1002f3e0 < 5; DAT_1002f3e0 = DAT_1002f3e0 + 1) {
   }
   GetTotalAmount0(&DAT_1002f410);
   if (iVar2 == 0) {
-    ProcessScenary();
+    FUN_10001130();
   }
   GetTotalAmount0(&DAT_1002f418);
   if (iVar2 == 0) {
-    OnInit();
+    FUN_100010b0();
   }
   uStack_8 = 0x1000253a;
-  return;
-}
-
-
-
-
-
-
-void OnInit(void)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-iVar1 = GetMyNation();
-  if (iVar1 == 0) {
-    ShowVictory();
-  }
-  else {
-    LooseGame();
-  }
-  uStack_8 = 0x10001108;
-  return;
-}
-
-
-
-
-
-void ProcessScenary(void)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-iVar1 = GetMyNation();
-  if (iVar1 == 1) {
-    ShowVictory();
-  }
-  else {
-    LooseGame();
-  }
-  uStack_8 = 0x10001189;
   return;
 }
 

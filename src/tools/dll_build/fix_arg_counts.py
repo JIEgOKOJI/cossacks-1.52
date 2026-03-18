@@ -36,12 +36,25 @@ def parse_game_api(header_path):
     return funcs
 
 def count_args(args_str):
-    """Count arguments in a call, handling nested parens/brackets."""
+    """Count arguments in a call, handling nested parens/brackets and strings."""
     if not args_str.strip():
         return 0
     depth = 0
     count = 1
+    in_string = False
+    escape = False
     for ch in args_str:
+        if escape:
+            escape = False
+            continue
+        if ch == '\\' and in_string:
+            escape = True
+            continue
+        if ch == '"':
+            in_string = not in_string
+            continue
+        if in_string:
+            continue
         if ch in '([':
             depth += 1
         elif ch in ')]':
@@ -54,11 +67,29 @@ def find_call_end(text, start):
     """Find the end of a function call starting at '(' position.
     Returns the index after the closing ')' or -1 if not found."""
     depth = 0
+    in_string = False
+    escape = False
     i = start
     while i < len(text):
-        if text[i] == '(':
+        ch = text[i]
+        if escape:
+            escape = False
+            i += 1
+            continue
+        if ch == '\\' and in_string:
+            escape = True
+            i += 1
+            continue
+        if ch == '"':
+            in_string = not in_string
+            i += 1
+            continue
+        if in_string:
+            i += 1
+            continue
+        if ch == '(':
             depth += 1
-        elif text[i] == ')':
+        elif ch == ')':
             depth -= 1
             if depth == 0:
                 return i + 1
@@ -111,8 +142,25 @@ def fix_file(filepath, funcs):
                             # Split args and keep only expected number
                             args = []
                             depth = 0
+                            in_str = False
+                            esc = False
                             current = []
                             for ch in args_str:
+                                if esc:
+                                    esc = False
+                                    current.append(ch)
+                                    continue
+                                if ch == '\\' and in_str:
+                                    esc = True
+                                    current.append(ch)
+                                    continue
+                                if ch == '"':
+                                    in_str = not in_str
+                                    current.append(ch)
+                                    continue
+                                if in_str:
+                                    current.append(ch)
+                                    continue
                                 if ch in '([':
                                     depth += 1
                                     current.append(ch)

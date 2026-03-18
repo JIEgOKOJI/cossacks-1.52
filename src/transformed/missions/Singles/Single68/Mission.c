@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 int this_ptr = 0;
@@ -204,11 +205,6 @@ long long DAT_1000ea80 = 0;
 long long DAT_1000ea88 = 0;
 int DAT_1000eab4 = 0;
 
-/* Stubs for missing internal functions */
-int FUN_100034af() { return 0; }
-int FUN_100037b9() { return 0; }
-
-
 /* Forward declarations */
 void  FUN_100026e0(void *this_ptr,int param_1);
 void 
@@ -223,7 +219,6 @@ void  FUN_10002b40(void *this_ptr,char param_1);
 void FUN_10002b70(int param_1,int param_2,int param_3);
 BOOL FUN_10002bc0(int param_1);
 void FUN_10002be0(int param_1,int param_2);
-void FUN_10003480(DWORD param_1);
 
 void OnInit();
 void ProcessScenary();
@@ -701,20 +696,6 @@ void __cdecl FUN_10002be0(int param_1,int param_2)
 
 
 
-void __cdecl FUN_10003480(DWORD param_1)
-
-{
-  DWORD *pDVar1;
-  
-  pDVar1 = FUN_100037b9();
-  pDVar1[5] = param_1;
-  return;
-}
-
-
-
-
-
 void OnInit(void)
 
 {
@@ -1126,8 +1107,8 @@ LAB_100020e7:
   iVar3 = GetUnitsAmount2(&DAT_1000e338,&DAT_1000e938,2);
   if (iVar3 != 0) {
     SelectTypeOfUnitsInZone(&DAT_1000e338,&DAT_1000e938,2,0);
-    DVar5 = FUN_100034af((int *)0x0);
-    FUN_10003480(DVar5);
+    DVar5 = time(NULL);
+    srand(DVar5);
     iVar3 = rand();
     switch(iVar3 % 6) {
     case 1:
@@ -1151,8 +1132,8 @@ LAB_100020e7:
   iVar3 = GetUnitsAmount2(&DAT_1000e340,&DAT_1000ea70,2);
   if (iVar3 != 0) {
     SelectTypeOfUnitsInZone(&DAT_1000e340,&DAT_1000ea70,2,0);
-    DVar5 = FUN_100034af((int *)0x0);
-    FUN_10003480(DVar5);
+    DVar5 = time(NULL);
+    srand(DVar5);
     uVar6 = rand();
     uVar6 = uVar6 & -2147483641;
     if ((int)uVar6 < 0) {

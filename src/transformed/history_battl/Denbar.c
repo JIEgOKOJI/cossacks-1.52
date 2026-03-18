@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 long long DAT_1001e400 = 0;
@@ -13,12 +14,57 @@ long long DAT_1001e428 = 0;
 long long DAT_1001e430 = 0;
 
 /* Forward declarations */
+void FUN_100010b0(char param_1,char param_2);
+void FUN_10001180(int param_1,int param_2);
 void FUN_10001220(void);
-void FUN_10001350(void);
-void FUN_10001390(void);
 
 void OnInit();
 void ProcessScenary();
+
+
+void __cdecl FUN_100010b0(char param_1,char param_2)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_c;
+  int local_8;
+local_8 = 0;
+  for (local_c = 0; local_c < 5; local_c = local_c + 1) {
+    iVar1 = GetUnitsAmount0(((unsigned char *)&DAT_1001e400) + local_c * 8,param_1);
+    if (0 < iVar1) {
+      iVar1 = GetUnitsAmount0(((unsigned char *)&DAT_1001e400) + local_c * 8,param_2);
+      if (iVar1 == 0) {
+        local_8 = local_8 + 1;
+      }
+    }
+  }
+  return;
+}
+
+
+
+
+
+void __cdecl FUN_10001180(int param_1,int param_2)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_8;
+local_8 = GetMyNation();
+  ShowPage(*(int *)(param_2 + local_8 * 4));
+  if (local_8 == param_1) {
+    ShowVictory();
+  }
+  else {
+    LooseGame();
+  }
+  return;
+}
+
+
+
 
 
 void FUN_10001220(void)
@@ -43,7 +89,8 @@ RegisterUnits(&DAT_1001e428,"Army0");
 
 
 
-void FUN_10001350(void)
+
+void OnInit(void)
 
 {
   int iVar1;
@@ -59,74 +106,26 @@ FUN_10001220();
 
 
 
-void FUN_10001390(void)
+void ProcessScenary(void)
 
 {
   int iVar1;
   int *puVar2;
   int local_44 [15];
   int uStack_8;
-OnInit(0,1);
+FUN_100010b0(0,1);
   if (2 < iVar1) {
-    ProcessScenary(0,0x1001ca40);
+    FUN_10001180(0,0x1001ca40);
   }
   GetTotalAmount0(&DAT_1001e428);
   if (iVar1 < 0x14) {
-    ProcessScenary(1,0x1001ca30);
+    FUN_10001180(1,0x1001ca30);
   }
   GetTotalAmount0(&DAT_1001e430);
   if (iVar1 < 0x14) {
-    ProcessScenary(0,0x1001ca38);
+    FUN_10001180(0,0x1001ca38);
   }
   uStack_8 = 0x10001417;
-  return;
-}
-
-
-
-
-
-
-__declspec(dllexport) void OnInit()
-{
-  int param_1 = 0;
-  int param_2 = 0;
-  int iVar1;
-  int *puVar2;
-  int local_c;
-  int local_8;
-local_8 = 0;
-  for (local_c = 0; local_c < 5; local_c = local_c + 1) {
-    iVar1 = GetUnitsAmount0(((unsigned char *)&DAT_1001e400) + local_c * 8,param_1);
-    if (0 < iVar1) {
-      iVar1 = GetUnitsAmount0(((unsigned char *)&DAT_1001e400) + local_c * 8,param_2);
-      if (iVar1 == 0) {
-        local_8 = local_8 + 1;
-      }
-    }
-  }
-  return;
-}
-
-
-
-
-
-__declspec(dllexport) void ProcessScenary()
-{
-  int param_1 = 0;
-  int param_2 = 0;
-  int iVar1;
-  int *puVar2;
-  int local_8;
-local_8 = GetMyNation();
-  ShowPage(*(int *)(param_2 + local_8 * 4));
-  if (local_8 == param_1) {
-    ShowVictory();
-  }
-  else {
-    LooseGame();
-  }
   return;
 }
 

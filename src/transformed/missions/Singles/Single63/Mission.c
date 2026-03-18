@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 int this_ptr = 0;
@@ -83,8 +84,7 @@ long long DAT_1000c0f8 = 0;
 int DAT_1000c104 = 0;
 
 /* Stubs for missing internal functions */
-int FUN_1000252f() { return 0; }
-int FUN_10002839() { return 0; }
+int FUN_10001260() { return 0; }
 
 
 /* Forward declarations */
@@ -93,7 +93,6 @@ FUN_10001020(void *this_ptr,int param_1,int param_2,int param_3,int param_4,
             int param_5,int param_6,int param_7);
 void 
 FUN_100010f0(void *this_ptr,int param_1,int param_2,int param_3,int param_4);
-void  FUN_10001260(void *this_ptr,int param_1);
 BOOL  FUN_100012e0(int param_1);
 int *  FUN_10001420(void *this_ptr,int param_1);
 void  FUN_10001440(int param_1);
@@ -102,8 +101,6 @@ void  FUN_100014b0(void *this_ptr,int param_1,int param_2);
 void  FUN_10001500(void *this_ptr,int param_1,int param_2);
 void 
 FUN_10001550(void *this_ptr,int param_1,int param_2,int param_3,int param_4);
-int FUN_100023b0(int param_1);
-void FUN_10002500(DWORD param_1);
 
 void OnInit();
 void ProcessScenary();
@@ -169,36 +166,6 @@ FUN_100010f0(void *this_ptr,int param_1,int param_2,int param_3,int param_4)
       SelSendAndKill(*(char *)this_ptr,param_4,0,0);
       RemoveGroup(&DAT_1000bf78,(int)this_ptr + 0x35);
       ClearSelection(*(char *)this_ptr);
-    }
-  }
-  return;
-}
-
-
-
-
-
-void  FUN_10001260(void *this_ptr,int param_1)
-
-{
-  char cVar1;
-  int iVar2;
-  int extraout_EDX;
-  
-  cVar1 = TimerDone(*(char *)((int)this_ptr + 0x10));
-  if (cVar1 != '\0') {
-    iVar2 = GetTotalAmount0((int)this_ptr + 0x2d);
-    if (iVar2 < 0x33) {
-      iVar2 = GetTotalAmount0((int)this_ptr + 0x35);
-      if (iVar2 < 0x15) {
-        *(int *)((int)this_ptr + 4) = param_1;
-        *(char *)((int)this_ptr + 0x14) = 1;
-        SelectUnits((int)this_ptr + 0x2d,0);
-        SelectUnits((int)this_ptr + 0x35,1);
-        FUN_100023b0((int)*(char *)this_ptr);
-        RunTimer(*(char *)((int)this_ptr + 0x10),*(int *)((int)this_ptr + 8));
-        DAT_1000c000 = DAT_1000c000 + 1;
-      }
     }
   }
   return;
@@ -324,101 +291,6 @@ FUN_10001550(void *this_ptr,int param_1,int param_2,int param_3,int param_4)
   FUN_10001460(this_ptr,param_1);
   FUN_100014b0(this_ptr,param_2,param_3);
   FUN_10001500(this_ptr,param_3,param_4);
-  return;
-}
-
-
-
-
-
-int __cdecl FUN_100023b0(int param_1)
-
-{
-  DWORD DVar1;
-  int iVar2;
-  int iVar3;
-  int *puVar4;
-  
-  DVar1 = FUN_1000252f((int *)0x0);
-  FUN_10002500(DVar1);
-  iVar2 = rand();
-  iVar2 = iVar2 % 3;
-  if (iVar2 == 0) {
-    puVar4 = &DAT_1000be68;
-LAB_1000240c:
-    SelSendAndKill(param_1,puVar4,0x80,0);
-  }
-  else {
-    if (iVar2 == 1) {
-      puVar4 = &DAT_1000be60;
-      goto LAB_1000240c;
-    }
-    if (iVar2 == 2) {
-      puVar4 = &DAT_1000bea8;
-      goto LAB_1000240c;
-    }
-  }
-  iVar2 = rand();
-  iVar2 = iVar2 % 3;
-  if (iVar2 == 0) {
-    puVar4 = &DAT_1000bea0;
-LAB_10002452:
-    SelSendAndKill(param_1,puVar4,0x80,2);
-  }
-  else {
-    if (iVar2 == 1) {
-      puVar4 = &DAT_1000be98;
-      goto LAB_10002452;
-    }
-    if (iVar2 == 2) {
-      puVar4 = &DAT_1000be88;
-      goto LAB_10002452;
-    }
-  }
-  iVar2 = rand();
-  iVar2 = iVar2 % 3;
-  if (iVar2 == 0) {
-    puVar4 = &DAT_1000bec8;
-  }
-  else if (iVar2 == 1) {
-    puVar4 = &DAT_1000beb8;
-  }
-  else {
-    if (iVar2 != 2) goto LAB_1000249e;
-    puVar4 = &DAT_1000beb0;
-  }
-  SelSendAndKill(param_1,puVar4,0x80,2);
-LAB_1000249e:
-  iVar2 = rand();
-  iVar3 = iVar2 / 3;
-  iVar2 = iVar2 % 3;
-  if (iVar2 == 0) {
-    iVar3 = SelSendAndKill(param_1,&DAT_1000be90,0x80,2);
-  }
-  else {
-    if (iVar2 == 1) {
-      iVar2 = SelSendAndKill(param_1,&DAT_1000be80,0x80,2);
-      return iVar2;
-    }
-    if (iVar2 == 2) {
-      iVar2 = SelSendAndKill(param_1,&DAT_1000bec0,0x80,2);
-      return iVar2;
-    }
-  }
-  return iVar3;
-}
-
-
-
-
-
-void __cdecl FUN_10002500(DWORD param_1)
-
-{
-  DWORD *pDVar1;
-  
-  pDVar1 = FUN_10002839();
-  pDVar1[5] = param_1;
   return;
 }
 

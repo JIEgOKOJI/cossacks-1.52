@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 long long DAT_1001e400 = 0;
@@ -16,6 +17,8 @@ long long DAT_1001e440 = 0;
 long long DAT_1001e448 = 0;
 
 /* Forward declarations */
+void FUN_10001100(int param_1,int param_2);
+void FUN_100011a0(void);
 void FUN_10001260(int param_1,char param_2,char param_3,char param_4);
 void FUN_100013d0(int param_1,char param_2,char param_3,char param_4);
 void FUN_10001460(int param_1);
@@ -24,11 +27,50 @@ void FUN_10001620(int param_1,int param_2,int param_3);
 void FUN_100016c0(char param_1,char param_2);
 void FUN_10001790(void);
 void FUN_10001880(void);
-void FUN_100018c0(void);
-void FUN_10001900(void);
 
 void OnInit();
 void ProcessScenary();
+
+
+void __cdecl FUN_10001100(int param_1,int param_2)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_48 [16];
+  int local_8;
+local_8 = GetMyNation();
+  if (local_8 == param_1) {
+    ShowVictory();
+  }
+  else {
+    LooseGame();
+  }
+  ShowPage(*(int *)(param_2 + local_8 * 4));
+  return;
+}
+
+
+
+
+
+void FUN_100011a0(void)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_44 [15];
+  int uStack_8;
+RegisterUnits(&DAT_1001e438,"Army0");
+  RegisterUnits(&DAT_1001e440,"Army1");
+  RegisterDynGroup(&DAT_1001e400);
+  RegisterDynGroup(&DAT_1001e408);
+  uStack_8 = 0x1000122b;
+  return;
+}
+
+
+
 
 
 void __cdecl FUN_10001260(int param_1,char param_2,char param_3,char param_4)
@@ -200,7 +242,7 @@ void FUN_10001880(void)
   int *puVar2;
   int local_44 [15];
   int uStack_8;
-ProcessScenary();
+FUN_100011a0();
   FUN_10001790();
   uStack_8 = 0x100018af;
   return;
@@ -210,7 +252,8 @@ ProcessScenary();
 
 
 
-void FUN_100018c0(void)
+
+void OnInit(void)
 
 {
   int iVar1;
@@ -226,7 +269,7 @@ FUN_10001880();
 
 
 
-void FUN_10001900(void)
+void ProcessScenary(void)
 
 {
   int iVar1;
@@ -235,60 +278,17 @@ void FUN_10001900(void)
   int uStack_8;
 FUN_100016c0(0,1);
   if (2 < iVar1) {
-    OnInit(0,0x1001ca30);
+    FUN_10001100(0,0x1001ca30);
   }
   GetTotalAmount0(&DAT_1001e438);
   if (iVar1 < 0x14) {
-    OnInit(1,0x1001ca38);
+    FUN_10001100(1,0x1001ca38);
   }
   GetTotalAmount0(&DAT_1001e440);
   if (iVar1 < 0x14) {
-    OnInit(0,0x1001ca30);
+    FUN_10001100(0,0x1001ca30);
   }
   uStack_8 = 0x10001987;
-  return;
-}
-
-
-
-
-
-
-__declspec(dllexport) void OnInit()
-{
-  int param_1 = 0;
-  int param_2 = 0;
-  int iVar1;
-  int *puVar2;
-  int local_48 [16];
-  int local_8;
-local_8 = GetMyNation();
-  if (local_8 == param_1) {
-    ShowVictory();
-  }
-  else {
-    LooseGame();
-  }
-  ShowPage(*(int *)(param_2 + local_8 * 4));
-  return;
-}
-
-
-
-
-
-void ProcessScenary(void)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-RegisterUnits(&DAT_1001e438,"Army0");
-  RegisterUnits(&DAT_1001e440,"Army1");
-  RegisterDynGroup(&DAT_1001e400);
-  RegisterDynGroup(&DAT_1001e408);
-  uStack_8 = 0x1000122b;
   return;
 }
 

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 int this_ptr = 0;
@@ -63,7 +64,6 @@ int *DAT_10034514 = 0;
 int DAT_10034518 = 0;
 
 /* Stubs for missing internal functions */
-int FUN_10002cb0() { return 0; }
 int FUN_10003380() { return 0; }
 int FUN_10003b00() { return 0; }
 int FUN_10003ba0() { return 0; }
@@ -71,13 +71,14 @@ int FUN_10003c30() { return 0; }
 int FUN_10004090() { return 0; }
 int FUN_10004690() { return 0; }
 int FUN_10004ad0() { return 0; }
-int FUN_10006900() { return 0; }
 int FUN_10006b80() { return 0; }
 int FUN_10006dc0() { return 0; }
 int FUN_10006dd0() { return 0; }
 
 
 /* Forward declarations */
+int  FUN_10001100(int param_1);
+void  FUN_10001140(int *param_1);
 void FUN_100011c0(void);
 void  FUN_100011f0(void *this_ptr,int param_1);
 int  FUN_10001230(int param_1);
@@ -91,14 +92,10 @@ void FUN_10001630(void);
 void FUN_10001670(void);
 void FUN_10001710(void);
 void FUN_10001760(void);
-void FUN_10001800(void);
 void FUN_10001c10(void *param_1,int param_2,int param_3,int param_4,
             int param_5);
-void FUN_10001eb0(void);
 void  FUN_10002920(void *this_ptr,void *param_1);
 void FUN_100029d0(void *param_1);
-int FUN_10002be0(int *param_1,int param_2,int param_3,int param_4,
-            int param_5,int param_6,int param_7);
 int FUN_10002d40(int param_1,int param_2,int param_3,unsigned int *param_4,unsigned int *param_5);
 void FUN_10002ea6(void);
 int FUN_10002ec0(int param_1);
@@ -106,6 +103,46 @@ int FUN_10002f80(int param_1);
 
 void OnInit();
 void ProcessScenary();
+
+
+int  FUN_10001100(int param_1)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_48 [17];
+*(int *)(param_1 + 0x2c) = 0;
+  return param_1;
+}
+
+
+
+
+
+void  FUN_10001140(int *param_1)
+
+{
+  int uVar1;
+  int iVar2;
+  int *puVar3;
+  int local_48 [16];
+  int *local_8;
+puVar3 = param_1;
+  for (iVar2 = 0xb; iVar2 != 0;
+      iVar2 = iVar2 + -1) {
+    *puVar3 = *(int *)0;
+    puVar3 = puVar3 + 1;
+  }
+  local_8 = param_1;
+  uVar1 = GetGlobalTime();
+  local_8[0xc] = uVar1;
+  local_8[0xb] = 0;
+  local_8 = (int *)0x10001199;
+  return;
+}
+
+
+
 
 
 void FUN_100011c0(void)
@@ -195,7 +232,7 @@ while (iVar1 = FUN_10001230((intptr_t)local_18), iVar1 != 0) {
       *puVar2 = *(int *)0;
       puVar2 = puVar2 + 1;
     }
-    ProcessScenary(local_20);
+    FUN_10001140(local_20);
   }
   local_1c = local_24;
   local_8 = -1;
@@ -352,14 +389,14 @@ void FUN_10001670(void)
   int *puVar2;
   int local_44 [15];
   int uStack_8;
-OnInit(0x10032898);
-  OnInit(0x100328d0);
-  OnInit(0x100326f0);
-  OnInit(0x10032728);
-  OnInit(0x10032760);
-  OnInit(0x10032798);
-  OnInit(0x100327d0);
-  OnInit(0x10032808);
+FUN_10001100(0x10032898);
+  FUN_10001100(0x100328d0);
+  FUN_10001100(0x100326f0);
+  FUN_10001100(0x10032728);
+  FUN_10001100(0x10032760);
+  FUN_10001100(0x10032798);
+  FUN_10001100(0x100327d0);
+  FUN_10001100(0x10032808);
   uStack_8 = 0x100016e5;
   return;
 }
@@ -400,50 +437,6 @@ FUN_100011c0();
   FUN_100011c0();
   FUN_100011c0();
   uStack_8 = 0x100017d5;
-  return;
-}
-
-
-
-
-
-void FUN_10001800(void)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-SetPlayerName(0,"RUSSIA");
-  SetPlayerName(1,"RUSSIA");
-  SetPlayerName(2,"SPAIN");
-  SetPlayerName(3,"VENECIA");
-  SetPlayerName(4,"POLAND");
-  SetPlayerName(5,"FRANCE");
-  RegisterZone(&DAT_10032840,DAT_1002d068);
-  RegisterZone(&DAT_10032848,DAT_1002d064);
-  RegisterZone(&DAT_10032850,DAT_1002d060);
-  RegisterZone(&DAT_10032858,DAT_1002d05c);
-  RegisterZone(&DAT_10032860,DAT_1002d058);
-  RegisterZone(&DAT_10032868,DAT_1002d054);
-  RegisterZone(&DAT_10032870,DAT_1002d050);
-  RegisterZone(&DAT_10032878,DAT_1002d04c);
-  RegisterZone(&DAT_10032880,DAT_1002d048);
-  RegisterZone(&DAT_10032908,DAT_1002d044);
-  RegisterZone(&DAT_10032910,DAT_1002d040);
-  RegisterZone(&DAT_10032918,DAT_1002d03c);
-  RegisterZone(&DAT_10032920,DAT_1002d038);
-  RegisterZone(&DAT_10032930,DAT_1002d034);
-  RegisterZone(&DAT_10032938,DAT_1002d030);
-  RegisterZone(&DAT_10032940,DAT_1002d02c);
-  RegisterZone(&DAT_10032948,DAT_1002d028);
-  RegisterZone(&DAT_10032950,DAT_1002d024);
-  RegisterZone(&DAT_10032958,DAT_1002d020);
-  RegisterZone(&DAT_10032928,DAT_1002d01c);
-  RegisterVar(&DAT_10032960,4);
-  RegisterDynGroup(&DAT_10032890);
-  RegisterDynGroup(&DAT_10032888);
-  uStack_8 = 0x10001b32;
   return;
 }
 
@@ -505,100 +498,6 @@ local_8 = GetUnitsAmount0(0,0);
 
 
 
-void FUN_10001eb0(void)
-
-{
-  unsigned int uVar1;
-  int iVar2;
-  int *puVar3;
-  int local_44 [15];
-  int uStack_8;
-uVar1 = Trigg(99);
-  if ((uVar1 & 0xff) != 0) {
-    DAT_10032960 = GetDiff(0);
-    SetResource(0,3,DAT_10032960 * -3000 + 10000);
-    SetResource(0,1,DAT_10032960 * -3000 + 10000);
-    SetResource(0,0,DAT_10032960 * -3000 + 10000);
-    SetResource(0,2,DAT_10032960 * -3000 + 10000);
-    SetResource(0,5,DAT_10032960 * -3000 + 10000);
-    SetResource(0,4,DAT_10032960 * -3000 + 10000);
-    SetResource(2,3,3000);
-    SetResource(2,1,3000);
-    SetResource(2,0,3000);
-    SetResource(2,2,3000);
-    SetResource(2,5,3000);
-    SetResource(2,4,3000);
-    SetResource(3,3,3000);
-    SetResource(3,1,3000);
-    SetResource(3,0,3000);
-    SetResource(3,2,3000);
-    SetResource(3,5,3000);
-    SetResource(3,4,3000);
-    SetResource(4,3,3000);
-    SetResource(4,1,3000);
-    SetResource(4,0,3000);
-    SetResource(4,2,3000);
-    SetResource(4,5,3000);
-    SetResource(4,4,3000);
-    SetResource(5,3,3000);
-    SetResource(5,1,3000);
-    SetResource(5,0,3000);
-    SetResource(5,2,3000);
-    SetResource(5,5,3000);
-    SetResource(5,4,3000);
-    SetLightSpot(&DAT_10032940,1,1);
-    SetLightSpot(&DAT_10032858,1,2);
-    SetLightSpot(&DAT_10032878,1,3);
-    SetLightSpot(&DAT_10032918,1,4);
-    SetLightSpot(&DAT_10032948,1,5);
-    SetLightSpot(&DAT_10032950,1,6);
-    SetLightSpot(&DAT_10032958,1,7);
-    SetLightSpot(&DAT_10032928,1,8);
-    ChangeFriends(2,0x3c);
-    ChangeFriends(3,0x3c);
-    ChangeFriends(4,0x3c);
-    ChangeFriends(5,0x3c);
-    ChangeFriends(1,3);
-    StartAI(2,"SPAIN.0",0,0,0,DAT_10032960);
-    StartAI(3,"VENECIA.0",0,0,0,DAT_10032960);
-    StartAI(4,"POLAND.0",0,0,0,DAT_10032960);
-    StartAI(5,"FRANCE.0",0,0,0,DAT_10032960);
-    ShowPage("#PAGE0");
-    SetTrigg(99,0);
-  }
-  FUN_10001c10(&DAT_10032898,&DAT_10032840,&DAT_10032850,0x2837,0x1c79);
-  FUN_10001c10(&DAT_100328d0,&DAT_10032848,&DAT_10032858,0x3945,0x1dc0);
-  FUN_10001c10(&DAT_100326f0,&DAT_10032870,&DAT_10032878,8000,0x378c);
-  FUN_10001c10(&DAT_10032728,&DAT_10032860,&DAT_10032868,0x1fba,0x23e9);
-  FUN_10001c10(&DAT_10032760,&DAT_10032910,&DAT_10032918,0x6a1,0x1cf0);
-  FUN_10001c10(&DAT_10032798,&DAT_10032880,&DAT_10032908,0x17c1,0x1d0c);
-  FUN_10001c10(&DAT_100327d0,&DAT_10032938,&DAT_10032940,0x1f78,0x6a6);
-  FUN_10001c10(&DAT_10032808,&DAT_10032920,&DAT_10032930,0x2008,0x157c);
-  uVar1 = NationIsErased(0);
-  if ((uVar1 & 0xff) != 0) {
-    LooseGame();
-  }
-  uVar1 = NationIsErased(2);
-  if ((uVar1 & 0xff) != 0) {
-    uVar1 = NationIsErased(3);
-    if ((uVar1 & 0xff) != 0) {
-      uVar1 = NationIsErased(4);
-      if ((uVar1 & 0xff) != 0) {
-        uVar1 = NationIsErased(5);
-        if ((uVar1 & 0xff) != 0) {
-          ShowVictory();
-        }
-      }
-    }
-  }
-  uStack_8 = 0x10002651;
-  return;
-}
-
-
-
-
-
 void  FUN_10002920(void *this_ptr,void *param_1)
 
 {
@@ -630,48 +529,6 @@ void __cdecl FUN_100029d0(void *param_1)
 {
   FUN_10003c30(param_1,1);
   return;
-}
-
-
-
-
-
-int __cdecl
-FUN_10002be0(int *param_1,int param_2,int param_3,int param_4,
-            int param_5,int param_6,int param_7)
-
-{
-  DWORD *pDVar1;
-  int uVar2;
-  int **ppuVar3;
-  int *local_34;
-  int local_30;
-  int *local_2c;
-  void *local_28;
-  int local_24;
-  int local_20;
-  int local_1c;
-  int local_18;
-  int local_14;
-  char *local_10;
-  char *local_c;
-  int local_8;
-  
-  local_28 = FUN_10002cb0;
-  local_24 = param_5;
-  local_20 = param_2;
-  local_1c = param_6;
-  local_18 = param_7;
-  local_8 = 0;
-  local_34 = param_1;
-  local_30 = param_3;
-  ppuVar3 = &local_34;
-  uVar2 = *param_1;
-  pDVar1 = FUN_10006900();
-  ((int(*)())pDVar1[0x1a])(uVar2,ppuVar3);
-  if (local_8 != 0) {
-  }
-  return 0;
 }
 
 
@@ -786,13 +643,43 @@ int __cdecl FUN_10002f80(int param_1)
 
 
 
-__declspec(dllexport) void OnInit()
+void OnInit(void)
+
 {
-  int param_1 = 0;
   int iVar1;
   int *puVar2;
-  int local_48 [17];
-*(int *)(param_1 + 0x2c) = 0;
+  int local_44 [15];
+  int uStack_8;
+SetPlayerName(0,"RUSSIA");
+  SetPlayerName(1,"RUSSIA");
+  SetPlayerName(2,"SPAIN");
+  SetPlayerName(3,"VENECIA");
+  SetPlayerName(4,"POLAND");
+  SetPlayerName(5,"FRANCE");
+  RegisterZone(&DAT_10032840,DAT_1002d068);
+  RegisterZone(&DAT_10032848,DAT_1002d064);
+  RegisterZone(&DAT_10032850,DAT_1002d060);
+  RegisterZone(&DAT_10032858,DAT_1002d05c);
+  RegisterZone(&DAT_10032860,DAT_1002d058);
+  RegisterZone(&DAT_10032868,DAT_1002d054);
+  RegisterZone(&DAT_10032870,DAT_1002d050);
+  RegisterZone(&DAT_10032878,DAT_1002d04c);
+  RegisterZone(&DAT_10032880,DAT_1002d048);
+  RegisterZone(&DAT_10032908,DAT_1002d044);
+  RegisterZone(&DAT_10032910,DAT_1002d040);
+  RegisterZone(&DAT_10032918,DAT_1002d03c);
+  RegisterZone(&DAT_10032920,DAT_1002d038);
+  RegisterZone(&DAT_10032930,DAT_1002d034);
+  RegisterZone(&DAT_10032938,DAT_1002d030);
+  RegisterZone(&DAT_10032940,DAT_1002d02c);
+  RegisterZone(&DAT_10032948,DAT_1002d028);
+  RegisterZone(&DAT_10032950,DAT_1002d024);
+  RegisterZone(&DAT_10032958,DAT_1002d020);
+  RegisterZone(&DAT_10032928,DAT_1002d01c);
+  RegisterVar(&DAT_10032960,4);
+  RegisterDynGroup(&DAT_10032890);
+  RegisterDynGroup(&DAT_10032888);
+  uStack_8 = 0x10001b32;
   return;
 }
 
@@ -800,25 +687,93 @@ __declspec(dllexport) void OnInit()
 
 
 
-__declspec(dllexport) void ProcessScenary()
+void ProcessScenary(void)
+
 {
-  int param_1 = 0;
-  int uVar1;
+  unsigned int uVar1;
   int iVar2;
   int *puVar3;
-  int local_48 [16];
-  int *local_8;
-puVar3 = param_1;
-  for (iVar2 = 0xb; iVar2 != 0;
-      iVar2 = iVar2 + -1) {
-    *puVar3 = *(int *)0;
-    puVar3 = puVar3 + 1;
+  int local_44 [15];
+  int uStack_8;
+uVar1 = Trigg(99);
+  if ((uVar1 & 0xff) != 0) {
+    DAT_10032960 = GetDiff(0);
+    SetResource(0,3,DAT_10032960 * -3000 + 10000);
+    SetResource(0,1,DAT_10032960 * -3000 + 10000);
+    SetResource(0,0,DAT_10032960 * -3000 + 10000);
+    SetResource(0,2,DAT_10032960 * -3000 + 10000);
+    SetResource(0,5,DAT_10032960 * -3000 + 10000);
+    SetResource(0,4,DAT_10032960 * -3000 + 10000);
+    SetResource(2,3,3000);
+    SetResource(2,1,3000);
+    SetResource(2,0,3000);
+    SetResource(2,2,3000);
+    SetResource(2,5,3000);
+    SetResource(2,4,3000);
+    SetResource(3,3,3000);
+    SetResource(3,1,3000);
+    SetResource(3,0,3000);
+    SetResource(3,2,3000);
+    SetResource(3,5,3000);
+    SetResource(3,4,3000);
+    SetResource(4,3,3000);
+    SetResource(4,1,3000);
+    SetResource(4,0,3000);
+    SetResource(4,2,3000);
+    SetResource(4,5,3000);
+    SetResource(4,4,3000);
+    SetResource(5,3,3000);
+    SetResource(5,1,3000);
+    SetResource(5,0,3000);
+    SetResource(5,2,3000);
+    SetResource(5,5,3000);
+    SetResource(5,4,3000);
+    SetLightSpot(&DAT_10032940,1,1);
+    SetLightSpot(&DAT_10032858,1,2);
+    SetLightSpot(&DAT_10032878,1,3);
+    SetLightSpot(&DAT_10032918,1,4);
+    SetLightSpot(&DAT_10032948,1,5);
+    SetLightSpot(&DAT_10032950,1,6);
+    SetLightSpot(&DAT_10032958,1,7);
+    SetLightSpot(&DAT_10032928,1,8);
+    ChangeFriends(2,0x3c);
+    ChangeFriends(3,0x3c);
+    ChangeFriends(4,0x3c);
+    ChangeFriends(5,0x3c);
+    ChangeFriends(1,3);
+    StartAI(2,"SPAIN.0",0,0,0,DAT_10032960);
+    StartAI(3,"VENECIA.0",0,0,0,DAT_10032960);
+    StartAI(4,"POLAND.0",0,0,0,DAT_10032960);
+    StartAI(5,"FRANCE.0",0,0,0,DAT_10032960);
+    ShowPage("#PAGE0");
+    SetTrigg(99,0);
   }
-  local_8 = param_1;
-  uVar1 = GetGlobalTime();
-  local_8[0xc] = uVar1;
-  local_8[0xb] = 0;
-  local_8 = (int *)0x10001199;
+  FUN_10001c10(&DAT_10032898,&DAT_10032840,&DAT_10032850,0x2837,0x1c79);
+  FUN_10001c10(&DAT_100328d0,&DAT_10032848,&DAT_10032858,0x3945,0x1dc0);
+  FUN_10001c10(&DAT_100326f0,&DAT_10032870,&DAT_10032878,8000,0x378c);
+  FUN_10001c10(&DAT_10032728,&DAT_10032860,&DAT_10032868,0x1fba,0x23e9);
+  FUN_10001c10(&DAT_10032760,&DAT_10032910,&DAT_10032918,0x6a1,0x1cf0);
+  FUN_10001c10(&DAT_10032798,&DAT_10032880,&DAT_10032908,0x17c1,0x1d0c);
+  FUN_10001c10(&DAT_100327d0,&DAT_10032938,&DAT_10032940,0x1f78,0x6a6);
+  FUN_10001c10(&DAT_10032808,&DAT_10032920,&DAT_10032930,0x2008,0x157c);
+  uVar1 = NationIsErased(0);
+  if ((uVar1 & 0xff) != 0) {
+    LooseGame();
+  }
+  uVar1 = NationIsErased(2);
+  if ((uVar1 & 0xff) != 0) {
+    uVar1 = NationIsErased(3);
+    if ((uVar1 & 0xff) != 0) {
+      uVar1 = NationIsErased(4);
+      if ((uVar1 & 0xff) != 0) {
+        uVar1 = NationIsErased(5);
+        if ((uVar1 & 0xff) != 0) {
+          ShowVictory();
+        }
+      }
+    }
+  }
+  uStack_8 = 0x10002651;
   return;
 }
 

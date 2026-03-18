@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 long long DAT_10009030 = 0;
@@ -63,11 +64,6 @@ long long DAT_1000bec0 = 0;
 long long DAT_1000bec8 = 0;
 long long DAT_1000bed0 = 0;
 
-/* Stubs for missing internal functions */
-int FUN_10001b7f() { return 0; }
-int FUN_10001e89() { return 0; }
-
-
 /* Forward declarations */
 BOOL FUN_100017b0(int param_1);
 void FUN_100017f0(int param_1,int param_2);
@@ -77,7 +73,6 @@ int FUN_100019c0(int param_1,int param_2,int param_3,int param_4,int param_5);
 int FUN_10001a30(int param_1);
 BOOL FUN_10001a80(int param_1);
 void FUN_10001af0(int param_1,int param_2);
-void FUN_10001b50(DWORD param_1);
 
 void OnInit();
 void ProcessScenary();
@@ -313,20 +308,6 @@ void __cdecl FUN_10001af0(int param_1,int param_2)
 
 
 
-void __cdecl FUN_10001b50(DWORD param_1)
-
-{
-  DWORD *pDVar1;
-  
-  pDVar1 = FUN_10001e89();
-  pDVar1[5] = param_1;
-  return;
-}
-
-
-
-
-
 void OnInit(void)
 
 {
@@ -396,8 +377,8 @@ void OnInit(void)
   SetPlayerName(1,"FRANCE");
   SetPlayerName(2,"PRUSSIA");
   SetPlayerName(3,"BAVARIA");
-  DVar1 = FUN_10001b7f((int *)0x0);
-  FUN_10001b50(DVar1);
+  DVar1 = time(NULL);
+  srand(DVar1);
   EnableMission(0x41);
   EnableMission(0x42);
   EnableMission(0x44);

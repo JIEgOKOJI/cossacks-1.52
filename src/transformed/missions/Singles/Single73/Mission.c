@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 int this_ptr = 0;
@@ -105,10 +106,8 @@ int DAT_10027e70 = 0;
 int DAT_100266f8_ovl = 0;
 
 /* Stubs for missing internal functions */
-int FUN_10003586() { return 0; }
 int FUN_100038ca() { return 0; }
 int FUN_1000391a() { return 0; }
-int FUN_10003dee() { return 0; }
 int FUN_100040a9() { return 0; }
 int FUN_100040b2() { return 0; }
 int FUN_100040d5() { return 0; }
@@ -164,7 +163,6 @@ int *  FUN_100034a0(int *param_1);
 int  FUN_100034c0(int param_1);
 void FUN_100034e0(void);
 void FUN_100034f8(void);
-void FUN_10003557(DWORD param_1);
 int FUN_10003662(int param_1);
 int FUN_100036e0(int param_1);
 
@@ -993,20 +991,6 @@ void FUN_100034f8(void)
 
 
 
-void __cdecl FUN_10003557(DWORD param_1)
-
-{
-  DWORD *pDVar1;
-  
-  pDVar1 = FUN_10003dee();
-  pDVar1[5] = param_1;
-  return;
-}
-
-
-
-
-
 int __cdecl FUN_10003662(int param_1)
 
 {
@@ -1058,8 +1042,8 @@ void OnInit(void)
   int uVar4;
   
                     
-  DVar1 = FUN_10003586((int *)0x0);
-  FUN_10003557(DVar1);
+  DVar1 = time(NULL);
+  srand(DVar1);
   RegisterZone(&DAT_10012d40,"z_treasure0");
   RegisterZone(&DAT_10012d48,"z_treasure1");
   RegisterZone(&DAT_10012d50,"z_treasure2");

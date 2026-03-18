@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 long long DAT_10008170 = 0;
@@ -60,9 +61,7 @@ int DAT_10008178_ovl = 0;
 int DAT_10009fb8_ovl = 0;
 
 /* Stubs for missing internal functions */
-int FUN_10001e2f() { return 0; }
 int FUN_100020b4() { return 0; }
-int FUN_1000220d() { return 0; }
 int FUN_10002314() { return 0; }
 int FUN_10002364() { return 0; }
 
@@ -72,7 +71,6 @@ int FUN_10001000(void);
 BOOL FUN_10001050(int param_1);
 void FUN_10001090(unsigned int *param_1,int param_2,int param_3,int param_4,int param_5);
 void FUN_10001d70(LPVOID param_1);
-void FUN_10001d89(DWORD param_1);
 void FUN_10001db8(void);
 void FUN_10001dd0(void);
 
@@ -223,20 +221,6 @@ void __cdecl FUN_10001d70(LPVOID param_1)
 
 
 
-void __cdecl FUN_10001d89(DWORD param_1)
-
-{
-  DWORD *pDVar1;
-  
-  pDVar1 = FUN_1000220d();
-  pDVar1[5] = param_1;
-  return;
-}
-
-
-
-
-
 
 
 void FUN_10001db8(void)
@@ -321,8 +305,8 @@ void OnInit(void)
   RegisterVar(&DAT_10009e98,8);
   RegisterDynGroup(&DAT_10009fa8);
   RegisterVar(&DAT_10009fa8,8);
-  DVar1 = FUN_10001e2f((int *)0x0);
-  FUN_10001d89(DVar1);
+  DVar1 = time(NULL);
+  srand(DVar1);
   return;
 }
 

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 int this_ptr = 0;
@@ -48,6 +49,8 @@ long long DAT_10030648 = 0;
 long long DAT_10030670 = 0;
 
 /* Forward declarations */
+void FUN_10001180(int param_1);
+void FUN_10001220(int param_1,int param_2,int param_3);
 void  FUN_10001290(void *param_1);
 void  FUN_10001520(int param_1);
 void  FUN_100015a0(void *this_ptr,int param_1,int param_2);
@@ -73,11 +76,52 @@ void  FUN_10002180(void *this_ptr,int param_1,char param_2,int param_3);
 void  FUN_10002240(char *param_1);
 void  FUN_10002380(char *param_1);
 void  FUN_10002450(char *param_1);
-void FUN_10002520(void);
-void FUN_100028e0(void);
 
 void OnInit();
 void ProcessScenary();
+
+
+void __cdecl FUN_10001180(int param_1)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_4c [16];
+  unsigned int local_c;
+  unsigned int local_8;
+local_8 = 0;
+  for (local_c = 0; (intptr_t)local_c < 8; local_c = local_c + 1) {
+    iVar1 = GetUnitsByNation(param_1,local_c & 0xff);
+    if (0 < iVar1) {
+      local_8 = local_c;
+      local_c = 8;
+    }
+  }
+  return;
+}
+
+
+
+
+
+void __cdecl FUN_10001220(int param_1,int param_2,int param_3)
+
+{
+  BOOL bVar1;
+  int iVar2;
+  int *puVar3;
+  int local_44 [15];
+  int uStack_8;
+bVar1 = FUN_10001a60(0x100304f8);
+  if (bVar1) {
+    FUN_10001ab0(&DAT_100304f8,param_1,param_2,param_3);
+  }
+  uStack_8 = 0x1000126e;
+  return;
+}
+
+
+
 
 
 void  FUN_10001290(void *param_1)
@@ -96,7 +140,7 @@ local_8 = param_1;
                                           ((intptr_t)local_8 + *(int *)((intptr_t)local_8 + 0x1c) * 8 + 0x28))
       ;
       if (cVar1 != '\0') {
-        ProcessScenary((intptr_t)local_8 + 0xc,
+        FUN_10001220((intptr_t)local_8 + 0xc,
                            *(int *)((intptr_t)local_8 + *(int *)((intptr_t)local_8 + 0x1c) * 8 + 0x28),
                            *(int *)((intptr_t)local_8 + *(int *)((intptr_t)local_8 + 0x1c) * 8 + 0x30))
         ;
@@ -298,7 +342,7 @@ void  FUN_100019a0(void *this_ptr,int param_1,int param_2)
   void *local_8;
 local_8 = this_ptr;
   RegisterUnits((int)this_ptr + 0xc,param_1);
-  OnInit((intptr_t)local_8 + 0xc);
+  FUN_10001180((intptr_t)local_8 + 0xc);
   *(int *)((intptr_t)local_8 + 0x18) = uVar1;
   *(int *)((intptr_t)local_8 + 0x14) = 0;
   *(int *)((intptr_t)local_8 + 0x1c) = param_2;
@@ -492,7 +536,7 @@ FUN_10002030(void *this_ptr,int param_1,int param_2,char param_3,int param_4)
 *(int *)((int)this_ptr + 6) = param_1;
   *(int *)((int)this_ptr + 10) = param_2;
   local_8 = this_ptr;
-  OnInit(param_1);
+  FUN_10001180(param_1);
   local_8[1] = uVar1;
   *local_8 = param_3;
   *(int *)(local_8 + 2) = param_4;
@@ -617,7 +661,7 @@ local_8 = param_1;
 
 
 
-void FUN_10002520(void)
+void OnInit(void)
 
 {
   int iVar1;
@@ -660,7 +704,7 @@ SetPlayerName(0,"PRUSSIA");
 
 
 
-void FUN_100028e0(void)
+void ProcessScenary(void)
 
 {
   unsigned int uVar1;
@@ -853,51 +897,6 @@ uVar1 = Trigg(99);
     LooseGame();
   }
   uStack_8 = 0x10003494;
-  return;
-}
-
-
-
-
-
-__declspec(dllexport) void OnInit()
-{
-  int param_1 = 0;
-  int iVar1;
-  int *puVar2;
-  int local_4c [16];
-  unsigned int local_c;
-  unsigned int local_8;
-local_8 = 0;
-  for (local_c = 0; (intptr_t)local_c < 8; local_c = local_c + 1) {
-    iVar1 = GetUnitsByNation(param_1,local_c & 0xff);
-    if (0 < iVar1) {
-      local_8 = local_c;
-      local_c = 8;
-    }
-  }
-  return;
-}
-
-
-
-
-
-__declspec(dllexport) void ProcessScenary()
-{
-  int param_1 = 0;
-  int param_2 = 0;
-  int param_3 = 0;
-  BOOL bVar1;
-  int iVar2;
-  int *puVar3;
-  int local_44 [15];
-  int uStack_8;
-bVar1 = FUN_10001a60(0x100304f8);
-  if (bVar1) {
-    FUN_10001ab0(&DAT_100304f8,param_1,param_2,param_3);
-  }
-  uStack_8 = 0x1000126e;
   return;
 }
 

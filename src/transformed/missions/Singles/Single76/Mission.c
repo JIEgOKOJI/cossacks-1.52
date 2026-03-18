@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 long long DAT_10008030 = 0;
@@ -34,11 +35,6 @@ long long DAT_1000acd8 = 0;
 long long DAT_1000ace0 = 0;
 long long DAT_1000ace8 = 0;
 
-/* Stubs for missing internal functions */
-int FUN_1000194f() { return 0; }
-int FUN_10001c59() { return 0; }
-
-
 /* Forward declarations */
 BOOL FUN_100015f0(int param_1);
 int FUN_10001630(int param_1,int param_2,int param_3,int param_4);
@@ -46,7 +42,6 @@ int FUN_10001790(int param_1,int param_2,int param_3,int param_4,int param_5);
 int FUN_10001800(int param_1);
 BOOL FUN_10001850(int param_1);
 void FUN_100018c0(int param_1,int param_2);
-void FUN_10001920(DWORD param_1);
 
 void OnInit();
 void ProcessScenary();
@@ -242,20 +237,6 @@ void __cdecl FUN_100018c0(int param_1,int param_2)
 
 
 
-void __cdecl FUN_10001920(DWORD param_1)
-
-{
-  DWORD *pDVar1;
-  
-  pDVar1 = FUN_10001c59();
-  pDVar1[5] = param_1;
-  return;
-}
-
-
-
-
-
 void OnInit(void)
 
 {
@@ -388,8 +369,8 @@ LAB_1000139c:
       (iVar6 = GetTotalAmount0(&DAT_1000ac80), iVar6 != 0)))) {
     iVar6 = GetDiff(0);
     RunTimer(1,(iVar6 + 10) * 500);
-    DVar5 = FUN_1000194f((int *)0x0);
-    FUN_10001920(DVar5);
+    DVar5 = time(NULL);
+    srand(DVar5);
     uVar4 = 0x40;
     iVar6 = rand();
 // FIXME(decompiler):     iVar6 = GetDiff(0);

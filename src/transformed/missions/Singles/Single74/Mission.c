@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 int this_ptr = 0;
@@ -81,10 +82,8 @@ int DAT_10028f70 = 0;
 int DAT_10027814_ovl = 0;
 
 /* Stubs for missing internal functions */
-int FUN_1000401b() { return 0; }
 int FUN_1000435f() { return 0; }
 int FUN_100043af() { return 0; }
-int FUN_10004883() { return 0; }
 int FUN_10004b3e() { return 0; }
 int FUN_10004b47() { return 0; }
 int FUN_10004b6a() { return 0; }
@@ -172,7 +171,6 @@ void  FUN_10003f30(char *param_1);
 void FUN_10003f50(void);
 void FUN_10003f68(void);
 int FUN_10003fc7(int param_1,int param_2);
-void FUN_10003fec(DWORD param_1);
 int FUN_100040f7(int param_1);
 int FUN_10004175(int param_1);
 
@@ -1873,20 +1871,6 @@ int __cdecl FUN_10003fc7(int param_1,int param_2)
 
 
 
-void __cdecl FUN_10003fec(DWORD param_1)
-
-{
-  DWORD *pDVar1;
-  
-  pDVar1 = FUN_10004883();
-  pDVar1[5] = param_1;
-  return;
-}
-
-
-
-
-
 int __cdecl FUN_100040f7(int param_1)
 
 {
@@ -1938,8 +1922,8 @@ void OnInit(void)
   int uVar4;
   
                     
-  DVar1 = FUN_1000401b((int *)0x0);
-  FUN_10003fec(DVar1);
+  DVar1 = time(NULL);
+  srand(DVar1);
   RegisterUnitType(&DAT_10014100,"Bashnia(sp)");
   RegisterUnitType(&DAT_10013db8,"Bashnia(fr)");
   RegisterUnitType(&DAT_100140b0,"WALL_EV(sp)");

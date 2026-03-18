@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 int this_ptr = 0;
@@ -64,8 +65,6 @@ int FUN_10009484() { return 0; }
 int FUN_1000948d() { return 0; }
 int FUN_10009534() { return 0; }
 int FUN_1000953d() { return 0; }
-int FUN_10009a30() { return 0; }
-int FUN_10009dc0() { return 0; }
 int FUN_1000a2e0() { return 0; }
 int FUN_1000abd8() { return 0; }
 int FUN_1000b620() { return 0; }
@@ -74,13 +73,13 @@ int FUN_1000b750() { return 0; }
 int FUN_1000bbb0() { return 0; }
 int FUN_1000c1b0() { return 0; }
 int FUN_1000c5f0() { return 0; }
-int FUN_1000e420() { return 0; }
 int FUN_1000e6a0() { return 0; }
 int FUN_1000e8e0() { return 0; }
 int FUN_1000e8f0() { return 0; }
 
 
 /* Forward declarations */
+void FUN_100015d0(int param_1);
 void FUN_10001830(int param_1,char param_2,char param_3);
 void FUN_100018f0(int param_1,char param_2);
 void FUN_100019b0(int param_1,int param_2,int param_3,int param_4,int param_5);
@@ -110,7 +109,6 @@ void FUN_10003090(void);
 void  FUN_100030d0(int param_1);
 void  FUN_10003130(int param_1);
 void  FUN_100031c0(int param_1);
-void FUN_100037e0(void);
 void FUN_10003b20(int param_1);
 void FUN_10003c90(int param_1);
 void FUN_10003d30(int param_1);
@@ -249,16 +247,50 @@ void FUN_10009600(void);
 int FUN_10009650(int param_1);
 void  FUN_100096a0(void *this_ptr,void *param_1);
 void FUN_10009750(void *param_1);
-int FUN_10009960(int *param_1,int param_2,int param_3,int param_4,
-            int param_5,int param_6,int param_7);
 int FUN_10009ac0(int param_1,int param_2,int param_3,unsigned int *param_4,unsigned int *param_5);
 void FUN_10009c26(void);
 int FUN_10009c40(int param_1);
 int FUN_10009d00(int param_1);
-void FUN_10009d70(DWORD param_1);
 
 void OnInit();
 void ProcessScenary();
+
+
+void __cdecl FUN_100015d0(int param_1)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_48;
+  int local_44;
+  int local_40;
+  int local_3c;
+  int local_38;
+  int local_34;
+  char local_30 [20];
+  int local_1c;
+  int local_18;
+  int uStack_8;
+local_38 = 0;
+  local_34 = 0;
+  local_3c = GetTotalAmount0(param_1);
+  if (0 < local_3c) {
+    local_40 = 0;
+    local_44 = 0;
+    for (local_48 = 0; local_48 < local_3c; local_48 = local_48 + 1) {
+      GetUnitInfo(param_1,local_48,local_30);
+      local_40 = local_40 + local_1c;
+      local_44 = local_44 + local_18;
+    }
+    local_38 = local_40 / local_3c;
+    local_34 = local_44 / local_3c;
+  }
+  uStack_8 = 0x1000169f;
+  return;
+}
+
+
+
 
 
 void __cdecl FUN_10001830(int param_1,char param_2,char param_3)
@@ -295,7 +327,7 @@ void __cdecl FUN_100018f0(int param_1,char param_2)
 RegisterDynGroup(local_c);
   SelectUnitsInZone(param_1,param_2,0);
   SaveSelectedUnits(param_2,local_c,0);
-  OnInit(local_c);
+  FUN_100015d0(local_c);
   uStack_8 = 0x1000197b;
   return;
 }
@@ -1100,50 +1132,6 @@ local_8 = param_1;
     }
   }
 LAB_10003632:
-  return;
-}
-
-
-
-
-
-
-
-void FUN_100037e0(void)
-
-{
-  DWORD DVar1;
-  int iVar2;
-  int *puVar3;
-  int local_48 [16];
-  int local_8;
-DVar1 = FUN_10009dc0((int *)0x0);
-  FUN_10009d70(DVar1);
-  SetPlayerName(0,"HOLLAND");
-  SetPlayerName(1,"ENGLAND");
-  SetPlayerName(2,"ENGLAND");
-  for (local_8 = 0; local_8 < 0x32; local_8 = local_8 + 1) {
-    RegisterDynGroup(((unsigned char *)&DAT_1003ee38) + local_8 * 0x18);
-    RegisterDynGroup(((unsigned char *)&DAT_1003ee48) + local_8 * 0x18);
-    RegisterVar(((unsigned char *)&DAT_1003ee38) + local_8 * 0x18,0x18);
-  }
-  RegisterUnitType(&DAT_1003ed48,"Fregat(HO)");
-  RegisterUnitType(&DAT_1003ed40,"GALERA(HO)");
-  RegisterUnitType(&DAT_1003ed58,"Center_Holland(HO)");
-  RegisterUnitType(&DAT_1003ee20,"Melnica(HO)");
-  RegisterUnitType(&DAT_1003ee30,"shahta(HO)");
-  RegisterUnitType(&DAT_1003ecf0,"Fregat(en)");
-  RegisterUnitType(&DAT_1003ecd8,"Linkor(en)");
-  RegisterUnitType(&DAT_1003ece8,"Krestian_Sved(en)");
-  RegisterDynGroup(&DAT_1003ed68);
-  RegisterVar(&DAT_1003ed68,8);
-  RegisterFormation(&DAT_1003ee28,"#ODIN");
-  DAT_1003ed50 = 0;
-  DAT_1003ed52 = 0;
-  DAT_1003ed54_ovl = 0x40000000;
-  RegisterDynGroup(&DAT_1003ed60);
-  RegisterVar(&DAT_1003ed60,8);
-  RegisterVar(&DAT_1003ee18,4);
   return;
 }
 
@@ -4074,48 +4062,6 @@ void __cdecl FUN_10009750(void *param_1)
 
 
 
-int __cdecl
-FUN_10009960(int *param_1,int param_2,int param_3,int param_4,
-            int param_5,int param_6,int param_7)
-
-{
-  DWORD *pDVar1;
-  int uVar2;
-  int **ppuVar3;
-  int *local_34;
-  int local_30;
-  int *local_2c;
-  void *local_28;
-  int local_24;
-  int local_20;
-  int local_1c;
-  int local_18;
-  int local_14;
-  char *local_10;
-  char *local_c;
-  int local_8;
-  
-  local_28 = FUN_10009a30;
-  local_24 = param_5;
-  local_20 = param_2;
-  local_1c = param_6;
-  local_18 = param_7;
-  local_8 = 0;
-  local_34 = param_1;
-  local_30 = param_3;
-  ppuVar3 = &local_34;
-  uVar2 = *param_1;
-  pDVar1 = FUN_1000e420();
-  ((int(*)())pDVar1[0x1a])(uVar2,ppuVar3);
-  if (local_8 != 0) {
-  }
-  return 0;
-}
-
-
-
-
-
 int __cdecl FUN_10009ac0(int param_1,int param_2,int param_3,unsigned int *param_4,unsigned int *param_5)
 
 {
@@ -4224,50 +4170,43 @@ int __cdecl FUN_10009d00(int param_1)
 
 
 
-void __cdecl FUN_10009d70(DWORD param_1)
+
+
+void OnInit(void)
 
 {
-  DWORD *pDVar1;
-  
-  pDVar1 = FUN_1000e420();
-  pDVar1[5] = param_1;
-  return;
-}
-
-
-
-
-
-__declspec(dllexport) void OnInit()
-{
-  int param_1 = 0;
-  int iVar1;
-  int *puVar2;
-  int local_48;
-  int local_44;
-  int local_40;
-  int local_3c;
-  int local_38;
-  int local_34;
-  char local_30 [20];
-  int local_1c;
-  int local_18;
-  int uStack_8;
-local_38 = 0;
-  local_34 = 0;
-  local_3c = GetTotalAmount0(param_1);
-  if (0 < local_3c) {
-    local_40 = 0;
-    local_44 = 0;
-    for (local_48 = 0; local_48 < local_3c; local_48 = local_48 + 1) {
-      GetUnitInfo(param_1,local_48,local_30);
-      local_40 = local_40 + local_1c;
-      local_44 = local_44 + local_18;
-    }
-    local_38 = local_40 / local_3c;
-    local_34 = local_44 / local_3c;
+  DWORD DVar1;
+  int iVar2;
+  int *puVar3;
+  int local_48 [16];
+  int local_8;
+DVar1 = time(NULL);
+  srand(DVar1);
+  SetPlayerName(0,"HOLLAND");
+  SetPlayerName(1,"ENGLAND");
+  SetPlayerName(2,"ENGLAND");
+  for (local_8 = 0; local_8 < 0x32; local_8 = local_8 + 1) {
+    RegisterDynGroup(((unsigned char *)&DAT_1003ee38) + local_8 * 0x18);
+    RegisterDynGroup(((unsigned char *)&DAT_1003ee48) + local_8 * 0x18);
+    RegisterVar(((unsigned char *)&DAT_1003ee38) + local_8 * 0x18,0x18);
   }
-  uStack_8 = 0x1000169f;
+  RegisterUnitType(&DAT_1003ed48,"Fregat(HO)");
+  RegisterUnitType(&DAT_1003ed40,"GALERA(HO)");
+  RegisterUnitType(&DAT_1003ed58,"Center_Holland(HO)");
+  RegisterUnitType(&DAT_1003ee20,"Melnica(HO)");
+  RegisterUnitType(&DAT_1003ee30,"shahta(HO)");
+  RegisterUnitType(&DAT_1003ecf0,"Fregat(en)");
+  RegisterUnitType(&DAT_1003ecd8,"Linkor(en)");
+  RegisterUnitType(&DAT_1003ece8,"Krestian_Sved(en)");
+  RegisterDynGroup(&DAT_1003ed68);
+  RegisterVar(&DAT_1003ed68,8);
+  RegisterFormation(&DAT_1003ee28,"#ODIN");
+  DAT_1003ed50 = 0;
+  DAT_1003ed52 = 0;
+  DAT_1003ed54_ovl = 0x40000000;
+  RegisterDynGroup(&DAT_1003ed60);
+  RegisterVar(&DAT_1003ed60,8);
+  RegisterVar(&DAT_1003ee18,4);
   return;
 }
 

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 int this_ptr = 0;
@@ -84,6 +85,8 @@ int FUN_10005700() { return 0; }
 
 
 /* Forward declarations */
+void FUN_100011d0(int param_1);
+void FUN_10001270(void);
 void FUN_100013b0(void);
 void FUN_100014e0(void);
 void FUN_10001580(char param_1);
@@ -118,8 +121,6 @@ void  FUN_10002c50(void *this_ptr,int param_1,int param_2,int param_3);
 void  FUN_10002cf0(void *this_ptr,int param_1);
 void  FUN_10002d70(void *this_ptr,int param_1);
 int  FUN_10002e00(int param_1);
-void FUN_10002e30(void);
-void FUN_100035a0(void);
 void FUN_10004320(void);
 void FUN_10004350(void);
 void FUN_10004360(void);
@@ -128,6 +129,62 @@ int FUN_100043d0(char *param_1,byte *param_2);
 
 void OnInit();
 void ProcessScenary();
+
+
+void __cdecl FUN_100011d0(int param_1)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_4c [16];
+  unsigned int local_c;
+  unsigned int local_8;
+local_8 = 0;
+  for (local_c = 0; (intptr_t)local_c < 8; local_c = local_c + 1) {
+    iVar1 = GetUnitsByNation(param_1,local_c & 0xff);
+    if (0 < iVar1) {
+      local_8 = local_c;
+      local_c = 8;
+    }
+  }
+  return;
+}
+
+
+
+
+
+void FUN_10001270(void)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_1c;
+  int local_18;
+  int local_14;
+  int local_10;
+  int local_c;
+  int local_8;
+local_8 = 0;
+  local_c = 0;
+  local_10 = 0;
+  for (local_14 = 0; local_14 < 6; local_14 = local_14 + 1) {
+    for (local_18 = 0; local_18 < 8; local_18 = local_18 + 1) {
+      local_1c = GetUnitsAmount0(((unsigned char *)&DAT_10035ef0) + local_18 * 8 + local_14 * 0x40,0);
+      iVar1 = GetUnitsAmount0(((unsigned char *)&DAT_10035ef0) + local_18 * 8 + local_14 * 0x40,1);
+      local_1c = local_1c + iVar1 / 2;
+      if (local_8 < local_1c) {
+        local_c = local_14;
+        local_10 = local_18;
+        local_8 = local_1c;
+      }
+    }
+  }
+  return;
+}
+
+
+
 
 
 void FUN_100013b0(void)
@@ -369,7 +426,7 @@ FUN_10001bb0(void *this_ptr,int param_1,int param_2,char param_3,int param_4)
 *(int *)((int)this_ptr + 6) = param_1;
   *(int *)((int)this_ptr + 10) = param_2;
   local_8 = this_ptr;
-  OnInit(param_1);
+  FUN_100011d0(param_1);
   local_8[1] = uVar1;
   *local_8 = param_3;
   *(int *)(local_8 + 2) = param_4;
@@ -505,7 +562,7 @@ FUN_100020a0(void *this_ptr,int param_1,int param_2,int param_3,int param_4)
   int *local_8;
 local_8 = this_ptr;
   RegisterUnits((int)this_ptr + 0x14,param_1);
-  OnInit(local_8 + 5);
+  FUN_100011d0(local_8 + 5);
   local_8[1] = uVar1;
   local_8[2] = param_4;
   local_8[3] = param_3;
@@ -932,7 +989,90 @@ return param_1;
 
 
 
-void FUN_10002e30(void)
+
+
+void FUN_10004320(void)
+
+{
+  FUN_10004360();
+  return;
+}
+
+
+
+
+
+void FUN_10004350(void)
+
+{
+  return;
+}
+
+
+
+
+
+void FUN_10004360(void)
+
+{
+  return;
+}
+
+
+
+
+
+int __cdecl FUN_100043b0(int param_1)
+
+{
+  int uVar1;
+  
+  uVar1 = DAT_100364d4;
+  DAT_100364d4 = param_1;
+  return uVar1;
+}
+
+
+
+
+
+int __cdecl FUN_100043d0(char *param_1,byte *param_2)
+
+{
+  void *pcVar1;
+  int iVar2;
+  char *local_24;
+  int local_20;
+  char *local_1c;
+  int local_18;
+  
+  if ((param_1 == (char *)0x0) &&
+     (iVar2 = FUN_10004860(2,0x1003041c,0x5d,0,(byte *)"string != NULL"), iVar2 == 1)) {
+    return iVar2;
+  }
+  if ((param_2 == (byte *)0x0) &&
+     (iVar2 = FUN_10004860(2,0x1003041c,0x5e,0,(byte *)"format != NULL"), iVar2 == 1)) {
+    return iVar2;
+  }
+  local_18 = 0x42;
+  local_1c = param_1;
+  local_24 = param_1;
+  local_20 = 0x7fffffff;
+  local_20 = local_20 + -1;
+  if (local_20 < 0) {
+    FUN_10005700(0,(int *)&local_24);
+  }
+  else {
+    *local_24 = 0;
+  }
+  return iVar2;
+}
+
+
+
+
+
+void OnInit(void)
 
 {
   int uVar1;
@@ -1027,7 +1167,7 @@ SetPlayerName(0,"AUSTRIANS");
 
 
 
-void FUN_100035a0(void)
+void ProcessScenary(void)
 
 {
   unsigned int uVar1;
@@ -1174,7 +1314,7 @@ uVar1 = Trigg(99);
       SetTrigg(0xb,0);
     }
   }
-  ProcessScenary();
+  FUN_10001270();
   FUN_100013b0();
   FUN_10001dc0(&DAT_10036240);
   FUN_10001dc0(&DAT_10036268);
@@ -1206,145 +1346,6 @@ uVar1 = Trigg(99);
   }
   LooseGame();
 LAB_10003f3e:
-  return;
-}
-
-
-
-
-
-
-
-void FUN_10004320(void)
-
-{
-  FUN_10004360();
-  return;
-}
-
-
-
-
-
-void FUN_10004350(void)
-
-{
-  return;
-}
-
-
-
-
-
-void FUN_10004360(void)
-
-{
-  return;
-}
-
-
-
-
-
-int __cdecl FUN_100043b0(int param_1)
-
-{
-  int uVar1;
-  
-  uVar1 = DAT_100364d4;
-  DAT_100364d4 = param_1;
-  return uVar1;
-}
-
-
-
-
-
-int __cdecl FUN_100043d0(char *param_1,byte *param_2)
-
-{
-  void *pcVar1;
-  int iVar2;
-  char *local_24;
-  int local_20;
-  char *local_1c;
-  int local_18;
-  
-  if ((param_1 == (char *)0x0) &&
-     (iVar2 = FUN_10004860(2,0x1003041c,0x5d,0,(byte *)"string != NULL"), iVar2 == 1)) {
-    return iVar2;
-  }
-  if ((param_2 == (byte *)0x0) &&
-     (iVar2 = FUN_10004860(2,0x1003041c,0x5e,0,(byte *)"format != NULL"), iVar2 == 1)) {
-    return iVar2;
-  }
-  local_18 = 0x42;
-  local_1c = param_1;
-  local_24 = param_1;
-  local_20 = 0x7fffffff;
-  local_20 = local_20 + -1;
-  if (local_20 < 0) {
-    FUN_10005700(0,(int *)&local_24);
-  }
-  else {
-    *local_24 = 0;
-  }
-  return iVar2;
-}
-
-
-
-
-
-__declspec(dllexport) void OnInit()
-{
-  int param_1 = 0;
-  int iVar1;
-  int *puVar2;
-  int local_4c [16];
-  unsigned int local_c;
-  unsigned int local_8;
-local_8 = 0;
-  for (local_c = 0; (intptr_t)local_c < 8; local_c = local_c + 1) {
-    iVar1 = GetUnitsByNation(param_1,local_c & 0xff);
-    if (0 < iVar1) {
-      local_8 = local_c;
-      local_c = 8;
-    }
-  }
-  return;
-}
-
-
-
-
-
-void ProcessScenary(void)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_1c;
-  int local_18;
-  int local_14;
-  int local_10;
-  int local_c;
-  int local_8;
-local_8 = 0;
-  local_c = 0;
-  local_10 = 0;
-  for (local_14 = 0; local_14 < 6; local_14 = local_14 + 1) {
-    for (local_18 = 0; local_18 < 8; local_18 = local_18 + 1) {
-      local_1c = GetUnitsAmount0(((unsigned char *)&DAT_10035ef0) + local_18 * 8 + local_14 * 0x40,0);
-      iVar1 = GetUnitsAmount0(((unsigned char *)&DAT_10035ef0) + local_18 * 8 + local_14 * 0x40,1);
-      local_1c = local_1c + iVar1 / 2;
-      if (local_8 < local_1c) {
-        local_c = local_14;
-        local_10 = local_18;
-        local_8 = local_1c;
-      }
-    }
-  }
   return;
 }
 

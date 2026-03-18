@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 int this_ptr = 0;
@@ -147,7 +148,7 @@ uVar1 = Trigg(1);
     iVar2 = GetUnitsAmount0(&DAT_10030440,0);
     if (0 < iVar2) {
       SetTrigg(3,0);
-      DAT_10030438 = AskMultilineQuestion (9,"#PAGE2",0, "Kenneth\'s orders are they? Tell you what gentlemen. I have no quarrel with thee per se. Leave now in peace);
+      DAT_10030438 = AskMultilineQuestion (9,"#PAGE2",0, "Kenneth\'s orders are they? Tell you what gentlemen. I have no quarrel with thee per se. Leave now in peace, but this_ptr cannon of yours is going into the sea, one way or another.|You on Kenneth\'s playrole? How about you take this_ptr 60 coins and relax in a brothel for a day or two?|To hell with you." );
       if (DAT_10030438 == 0) {
         SetTrigg(4,0);
       }

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 int this_ptr = 0;
@@ -49,7 +50,6 @@ int FUN_100031c0() { return 0; }
 int FUN_100047db() { return 0; }
 int FUN_10004a07() { return 0; }
 int FUN_10004d2a() { return 0; }
-int FUN_1000537b() { return 0; }
 int FUN_10005e59() { return 0; }
 int FUN_10005f5e() { return 0; }
 int FUN_10005f9b() { return 0; }
@@ -72,7 +72,6 @@ int FUN_100074b3() { return 0; }
 int FUN_100076d5() { return 0; }
 int FUN_100077ad() { return 0; }
 int FUN_1000791d() { return 0; }
-int FUN_100082c1() { return 0; }
 int FUN_1000842c() { return 0; }
 int FUN_100097ff() { return 0; }
 int FUN_1000e190() { return 0; }
@@ -152,8 +151,6 @@ int FUN_10005088(int *param_1,int param_2,DWORD param_3);
 int FUN_100050b4(int *param_1,int param_2,DWORD param_3);
 int * FUN_10005141(LPCSTR param_1,char *param_2,unsigned int param_3);
 void FUN_10005172(LPCSTR param_1,char *param_2);
-int FUN_100052c5(int *param_1,int param_2,int param_3,int param_4,
-            int param_5,int param_6,int param_7);
 int FUN_100053f0(int param_1,int param_2,int param_3,unsigned int *param_4,unsigned int *param_5);
 void FUN_10005470(void);
 void FUN_10005576(void);
@@ -2658,48 +2655,6 @@ void __cdecl FUN_10005172(LPCSTR param_1,char *param_2)
 {
   FUN_10005141(param_1,param_2,0x40);
   return;
-}
-
-
-
-
-
-int __cdecl
-FUN_100052c5(int *param_1,int param_2,int param_3,int param_4,
-            int param_5,int param_6,int param_7)
-
-{
-  DWORD *pDVar1;
-  int uVar2;
-  int **ppuVar3;
-  int *local_34;
-  int local_30;
-  int *local_2c;
-  void *local_28;
-  int local_24;
-  int local_20;
-  int local_1c;
-  int local_18;
-  int local_14;
-  char *local_10;
-  char *local_c;
-  int local_8;
-  
-  local_28 = FUN_1000537b;
-  local_24 = param_5;
-  local_20 = param_2;
-  local_1c = param_6;
-  local_18 = param_7;
-  local_8 = 0;
-  local_34 = param_1;
-  local_30 = param_3;
-  ppuVar3 = &local_34;
-  uVar2 = *param_1;
-  pDVar1 = FUN_100082c1();
-  ((int(*)())pDVar1[0x1a])(uVar2,ppuVar3);
-  if (local_8 != 0) {
-  }
-  return 0;
 }
 
 

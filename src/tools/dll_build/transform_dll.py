@@ -64,8 +64,13 @@ def identify_game_functions(blocks):
         if fname in CRT_SKIP or fname.startswith('__'):
             continue
 
-        # Skip everything after entry()
+        # Skip everything after entry(), but still track CRT markers
         if past_entry:
+            if fname.startswith('FUN_'):
+                if 'TIME_ZONE_INFORMATION' in block or 'DaylightDate' in block:
+                    result.setdefault('crt_replacements', {})[fname] = 'time'
+                if 'TlsGetValue' in block or 'TlsSetValue' in block:
+                    result.setdefault('crt_replacements', {})[fname] = '__getptd'
             continue
 
         # Named OnInit / ProcessScenary
@@ -92,6 +97,10 @@ def identify_game_functions(blocks):
             if '_s_FuncInfo' in block or 'PEXCEPTION_RECORD' in block:
                 continue
             if 'TIME_ZONE_INFORMATION' in block or 'DaylightDate' in block:
+                result.setdefault('crt_replacements', {})[fname] = 'time'
+                continue
+            if 'TlsGetValue' in block or 'TlsSetValue' in block:
+                result.setdefault('crt_replacements', {})[fname] = '__getptd'
                 continue
             if '__fclose_lk' in block:
                 continue
@@ -189,6 +198,42 @@ class PEData:
         if off is None:
             return None
         return self.data[off:off+size]
+
+    def resolve_export_thunks(self):
+        """Read PE export table and resolve thunk (jmp) exports to real targets.
+        Returns dict: export_name -> 'FUN_XXXXXXXX'."""
+        data = self.data
+        pe_off = struct.unpack_from('<I', data, 0x3C)[0]
+        export_rva = struct.unpack_from('<I', data, pe_off + 24 + 96)[0]
+        if export_rva == 0:
+            return {}
+        exp_foff = self.rva_to_file_offset(export_rva)
+        if exp_foff is None:
+            return {}
+        n_names = struct.unpack_from('<I', data, exp_foff + 24)[0]
+        func_tbl_rva = struct.unpack_from('<I', data, exp_foff + 28)[0]
+        name_tbl_rva = struct.unpack_from('<I', data, exp_foff + 32)[0]
+        ord_tbl_rva = struct.unpack_from('<I', data, exp_foff + 36)[0]
+        thunks = {}
+        for i in range(n_names):
+            name_ptr_off = self.rva_to_file_offset(name_tbl_rva + i * 4)
+            name_rva = struct.unpack_from('<I', data, name_ptr_off)[0]
+            name_off = self.rva_to_file_offset(name_rva)
+            end = data.index(b'\x00', name_off)
+            name = data[name_off:end].decode('ascii', errors='replace')
+            ord_off = self.rva_to_file_offset(ord_tbl_rva + i * 2)
+            ordinal = struct.unpack_from('<H', data, ord_off)[0]
+            func_ptr_off = self.rva_to_file_offset(func_tbl_rva + ordinal * 4)
+            func_rva = struct.unpack_from('<I', data, func_ptr_off)[0]
+            func_foff = self.rva_to_file_offset(func_rva)
+            if func_foff is None:
+                continue
+            if data[func_foff] == 0xE9:  # jmp rel32
+                rel32 = struct.unpack_from('<i', data, func_foff + 1)[0]
+                target_rva = func_rva + 5 + rel32
+                target_va = self.image_base + target_rva
+                thunks[name] = f'FUN_{target_va:08x}'
+        return thunks
 
 
 def collect_data_refs(source):
@@ -592,6 +637,24 @@ if __name__ == '__main__':
     # Identify game functions
     game = identify_game_functions(blocks)
 
+    # Resolve PE export thunks: if OnInit/ProcessScenary are jmp thunks,
+    # Ghidra won't name them. Map export names to real FUN_ targets.
+    if 'oninit' not in game or 'process' not in game:
+        thunks = pe.resolve_export_thunks()
+        for export_name, key in [('OnInit', 'oninit'), ('ProcessScenary', 'process')]:
+            if key in game:
+                continue
+            target_fun = thunks.get(export_name)
+            if not target_fun:
+                continue
+            # Find target in helpers and promote it
+            for i, (hname, hblock) in enumerate(game['helpers']):
+                if hname == target_fun:
+                    game[key] = hblock
+                    game[key + '_name'] = hname
+                    game['helpers'].pop(i)
+                    break
+
     # If OnInit/ProcessScenary not found by name, find by structure
     if 'oninit' not in game or 'process' not in game:
         fun_blocks = find_unnamed_game_functions(blocks)
@@ -628,6 +691,47 @@ if __name__ == '__main__':
     if 'oninit' not in game:
         print(f"ERROR: Could not find OnInit in {decomp_path}", file=sys.stderr)
         sys.exit(1)
+
+    # Remove helpers that call CRT functions (cascading).
+    # When a helper calls a skipped CRT function (e.g. __getptd / TlsGetValue),
+    # the CRT function becomes a stub (return 0) → crash (NULL deref).
+    # Identify such helpers and remove them, replacing calls with stdlib equivalents.
+    crt_funs = set(game.get('crt_replacements', {}).keys())
+    if crt_funs:
+        # Cascade: helpers calling CRT funs are also CRT
+        changed = True
+        while changed:
+            changed = False
+            new_helpers = []
+            for name, block in game['helpers']:
+                calls_crt = any(re.search(r'\b' + re.escape(f) + r'\b', block) for f in crt_funs)
+                if calls_crt:
+                    crt_funs.add(name)
+                    changed = True
+                else:
+                    new_helpers.append((name, block))
+            game['helpers'] = new_helpers
+
+        # Replace calls to CRT functions in OnInit/ProcessScenary.
+        # Pattern: DVar = FUN_time((int*)0x0); FUN_srand(DVar);
+        # After CRT cascade, both FUN_time and FUN_srand are in crt_funs.
+        # Replace: FUN_xxx((int *)0x0) → time(NULL)
+        #          FUN_xxx(single_arg) → srand(arg) — but not FUN_xxx(void) definitions
+        for key in ['oninit', 'process']:
+            if key not in game:
+                continue
+            code = game[key]
+            for crt_fun in crt_funs:
+                # FUN_xxx((int *)0x0) or ((int *)0) → time(NULL)
+                code = re.sub(
+                    r'\b' + re.escape(crt_fun) + r'\s*\(\s*\(int\s*\*\)\s*0x?0?\s*\)',
+                    'time(NULL)', code)
+                # FUN_xxx(single_arg) → srand(arg) — skip void (function definition)
+                code = re.sub(
+                    r'\b' + re.escape(crt_fun) + r'\s*\(([^,)]+)\)',
+                    lambda m: m.group(0) if m.group(1).strip() == 'void' else 'srand(' + m.group(1) + ')',
+                    code)
+            game[key] = code
 
     # Combine game function code: helpers first (forward declarations not needed),
     # then OnInit, then ProcessScenary
@@ -1065,6 +1169,10 @@ if __name__ == '__main__':
         r'sprintf\s*\(\s*&(DAT_\w+)\s*,\s*&DAT_\w+\s*\)\s*;',
         _fix_sprintf_no_args, raw_code)
 
+    # Fix SetTrigg with missing second argument (Ghidra decompilation error):
+    # SetTrigg(X) → SetTrigg(X, 0)  — only when followed by ; (end of statement)
+    raw_code = re.sub(r'\bSetTrigg\(([^,)]+)\)\s*;', r'SetTrigg(\1, 0);', raw_code)
+
     # Resolve indirect calls through function pointers loaded from _exref
     # Pattern: pcVarN = (void*)&Func; ... (*pcVarN)(args) → Func(args)
     raw_code = resolve_indirect_calls(raw_code)
@@ -1228,7 +1336,7 @@ if __name__ == '__main__':
         fwd_decls += f'{sig};\n'
 
     # Build output file
-    header = '#include "game_api.h"\n#include <stdlib.h>\n#include <stdio.h>\n#include <math.h>\n\n'
+    header = '#include "game_api.h"\n#include <stdlib.h>\n#include <stdio.h>\n#include <math.h>\n#include <time.h>\n\n'
     header += '/* Global variables */\n'
     if re.search(r'\bptr_var\b', raw_code):
         header += 'int ptr_var = 0;\n'

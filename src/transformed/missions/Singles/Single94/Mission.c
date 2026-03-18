@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 int this_ptr = 0;
@@ -76,8 +77,6 @@ int FUN_10008f24() { return 0; }
 int FUN_10008f2d() { return 0; }
 int FUN_10008fd4() { return 0; }
 int FUN_10008fdd() { return 0; }
-int FUN_100094d0() { return 0; }
-int FUN_10009860() { return 0; }
 int FUN_10009d80() { return 0; }
 int FUN_1000a678() { return 0; }
 int FUN_1000b0c0() { return 0; }
@@ -86,13 +85,14 @@ int FUN_1000b1f0() { return 0; }
 int FUN_1000b650() { return 0; }
 int FUN_1000bc50() { return 0; }
 int FUN_1000c090() { return 0; }
-int FUN_1000dec0() { return 0; }
 int FUN_1000e140() { return 0; }
 int FUN_1000e380() { return 0; }
 int FUN_1000e390() { return 0; }
 
 
 /* Forward declarations */
+void FUN_10001580(int param_1);
+void FUN_10001690(int param_1,unsigned short param_2);
 void FUN_100017e0(int param_1,char param_2,char param_3);
 void FUN_100018a0(int param_1,char param_2);
 void FUN_10001960(int param_1,int param_2,int param_3,int param_4,int param_5);
@@ -122,10 +122,8 @@ void FUN_10003040(void);
 void  FUN_10003080(int param_1);
 void  FUN_100030e0(int param_1);
 void  FUN_10003170(int param_1);
-void FUN_10003790(void);
 void FUN_10003b00(int param_1,int param_2);
 void FUN_10003bb0(void);
-void FUN_10003c70(void);
 void FUN_10004890(int param_1);
 void FUN_10004930(int param_1);
 void FUN_100049d0(void);
@@ -255,16 +253,97 @@ void FUN_100090a0(void);
 int FUN_100090f0(int param_1);
 void FUN_10009140(void *param_1);
 void FUN_100091f0(void *param_1);
-int FUN_10009400(int *param_1,int param_2,int param_3,int param_4,
-            int param_5,int param_6,int param_7);
 int FUN_10009560(int param_1,int param_2,int param_3,unsigned int *param_4,unsigned int *param_5);
 void FUN_100096c6(void);
 int FUN_100096e0(int param_1);
 int FUN_100097a0(int param_1);
-void FUN_10009810(DWORD param_1);
 
 void OnInit();
 void ProcessScenary();
+
+
+void __cdecl FUN_10001580(int param_1)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_48;
+  int local_44;
+  int local_40;
+  int local_3c;
+  int local_38;
+  int local_34;
+  char local_30 [20];
+  int local_1c;
+  int local_18;
+  int uStack_8;
+local_38 = 0;
+  local_34 = 0;
+  local_3c = GetTotalAmount0(param_1);
+  if (0 < local_3c) {
+    local_40 = 0;
+    local_44 = 0;
+    for (local_48 = 0; local_48 < local_3c; local_48 = local_48 + 1) {
+      GetUnitInfo(param_1,local_48,local_30);
+      local_40 = local_40 + local_1c;
+      local_44 = local_44 + local_18;
+    }
+    local_38 = local_40 / local_3c;
+    local_34 = local_44 / local_3c;
+  }
+  uStack_8 = 0x1000164f;
+  return;
+}
+
+
+
+
+
+void __cdecl FUN_10001690(int param_1,unsigned short param_2)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_8c [16];
+  int local_4c;
+  int local_48;
+  int local_44;
+  int local_40;
+  int local_3c;
+  int local_38;
+  int local_34;
+  char local_30 [18];
+  unsigned short local_1e;
+  short uStack_1c;
+  short uStack_1a;
+  int local_18;
+  int uStack_8;
+local_38 = 0;
+  local_34 = 0;
+  local_3c = GetTotalAmount0(param_1);
+  local_40 = 0;
+  if (0 < local_3c) {
+    local_44 = 0;
+    local_48 = 0;
+    for (local_4c = 0; local_4c < local_3c; local_4c = local_4c + 1) {
+      GetUnitInfo(param_1,local_4c,local_30);
+      if ((local_1e & 0xff) == (param_2 & 0xff)) {
+        local_44 = local_44 + (int)uStack_1c;
+        local_48 = local_48 + local_18;
+        local_40 = local_40 + 1;
+      }
+    }
+    if (0 < local_40) {
+      local_38 = local_44 / local_40;
+      local_34 = local_48 / local_40;
+    }
+  }
+  uStack_8 = 0x1000178e;
+  return;
+}
+
+
+
 
 
 void __cdecl FUN_100017e0(int param_1,char param_2,char param_3)
@@ -280,7 +359,7 @@ void __cdecl FUN_100017e0(int param_1,char param_2,char param_3)
 RegisterDynGroup(local_c);
   SelectUnitsInZone(param_1,param_2,0);
   SaveSelectedUnits(param_2,local_c,0);
-  ProcessScenary(local_c,(unsigned short)(intptr_t)param_3);
+  FUN_10001690(local_c,(unsigned short)(intptr_t)param_3);
   uStack_8 = 0x1000186f;
   return;
 }
@@ -301,7 +380,7 @@ void __cdecl FUN_100018a0(int param_1,char param_2)
 RegisterDynGroup(local_c);
   SelectUnitsInZone(param_1,param_2,0);
   SaveSelectedUnits(param_2,local_c,0);
-  OnInit(local_c);
+  FUN_10001580(local_c);
   uStack_8 = 0x1000192b;
   return;
 }
@@ -1113,48 +1192,6 @@ LAB_100035e2:
 
 
 
-void FUN_10003790(void)
-
-{
-  DWORD DVar1;
-  int iVar2;
-  int *puVar3;
-  int local_44 [15];
-  int uStack_8;
-DVar1 = FUN_10009860((int *)0x0);
-  FUN_10009810(DVar1);
-  SetPlayerName(0,"VENECIA");
-  SetPlayerName(1,DAT_100390c4);
-  SetPlayerName(2,"ENGLAND");
-  RegisterZone(&DAT_1003ece0,DAT_100390b4);
-  RegisterZone(&DAT_1003ed08,DAT_100390b0);
-  RegisterZone(&DAT_1003ece8,DAT_100390ac);
-  RegisterZone(&DAT_1003ed10,DAT_100390a8);
-  RegisterZone(&DAT_1003ecf0,DAT_100390a4);
-  RegisterZone(&DAT_1003ed18,DAT_100390a0);
-  RegisterZone(&DAT_1003ecf8,DAT_1003909c);
-  RegisterZone(&DAT_1003ed20,DAT_10039098);
-  RegisterZone(&DAT_1003ed00,DAT_10039094);
-  RegisterUnitType(&DAT_1003ee08,"PorE(VE)");
-  RegisterUnitType(&DAT_1003ee10,"PorE(SA)");
-  RegisterUnitType(&DAT_1003ed40,"Fregat(VE)");
-  RegisterUnitType(&DAT_1003ee18,"PERES_KOR(SA)");
-  RegisterFormation(&DAT_1003edf8,"#ODIN");
-  RegisterDynGroup(&DAT_1003ed30);
-  RegisterDynGroup(&DAT_1003ee00);
-  RegisterVar(&DAT_1003ed30,8);
-  RegisterVar(&DAT_1003ee00,8);
-  RegisterVar(&DAT_1003edf0,4);
-  RegisterVar(&DAT_1003ed28,4);
-  RegisterVar(&DAT_1003ecd8,4);
-  uStack_8 = 0x10003a46;
-  return;
-}
-
-
-
-
-
 void __cdecl FUN_10003b00(int param_1,int param_2)
 
 {
@@ -1184,158 +1221,6 @@ CreateObject0(&DAT_1003ee00,&DAT_1003edf8,&DAT_1003ed40,5,&DAT_1003ed00,0x80);
   SelectUnits(&DAT_1003ee00,0);
   SelSendTo(5,&DAT_1003ed10,0x80,0);
   uStack_8 = 0x10003c3b;
-  return;
-}
-
-
-
-
-
-
-
-void FUN_10003c70(void)
-
-{
-  unsigned int uVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  int *puVar5;
-  int local_44 [15];
-  int uStack_8;
-uVar1 = Trigg(99);
-  if ((uVar1 & 0xff) != 0) {
-    DAT_1003edf0 = GetDiff(0);
-    ChangeFriends(1,0x16);
-    ChangeFriends(2,0x16);
-    ChangeFriends(0,0x21);
-    SetResource(0,3,DAT_1003edf0 * -3000 + 10000);
-    SetResource(0,1,DAT_1003edf0 * -3000 + 10000);
-    SetResource(0,0,DAT_1003edf0 * -3000 + 10000);
-    SetResource(0,2,DAT_1003edf0 * -3000 + 10000);
-    SetResource(0,5,DAT_1003edf0 * -3000 + 10000);
-    SetResource(0,4,DAT_1003edf0 * -3000 + 10000);
-    SetResource(1,3,3000);
-    SetResource(1,1,3000);
-    SetResource(1,0,3000);
-    SetResource(1,2,3000);
-    SetResource(1,5,3000);
-    SetResource(1,4,3000);
-    SetResource(2,3,3000);
-    SetResource(2,1,3000);
-    SetResource(2,0,3000);
-    SetResource(2,2,3000);
-    SetResource(2,5,3000);
-    SetResource(2,4,3000);
-    EnableUnit(0,&DAT_1003ee08,0);
-    EnableUnit(0,&DAT_1003ee10,0);
-    StartAI(1,"SAKSINIA.0",0,0,0,DAT_1003edf0);
-    StartAI(2,"ENGLAND.0",2,0,0,DAT_1003edf0);
-    DAT_1003ecd8_ovl = 0;
-    DAT_1003ed28 = GetGlobalTime();
-    RunTimer(0x1e,0x96);
-    SetTrigg(99,0);
-  }
-  uVar1 = TimerDoneFirst(0x1e);
-  if ((uVar1 & 0xff) != 0) {
-    ShowPage("#PAGE0");
-    SetLightSpot(&DAT_1003ed18,1,2);
-    SetLightSpot(&DAT_1003ed20,1,3);
-    RunTimer(1,(4 - DAT_1003edf0) * 500);
-    RunTimer(2,(4 - DAT_1003edf0) * 1000);
-    RunTimer(3,(4 - DAT_1003edf0) * 10000);
-  }
-  uVar1 = Trigg(100);
-  if ((uVar1 & 0xff) != 0) {
-    uVar1 = TimerDoneFirst(1);
-    if ((uVar1 & 0xff) != 0) {
-      FUN_10003b00(&DAT_1003ece0,&DAT_1003ecf0);
-      iVar4 = 4 - DAT_1003edf0;
-      iVar3 = rand();
-      RunTimer(1,iVar4 * 500 + (iVar3 % 10) * 400);
-    }
-    uVar1 = TimerDoneFirst(2);
-    if ((uVar1 & 0xff) != 0) {
-      FUN_10003b00(&DAT_1003ece8,&DAT_1003ecf8);
-      iVar4 = 4 - DAT_1003edf0;
-      iVar3 = rand();
-      RunTimer(2,iVar4 * 500 + (iVar3 % 10) * 400);
-    }
-    uVar1 = TimerDoneFirst(3);
-    if ((uVar1 & 0xff) != 0) {
-      FUN_10003bb0();
-    }
-    iVar3 = GetUnitsAmount0(&DAT_1003ecf0,4);
-    if (iVar3 != 0) {
-      DAT_1003ed28 = GetGlobalTime();
-      SelectUnitsInZone(&DAT_1003ecf0,4,0);
-      SelErase(4);
-    }
-    iVar3 = GetUnitsAmount0(&DAT_1003ecf8,4);
-    if (iVar3 != 0) {
-      DAT_1003ed28 = GetGlobalTime();
-      SelectUnitsInZone(&DAT_1003ecf8,4,0);
-      SelErase(4);
-    }
-    uVar1 = Trigg(1);
-    if ((uVar1 & 0xff) != 0) {
-      iVar3 = GetUnitsAmount1(&DAT_1003ed10,&DAT_1003ee00);
-      if (0 < iVar3) {
-        iVar3 = GetUnitsAmount0(&DAT_1003ed10,0);
-        if (0 < iVar3) {
-          ShowPageParam("#PAGE6",DAT_1003edf0 * 0xfa + 1000);
-          SetLightSpot(&DAT_1003ed10,1,1);
-          uVar1 = AskQuestion("#PAGE4");
-          if ((uVar1 & 0xff) != 0) {
-            iVar3 = GetResource(0,1);
-            if (iVar3 < DAT_1003edf0 * 0xfa + 1000) {
-              ShowPage("#PAGE5");
-            }
-            else {
-              AddResource(0,1,-(DAT_1003edf0 * 0xfa + 1000));
-              SelectUnits(&DAT_1003ee00,0);
-              SelSendTo(5,&DAT_1003ed00,0,0);
-              RunTimer(10,1000);
-            }
-          }
-          SetTrigg(1,0);
-        }
-      }
-    }
-    uVar1 = Trigg(1);
-    if ((uVar1 & 0xff) == 0) {
-      iVar3 = GetUnitsAmount0(&DAT_1003ed10,0);
-      if (iVar3 == 0) {
-        SetTrigg(1,0);
-      }
-    }
-    uVar1 = Trigg(2);
-    if ((uVar1 & 0xff) != 0) {
-      iVar3 = GetUnitsAmount1(&DAT_1003ed10,&DAT_1003ee00);
-      if (0 < iVar3) {
-        ShowPage("#PAGE3");
-        SetTrigg(2,0);
-      }
-    }
-    uVar1 = TimerDoneFirst(10);
-    if ((uVar1 & 0xff) != 0) {
-      SelectUnits(&DAT_1003ee00,0);
-      Patrol(5,&DAT_1003ed08,0);
-    }
-    uVar1 = NationIsErased(0);
-    if ((uVar1 & 0xff) != 0) {
-      LooseGame();
-      SetTrigg(100,0);
-    }
-    iVar4 = DAT_1003edf0 * 500;
-    iVar3 = DAT_1003ed28 + 40000;
-    iVar2 = GetGlobalTime();
-    if (iVar3 + iVar4 < iVar2) {
-      ShowVictory();
-      SetTrigg(100,0);
-    }
-  }
-  uStack_8 = 0x10004615;
   return;
 }
 
@@ -3998,48 +3883,6 @@ void __cdecl FUN_100091f0(void *param_1)
 
 
 
-int __cdecl
-FUN_10009400(int *param_1,int param_2,int param_3,int param_4,
-            int param_5,int param_6,int param_7)
-
-{
-  DWORD *pDVar1;
-  int uVar2;
-  int **ppuVar3;
-  int *local_34;
-  int local_30;
-  int *local_2c;
-  void *local_28;
-  int local_24;
-  int local_20;
-  int local_1c;
-  int local_18;
-  int local_14;
-  char *local_10;
-  char *local_c;
-  int local_8;
-  
-  local_28 = FUN_100094d0;
-  local_24 = param_5;
-  local_20 = param_2;
-  local_1c = param_6;
-  local_18 = param_7;
-  local_8 = 0;
-  local_34 = param_1;
-  local_30 = param_3;
-  ppuVar3 = &local_34;
-  uVar2 = *param_1;
-  pDVar1 = FUN_1000dec0();
-  ((int(*)())pDVar1[0x1a])(uVar2,ppuVar3);
-  if (local_8 != 0) {
-  }
-  return 0;
-}
-
-
-
-
-
 int __cdecl FUN_10009560(int param_1,int param_2,int param_3,unsigned int *param_4,unsigned int *param_5)
 
 {
@@ -4143,13 +3986,41 @@ int __cdecl FUN_100097a0(int param_1)
 
 
 
-void __cdecl FUN_10009810(DWORD param_1)
+void OnInit(void)
 
 {
-  DWORD *pDVar1;
-  
-  pDVar1 = FUN_1000dec0();
-  pDVar1[5] = param_1;
+  DWORD DVar1;
+  int iVar2;
+  int *puVar3;
+  int local_44 [15];
+  int uStack_8;
+DVar1 = time(NULL);
+  srand(DVar1);
+  SetPlayerName(0,"VENECIA");
+  SetPlayerName(1,DAT_100390c4);
+  SetPlayerName(2,"ENGLAND");
+  RegisterZone(&DAT_1003ece0,DAT_100390b4);
+  RegisterZone(&DAT_1003ed08,DAT_100390b0);
+  RegisterZone(&DAT_1003ece8,DAT_100390ac);
+  RegisterZone(&DAT_1003ed10,DAT_100390a8);
+  RegisterZone(&DAT_1003ecf0,DAT_100390a4);
+  RegisterZone(&DAT_1003ed18,DAT_100390a0);
+  RegisterZone(&DAT_1003ecf8,DAT_1003909c);
+  RegisterZone(&DAT_1003ed20,DAT_10039098);
+  RegisterZone(&DAT_1003ed00,DAT_10039094);
+  RegisterUnitType(&DAT_1003ee08,"PorE(VE)");
+  RegisterUnitType(&DAT_1003ee10,"PorE(SA)");
+  RegisterUnitType(&DAT_1003ed40,"Fregat(VE)");
+  RegisterUnitType(&DAT_1003ee18,"PERES_KOR(SA)");
+  RegisterFormation(&DAT_1003edf8,"#ODIN");
+  RegisterDynGroup(&DAT_1003ed30);
+  RegisterDynGroup(&DAT_1003ee00);
+  RegisterVar(&DAT_1003ed30,8);
+  RegisterVar(&DAT_1003ee00,8);
+  RegisterVar(&DAT_1003edf0,4);
+  RegisterVar(&DAT_1003ed28,4);
+  RegisterVar(&DAT_1003ecd8,4);
+  uStack_8 = 0x10003a46;
   return;
 }
 
@@ -4157,84 +4028,151 @@ void __cdecl FUN_10009810(DWORD param_1)
 
 
 
-__declspec(dllexport) void OnInit()
+
+
+void ProcessScenary(void)
+
 {
-  int param_1 = 0;
-  int iVar1;
-  int *puVar2;
-  int local_48;
-  int local_44;
-  int local_40;
-  int local_3c;
-  int local_38;
-  int local_34;
-  char local_30 [20];
-  int local_1c;
-  int local_18;
+  unsigned int uVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  int *puVar5;
+  int local_44 [15];
   int uStack_8;
-local_38 = 0;
-  local_34 = 0;
-  local_3c = GetTotalAmount0(param_1);
-  if (0 < local_3c) {
-    local_40 = 0;
-    local_44 = 0;
-    for (local_48 = 0; local_48 < local_3c; local_48 = local_48 + 1) {
-      GetUnitInfo(param_1,local_48,local_30);
-      local_40 = local_40 + local_1c;
-      local_44 = local_44 + local_18;
-    }
-    local_38 = local_40 / local_3c;
-    local_34 = local_44 / local_3c;
+uVar1 = Trigg(99);
+  if ((uVar1 & 0xff) != 0) {
+    DAT_1003edf0 = GetDiff(0);
+    ChangeFriends(1,0x16);
+    ChangeFriends(2,0x16);
+    ChangeFriends(0,0x21);
+    SetResource(0,3,DAT_1003edf0 * -3000 + 10000);
+    SetResource(0,1,DAT_1003edf0 * -3000 + 10000);
+    SetResource(0,0,DAT_1003edf0 * -3000 + 10000);
+    SetResource(0,2,DAT_1003edf0 * -3000 + 10000);
+    SetResource(0,5,DAT_1003edf0 * -3000 + 10000);
+    SetResource(0,4,DAT_1003edf0 * -3000 + 10000);
+    SetResource(1,3,3000);
+    SetResource(1,1,3000);
+    SetResource(1,0,3000);
+    SetResource(1,2,3000);
+    SetResource(1,5,3000);
+    SetResource(1,4,3000);
+    SetResource(2,3,3000);
+    SetResource(2,1,3000);
+    SetResource(2,0,3000);
+    SetResource(2,2,3000);
+    SetResource(2,5,3000);
+    SetResource(2,4,3000);
+    EnableUnit(0,&DAT_1003ee08,0);
+    EnableUnit(0,&DAT_1003ee10,0);
+    StartAI(1,"SAKSINIA.0",0,0,0,DAT_1003edf0);
+    StartAI(2,"ENGLAND.0",2,0,0,DAT_1003edf0);
+    DAT_1003ecd8_ovl = 0;
+    DAT_1003ed28 = GetGlobalTime();
+    RunTimer(0x1e,0x96);
+    SetTrigg(99,0);
   }
-  uStack_8 = 0x1000164f;
-  return;
-}
-
-
-
-
-
-__declspec(dllexport) void ProcessScenary()
-{
-  int param_1 = 0;
-  int param_2 = 0;
-  int iVar1;
-  int *puVar2;
-  int local_8c [16];
-  int local_4c;
-  int local_48;
-  int local_44;
-  int local_40;
-  int local_3c;
-  int local_38;
-  int local_34;
-  char local_30 [18];
-  unsigned short local_1e;
-  short uStack_1c;
-  short uStack_1a;
-  int local_18;
-  int uStack_8;
-local_38 = 0;
-  local_34 = 0;
-  local_3c = GetTotalAmount0(param_1);
-  local_40 = 0;
-  if (0 < local_3c) {
-    local_44 = 0;
-    local_48 = 0;
-    for (local_4c = 0; local_4c < local_3c; local_4c = local_4c + 1) {
-      GetUnitInfo(param_1,local_4c,local_30);
-      if ((local_1e & 0xff) == (param_2 & 0xff)) {
-        local_44 = local_44 + (int)uStack_1c;
-        local_48 = local_48 + local_18;
-        local_40 = local_40 + 1;
+  uVar1 = TimerDoneFirst(0x1e);
+  if ((uVar1 & 0xff) != 0) {
+    ShowPage("#PAGE0");
+    SetLightSpot(&DAT_1003ed18,1,2);
+    SetLightSpot(&DAT_1003ed20,1,3);
+    RunTimer(1,(4 - DAT_1003edf0) * 500);
+    RunTimer(2,(4 - DAT_1003edf0) * 1000);
+    RunTimer(3,(4 - DAT_1003edf0) * 10000);
+  }
+  uVar1 = Trigg(100);
+  if ((uVar1 & 0xff) != 0) {
+    uVar1 = TimerDoneFirst(1);
+    if ((uVar1 & 0xff) != 0) {
+      FUN_10003b00(&DAT_1003ece0,&DAT_1003ecf0);
+      iVar4 = 4 - DAT_1003edf0;
+      iVar3 = rand();
+      RunTimer(1,iVar4 * 500 + (iVar3 % 10) * 400);
+    }
+    uVar1 = TimerDoneFirst(2);
+    if ((uVar1 & 0xff) != 0) {
+      FUN_10003b00(&DAT_1003ece8,&DAT_1003ecf8);
+      iVar4 = 4 - DAT_1003edf0;
+      iVar3 = rand();
+      RunTimer(2,iVar4 * 500 + (iVar3 % 10) * 400);
+    }
+    uVar1 = TimerDoneFirst(3);
+    if ((uVar1 & 0xff) != 0) {
+      FUN_10003bb0();
+    }
+    iVar3 = GetUnitsAmount0(&DAT_1003ecf0,4);
+    if (iVar3 != 0) {
+      DAT_1003ed28 = GetGlobalTime();
+      SelectUnitsInZone(&DAT_1003ecf0,4,0);
+      SelErase(4);
+    }
+    iVar3 = GetUnitsAmount0(&DAT_1003ecf8,4);
+    if (iVar3 != 0) {
+      DAT_1003ed28 = GetGlobalTime();
+      SelectUnitsInZone(&DAT_1003ecf8,4,0);
+      SelErase(4);
+    }
+    uVar1 = Trigg(1);
+    if ((uVar1 & 0xff) != 0) {
+      iVar3 = GetUnitsAmount1(&DAT_1003ed10,&DAT_1003ee00);
+      if (0 < iVar3) {
+        iVar3 = GetUnitsAmount0(&DAT_1003ed10,0);
+        if (0 < iVar3) {
+          ShowPageParam("#PAGE6",DAT_1003edf0 * 0xfa + 1000);
+          SetLightSpot(&DAT_1003ed10,1,1);
+          uVar1 = AskQuestion("#PAGE4");
+          if ((uVar1 & 0xff) != 0) {
+            iVar3 = GetResource(0,1);
+            if (iVar3 < DAT_1003edf0 * 0xfa + 1000) {
+              ShowPage("#PAGE5");
+            }
+            else {
+              AddResource(0,1,-(DAT_1003edf0 * 0xfa + 1000));
+              SelectUnits(&DAT_1003ee00,0);
+              SelSendTo(5,&DAT_1003ed00,0,0);
+              RunTimer(10,1000);
+            }
+          }
+          SetTrigg(1,0);
+        }
       }
     }
-    if (0 < local_40) {
-      local_38 = local_44 / local_40;
-      local_34 = local_48 / local_40;
+    uVar1 = Trigg(1);
+    if ((uVar1 & 0xff) == 0) {
+      iVar3 = GetUnitsAmount0(&DAT_1003ed10,0);
+      if (iVar3 == 0) {
+        SetTrigg(1,0);
+      }
+    }
+    uVar1 = Trigg(2);
+    if ((uVar1 & 0xff) != 0) {
+      iVar3 = GetUnitsAmount1(&DAT_1003ed10,&DAT_1003ee00);
+      if (0 < iVar3) {
+        ShowPage("#PAGE3");
+        SetTrigg(2,0);
+      }
+    }
+    uVar1 = TimerDoneFirst(10);
+    if ((uVar1 & 0xff) != 0) {
+      SelectUnits(&DAT_1003ee00,0);
+      Patrol(5,&DAT_1003ed08,0);
+    }
+    uVar1 = NationIsErased(0);
+    if ((uVar1 & 0xff) != 0) {
+      LooseGame();
+      SetTrigg(100,0);
+    }
+    iVar4 = DAT_1003edf0 * 500;
+    iVar3 = DAT_1003ed28 + 40000;
+    iVar2 = GetGlobalTime();
+    if (iVar3 + iVar4 < iVar2) {
+      ShowVictory();
+      SetTrigg(100,0);
     }
   }
-  uStack_8 = 0x1000178e;
+  uStack_8 = 0x10004615;
   return;
 }
 

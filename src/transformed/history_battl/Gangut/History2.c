@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 int (*DAT_1002f3f0)() = 0;
@@ -50,6 +51,8 @@ int FUN_100034a0() { return 0; }
 
 
 /* Forward declarations */
+void FUN_10001170(int param_1,int param_2);
+void FUN_100011d0(char param_1);
 void FUN_10001220(char param_1);
 void FUN_10001270(char param_1);
 void FUN_100012c0(char param_1);
@@ -79,12 +82,10 @@ void FUN_10001a30(LPCSTR param_1);
 void FUN_10002320(int param_1,int param_2);
 void FUN_10002370(char param_1);
 void FUN_10002400(void);
-void FUN_10002450(void);
 void FUN_10002520(void);
 void FUN_10002570(void);
 void FUN_100025d0(void);
 void FUN_10002630(void);
-void FUN_10002680(void);
 void FUN_10002770(int param_1,int param_2);
 void FUN_100027e0(char param_1,char param_2);
 void FUN_10002830(char param_1,char param_2);
@@ -93,6 +94,40 @@ int FUN_10002970(char *param_1,int param_2);
 
 void OnInit();
 void ProcessScenary();
+
+
+void __cdecl FUN_10001170(int param_1,int param_2)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_44 [15];
+  int uStack_8;
+if (DAT_1002f484 != (void *)0x0) {
+    (*DAT_1002f484)(param_1,param_2);
+  }
+  uStack_8 = 0x100011b8;
+  return;
+}
+
+
+
+
+
+void __cdecl FUN_100011d0(char param_1)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_44 [15];
+  int uStack_8;
+(*DAT_1002f4b0)((intptr_t)param_1);
+  uStack_8 = 0x1000120b;
+  return;
+}
+
+
+
 
 
 void __cdecl FUN_10001220(char param_1)
@@ -546,42 +581,6 @@ if (DAT_1002f56c != (void *)0x0) {
 
 
 
-void FUN_10002450(void)
-
-{
-  char cVar1;
-  int iVar2;
-  int *puVar3;
-  int local_44 [15];
-  int uStack_8;
-FUN_10002370(10);
-  if (cVar1 != '\0') {
-    FUN_10002400();
-    if (38000 < iVar2) {
-      FUN_10002830(10,0);
-      FUN_10002320("TEXT7",100);
-    }
-  }
-  FUN_10002400();
-  if (40000 < iVar2) {
-    FUN_10002630();
-  }
-  FUN_100028b0(&DAT_1002f420);
-  if (iVar2 == 0) {
-    FUN_10002630();
-  }
-  FUN_100028b0(&DAT_1002f428);
-  if (iVar2 == 0) {
-    FUN_10002520();
-  }
-  uStack_8 = 0x100024ec;
-  return;
-}
-
-
-
-
-
 void FUN_10002520(void)
 
 {
@@ -655,30 +654,6 @@ FUN_100019e0();
     FUN_100025d0();
   }
   uStack_8 = 0x1000266b;
-  return;
-}
-
-
-
-
-
-void FUN_10002680(void)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-FUN_10002770(&DAT_1002f420,"Group1");
-  FUN_10002770(&DAT_1002f428,"Group2");
-  FUN_100027e0(0,1);
-  FUN_100027e0(1,2);
-  FUN_100027e0(3,7);
-  for (DAT_1002f3f4 = 0; DAT_1002f3f4 < 5; DAT_1002f3f4 = DAT_1002f3f4 + 1) {
-    ((long long *)&DAT_1002f3f8)[DAT_1002f3f4] = 0;
-    ((long long *)&DAT_1002f40c)[DAT_1002f3f4] = 0;
-  }
-  uStack_8 = 0x10002733;
   return;
 }
 
@@ -795,18 +770,23 @@ int __cdecl FUN_10002970(char *param_1,int param_2)
 
 
 
-__declspec(dllexport) void OnInit()
+void OnInit(void)
+
 {
-  int param_1 = 0;
-  int param_2 = 0;
   int iVar1;
   int *puVar2;
   int local_44 [15];
   int uStack_8;
-if (DAT_1002f484 != (void *)0x0) {
-    (*DAT_1002f484)(param_1,param_2);
+FUN_10002770(&DAT_1002f420,"Group1");
+  FUN_10002770(&DAT_1002f428,"Group2");
+  FUN_100027e0(0,1);
+  FUN_100027e0(1,2);
+  FUN_100027e0(3,7);
+  for (DAT_1002f3f4 = 0; DAT_1002f3f4 < 5; DAT_1002f3f4 = DAT_1002f3f4 + 1) {
+    ((long long *)&DAT_1002f3f8)[DAT_1002f3f4] = 0;
+    ((long long *)&DAT_1002f40c)[DAT_1002f3f4] = 0;
   }
-  uStack_8 = 0x100011b8;
+  uStack_8 = 0x10002733;
   return;
 }
 
@@ -814,15 +794,35 @@ if (DAT_1002f484 != (void *)0x0) {
 
 
 
-__declspec(dllexport) void ProcessScenary()
+void ProcessScenary(void)
+
 {
-  int param_1 = 0;
-  int iVar1;
-  int *puVar2;
+  char cVar1;
+  int iVar2;
+  int *puVar3;
   int local_44 [15];
   int uStack_8;
-(*DAT_1002f4b0)((intptr_t)param_1);
-  uStack_8 = 0x1000120b;
+FUN_10002370(10);
+  if (cVar1 != '\0') {
+    FUN_10002400();
+    if (38000 < iVar2) {
+      FUN_10002830(10,0);
+      FUN_10002320("TEXT7",100);
+    }
+  }
+  FUN_10002400();
+  if (40000 < iVar2) {
+    FUN_10002630();
+  }
+  FUN_100028b0(&DAT_1002f420);
+  if (iVar2 == 0) {
+    FUN_10002630();
+  }
+  FUN_100028b0(&DAT_1002f428);
+  if (iVar2 == 0) {
+    FUN_10002520();
+  }
+  uStack_8 = 0x100024ec;
   return;
 }
 

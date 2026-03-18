@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 long long DAT_1001d4a0 = 0;
@@ -16,6 +17,8 @@ long long DAT_1001d4e0 = 0;
 long long DAT_1001d4e8 = 0;
 
 /* Forward declarations */
+void FUN_100010d3(int param_1,int param_2);
+void FUN_10001144(void);
 void FUN_100011b8(int param_1,char param_2,char param_3,char param_4);
 void FUN_100012db(int param_1,char param_2,char param_3,char param_4);
 void FUN_1000132b(int param_1);
@@ -24,11 +27,43 @@ void FUN_1000147b(int param_1,int param_2,int param_3);
 void FUN_100014ed(char param_1,char param_2);
 void FUN_10001588(void);
 void FUN_10001622(void);
-void FUN_10001638(void);
-void FUN_10001683(void);
 
 void OnInit();
 void ProcessScenary();
+
+
+void __cdecl FUN_100010d3(int param_1,int param_2)
+
+{
+  int iVar1;
+  
+  iVar1 = GetMyNation();
+  if (iVar1 == param_1) {
+    ShowVictory();
+  }
+  else {
+    LooseGame();
+  }
+  ShowPage(*(int *)(param_2 + iVar1 * 4));
+  return;
+}
+
+
+
+
+
+void FUN_10001144(void)
+
+{
+  RegisterUnits(&DAT_1001d4d8,"Army0");
+  RegisterUnits(&DAT_1001d4e0,"Army1");
+  RegisterDynGroup(&DAT_1001d4a0);
+  RegisterDynGroup(&DAT_1001d4a8);
+  return;
+}
+
+
+
 
 
 void __cdecl FUN_100011b8(int param_1,char param_2,char param_3,char param_4)
@@ -188,7 +223,7 @@ void FUN_10001588(void)
 void FUN_10001622(void)
 
 {
-  ProcessScenary();
+  FUN_10001144();
   FUN_10001588();
   return;
 }
@@ -197,7 +232,8 @@ void FUN_10001622(void)
 
 
 
-void FUN_10001638(void)
+
+void OnInit(void)
 
 {
   FUN_10001622();
@@ -210,59 +246,23 @@ void FUN_10001638(void)
 
 
 
-void FUN_10001683(void)
+void ProcessScenary(void)
 
 {
   int iVar1;
   
   FUN_100014ed(0,1);
   if (2 < iVar1) {
-    OnInit(0,0x1001ba30);
+    FUN_100010d3(0,0x1001ba30);
   }
   GetTotalAmount0(&DAT_1001d4d8);
   if (iVar1 < 0x14) {
-    OnInit(1,0x1001ba38);
+    FUN_100010d3(1,0x1001ba38);
   }
   GetTotalAmount0(&DAT_1001d4e0);
   if (iVar1 < 0x14) {
-    OnInit(0,0x1001ba30);
+    FUN_100010d3(0,0x1001ba30);
   }
-  return;
-}
-
-
-
-
-
-
-__declspec(dllexport) void OnInit()
-{
-  int param_1 = 0;
-  int param_2 = 0;
-  int iVar1;
-  
-  iVar1 = GetMyNation();
-  if (iVar1 == param_1) {
-    ShowVictory();
-  }
-  else {
-    LooseGame();
-  }
-  ShowPage(*(int *)(param_2 + iVar1 * 4));
-  return;
-}
-
-
-
-
-
-void ProcessScenary(void)
-
-{
-  RegisterUnits(&DAT_1001d4d8,"Army0");
-  RegisterUnits(&DAT_1001d4e0,"Army1");
-  RegisterDynGroup(&DAT_1001d4a0);
-  RegisterDynGroup(&DAT_1001d4a8);
   return;
 }
 

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 char DAT_1001a190[] = "Hall";
@@ -39,13 +40,70 @@ long long DAT_1001f4d0 = 0;
 long long DAT_1001f4d8 = 0;
 
 /* Forward declarations */
+void FUN_100010c0(int param_1);
+void FUN_10001140(int param_1,char param_2);
 void FUN_10001340(int param_1,char param_2);
 void FUN_10001540(int param_1);
-void FUN_10001600(void);
-void FUN_10001ae0(void);
 
 void OnInit();
 void ProcessScenary();
+
+
+void __cdecl FUN_100010c0(int param_1)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_44 [15];
+  int uStack_8;
+iVar1 = GetMyNation();
+  if (iVar1 == param_1) {
+    ShowVictory();
+  }
+  else {
+    LooseGame();
+  }
+  uStack_8 = 0x10001119;
+  return;
+}
+
+
+
+
+
+void __cdecl FUN_10001140(int param_1,char param_2)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_7c [16];
+  int local_3c;
+  char local_38 [8];
+  char local_30;
+  int local_c;
+  unsigned int local_8;
+UnitsCenter(&DAT_1001f4b0,param_1,0x5dc);
+  for (local_8 = 0; (intptr_t)local_8 < 8; local_8 = local_8 + 1) {
+    SaveSelectedUnits(local_8 & 0xff,&DAT_1001f3e8,local_8 != 0);
+    ClearSelection(local_8 & 0xff);
+    iVar1 = GetUnitsByNation(param_1,local_8 & 0xff);
+    if (iVar1 != 0) {
+      SelectUnitsInZone(&DAT_1001f4b0,local_8 & 0xff,0);
+      SaveSelectedUnits(local_8 & 0xff,&DAT_1001f3e0,0);
+      local_c = GetNUnits(&DAT_1001f3e0);
+      for (local_3c = 0; local_3c < local_c; local_3c = local_3c + 1) {
+        GetUnitInfo(&DAT_1001f3e0,local_3c,local_38);
+        local_30 = param_2;
+        SetUnitInfo(local_38);
+      }
+    }
+    SelectUnits1(local_8 & 0xff,&DAT_1001f3e8,0);
+  }
+  return;
+}
+
+
+
 
 
 void __cdecl FUN_10001340(int param_1,char param_2)
@@ -107,7 +165,8 @@ local_8 = GetNUnits(param_1);
 
 
 
-void FUN_10001600(void)
+
+void OnInit(void)
 
 {
   int iVar1;
@@ -157,7 +216,7 @@ RegisterUnits(&DAT_1001f470,"Army0");
 
 
 
-void FUN_10001ae0(void)
+void ProcessScenary(void)
 
 {
   unsigned int uVar1;
@@ -174,7 +233,7 @@ GetTotalAmount0(&DAT_1001f428);
     else {
       ShowPage("#Ludovik_Killed1");
     }
-    OnInit(0);
+    FUN_100010c0(0);
   }
   GetTotalAmount0(&DAT_1001f478);
   if (iVar2 < 0x14) {
@@ -185,7 +244,7 @@ GetTotalAmount0(&DAT_1001f428);
     else {
       ShowPage("#DutchArmyLost_Defeat");
     }
-    OnInit(0);
+    FUN_100010c0(0);
   }
   iVar2 = GetUnitsAmount1(&DAT_1001f458,&DAT_1001f428);
   if (0 < iVar2) {
@@ -196,7 +255,7 @@ GetTotalAmount0(&DAT_1001f428);
     else {
       ShowPage("#Ludovik_Escaped1");
     }
-    OnInit(1);
+    FUN_100010c0(1);
   }
   GetTotalAmount0(&DAT_1001f470);
   if (iVar2 < 0x14) {
@@ -207,7 +266,7 @@ GetTotalAmount0(&DAT_1001f428);
     else {
       ShowPage("#Ludovik_Escaped1");
     }
-    OnInit(1);
+    FUN_100010c0(1);
   }
   uVar1 = Trigg(0);
   if ((uVar1 & 0xff) != 0) {
@@ -302,68 +361,9 @@ GetTotalAmount0(&DAT_1001f428);
   FUN_10001540(&DAT_1001f470);
   FUN_10001540(&DAT_1001f478);
   FUN_10001340(&DAT_1001f428,4);
-  ProcessScenary(&DAT_1001f490,4);
+  FUN_10001140(&DAT_1001f490,4);
   FUN_10001340(&DAT_1001f408,4);
   uStack_8 = 0x100022aa;
-  return;
-}
-
-
-
-
-
-
-__declspec(dllexport) void OnInit()
-{
-  int param_1 = 0;
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-iVar1 = GetMyNation();
-  if (iVar1 == param_1) {
-    ShowVictory();
-  }
-  else {
-    LooseGame();
-  }
-  uStack_8 = 0x10001119;
-  return;
-}
-
-
-
-
-
-__declspec(dllexport) void ProcessScenary()
-{
-  int param_1 = 0;
-  int param_2 = 0;
-  int iVar1;
-  int *puVar2;
-  int local_7c [16];
-  int local_3c;
-  char local_38 [8];
-  char local_30;
-  int local_c;
-  unsigned int local_8;
-UnitsCenter(&DAT_1001f4b0,param_1,0x5dc);
-  for (local_8 = 0; (intptr_t)local_8 < 8; local_8 = local_8 + 1) {
-    SaveSelectedUnits(local_8 & 0xff,&DAT_1001f3e8,local_8 != 0);
-    ClearSelection(local_8 & 0xff);
-    iVar1 = GetUnitsByNation(param_1,local_8 & 0xff);
-    if (iVar1 != 0) {
-      SelectUnitsInZone(&DAT_1001f4b0,local_8 & 0xff,0);
-      SaveSelectedUnits(local_8 & 0xff,&DAT_1001f3e0,0);
-      local_c = GetNUnits(&DAT_1001f3e0);
-      for (local_3c = 0; local_3c < local_c; local_3c = local_3c + 1) {
-        GetUnitInfo(&DAT_1001f3e0,local_3c,local_38);
-        local_30 = param_2;
-        SetUnitInfo(local_38);
-      }
-    }
-    SelectUnits1(local_8 & 0xff,&DAT_1001f3e8,0);
-  }
   return;
 }
 

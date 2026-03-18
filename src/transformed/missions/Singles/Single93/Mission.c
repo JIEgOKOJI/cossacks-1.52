@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 char DAT_1002d044[] = "Z3";
@@ -107,6 +108,8 @@ long long DAT_10032620 = 0;
 long long DAT_10032628 = 0;
 
 /* Forward declarations */
+void FUN_10001150(void);
+void FUN_100011b0(int param_1);
 void FUN_10001250(int param_1);
 void FUN_10001310(unsigned short *param_1,int param_2);
 void FUN_100014b0(int param_1);
@@ -126,11 +129,45 @@ void FUN_10001b30(int param_1,int param_2,int param_3,int param_4,
             char param_5,int param_6);
 void FUN_10001bf0(unsigned int param_1,int param_2,int param_3,int param_4,
             int param_5,int param_6);
-void FUN_10001fd0(void);
-void FUN_10002af0(void);
 
 void OnInit();
 void ProcessScenary();
+
+
+void FUN_10001150(void)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_44 [15];
+  int uStack_8;
+uStack_8 = 0x10001199;
+  return;
+}
+
+
+
+
+
+void __cdecl FUN_100011b0(int param_1)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_44 [15];
+  int uStack_8;
+while( 1 ) {
+    iVar1 = GetTotalAmount0(param_1);
+    if (iVar1 == 0) break;
+    RemoveUnitFromGroup(param_1,0);
+  }
+  GetTotalAmount0(param_1);
+  uStack_8 = 0x10001224;
+  return;
+}
+
+
+
 
 
 void __cdecl FUN_10001250(int param_1)
@@ -182,7 +219,7 @@ FUN_10001250(param_2);
       GetUnitInfo(param_2,local_4c,local_48);
       local_50 = local_34 - local_18;
       local_54 = local_30 - local_1c;
-      OnInit();
+      FUN_10001150();
       if ((intptr_t)local_58 < (intptr_t)local_14) {
         local_c = local_48[0] & 0xffff;
         local_14 = local_58;
@@ -191,7 +228,7 @@ FUN_10001250(param_2);
         }
       }
     }
-    ProcessScenary(param_2);
+    FUN_100011b0(param_2);
     InsertUnitToGroup(0,param_2,local_c);
   }
   return;
@@ -507,7 +544,7 @@ LAB_10001ef6:
 
 
 
-void FUN_10001fd0(void)
+void OnInit(void)
 
 {
   int iVar1;
@@ -606,7 +643,7 @@ RegisterVar(&DAT_100323fc,4);
 
 
 
-void FUN_10002af0(void)
+void ProcessScenary(void)
 
 {
   unsigned int uVar1;
@@ -1090,42 +1127,6 @@ LAB_10003b37:
       ShowVictory();
     }
   }
-  return;
-}
-
-
-
-
-
-void OnInit(void)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-uStack_8 = 0x10001199;
-  return;
-}
-
-
-
-
-
-__declspec(dllexport) void ProcessScenary()
-{
-  int param_1 = 0;
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-while( 1 ) {
-    iVar1 = GetTotalAmount0(param_1);
-    if (iVar1 == 0) break;
-    RemoveUnitFromGroup(param_1,0);
-  }
-  GetTotalAmount0(param_1);
-  uStack_8 = 0x10001224;
   return;
 }
 

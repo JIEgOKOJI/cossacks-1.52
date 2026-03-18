@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 int this_ptr = 0;
@@ -106,9 +107,6 @@ int DAT_10012831_ovl = 0;
 int DAT_10012b24_ovl = 0;
 
 /* Stubs for missing internal functions */
-int FUN_1000392f() { return 0; }
-int FUN_10003c0c() { return 0; }
-int FUN_100040f3() { return 0; }
 int FUN_100042bc() { return 0; }
 int FUN_10004c6d() { return 0; }
 int FUN_1000519f() { return 0; }
@@ -128,10 +126,7 @@ void  FUN_100025e0(int param_1);
 void  FUN_10002610(void *this_ptr,int *param_1,unsigned int param_2,int *param_3);
 void FUN_10002820(int param_1,int param_2,char param_3);
 void FUN_100037e0(int param_1,int param_2,char param_3);
-void FUN_10003900(DWORD param_1);
 void FUN_10003a0b(int *param_1);
-int FUN_10003b56(int *param_1,int param_2,int param_3,int param_4,
-            int param_5,int param_6,int param_7);
 int FUN_10003c81(int param_1,int param_2,int param_3,unsigned int *param_4,unsigned int *param_5);
 void FUN_10003dd2(void);
 void FUN_10003e75(void);
@@ -1107,67 +1102,11 @@ void __cdecl FUN_100037e0(int param_1,int param_2,char param_3)
 
 
 
-void __cdecl FUN_10003900(DWORD param_1)
-
-{
-  DWORD *pDVar1;
-  
-  pDVar1 = FUN_100040f3();
-  pDVar1[5] = param_1;
-  return;
-}
-
-
-
-
-
 void __cdecl FUN_10003a0b(int *param_1)
 
 {
   FUN_100042bc(param_1);
   return;
-}
-
-
-
-
-
-int __cdecl
-FUN_10003b56(int *param_1,int param_2,int param_3,int param_4,
-            int param_5,int param_6,int param_7)
-
-{
-  DWORD *pDVar1;
-  int uVar2;
-  int **ppuVar3;
-  int *local_34;
-  int local_30;
-  int *local_2c;
-  void *local_28;
-  int local_24;
-  int local_20;
-  int local_1c;
-  int local_18;
-  int local_14;
-  char *local_10;
-  char *local_c;
-  int local_8;
-  
-  local_28 = FUN_10003c0c;
-  local_24 = param_5;
-  local_20 = param_2;
-  local_1c = param_6;
-  local_18 = param_7;
-  local_8 = 0;
-  local_34 = param_1;
-  local_30 = param_3;
-  ppuVar3 = &local_34;
-  uVar2 = *param_1;
-  pDVar1 = FUN_100040f3();
-  ((int(*)())pDVar1[0x1a])(uVar2,ppuVar3);
-  if (local_8 != 0) {
-  }
-  return 0;
 }
 
 
@@ -1334,8 +1273,8 @@ void OnInit(void)
   RegisterUnitType(&DAT_10012670,"PorPO(PO)");
   RegisterVar(&DAT_1000e048,4);
   SetPlayerName(1,"PORTUGAL");
-  DVar1 = FUN_1000392f((int *)0x0);
-  FUN_10003900(DVar1);
+  DVar1 = time(NULL);
+  srand(DVar1);
   return;
 }
 

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 int this_ptr = 0;
@@ -67,14 +68,13 @@ int FUN_1000657d() { return 0; }
 int FUN_10006624() { return 0; }
 int FUN_1000662d() { return 0; }
 int FUN_10006a40() { return 0; }
-int FUN_100071c0() { return 0; }
 int FUN_10007390() { return 0; }
 int FUN_10008f08() { return 0; }
 
 
 /* Forward declarations */
+void FUN_100013f0(void);
 void FUN_100018d0(int param_1);
-void FUN_10001940(void);
 void FUN_10002bc0(int param_1);
 void  FUN_10002c60(int param_1);
 void  FUN_10002cc0(int param_1);
@@ -162,7 +162,6 @@ void  FUN_10005d90(void *this_ptr,int param_1,char param_2,int param_3);
 void  FUN_10005e50(char *param_1);
 void  FUN_10005f90(char *param_1);
 void  FUN_10006060(char *param_1);
-void FUN_10006280(DWORD param_1);
 int FUN_100062d0(char *param_1,byte *param_2);
 void FUN_100063d0(void);
 void FUN_10006400(void);
@@ -174,6 +173,21 @@ void FUN_10006610(void);
 
 void OnInit();
 void ProcessScenary();
+
+
+void FUN_100013f0(void)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_48 [16];
+  int local_8;
+rand();
+  return;
+}
+
+
+
 
 
 void __cdecl FUN_100018d0(int param_1)
@@ -188,284 +202,6 @@ void __cdecl FUN_100018d0(int param_1)
   int local_8;
 GetUnitInfo(param_1,0,local_38);
   local_c = local_24;
-  return;
-}
-
-
-
-
-
-void FUN_10001940(void)
-
-{
-  char cVar1;
-  unsigned int uVar2;
-  int *piVar3;
-  int iVar4;
-  int iVar5;
-  int *puVar6;
-  long long uVar7;
-  int uVar8;
-  int local_78 [16];
-  int local_38 [2];
-  long long local_30;
-  int local_28;
-  int local_24;
-  int local_20;
-  int local_1c;
-  int local_18;
-  int local_14;
-  int local_10;
-  int local_c;
-  int local_8;
-if (DAT_100390a8 != '\0') {
-    SetTrigg(7,0);
-    RunTimer(0x18,0x32);
-    DAT_100390a8 = '\0';
-  }
-  uVar2 = TimerDoneFirst(0x18);
-  if ((uVar2 & 0xff) != 0) {
-    SetTrigg(7,0);
-  }
-  uVar2 = Trigg(99);
-  if ((uVar2 & 0xff) != 0) {
-    for (local_8 = 0; local_8 < 0x18; local_8 = local_8 + 1) {
-      ((long long *)&DAT_10038a34)[local_8 * 0x25] = 0;
-      ((long long *)&DAT_10038a10)[local_8] = 0xff;
-    }
-    DAT_100390a0 = GetDiff(0);
-    SetLightSpot(&DAT_10038f90,3,1);
-    ChangeFriends(0,9);
-    ChangeFriends(4,0x1d);
-    RunTimer(2,200);
-    RunTimer(3,200);
-    RunTimer(4,200);
-    RunTimer(7,800);
-    RunTimer(0x1e,100);
-    SetTrigg(99,0);
-  }
-  uVar2 = TimerDoneFirst(0x1e);
-  if ((uVar2 & 0xff) != 0) {
-    if (DAT_100390a0 < 1) {
-      InitialUpgrade(DAT_10033050,"Pikiner_turki(AL)ATTACK4");
-      InitialUpgrade(DAT_10033050,"Pikiner_turki(AL)SHIELD4");
-      InitialUpgrade(DAT_10033050,"Pehota_turki(AL)ATTACK4");
-      InitialUpgrade(DAT_10033050,"Pehota_turki(AL)SHIELD4");
-      InitialUpgrade(DAT_10033050,"Mameluk(AL)ATTACK4");
-      InitialUpgrade(DAT_10033050,"Mameluk(AL)SHIELD4");
-    }
-    if (DAT_100390a0 < 2) {
-      InitialUpgrade(DAT_10033050,"Pikiner_turki(AL)ATTACK4");
-      InitialUpgrade(DAT_10033050,"Pikiner_turki(AL)SHIELD4");
-      InitialUpgrade(DAT_10033050,"Pehota_turki(AL)ATTACK4");
-      InitialUpgrade(DAT_10033050,"Pehota_turki(AL)SHIELD4");
-      InitialUpgrade(DAT_10033050,"Mameluk(AL)ATTACK4");
-      InitialUpgrade(DAT_10033050,"Mameluk(AL)SHIELD4");
-    }
-    if (DAT_100390a0 < 3) {
-      InitialUpgrade(DAT_10033050,"Pikiner_turki(AL)ATTACK4");
-      InitialUpgrade(DAT_10033050,"Pikiner_turki(AL)SHIELD4");
-      InitialUpgrade(DAT_10033050,"Pehota_turki(AL)ATTACK4");
-      InitialUpgrade(DAT_10033050,"Pehota_turki(AL)SHIELD4");
-      InitialUpgrade(DAT_10033050,"Mameluk(AL)ATTACK4");
-      InitialUpgrade(DAT_10033050,"Mameluk(AL)SHIELD4");
-    }
-    SelectUnits(&DAT_10038fd8,0);
-    SelSendTo(0,&DAT_10039090,0xc3,0);
-    SelSendTo(0,&DAT_10039098,0x40,0);
-    SelectUnits(&DAT_10038fe0,0);
-    SelSendTo(0,&DAT_10039090,0xc3,0);
-    SelSendTo(0,&DAT_10038f88,0x40,0);
-    SelectUnits(&DAT_10038f80,0);
-    ShowPage("#PAGE0");
-  }
-  uVar2 = Trigg(7);
-  if ((uVar2 & 0xff) == 0) goto LAB_100027fa;
-  FUN_10005e50(&DAT_10038f00);
-  FUN_10005e50(&DAT_10038f28);
-  FUN_10005e50(&DAT_10038f50);
-  uVar2 = Trigg(2);
-  if ((uVar2 & 0xff) != 0) {
-    iVar5 = GetUnitsAmount1(&DAT_10038f88,&DAT_10038f80);
-    if (0 < iVar5) {
-      uVar2 = AskQuestion("#PAGE1");
-      if ((uVar2 & 0xff) == 0) {
-        for (local_10 = 0; local_10 < 0xc; local_10 = local_10 + 1) {
-          ((long long *)&DAT_10038a34)[local_10 * 0x25] = 1;
-          ((long long *)&DAT_10038a10)[local_10] = (char)local_10;
-        }
-        SetTrigg(3,0);
-      }
-      else {
-        for (local_c = 0; local_c < 0x18; local_c = local_c + 1) {
-          ((long long *)&DAT_10038a34)[local_c * 0x25] = 1;
-          ((long long *)&DAT_10038a10)[local_c] = (char)local_c;
-        }
-      }
-      SetTrigg(2,0);
-    }
-  }
-  uVar2 = Trigg(3);
-  if ((uVar2 & 0xff) == 2) {
-    iVar5 = GetUnitsAmount1(&DAT_10038f88,&DAT_10038f80);
-    if (0 < iVar5) {
-      for (local_14 = 0; local_14 < 0xc; local_14 = local_14 + 1) {
-        ((long long *)&DAT_10038a34)[(local_14 + 0xc) * 0x25] = 1;
-        ((long long *)&DAT_10038a10)[local_14] = (char)local_14 + '\f';
-      }
-      SetTrigg(3,0);
-    }
-  }
-  uVar2 = Trigg(2);
-  if ((uVar2 & 0xff) == 0) {
-    uVar2 = TimerDoneFirst(2);
-    if ((uVar2 & 0xff) != 0) {
-      FUN_100018d0(&DAT_10038f80);
-      local_18 = 0;
-      local_30 = uVar7;
-      while( 1 ) {
-        DAT_10038a0c = (int)((unsigned long long)uVar7 >> 0x20);
-        DAT_10038a08 = (int)uVar7;
-        if (0x17 < local_18) break;
-        if (((long long *)&DAT_10038a10)[local_18] != -1) {
-          FUN_100057c0((int)(((unsigned char *)&DAT_10038a28) +
-                                          (unsigned int)(byte)((long long *)&DAT_10038a10)[local_18] * 0x25));
-          uVar7 = (int)DAT_10038a08;
-          if (cVar1 != '\0') {
-            if (((long long *)&DAT_10038a34)[(unsigned int)(byte)((long long *)&DAT_10038a10)[local_18] * 0x25] == '\x01') {
-              FUN_10005490(((unsigned char *)&DAT_10038a28) + (unsigned int)(byte)((long long *)&DAT_10038a10)[local_18] * 0x25,
-                                 DAT_10038a08,DAT_10038a0c,0x46);
-              FUN_10005870(((unsigned char *)&DAT_10038a28) +
-                                                 (unsigned int)(byte)((long long *)&DAT_10038a10)[local_18] * 0x25,
-                                                 local_38);
-              DAT_10038a08 = *piVar3;
-              DAT_10038a0c = piVar3[1];
-            }
-            else {
-              FUN_10005280(((unsigned char *)&DAT_10038a28) + (unsigned int)(byte)((long long *)&DAT_10038a10)[local_18] * 0x25);
-            }
-            iVar5 = FUN_10005830((int)(((unsigned char *)&DAT_10038a28) +
-                                            (unsigned int)(byte)((long long *)&DAT_10038a10)[local_18] * 0x25));
-            iVar5 = GetUnitsAmount1(&DAT_10038f90,iVar5);
-            iVar4 = FUN_10005830((int)(((unsigned char *)&DAT_10038a28) +
-                                            (unsigned int)(byte)((long long *)&DAT_10038a10)[local_18] * 0x25));
-            iVar4 = GetTotalAmount0(iVar4);
-            uVar7 = (int)DAT_10038a08;
-            if (iVar5 == iVar4) {
-              ((long long *)&DAT_10038a34)[(unsigned int)(byte)((long long *)&DAT_10038a10)[local_18] * 0x25] = 3;
-              uVar8 = 0;
-              iVar5 = FUN_10005830((int)(((unsigned char *)&DAT_10038a28) +
-                                              (unsigned int)(byte)((long long *)&DAT_10038a10)[local_18] * 0x25));
-              SelectUnits(iVar5,uVar8);
-              SelSendTo(4,&DAT_10038f98,0,0);
-              uVar7 = (int)DAT_10038a08;
-            }
-          }
-        }
-        local_18 = local_18 + 1;
-      }
-      RunTimer(2,0x14);
-    }
-  }
-  uVar2 = TimerDoneFirst(3);
-  if ((uVar2 & 0xff) != 0) {
-    for (local_1c = 0; local_1c < 8; local_1c = local_1c + 1) {
-      OnInit();
-      *(int *)(((unsigned char *)&DAT_10038978) + local_1c * 0x14) = uVar8;
-    }
-    RunTimer(3,2000);
-  }
-  uVar2 = TimerDoneFirst(4);
-  if ((uVar2 & 0xff) != 0) {
-    for (local_20 = 0; local_20 < 8; local_20 = local_20 + 1) {
-      FUN_100059a0((int)(((unsigned char *)&DAT_10038968) + local_20 * 0x14));
-    }
-    RunTimer(4,100);
-  }
-  uVar2 = Trigg(8);
-  if ((uVar2 & 0xff) != 0) {
-    iVar5 = GetUnitsAmount0(&DAT_10038f90,4);
-    if (iVar5 < 1) {
-      iVar5 = GetUnitsAmount0(&DAT_10038f90,0);
-      if (iVar5 < 1) goto LAB_10002379;
-    }
-    SelectUnits(&DAT_10038fd0,0);
-    SelOpenGates(3);
-    SetTrigg(8,0);
-  }
-LAB_10002379:
-  uVar2 = Trigg(8);
-  if ((uVar2 & 0xff) == 0) {
-    iVar5 = GetUnitsAmount0(&DAT_10038f90,4);
-    if (iVar5 < 1) {
-      iVar5 = GetUnitsAmount0(&DAT_10038f90,0);
-      if (iVar5 < 1) {
-        SelectUnits(&DAT_10038fd0,0);
-        SelCloseGates(3);
-        SetTrigg(8,0);
-      }
-    }
-  }
-  uVar2 = Trigg(3);
-  if ((uVar2 & 0xff) == 0) {
-    iVar5 = GetUnitsAmount0(&DAT_10038f98,4);
-    if (0x28 < iVar5) {
-      SetTrigg(3,0);
-      ShowPage("#PAGE2");
-    }
-  }
-  uVar2 = TimerDoneFirst(7);
-  if ((uVar2 & 0xff) != 0) {
-    RunTimer(7,300);
-    local_24 = 0;
-    for (local_28 = 0; local_28 < 0x18; local_28 = local_28 + 1) {
-      if (((long long *)&DAT_10038a34)[local_28 * 0x25] == '\x03') {
-        iVar5 = FUN_10005830((int)(((unsigned char *)&DAT_10038a28) + local_28 * 0x25));
-        iVar5 = GetTotalAmount0(iVar5);
-        local_24 = local_24 + iVar5;
-      }
-    }
-    if ((3 - DAT_100390a0) * -8 + 0x5f < local_24) {
-      ShowPageParam("#PAGE4",local_24);
-      ShowVictory();
-      FreeTimer(1);
-      FreeTimer(2);
-      FreeTimer(3);
-      FreeTimer(4);
-      FreeTimer(4);
-      FreeTimer(6);
-      FreeTimer(7);
-      SetTrigg(7,0);
-    }
-    iVar5 = GetUnitsAmount0(&DAT_10038e00,4);
-    if ((3 - DAT_100390a0) * 4 < iVar5) {
-      uVar8 = GetUnitsAmount0(&DAT_10038e00,4);
-      ShowPageParam("#PAGE3",uVar8);
-      LooseGame();
-      FreeTimer(1);
-      FreeTimer(2);
-      FreeTimer(3);
-      FreeTimer(4);
-      FreeTimer(4);
-      FreeTimer(6);
-      FreeTimer(7);
-      SetTrigg(7,0);
-    }
-    iVar5 = GetTotalAmount0(&DAT_10038f80);
-    if (iVar5 < 1) {
-      ShowPage("#PAGE5");
-      LooseGame();
-      FreeTimer(1);
-      FreeTimer(2);
-      FreeTimer(3);
-      FreeTimer(4);
-      FreeTimer(4);
-      FreeTimer(6);
-      FreeTimer(7);
-      SetTrigg(7,0);
-    }
-  }
-LAB_100027fa:
   return;
 }
 
@@ -2385,20 +2121,6 @@ local_8 = param_1;
 
 
 
-void __cdecl FUN_10006280(DWORD param_1)
-
-{
-  DWORD *pDVar1;
-  
-  pDVar1 = FUN_100071c0();
-  pDVar1[5] = param_1;
-  return;
-}
-
-
-
-
-
 int __cdecl FUN_100062d0(char *param_1,byte *param_2)
 
 {
@@ -2530,24 +2252,9 @@ void FUN_10006610(void)
 
 
 
+
+
 void OnInit(void)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_48 [16];
-  int local_8;
-rand();
-  return;
-}
-
-
-
-
-
-
-
-void ProcessScenary(void)
 
 {
   int iVar1;
@@ -2597,6 +2304,284 @@ DAT_100390a8 = 1;
   }
   RegisterVar(&DAT_10038a10,0x18);
   uStack_8 = 0x100017dd;
+  return;
+}
+
+
+
+
+
+void ProcessScenary(void)
+
+{
+  char cVar1;
+  unsigned int uVar2;
+  int *piVar3;
+  int iVar4;
+  int iVar5;
+  int *puVar6;
+  long long uVar7;
+  int uVar8;
+  int local_78 [16];
+  int local_38 [2];
+  long long local_30;
+  int local_28;
+  int local_24;
+  int local_20;
+  int local_1c;
+  int local_18;
+  int local_14;
+  int local_10;
+  int local_c;
+  int local_8;
+if (DAT_100390a8 != '\0') {
+    SetTrigg(7,0);
+    RunTimer(0x18,0x32);
+    DAT_100390a8 = '\0';
+  }
+  uVar2 = TimerDoneFirst(0x18);
+  if ((uVar2 & 0xff) != 0) {
+    SetTrigg(7,0);
+  }
+  uVar2 = Trigg(99);
+  if ((uVar2 & 0xff) != 0) {
+    for (local_8 = 0; local_8 < 0x18; local_8 = local_8 + 1) {
+      ((long long *)&DAT_10038a34)[local_8 * 0x25] = 0;
+      ((long long *)&DAT_10038a10)[local_8] = 0xff;
+    }
+    DAT_100390a0 = GetDiff(0);
+    SetLightSpot(&DAT_10038f90,3,1);
+    ChangeFriends(0,9);
+    ChangeFriends(4,0x1d);
+    RunTimer(2,200);
+    RunTimer(3,200);
+    RunTimer(4,200);
+    RunTimer(7,800);
+    RunTimer(0x1e,100);
+    SetTrigg(99,0);
+  }
+  uVar2 = TimerDoneFirst(0x1e);
+  if ((uVar2 & 0xff) != 0) {
+    if (DAT_100390a0 < 1) {
+      InitialUpgrade(DAT_10033050,"Pikiner_turki(AL)ATTACK4");
+      InitialUpgrade(DAT_10033050,"Pikiner_turki(AL)SHIELD4");
+      InitialUpgrade(DAT_10033050,"Pehota_turki(AL)ATTACK4");
+      InitialUpgrade(DAT_10033050,"Pehota_turki(AL)SHIELD4");
+      InitialUpgrade(DAT_10033050,"Mameluk(AL)ATTACK4");
+      InitialUpgrade(DAT_10033050,"Mameluk(AL)SHIELD4");
+    }
+    if (DAT_100390a0 < 2) {
+      InitialUpgrade(DAT_10033050,"Pikiner_turki(AL)ATTACK4");
+      InitialUpgrade(DAT_10033050,"Pikiner_turki(AL)SHIELD4");
+      InitialUpgrade(DAT_10033050,"Pehota_turki(AL)ATTACK4");
+      InitialUpgrade(DAT_10033050,"Pehota_turki(AL)SHIELD4");
+      InitialUpgrade(DAT_10033050,"Mameluk(AL)ATTACK4");
+      InitialUpgrade(DAT_10033050,"Mameluk(AL)SHIELD4");
+    }
+    if (DAT_100390a0 < 3) {
+      InitialUpgrade(DAT_10033050,"Pikiner_turki(AL)ATTACK4");
+      InitialUpgrade(DAT_10033050,"Pikiner_turki(AL)SHIELD4");
+      InitialUpgrade(DAT_10033050,"Pehota_turki(AL)ATTACK4");
+      InitialUpgrade(DAT_10033050,"Pehota_turki(AL)SHIELD4");
+      InitialUpgrade(DAT_10033050,"Mameluk(AL)ATTACK4");
+      InitialUpgrade(DAT_10033050,"Mameluk(AL)SHIELD4");
+    }
+    SelectUnits(&DAT_10038fd8,0);
+    SelSendTo(0,&DAT_10039090,0xc3,0);
+    SelSendTo(0,&DAT_10039098,0x40,0);
+    SelectUnits(&DAT_10038fe0,0);
+    SelSendTo(0,&DAT_10039090,0xc3,0);
+    SelSendTo(0,&DAT_10038f88,0x40,0);
+    SelectUnits(&DAT_10038f80,0);
+    ShowPage("#PAGE0");
+  }
+  uVar2 = Trigg(7);
+  if ((uVar2 & 0xff) == 0) goto LAB_100027fa;
+  FUN_10005e50(&DAT_10038f00);
+  FUN_10005e50(&DAT_10038f28);
+  FUN_10005e50(&DAT_10038f50);
+  uVar2 = Trigg(2);
+  if ((uVar2 & 0xff) != 0) {
+    iVar5 = GetUnitsAmount1(&DAT_10038f88,&DAT_10038f80);
+    if (0 < iVar5) {
+      uVar2 = AskQuestion("#PAGE1");
+      if ((uVar2 & 0xff) == 0) {
+        for (local_10 = 0; local_10 < 0xc; local_10 = local_10 + 1) {
+          ((long long *)&DAT_10038a34)[local_10 * 0x25] = 1;
+          ((long long *)&DAT_10038a10)[local_10] = (char)local_10;
+        }
+        SetTrigg(3,0);
+      }
+      else {
+        for (local_c = 0; local_c < 0x18; local_c = local_c + 1) {
+          ((long long *)&DAT_10038a34)[local_c * 0x25] = 1;
+          ((long long *)&DAT_10038a10)[local_c] = (char)local_c;
+        }
+      }
+      SetTrigg(2,0);
+    }
+  }
+  uVar2 = Trigg(3);
+  if ((uVar2 & 0xff) == 2) {
+    iVar5 = GetUnitsAmount1(&DAT_10038f88,&DAT_10038f80);
+    if (0 < iVar5) {
+      for (local_14 = 0; local_14 < 0xc; local_14 = local_14 + 1) {
+        ((long long *)&DAT_10038a34)[(local_14 + 0xc) * 0x25] = 1;
+        ((long long *)&DAT_10038a10)[local_14] = (char)local_14 + '\f';
+      }
+      SetTrigg(3,0);
+    }
+  }
+  uVar2 = Trigg(2);
+  if ((uVar2 & 0xff) == 0) {
+    uVar2 = TimerDoneFirst(2);
+    if ((uVar2 & 0xff) != 0) {
+      FUN_100018d0(&DAT_10038f80);
+      local_18 = 0;
+      local_30 = uVar7;
+      while( 1 ) {
+        DAT_10038a0c = (int)((unsigned long long)uVar7 >> 0x20);
+        DAT_10038a08 = (int)uVar7;
+        if (0x17 < local_18) break;
+        if (((long long *)&DAT_10038a10)[local_18] != -1) {
+          FUN_100057c0((int)(((unsigned char *)&DAT_10038a28) +
+                                          (unsigned int)(byte)((long long *)&DAT_10038a10)[local_18] * 0x25));
+          uVar7 = (int)DAT_10038a08;
+          if (cVar1 != '\0') {
+            if (((long long *)&DAT_10038a34)[(unsigned int)(byte)((long long *)&DAT_10038a10)[local_18] * 0x25] == '\x01') {
+              FUN_10005490(((unsigned char *)&DAT_10038a28) + (unsigned int)(byte)((long long *)&DAT_10038a10)[local_18] * 0x25,
+                                 DAT_10038a08,DAT_10038a0c,0x46);
+              FUN_10005870(((unsigned char *)&DAT_10038a28) +
+                                                 (unsigned int)(byte)((long long *)&DAT_10038a10)[local_18] * 0x25,
+                                                 local_38);
+              DAT_10038a08 = *piVar3;
+              DAT_10038a0c = piVar3[1];
+            }
+            else {
+              FUN_10005280(((unsigned char *)&DAT_10038a28) + (unsigned int)(byte)((long long *)&DAT_10038a10)[local_18] * 0x25);
+            }
+            iVar5 = FUN_10005830((int)(((unsigned char *)&DAT_10038a28) +
+                                            (unsigned int)(byte)((long long *)&DAT_10038a10)[local_18] * 0x25));
+            iVar5 = GetUnitsAmount1(&DAT_10038f90,iVar5);
+            iVar4 = FUN_10005830((int)(((unsigned char *)&DAT_10038a28) +
+                                            (unsigned int)(byte)((long long *)&DAT_10038a10)[local_18] * 0x25));
+            iVar4 = GetTotalAmount0(iVar4);
+            uVar7 = (int)DAT_10038a08;
+            if (iVar5 == iVar4) {
+              ((long long *)&DAT_10038a34)[(unsigned int)(byte)((long long *)&DAT_10038a10)[local_18] * 0x25] = 3;
+              uVar8 = 0;
+              iVar5 = FUN_10005830((int)(((unsigned char *)&DAT_10038a28) +
+                                              (unsigned int)(byte)((long long *)&DAT_10038a10)[local_18] * 0x25));
+              SelectUnits(iVar5,uVar8);
+              SelSendTo(4,&DAT_10038f98,0,0);
+              uVar7 = (int)DAT_10038a08;
+            }
+          }
+        }
+        local_18 = local_18 + 1;
+      }
+      RunTimer(2,0x14);
+    }
+  }
+  uVar2 = TimerDoneFirst(3);
+  if ((uVar2 & 0xff) != 0) {
+    for (local_1c = 0; local_1c < 8; local_1c = local_1c + 1) {
+      FUN_100013f0();
+      *(int *)(((unsigned char *)&DAT_10038978) + local_1c * 0x14) = uVar8;
+    }
+    RunTimer(3,2000);
+  }
+  uVar2 = TimerDoneFirst(4);
+  if ((uVar2 & 0xff) != 0) {
+    for (local_20 = 0; local_20 < 8; local_20 = local_20 + 1) {
+      FUN_100059a0((int)(((unsigned char *)&DAT_10038968) + local_20 * 0x14));
+    }
+    RunTimer(4,100);
+  }
+  uVar2 = Trigg(8);
+  if ((uVar2 & 0xff) != 0) {
+    iVar5 = GetUnitsAmount0(&DAT_10038f90,4);
+    if (iVar5 < 1) {
+      iVar5 = GetUnitsAmount0(&DAT_10038f90,0);
+      if (iVar5 < 1) goto LAB_10002379;
+    }
+    SelectUnits(&DAT_10038fd0,0);
+    SelOpenGates(3);
+    SetTrigg(8,0);
+  }
+LAB_10002379:
+  uVar2 = Trigg(8);
+  if ((uVar2 & 0xff) == 0) {
+    iVar5 = GetUnitsAmount0(&DAT_10038f90,4);
+    if (iVar5 < 1) {
+      iVar5 = GetUnitsAmount0(&DAT_10038f90,0);
+      if (iVar5 < 1) {
+        SelectUnits(&DAT_10038fd0,0);
+        SelCloseGates(3);
+        SetTrigg(8,0);
+      }
+    }
+  }
+  uVar2 = Trigg(3);
+  if ((uVar2 & 0xff) == 0) {
+    iVar5 = GetUnitsAmount0(&DAT_10038f98,4);
+    if (0x28 < iVar5) {
+      SetTrigg(3,0);
+      ShowPage("#PAGE2");
+    }
+  }
+  uVar2 = TimerDoneFirst(7);
+  if ((uVar2 & 0xff) != 0) {
+    RunTimer(7,300);
+    local_24 = 0;
+    for (local_28 = 0; local_28 < 0x18; local_28 = local_28 + 1) {
+      if (((long long *)&DAT_10038a34)[local_28 * 0x25] == '\x03') {
+        iVar5 = FUN_10005830((int)(((unsigned char *)&DAT_10038a28) + local_28 * 0x25));
+        iVar5 = GetTotalAmount0(iVar5);
+        local_24 = local_24 + iVar5;
+      }
+    }
+    if ((3 - DAT_100390a0) * -8 + 0x5f < local_24) {
+      ShowPageParam("#PAGE4",local_24);
+      ShowVictory();
+      FreeTimer(1);
+      FreeTimer(2);
+      FreeTimer(3);
+      FreeTimer(4);
+      FreeTimer(4);
+      FreeTimer(6);
+      FreeTimer(7);
+      SetTrigg(7,0);
+    }
+    iVar5 = GetUnitsAmount0(&DAT_10038e00,4);
+    if ((3 - DAT_100390a0) * 4 < iVar5) {
+      uVar8 = GetUnitsAmount0(&DAT_10038e00,4);
+      ShowPageParam("#PAGE3",uVar8);
+      LooseGame();
+      FreeTimer(1);
+      FreeTimer(2);
+      FreeTimer(3);
+      FreeTimer(4);
+      FreeTimer(4);
+      FreeTimer(6);
+      FreeTimer(7);
+      SetTrigg(7,0);
+    }
+    iVar5 = GetTotalAmount0(&DAT_10038f80);
+    if (iVar5 < 1) {
+      ShowPage("#PAGE5");
+      LooseGame();
+      FreeTimer(1);
+      FreeTimer(2);
+      FreeTimer(3);
+      FreeTimer(4);
+      FreeTimer(4);
+      FreeTimer(6);
+      FreeTimer(7);
+      SetTrigg(7,0);
+    }
+  }
+LAB_100027fa:
   return;
 }
 

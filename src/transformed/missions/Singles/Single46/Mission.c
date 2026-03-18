@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 int this_ptr = 0;
@@ -171,21 +172,61 @@ long long DAT_100379d0 = 0;
 long long DAT_10037a00 = 0;
 long long DAT_10037a30 = 0;
 
-/* Stubs for missing internal functions */
-int FUN_10008850() { return 0; }
-int FUN_100094f0() { return 0; }
-
-
 /* Forward declarations */
+void  FUN_10001060(void *this_ptr,int param_1,int param_2,int param_3);
+void  FUN_10001160(void *this_ptr,int param_1);
 void  FUN_10001210(int param_1);
 void FUN_10001300(void);
 void  FUN_100013a0(void *this_ptr,int param_1,byte param_2);
-void FUN_100014b0(void);
-void FUN_10002dc0(void);
-void FUN_10008800(DWORD param_1);
 
 void OnInit();
 void ProcessScenary();
+
+
+void  FUN_10001060(void *this_ptr,int param_1,int param_2,int param_3)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_48 [16];
+  void *local_8;
+local_8 = this_ptr;
+  RegisterVar(this_ptr,0x2e);
+  RegisterUnits(local_8,param_1);
+  RegisterUnitType((intptr_t)local_8 + 8,param_2);
+  RegisterDynGroup((intptr_t)local_8 + 0x10);
+  RegisterDynGroup((intptr_t)local_8 + 0x18);
+  *(char *)((intptr_t)local_8 + 0x20) = 1;
+  *(char *)((intptr_t)local_8 + 0x21) = 0;
+  *(int *)((intptr_t)local_8 + 0x2a) = param_3;
+  local_8 = (void *)0x10001122;
+  return;
+}
+
+
+
+
+
+void  FUN_10001160(void *this_ptr,int param_1)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_c;
+  void *local_8;
+if (*(char *)((int)this_ptr + 0x20) != '\0') {
+    *(char *)((int)this_ptr + 0x20) = 0;
+    local_8 = this_ptr;
+    for (local_c = 0; local_c < param_1; local_c = local_c + 1) {
+      ProduceUnitFast(local_8,(intptr_t)local_8 + 8,(intptr_t)local_8 + 0x10,0);
+    }
+  }
+  local_8 = (void *)0x100011df;
+  return;
+}
+
+
+
 
 
 void  FUN_10001210(int param_1)
@@ -265,7 +306,8 @@ void  FUN_100013a0(void *this_ptr,int param_1,byte param_2)
 
 
 
-void FUN_100014b0(void)
+
+void OnInit(void)
 
 {
   DWORD DVar1;
@@ -395,18 +437,18 @@ RegisterUnits(&DAT_10037480,"Ghetman");
   RegisterVar(&DAT_10037614,4);
   RegisterVar(&DAT_10037978,4);
   RegisterVar(&DAT_10037520,4);
-  OnInit(&DAT_10037738,"Gkaz1","Mushketer_DA(DA)",1);
-  OnInit(&DAT_10037768,"Gkaz2","Pikiner_evro(DA)",1);
-  OnInit(&DAT_10037798,"Gkon1","Gusar_evro(DA)",1);
-  OnInit(&DAT_100377c8,"Gkon1","Dragun_18(DA)",1);
-  OnInit(&DAT_10037800,"Gkaz3","Mushketer_BA(BA)",2);
-  OnInit(&DAT_10037838,"Gkaz4","Pikiner_evro(BA)",2);
-  OnInit(&DAT_10037868,"Gkon3","Gusar_evro(BA)",2);
-  OnInit(&DAT_100378a8,"Gkon3","Dragun_18(BA)",2);
-  OnInit(&DAT_100378d8,"Gkaz5","Mushketer_sakson(SA)",3);
-  OnInit(&DAT_100379d0,"Gkaz6","Pikiner_evro(SA)",3);
-  OnInit(&DAT_100379a0,"Gkon5","Gusar_evro(SA)",3);
-  OnInit(&DAT_10037a00,"Gkon5","Dragun_18(SA)",3);
+  FUN_10001060(&DAT_10037738,"Gkaz1","Mushketer_DA(DA)",1);
+  FUN_10001060(&DAT_10037768,"Gkaz2","Pikiner_evro(DA)",1);
+  FUN_10001060(&DAT_10037798,"Gkon1","Gusar_evro(DA)",1);
+  FUN_10001060(&DAT_100377c8,"Gkon1","Dragun_18(DA)",1);
+  FUN_10001060(&DAT_10037800,"Gkaz3","Mushketer_BA(BA)",2);
+  FUN_10001060(&DAT_10037838,"Gkaz4","Pikiner_evro(BA)",2);
+  FUN_10001060(&DAT_10037868,"Gkon3","Gusar_evro(BA)",2);
+  FUN_10001060(&DAT_100378a8,"Gkon3","Dragun_18(BA)",2);
+  FUN_10001060(&DAT_100378d8,"Gkaz5","Mushketer_sakson(SA)",3);
+  FUN_10001060(&DAT_100379d0,"Gkaz6","Pikiner_evro(SA)",3);
+  FUN_10001060(&DAT_100379a0,"Gkon5","Gusar_evro(SA)",3);
+  FUN_10001060(&DAT_10037a00,"Gkon5","Dragun_18(SA)",3);
   RegisterFormation(&DAT_10037898,"#LINE5");
   RegisterFormation(&DAT_10037620,"#LINE20PUS");
   RegisterFormation(&DAT_10037630,"#LINE30PUS");
@@ -462,8 +504,8 @@ RegisterUnits(&DAT_10037480,"Ghetman");
   EnableUnit(0,&DAT_10037578,0);
   EnableUnit(0,&DAT_10037598,0);
   EnableUnit(0,&DAT_100375a0,0);
-  DVar1 = FUN_10008850((int *)0x0);
-  FUN_10008800(DVar1);
+  DVar1 = time(NULL);
+  srand(DVar1);
   uStack_8 = 0x10002862;
   return;
 }
@@ -472,7 +514,7 @@ RegisterUnits(&DAT_10037480,"Ghetman");
 
 
 
-void FUN_10002dc0(void)
+void ProcessScenary(void)
 
 {
   char cVar1;
@@ -1078,10 +1120,10 @@ uVar2 = Trigg(99);
     RunTimer(0xd,(5 - iVar4) * 0x23f0);
   }
 LAB_100062d1:
-  ProcessScenary(&DAT_10037738,DAT_100375b8);
-  ProcessScenary(&DAT_10037768,DAT_10037610);
-  ProcessScenary(&DAT_10037798,DAT_10037640);
-  ProcessScenary(&DAT_100377c8,DAT_10037670);
+  FUN_10001160(&DAT_10037738,DAT_100375b8);
+  FUN_10001160(&DAT_10037768,DAT_10037610);
+  FUN_10001160(&DAT_10037798,DAT_10037640);
+  FUN_10001160(&DAT_100377c8,DAT_10037670);
   FUN_10001210(0x10037738);
   if ((((cVar1 != '\0') && (FUN_10001210(0x10037768), cVar1 != '\0')) &&
       (FUN_10001210(0x10037798), cVar1 != '\0')) &&
@@ -1109,10 +1151,10 @@ LAB_100062d1:
     FUN_100013a0(&DAT_100377c8,&DAT_10037728,0);
     FUN_100013a0(&DAT_100377c8,&DAT_10037720,2);
   }
-  ProcessScenary(&DAT_10037800,DAT_100376c0);
-  ProcessScenary(&DAT_10037838,DAT_10037708);
-  ProcessScenary(&DAT_10037868,DAT_10037730);
-  ProcessScenary(&DAT_100378a8,DAT_10037920);
+  FUN_10001160(&DAT_10037800,DAT_100376c0);
+  FUN_10001160(&DAT_10037838,DAT_10037708);
+  FUN_10001160(&DAT_10037868,DAT_10037730);
+  FUN_10001160(&DAT_100378a8,DAT_10037920);
   FUN_10001210(0x10037800);
   if ((((cVar1 != '\0') && (FUN_10001210(0x10037838), cVar1 != '\0')) &&
       (FUN_10001210(0x10037868), cVar1 != '\0')) &&
@@ -1140,10 +1182,10 @@ LAB_100062d1:
     FUN_100013a0(&DAT_100378a8,&DAT_10037710,0);
     FUN_100013a0(&DAT_100378a8,&DAT_10037720,2);
   }
-  ProcessScenary(&DAT_100378d8,DAT_10037930);
-  ProcessScenary(&DAT_100379d0,DAT_1003770c);
-  ProcessScenary(&DAT_100379a0,DAT_100378a0);
-  ProcessScenary(&DAT_10037a00,DAT_10037924);
+  FUN_10001160(&DAT_100378d8,DAT_10037930);
+  FUN_10001160(&DAT_100379d0,DAT_1003770c);
+  FUN_10001160(&DAT_100379a0,DAT_100378a0);
+  FUN_10001160(&DAT_10037a00,DAT_10037924);
   FUN_10001210(0x100378d8);
   if ((((cVar1 != '\0') && (FUN_10001210(0x100379d0), cVar1 != '\0')) &&
       (FUN_10001210(0x100379a0), cVar1 != '\0')) &&
@@ -1358,69 +1400,6 @@ LAB_100062d1:
       LooseGame();
     }
   }
-  return;
-}
-
-
-
-
-
-
-void __cdecl FUN_10008800(DWORD param_1)
-
-{
-  DWORD *pDVar1;
-  
-  pDVar1 = FUN_100094f0();
-  pDVar1[5] = param_1;
-  return;
-}
-
-
-
-
-
-__declspec(dllexport) void OnInit()
-{
-  int param_1 = 0;
-  int param_2 = 0;
-  int param_3 = 0;
-  int iVar1;
-  int *puVar2;
-  int local_48 [16];
-  void *local_8;
-local_8 = this_ptr;
-  RegisterVar(this_ptr,0x2e);
-  RegisterUnits(local_8,param_1);
-  RegisterUnitType((intptr_t)local_8 + 8,param_2);
-  RegisterDynGroup((intptr_t)local_8 + 0x10);
-  RegisterDynGroup((intptr_t)local_8 + 0x18);
-  *(char *)((intptr_t)local_8 + 0x20) = 1;
-  *(char *)((intptr_t)local_8 + 0x21) = 0;
-  *(int *)((intptr_t)local_8 + 0x2a) = param_3;
-  local_8 = (void *)0x10001122;
-  return;
-}
-
-
-
-
-
-__declspec(dllexport) void ProcessScenary()
-{
-  int param_1 = 0;
-  int iVar1;
-  int *puVar2;
-  int local_c;
-  void *local_8;
-if (*(char *)((int)this_ptr + 0x20) != '\0') {
-    *(char *)((int)this_ptr + 0x20) = 0;
-    local_8 = this_ptr;
-    for (local_c = 0; local_c < param_1; local_c = local_c + 1) {
-      ProduceUnitFast(local_8,(intptr_t)local_8 + 8,(intptr_t)local_8 + 0x10,0);
-    }
-  }
-  local_8 = (void *)0x100011df;
   return;
 }
 

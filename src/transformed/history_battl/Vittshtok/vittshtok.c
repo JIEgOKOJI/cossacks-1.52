@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 int DAT_1002e3e0 = 0;
@@ -19,13 +20,57 @@ int DAT_1002e450 = 0;
 int DAT_1002e454 = 0;
 
 /* Forward declarations */
+void FUN_100010c0(void);
+void FUN_10001140(void);
 void FUN_100011c0(void);
 void FUN_10001230(void);
-void FUN_100012a0(void);
-void FUN_100014a0(void);
 
 void OnInit();
 void ProcessScenary();
+
+
+void FUN_100010c0(void)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_44 [15];
+  int uStack_8;
+iVar1 = GetMyNation();
+  if (iVar1 == 0) {
+    ShowVictory();
+  }
+  else {
+    LooseGame();
+  }
+  uStack_8 = 0x10001118;
+  return;
+}
+
+
+
+
+
+void FUN_10001140(void)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_44 [15];
+  int uStack_8;
+iVar1 = GetMyNation();
+  if (iVar1 == 1) {
+    ShowVictory();
+  }
+  else {
+    LooseGame();
+  }
+  uStack_8 = 0x10001199;
+  return;
+}
+
+
+
 
 
 void FUN_100011c0(void)
@@ -62,7 +107,9 @@ SetResource(1,5,0);
 
 
 
-void FUN_100012a0(void)
+
+
+void OnInit(void)
 
 {
   int iVar1;
@@ -92,7 +139,7 @@ RegisterVisibleZone(&DAT_1002e428,"Zone1");
 
 
 
-void FUN_100014a0(void)
+void ProcessScenary(void)
 
 {
   unsigned int uVar1;
@@ -132,7 +179,7 @@ uVar1 = Trigg(0xff);
       DAT_1002e454 = DAT_1002e454 + ((long long *)&DAT_1002e3f8)[DAT_1002e3e0];
     }
     if ((DAT_1002e450 < 3) && (2 < DAT_1002e454)) {
-      ProcessScenary();
+      FUN_10001140();
     }
     uVar1 = Trigg(10);
     if ((uVar1 & 0xff) != 0) {
@@ -144,7 +191,7 @@ uVar1 = Trigg(0xff);
     }
     iVar2 = GetGlobalTime();
     if (70000 < iVar2) {
-      OnInit();
+      FUN_100010c0();
     }
     uVar1 = Trigg(0xf);
     if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_1002e410), iVar2 < 0x14)) {
@@ -164,11 +211,11 @@ uVar1 = Trigg(0xff);
     }
     GetTotalAmount0(&DAT_1002e410);
     if (iVar2 == 0) {
-      ProcessScenary();
+      FUN_10001140();
     }
     GetTotalAmount0(&DAT_1002e418);
     if (iVar2 == 0) {
-      OnInit();
+      FUN_100010c0();
     }
     uVar1 = Trigg(0xb);
     if (((uVar1 & 0xff) != 0) && (GetTotalAmount1(&DAT_1002e420,0), iVar2 == 0)) {
@@ -182,52 +229,6 @@ uVar1 = Trigg(0xff);
     }
   }
   uStack_8 = 0x100018e1;
-  return;
-}
-
-
-
-
-
-
-
-void OnInit(void)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-iVar1 = GetMyNation();
-  if (iVar1 == 0) {
-    ShowVictory();
-  }
-  else {
-    LooseGame();
-  }
-  uStack_8 = 0x10001118;
-  return;
-}
-
-
-
-
-
-void ProcessScenary(void)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-iVar1 = GetMyNation();
-  if (iVar1 == 1) {
-    ShowVictory();
-  }
-  else {
-    LooseGame();
-  }
-  uStack_8 = 0x10001199;
   return;
 }
 

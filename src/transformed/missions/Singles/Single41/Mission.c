@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 /* Global variables */
 int this_ptr = 0;
@@ -45,17 +46,65 @@ long long DAT_1002f5a0 = 0;
 long long DAT_1002f5a8 = 0;
 
 /* Forward declarations */
+void FUN_100010d0(int param_1);
+void 
+FUN_10001170(void *this_ptr,int param_1,int param_2,char param_3,int param_4);
 void 
 FUN_10001210(void *this_ptr,int param_1,int param_2,char param_3,int param_4);
 void  FUN_100012c0(void *this_ptr,int param_1,char param_2,int param_3);
 void  FUN_10001380(char *param_1);
 void  FUN_100014c0(char *param_1);
 void  FUN_10001590(char *param_1);
-void FUN_10001660(void);
-void FUN_10001a40(void);
 
 void OnInit();
 void ProcessScenary();
+
+
+void __cdecl FUN_100010d0(int param_1)
+
+{
+  int iVar1;
+  int *puVar2;
+  unsigned int local_c;
+  unsigned int local_8;
+local_8 = 0;
+  for (local_c = 0; (intptr_t)local_c < 8; local_c = local_c + 1) {
+    iVar1 = GetUnitsByNation(param_1,local_c & 0xff);
+    if (0 < iVar1) {
+      local_8 = local_c;
+      local_c = 8;
+    }
+  }
+  return;
+}
+
+
+
+
+
+void 
+FUN_10001170(void *this_ptr,int param_1,int param_2,char param_3,int param_4)
+
+{
+  char uVar1;
+  int iVar2;
+  int *puVar3;
+  int local_48 [16];
+  char *local_8;
+*(int *)((int)this_ptr + 6) = param_1;
+  *(int *)((int)this_ptr + 10) = param_2;
+  local_8 = this_ptr;
+  FUN_100010d0(param_1);
+  local_8[1] = uVar1;
+  *local_8 = param_3;
+  *(int *)(local_8 + 2) = param_4;
+  RegisterDynGroup(local_8 + 0xe);
+  local_8 = (char *)0x100011e8;
+  return;
+}
+
+
+
 
 
 void 
@@ -69,7 +118,7 @@ FUN_10001210(void *this_ptr,int param_1,int param_2,char param_3,int param_4)
 local_8 = this_ptr;
   RegisterUnits((int)this_ptr + 0x16,param_1);
   RegisterZone((intptr_t)local_8 + 0x1e,param_2);
-  ProcessScenary(local_8,(intptr_t)local_8 + 0x16,(intptr_t)local_8 + 0x1e,param_3,param_4);
+  FUN_10001170(local_8,(intptr_t)local_8 + 0x16,(intptr_t)local_8 + 0x1e,param_3,param_4);
   local_8 = (void *)0x10001292;
   return;
 }
@@ -88,7 +137,7 @@ void  FUN_100012c0(void *this_ptr,int param_1,char param_2,int param_3)
 local_8 = this_ptr;
   RegisterUnits((int)this_ptr + 0x16,param_1);
   CreateZoneNearGroup((intptr_t)local_8 + 0x1e,&DAT_1002f4a8,(intptr_t)local_8 + 0x16,300);
-  ProcessScenary(local_8,(intptr_t)local_8 + 0x16,(intptr_t)local_8 + 0x1e,param_2,param_3);
+  FUN_10001170(local_8,(intptr_t)local_8 + 0x16,(intptr_t)local_8 + 0x1e,param_2,param_3);
   local_8 = (void *)0x1000134f;
   return;
 }
@@ -170,7 +219,7 @@ local_8 = param_1;
 
 
 
-void FUN_10001660(void)
+void OnInit(void)
 
 {
   int iVar1;
@@ -214,7 +263,7 @@ SetPlayerName(0,"ENGLAND");
 
 
 
-void FUN_10001a40(void)
+void ProcessScenary(void)
 
 {
   unsigned int uVar1;
@@ -405,55 +454,6 @@ LAB_100026bb:
   ShowVictory();
 LAB_100026e9:
   uStack_8 = 0x100026f6;
-  return;
-}
-
-
-
-
-
-__declspec(dllexport) void OnInit()
-{
-  int param_1 = 0;
-  int iVar1;
-  int *puVar2;
-  unsigned int local_c;
-  unsigned int local_8;
-local_8 = 0;
-  for (local_c = 0; (intptr_t)local_c < 8; local_c = local_c + 1) {
-    iVar1 = GetUnitsByNation(param_1,local_c & 0xff);
-    if (0 < iVar1) {
-      local_8 = local_c;
-      local_c = 8;
-    }
-  }
-  return;
-}
-
-
-
-
-
-__declspec(dllexport) void ProcessScenary()
-{
-  int param_1 = 0;
-  int param_2 = 0;
-  int param_3 = 0;
-  int param_4 = 0;
-  char uVar1;
-  int iVar2;
-  int *puVar3;
-  int local_48 [16];
-  char *local_8;
-*(int *)((int)this_ptr + 6) = param_1;
-  *(int *)((int)this_ptr + 10) = param_2;
-  local_8 = this_ptr;
-  OnInit(param_1);
-  local_8[1] = uVar1;
-  *local_8 = param_3;
-  *(int *)(local_8 + 2) = param_4;
-  RegisterDynGroup(local_8 + 0xe);
-  local_8 = (char *)0x100011e8;
   return;
 }
 
