@@ -26,7 +26,9 @@ void FUN_10001588(void);
 void FUN_10001622(void);
 void FUN_10001638(void);
 void FUN_10001683(void);
-void FUN_10001890(int param_1);
+
+void OnInit();
+void ProcessScenary();
 
 
 void __cdecl FUN_100011b8(int param_1,char param_2,char param_3,char param_4)
@@ -156,9 +158,9 @@ void __cdecl FUN_100014ed(char param_1,char param_2)
   int local_c;
   
   for (local_c = 0; local_c < 5; local_c = local_c + 1) {
-    iVar1 = GetUnitsAmount0(&DAT_1001d4b0 + local_c * 8,param_1);
+    iVar1 = GetUnitsAmount0(((unsigned char *)&DAT_1001d4b0) + local_c * 8,param_1);
     if (0 < iVar1) {
-      GetUnitsAmount0(&DAT_1001d4b0 + local_c * 8,param_2);
+      GetUnitsAmount0(((unsigned char *)&DAT_1001d4b0) + local_c * 8,param_2);
     }
   }
   return;
@@ -217,27 +219,17 @@ void FUN_10001683(void)
   if (2 < iVar1) {
     OnInit(0,0x1001ba30);
   }
-  FUN_10001890(&DAT_1001d4d8);
+  GetTotalAmount0(&DAT_1001d4d8);
   if (iVar1 < 0x14) {
     OnInit(1,0x1001ba38);
   }
-  FUN_10001890(&DAT_1001d4e0);
+  GetTotalAmount0(&DAT_1001d4e0);
   if (iVar1 < 0x14) {
     OnInit(0,0x1001ba30);
   }
   return;
 }
 
-
-
-
-
-void __cdecl FUN_10001890(int param_1)
-
-{
-  GetTotalAmount0(param_1);
-  return;
-}
 
 
 

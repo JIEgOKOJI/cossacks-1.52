@@ -116,6 +116,9 @@ int FUN_1000124b(int param_1,int param_2,int param_3,int param_4,
 void FUN_1000136a(int param_1,int param_2,int param_3,int param_4,
             int param_5,int param_6,int param_7);
 
+void OnInit();
+void ProcessScenary();
+
 
 int __cdecl FUN_10001012(int param_1)
 

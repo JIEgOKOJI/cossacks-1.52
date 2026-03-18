@@ -16,7 +16,9 @@ long long DAT_1001e430 = 0;
 void FUN_10001220(void);
 void FUN_10001350(void);
 void FUN_10001390(void);
-void FUN_10001440(int param_1);
+
+void OnInit();
+void ProcessScenary();
 
 
 void FUN_10001220(void)
@@ -68,11 +70,11 @@ OnInit(0,1);
   if (2 < iVar1) {
     ProcessScenary(0,0x1001ca40);
   }
-  FUN_10001440(&DAT_1001e428);
+  GetTotalAmount0(&DAT_1001e428);
   if (iVar1 < 0x14) {
     ProcessScenary(1,0x1001ca30);
   }
-  FUN_10001440(&DAT_1001e430);
+  GetTotalAmount0(&DAT_1001e430);
   if (iVar1 < 0x14) {
     ProcessScenary(0,0x1001ca38);
   }
@@ -80,21 +82,6 @@ OnInit(0,1);
   return;
 }
 
-
-
-
-
-void __cdecl FUN_10001440(int param_1)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-GetTotalAmount0(param_1);
-  uStack_8 = 0x1000147b;
-  return;
-}
 
 
 
@@ -110,9 +97,9 @@ __declspec(dllexport) void OnInit()
   int local_8;
 local_8 = 0;
   for (local_c = 0; local_c < 5; local_c = local_c + 1) {
-    iVar1 = GetUnitsAmount0(&DAT_1001e400 + local_c * 8,param_1);
+    iVar1 = GetUnitsAmount0(((unsigned char *)&DAT_1001e400) + local_c * 8,param_1);
     if (0 < iVar1) {
-      iVar1 = GetUnitsAmount0(&DAT_1001e400 + local_c * 8,param_2);
+      iVar1 = GetUnitsAmount0(((unsigned char *)&DAT_1001e400) + local_c * 8,param_2);
       if (iVar1 == 0) {
         local_8 = local_8 + 1;
       }

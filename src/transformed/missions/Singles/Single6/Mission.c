@@ -160,6 +160,9 @@ void FUN_1000113d(int param_1,int param_2,int param_3);
 int FUN_10001154(int param_1,int param_2,int param_3,int param_4);
 int FUN_1000118a(int param_1,int param_2,int param_3,int param_4);
 
+void OnInit();
+void ProcessScenary();
+
 
 void __cdecl FUN_10001012(int param_1)
 

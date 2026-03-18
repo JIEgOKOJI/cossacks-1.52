@@ -58,40 +58,8 @@ long long DAT_10030570 = 0;
 long long DAT_10030578 = 0;
 long long DAT_10030580 = 0;
 long long DAT_10030588 = 0;
-
-/* Forward declarations */
-void FUN_10003b70(int param_1);
-void FUN_10003bc0(int param_1,char param_2);
-
-
-void __cdecl FUN_10003b70(int param_1)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-GetTotalAmount0(param_1);
-  uStack_8 = 0x10003bab;
-  return;
-}
-
-
-
-
-
-void __cdecl FUN_10003bc0(int param_1,char param_2)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-GetTotalAmount1(param_1,(int)param_2);
-  uStack_8 = 0x10003bff;
-  return;
-}
-
+void OnInit();
+void ProcessScenary();
 
 
 
@@ -209,7 +177,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(2);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10003b70(&DAT_100303f8);
+    GetTotalAmount0(&DAT_100303f8);
     if (iVar2 == 3) {
       iVar2 = GetUnitsAmount1(&DAT_10030498,&DAT_100303f8);
       if (0 < iVar2) {
@@ -220,7 +188,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(2);
   if ((uVar1 & 0xff) == 0) {
-    FUN_10003b70(&DAT_100303f8);
+    GetTotalAmount0(&DAT_100303f8);
     if (0 < iVar2) {
       iVar2 = GetUnitsAmount0(&DAT_10030498,0);
       if (0 < iVar2) {
@@ -237,7 +205,7 @@ uVar1 = Trigg(1);
       SelSendAndKill(1,&DAT_10030480,0,0);
     }
   }
-  FUN_10003b70(&DAT_10030400);
+  GetTotalAmount0(&DAT_10030400);
   if (0 < iVar2) {
     iVar2 = GetUnitsAmount1(&DAT_10030480,&DAT_10030410);
     if (0 < iVar2) {
@@ -247,9 +215,9 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(0x48);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10003b70(&DAT_10030400);
+    GetTotalAmount0(&DAT_10030400);
     if (iVar2 == 0) {
-      FUN_10003b70(&DAT_10030410);
+      GetTotalAmount0(&DAT_10030410);
       if (0 < iVar2) {
         SetTrigg(0x48,0);
         SelectUnits(&DAT_10030410,0);
@@ -340,20 +308,20 @@ uVar1 = Trigg(1);
   }
   iVar2 = GetUnitsAmount0(&DAT_100304d0,0);
   if (0 < iVar2) {
-    FUN_10003b70(&DAT_100304e0);
+    GetTotalAmount0(&DAT_100304e0);
     if (1 < iVar2) {
       AttackEnemyInZone(&DAT_100304e0,&DAT_100304d0,0);
     }
   }
   uVar1 = Trigg(5);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10003b70(&DAT_10030420);
+    GetTotalAmount0(&DAT_10030420);
     if (iVar2 == 0) {
       SetTrigg(5,0);
       ShowPage("#PAGE5");
       DisableMission(0x42);
       EnableMission(0x43);
-      FUN_10003b70(&DAT_10030428);
+      GetTotalAmount0(&DAT_10030428);
       if (0 < iVar2) {
         SelectUnits(&DAT_10030428,0);
         SelDie(1);
@@ -362,7 +330,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(6);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10003b70(&DAT_10030578);
+    GetTotalAmount0(&DAT_10030578);
     if (iVar2 == 0) {
       SetTrigg(6,0);
       ShowPage("#PAGE6");
@@ -370,7 +338,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(7);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10003b70(&DAT_10030418);
+    GetTotalAmount0(&DAT_10030418);
     if (iVar2 == 0) {
       SetTrigg(7,0);
       ShowPage("#PAGE7");
@@ -420,7 +388,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = TimerDoneFirst(3);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10003bc0(&DAT_10030488,0);
+    GetTotalAmount1(&DAT_10030488,0);
     if (iVar2 == 0) {
       ShowPage("#PAGE8B");
       EnableMission(0x44);
@@ -428,7 +396,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(0x35);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10003bc0(&DAT_10030488,0);
+    GetTotalAmount1(&DAT_10030488,0);
     if (0 < iVar2) {
       SetTrigg(0x35,0);
       DisableMission(0x44);
@@ -437,7 +405,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(9);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10003b70(&DAT_100303e8);
+    GetTotalAmount0(&DAT_100303e8);
     if (iVar2 == 0) {
       SetTrigg(9,0);
       iVar2 = GetResource(0,3);
@@ -454,7 +422,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) != 0) {
     iVar2 = GetUnitsAmount0(&DAT_10030430,0);
     if (3 < iVar2) {
-      FUN_10003b70(&DAT_100304f0);
+      GetTotalAmount0(&DAT_100304f0);
       if (0 < iVar2) {
         SetTrigg(10,0);
         ShowPage("#PAGE10");
@@ -465,7 +433,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) == 0) {
     iVar2 = GetUnitsAmount0(&DAT_10030430,0);
     if (0 < iVar2) {
-      FUN_10003b70(&DAT_100304f0);
+      GetTotalAmount0(&DAT_100304f0);
       if (0 < iVar2) {
         AttackEnemyInZone(&DAT_100304f0,&DAT_10030430,0);
       }
@@ -475,7 +443,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) != 0) {
     iVar2 = GetUnitsAmount0(&DAT_10030448,0);
     if (0 < iVar2) {
-      FUN_10003b70(&DAT_100304f0);
+      GetTotalAmount0(&DAT_100304f0);
       if (iVar2 == 0) {
         SetTrigg(0xb,0);
         ShowPage("#PAGE11");
@@ -488,7 +456,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(0xc);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10003b70(&DAT_10030548);
+    GetTotalAmount0(&DAT_10030548);
     if (iVar2 == 0) {
       SetTrigg(0xc,0);
       ShowPage("#PAGE12");
@@ -511,7 +479,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(0xe);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10003b70(&DAT_10030540);
+    GetTotalAmount0(&DAT_10030540);
     if (iVar2 == 0) {
       uVar1 = Trigg(0xc);
       if ((uVar1 & 0xff) == 0) {
@@ -523,11 +491,11 @@ uVar1 = Trigg(1);
       }
     }
   }
-  FUN_10003bc0(&DAT_10030588,0);
+  GetTotalAmount1(&DAT_10030588,0);
   if (iVar2 < DAT_10030490) {
-    FUN_10003bc0(&DAT_10030588,0);
+    GetTotalAmount1(&DAT_10030588,0);
   }
-  FUN_10003bc0(&DAT_10030588,0);
+  GetTotalAmount1(&DAT_10030588,0);
   if (DAT_10030490 < iVar2) {
     uVar1 = Trigg(0xf);
     if ((uVar1 & 0xff) == 0) {
@@ -557,11 +525,11 @@ uVar1 = Trigg(1);
       AddResource(0,4,5000);
       AddResource(0,5,5000);
     }
-    FUN_10003bc0(&DAT_10030588,0);
+    GetTotalAmount1(&DAT_10030588,0);
   }
   uVar1 = Trigg(0x12);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10003b70(&DAT_10030570);
+    GetTotalAmount0(&DAT_10030570);
     if (iVar2 == 0) {
       SetTrigg(0x12,0);
       ShowPage("#PAGE18");
@@ -569,7 +537,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(0x13);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10003b70(&DAT_10030580);
+    GetTotalAmount0(&DAT_10030580);
     if (iVar2 == 0) {
       SetTrigg(0x13,0);
       ShowPage("#PAGE19");
@@ -577,7 +545,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(0x14);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10003b70(&DAT_10030560);
+    GetTotalAmount0(&DAT_10030560);
     if (iVar2 == 0) {
       SetTrigg(0x14,0);
       ShowPage("#PAGE20");
@@ -585,7 +553,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(0x15);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10003b70(&DAT_10030568);
+    GetTotalAmount0(&DAT_10030568);
     if (iVar2 == 0) {
       SetTrigg(0x15,0);
       ShowPage("#PAGE21");
@@ -612,7 +580,7 @@ uVar1 = Trigg(1);
     if ((uVar1 & 0xff) == 0) {
       iVar2 = GetUnitsAmount1(&DAT_10030468,&DAT_100303e8);
       if (0 < iVar2) {
-        FUN_10003b70(&DAT_100304e8);
+        GetTotalAmount0(&DAT_100304e8);
         if (0 < iVar2) {
           SetTrigg(0x17,0);
           ShowPage("#PAGE23");
@@ -627,7 +595,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) != 0) {
     iVar2 = GetUnitsAmount0(&DAT_10030460,0);
     if (3 < iVar2) {
-      FUN_10003b70(&DAT_10030500);
+      GetTotalAmount0(&DAT_10030500);
       if (0 < iVar2) {
         SetTrigg(0x18,0);
         ShowPage("#PAGE24");
@@ -638,7 +606,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) == 0) {
     iVar2 = GetUnitsAmount0(&DAT_10030460,0);
     if (0 < iVar2) {
-      FUN_10003b70(&DAT_10030500);
+      GetTotalAmount0(&DAT_10030500);
       if (0 < iVar2) {
         AttackEnemyInZone(&DAT_10030500,&DAT_10030460,0);
       }
@@ -646,7 +614,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(0x19);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10003b70(&DAT_10030500);
+    GetTotalAmount0(&DAT_10030500);
     if (iVar2 == 0) {
       iVar2 = GetUnitsAmount0(&DAT_10030478,0);
       if (0 < iVar2) {
@@ -658,11 +626,11 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(0x1a);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10003b70(&DAT_100304f8);
+    GetTotalAmount0(&DAT_100304f8);
     if (iVar2 == 0) {
       iVar2 = GetUnitsAmount0(&DAT_10030470,0);
       if (0 < iVar2) {
-        FUN_10003b70(&DAT_10030558);
+        GetTotalAmount0(&DAT_10030558);
         if (0 < iVar2) {
           SetTrigg(0x1a,0);
           ShowPage("#PAGE26");

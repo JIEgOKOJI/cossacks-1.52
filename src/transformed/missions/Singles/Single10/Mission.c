@@ -27,6 +27,9 @@ int DAT_1002e44c = 0;
 /* Forward declarations */
 void FUN_100014a0(void);
 
+void OnInit();
+void ProcessScenary();
+
 
 void FUN_100014a0(void)
 

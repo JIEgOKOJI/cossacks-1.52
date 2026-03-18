@@ -76,6 +76,9 @@ void FUN_10001d89(DWORD param_1);
 void FUN_10001db8(void);
 void FUN_10001dd0(void);
 
+void OnInit();
+void ProcessScenary();
+
 
 int FUN_10001000(void)
 

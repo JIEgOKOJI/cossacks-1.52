@@ -374,11 +374,14 @@ def collect_remaining_dats(code, api_mapping, pe):
     stride_sizes = {}  # dat_name → min byte size needed
 
     # Find stride constants from assignments like: iVar1 = DAT_xxx * 0x4b8
+    # Cap at 0x10000 to filter out compiler optimization constants like
+    # 0x55555556 (division by 3) and 0x01010101 (byte broadcast)
+    MAX_STRIDE = 0x10000
     stride_vars = {}  # var_name → stride_value
     for m in re.finditer(r'(\w+)\s*=\s*\w+\s*\*\s*(0x[0-9a-fA-F]+|\d+)\s*;', code):
         var_name, stride_str = m.group(1), m.group(2)
         stride = int(stride_str, 0)
-        if stride > 8:
+        if 8 < stride <= MAX_STRIDE:
             stride_vars[var_name] = stride
 
     # Find &DAT_xxx + stride_var (indirect pattern)
@@ -392,7 +395,7 @@ def collect_remaining_dats(code, api_mapping, pe):
     for m in re.finditer(r'&(DAT_[0-9a-f]+)\s*[+\-]\s*\w+\s*\*\s*(0x[0-9a-fA-F]+|\d+)', code):
         dat, stride_str = m.group(1), m.group(2)
         stride = int(stride_str, 0)
-        if stride > 8:
+        if 8 < stride <= MAX_STRIDE:
             needed = MAX_PLAYERS * stride
             stride_sizes[dat] = max(stride_sizes.get(dat, 0), needed)
 

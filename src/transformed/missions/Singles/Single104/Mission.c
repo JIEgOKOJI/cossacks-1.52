@@ -158,24 +158,8 @@ long long DAT_100356d8 = 0;
 long long DAT_100356e0 = 0;
 long long DAT_100356e8 = 0;
 long long DAT_100356f0 = 0;
-
-/* Forward declarations */
-void FUN_10008710(int param_1);
-
-
-void __cdecl FUN_10008710(int param_1)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-GetTotalAmount0(param_1);
-  uStack_8 = 0x1000874b;
-  return;
-}
-
-
+void OnInit();
+void ProcessScenary();
 
 
 
@@ -1266,7 +1250,7 @@ LAB_10004e6f:
   }
   uVar1 = Trigg(0x3a);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10008710(&DAT_10035468);
+    GetTotalAmount0(&DAT_10035468);
     if (iVar2 < 0xf) {
       SetTrigg(0x3a,0);
       SetTrigg(0x2b,1);

@@ -6,6 +6,9 @@
 /* Global variables */
 char DAT_10005038[] = "G1";
 long long DAT_100053a0 = 0;
+void OnInit();
+void ProcessScenary();
+
 
 void OnInit(void)
 

@@ -87,8 +87,10 @@ void FUN_10001012(void);
 int FUN_1000108c(int param_1);
 int FUN_100010aa(int param_1,int param_2,int param_3,int param_4);
 void FUN_100010db(int param_1,int param_2);
-int FUN_100010f3(int param_1,int param_2,int param_3,int param_4);
 int FUN_1000111a(int param_1,int param_2,int param_3);
+
+void OnInit();
+void ProcessScenary();
 
 
 void FUN_10001012(void)
@@ -167,17 +169,6 @@ void __cdecl FUN_100010db(int param_1,int param_2)
 
 
 
-int __cdecl
-FUN_100010f3(int param_1,int param_2,int param_3,int param_4)
-
-{
-  CreateObject0(param_1,&DAT_100068b8,param_2,param_4,param_3,0x80);
-  return param_4;
-}
-
-
-
-
 
 int __cdecl FUN_1000111a(int param_1,int param_2,int param_3)
 
@@ -189,7 +180,7 @@ int __cdecl FUN_1000111a(int param_1,int param_2,int param_3)
   iVar2 = 0;
   if (0 < DAT_10006938) {
     do {
-      FUN_100010f3(&DAT_10006878,param_2,param_3,iVar1);
+      CreateObject0(&DAT_10006878,param_2,param_3,iVar1);
       RemoveGroup(&DAT_10006878,param_1);
       iVar2 = iVar2 + 1;
     } while (iVar2 < DAT_10006938);
@@ -430,9 +421,9 @@ LAB_1000182c:
     iStack_c = 0;
     if (0 < DAT_10006938) {
       do {
-        FUN_100010f3(&DAT_10006878,&DAT_100068a0,&uStack_8,3);
+        CreateObject0(&DAT_10006878,&DAT_100068a0,&uStack_8,3);
         RemoveGroup(&DAT_10006878,&DAT_10006890);
-        FUN_100010f3(&DAT_10006878,&DAT_100069a0,&uStack_8,3);
+        CreateObject0(&DAT_10006878,&DAT_100069a0,&uStack_8,3);
         RemoveGroup(&DAT_10006878,&DAT_10006898);
         iStack_c = iStack_c + 1;
       } while (iStack_c < DAT_10006938);

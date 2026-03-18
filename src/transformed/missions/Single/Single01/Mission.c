@@ -6,6 +6,9 @@
 /* Global variables */
 long long DAT_1002e3e0 = 0;
 long long DAT_1002e3e8 = 0;
+void OnInit();
+void ProcessScenary();
+
 
 void OnInit(void)
 

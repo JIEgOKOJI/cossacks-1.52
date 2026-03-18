@@ -137,6 +137,9 @@ void FUN_10003dd2(void);
 void FUN_10003e75(void);
 void FUN_10003e8d(void);
 
+void OnInit();
+void ProcessScenary();
+
 
 void  FUN_10001de0(void *this_ptr,int param_1,char param_2)
 

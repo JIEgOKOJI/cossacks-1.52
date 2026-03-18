@@ -45,6 +45,9 @@ long long DAT_1002f4d0 = 0;
 long long DAT_1002f4d8 = 0;
 int DAT_1002f4e0 = 0;
 int DAT_1002f4b8_ovl = 0;
+void OnInit();
+void ProcessScenary();
+
 
 void OnInit(void)
 

@@ -110,6 +110,9 @@ void FUN_10006070(void);
 void FUN_10006080(void);
 int FUN_100060d0(int param_1);
 
+void OnInit();
+void ProcessScenary();
+
 
 void __cdecl FUN_10005e20(DWORD param_1)
 

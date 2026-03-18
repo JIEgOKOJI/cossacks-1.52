@@ -147,23 +147,10 @@ int FUN_100089f0() { return 0; }
 
 
 /* Forward declarations */
-void FUN_10008310(int param_1);
 void FUN_10008470(DWORD param_1);
 
-
-void __cdecl FUN_10008310(int param_1)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-GetTotalAmount0(param_1);
-  uStack_8 = 0x1000834b;
-  return;
-}
-
-
+void OnInit();
+void ProcessScenary();
 
 
 
@@ -187,7 +174,6 @@ void OnInit(void)
   DWORD DVar1;
   int iVar2;
   int *puVar3;
-  int local_44 [15];
   int uStack_8;
 RegisterUnits(&DAT_10036458,"Ghetman");
   RegisterUnits(&DAT_100364c0,"Gband1");
@@ -1300,7 +1286,7 @@ LAB_100066e1:
     }
   }
   uVar1 = Trigg(0xf);
-  if (((uVar1 & 0xff) != 0) && (FUN_10008310(&DAT_10036458), iVar4 == 0)) {
+  if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_10036458), iVar4 == 0)) {
     SetTrigg(0xf,0);
     ShowPage("#PAGE10");
     DisableMission(0x42);

@@ -502,20 +502,57 @@ void ScenaryInterface::Load(char* Name, char* Text)
 
 	if (strstr(cc3, ".CMS"))
 	{
-		FILE* F = fopen("UserMissions\\start.dat", "w");
+#ifndef _MSC_VER
+		char startDatPath[] = "UserMissions/start.dat";
+#else
+		char startDatPath[] = "UserMissions\\start.dat";
+#endif
+		FILE* F = fopen(startDatPath, "w");
 		if (F)
 		{
 			fprintf(F, "%s", cc3);
 			fclose(F);
 		}
+#ifndef _MSC_VER
+		dbglog("SCENINF.Load: loading UserMissions/CMS_Start.dylib\n");
+#ifdef __APPLE__
+		hLib = LoadLibrary("UserMissions/CMS_Start.dylib");
+#else
+		hLib = LoadLibrary("UserMissions/CMS_Start.so");
+#endif
+		if (!hLib)
+			hLib = LoadLibrary("UserMissions/CMS_start.dll");
+#else
 		dbglog("SCENINF.Load: loading UserMissions\\CMS_start.dll\n");
 		hLib = LoadLibrary("UserMissions\\CMS_start.dll");
+#endif
 	}
 	else
 	{
 		if (hLib) FreeLibrary(hLib);
 		dbglog("SCENINF.Load: loading '%s'\n", Name);
+#ifndef _MSC_VER
+		// On non-Windows, fix path separators and extension
+		char altMissName[512];
+		strncpy(altMissName, Name, sizeof(altMissName) - 1);
+		altMissName[sizeof(altMissName) - 1] = '\0';
+		for (char* p = altMissName; *p; p++) {
+			if (*p == '\\') *p = '/';
+		}
+		char* dotMiss = strrchr(altMissName, '.');
+		if (dotMiss && _stricmp(dotMiss, ".dll") == 0) {
+#ifdef __APPLE__
+			strcpy(dotMiss, ".dylib");
+#else
+			strcpy(dotMiss, ".so");
+#endif
+		}
+		hLib = LoadLibrary(altMissName);
+		if (!hLib)
+			hLib = LoadLibrary(Name);
+#else
 		hLib = LoadLibrary(Name);
+#endif
 	}
 
 	ScenaryHandler = NULL;
@@ -529,6 +566,21 @@ void ScenaryInterface::Load(char* Name, char* Text)
 	{
 		dbglog("SCENINF.Load: LoadLibrary OK, hLib=%p\n", hLib);
 		NErrors = 0;
+#ifndef _MSC_VER
+		// On non-Windows, dlopen() does not call DllMain automatically.
+		// We must call OnInit() explicitly (like AI DLLs call InitAI()).
+		StdVoid* fnOnInit = (StdVoid*)GetProcAddress(hLib, "OnInit");
+		dbglog("SCENINF.Load: GetProcAddress(OnInit)=%p\n", (void*)fnOnInit);
+		if (fnOnInit) {
+			fnOnInit();
+		} else {
+			dbglog("SCENINF.Load: WARNING: OnInit not found, trying DllMain\n");
+			typedef BOOL (WINAPI *DllMainFunc)(HINSTANCE, DWORD, LPVOID);
+			DllMainFunc fnDllMain = (DllMainFunc)GetProcAddress(hLib, "DllMain");
+			if (fnDllMain)
+				fnDllMain(hLib, DLL_PROCESS_ATTACH, NULL);
+		}
+#endif
 		ScenaryHandler = (StdVoid*)GetProcAddress(hLib, "ProcessScenary");
 		dbglog("SCENINF.Load: GetProcAddress(ProcessScenary)=%p\n", (void*)ScenaryHandler);
 		if (!ScenaryHandler)

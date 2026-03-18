@@ -31,7 +31,7 @@ int DAT_1002f400 = 0;
 int DAT_1002f404 = 0;
 long long DAT_1002f408 = 0;
 long long DAT_1002f410 = 0;
-long long DAT_1002f418 = 0;
+unsigned char DAT_1002f418[80] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 long long DAT_1002f468 = 0;
 long long DAT_1002f470 = 0;
 long long DAT_1002f478 = 0;
@@ -53,24 +53,8 @@ long long DAT_1002f4f0 = 0;
 long long DAT_1002f4f8 = 0;
 long long DAT_1002f500 = 0;
 long long DAT_1002f508 = 0;
-
-/* Forward declarations */
-void FUN_10002900(int param_1);
-
-
-void __cdecl FUN_10002900(int param_1)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-GetTotalAmount0(param_1);
-  uStack_8 = 0x1000293b;
-  return;
-}
-
-
+void OnInit();
+void ProcessScenary();
 
 
 
@@ -79,7 +63,6 @@ void OnInit(void)
 {
   int iVar1;
   int *puVar2;
-  int local_44 [15];
   int uStack_8;
 RegisterUnits(&DAT_1002f468,DAT_1002a0d8);
   RegisterUnits(&DAT_1002f470,DAT_1002a0d4);
@@ -101,7 +84,7 @@ RegisterUnits(&DAT_1002f468,DAT_1002a0d8);
   RegisterZone(&DAT_1002f4f0,DAT_1002a094);
   RegisterZone(&DAT_1002f4f8,DAT_1002a090);
   for (DAT_1002f400 = 0; DAT_1002f400 < 10; DAT_1002f400 = DAT_1002f400 + 1) {
-    RegisterVar(&DAT_1002f418 + DAT_1002f400 * 8,8);
+    RegisterVar(((unsigned char *)&DAT_1002f418) + DAT_1002f400 * 8,8);
   }
   RegisterUnitType(&DAT_1002f500,"Poland_pikiner(PL)");
   RegisterUnitType(&DAT_1002f508,"Kozak_loshad(UA)");
@@ -256,13 +239,13 @@ uVar1 = Trigg(99);
     SelDie(1);
   }
   uVar1 = Trigg(2);
-  if (((uVar1 & 0xff) != 0) && (FUN_10002900(&DAT_1002f470), iVar4 < 3)) {
+  if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_1002f470), iVar4 < 3)) {
     SetTrigg(2,0);
     ShowPage("#PAGE4");
     LooseGame();
   }
   uVar1 = Trigg(2);
-  if (((uVar1 & 0xff) != 0) && (FUN_10002900(&DAT_1002f468), iVar4 < 3)) {
+  if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_1002f468), iVar4 < 3)) {
     uVar1 = TimerDone(1);
     if ((uVar1 & 0xff) == 0) {
       SetTrigg(2,0);
@@ -350,25 +333,25 @@ uVar1 = Trigg(99);
   {
     local_c = GetDiff(1);
     if (local_c == 0) {
-      CreateObject0(&DAT_1002f418 + DAT_1002f404 * 8,&DAT_1002f3f8,&DAT_1002f508,1,&DAT_1002f4f0,
+      CreateObject0(((unsigned char *)&DAT_1002f418) + DAT_1002f404 * 8,&DAT_1002f3f8,&DAT_1002f508,1,&DAT_1002f4f0,
                     0x80);
     }
     else if (local_c == 1) {
-      CreateObject0(&DAT_1002f418 + DAT_1002f404 * 8,&DAT_1002f3e8,&DAT_1002f508,1,&DAT_1002f4f0,
+      CreateObject0(((unsigned char *)&DAT_1002f418) + DAT_1002f404 * 8,&DAT_1002f3e8,&DAT_1002f508,1,&DAT_1002f4f0,
                     0x80);
     }
     else {
-      CreateObject0(&DAT_1002f418 + DAT_1002f404 * 8,&DAT_1002f3e0,&DAT_1002f508,1,&DAT_1002f4f0,
+      CreateObject0(((unsigned char *)&DAT_1002f418) + DAT_1002f404 * 8,&DAT_1002f3e0,&DAT_1002f508,1,&DAT_1002f4f0,
                     0x80);
     }
-    SelectUnits(&DAT_1002f418 + DAT_1002f404 * 8,0);
+    SelectUnits(((unsigned char *)&DAT_1002f418) + DAT_1002f404 * 8,0);
     SelSendAndKill(1,&DAT_1002f4c0,0,0);
     DAT_1002f404 = DAT_1002f404 + 1;
   }
   for (DAT_1002f400 = 0; DAT_1002f400 < DAT_1002f404; DAT_1002f400 = DAT_1002f400 + 1) {
-    FUN_10002900(&DAT_1002f418 + DAT_1002f400 * 8);
+    GetTotalAmount0(((unsigned char *)&DAT_1002f418) + DAT_1002f400 * 8);
     if (0 < iVar4) {
-      SelectUnits(&DAT_1002f418 + DAT_1002f400 * 8,0);
+      SelectUnits(((unsigned char *)&DAT_1002f418) + DAT_1002f400 * 8,0);
       SelAttackGroup(1,&DAT_1002f470);
     }
   }

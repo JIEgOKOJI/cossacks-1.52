@@ -153,6 +153,9 @@ void FUN_100037f0(void);
 void FUN_100038c0(void);
 void FUN_10004c20(DWORD param_1);
 
+void OnInit();
+void ProcessScenary();
+
 
 void  FUN_100012f0(void *this_ptr,int param_1,int param_2,int param_3)
 

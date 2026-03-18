@@ -24,40 +24,8 @@ long long DAT_1002f460 = 0;
 long long DAT_1002f468 = 0;
 long long DAT_1002f470 = 0;
 long long DAT_1002f478 = 0;
-
-/* Forward declarations */
-void FUN_10001e00(int param_1);
-void FUN_10001e50(int param_1,char param_2);
-
-
-void __cdecl FUN_10001e00(int param_1)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-GetTotalAmount0(param_1);
-  uStack_8 = 0x10001e3b;
-  return;
-}
-
-
-
-
-
-void __cdecl FUN_10001e50(int param_1,char param_2)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-GetTotalAmount1(param_1,(int)param_2);
-  uStack_8 = 0x10001e8f;
-  return;
-}
-
+void OnInit();
+void ProcessScenary();
 
 
 
@@ -136,7 +104,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(2);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10001e50(&DAT_1002f430,0);
+    GetTotalAmount1(&DAT_1002f430,0);
     if (0 < iVar2) {
       SetTrigg(2,0);
       ShowPage("#PAGE2");
@@ -147,7 +115,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) != 0) {
     uVar1 = Trigg(6);
     if ((uVar1 & 0xff) != 0) {
-      FUN_10001e00(&DAT_1002f3e8);
+      GetTotalAmount0(&DAT_1002f3e8);
       if (iVar2 == 0) {
         SetTrigg(6,0);
         ShowPage("#PAGE6");
@@ -157,7 +125,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(3);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10001e50(&DAT_1002f460,0);
+    GetTotalAmount1(&DAT_1002f460,0);
     if (0 < iVar2) {
       SetTrigg(3,0);
       ShowPage("#PAGE3");
@@ -168,7 +136,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) != 0) {
     uVar1 = Trigg(6);
     if ((uVar1 & 0xff) != 0) {
-      FUN_10001e00(&DAT_1002f400);
+      GetTotalAmount0(&DAT_1002f400);
       if (iVar2 == 0) {
         SetTrigg(6,0);
         ShowPage("#PAGE7");
@@ -178,7 +146,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(4);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10001e50(&DAT_1002f428,0);
+    GetTotalAmount1(&DAT_1002f428,0);
     if (0 < iVar2) {
       SetTrigg(4,0);
       ShowPage("#PAGE4");
@@ -189,7 +157,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) != 0) {
     uVar1 = Trigg(6);
     if ((uVar1 & 0xff) != 0) {
-      FUN_10001e00(&DAT_1002f3f8);
+      GetTotalAmount0(&DAT_1002f3f8);
       if (iVar2 == 0) {
         SetTrigg(6,0);
         ShowPage("#PAGE8");
@@ -199,7 +167,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(5);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10001e50(&DAT_1002f478,0);
+    GetTotalAmount1(&DAT_1002f478,0);
     if (0 < iVar2) {
       SetTrigg(5,0);
       ShowPage("#PAGE5");
@@ -211,7 +179,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) != 0) {
     uVar1 = Trigg(6);
     if ((uVar1 & 0xff) != 0) {
-      FUN_10001e00(&DAT_1002f410);
+      GetTotalAmount0(&DAT_1002f410);
       if (iVar2 == 0) {
         SetTrigg(6,0);
         ShowPage("#PAGE9");
@@ -239,9 +207,9 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(8);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10001e00(&DAT_1002f3e0);
+    GetTotalAmount0(&DAT_1002f3e0);
     if (iVar2 == 0) {
-      FUN_10001e00(&DAT_1002f3f0);
+      GetTotalAmount0(&DAT_1002f3f0);
       if (iVar2 == 0) {
         SetTrigg(8,0);
         ShowPage("#PAGE10");

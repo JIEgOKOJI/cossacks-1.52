@@ -21,6 +21,9 @@ long long DAT_100054f0 = 0;
 /* Forward declarations */
 int FUN_10001000(void);
 
+void OnInit();
+void ProcessScenary();
+
 
 int FUN_10001000(void)
 

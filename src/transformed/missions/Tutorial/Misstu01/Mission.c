@@ -190,6 +190,9 @@ void FUN_10004b70(char param_1);
 void FUN_10004bd0(int param_1,int param_2,char param_3);
 int FUN_10004c90(char *param_1,byte *param_2);
 
+void OnInit();
+void ProcessScenary();
+
 
 void __cdecl FUN_10001240(char param_1)
 

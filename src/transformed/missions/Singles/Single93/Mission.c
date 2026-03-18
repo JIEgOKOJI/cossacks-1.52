@@ -41,7 +41,7 @@ int DAT_100323f8 = 0;
 int DAT_100323fc = 0;
 int DAT_10032400 = 0;
 long long DAT_10032408 = 0;
-long long DAT_10032410 = 0;
+unsigned char DAT_10032410[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 long long DAT_10032420 = 0;
 long long DAT_10032428 = 0;
 long long DAT_10032438 = 0;
@@ -118,7 +118,6 @@ void FUN_10001780(int param_1,int param_2);
 void FUN_100017d0(int param_1,int param_2,char param_3);
 void FUN_10001820(int param_1,int param_2);
 void FUN_10001870(int param_1,int param_2,char param_3);
-void FUN_100018c0(int param_1,int param_2,int param_3,char param_4);
 void FUN_10001930(int param_1,int param_2,int param_3);
 void FUN_100019b0(int param_1,int param_2,int param_3,int param_4,
             char param_5,int param_6);
@@ -130,6 +129,9 @@ void FUN_10001bf0(unsigned int param_1,int param_2,int param_3,int param_4,
 void FUN_10001fd0(void);
 void FUN_10002af0(void);
 
+void OnInit();
+void ProcessScenary();
+
 
 void __cdecl FUN_10001250(int param_1)
 
@@ -140,7 +142,7 @@ void __cdecl FUN_10001250(int param_1)
   int local_8;
 ClearSelection(0);
   for (local_8 = 0; local_8 < 2; local_8 = local_8 + 1) {
-    SelectUnitsType(&DAT_10032410 + local_8 * 8,0,1);
+    SelectUnitsType(((unsigned char *)&DAT_10032410) + local_8 * 8,0,1);
   }
   SaveSelectedUnits(0,param_1,0);
   return;
@@ -355,22 +357,6 @@ FUN_100016e0(param_1,param_2,param_3,0);
 
 
 
-void __cdecl
-FUN_100018c0(int param_1,int param_2,int param_3,char param_4)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-CreateObject0(param_1,&DAT_10032498,param_2,param_4,param_3,0);
-  uStack_8 = 0x10001911;
-  return;
-}
-
-
-
-
 
 void __cdecl FUN_10001930(int param_1,int param_2,int param_3)
 
@@ -380,7 +366,7 @@ void __cdecl FUN_10001930(int param_1,int param_2,int param_3)
   int local_48 [16];
   int local_8;
 local_8 = 3;
-  FUN_100018c0(&DAT_10032428,param_2,param_3,3);
+  CreateObject0(&DAT_10032428,param_2,param_3,3);
   RemoveGroup(&DAT_10032428,param_1);
   return;
 }
@@ -558,7 +544,7 @@ RegisterVar(&DAT_100323fc,4);
   RegisterDynGroup(&DAT_10032588);
   RegisterVar(&DAT_10032588,8);
   for (local_8 = 0; local_8 < 2; local_8 = local_8 + 1) {
-    RegisterUnitType(&DAT_10032410 + local_8 * 8,(((int*)0))[local_8]);
+    RegisterUnitType(((unsigned char *)&DAT_10032410) + local_8 * 8,(((int*)0))[local_8]);
   }
   RegisterDynGroup(&DAT_100323f0);
   RegisterVar(&DAT_100323f0,8);

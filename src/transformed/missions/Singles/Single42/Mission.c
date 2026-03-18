@@ -104,6 +104,9 @@ void FUN_10002ea6(void);
 int FUN_10002ec0(int param_1);
 int FUN_10002f80(int param_1);
 
+void OnInit();
+void ProcessScenary();
+
 
 void FUN_100011c0(void)
 
@@ -790,7 +793,7 @@ __declspec(dllexport) void OnInit()
   int *puVar2;
   int local_48 [17];
 *(int *)(param_1 + 0x2c) = 0;
-  return param_1;
+  return;
 }
 
 

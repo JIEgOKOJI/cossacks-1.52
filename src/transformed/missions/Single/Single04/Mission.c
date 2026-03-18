@@ -5,6 +5,9 @@
 
 /* Global variables */
 
+void OnInit();
+void ProcessScenary();
+
 
 void OnInit(void)
 

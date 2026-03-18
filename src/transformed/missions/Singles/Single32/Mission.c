@@ -281,6 +281,9 @@ int DAT_1000b124_ovl = 0;
 unsigned int * FUN_100059f0(unsigned int *param_1,unsigned int *param_2);
 unsigned int * FUN_10005a00(unsigned int *param_1,unsigned int *param_2);
 
+void OnInit();
+void ProcessScenary();
+
 
 unsigned int * __cdecl FUN_100059f0(unsigned int *param_1,unsigned int *param_2)
 

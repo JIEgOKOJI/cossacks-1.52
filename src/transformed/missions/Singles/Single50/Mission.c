@@ -130,24 +130,8 @@ long long DAT_10034780 = 0;
 long long DAT_10034788 = 0;
 long long DAT_10034790 = 0;
 long long DAT_10034798 = 0;
-
-/* Forward declarations */
-void FUN_10007250(int param_1);
-
-
-void __cdecl FUN_10007250(int param_1)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-GetTotalAmount0(param_1);
-  uStack_8 = 0x1000728b;
-  return;
-}
-
-
+void OnInit();
+void ProcessScenary();
 
 
 
@@ -156,7 +140,6 @@ void OnInit(void)
 {
   int iVar1;
   int *puVar2;
-  int local_44 [15];
   int uStack_8;
 RegisterUnits(&DAT_10034558,"Gband1");
   RegisterUnits(&DAT_10034588,"Gholop1");
@@ -1086,7 +1069,7 @@ LAB_10005996:
         if ((uVar1 & 0xff) != 0) {
           uVar1 = Trigg(0x1c);
           if ((uVar1 & 0xff) != 0) {
-            FUN_10007250(&DAT_10034750);
+            GetTotalAmount0(&DAT_10034750);
             if (iVar4 == 0) {
               SetTrigg(0x1c,0);
               SelectUnits(&DAT_10034470,0);
@@ -1103,7 +1086,7 @@ LAB_10005996:
           }
           uVar1 = Trigg(0x1d);
           if ((uVar1 & 0xff) != 0) {
-            FUN_10007250(&DAT_100345b0);
+            GetTotalAmount0(&DAT_100345b0);
             if (iVar4 == 0) {
               SetTrigg(0x1d,0);
               SelectUnits(&DAT_100345d0,0);
@@ -1120,7 +1103,7 @@ LAB_10005996:
           }
           uVar1 = Trigg(0x1e);
           if ((uVar1 & 0xff) != 0) {
-            FUN_10007250(&DAT_100345c0);
+            GetTotalAmount0(&DAT_100345c0);
             if (iVar4 == 0) {
               SetTrigg(0x1e,0);
               SelectUnits(&DAT_100345c8,0);
@@ -1137,7 +1120,7 @@ LAB_10005996:
           }
           uVar1 = Trigg(0x1f);
           if ((uVar1 & 0xff) != 0) {
-            FUN_10007250(&DAT_10034758);
+            GetTotalAmount0(&DAT_10034758);
             if (iVar4 == 0) {
               SetTrigg(0x1f,0);
               SelectUnits(&DAT_10034600,0);

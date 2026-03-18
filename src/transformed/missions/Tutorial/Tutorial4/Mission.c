@@ -132,24 +132,8 @@ long long DAT_10033760 = 0;
 long long DAT_10033768 = 0;
 long long DAT_10033770 = 0;
 long long DAT_10033778 = 0;
-
-/* Forward declarations */
-void FUN_100063d0(int param_1);
-
-
-void __cdecl FUN_100063d0(int param_1)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-GetTotalAmount0(param_1);
-  uStack_8 = 0x1000640b;
-  return;
-}
-
-
+void OnInit();
+void ProcessScenary();
 
 
 
@@ -660,7 +644,7 @@ LAB_10003897:
   if ((uVar1 & 0xff) != 0) {
     iVar2 = GetTotalAmount0(&DAT_100334d8);
     if (iVar2 == 0) {
-      FUN_100063d0(&DAT_100334e0);
+      GetTotalAmount0(&DAT_100334e0);
       if (iVar2 == 0) {
         SetTrigg(10,0);
         ShowPage("#PAGE7");

@@ -76,12 +76,12 @@ void FUN_10001540(int param_1,int param_2,char param_3);
 void FUN_10001590(int param_1,int param_2,char param_3,char param_4);
 void FUN_10001650(int param_1,int param_2);
 void FUN_100016a0(int param_1,int param_2,char param_3);
-void FUN_100016f0(int param_1,int param_2,int param_3,char param_4);
-void FUN_10001760(int param_1,int param_2,int param_3,char param_4,
-            char param_5);
 void FUN_100017d0(int param_1,int param_2,int param_3);
 void FUN_10001890(void);
 void FUN_10002000(void);
+
+void OnInit();
+void ProcessScenary();
 
 
 void __cdecl FUN_10001260(char param_1)
@@ -259,39 +259,6 @@ FUN_10001590(param_1,param_2,param_3,0);
 
 
 
-void __cdecl
-FUN_100016f0(int param_1,int param_2,int param_3,char param_4)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-CreateObject0(param_1,&DAT_10031468,param_2,param_4,param_3,100);
-  uStack_8 = 0x10001741;
-  return;
-}
-
-
-
-
-
-void __cdecl
-FUN_10001760(int param_1,int param_2,int param_3,char param_4,
-            char param_5)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-CreateObject0(param_1,&DAT_10031468,param_2,param_4,param_3,(int)param_5);
-  uStack_8 = 0x100017b3;
-  return;
-}
-
-
-
 
 
 void __cdecl FUN_100017d0(int param_1,int param_2,int param_3)
@@ -303,7 +270,7 @@ void __cdecl FUN_100017d0(int param_1,int param_2,int param_3)
   int local_8;
 FUN_100012d0(param_1);
   for (local_c = 0; local_c < DAT_10031500; local_c = local_c + 1) {
-    FUN_10001760(&DAT_10031418,param_2,param_3,(char)local_8,0);
+    CreateObject0(&DAT_10031418,param_2,param_3,(char)local_8,0);
     RemoveGroup(&DAT_10031418,param_1);
   }
   return;

@@ -164,6 +164,9 @@ int DAT_1000ada0_ovl = 0;
 int DAT_1000ada4_ovl = 0;
 int DAT_1000adc0_ovl = 0;
 int DAT_1000adc4_ovl = 0;
+void OnInit();
+void ProcessScenary();
+
 
 void OnInit(void)
 

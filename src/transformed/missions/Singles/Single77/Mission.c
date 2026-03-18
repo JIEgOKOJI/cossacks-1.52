@@ -123,10 +123,12 @@ int FUN_10001012(int param_1);
 int FUN_10001030(int param_1,int param_2,int param_3,int param_4);
 void FUN_1000106a(int param_1,int param_2);
 void FUN_10001082(int param_1,int param_2,int param_3);
-int FUN_10001099(int param_1,int param_2,int param_3,int param_4);
 int FUN_100010c0(int param_1,int param_2,int param_3);
 BOOL FUN_1000110a(int param_1,int param_2,int param_3,int param_4,
             int param_5,int param_6);
+
+void OnInit();
+void ProcessScenary();
 
 
 int __cdecl FUN_10001012(int param_1)
@@ -189,17 +191,6 @@ void __cdecl FUN_10001082(int param_1,int param_2,int param_3)
 
 
 
-int __cdecl
-FUN_10001099(int param_1,int param_2,int param_3,int param_4)
-
-{
-  CreateObject0(param_1,&DAT_10006790,param_2,param_4,param_3,0x80);
-  return param_4;
-}
-
-
-
-
 
 int __cdecl FUN_100010c0(int param_1,int param_2,int param_3)
 
@@ -211,7 +202,7 @@ int __cdecl FUN_100010c0(int param_1,int param_2,int param_3)
   iVar2 = 0;
   if (0 < DAT_10006868) {
     do {
-      FUN_10001099(&DAT_10006740,param_2,param_3,iVar1);
+      CreateObject0(&DAT_10006740,param_2,param_3,iVar1);
       RemoveGroup(&DAT_10006740,param_1);
       iVar2 = iVar2 + 1;
     } while (iVar2 < DAT_10006868);

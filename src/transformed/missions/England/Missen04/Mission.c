@@ -21,24 +21,8 @@ long long DAT_1002e440 = 0;
 /* Stubs for missing internal functions */
 int FUN_100290d0() { return 0; }
 
-
-/* Forward declarations */
-void FUN_10001b50(int param_1);
-
-
-void __cdecl FUN_10001b50(int param_1)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-GetTotalAmount0(param_1);
-  uStack_8 = 0x10001b8b;
-  return;
-}
-
-
+void OnInit();
+void ProcessScenary();
 
 
 
@@ -98,7 +82,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(0x1e);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10001b50(&DAT_1002e3f0);
+    GetTotalAmount0(&DAT_1002e3f0);
     if (iVar2 < 2) {
       SetTrigg(0x1e,0);
       SelectUnits(&DAT_1002e3e8,0);
@@ -115,9 +99,9 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(2);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10001b50(&DAT_1002e400);
+    GetTotalAmount0(&DAT_1002e400);
     if (0 < iVar2) {
-      FUN_10001b50(&DAT_1002e3f0);
+      GetTotalAmount0(&DAT_1002e3f0);
       if (iVar2 == 0) {
         SetTrigg(2,0);
         ShowPage("#PAGE2");
@@ -129,9 +113,9 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(3);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10001b50(&DAT_1002e400);
+    GetTotalAmount0(&DAT_1002e400);
     if (iVar2 == 0) {
-      FUN_10001b50(&DAT_1002e3f0);
+      GetTotalAmount0(&DAT_1002e3f0);
       if (iVar2 == 0) {
         SetTrigg(3,0);
         ShowPage("#PAGE3");
@@ -146,7 +130,7 @@ uVar1 = Trigg(1);
     if ((uVar1 & 0xff) != 0) {
       iVar2 = GetUnitsAmount1(&DAT_1002e428,&DAT_1002e3e0);
       if (0 < iVar2) {
-        FUN_10001b50(&DAT_1002e408);
+        GetTotalAmount0(&DAT_1002e408);
         if (iVar2 == 0) {
           SetTrigg(4,0);
           ShowPage("#PAGE4");
@@ -157,7 +141,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(5);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10001b50(&DAT_1002e3e0);
+    GetTotalAmount0(&DAT_1002e3e0);
     if (iVar2 == 0) {
       SetTrigg(5,0);
       ShowPage("#PAGE5");

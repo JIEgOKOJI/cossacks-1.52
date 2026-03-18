@@ -54,6 +54,9 @@ void  FUN_10001590(char *param_1);
 void FUN_10001660(void);
 void FUN_10001a40(void);
 
+void OnInit();
+void ProcessScenary();
+
 
 void 
 FUN_10001210(void *this_ptr,int param_1,int param_2,char param_3,int param_4)

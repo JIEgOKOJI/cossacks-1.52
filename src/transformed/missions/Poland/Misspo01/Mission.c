@@ -282,6 +282,9 @@ long long DAT_10008fa8 = 0;
 long long DAT_10008fb0 = 0;
 int DAT_10008c88_ovl = 0;
 int DAT_10008ef8_ovl = 0;
+void OnInit();
+void ProcessScenary();
+
 
 void OnInit(void)
 

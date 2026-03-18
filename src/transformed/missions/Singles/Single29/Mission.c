@@ -207,20 +207,8 @@ long long DAT_10007b40 = 0;
 long long DAT_10007b48 = 0;
 long long DAT_10007b50 = 0;
 long long DAT_10007b58 = 0;
-
-/* Forward declarations */
-int FUN_10001012(int param_1,int param_2,int param_3,int param_4);
-
-
-int __cdecl
-FUN_10001012(int param_1,int param_2,int param_3,int param_4)
-
-{
-  CreateObject0(param_1,&DAT_10007898,param_2,param_4,param_3,0x80);
-  return param_4;
-}
-
-
+void OnInit();
+void ProcessScenary();
 
 
 
@@ -555,28 +543,28 @@ LAB_10001ce8:
   SetStandGround(1,1);
   if ((DAT_100077b8 != 0) && (DAT_100077ac = 0, 0 < DAT_100077e0)) {
     do {
-      FUN_10001012(&DAT_10007990,&DAT_10007a58,&DAT_100078d8,1);
+      CreateObject0(&DAT_10007990,&DAT_10007a58,&DAT_100078d8,1);
       DAT_100077ac = DAT_100077ac + 1;
     } while (DAT_100077ac < DAT_100077e0);
   }
   DAT_100077ac = 0;
   if (0 < DAT_100079d8) {
     do {
-      FUN_10001012(&DAT_10007838,&DAT_10007940,&DAT_10007a18,2);
+      CreateObject0(&DAT_10007838,&DAT_10007940,&DAT_10007a18,2);
       DAT_100077ac = DAT_100077ac + 1;
     } while (DAT_100077ac < DAT_100079d8);
   }
   DAT_100077ac = 0;
   if (0 < DAT_100079d8) {
     do {
-      FUN_10001012(&DAT_10007828,&DAT_10007928,&DAT_10007a18,2);
+      CreateObject0(&DAT_10007828,&DAT_10007928,&DAT_10007a18,2);
       DAT_100077ac = DAT_100077ac + 1;
     } while (DAT_100077ac < DAT_100079d8);
   }
   DAT_100077ac = 0;
   if (0 < DAT_100077e0) {
     do {
-      FUN_10001012(&DAT_10007990,&DAT_10007a58,&DAT_100078d8,1);
+      CreateObject0(&DAT_10007990,&DAT_10007a58,&DAT_100078d8,1);
       RemoveGroup(&DAT_10007990,&DAT_10007978);
       DAT_100077ac = DAT_100077ac + 1;
     } while (DAT_100077ac < DAT_100077e0);
@@ -586,7 +574,7 @@ LAB_10001ce8:
   DAT_100077ac = 0;
   if (0 < DAT_100077e0) {
     do {
-      FUN_10001012(&DAT_10007990,&DAT_10007a58,&DAT_100078d8,1);
+      CreateObject0(&DAT_10007990,&DAT_10007a58,&DAT_100078d8,1);
       RemoveGroup(&DAT_10007990,&DAT_10007980);
       DAT_100077ac = DAT_100077ac + 1;
     } while (DAT_100077ac < DAT_100077e0);
@@ -596,7 +584,7 @@ LAB_10001ce8:
   DAT_100077ac = 0;
   if (0 < DAT_100079d8) {
     do {
-      FUN_10001012(&DAT_10007990,&DAT_10007a70,&DAT_100078d8,1);
+      CreateObject0(&DAT_10007990,&DAT_10007a70,&DAT_100078d8,1);
       RemoveGroup(&DAT_10007990,&DAT_10007988);
       DAT_100077ac = DAT_100077ac + 1;
     } while (DAT_100077ac < DAT_100079d8);
@@ -1047,21 +1035,21 @@ LAB_10002004:
     DAT_100077ac = 0;
     if (0 < DAT_100077e0 * 3) {
       do {
-        FUN_10001012(&DAT_10007990,&DAT_10007a90,&DAT_100079f8,3);
+        CreateObject0(&DAT_10007990,&DAT_10007a90,&DAT_100079f8,3);
         DAT_100077ac = DAT_100077ac + 1;
       } while (DAT_100077ac < DAT_100077e0 * 3);
     }
     DAT_100077ac = 0;
     if (0 < DAT_100079d8 * 2) {
       do {
-        FUN_10001012(&DAT_10007990,&DAT_10007aa0,&DAT_100079f8,3);
+        CreateObject0(&DAT_10007990,&DAT_10007aa0,&DAT_100079f8,3);
         DAT_100077ac = DAT_100077ac + 1;
       } while (DAT_100077ac < DAT_100079d8 * 2);
     }
     DAT_100077ac = 0;
     if (0 < DAT_100079d8 * 2) {
       do {
-        FUN_10001012(&DAT_10007990,&DAT_10007ab8,&DAT_100079f8,3);
+        CreateObject0(&DAT_10007990,&DAT_10007ab8,&DAT_100079f8,3);
         DAT_100077ac = DAT_100077ac + 1;
       } while (DAT_100077ac < DAT_100079d8 * 2);
     }

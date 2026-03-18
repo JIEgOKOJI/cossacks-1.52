@@ -74,6 +74,9 @@ long long DAT_10006988 = 0;
 /* Forward declarations */
 int FUN_10001000(void);
 
+void OnInit();
+void ProcessScenary();
+
 
 int FUN_10001000(void)
 

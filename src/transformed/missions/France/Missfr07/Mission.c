@@ -31,40 +31,8 @@ long long DAT_1002f498 = 0;
 long long DAT_1002f4a0 = 0;
 long long DAT_1002f4a8 = 0;
 long long DAT_1002f4b0 = 0;
-
-/* Forward declarations */
-void FUN_10002690(int param_1);
-void FUN_100026e0(int param_1,char param_2);
-
-
-void __cdecl FUN_10002690(int param_1)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-GetTotalAmount0(param_1);
-  uStack_8 = 0x100026cb;
-  return;
-}
-
-
-
-
-
-void __cdecl FUN_100026e0(int param_1,char param_2)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-GetTotalAmount1(param_1,(int)param_2);
-  uStack_8 = 0x1000271f;
-  return;
-}
-
+void OnInit();
+void ProcessScenary();
 
 
 
@@ -153,7 +121,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(2);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10002690(&DAT_1002f3f8);
+    GetTotalAmount0(&DAT_1002f3f8);
     if (iVar3 < 0xd) {
       SetTrigg(2,0);
       ShowPage("#PAGE2");
@@ -194,7 +162,7 @@ uVar1 = Trigg(1);
     uVar1 = Trigg(2);
     if ((uVar1 & 0xff) != 0) {
       iVar3 = GetUnitsAmount1(&DAT_1002f470,&DAT_1002f3f8);
-      FUN_10002690(&DAT_1002f3f8);
+      GetTotalAmount0(&DAT_1002f3f8);
       if (iVar3 == iVar2) {
         SetTrigg(3,0);
         SetTrigg(0x43,1);
@@ -224,7 +192,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(5);
   if ((uVar1 & 0xff) != 0) {
-    FUN_100026e0(&DAT_1002f3e0,1);
+    GetTotalAmount1(&DAT_1002f3e0,1);
     if (iVar3 == 0) {
       SetTrigg(5,0);
       ShowPage("#PAGE5");
@@ -246,7 +214,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(7);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10002690(&DAT_1002f418);
+    GetTotalAmount0(&DAT_1002f418);
     if (iVar3 == 0) {
       SetTrigg(7,0);
       ShowPage("#PAGE7");
@@ -277,7 +245,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(10);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10002690(&DAT_1002f3e8);
+    GetTotalAmount0(&DAT_1002f3e8);
     if (iVar3 == 0) {
       SetTrigg(10,0);
       iVar3 = GetResource(0,3);
@@ -308,7 +276,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(0xd);
   if ((uVar1 & 0xff) != 0) {
-    FUN_100026e0(&DAT_1002f4b0,0);
+    GetTotalAmount1(&DAT_1002f4b0,0);
     if (0 < iVar3) {
       SetTrigg(0xd,0);
       ShowPage("#PAGE13");

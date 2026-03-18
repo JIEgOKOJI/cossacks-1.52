@@ -76,6 +76,9 @@ void  FUN_10002450(char *param_1);
 void FUN_10002520(void);
 void FUN_100028e0(void);
 
+void OnInit();
+void ProcessScenary();
+
 
 void  FUN_10001290(void *param_1)
 

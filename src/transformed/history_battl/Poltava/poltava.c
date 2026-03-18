@@ -20,7 +20,9 @@ int DAT_1002f44c = 0;
 /* Forward declarations */
 void FUN_100011b0(void);
 void FUN_10002200(void);
-void FUN_10002610(int param_1);
+
+void OnInit();
+void ProcessScenary();
 
 
 void FUN_100011b0(void)
@@ -147,8 +149,8 @@ RegisterVisibleZone(&DAT_1002f420,"Zone1");
   SetLightSpot(&DAT_1002f438,0,4);
   SetLightSpot(&DAT_1002f440,0,5);
   for (DAT_1002f3e0 = 0; DAT_1002f3e0 < 5; DAT_1002f3e0 = DAT_1002f3e0 + 1) {
-    (&DAT_1002f3e4)[DAT_1002f3e0] = 0;
-    (&DAT_1002f3f8)[DAT_1002f3e0] = 0;
+    ((long long *)&DAT_1002f3e4)[DAT_1002f3e0] = 0;
+    ((long long *)&DAT_1002f3f8)[DAT_1002f3e0] = 0;
   }
   uStack_8 = 0x10001eb4;
   return;
@@ -167,28 +169,28 @@ void FUN_10002200(void)
   int local_44 [15];
   int uStack_8;
 for (DAT_1002f3e0 = 0; DAT_1002f3e0 < 5; DAT_1002f3e0 = DAT_1002f3e0 + 1) {
-    iVar2 = GetUnitsAmount0(&DAT_1002f420 + DAT_1002f3e0 * 8,0);
+    iVar2 = GetUnitsAmount0(((unsigned char *)&DAT_1002f420) + DAT_1002f3e0 * 8,0);
     if (0 < iVar2) {
-      iVar2 = GetUnitsAmount0(&DAT_1002f420 + DAT_1002f3e0 * 8,1);
+      iVar2 = GetUnitsAmount0(((unsigned char *)&DAT_1002f420) + DAT_1002f3e0 * 8,1);
       if (iVar2 == 0) {
-        (&DAT_1002f3e4)[DAT_1002f3e0] = 1;
-        (&DAT_1002f3f8)[DAT_1002f3e0] = 0;
+        ((long long *)&DAT_1002f3e4)[DAT_1002f3e0] = 1;
+        ((long long *)&DAT_1002f3f8)[DAT_1002f3e0] = 0;
       }
     }
-    iVar2 = GetUnitsAmount0(&DAT_1002f420 + DAT_1002f3e0 * 8,1);
+    iVar2 = GetUnitsAmount0(((unsigned char *)&DAT_1002f420) + DAT_1002f3e0 * 8,1);
     if (0 < iVar2) {
-      iVar2 = GetUnitsAmount0(&DAT_1002f420 + DAT_1002f3e0 * 8,0);
+      iVar2 = GetUnitsAmount0(((unsigned char *)&DAT_1002f420) + DAT_1002f3e0 * 8,0);
       if (iVar2 == 0) {
-        (&DAT_1002f3e4)[DAT_1002f3e0] = 0;
-        (&DAT_1002f3f8)[DAT_1002f3e0] = 1;
+        ((long long *)&DAT_1002f3e4)[DAT_1002f3e0] = 0;
+        ((long long *)&DAT_1002f3f8)[DAT_1002f3e0] = 1;
       }
     }
   }
   DAT_1002f448 = 0;
   DAT_1002f44c = 0;
   for (DAT_1002f3e0 = 0; DAT_1002f3e0 < 5; DAT_1002f3e0 = DAT_1002f3e0 + 1) {
-    DAT_1002f448 = DAT_1002f448 + (&DAT_1002f3e4)[DAT_1002f3e0];
-    DAT_1002f44c = DAT_1002f44c + (&DAT_1002f3f8)[DAT_1002f3e0];
+    DAT_1002f448 = DAT_1002f448 + ((long long *)&DAT_1002f3e4)[DAT_1002f3e0];
+    DAT_1002f44c = DAT_1002f44c + ((long long *)&DAT_1002f3f8)[DAT_1002f3e0];
   }
   if ((DAT_1002f448 < 3) && (2 < DAT_1002f44c)) {
     ProcessScenary();
@@ -206,7 +208,7 @@ for (DAT_1002f3e0 = 0; DAT_1002f3e0 < 5; DAT_1002f3e0 = DAT_1002f3e0 + 1) {
     OnInit();
   }
   uVar1 = Trigg(0xf);
-  if (((uVar1 & 0xff) != 0) && (FUN_10002610(&DAT_1002f410), iVar2 < 0x14)) {
+  if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_1002f410), iVar2 < 0x14)) {
     SetTrigg(0xf,0);
     iVar2 = GetMyNation();
     if (iVar2 == 1) {
@@ -214,18 +216,18 @@ for (DAT_1002f3e0 = 0; DAT_1002f3e0 < 5; DAT_1002f3e0 = DAT_1002f3e0 + 1) {
     }
   }
   uVar1 = Trigg(0x10);
-  if (((uVar1 & 0xff) != 0) && (FUN_10002610(&DAT_1002f418), iVar2 < 0x14)) {
+  if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_1002f418), iVar2 < 0x14)) {
     SetTrigg(0x10,0);
     iVar2 = GetMyNation();
     if (iVar2 == 0) {
       ShowCentralText("TEXT8",100);
     }
   }
-  FUN_10002610(&DAT_1002f410);
+  GetTotalAmount0(&DAT_1002f410);
   if (iVar2 == 0) {
     ProcessScenary();
   }
-  FUN_10002610(&DAT_1002f418);
+  GetTotalAmount0(&DAT_1002f418);
   if (iVar2 == 0) {
     OnInit();
   }
@@ -233,21 +235,6 @@ for (DAT_1002f3e0 = 0; DAT_1002f3e0 < 5; DAT_1002f3e0 = DAT_1002f3e0 + 1) {
   return;
 }
 
-
-
-
-
-void __cdecl FUN_10002610(int param_1)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-GetTotalAmount0(param_1);
-  uStack_8 = 0x1000264b;
-  return;
-}
 
 
 

@@ -126,24 +126,8 @@ long long DAT_10034750 = 0;
 long long DAT_10034758 = 0;
 long long DAT_10034760 = 0;
 long long DAT_10034768 = 0;
-
-/* Forward declarations */
-void FUN_10007070(int param_1,char param_2);
-
-
-void __cdecl FUN_10007070(int param_1,char param_2)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-GetTotalAmount1(param_1,(int)param_2);
-  uStack_8 = 0x100070af;
-  return;
-}
-
-
+void OnInit();
+void ProcessScenary();
 
 
 
@@ -644,7 +628,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(0x31);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10007070(&DAT_10034490,0);
+    GetTotalAmount1(&DAT_10034490,0);
     if (3 < iVar2) {
       DisableMission(0x4a);
       EnableMission(0x6a);
@@ -656,7 +640,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(0x32);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10007070(&DAT_100344a8,0);
+    GetTotalAmount1(&DAT_100344a8,0);
     if (0 < iVar2) {
       DisableMission(0x4b);
       EnableMission(0x6b);

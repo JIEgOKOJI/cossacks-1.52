@@ -449,16 +449,109 @@ def remove_stack_fill(code):
     return code
 
 
-def generate_var_declarations(dat_types, pe):
-    """Generate C variable declarations for all DAT_ references."""
+def detect_stride_sizes(code, dat_types):
+    """Detect stride-based array access patterns in code.
+
+    Patterns like &DAT_xxx + expr * STRIDE indicate that DAT_xxx needs
+    to be a byte array of at least (MAX_INDEX+1) * STRIDE bytes, not a
+    scalar int/long long.
+
+    Returns dict: addr_hex → min byte size needed.
+    """
+    stride_sizes = {}  # addr_hex → size
+
+    # Find stride constants from assignments like: iVar = expr * 0x4b8
+    # Cap at 0x10000 to filter out compiler optimization constants like
+    # 0x55555556 (division by 3) and 0x01010101 (byte broadcast)
+    MAX_STRIDE = 0x10000
+    stride_vars = {}  # var_name → stride_value
+    for m in re.finditer(r'(\w+)\s*=\s*\w+\s*\*\s*(0x[0-9a-fA-F]+|\d+)\s*;', code):
+        var_name, stride_str = m.group(1), m.group(2)
+        stride = int(stride_str, 0)
+        if 8 < stride <= MAX_STRIDE:
+            stride_vars[var_name] = stride
+
+    # Find &DAT_xxx + stride_var (indirect pattern)
+    for m in re.finditer(r'&DAT_([\da-fA-F]+)\s*[+\-]\s*(\w+)\b', code):
+        addr_hex, var_name = m.group(1), m.group(2)
+        if var_name in stride_vars:
+            # Estimate max index: use 8 (safe default for game with up to 8 players)
+            # but also check for loop bounds
+            needed = 8 * stride_vars[var_name]
+            stride_sizes[addr_hex] = max(stride_sizes.get(addr_hex, 0), needed)
+
+    # Find &DAT_xxx + expr * STRIDE (direct pattern)
+    for m in re.finditer(r'&DAT_([\da-fA-F]+)\s*[+\-]\s*\w+\s*\*\s*(0x[0-9a-fA-F]+|\d+)', code):
+        addr_hex, stride_str = m.group(1), m.group(2)
+        stride = int(stride_str, 0)
+        if 8 < stride <= MAX_STRIDE:
+            needed = 8 * stride
+            stride_sizes[addr_hex] = max(stride_sizes.get(addr_hex, 0), needed)
+
+    # Find &DAT_xxx + expr * stride1 + expr2 * stride2 (multi-dimensional)
+    for m in re.finditer(r'&DAT_([\da-fA-F]+)\s*\+.*?\*\s*(0x[0-9a-fA-F]+|\d+).*?\*\s*(0x[0-9a-fA-F]+|\d+)', code):
+        addr_hex = m.group(1)
+        s1 = int(m.group(2), 0)
+        s2 = int(m.group(3), 0)
+        # Take the larger stride as the primary, estimate 8 * max_stride
+        max_stride = max(s1, s2)
+        if 8 < max_stride <= MAX_STRIDE:
+            needed = 8 * max_stride
+            stride_sizes[addr_hex] = max(stride_sizes.get(addr_hex, 0), needed)
+
+    return stride_sizes
+
+
+def generate_var_declarations(dat_types, pe, code=''):
+    """Generate C variable declarations for all DAT_ references.
+
+    If code is provided, also detects stride-based array access patterns
+    and generates appropriately-sized byte arrays instead of scalars.
+    """
     lines = []
     sorted_addrs = sorted(dat_types.keys(), key=lambda x: int(x, 16))
+
+    # Detect stride patterns
+    stride_sizes = detect_stride_sizes(code, dat_types) if code else {}
+
+    # Build sorted address list for extent calculation
+    all_vas = sorted(int(a, 16) for a in dat_types.keys())
+
+    def get_extent(va):
+        """Get byte extent from va to the next DAT_ address."""
+        for a in all_vas:
+            if a > va:
+                return a - va
+        return 8
 
     for addr_hex in sorted_addrs:
         dtype = dat_types[addr_hex]
         va = int(addr_hex, 16)
 
+        # If stride detection found this needs to be a large array
+        if addr_hex in stride_sizes:
+            byte_size = stride_sizes[addr_hex]
+            raw = pe.read_bytes_at_va(va, byte_size)
+            if raw and len(raw) == byte_size:
+                hex_vals = ', '.join(f'0x{b:02X}' for b in raw)
+                lines.append(f'unsigned char DAT_{addr_hex}[{byte_size}] = {{{hex_vals}}};')
+            else:
+                lines.append(f'unsigned char DAT_{addr_hex}[{byte_size}] = {{0}};')
+            continue
+
         if dtype == 'gameobj':
+            # Check if used as array base with offset arithmetic
+            used_as_array_base = bool(re.search(r'&DAT_' + addr_hex + r'\s*[+\-]', code)) if code else False
+            if used_as_array_base:
+                extent = get_extent(va)
+                if 8 < extent <= 0x100000:  # cap at 1MB to avoid address-gap artifacts
+                    raw = pe.read_bytes_at_va(va, extent)
+                    if raw and len(raw) == extent:
+                        hex_vals = ', '.join(f'0x{b:02X}' for b in raw)
+                        lines.append(f'unsigned char DAT_{addr_hex}[{extent}] = {{{hex_vals}}};')
+                    else:
+                        lines.append(f'unsigned char DAT_{addr_hex}[{extent}] = {{0}};')
+                    continue
             lines.append(f'long long DAT_{addr_hex} = 0;')
         elif dtype == 'string':
             s = pe.read_string_at_va(va)
@@ -612,6 +705,105 @@ if __name__ == '__main__':
 
     # Remove Ghidra stack-fill boilerplate
     raw_code = remove_stack_fill(raw_code)
+
+    # Inline simple API wrapper functions.
+    # Pattern: FUN_xxx(params) { ApiCall(params); return; }
+    # These wrappers use `undefined4` / `int` params which truncate 64-bit pointers.
+    # By inlining, &DAT_xxx args go directly to properly-typed API functions.
+    API_NAMES = {
+        'AddResource', 'AllowAttack', 'AskComplexQuestion', 'AskMultilineQuestion',
+        'AskQuestion', 'AssignAmountOfMineUpgrades', 'AssignFormUnit', 'AssignHouse',
+        'AssignMine', 'AssignMineUpgrade', 'AssignNation', 'AssignPeasant', 'AssignWall',
+        'AttackBuildingsInZone', 'AttackEnemyInZone', 'AttackZoneByArtillery',
+        'AI_Torg', 'ChangeFriends', 'ChangeUnitParam', 'CheckBuildingsComplete',
+        'CheckLeaveAbility', 'CheckProduction', 'ClearLightSpot', 'ClearSelection',
+        'CreateBuilding', 'CreateObject0', 'CreateZoneNearGroup', 'CreateZoneNearUnit',
+        'DisableMission', 'DisableUpgrade', 'DoMessagesBrief', 'DoNotUseSelInAI',
+        'EnableMission', 'EnableUnit', 'EnableUpgrade', 'FieldExist', 'FreeTimer',
+        'GetAINation', 'GetAIRegister', 'GetAmountOfWarriors', 'GetDied', 'GetDiff',
+        'GetDifficulty', 'GetExtraction', 'GetGlobalTime', 'GetKilled', 'GetLandType',
+        'GetMaxInside', 'GetMaxPeaceTime', 'GetMaxPeasantsInMines', 'GetMoney',
+        'GetMyNation', 'GetNInside', 'GetNUnits', 'GetPeaceTimeLeft', 'GetQuestPressed',
+        'GetRandomIndex', 'GetReadyAmount', 'GetReadyUnits', 'GetResOnMap',
+        'GetResource', 'GetStartRes', 'GetTime', 'GetTopDst', 'GetTorgResult',
+        'GetTotalAmount0', 'GetTotalAmount1', 'GetTotalAmount2', 'GetUnitCost',
+        'GetUnitExCaps', 'GetUnitInfo', 'GetUnits', 'GetUnitsAmount0',
+        'GetUnitsAmount1', 'GetUnitsAmount2', 'GetUnitsByNation', 'GetUnitsByUsage',
+        'GetUpgradeCost', 'GetZoneCoor', 'HINT', 'InitialUpgrade',
+        'InsertUnitToGroup', 'IsUpgradeDoing', 'IsUpgradeDone', 'IsUpgradeEnabled',
+        'LooseGame', 'NationIsErased', 'PastePiece', 'Patrol',
+        'ProduceOneUnit', 'ProduceUnit', 'ProduceUnitFast',
+        'PushAllUnitsAway', 'PushUnitAway', 'RefreshScreen',
+        'RegisterDynGroup', 'RegisterFormation', 'RegisterSound', 'RegisterString',
+        'RegisterUnitType', 'RegisterUnits', 'RegisterUnitsForm', 'RegisterUpgrade',
+        'RegisterVar', 'RegisterVisibleZone', 'RegisterZone',
+        'RemoveGroup', 'RemoveUnitFromGroup', 'RepairBuildingsBySel',
+        'RunAI', 'RunAIWithPeasants', 'RunTimer',
+        'SafeRegisterUpgrade', 'SaveSelectedUnits',
+        'SelAttackGroup', 'SelAutoKill', 'SelCenter', 'SelChangeNation',
+        'SelCloseGates', 'SelDie', 'SelErase', 'SelOpenGates',
+        'SelSendAndKill', 'SelSendTo',
+        'SelectBuildingsInZone', 'SelectTypeOfUnitsInZone',
+        'SelectUnits', 'SelectUnits1', 'SelectUnitsInZone', 'SelectUnitsType',
+        'SendUnitsToTransport', 'SetAIProperty', 'SetAIRegister',
+        'SetDefSettings', 'SetDefenseState', 'SetDestPoint',
+        'SetLightSpot', 'SetLooseText', 'SetMineBalanse',
+        'SetMinesBuildingRules', 'SetMinesUpgradeRules', 'SetPDistribution',
+        'SetPlayerName', 'SetReadyState', 'SetResource', 'SetStandGround',
+        'SetStandartVictory', 'SetStartPoint', 'SetTrigg', 'SetTutorial',
+        'SetUnitInfo', 'SetUpgradeLock', 'SetVictoryText', 'SetWTrigg',
+        'ShowAlarm', 'ShowCentralText', 'ShowPage', 'ShowPageParam', 'ShowVictory',
+        'StartAI', 'TakeFood', 'TakeStone', 'TakeWood',
+        'TimerDone', 'TimerDoneFirst', 'TimerIsEmpty', 'Trigg', 'TryUnit',
+        'TryUpgrade', 'UnitsCenter', 'UpgIsDone', 'UpgIsRun', 'WTrigg',
+        'SET_DEFAULT_MAX_WORKERS', 'SET_MINE_CAPTURE_RADIUS',
+        'SET_MINE_UPGRADE1_RADIUS', 'SET_MINE_UPGRADE2_RADIUS',
+        'SET_MIN_PEASANT_BRIGADE',
+    }
+
+    # Find all FUN_ function definitions and detect simple wrappers
+    wrapper_map = {}  # FUN_name → API_name
+    fun_pattern = re.compile(
+        r'^(?:void|int|undefined\w*)\s+(?:__\w+\s+)?(FUN_[0-9a-fA-F]+)\s*\([^)]*\)\s*\n\{(.*?)\n\}',
+        re.MULTILINE | re.DOTALL)
+    for m_fun in fun_pattern.finditer(raw_code):
+        fn_name = m_fun.group(1)
+        body = m_fun.group(2)
+        # Strip variable declarations, empty lines, return statements
+        body_lines = []
+        for line in body.split('\n'):
+            stripped = line.strip()
+            if not stripped:
+                continue
+            # Skip var declarations, return, uStack assignments
+            if re.match(r'^(int|char|short|long|unsigned|void|undefined\w*|BOOL|DWORD|float|double)\b', stripped):
+                continue
+            if stripped.startswith('return'):
+                continue
+            if re.match(r'^uStack_\w+\s*=', stripped):
+                continue
+            if stripped == '0;':  # leftover from __chkesp() → 0
+                continue
+            body_lines.append(stripped)
+        # A simple wrapper has exactly one meaningful statement: an API call
+        if len(body_lines) == 1:
+            call_m = re.match(r'(\w+)\s*\(', body_lines[0])
+            if call_m and call_m.group(1) in API_NAMES:
+                wrapper_map[fn_name] = call_m.group(1)
+
+    # Replace all calls to wrapper FUN_xxx(args) → ApiName(args)
+    # and remove the wrapper function definitions entirely
+    for fn_name, api_name in wrapper_map.items():
+        raw_code = re.sub(r'\b' + re.escape(fn_name) + r'\s*\(', api_name + '(', raw_code)
+        # Remove the wrapper function definition (now renamed to API name)
+        raw_code = re.sub(
+            r'^(?:void|int|undefined\w*)\s+(?:__\w+\s+)?' + re.escape(api_name) +
+            r'\s*\([^)]*\)\s*\n\{.*?\n\}\s*',
+            '', raw_code, count=1, flags=re.MULTILINE | re.DOTALL)
+        # Remove forward declaration
+        raw_code = re.sub(
+            r'^(?:void|int|undefined\w*)\s+' + re.escape(api_name) + r'\s*\([^)]*\)\s*;\s*\n',
+            '', raw_code, count=1, flags=re.MULTILINE)
 
     # Remove 'undefined4' type → replace with 'int'
     raw_code = re.sub(r'\bundefined8\b', 'long long', raw_code)
@@ -894,6 +1086,26 @@ if __name__ == '__main__':
                 r'__declspec(dllexport) void ' + func_name + '()',
                 raw_code, count=1, flags=re.MULTILINE)
 
+    # After converting OnInit/ProcessScenary to void, fix "return expr;" → "return;"
+    for func_name in ('OnInit', 'ProcessScenary'):
+        m_fn = re.search(r'void\s+' + func_name + r'\s*\(\)\s*\n\{', raw_code)
+        if m_fn:
+            fn_start = m_fn.start()
+            # Find matching closing brace
+            depth = 0
+            fn_end = fn_start
+            for i in range(m_fn.end() - 1, len(raw_code)):
+                if raw_code[i] == '{':
+                    depth += 1
+                elif raw_code[i] == '}':
+                    depth -= 1
+                    if depth == 0:
+                        fn_end = i + 1
+                        break
+            fn_body = raw_code[fn_start:fn_end]
+            fn_body_fixed = re.sub(r'\breturn\s+\w+\s*;', 'return;', fn_body)
+            raw_code = raw_code[:fn_start] + fn_body_fixed + raw_code[fn_end:]
+
     # Fix C++ bool literals
     raw_code = re.sub(r'\btrue\b', '1', raw_code)
     raw_code = re.sub(r'\bfalse\b', '0', raw_code)
@@ -913,8 +1125,36 @@ if __name__ == '__main__':
     # Remove address comments like /* 0x1012  1  OnInit */
     raw_code = re.sub(r'/\*\s*0x[\da-f]+\s+\d+\s+\w+\s*\*/', '', raw_code)
 
-    # Generate variable declarations
-    var_decls = generate_var_declarations(dat_types, pe)
+    # Fix extraout_ECX Ghidra artifacts: these represent x86 ECX register
+    # output from function calls. On non-x86, they're meaningless.
+    raw_code = re.sub(
+        r'^(\s*(?:int|void\s*\*)\s+extraout_ECX\w*)\s*;',
+        r'\1 = 0;',
+        raw_code, flags=re.MULTILINE
+    )
+
+    # Generate variable declarations (pass code for stride detection)
+    var_decls = generate_var_declarations(dat_types, pe, raw_code)
+
+    # Fix &DAT_xxx pointer arithmetic: when a DAT_ is declared as an array
+    # (unsigned char DAT_xxx[N]), &DAT_xxx gives unsigned char(*)[N] and
+    # arithmetic scales by N instead of 1. Cast to (unsigned char *) to
+    # ensure byte-level arithmetic matching original Ghidra semantics.
+    raw_code = re.sub(
+        r'&(DAT_[\da-fA-F]+)\s*(\+|-)',
+        r'((unsigned char *)&\1) \2',
+        raw_code
+    )
+
+    # Fix (&DAT_xxx)[index] subscript on array-typed DAT_ variables:
+    # When DAT_xxx was long long (8 bytes), (&DAT_xxx)[i] indexed 8-byte elements.
+    # After conversion to unsigned char[], (&array)[i] gives the i-th array-sized chunk.
+    # Cast to (long long *) to preserve original 8-byte element semantics.
+    raw_code = re.sub(
+        r'\(&(DAT_[\da-fA-F]+)\)\s*\[',
+        r'((long long *)&\1)[',
+        raw_code
+    )
 
     # Collect _ovl overlay variables and add declarations  
     ovl_addrs = set(re.findall(r'DAT_([\da-fA-F]+)_ovl', raw_code))
@@ -976,6 +1216,13 @@ if __name__ == '__main__':
     if fwd_decls:
         header += '\n/* Forward declarations */\n'
         header += fwd_decls + '\n'
+
+    # Add forward declarations for OnInit/ProcessScenary to avoid
+    # "conflicting types" when DllMain or other code calls them before definition
+    header += 'void OnInit();\n'
+    if 'process' in game:
+        header += 'void ProcessScenary();\n'
+    header += '\n'
 
     # DllMain
     dllmain = '''

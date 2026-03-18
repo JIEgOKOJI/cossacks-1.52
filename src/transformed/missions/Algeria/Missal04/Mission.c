@@ -89,6 +89,9 @@ long long DAT_10006818 = 0;
 /* Forward declarations */
 void FUN_100013b0(void);
 
+void OnInit();
+void ProcessScenary();
+
 
 void FUN_100013b0(void)
 

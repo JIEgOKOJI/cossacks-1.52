@@ -31,26 +31,21 @@ int FUN_10001fdd() { return 0; }
 
 /* Forward declarations */
 void FUN_10001020(void *param_1);
-void  FUN_10001960(void *this_ptr,int param_1);
-void  FUN_10001980(void *this_ptr,int param_1);
-void  FUN_100019a0(void *this_ptr,int param_1);
 void  FUN_100019c0(void *this_ptr,int param_1);
-void  FUN_100019f0(void *this_ptr,int param_1);
 void  FUN_10001a10(void *this_ptr,int param_1,int param_2);
 void  FUN_10001a70(int param_1);
 int  FUN_10001ac0(int param_1);
 void  FUN_10001b10(void *this_ptr,int param_1);
 void  FUN_10001b20(void *this_ptr,int param_1);
 void  FUN_10001b30(void *this_ptr,int param_1);
-void  FUN_10001b60(void *this_ptr,int param_1);
-void  FUN_10001b80(void *this_ptr,int param_1);
-void  FUN_10001ba0(void *this_ptr,int param_1);
-void  FUN_10001bc0(void *this_ptr,int param_1);
 void  FUN_10001be0(void *this_ptr,int param_1);
 void  FUN_10001cc0(void *this_ptr,int param_1);
 int  FUN_10001d60(int param_1);
 BOOL  FUN_10001da0(int param_1);
 int FUN_10001dc0(char *param_1,byte *param_2);
+
+void OnInit();
+void ProcessScenary();
 
 
 void __cdecl FUN_10001020(void *param_1)
@@ -90,36 +85,6 @@ void __cdecl FUN_10001020(void *param_1)
 
 
 
-void  FUN_10001960(void *this_ptr,int param_1)
-
-{
-  RegisterUnits(this_ptr,param_1);
-  return;
-}
-
-
-
-
-
-void  FUN_10001980(void *this_ptr,int param_1)
-
-{
-  RegisterUnits((int)this_ptr + 8,param_1);
-  return;
-}
-
-
-
-
-
-void  FUN_100019a0(void *this_ptr,int param_1)
-
-{
-  RegisterUnits((int)this_ptr + 0x10,param_1);
-  return;
-}
-
-
 
 
 
@@ -131,16 +96,6 @@ void  FUN_100019c0(void *this_ptr,int param_1)
   return;
 }
 
-
-
-
-
-void  FUN_100019f0(void *this_ptr,int param_1)
-
-{
-  RegisterUnits((int)this_ptr + 0x48,param_1);
-  return;
-}
 
 
 
@@ -243,46 +198,6 @@ void  FUN_10001b30(void *this_ptr,int param_1)
 
 
 
-
-void  FUN_10001b60(void *this_ptr,int param_1)
-
-{
-  RegisterUnits((int)this_ptr + 0xc,param_1);
-  return;
-}
-
-
-
-
-
-void  FUN_10001b80(void *this_ptr,int param_1)
-
-{
-  RegisterZone((int)this_ptr + 0x14,param_1);
-  return;
-}
-
-
-
-
-
-void  FUN_10001ba0(void *this_ptr,int param_1)
-
-{
-  RegisterUnitType((int)this_ptr + 0x1c,param_1);
-  return;
-}
-
-
-
-
-
-void  FUN_10001bc0(void *this_ptr,int param_1)
-
-{
-  RegisterUnitType((int)this_ptr + 0x24,param_1);
-  return;
-}
 
 
 
@@ -419,10 +334,10 @@ void OnInit(void)
   FUN_10001b30(&DAT_1000bf98,"Band0_house0");
   FUN_10001b30(&DAT_1000bf98,"Band0_house1");
   FUN_10001b30(&DAT_1000bf98,"Band0_house2");
-  FUN_10001b60(&DAT_1000bf98,"Band0_barrack");
-  FUN_10001b80(&DAT_1000bf98,"Z_Band0_main");
-  FUN_10001ba0(&DAT_1000bf98,"Strelec_Algir(AL)");
-  FUN_10001bc0(&DAT_1000bf98,"Pehota_turki(AL)");
+  RegisterUnits(&DAT_1000bf98,"Band0_barrack");
+  RegisterZone(&DAT_1000bf98,"Z_Band0_main");
+  RegisterUnitType(&DAT_1000bf98,"Strelec_Algir(AL)");
+  RegisterUnitType(&DAT_1000bf98,"Pehota_turki(AL)");
   RegisterZone(&DAT_1000c020,"Z_View0");
   RegisterZone(&DAT_1000c028,"Z_View1");
   RegisterZone(&DAT_1000c030,"Z_View2");
@@ -435,21 +350,21 @@ void OnInit(void)
   RegisterUnitType(&DAT_1000c130,"WALL_EV(DA)");
   RegisterUpgrade(&DAT_1000bf80,"AKA24DA");
   RegisterUpgrade(&DAT_1000c128,"AKA19DA");
-  FUN_10001960(&DAT_1000c038,"Link0_MainForce");
-  FUN_10001980(&DAT_1000c038,"Link0_Buildings");
+  RegisterUnits(&DAT_1000c038,"Link0_MainForce");
+  RegisterUnits(&DAT_1000c038,"Link0_Buildings");
   FUN_100019c0(&DAT_1000c038,"Link0_Towers");
-  FUN_100019f0(&DAT_1000c038,"Link0_Wall");
-  FUN_100019a0(&DAT_1000c038,"Link0_Food");
-  FUN_10001960(&DAT_1000c088,"Link1_MainForce");
-  FUN_10001980(&DAT_1000c088,"Link1_Buildings");
+  RegisterUnits(&DAT_1000c038,"Link0_Wall");
+  RegisterUnits(&DAT_1000c038,"Link0_Food");
+  RegisterUnits(&DAT_1000c088,"Link1_MainForce");
+  RegisterUnits(&DAT_1000c088,"Link1_Buildings");
   FUN_100019c0(&DAT_1000c088,"Link1_Towers");
-  FUN_100019f0(&DAT_1000c088,"Link1_Wall");
-  FUN_100019a0(&DAT_1000c088,"Link1_Food");
-  FUN_10001960(&DAT_1000c0d8,"Link2_MainForce");
-  FUN_10001980(&DAT_1000c0d8,"Link2_Buildings");
+  RegisterUnits(&DAT_1000c088,"Link1_Wall");
+  RegisterUnits(&DAT_1000c088,"Link1_Food");
+  RegisterUnits(&DAT_1000c0d8,"Link2_MainForce");
+  RegisterUnits(&DAT_1000c0d8,"Link2_Buildings");
   FUN_100019c0(&DAT_1000c0d8,"Link2_Towers");
-  FUN_100019f0(&DAT_1000c0d8,"Link2_Wall");
-  FUN_100019a0(&DAT_1000c0d8,"Link2_Food");
+  RegisterUnits(&DAT_1000c0d8,"Link2_Wall");
+  RegisterUnits(&DAT_1000c0d8,"Link2_Food");
   ChangeFriends(1,0xe);
   ChangeFriends(2,0xe);
   ChangeFriends(3,0xe);

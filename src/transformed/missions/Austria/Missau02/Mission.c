@@ -120,6 +120,9 @@ long long DAT_10006698 = 0;
 /* Forward declarations */
 void FUN_10001330(int param_1);
 
+void OnInit();
+void ProcessScenary();
+
 
 void __cdecl FUN_10001330(int param_1)
 

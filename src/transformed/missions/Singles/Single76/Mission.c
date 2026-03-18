@@ -48,6 +48,9 @@ BOOL FUN_10001850(int param_1);
 void FUN_100018c0(int param_1,int param_2);
 void FUN_10001920(DWORD param_1);
 
+void OnInit();
+void ProcessScenary();
+
 
 BOOL __cdecl FUN_100015f0(int param_1)
 
@@ -90,7 +93,7 @@ int __cdecl FUN_10001630(int param_1,int param_2,int param_3,int param_4)
   local_3d = '\0';
   local_3c = 0;
   do {
-    if ((&DAT_10008030)[local_3c] == '\x01') {
+    if (((long long *)&DAT_10008030)[local_3c] == '\x01') {
       ClearSelection(local_3c);
       iVar4 = param_3;
       iVar5 = param_2;
@@ -203,7 +206,7 @@ BOOL __cdecl FUN_10001850(int param_1)
     UnitsCenter(auStack_8,param_1,500);
     iVar2 = 0;
     do {
-      if (((&DAT_10008030)[iVar2] == '\x01') &&
+      if ((((long long *)&DAT_10008030)[iVar2] == '\x01') &&
          ((bVar1 || (iVar3 = GetUnitsAmount0(auStack_8,iVar2), iVar3 != 0)))) {
         bVar1 = 1;
       }
@@ -389,8 +392,8 @@ LAB_1000139c:
     FUN_10001920(DVar5);
     uVar4 = 0x40;
     iVar6 = rand();
-// FIXME(decompiler):     iVar6 = GetDiff(0,&DAT_1000ac50,1,&DAT_1000ac98 + (iVar6 % 5) * 8,uVar4);
-    CreateObject0(&DAT_1000ac70,&DAT_1000ac30 + iVar6 * 8);
+// FIXME(decompiler):     iVar6 = GetDiff(0,&DAT_1000ac50,1,((unsigned char *)&DAT_1000ac98) + (iVar6 % 5) * 8,uVar4);
+    CreateObject0(&DAT_1000ac70,((unsigned char *)&DAT_1000ac30) + iVar6 * 8);
   }
   bVar2 = FUN_10001850(&DAT_1000ac70);
   if ((bVar2) && (iVar6 = GetTotalAmount0(&DAT_1000ac80), iVar6 != 0)) {

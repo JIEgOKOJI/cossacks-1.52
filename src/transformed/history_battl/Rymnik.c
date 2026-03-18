@@ -62,9 +62,11 @@ void FUN_100017a0(void);
 void FUN_10001890(void);
 void FUN_100018d0(int param_1);
 void FUN_10001960(void);
-void FUN_100019e0(int param_1);
 void FUN_10001a30(void);
 void FUN_10002050(void);
+
+void OnInit();
+void ProcessScenary();
 
 
 void __cdecl FUN_10001270(int param_1,char param_2,char param_3,char param_4)
@@ -194,9 +196,9 @@ void __cdecl FUN_100016d0(char param_1,char param_2)
   int local_8;
 local_8 = 0;
   for (local_c = 0; local_c < 5; local_c = local_c + 1) {
-    iVar1 = GetUnitsAmount0(&DAT_1001f468 + local_c * 8,param_1);
+    iVar1 = GetUnitsAmount0(((unsigned char *)&DAT_1001f468) + local_c * 8,param_1);
     if (0 < iVar1) {
-      iVar1 = GetUnitsAmount0(&DAT_1001f468 + local_c * 8,param_2);
+      iVar1 = GetUnitsAmount0(((unsigned char *)&DAT_1001f468) + local_c * 8,param_2);
       if (iVar1 == 0) {
         local_8 = local_8 + 1;
       }
@@ -272,27 +274,12 @@ void FUN_10001960(void)
   int local_48 [16];
   int local_8;
 local_8 = 0;
-  while ((local_8 < 3 && (FUN_100019e0(&DAT_1001f448 + local_8 * 8), iVar1 < 1))) {
+  while ((local_8 < 3 && (GetTotalAmount0(((unsigned char *)&DAT_1001f448) + local_8 * 8), iVar1 < 1))) {
     local_8 = local_8 + 1;
   }
   return;
 }
 
-
-
-
-
-void __cdecl FUN_100019e0(int param_1)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-GetTotalAmount0(param_1);
-  uStack_8 = 0x10001a1b;
-  return;
-}
 
 
 
@@ -350,7 +337,7 @@ RegisterVar(&DAT_1001da40,2);
   iVar1 = GetMyNation();
   if (iVar1 == 1) {
     for (local_8 = 0; (int)local_8 < 7; local_8 = local_8 + 1) {
-      SetLightSpot(&DAT_1001f4e8 + local_8 * 8,2,local_8 & 0xff);
+      SetLightSpot(((unsigned char *)&DAT_1001f4e8) + local_8 * 8,2,local_8 & 0xff);
     }
   }
   return;
@@ -453,7 +440,7 @@ LAB_10002294:
       }
       uVar1 = Trigg(0x14);
       if ((uVar1 & 0xff) != 0) {
-        FUN_100019e0(&DAT_1001f420);
+        GetTotalAmount0(&DAT_1001f420);
         if (iVar2 < 0x32) {
           SetTrigg(0x14,0);
           iVar2 = GetMyNation();
@@ -467,7 +454,7 @@ LAB_10002294:
       FUN_10001470(&DAT_1001f4a0);
       FUN_10001470(&DAT_1001f4a8);
       for (local_8 = 0; local_8 < 3; local_8 = local_8 + 1) {
-        FUN_100013e0(&DAT_1001f4b8 + local_8 * 8,0,(char)DAT_1001da40,'\x01');
+        FUN_100013e0(((unsigned char *)&DAT_1001f4b8) + local_8 * 8,0,(char)DAT_1001da40,'\x01');
       }
       iVar2 = GetTotalAmount0(&DAT_1001f438);
       if (iVar2 < 1) {
@@ -490,17 +477,17 @@ LAB_10002294:
           OnInit(0,0x1001da30);
         }
       }
-      FUN_100019e0(&DAT_1001f4a8);
+      GetTotalAmount0(&DAT_1001f4a8);
       if (iVar2 < 0x14) {
         OnInit(0,0x1001da30);
       }
-      FUN_100019e0(&DAT_1001f4a0);
+      GetTotalAmount0(&DAT_1001f4a0);
       if (iVar2 < 0x14) {
         OnInit(1,0x1001da38);
       }
       return;
     }
-    uVar1 = UnitsCenter(&DAT_1001f560,&DAT_1001f448 + local_8 * 8,0x4b0);
+    uVar1 = UnitsCenter(&DAT_1001f560,((unsigned char *)&DAT_1001f448) + local_8 * 8,0x4b0);
     if ((uVar1 & 0xff) != 0) {
       iVar2 = GetUnitsAmount0(&DAT_1001f560,0);
       if (iVar2 < 1) {
@@ -512,7 +499,7 @@ LAB_10002294:
         HINT(&DAT_1001f520,100);
         ShowAlarm(&DAT_1001f560);
       }
-      RemoveGroup(&DAT_1001f448 + local_8 * 8,&DAT_1001f490);
+      RemoveGroup(((unsigned char *)&DAT_1001f448) + local_8 * 8,&DAT_1001f490);
     }
 LAB_10002339:
     local_8 = local_8 + 1;

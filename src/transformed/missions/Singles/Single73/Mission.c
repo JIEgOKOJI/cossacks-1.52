@@ -7,7 +7,7 @@
 int this_ptr = 0;
 long long DAT_10012c88 = 0;
 long long DAT_10012cf8 = 0;
-long long DAT_10012cfc = 0;
+unsigned char DAT_10012cfc[60] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 long long DAT_10012d38 = 0;
 long long DAT_10012d40 = 0;
 long long DAT_10012d48 = 0;
@@ -125,7 +125,6 @@ void FUN_100019d0(void *param_1);
 void FUN_10001a20(void *param_1);
 void FUN_10002a30(void);
 void FUN_10002a40(void);
-int  FUN_10002ab0(int param_1);
 void 
 FUN_10002ad0(void *this_ptr,int param_1,int param_2,int param_3,int param_4);
 void  FUN_10002b80(void *this_ptr,int param_1);
@@ -143,7 +142,6 @@ void  FUN_10002c90(void *this_ptr,int param_1);
 void  FUN_10002ca0(void *this_ptr,int *param_1);
 BOOL  FUN_10002cc0(int param_1);
 int  FUN_10002ce0(int param_1);
-void  FUN_10002dd0(int param_1);
 int  FUN_10002de0(int param_1);
 void  FUN_10002e10(void *this_ptr,int param_1,int param_2);
 void  FUN_10002ec0(void *this_ptr,int param_1,int param_2);
@@ -169,6 +167,9 @@ void FUN_100034f8(void);
 void FUN_10003557(DWORD param_1);
 int FUN_10003662(int param_1);
 int FUN_100036e0(int param_1);
+
+void OnInit();
+void ProcessScenary();
 
 
 int __cdecl FUN_10001000(int param_1,int param_2,int param_3)
@@ -198,10 +199,10 @@ int __cdecl FUN_10001000(int param_1,int param_2,int param_3)
 void __cdecl FUN_10001910(int param_1)
 
 {
-  if (*(int *)(&DAT_10012cfc + param_1 * 8) != 0x554e4954) {
-    RegisterDynGroup(&DAT_10012cf8 + param_1 * 8);
+  if (*(int *)(((unsigned char *)&DAT_10012cfc) + param_1 * 8) != 0x554e4954) {
+    RegisterDynGroup(((unsigned char *)&DAT_10012cf8) + param_1 * 8);
   }
-  SaveSelectedUnits(param_1,&DAT_10012cf8 + param_1 * 8,0);
+  SaveSelectedUnits(param_1,((unsigned char *)&DAT_10012cf8) + param_1 * 8,0);
   ClearSelection(param_1);
   return;
 }
@@ -214,7 +215,7 @@ void __cdecl FUN_10001950(int param_1)
 
 {
   ClearSelection(param_1);
-  SelectUnits(&DAT_10012cf8 + param_1 * 8,0);
+  SelectUnits(((unsigned char *)&DAT_10012cf8) + param_1 * 8,0);
   return;
 }
 
@@ -284,16 +285,6 @@ void FUN_10002a40(void)
   return;
 }
 
-
-
-
-
-int  FUN_10002ab0(int param_1)
-
-{
-  RegisterFormation(param_1,"#ALONE");
-  return param_1;
-}
 
 
 
@@ -548,16 +539,6 @@ int  FUN_10002ce0(int param_1)
   return 0;
 }
 
-
-
-
-
-void  FUN_10002dd0(int param_1)
-
-{
-  GetTotalAmount0(param_1 + 0x14);
-  return;
-}
 
 
 
@@ -848,8 +829,8 @@ int  FUN_10003310(int *param_1)
   short asStack_58 [22];
   short asStack_2c [22];
   
-  puVar1 = &DAT_10012cf8 + *param_1 * 8;
-  if (*(int *)(&DAT_10012cfc + *param_1 * 8) != 0x554e4954) {
+  puVar1 = ((unsigned char *)&DAT_10012cf8) + *param_1 * 8;
+  if (*(int *)(((unsigned char *)&DAT_10012cfc) + *param_1 * 8) != 0x554e4954) {
     RegisterDynGroup(puVar1);
   }
   SaveSelectedUnits((char)*param_1,puVar1,0);
@@ -1420,19 +1401,19 @@ void ProcessScenary(void)
   FUN_10002b80(&DAT_100225e8,0);
   FUN_10002b80(&DAT_10022660,0);
   FUN_10002b80(&DAT_100226d8,0);
-  FUN_10002dd0(0x10022570);
+  GetTotalAmount0(0x10022570);
   if (iVar3 < 0x23) {
     FUN_10002b80(&DAT_10022570,2);
   }
-  FUN_10002dd0(0x100225e8);
+  GetTotalAmount0(0x100225e8);
   if (iVar3 < 0x2d) {
     FUN_10002b80(&DAT_100225e8,3);
   }
-  FUN_10002dd0(0x10022660);
+  GetTotalAmount0(0x10022660);
   if (iVar3 < 0x3c) {
     FUN_10002b80(&DAT_10022660,3);
   }
-  FUN_10002dd0(0x100226d8);
+  GetTotalAmount0(0x100226d8);
   if (iVar3 < 0x50) {
     FUN_10002b80(&DAT_100226d8,3);
   }
@@ -1592,7 +1573,7 @@ void ProcessScenary(void)
   }
   iVar3 = FUN_10001000(&DAT_100266bc,0x10012d40,5);
   if (DAT_10022962 == 0) {
-    if ((iVar3 < 5) && ((&DAT_10022950)[iVar3] == '\0')) {
+    if ((iVar3 < 5) && (((long long *)&DAT_10022950)[iVar3] == '\0')) {
       cVar1 = '\x01';
     }
     else {
@@ -1645,7 +1626,7 @@ void ProcessScenary(void)
         SelectUnits(&DAT_10022948,0);
         uVar4 = 0;
         iVar3 = rand();
-        SelSendTo(6,&DAT_10012d40 + DAT_1002295e * 8,iVar3,uVar4);
+        SelSendTo(6,((unsigned char *)&DAT_10012d40) + DAT_1002295e * 8,iVar3,uVar4);
         FUN_10001950(6);
         iVar3 = GetGlobalTime();
         DAT_1002296e = iVar3 + 2000;
@@ -1675,7 +1656,7 @@ void ProcessScenary(void)
         SelChangeNation(6,0);
         FUN_10001950(6);
         DAT_10022962 = 0;
-        (&DAT_10022950)[DAT_1002295e] = 1;
+        ((long long *)&DAT_10022950)[DAT_1002295e] = 1;
         if (DAT_1002295e == DAT_1002295a) {
           ShowPage("#find_treasure");
           ShowVictory();

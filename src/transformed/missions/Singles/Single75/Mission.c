@@ -125,6 +125,9 @@ void FUN_100021e0(char param_1,int param_2,int param_3,int param_4,int param_5);
 void FUN_10002240(int param_1,int param_2,int param_3,int param_4);
 int FUN_10002290(int param_1,int param_2,int param_3);
 
+void OnInit();
+void ProcessScenary();
+
 
 int * FUN_10001020(void)
 
@@ -524,7 +527,7 @@ void ProcessScenary(void)
     InitialUpgrade("GPortLeft01","AKA06SV");
     InitialUpgrade("GPortLeft01","AKA30SV");
 // FIXME(decompiler):     iVar3 = GetDiff(0,0);
-    SelectUnits(&DAT_1000ae88 + iVar3 * 8);
+    SelectUnits(((unsigned char *)&DAT_1000ae88) + iVar3 * 8);
     SelErase(2);
   }
   iVar3 = GetTotalAmount0(&DAT_1000afc8);

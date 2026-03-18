@@ -37,7 +37,7 @@ long long DAT_1000bd50 = 0;
 long long DAT_1000bd58 = 0;
 long long DAT_1000bd60 = 0;
 long long DAT_1000bd68 = 0;
-long long DAT_1000bd70 = 0;
+unsigned char DAT_1000bd70[72] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 long long DAT_1000be18 = 0;
 long long DAT_1000be20 = 0;
 long long DAT_1000be28 = 0;
@@ -78,6 +78,9 @@ int FUN_10001a30(int param_1);
 BOOL FUN_10001a80(int param_1);
 void FUN_10001af0(int param_1,int param_2);
 void FUN_10001b50(DWORD param_1);
+
+void OnInit();
+void ProcessScenary();
 
 
 BOOL __cdecl FUN_100017b0(int param_1)
@@ -161,7 +164,7 @@ int __cdecl FUN_10001860(int param_1,int param_2,int param_3,int param_4)
   local_3d = '\0';
   local_3c = 0;
   do {
-    if ((&DAT_10009030)[local_3c] == '\x01') {
+    if (((long long *)&DAT_10009030)[local_3c] == '\x01') {
       ClearSelection(local_3c);
       iVar4 = param_3;
       iVar5 = param_2;
@@ -274,7 +277,7 @@ BOOL __cdecl FUN_10001a80(int param_1)
     UnitsCenter(auStack_8,param_1,500);
     iVar2 = 0;
     do {
-      if (((&DAT_10009030)[iVar2] == '\x01') &&
+      if ((((long long *)&DAT_10009030)[iVar2] == '\x01') &&
          ((bVar1 || (iVar3 = GetUnitsAmount0(auStack_8,iVar2), iVar3 != 0)))) {
         bVar1 = 1;
       }
@@ -464,7 +467,7 @@ void ProcessScenary(void)
     }
     else {
       iVar6 = FUN_10001820(0x1000bd70,0x12);
-      RemoveGroup(&DAT_1000bd68,&DAT_1000bd70 + iVar6 * 9);
+      RemoveGroup(&DAT_1000bd68,((unsigned char *)&DAT_1000bd70) + iVar6 * 9);
     }
   }
   iVar6 = FUN_10001820(0x1000bd70,0x12);
@@ -475,7 +478,7 @@ void ProcessScenary(void)
     }
     else {
       iVar6 = FUN_10001820(0x1000bd70,0x12);
-      RemoveGroup(&DAT_1000bd60,&DAT_1000bd70 + iVar6 * 9);
+      RemoveGroup(&DAT_1000bd60,((unsigned char *)&DAT_1000bd70) + iVar6 * 9);
     }
   }
   cVar1 = TimerDone(1);
@@ -487,7 +490,7 @@ void ProcessScenary(void)
       uVar10 = 0;
       uVar3 = 0;
       iVar6 = rand();
-      SelSendAndKill(1,&DAT_1000bcc8 + (iVar6 % 10) * 8,uVar3,uVar10);
+      SelSendAndKill(1,((unsigned char *)&DAT_1000bcc8) + (iVar6 % 10) * 8,uVar3,uVar10);
       puVar7 = puVar7 + 9;
     } while ((int)puVar7 < 0x1000be12);
   }
@@ -504,8 +507,8 @@ void ProcessScenary(void)
     if ((int)uVar4 < 0) {
       uVar4 = (uVar4 - 1 | 0xfffffffc) + 1;
     }
-// FIXME(decompiler):     iVar6 = GetDiff(0,&DAT_1000bd40,1,&DAT_1000be18 + uVar4 * 8,uVar3);
-    CreateObject0(&DAT_1000bd48,&DAT_1000bd20 + iVar6 * 8);
+// FIXME(decompiler):     iVar6 = GetDiff(0,&DAT_1000bd40,1,((unsigned char *)&DAT_1000be18) + uVar4 * 8,uVar3);
+    CreateObject0(&DAT_1000bd48,((unsigned char *)&DAT_1000bd20) + iVar6 * 8);
   }
   iVar6 = GetTotalAmount0(&DAT_1000bd48);
   if ((iVar6 == 0) && (cVar1 = TimerDone(2), cVar1 != '\0')) {

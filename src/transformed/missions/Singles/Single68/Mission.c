@@ -57,8 +57,8 @@ char DAT_1000b3cc[] = "ZW21";
 char DAT_1000b3d4[] = "ZW01";
 long long DAT_1000df50 = 0;
 long long DAT_1000df58 = 0;
-long long DAT_1000df60 = 0;
-long long DAT_1000df68 = 0;
+unsigned char DAT_1000df60[112] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+unsigned char DAT_1000df68[112] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 long long DAT_1000df6c = 0;
 long long DAT_1000df6d = 0;
 long long DAT_1000e338 = 0;
@@ -109,8 +109,8 @@ long long DAT_1000e518 = 0;
 long long DAT_1000e520 = 0;
 long long DAT_1000e528 = 0;
 long long DAT_1000e530 = 0;
-long long DAT_1000e538 = 0;
-long long DAT_1000e540 = 0;
+unsigned char DAT_1000e538[112] = {0};
+unsigned char DAT_1000e540[112] = {0};
 long long DAT_1000e544 = 0;
 long long DAT_1000e545 = 0;
 long long DAT_1000e728 = 0;
@@ -225,6 +225,9 @@ BOOL FUN_10002bc0(int param_1);
 void FUN_10002be0(int param_1,int param_2);
 void FUN_10003480(DWORD param_1);
 
+void OnInit();
+void ProcessScenary();
+
 
 void  FUN_100026e0(void *this_ptr,int param_1)
 
@@ -254,7 +257,7 @@ FUN_100026f0(void *this_ptr,char param_1,int param_2,int param_3,int param_4,
   *(int *)((int)this_ptr + 0x1e) = param_6;
   *(char *)((int)this_ptr + 0x15) = param_7;
   if (iVar2 < iVar2 + 7) {
-    puVar1 = (int *)(&DAT_1000df68 + iVar2 * 0xe);
+    puVar1 = (int *)(((unsigned char *)&DAT_1000df68) + iVar2 * 0xe);
     do {
       iVar2 = iVar2 + 1;
       *(char *)(puVar1 + 1) = *(char *)((int)this_ptr + 0x14);
@@ -280,7 +283,7 @@ unsigned int  FUN_10002770(int param_1)
   iVar2 = *(int *)(param_1 + 0x16);
   uVar1 = iVar2 + 7;
   if (iVar2 < (int)uVar1) {
-    puVar3 = &DAT_1000df60 + iVar2 * 0xe;
+    puVar3 = ((unsigned char *)&DAT_1000df60) + iVar2 * 0xe;
     do {
       uVar1 = GetTotalAmount0(puVar3);
       if (uVar1 == 0) {
@@ -310,17 +313,17 @@ void  FUN_100027c0(int param_1)
   if (((char)uVar2 != '\0') && (cVar1 = TimerDone(*(char *)(param_1 + 0x15)), cVar1 != '\0'))
   {
     iVar4 = *(int *)(param_1 + 0x16);
-    puVar5 = &DAT_1000df60 + iVar4 * 0xe;
+    puVar5 = ((unsigned char *)&DAT_1000df60) + iVar4 * 0xe;
     iVar3 = GetTotalAmount0(puVar5);
     for (; (iVar3 != 0 && (iVar4 < *(int *)(param_1 + 0x16) + 7)); iVar4 = iVar4 + 1) {
       puVar5 = puVar5 + 0xe;
       iVar3 = GetTotalAmount0(puVar5);
     }
     iVar4 = iVar4 * 0xe;
-    CreateObject0(&DAT_1000df60 + iVar4,&DAT_1000ea80,&DAT_1000e3d8,*(char *)(param_1 + 0x14),
+    CreateObject0(((unsigned char *)&DAT_1000df60) + iVar4,&DAT_1000ea80,&DAT_1000e3d8,*(char *)(param_1 + 0x14),
                   param_1,0);
-    (&DAT_1000df6c)[iVar4] = *(char *)(param_1 + 0x14);
-    (&DAT_1000df6d)[iVar4] = 0;
+    ((long long *)&DAT_1000df6c)[iVar4] = *(char *)(param_1 + 0x14);
+    ((long long *)&DAT_1000df6d)[iVar4] = 0;
     RunTimer(*(char *)(param_1 + 0x15),500);
   }
   return;
@@ -343,7 +346,7 @@ void  FUN_10002880(int param_1)
   if (iVar2 != 0) {
     iVar2 = *(int *)(param_1 + 0x16);
     bVar1 = 1;
-    puVar5 = &DAT_1000df60 + iVar2 * 0xe;
+    puVar5 = ((unsigned char *)&DAT_1000df60) + iVar2 * 0xe;
     do {
       if (*(int *)(param_1 + 0x16) + 7 <= iVar2) {
         return;
@@ -381,7 +384,7 @@ void  FUN_10002910(int param_1)
   if (iVar2 != 0) {
     iVar2 = *(int *)(param_1 + 0x16);
     bVar1 = 1;
-    puVar4 = &DAT_1000df60 + iVar2 * 0xe;
+    puVar4 = ((unsigned char *)&DAT_1000df60) + iVar2 * 0xe;
     do {
       if (*(int *)(param_1 + 0x16) + 7 <= iVar2) {
         return;
@@ -423,7 +426,7 @@ void  FUN_100029f0(int param_1)
   
   iVar6 = *(int *)(param_1 + 0x16);
   if (iVar6 < iVar6 + 7) {
-    puVar7 = &DAT_1000df60 + iVar6 * 0xe;
+    puVar7 = ((unsigned char *)&DAT_1000df60) + iVar6 * 0xe;
     do {
       iVar3 = GetTotalAmount0(puVar7);
       if ((iVar3 != 0) &&
@@ -440,12 +443,12 @@ void  FUN_100029f0(int param_1)
           CreateZoneNearGroup(&DAT_1000e780,&DAT_1000e930,puVar7,1);
           SelErase(0);
           iVar3 = iVar3 * 0xe;
-          CreateObject0(&DAT_1000e538 + iVar3,&DAT_1000ea80,&DAT_1000e768,0,&DAT_1000e780,0);
+          CreateObject0(((unsigned char *)&DAT_1000e538) + iVar3,&DAT_1000ea80,&DAT_1000e768,0,&DAT_1000e780,0);
           uVar1 = puVar7[0xd];
           uVar2 = puVar7[0xc];
-          *(int *)((int)&DAT_1000e540 + iVar3) = *(int *)(puVar7 + 8);
-          (&DAT_1000e545)[iVar3] = uVar1;
-          (&DAT_1000e544)[iVar3] = uVar2;
+          *(int *)((int)((unsigned char *)&DAT_1000e540) + iVar3) = *(int *)(puVar7 + 8);
+          ((long long *)&DAT_1000e545)[iVar3] = uVar1;
+          ((long long *)&DAT_1000e544)[iVar3] = uVar2;
           DAT_1000eab4 = DAT_1000eab4 + 1;
         }
         else {
@@ -1069,14 +1072,14 @@ void ProcessScenary(void)
       if (0x22 < iStack_30) goto LAB_100020e7;
     }
     iStack_30 = iStack_30 * 0xe;
-    if ((&DAT_1000e545)[iStack_30] != '\0') {
+    if (((long long *)&DAT_1000e545)[iStack_30] != '\0') {
       iVar3 = GetDiff(0);
-      AddResource(0,(int)*(char *)((int)&DAT_1000e540 + iStack_30),(10 - iVar3) * 0x32);
+      AddResource(0,(int)*(char *)((int)((unsigned char *)&DAT_1000e540) + iStack_30),(10 - iVar3) * 0x32);
     }
     AddResource(0,1,100);
     SaveSelectedUnits(0,&DAT_1000e968,0);
     ClearSelection(0);
-    SelectUnits(&DAT_1000e538 + iStack_30,0);
+    SelectUnits(((unsigned char *)&DAT_1000e538) + iStack_30,0);
     SelSendTo(0,&DAT_1000e350,0,0);
     SelChangeNation(0,1);
     ClearSelection(0);

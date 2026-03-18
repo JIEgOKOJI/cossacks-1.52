@@ -34,7 +34,9 @@ void FUN_10001790(void);
 void FUN_10001880(void);
 void FUN_100018c0(void);
 void FUN_10001ad0(void);
-void FUN_10002030(int param_1);
+
+void OnInit();
+void ProcessScenary();
 
 
 void __cdecl FUN_10001260(int param_1,char param_2,char param_3,char param_4)
@@ -164,9 +166,9 @@ void __cdecl FUN_100016c0(char param_1,char param_2)
   int local_8;
 local_8 = 0;
   for (local_c = 0; local_c < 5; local_c = local_c + 1) {
-    iVar1 = GetUnitsAmount0(&DAT_1001f438 + local_c * 8,param_1);
+    iVar1 = GetUnitsAmount0(((unsigned char *)&DAT_1001f438) + local_c * 8,param_1);
     if (0 < iVar1) {
-      iVar1 = GetUnitsAmount0(&DAT_1001f438 + local_c * 8,param_2);
+      iVar1 = GetUnitsAmount0(((unsigned char *)&DAT_1001f438) + local_c * 8,param_2);
       if (iVar1 == 0) {
         local_8 = local_8 + 1;
       }
@@ -309,11 +311,11 @@ uVar1 = Trigg(1);
   if (2 < iVar3) {
     OnInit(0,0x1001da30);
   }
-  FUN_10002030(&DAT_1001f470);
+  GetTotalAmount0(&DAT_1001f470);
   if (iVar3 < 0x14) {
     OnInit(1,0x1001da38);
   }
-  FUN_10002030(&DAT_1001f478);
+  GetTotalAmount0(&DAT_1001f478);
   if (iVar3 < 0x14) {
     OnInit(0,0x1001da30);
   }
@@ -331,21 +333,6 @@ uVar1 = Trigg(1);
   return;
 }
 
-
-
-
-
-void __cdecl FUN_10002030(int param_1)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-GetTotalAmount0(param_1);
-  uStack_8 = 0x1000206b;
-  return;
-}
 
 
 

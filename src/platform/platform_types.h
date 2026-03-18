@@ -46,6 +46,12 @@ typedef void* HWND;
 typedef void* HINSTANCE;
 typedef void* HMODULE;
 typedef int32_t LONG;   // Windows LONG is always 32-bit (not `long` which is 64-bit on LP64)
+
+// DLL reason codes for DllMain
+#define DLL_PROCESS_ATTACH 1
+#define DLL_THREAD_ATTACH  2
+#define DLL_THREAD_DETACH  3
+#define DLL_PROCESS_DETACH 0
 typedef uint32_t ULONG;
 typedef int INT;
 typedef unsigned int UINT;
@@ -56,6 +62,7 @@ typedef unsigned char byte;
 typedef short small;
 typedef uint32_t LCID;
 typedef unsigned long DWORD_PTR;
+typedef unsigned long SIZE_T;
 typedef unsigned short WCHAR;
 typedef void* HGLOBAL;
 

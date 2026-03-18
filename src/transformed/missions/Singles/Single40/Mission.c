@@ -13,8 +13,8 @@ char DAT_1003a770[] = "SUXX";
 long long DAT_1003a788 = 0;
 long long DAT_1003a798 = 0;
 long long DAT_1003dd60 = 0;
-long long DAT_1003dec4 = 0;
-long long DAT_1003df08 = 0;
+unsigned char DAT_1003dec4[68] = {0x0A, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x14, 0x00, 0x00, 0x00, 0x0F, 0x00, 0x00, 0x00, 0x0F, 0x00, 0x00, 0x00, 0x05, 0x00, 0x00, 0x00, 0x32, 0x00, 0x00, 0x00, 0x05, 0x00, 0x00, 0x00, 0x0F, 0x00, 0x00, 0x00, 0x19, 0x00, 0x00, 0x00, 0x32, 0x00, 0x00, 0x00, 0x90, 0x01, 0x00, 0x00, 0x19, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00};
+unsigned char DAT_1003df08[208] = {0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x03, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x03, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x05, 0x00, 0x00, 0x00, 0x05, 0x00, 0x00, 0x00, 0x05, 0x00, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x03, 0x00, 0x00, 0x00, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 int DAT_1003dfd8 = 4;
 int DAT_1003dfdc = 800;
 int DAT_1003dfe0 = 2;
@@ -26,15 +26,15 @@ long long DAT_1003ff0c = 0;
 long long DAT_1003ff10 = 0;
 long long DAT_1003ff20 = 0;
 int DAT_1003ff48 = 0;
-long long DAT_1003ff58 = 0;
-long long DAT_10040028 = 0;
+unsigned char DAT_1003ff58[208] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xDC, 0x31, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xE0, 0x39, 0x04, 0x00, 0xC8, 0x34, 0x04, 0x00, 0x3C, 0x30, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6C, 0x3F, 0x04, 0x00, 0x28, 0x33, 0x04, 0x00};
+unsigned char DAT_10040028[136] = {0};
 int DAT_100400b0 = 0;
 long long DAT_100400b8 = 0;
 long long DAT_100400c0 = 0;
 int DAT_100400c8 = 0;
 long long DAT_100400d0 = 0;
-long long DAT_10040120 = 0;
-long long DAT_100401a8 = 0;
+unsigned char DAT_10040120[136] = {0};
+unsigned char DAT_100401a8[208] = {0};
 long long DAT_10040278 = 0;
 int DAT_10040280 = 0;
 int DAT_10040282 = 0;
@@ -274,6 +274,9 @@ int FUN_1000a710(int param_1);
 void FUN_1000a780(DWORD param_1);
 unsigned int * FUN_1000a7d0(unsigned int *param_1,unsigned int *param_2);
 unsigned int * FUN_1000a7e0(unsigned int *param_1,unsigned int *param_2);
+
+void OnInit();
+void ProcessScenary();
 
 
 void __cdecl FUN_10001820(int param_1,char param_2,char param_3)
@@ -651,7 +654,7 @@ unsigned int *  FUN_10002710(void *this_ptr,unsigned int *param_1,byte param_2)
 local_10 = (unsigned int)param_2;
   uStack_c = 0;
   for (local_14 = 0; local_14 < 8; local_14 = local_14 + 1) {
-    if ((&DAT_1003dd60)[local_14] == param_2) {
+    if (((long long *)&DAT_1003dd60)[local_14] == param_2) {
       uVar1 = *(int *)((int)this_ptr + local_14 * 4);
       *(int*)((char*)&local_10 + 1) = (int)uVar1;
       uStack_c = (char)((unsigned int)uVar1 >> 0x18);
@@ -724,7 +727,7 @@ local_c = 0;
   while (bVar1 < 8) {
     uVar2 = 0;
     local_10 = bVar1;
-    if ((&DAT_1003dd60)[bVar1] == param_1) {
+    if (((long long *)&DAT_1003dd60)[bVar1] == param_1) {
       local_10 = 8;
       local_c = bVar1;
     }
@@ -852,7 +855,7 @@ void FUN_10002b80(int param_1,char param_2)
   unsigned short uVar1;
   unsigned int uVar2;
   int iVar3;
-  int extraout_ECX;
+  int extraout_ECX = 0;
   int *puVar4;
   long long lVar5;
   unsigned short local_58;
@@ -876,10 +879,10 @@ local_c = local_c & 0xffff0000;
   UnitsCenter(local_8,param_1,500);
   FUN_100027c0(&DAT_1003ff20,local_8,param_2);
   for (local_40 = 0; local_40 < 8; local_40 = local_40 + 1) {
-    if (0 < (int)(&DAT_1003ff20)[local_40]) {
-      uVar2 = ((&DAT_1003ff20)[local_40] * 100) / local_10;
+    if (0 < (int)((long long *)&DAT_1003ff20)[local_40]) {
+      uVar2 = (((long long *)&DAT_1003ff20)[local_40] * 100) / local_10;
       FUN_10002470(&DAT_1003ff10,(int)local_2a,1,
-                                 (int)(&DAT_1003dd60)[local_40],uVar2);
+                                 (int)((long long *)&DAT_1003dd60)[local_40],uVar2);
       local_44 = (int)uVar1;
       if ((local_c & 0xffff) / 100 < uVar1 / 100) {
         local_c = (int)uVar1;
@@ -893,10 +896,10 @@ local_c = local_c & 0xffff0000;
     UnitsCenter(local_8,param_1,1000);
     FUN_100027c0(&DAT_1003ff20,local_8,param_2);
     for (local_48 = 0; local_48 < 8; local_48 = local_48 + 1) {
-      if (0 < (int)(&DAT_1003ff20)[local_48]) {
-        uVar2 = ((&DAT_1003ff20)[local_48] * 100) / local_10;
+      if (0 < (int)((long long *)&DAT_1003ff20)[local_48]) {
+        uVar2 = (((long long *)&DAT_1003ff20)[local_48] * 100) / local_10;
         FUN_10002470(&DAT_1003ff10,(int)local_2a,2,
-                                   (int)(&DAT_1003dd60)[local_48],uVar2);
+                                   (int)((long long *)&DAT_1003dd60)[local_48],uVar2);
         local_4c = (int)uVar1;
         if ((local_c & 0xffff) / 100 < uVar1 / 100) {
           local_c = (int)uVar1;
@@ -911,14 +914,14 @@ local_c = local_c & 0xffff0000;
     UnitsCenter(local_8,param_1,2000);
     FUN_100027c0(&DAT_1003ff20,local_8,param_2);
     for (local_50 = 0; local_50 < 8; local_50 = local_50 + 1) {
-      if (0 < (int)(&DAT_1003ff20)[local_50]) {
-        local_54 = ((float)(int)(&DAT_1003ff20)[local_50] * DAT_1003a050_ovl) / (float)local_10;
+      if (0 < (int)((long long *)&DAT_1003ff20)[local_50]) {
+        local_54 = ((float)(int)((long long *)&DAT_1003ff20)[local_50] * DAT_1003a050_ovl) / (float)local_10;
         if (local_54 < DAT_1003a04c_ovl) {
           local_54 = 1.0;
         }
         lVar5 = 0;
         FUN_10002470(&DAT_1003ff10,(int)local_2a,
-                                   3,(int)(&DAT_1003dd60)[local_50],(unsigned int)lVar5);
+                                   3,(int)((long long *)&DAT_1003dd60)[local_50],(unsigned int)lVar5);
         local_58 = (int)uVar1;
         if ((local_c & 0xffff) / 100 < uVar1 / 100) {
           local_c = (int)uVar1;
@@ -1178,12 +1181,12 @@ SetPlayerName(0,"PRUSSIA");
   RegisterFormation(&DAT_10040398,"#ODIN");
   RegisterFormation(&DAT_100400d0,"#LINEMORB10");
   for (local_8 = 0; local_8 < 0x11; local_8 = local_8 + 1) {
-    RegisterUnitType(&DAT_10040120 + local_8 * 8,(((int*)0))[local_8]);
-    RegisterUnitType(&DAT_10040028 + local_8 * 8,(((int*)0))[local_8]);
+    RegisterUnitType(((unsigned char *)&DAT_10040120) + local_8 * 8,(((int*)0))[local_8]);
+    RegisterUnitType(((unsigned char *)&DAT_10040028) + local_8 * 8,(((int*)0))[local_8]);
   }
   for (local_8 = 0; local_8 < 0x1a; local_8 = local_8 + 1) {
-    RegisterUnitType(&DAT_100401a8 + local_8 * 8,(((int*)0))[local_8]);
-    RegisterUnitType(&DAT_1003ff58 + local_8 * 8,(((int*)0))[local_8]);
+    RegisterUnitType(((unsigned char *)&DAT_100401a8) + local_8 * 8,(((int*)0))[local_8]);
+    RegisterUnitType(((unsigned char *)&DAT_1003ff58) + local_8 * 8,(((int*)0))[local_8]);
   }
   RegisterUnitType(&DAT_100400b8,"Kreposnoi_portugal(sp)");
   RegisterUnitType(&DAT_100403a8,"KUPEC(UN)");
@@ -1278,7 +1281,7 @@ void __cdecl FUN_10003f60(int param_1)
 local_8 = 0;
   for (local_c = 0; local_c < 0x11; local_c = local_c + 1) {
     iVar1 = GetTotalAmount1(param_1 + local_c * 8,0);
-    local_8 = local_8 + *(int *)(&DAT_1003dec4 + local_c * 4) * iVar1;
+    local_8 = local_8 + *(int *)(((unsigned char *)&DAT_1003dec4) + local_c * 4) * iVar1;
   }
   return;
 }
@@ -1298,7 +1301,7 @@ void __cdecl FUN_10004000(int param_1)
 local_8 = 0;
   for (local_c = 0; local_c < 0x1a; local_c = local_c + 1) {
     iVar1 = GetTotalAmount1(param_1 + local_c * 8,0);
-    local_8 = local_8 + *(int *)(&DAT_1003df08 + local_c * 4) * iVar1;
+    local_8 = local_8 + *(int *)(((unsigned char *)&DAT_1003df08) + local_c * 4) * iVar1;
   }
   return;
 }
@@ -2450,7 +2453,7 @@ void  FUN_10006b30(void *this_ptr,int param_1)
   int *puVar2;
   int local_48 [17];
 *(int *)((int)this_ptr + 4) = param_1;
-  (&DAT_10040498)[DAT_100404e8] = this_ptr;
+  ((long long *)&DAT_10040498)[DAT_100404e8] = this_ptr;
   DAT_100404e8 = DAT_100404e8 + 1;
   return;
 }
@@ -2470,9 +2473,9 @@ void __cdecl FUN_10006ba0(short *param_1)
   int local_8;
 local_8 = DAT_10040498;
   for (local_c = 0; local_c < DAT_100404e8; local_c = local_c + 1) {
-    psVar1 = (short *)FUN_10006d70((&DAT_10040498)[local_c]);
+    psVar1 = (short *)FUN_10006d70(((long long *)&DAT_10040498)[local_c]);
     if (*psVar1 == *param_1) {
-      local_8 = (&DAT_10040498)[local_c];
+      local_8 = ((long long *)&DAT_10040498)[local_c];
     }
   }
   return;
@@ -3210,7 +3213,7 @@ void  FUN_10008210(void *this_ptr,int param_1,int param_2,int param_3)
 {
   int *piVar1;
   int iVar2;
-  int extraout_ECX;
+  int extraout_ECX = 0;
   int *puVar3;
   long double fVar4;
   long long lVar5;

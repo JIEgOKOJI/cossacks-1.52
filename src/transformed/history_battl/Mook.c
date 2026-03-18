@@ -43,7 +43,9 @@ void FUN_10001340(int param_1,char param_2);
 void FUN_10001540(int param_1);
 void FUN_10001600(void);
 void FUN_10001ae0(void);
-void FUN_100024b0(int param_1);
+
+void OnInit();
+void ProcessScenary();
 
 
 void __cdecl FUN_10001340(int param_1,char param_2)
@@ -163,7 +165,7 @@ void FUN_10001ae0(void)
   int *puVar3;
   int local_44 [15];
   int uStack_8;
-FUN_100024b0(&DAT_1001f428);
+GetTotalAmount0(&DAT_1001f428);
   if (iVar2 == 0) {
     iVar2 = GetMyNation();
     if (iVar2 == 0) {
@@ -174,7 +176,7 @@ FUN_100024b0(&DAT_1001f428);
     }
     OnInit(0);
   }
-  FUN_100024b0(&DAT_1001f478);
+  GetTotalAmount0(&DAT_1001f478);
   if (iVar2 < 0x14) {
     iVar2 = GetMyNation();
     if (iVar2 == 0) {
@@ -196,7 +198,7 @@ FUN_100024b0(&DAT_1001f428);
     }
     OnInit(1);
   }
-  FUN_100024b0(&DAT_1001f470);
+  GetTotalAmount0(&DAT_1001f470);
   if (iVar2 < 0x14) {
     iVar2 = GetMyNation();
     if (iVar2 == 0) {
@@ -227,7 +229,7 @@ FUN_100024b0(&DAT_1001f428);
   }
   uVar1 = Trigg(2);
   if ((uVar1 & 0xff) != 0) {
-    FUN_100024b0(&DAT_1001f498);
+    GetTotalAmount0(&DAT_1001f498);
     if (iVar2 == 0) {
       SetTrigg(2,0);
       ShowCentralText("MK_R_Dutch",100);
@@ -242,7 +244,7 @@ FUN_100024b0(&DAT_1001f428);
   }
   uVar1 = Trigg(3);
   if ((uVar1 & 0xff) != 0) {
-    FUN_100024b0(&DAT_1001f4b8);
+    GetTotalAmount0(&DAT_1001f4b8);
     if (iVar2 == 0) {
       SetTrigg(3,0);
       ShowCentralText("MK_R_Spain",100);
@@ -306,21 +308,6 @@ FUN_100024b0(&DAT_1001f428);
   return;
 }
 
-
-
-
-
-void __cdecl FUN_100024b0(int param_1)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-GetTotalAmount0(param_1);
-  uStack_8 = 0x100024eb;
-  return;
-}
 
 
 

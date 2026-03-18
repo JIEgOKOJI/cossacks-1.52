@@ -39,10 +39,10 @@ long long DAT_10040ca0 = 0;
 int DAT_10040cc8 = 0;
 long long DAT_10040cd8 = 0;
 long long DAT_10040ce0 = 0;
-long long DAT_10040ce8 = 0;
+unsigned char DAT_10040ce8[128] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 long long DAT_10041008 = 0;
 long long DAT_10041010 = 0;
-long long DAT_10041018 = 0;
+unsigned char DAT_10041018[128] = {0};
 long long DAT_100410b8 = 0;
 long long DAT_100410c0 = 0;
 long long DAT_100410c8 = 0;
@@ -292,6 +292,9 @@ void FUN_1000ad26(void);
 int FUN_1000ad40(int param_1);
 int FUN_1000ae00(int param_1);
 void FUN_1000ae70(DWORD param_1);
+
+void OnInit();
+void ProcessScenary();
 
 
 void __cdecl FUN_10001830(int param_1,char param_2,char param_3)
@@ -669,7 +672,7 @@ unsigned int *  FUN_10002720(void *this_ptr,unsigned int *param_1,byte param_2)
 local_10 = (unsigned int)param_2;
   uStack_c = 0;
   for (local_14 = 0; local_14 < 8; local_14 = local_14 + 1) {
-    if ((&DAT_1003ed50)[local_14] == param_2) {
+    if (((long long *)&DAT_1003ed50)[local_14] == param_2) {
       uVar1 = *(int *)((int)this_ptr + local_14 * 4);
       *(int*)((char*)&local_10 + 1) = (int)uVar1;
       uStack_c = (char)((unsigned int)uVar1 >> 0x18);
@@ -742,7 +745,7 @@ local_c = 0;
   while (bVar1 < 8) {
     uVar2 = 0;
     local_10 = bVar1;
-    if ((&DAT_1003ed50)[bVar1] == param_1) {
+    if (((long long *)&DAT_1003ed50)[bVar1] == param_1) {
       local_10 = 8;
       local_c = bVar1;
     }
@@ -871,7 +874,7 @@ void FUN_10002b90(int param_1,char param_2)
   unsigned short uVar1;
   unsigned int uVar2;
   int iVar3;
-  int extraout_ECX;
+  int extraout_ECX = 0;
   int *puVar4;
   long long lVar5;
   unsigned short local_58;
@@ -895,10 +898,10 @@ local_c = local_c & 0xffff0000;
   UnitsCenter(local_8,param_1,500);
   FUN_100027d0(&DAT_10040ca0,local_8,param_2);
   for (local_40 = 0; local_40 < 8; local_40 = local_40 + 1) {
-    if (0 < (int)(&DAT_10040ca0)[local_40]) {
-      uVar2 = ((&DAT_10040ca0)[local_40] * 100) / local_10;
+    if (0 < (int)((long long *)&DAT_10040ca0)[local_40]) {
+      uVar2 = (((long long *)&DAT_10040ca0)[local_40] * 100) / local_10;
       FUN_10002480(&DAT_10040c90,(int)local_2a,1,
-                                 (int)(&DAT_1003ed50)[local_40],uVar2);
+                                 (int)((long long *)&DAT_1003ed50)[local_40],uVar2);
       local_44 = (int)uVar1;
       if ((local_c & 0xffff) / 100 < uVar1 / 100) {
         local_c = (int)uVar1;
@@ -912,10 +915,10 @@ local_c = local_c & 0xffff0000;
     UnitsCenter(local_8,param_1,1000);
     FUN_100027d0(&DAT_10040ca0,local_8,param_2);
     for (local_48 = 0; local_48 < 8; local_48 = local_48 + 1) {
-      if (0 < (int)(&DAT_10040ca0)[local_48]) {
-        uVar2 = ((&DAT_10040ca0)[local_48] * 100) / local_10;
+      if (0 < (int)((long long *)&DAT_10040ca0)[local_48]) {
+        uVar2 = (((long long *)&DAT_10040ca0)[local_48] * 100) / local_10;
         FUN_10002480(&DAT_10040c90,(int)local_2a,2,
-                                   (int)(&DAT_1003ed50)[local_48],uVar2);
+                                   (int)((long long *)&DAT_1003ed50)[local_48],uVar2);
         local_4c = (int)uVar1;
         if ((local_c & 0xffff) / 100 < uVar1 / 100) {
           local_c = (int)uVar1;
@@ -930,14 +933,14 @@ local_c = local_c & 0xffff0000;
     UnitsCenter(local_8,param_1,2000);
     FUN_100027d0(&DAT_10040ca0,local_8,param_2);
     for (local_50 = 0; local_50 < 8; local_50 = local_50 + 1) {
-      if (0 < (int)(&DAT_10040ca0)[local_50]) {
-        local_54 = ((float)(int)(&DAT_10040ca0)[local_50] * DAT_1003b050_ovl) / (float)local_10;
+      if (0 < (int)((long long *)&DAT_10040ca0)[local_50]) {
+        local_54 = ((float)(int)((long long *)&DAT_10040ca0)[local_50] * DAT_1003b050_ovl) / (float)local_10;
         if (local_54 < DAT_1003b04c_ovl) {
           local_54 = 1.0;
         }
         lVar5 = 0;
         FUN_10002480(&DAT_10040c90,(int)local_2a,
-                                   3,(int)(&DAT_1003ed50)[local_50],(unsigned int)lVar5);
+                                   3,(int)((long long *)&DAT_1003ed50)[local_50],(unsigned int)lVar5);
         local_58 = (int)uVar1;
         if ((local_c & 0xffff) / 100 < uVar1 / 100) {
           local_c = (int)uVar1;
@@ -1184,12 +1187,12 @@ DVar1 = FUN_1000aec0((int *)0x0);
   RegisterUnitType(&DAT_10040ce0,"Kreposnoi(RU)");
   RegisterUnitType(&DAT_10041220,"Pik_rus(RU)");
   for (local_8 = 0; local_8 < 0x32; local_8 = local_8 + 1) {
-    RegisterDynGroup(&DAT_10040ce8 + local_8 * 0x10);
-    RegisterVar(&DAT_10040ce8 + local_8 * 0x10,0x10);
+    RegisterDynGroup(((unsigned char *)&DAT_10040ce8) + local_8 * 0x10);
+    RegisterVar(((unsigned char *)&DAT_10040ce8) + local_8 * 0x10,0x10);
   }
   for (local_8 = 0; local_8 < 10; local_8 = local_8 + 1) {
-    RegisterDynGroup(&DAT_10041018 + local_8 * 0x10);
-    RegisterVar(&DAT_10041018 + local_8 * 0x10,0x10);
+    RegisterDynGroup(((unsigned char *)&DAT_10041018) + local_8 * 0x10);
+    RegisterVar(((unsigned char *)&DAT_10041018) + local_8 * 0x10,0x10);
   }
   DAT_10041148 = 0;
   DAT_1004114a = 0;
@@ -1209,7 +1212,7 @@ void __cdecl FUN_10003db0(unsigned short *param_1,int param_2)
 
 {
   int iVar1;
-  int extraout_ECX;
+  int extraout_ECX = 0;
   int *puVar2;
   long long lVar3;
   int local_6c [16];
@@ -1238,12 +1241,12 @@ local_8 = *(unsigned int *)(param_1 + 2) & 0xffffff;
     *param_1 = (short)local_c + (short)lVar3;
     if (local_14 % 3 == 0) {
       iVar1 = rand();
-      CreateObject0(&DAT_10040ce8 + local_14 * 0x10,&DAT_10041218,&DAT_10041220,1,param_1,
+      CreateObject0(((unsigned char *)&DAT_10040ce8) + local_14 * 0x10,&DAT_10041218,&DAT_10041220,1,param_1,
                     iVar1 % 0xff);
     }
     else {
       iVar1 = rand();
-      CreateObject0(&DAT_10040ce8 + local_14 * 0x10,&DAT_10041218,&DAT_10041150,1,param_1,
+      CreateObject0(((unsigned char *)&DAT_10040ce8) + local_14 * 0x10,&DAT_10041218,&DAT_10041150,1,param_1,
                     iVar1 % 0xff);
     }
   }
@@ -1280,7 +1283,7 @@ void __cdecl FUN_10004050(unsigned short *param_1,int param_2)
 
 {
   int iVar1;
-  int extraout_ECX;
+  int extraout_ECX = 0;
   int *puVar2;
   long long lVar3;
   int local_6c [16];
@@ -1308,7 +1311,7 @@ local_8 = *(unsigned int *)(param_1 + 2) & 0xffffff;
     lVar3 = 0;
     *param_1 = (short)local_c + (short)lVar3;
     iVar1 = rand();
-    CreateObject0(&DAT_10041018 + local_14 * 0x10,&DAT_10041008,&DAT_10041140,3,param_1,iVar1 % 0xff
+    CreateObject0(((unsigned char *)&DAT_10041018) + local_14 * 0x10,&DAT_10041008,&DAT_10041140,3,param_1,iVar1 % 0xff
                  );
   }
   return;
@@ -1553,7 +1556,7 @@ uVar2 = Trigg(99);
   SaveSelectedUnits(0,&DAT_10041158,0);
   for (local_8 = 0; local_8 < 10; local_8 = local_8 + 1) {
     uVar2 = Trigg(0xd);
-    FUN_100041c0((int)(&DAT_10041018 + local_8 * 0x10),uVar2 & 0xff);
+    FUN_100041c0((int)(((unsigned char *)&DAT_10041018) + local_8 * 0x10),uVar2 & 0xff);
     if (cVar1 != '\0') {
       uVar2 = Trigg(0xb);
       if ((uVar2 & 0xff) != 0) {
@@ -1584,7 +1587,7 @@ uVar2 = Trigg(99);
       iVar4 = local_c % 3;
       iVar3 = GetGlobalTime();
       if (iVar4 == iVar3 % 3) {
-        FUN_100044d0((int)(&DAT_10041018 + local_c * 0x10));
+        FUN_100044d0((int)(((unsigned char *)&DAT_10041018) + local_c * 0x10));
       }
     }
     RunTimer(2,300);
@@ -1597,7 +1600,7 @@ uVar2 = Trigg(99);
         iVar4 = local_10 % 3;
         iVar3 = GetGlobalTime();
         if (iVar4 == iVar3 % 3) {
-          FUN_10004710((int)(&DAT_10040ce8 + local_10 * 0x10));
+          FUN_10004710((int)(((unsigned char *)&DAT_10040ce8) + local_10 * 0x10));
         }
       }
       RunTimer(1,0x96);
@@ -1637,7 +1640,7 @@ uVar2 = Trigg(99);
     uVar2 = Trigg(5);
     if ((uVar2 & 0xff) != 0) {
       for (local_18 = 0; local_18 < DAT_1003ed5c; local_18 = local_18 + 1) {
-        FUN_10003f90((int)(&DAT_10040ce8 + local_18 * 0x10));
+        FUN_10003f90((int)(((unsigned char *)&DAT_10040ce8) + local_18 * 0x10));
         if (cVar1 != '\0') {
           ShowPage("#PAGE8");
           ChangeFriends(1,2);
@@ -2510,7 +2513,7 @@ void  FUN_10007060(void *this_ptr,int param_1)
   int *puVar2;
   int local_48 [17];
 *(int *)((int)this_ptr + 4) = param_1;
-  (&DAT_10041350)[DAT_100413a0] = this_ptr;
+  ((long long *)&DAT_10041350)[DAT_100413a0] = this_ptr;
   DAT_100413a0 = DAT_100413a0 + 1;
   return;
 }
@@ -2530,9 +2533,9 @@ void __cdecl FUN_100070d0(short *param_1)
   int local_8;
 local_8 = DAT_10041350;
   for (local_c = 0; local_c < DAT_100413a0; local_c = local_c + 1) {
-    psVar1 = (short *)FUN_100072a0((&DAT_10041350)[local_c]);
+    psVar1 = (short *)FUN_100072a0(((long long *)&DAT_10041350)[local_c]);
     if (*psVar1 == *param_1) {
-      local_8 = (&DAT_10041350)[local_c];
+      local_8 = ((long long *)&DAT_10041350)[local_c];
     }
   }
   return;
@@ -3270,7 +3273,7 @@ void  FUN_10008740(void *this_ptr,int param_1,int param_2,int param_3)
 {
   int *piVar1;
   int iVar2;
-  int extraout_ECX;
+  int extraout_ECX = 0;
   int *puVar3;
   long double fVar4;
   long long lVar5;

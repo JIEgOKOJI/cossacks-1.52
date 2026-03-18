@@ -168,6 +168,9 @@ void FUN_10005ba5(int param_1,int param_2,int param_3,int *param_4);
 void FUN_10005c0f(void);
 unsigned int * FUN_10005c30(unsigned int *param_1,char *param_2);
 
+void OnInit();
+void ProcessScenary();
+
 
 void FUN_10001010(void)
 
@@ -2518,7 +2521,7 @@ LAB_10004fb5:
     }
     else {
       pcVar9 = pcVar7;
-      if ((*(byte *)((&DAT_1002ca20)[(int)uVar1 >> 5] + 4 + (uVar1 & 0x1f) * 0x24) & 0x80) != 0) {
+      if ((*(byte *)(((long long *)&DAT_1002ca20)[(int)uVar1 >> 5] + 4 + (uVar1 & 0x1f) * 0x24) & 0x80) != 0) {
         for (; pcVar9 < pcVar5; pcVar9 = pcVar9 + 1) {
           if (*pcVar9 == '\n') {
             local_c = local_c + 1;
@@ -2534,7 +2537,7 @@ LAB_10004fb5:
         else {
           pcVar5 = pcVar5 + (*(int *)(param_1 + 4) - (int)pcVar7);
           iVar10 = (uVar1 & 0x1f) * 0x24;
-          if ((*(byte *)(iVar10 + 4 + (&DAT_1002ca20)[(int)uVar1 >> 5]) & 0x80) != 0) {
+          if ((*(byte *)(iVar10 + 4 + ((long long *)&DAT_1002ca20)[(int)uVar1 >> 5]) & 0x80) != 0) {
             DVar6 = FUN_100076d5(uVar1,0,2);
             if (DVar6 == local_8) {
               pcVar7 = *(char **)(param_1 + 8);
@@ -2554,7 +2557,7 @@ LAB_10004fb5:
                  ((*(unsigned int *)(param_1 + 0xc) & 0x400) != 0)) {
                 pcVar8 = *(char **)(param_1 + 0x18);
               }
-              bVar3 = *(byte *)(iVar10 + 4 + (&DAT_1002ca20)[(int)uVar1 >> 5]) & 4;
+              bVar3 = *(byte *)(iVar10 + 4 + ((long long *)&DAT_1002ca20)[(int)uVar1 >> 5]) & 4;
               param_1 = pcVar8;
             }
             pcVar5 = param_1;
@@ -3436,7 +3439,7 @@ void OnInit(void)
     DisableMission();
   }
   for (iVar3 = 0; iVar3 < 8; iVar3 = iVar3 + 1) {
-    (&DAT_100132d8)[iVar3] = 0xff;
+    ((long long *)&DAT_100132d8)[iVar3] = 0xff;
   }
   RegisterVar();
   DAT_100132e0 = 1;
@@ -3462,7 +3465,7 @@ void ProcessScenary(void)
   if (DAT_100132e0 != '\0') {
     iVar2 = 0;
     do {
-      ChangeFriends(iVar2,(int)(&DAT_100132d8)[iVar2]);
+      ChangeFriends(iVar2,(int)((long long *)&DAT_100132d8)[iVar2]);
       iVar2 = iVar2 + 1;
       uVar1 = extraout_var;
     } while (iVar2 < 8);

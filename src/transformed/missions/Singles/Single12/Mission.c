@@ -31,7 +31,7 @@ long long DAT_1000cff0 = 0;
 long long DAT_1000cff8 = 0;
 int DAT_1000d2a3 = 0;
 long long DAT_1000d2f8 = 0;
-long long DAT_1000d300 = 0;
+unsigned char DAT_1000d300[120] = {0};
 long long DAT_1000d30f = 0;
 long long DAT_1000d320 = 0;
 long long DAT_1000d328 = 0;
@@ -54,7 +54,7 @@ long long DAT_1000d6a0 = 0;
 long long DAT_1000d6a8 = 0;
 long long DAT_1000d6b0 = 0;
 long long DAT_1000d6b8 = 0;
-long long DAT_1000d6c8 = 0;
+unsigned char DAT_1000d6c8[800] = {0};
 long long DAT_1000d6d7 = 0;
 long long DAT_1000d6e6 = 0;
 long long DAT_1000d6f5 = 0;
@@ -123,6 +123,9 @@ int FUN_10003085(int *param_1,int param_2,DWORD param_3);
 int FUN_100030b1(int *param_1,int param_2,DWORD param_3);
 int * FUN_1000313e(LPCSTR param_1,char *param_2,unsigned int param_3);
 void FUN_1000316f(LPCSTR param_1,char *param_2);
+
+void OnInit();
+void ProcessScenary();
 
 
 void 
@@ -444,7 +447,7 @@ void  FUN_100015e0(int param_1)
   
   iVar1 = FUN_100014c0(param_1);
   ShowPageParam("#PAGE11",param_1 + 0x298,
-                (int)&DAT_1000d6c8 + *(int *)(param_1 + 0x2e9) * 0xf,&DAT_1000d6c8,
+                (int)((unsigned char *)&DAT_1000d6c8) + *(int *)(param_1 + 0x2e9) * 0xf,&DAT_1000d6c8,
                 *(int *)(param_1 + 0x2b8),&DAT_1000d6d7,*(int *)(param_1 + 700),
                 &DAT_1000d6e6,*(int *)(param_1 + 0x2c0),&DAT_1000d6f5,
                 *(int *)(param_1 + 0x2c4),&DAT_1000d704,*(int *)(param_1 + 0x2c8),
@@ -548,8 +551,8 @@ void  FUN_10001700(void *param_1)
   FUN_10001230((int)param_1);
   iVar2 = FUN_10001f50(param_1,pvVar5);
   iVar3 = FUN_10001f50(param_1,pvVar4);
-  ShowPageParam("#PAGE131",(int)&DAT_1000d6c8 + (int)pvVar5 * 0xf,100,
-                (int)&DAT_1000d6c8 + (int)pvVar4 * 0xf,(iVar2 * 100) / iVar3);
+  ShowPageParam("#PAGE131",(int)((unsigned char *)&DAT_1000d6c8) + (int)pvVar5 * 0xf,100,
+                (int)((unsigned char *)&DAT_1000d6c8) + (int)pvVar4 * 0xf,(iVar2 * 100) / iVar3);
   return;
 }
 
@@ -570,8 +573,8 @@ void  FUN_10001830(void *param_1)
     pvVar3 = (void *)(iVar1 * 0x40 + (int)param_1);
     iVar1 = GetTotalAmount0(pvVar3);
     if (iVar1 != 0) {
-      iVar1 = (int)&DAT_1000d6c8 + *(int *)((int)pvVar3 + 0x11) * 0xf;
-      iVar2 = (int)&DAT_1000d6c8 + *(int *)((int)pvVar3 + 9) * 0xf;
+      iVar1 = (int)((unsigned char *)&DAT_1000d6c8) + *(int *)((int)pvVar3 + 0x11) * 0xf;
+      iVar2 = (int)((unsigned char *)&DAT_1000d6c8) + *(int *)((int)pvVar3 + 9) * 0xf;
       ShowPageParam("#PAGE7",(int)pvVar3 + 0x29,iVar2,iVar1,iVar2,
                     *(int *)((int)pvVar3 + 0xd),iVar1,*(int *)((int)pvVar3 + 0x15));
       return;
@@ -1397,7 +1400,7 @@ LAB_10002fb2:
     }
     else {
       pcVar9 = pcVar7;
-      if ((*(byte *)((&DAT_1000dd00)[(int)uVar1 >> 5] + 4 + (uVar1 & 0x1f) * 0x24) & 0x80) != 0) {
+      if ((*(byte *)(((long long *)&DAT_1000dd00)[(int)uVar1 >> 5] + 4 + (uVar1 & 0x1f) * 0x24) & 0x80) != 0) {
         for (; pcVar9 < pcVar5; pcVar9 = pcVar9 + 1) {
           if (*pcVar9 == '\n') {
             local_c = local_c + 1;
@@ -1413,7 +1416,7 @@ LAB_10002fb2:
         else {
           pcVar5 = pcVar5 + (*(int *)(param_1 + 4) - (int)pcVar7);
           iVar10 = (uVar1 & 0x1f) * 0x24;
-          if ((*(byte *)(iVar10 + 4 + (&DAT_1000dd00)[(int)uVar1 >> 5]) & 0x80) != 0) {
+          if ((*(byte *)(iVar10 + 4 + ((long long *)&DAT_1000dd00)[(int)uVar1 >> 5]) & 0x80) != 0) {
             DVar6 = FUN_100042b4(uVar1,0,2);
             if (DVar6 == local_8) {
               pcVar7 = *(char **)(param_1 + 8);
@@ -1433,7 +1436,7 @@ LAB_10002fb2:
                  ((*(unsigned int *)(param_1 + 0xc) & 0x400) != 0)) {
                 pcVar8 = *(char **)(param_1 + 0x18);
               }
-              bVar3 = *(byte *)(iVar10 + 4 + (&DAT_1000dd00)[(int)uVar1 >> 5]) & 4;
+              bVar3 = *(byte *)(iVar10 + 4 + ((long long *)&DAT_1000dd00)[(int)uVar1 >> 5]) & 4;
               param_1 = pcVar8;
             }
             pcVar5 = param_1;
@@ -1834,9 +1837,9 @@ LAB_1000258f:
         iVar11 = iVar11 + 5;
         sVar6 = FUN_10002ca0((byte *)(iVar11 + (int)puVar4),&DAT_1000a2b0);
         iVar1 = iVar8 * 0xf;
-        strncpy((char *)((int)&DAT_1000d6c8 + iVar1),(char *)(iVar11 + (int)puVar4),sVar6);
+        strncpy((char *)((int)((unsigned char *)&DAT_1000d6c8) + iVar1),(char *)(iVar11 + (int)puVar4),sVar6);
         iVar8 = iVar8 + 1;
-        *(char *)((int)&DAT_1000d6c8 + sVar6 + iVar1) = 0;
+        *(char *)((int)((unsigned char *)&DAT_1000d6c8) + sVar6 + iVar1) = 0;
       } while (iVar8 < 6);
       iVar8 = 0;
       do {
@@ -1853,9 +1856,9 @@ LAB_100025fe:
         iVar11 = iVar11 + 10;
         sVar6 = FUN_10002ca0((byte *)(iVar11 + (int)puVar4),&DAT_1000a2b0);
         iVar1 = iVar8 * 0xf;
-        strncpy((char *)((int)&DAT_1000d300 + iVar1),(char *)(iVar11 + (int)puVar4),sVar6);
+        strncpy((char *)((int)((unsigned char *)&DAT_1000d300) + iVar1),(char *)(iVar11 + (int)puVar4),sVar6);
         iVar8 = iVar8 + 1;
-        *(char *)((int)&DAT_1000d300 + sVar6 + iVar1) = 0;
+        *(char *)((int)((unsigned char *)&DAT_1000d300) + sVar6 + iVar1) = 0;
       } while (iVar8 < 2);
       FUN_10002b90((int *)puVar4);
     }

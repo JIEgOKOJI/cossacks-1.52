@@ -11,7 +11,7 @@ long long DAT_10012c00 = 0;
 long long DAT_10012c09 = 0;
 long long DAT_10012c12 = 0;
 long long DAT_10012c80 = 0;
-long long DAT_10012c84 = 0;
+unsigned char DAT_10012c84[60] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 long long DAT_10012cc0 = 0;
 long long DAT_10012cc8 = 0;
 long long DAT_10012cd0 = 0;
@@ -184,7 +184,6 @@ void FUN_100016e0(void);
 void FUN_100016f0(void);
 void FUN_10002ea0(void);
 void FUN_10002eb0(void);
-int  FUN_10002f00(int param_1);
 int *  FUN_10002f20(void *this_ptr,int param_1,int param_2);
 void  FUN_10002f60(void *this_ptr,int param_1);
 void  FUN_10002fb0(void *this_ptr,int *param_1);
@@ -218,6 +217,9 @@ void FUN_10003b03(void);
 int FUN_10003b63(int param_1,int param_2);
 int FUN_10003b88(int param_1);
 int FUN_10003c06(int param_1);
+
+void OnInit();
+void ProcessScenary();
 
 
 int *  FUN_10001000(int *param_1)
@@ -310,11 +312,11 @@ char __cdecl FUN_100010b0(unsigned int param_1,unsigned int param_2)
   iVar1 = (param_2 ^ (int)param_2 >> 0x1f) - ((int)param_2 >> 0x1f);
   if (iVar1 < iVar3) {
     iVar1 = FUN_10003b63(iVar1 * 0x100,iVar3);
-    cVar2 = (&DAT_100125e8)[iVar1 * 2];
+    cVar2 = ((long long *)&DAT_100125e8)[iVar1 * 2];
   }
   else {
     iVar1 = FUN_10003b63(iVar3 * 0x100,iVar1);
-    cVar2 = '@' - (&DAT_100125e8)[iVar1 * 2];
+    cVar2 = '@' - ((long long *)&DAT_100125e8)[iVar1 * 2];
   }
   if ((int)param_1 < 0) {
     cVar2 = -0x80 - cVar2;
@@ -502,10 +504,10 @@ void FUN_100014a0(void)
 void __cdecl FUN_100014c0(int param_1)
 
 {
-  if (*(int *)(&DAT_10012c84 + param_1 * 8) != 0x554e4954) {
-    RegisterDynGroup(&DAT_10012c80 + param_1 * 8);
+  if (*(int *)(((unsigned char *)&DAT_10012c84) + param_1 * 8) != 0x554e4954) {
+    RegisterDynGroup(((unsigned char *)&DAT_10012c80) + param_1 * 8);
   }
-  SaveSelectedUnits(param_1,&DAT_10012c80 + param_1 * 8,0);
+  SaveSelectedUnits(param_1,((unsigned char *)&DAT_10012c80) + param_1 * 8,0);
   ClearSelection(param_1);
   return;
 }
@@ -539,7 +541,7 @@ void __cdecl FUN_10001540(int param_1)
 
 {
   ClearSelection(param_1);
-  SelectUnits(&DAT_10012c80 + param_1 * 8,0);
+  SelectUnits(((unsigned char *)&DAT_10012c80) + param_1 * 8,0);
   return;
 }
 
@@ -690,16 +692,6 @@ void FUN_10002eb0(void)
   return;
 }
 
-
-
-
-
-int  FUN_10002f00(int param_1)
-
-{
-  RegisterFormation(param_1,"#ALONE");
-  return param_1;
-}
 
 
 
@@ -1185,7 +1177,7 @@ void  FUN_10003800(void *this_ptr,int *param_1)
   char cVar2;
   int iVar3;
   int iVar4;
-  int extraout_ECX;
+  int extraout_ECX = 0;
   int iVar5;
   int local_74;
   int uStack_70;

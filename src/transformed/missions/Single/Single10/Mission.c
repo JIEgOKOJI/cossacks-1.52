@@ -5,24 +5,8 @@
 
 /* Global variables */
 long long DAT_1002e3e0 = 0;
-
-/* Forward declarations */
-void FUN_10001750(int param_1,char param_2);
-
-
-void __cdecl FUN_10001750(int param_1,char param_2)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-GetTotalAmount1(param_1,(int)param_2);
-  uStack_8 = 0x1000178f;
-  return;
-}
-
-
+void OnInit();
+void ProcessScenary();
 
 
 
@@ -90,7 +74,7 @@ uVar1 = Trigg(100);
   if ((uVar1 & 0xff) != 0) {
     iVar2 = GetAmountOfWarriors(4);
     if (iVar2 == 0) {
-      FUN_10001750(&DAT_1002e3e0,4);
+      GetTotalAmount1(&DAT_1002e3e0,4);
       if (iVar2 == 0) {
         SetTrigg(99,0);
         ShowPage("#PAGE2");
@@ -103,7 +87,7 @@ uVar1 = Trigg(100);
   if ((uVar1 & 0xff) != 0) {
     iVar2 = GetAmountOfWarriors(5);
     if (iVar2 == 0) {
-      FUN_10001750(&DAT_1002e3e0,5);
+      GetTotalAmount1(&DAT_1002e3e0,5);
       if (iVar2 == 0) {
         SetTrigg(0x62,0);
         ShowPage("#PAGE3");

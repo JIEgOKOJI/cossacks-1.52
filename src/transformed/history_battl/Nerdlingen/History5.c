@@ -115,6 +115,9 @@ void FUN_100030d0(char param_1);
 void FUN_10003130(char param_1,char param_2);
 int FUN_100031f0(char *param_1,byte *param_2);
 
+void OnInit();
+void ProcessScenary();
+
 
 void __cdecl FUN_100012a0(char param_1)
 
@@ -682,8 +685,8 @@ FUN_10002a70(&DAT_10030438,"Zone1");
   FUN_10002b40(1,2);
   FUN_10002b40(3,7);
   for (DAT_100303f4 = 0; DAT_100303f4 < 5; DAT_100303f4 = DAT_100303f4 + 1) {
-    (&DAT_100303f8)[DAT_100303f4] = 0;
-    (&DAT_1003040c)[DAT_100303f4] = 0;
+    ((long long *)&DAT_100303f8)[DAT_100303f4] = 0;
+    ((long long *)&DAT_1003040c)[DAT_100303f4] = 0;
   }
   uStack_8 = 0x100029af;
   return;
@@ -781,24 +784,24 @@ FUN_100030d0(0xff);
   FUN_10003010(0);
   if (cVar1 != '\0') {
     for (DAT_100303f4 = 0; DAT_100303f4 < 5; DAT_100303f4 = DAT_100303f4 + 1) {
-      FUN_10002e70(&DAT_10030438 + DAT_100303f4 * 8,0);
+      FUN_10002e70(((unsigned char *)&DAT_10030438) + DAT_100303f4 * 8,0);
       if ((0 < iVar2) &&
-         (FUN_10002e70(&DAT_10030438 + DAT_100303f4 * 8,1), iVar2 == 0)) {
-        (&DAT_100303f8)[DAT_100303f4] = 1;
-        (&DAT_1003040c)[DAT_100303f4] = 0;
+         (FUN_10002e70(((unsigned char *)&DAT_10030438) + DAT_100303f4 * 8,1), iVar2 == 0)) {
+        ((long long *)&DAT_100303f8)[DAT_100303f4] = 1;
+        ((long long *)&DAT_1003040c)[DAT_100303f4] = 0;
       }
-      FUN_10002e70(&DAT_10030438 + DAT_100303f4 * 8,1);
+      FUN_10002e70(((unsigned char *)&DAT_10030438) + DAT_100303f4 * 8,1);
       if ((0 < iVar2) &&
-         (FUN_10002e70(&DAT_10030438 + DAT_100303f4 * 8,0), iVar2 == 0)) {
-        (&DAT_100303f8)[DAT_100303f4] = 0;
-        (&DAT_1003040c)[DAT_100303f4] = 1;
+         (FUN_10002e70(((unsigned char *)&DAT_10030438) + DAT_100303f4 * 8,0), iVar2 == 0)) {
+        ((long long *)&DAT_100303f8)[DAT_100303f4] = 0;
+        ((long long *)&DAT_1003040c)[DAT_100303f4] = 1;
       }
     }
     DAT_10030460 = 0;
     DAT_10030464 = 0;
     for (DAT_100303f4 = 0; DAT_100303f4 < 5; DAT_100303f4 = DAT_100303f4 + 1) {
-      DAT_10030460 = DAT_10030460 + (&DAT_100303f8)[DAT_100303f4];
-      DAT_10030464 = DAT_10030464 + (&DAT_1003040c)[DAT_100303f4];
+      DAT_10030460 = DAT_10030460 + ((long long *)&DAT_100303f8)[DAT_100303f4];
+      DAT_10030464 = DAT_10030464 + ((long long *)&DAT_1003040c)[DAT_100303f4];
     }
     if ((DAT_10030460 < 3) && (2 < DAT_10030464)) {
       FUN_100026b0();

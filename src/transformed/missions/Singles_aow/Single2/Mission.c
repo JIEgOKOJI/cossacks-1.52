@@ -130,24 +130,8 @@ int DAT_10033650 = 0;
 int DAT_10033654 = 0;
 int DAT_10033658 = 0;
 int DAT_1003365c = 0;
-
-/* Forward declarations */
-void FUN_100066e0(int param_1);
-
-
-void __cdecl FUN_100066e0(int param_1)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-GetTotalAmount0(param_1);
-  uStack_8 = 0x1000671b;
-  return;
-}
-
-
+void OnInit();
+void ProcessScenary();
 
 
 
@@ -477,7 +461,7 @@ uVar1 = Trigg(1);
       }
     }
     uVar1 = Trigg(0x24);
-    if (((uVar1 & 0xff) != 0) && (FUN_100066e0(&DAT_10033508), 0 < iVar2)) {
+    if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_10033508), 0 < iVar2)) {
       iVar2 = GetUnitsAmount1(&DAT_100335c8,&DAT_10033508);
       if (0 < iVar2) {
         SetTrigg(0x24,0);
@@ -503,7 +487,7 @@ uVar1 = Trigg(1);
         }
       }
       uVar1 = Trigg(0x2f);
-      if (((uVar1 & 0xff) != 0) && (FUN_100066e0(&DAT_100334b8), 0 < iVar2)) {
+      if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_100334b8), 0 < iVar2)) {
         iVar2 = GetUnitsAmount1(&DAT_100335c8,&DAT_100334b8);
         if (0 < iVar2) {
           SetTrigg(0x2f,0);
@@ -688,7 +672,7 @@ uVar1 = Trigg(1);
       }
     }
     uVar1 = Trigg(0x25);
-    if (((uVar1 & 0xff) != 0) && (FUN_100066e0(&DAT_10033520), 0 < iVar2)) {
+    if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_10033520), 0 < iVar2)) {
       iVar2 = GetUnitsAmount1(&DAT_100335c8,&DAT_10033520);
       if (0 < iVar2) {
         SetTrigg(0x25,0);
@@ -714,7 +698,7 @@ uVar1 = Trigg(1);
         }
       }
       uVar1 = Trigg(0x31);
-      if (((uVar1 & 0xff) != 0) && (FUN_100066e0(&DAT_100334c0), 0 < iVar2)) {
+      if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_100334c0), 0 < iVar2)) {
         iVar2 = GetUnitsAmount1(&DAT_100335d8,&DAT_100334c0);
         if (0 < iVar2) {
           SetTrigg(0x31,0);

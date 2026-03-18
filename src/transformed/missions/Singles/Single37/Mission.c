@@ -113,9 +113,10 @@ int FUN_10001012(int param_1);
 int FUN_10001030(int param_1,int param_2);
 int FUN_1000105e(int param_1,int param_2,int param_3);
 int FUN_1000108e(int param_1,int param_2);
-int FUN_100010bc(int param_1,int param_2,int param_3,int param_4);
-int FUN_100010e0(int param_1,int param_2,int param_3,int param_4);
 void FUN_10001104(int param_1);
+
+void OnInit();
+void ProcessScenary();
 
 
 int __cdecl FUN_10001012(int param_1)
@@ -181,28 +182,6 @@ int __cdecl FUN_1000108e(int param_1,int param_2)
 }
 
 
-
-
-
-int __cdecl
-FUN_100010bc(int param_1,int param_2,int param_3,int param_4)
-
-{
-  CreateObject0(param_1,&DAT_100077d0,param_2,param_4,param_3,0x40);
-  return param_4;
-}
-
-
-
-
-
-int __cdecl
-FUN_100010e0(int param_1,int param_2,int param_3,int param_4)
-
-{
-  CreateObject0(param_1,&DAT_10007718,param_2,param_4,param_3,0x40);
-  return param_4;
-}
 
 
 
@@ -595,24 +574,24 @@ LAB_100017b9:
      (cVar1 = TimerDone(6), cVar1 != '\0')) {
     cVar1 = Trigg(7);
     if (cVar1 == '\0') {
-      FUN_100010bc(&DAT_100076f8,&DAT_10007660,&DAT_100077f8,3);
+      CreateObject0(&DAT_100076f8,&DAT_10007660,&DAT_100077f8,3);
       cVar1 = Trigg(8);
       if (cVar1 != '\0') {
         FUN_1000108e(&DAT_100076f8,&DAT_10007808);
       }
       FUN_1000108e(&DAT_100076f8,&DAT_10007790);
-      FUN_100010bc(&DAT_100076f8,&DAT_100077c8,&DAT_100077f8,3);
+      CreateObject0(&DAT_100076f8,&DAT_100077c8,&DAT_100077f8,3);
       FUN_10001030(&DAT_100076f8,&DAT_10007810);
       puVar8 = &DAT_100076f8;
     }
     else {
-      FUN_100010bc(&DAT_100076e0,&DAT_100077c8,&DAT_100077f8,3);
+      CreateObject0(&DAT_100076e0,&DAT_100077c8,&DAT_100077f8,3);
       cVar1 = Trigg(8);
       if (cVar1 != '\0') {
         FUN_1000108e(&DAT_100076e0,&DAT_10007808);
       }
       FUN_1000108e(&DAT_100076e0,&DAT_10007790);
-      FUN_100010bc(&DAT_100076e0,&DAT_100077c8,&DAT_100077f8,3);
+      CreateObject0(&DAT_100076e0,&DAT_100077c8,&DAT_100077f8,3);
       FUN_10001030(&DAT_100076e0,&DAT_10007810);
       puVar8 = &DAT_100076e0;
     }
@@ -629,21 +608,21 @@ LAB_100017b9:
   if ((cVar1 != '\0') && (cVar1 = TimerDone(8), cVar1 != '\0')) {
     iStack_4 = 5;
     do {
-      FUN_100010bc(&DAT_10007780,&DAT_100077c0,&DAT_10007738,4);
+      CreateObject0(&DAT_10007780,&DAT_100077c0,&DAT_10007738,4);
       RemoveGroup(&DAT_10007780,&DAT_10007658);
-      FUN_100010e0(&DAT_10007780,&DAT_10007650,&DAT_10007738,4);
+      CreateObject0(&DAT_10007780,&DAT_10007650,&DAT_10007738,4);
       RemoveGroup(&DAT_10007780,&DAT_10007658);
       iStack_4 = iStack_4 + -1;
     } while (iStack_4 != 0);
     iStack_4 = 2;
     do {
-      FUN_100010bc(&DAT_10007780,&DAT_100077b0,&DAT_10007738,4);
+      CreateObject0(&DAT_10007780,&DAT_100077b0,&DAT_10007738,4);
       RemoveGroup(&DAT_10007780,&DAT_10007658);
-      FUN_100010bc(&DAT_10007780,&DAT_10007868,&DAT_10007738,4);
+      CreateObject0(&DAT_10007780,&DAT_10007868,&DAT_10007738,4);
       RemoveGroup(&DAT_10007780,&DAT_10007658);
       iStack_4 = iStack_4 + -1;
     } while (iStack_4 != 0);
-    FUN_100010bc(&DAT_10007780,&DAT_10007770,&DAT_10007738,4);
+    CreateObject0(&DAT_10007780,&DAT_10007770,&DAT_10007738,4);
     RemoveGroup(&DAT_10007780,&DAT_10007658);
     FUN_1000105e(&DAT_10007658,&DAT_10007828,0x80);
     FUN_1000105e(&DAT_100076a8,&DAT_10007828,0x80);
@@ -682,7 +661,7 @@ LAB_100017b9:
     if (iVar3 + iVar4 + iVar5 == 0) {
       iStack_4 = 5;
       do {
-        FUN_100010bc(&DAT_10007780,&DAT_100077c0,&DAT_10007738,0);
+        CreateObject0(&DAT_10007780,&DAT_100077c0,&DAT_10007738,0);
         uVar10 = 2;
         uVar2 = 0x80;
         puVar8 = &DAT_10007828;
@@ -692,13 +671,13 @@ LAB_100017b9:
       } while (iStack_4 != 0);
       iStack_4 = 2;
       do {
-        FUN_100010bc(&DAT_10007780,&DAT_100077b0,&DAT_10007738,0);
+        CreateObject0(&DAT_10007780,&DAT_100077b0,&DAT_10007738,0);
         uVar10 = 2;
         uVar2 = 0x80;
         puVar8 = &DAT_10007828;
         iVar3 = FUN_1000105e(&DAT_10007780,&DAT_10007738,0x80);
         SelSendAndKill(iVar3,puVar8,uVar2,uVar10);
-        FUN_100010bc(&DAT_10007780,&DAT_10007868,&DAT_10007738,0);
+        CreateObject0(&DAT_10007780,&DAT_10007868,&DAT_10007738,0);
         uVar10 = 2;
         uVar2 = 0x80;
         puVar8 = &DAT_10007828;
@@ -706,13 +685,13 @@ LAB_100017b9:
         SelSendAndKill(iVar3,puVar8,uVar2,uVar10);
         iStack_4 = iStack_4 + -1;
       } while (iStack_4 != 0);
-      FUN_100010bc(&DAT_10007780,&DAT_10007770,&DAT_10007738,0);
+      CreateObject0(&DAT_10007780,&DAT_10007770,&DAT_10007738,0);
       uVar10 = 2;
       uVar2 = 0x80;
       puVar8 = &DAT_10007828;
       iVar3 = FUN_1000105e(&DAT_10007780,&DAT_10007738,0x80);
       SelSendAndKill(iVar3,puVar8,uVar2,uVar10);
-      FUN_100010bc(&DAT_10007780,&DAT_10007778,&DAT_10007738,0);
+      CreateObject0(&DAT_10007780,&DAT_10007778,&DAT_10007738,0);
       FUN_1000105e(&DAT_10007780,&DAT_10007738,0x80);
       SetResource(0,0,100000);
       SetResource(0,2,100000);

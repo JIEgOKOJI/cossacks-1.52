@@ -84,7 +84,6 @@ void FUN_10001dd0(int param_1,int param_2,int param_3,int param_4,int param_5,
 BOOL FUN_10001e90(int param_1);
 void FUN_10001ed0(unsigned int *param_1,int param_2,int param_3,int param_4,int param_5);
 void  FUN_100020a0(int param_1);
-void FUN_100020e0(int param_1,int param_2);
 int FUN_10002100(int param_1,int param_2,int param_3);
 void FUN_10002190(int param_1,int param_2,int param_3);
 void  FUN_100022e0(int param_1);
@@ -95,6 +94,9 @@ void FUN_100025eb(int *param_1);
 void FUN_100026ce(void);
 void FUN_100026f4(void);
 void FUN_1000270c(void);
+
+void OnInit();
+void ProcessScenary();
 
 
 void __cdecl
@@ -246,16 +248,6 @@ void  FUN_100020a0(int param_1)
   return;
 }
 
-
-
-
-
-void __cdecl FUN_100020e0(int param_1,int param_2)
-
-{
-  CreateObject0(param_1 + 0x10,param_2,param_2 + 0x10,6,param_1,0);
-  return;
-}
 
 
 
@@ -653,10 +645,10 @@ void ProcessScenary(void)
     RunTimer(0xf,100);
     RunTimer(0x10,100);
     RunTimer(0x11,15000);
-    FUN_100020e0(0x1000f460,0x1000f478);
-    FUN_100020e0(0x1000f448,0x1000f478);
-    FUN_100020e0(0x1000f430,0x1000f478);
-    FUN_100020e0(0x1000f418,0x1000f478);
+    CreateObject0(0x1000f460,0x1000f478);
+    CreateObject0(0x1000f448,0x1000f478);
+    CreateObject0(0x1000f430,0x1000f478);
+    CreateObject0(0x1000f418,0x1000f478);
     iVar2 = 0;
     iVar5 = GetDiff(0);
     if (iVar5 != -1 && -1 < iVar5 + 1) {

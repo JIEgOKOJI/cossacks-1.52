@@ -30,7 +30,7 @@ long long DAT_1003fd48 = 0;
 long long DAT_1003fd50 = 0;
 long long DAT_1003fd52 = 0;
 int DAT_1003fd54 = 0;
-long long DAT_1003fd58 = 0;
+unsigned char DAT_1003fd58[160] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 long long DAT_1003fdf8 = 0;
 long long DAT_1003fe00 = 0;
 long long DAT_1003fe08 = 0;
@@ -54,7 +54,7 @@ long long DAT_1003fed8 = 0;
 int DAT_1003ff88 = 0;
 long long DAT_1003ff90 = 0;
 long long DAT_1003ff98 = 0;
-long long DAT_1003ffa0 = 0;
+unsigned char DAT_1003ffa0[520] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xDC, 0x31, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x82, 0x39, 0x04, 0x00, 0xB4, 0x34, 0x04, 0x00, 0x3C, 0x30, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0E, 0x3F, 0x04, 0x00, 0x14, 0x33, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x4A, 0x3A, 0x04, 0x00, 0x34, 0x3A, 0x04, 0x00, 0x00, 0x3F, 0x04, 0x00, 0xEE, 0x3E, 0x04, 0x00, 0xDA, 0x3E, 0x04, 0x00, 0xC0, 0x3E, 0x04, 0x00, 0xAE, 0x3E, 0x04, 0x00, 0x9C, 0x3E, 0x04, 0x00, 0x8C, 0x3E, 0x04, 0x00, 0x7C, 0x3E, 0x04, 0x00, 0x66, 0x3E, 0x04, 0x00, 0x50, 0x3E, 0x04, 0x00, 0x3E, 0x3E, 0x04, 0x00, 0x2C, 0x3E, 0x04, 0x00, 0x1C, 0x3E, 0x04, 0x00, 0x0A, 0x3E, 0x04, 0x00, 0xFA, 0x3D, 0x04, 0x00, 0xEA, 0x3D, 0x04, 0x00, 0xE2, 0x3D, 0x04, 0x00, 0xD0, 0x3D, 0x04, 0x00, 0xBE, 0x3D, 0x04, 0x00, 0xA8, 0x3D, 0x04, 0x00, 0x96, 0x3D, 0x04, 0x00, 0x8A, 0x3D, 0x04, 0x00, 0x80, 0x3D, 0x04, 0x00, 0x74, 0x3D, 0x04, 0x00, 0x58, 0x3D, 0x04, 0x00, 0x48, 0x3D, 0x04, 0x00, 0x2A, 0x3D, 0x04, 0x00, 0x1A, 0x3D, 0x04, 0x00, 0x0C, 0x3D, 0x04, 0x00, 0x00, 0x3D, 0x04, 0x00, 0xE8, 0x3C, 0x04, 0x00, 0xDA, 0x3C, 0x04, 0x00, 0xCE, 0x3C, 0x04, 0x00, 0xC0, 0x3C, 0x04, 0x00, 0xB2, 0x3C, 0x04, 0x00, 0x98, 0x3C, 0x04, 0x00, 0x80, 0x3C, 0x04, 0x00, 0x6A, 0x3C, 0x04, 0x00, 0x50, 0x3C, 0x04, 0x00, 0x36, 0x3C, 0x04, 0x00, 0x24, 0x3C, 0x04, 0x00, 0x16, 0x3C, 0x04, 0x00, 0x04, 0x3C, 0x04, 0x00, 0xF0, 0x3B, 0x04, 0x00, 0xDC, 0x3B, 0x04, 0x00, 0xC8, 0x3B, 0x04, 0x00, 0xB8, 0x3B, 0x04, 0x00, 0xAA, 0x3B, 0x04, 0x00, 0x9A, 0x3B, 0x04, 0x00, 0x90, 0x3B, 0x04, 0x00, 0x84, 0x3B, 0x04, 0x00, 0x76, 0x3B, 0x04, 0x00, 0x60, 0x3B, 0x04, 0x00, 0x50, 0x3B, 0x04, 0x00, 0x8C, 0x39, 0x04, 0x00, 0x98, 0x39, 0x04, 0x00, 0xB2, 0x39, 0x04, 0x00, 0xC2, 0x39, 0x04, 0x00, 0xD2, 0x39, 0x04, 0x00, 0xE4, 0x39, 0x04, 0x00, 0xF2, 0x39, 0x04, 0x00, 0x00, 0x3A, 0x04, 0x00, 0x10, 0x3A, 0x04, 0x00, 0x1C, 0x3A, 0x04, 0x00, 0x40, 0x3B, 0x04, 0x00, 0xCA, 0x3A, 0x04, 0x00, 0x5C, 0x3A, 0x04, 0x00, 0x6C, 0x3A, 0x04, 0x00, 0x84, 0x3A, 0x04, 0x00, 0x9A, 0x3A, 0x04, 0x00, 0xAE, 0x3A, 0x04, 0x00, 0xE2, 0x3A, 0x04, 0x00, 0xFA, 0x3A, 0x04, 0x00, 0x12, 0x3B, 0x04, 0x00, 0x20, 0x3B, 0x04, 0x00, 0x30, 0x3B, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 int DAT_100404b8 = 0;
 int DAT_10040638 = 0;
 int DAT_10040688 = 0;
@@ -281,6 +281,9 @@ void FUN_10009fc6(void);
 int FUN_10009fe0(int param_1);
 int FUN_1000a0a0(int param_1);
 void FUN_1000a110(DWORD param_1);
+
+void OnInit();
+void ProcessScenary();
 
 
 void __cdecl FUN_10001840(int param_1,char param_2,char param_3)
@@ -658,7 +661,7 @@ unsigned int *  FUN_10002730(void *this_ptr,unsigned int *param_1,byte param_2)
 local_10 = (unsigned int)param_2;
   uStack_c = 0;
   for (local_14 = 0; local_14 < 8; local_14 = local_14 + 1) {
-    if ((&DAT_1003dd60)[local_14] == param_2) {
+    if (((long long *)&DAT_1003dd60)[local_14] == param_2) {
       uVar1 = *(int *)((int)this_ptr + local_14 * 4);
       *(int*)((char*)&local_10 + 1) = (int)uVar1;
       uStack_c = (char)((unsigned int)uVar1 >> 0x18);
@@ -731,7 +734,7 @@ local_c = 0;
   while (bVar1 < 8) {
     uVar2 = 0;
     local_10 = bVar1;
-    if ((&DAT_1003dd60)[bVar1] == param_1) {
+    if (((long long *)&DAT_1003dd60)[bVar1] == param_1) {
       local_10 = 8;
       local_c = bVar1;
     }
@@ -859,7 +862,7 @@ void FUN_10002ba0(int param_1,char param_2)
   unsigned short uVar1;
   unsigned int uVar2;
   int iVar3;
-  int extraout_ECX;
+  int extraout_ECX = 0;
   int *puVar4;
   long long lVar5;
   unsigned short local_58;
@@ -883,10 +886,10 @@ local_c = local_c & 0xffff0000;
   UnitsCenter(local_8,param_1,500);
   FUN_100027e0(&DAT_1003fd10,local_8,param_2);
   for (local_40 = 0; local_40 < 8; local_40 = local_40 + 1) {
-    if (0 < (int)(&DAT_1003fd10)[local_40]) {
-      uVar2 = ((&DAT_1003fd10)[local_40] * 100) / local_10;
+    if (0 < (int)((long long *)&DAT_1003fd10)[local_40]) {
+      uVar2 = (((long long *)&DAT_1003fd10)[local_40] * 100) / local_10;
       FUN_10002490(&DAT_1003fd00,(int)local_2a,1,
-                                 (int)(&DAT_1003dd60)[local_40],uVar2);
+                                 (int)((long long *)&DAT_1003dd60)[local_40],uVar2);
       local_44 = (int)uVar1;
       if ((local_c & 0xffff) / 100 < uVar1 / 100) {
         local_c = (int)uVar1;
@@ -900,10 +903,10 @@ local_c = local_c & 0xffff0000;
     UnitsCenter(local_8,param_1,1000);
     FUN_100027e0(&DAT_1003fd10,local_8,param_2);
     for (local_48 = 0; local_48 < 8; local_48 = local_48 + 1) {
-      if (0 < (int)(&DAT_1003fd10)[local_48]) {
-        uVar2 = ((&DAT_1003fd10)[local_48] * 100) / local_10;
+      if (0 < (int)((long long *)&DAT_1003fd10)[local_48]) {
+        uVar2 = (((long long *)&DAT_1003fd10)[local_48] * 100) / local_10;
         FUN_10002490(&DAT_1003fd00,(int)local_2a,2,
-                                   (int)(&DAT_1003dd60)[local_48],uVar2);
+                                   (int)((long long *)&DAT_1003dd60)[local_48],uVar2);
         local_4c = (int)uVar1;
         if ((local_c & 0xffff) / 100 < uVar1 / 100) {
           local_c = (int)uVar1;
@@ -918,14 +921,14 @@ local_c = local_c & 0xffff0000;
     UnitsCenter(local_8,param_1,2000);
     FUN_100027e0(&DAT_1003fd10,local_8,param_2);
     for (local_50 = 0; local_50 < 8; local_50 = local_50 + 1) {
-      if (0 < (int)(&DAT_1003fd10)[local_50]) {
-        local_54 = ((float)(int)(&DAT_1003fd10)[local_50] * DAT_1003a050_ovl) / (float)local_10;
+      if (0 < (int)((long long *)&DAT_1003fd10)[local_50]) {
+        local_54 = ((float)(int)((long long *)&DAT_1003fd10)[local_50] * DAT_1003a050_ovl) / (float)local_10;
         if (local_54 < DAT_1003a04c_ovl) {
           local_54 = 1.0;
         }
         lVar5 = 0;
         FUN_10002490(&DAT_1003fd00,(int)local_2a,
-                                   3,(int)(&DAT_1003dd60)[local_50],(unsigned int)lVar5);
+                                   3,(int)((long long *)&DAT_1003dd60)[local_50],(unsigned int)lVar5);
         local_58 = (int)uVar1;
         if ((local_c & 0xffff) / 100 < uVar1 / 100) {
           local_c = (int)uVar1;
@@ -1232,13 +1235,13 @@ DVar1 = FUN_1000a160((int *)0x0);
   RegisterVar(&DAT_1003fd48,8);
   RegisterVar(&DAT_1003fed8,8);
   for (local_8 = 0; local_8 < 0x14; local_8 = local_8 + 1) {
-    RegisterUnitType(&DAT_1003fd58 + local_8 * 8,(((int*)0))[local_8]);
+    RegisterUnitType(((unsigned char *)&DAT_1003fd58) + local_8 * 8,(((int*)0))[local_8]);
   }
   for (local_8 = 0; local_8 < 0x14; local_8 = local_8 + 1) {
-    FUN_10009570(&DAT_1003ffa0 + local_8 * 0x41);
-    FUN_10009430(&DAT_1003ffa0 + local_8 * 0x41,&DAT_1003fd48);
-    FUN_100093f0(&DAT_1003ffa0 + local_8 * 0x41,1);
-    RegisterVar(&DAT_1003ffa0 + local_8 * 0x41,0x41);
+    FUN_10009570(((unsigned char *)&DAT_1003ffa0) + local_8 * 0x41);
+    FUN_10009430(((unsigned char *)&DAT_1003ffa0) + local_8 * 0x41,&DAT_1003fd48);
+    FUN_100093f0(((unsigned char *)&DAT_1003ffa0) + local_8 * 0x41,1);
+    RegisterVar(((unsigned char *)&DAT_1003ffa0) + local_8 * 0x41,0x41);
   }
   RegisterVar(&DAT_1003ff88,4);
   return;
@@ -1266,7 +1269,7 @@ void FUN_10003e30(void)
   unsigned int local_8;
 local_8 = local_8 & 0xffffff00;
   while ((local_8 & 0xff) < 0x14) {
-    FUN_10009200(&DAT_1003ffa0 + (local_8 & 0xff) * 0x41);
+    FUN_10009200(((unsigned char *)&DAT_1003ffa0) + (local_8 & 0xff) * 0x41);
     if (cVar1 == '\0') {
       uVar2 = rand();
       uVar2 = uVar2 & 0x80000003;
@@ -1282,11 +1285,11 @@ local_8 = local_8 & 0xffffff00;
       local_10 = (int)(char)uVar2;
       iVar4 = rand();
       iVar4 = iVar4 % 0xff;
-      puVar9 = &DAT_1003fdf8 + (local_10 & 0xff) * 8;
+      puVar9 = ((unsigned char *)&DAT_1003fdf8) + (local_10 & 0xff) * 8;
       uVar8 = 1;
-      puVar7 = &DAT_1003fea8 + (local_c & 0xff) * 8;
+      puVar7 = ((unsigned char *)&DAT_1003fea8) + (local_c & 0xff) * 8;
       puVar6 = &DAT_1003fed0;
-      uVar3 = FUN_10009070(&DAT_1003ffa0 + (local_8 & 0xff) * 0x41);
+      uVar3 = FUN_10009070(((unsigned char *)&DAT_1003ffa0) + (local_8 & 0xff) * 0x41);
       CreateObject0(uVar3,puVar6,puVar7,uVar8,puVar9,iVar4);
       local_8 = (int)0x14;
     }
@@ -1345,7 +1348,7 @@ void __cdecl FUN_100040e0(int param_1)
   int local_8;
 ClearSelection(0);
   for (local_8 = 0; local_8 < 1; local_8 = local_8 + 1) {
-    SelectUnitsType(&DAT_1003fd58 + local_8 * 8,0,1);
+    SelectUnitsType(((unsigned char *)&DAT_1003fd58) + local_8 * 8,0,1);
   }
   SaveSelectedUnits(0,param_1,0);
   return;
@@ -1416,18 +1419,18 @@ ClearSelection(1);
   local_8 = (int)0 < iVar3;
   local_c = local_c & 0xffffff00;
   for (local_10 = 0; local_10 < 0x14; local_10 = local_10 + 1) {
-    FUN_10009200(&DAT_1003ffa0 + local_10 * 0x41);
+    FUN_10009200(((unsigned char *)&DAT_1003ffa0) + local_10 * 0x41);
     if (cVar1 != '\0') {
       if ((local_8 & 0xff) == 0) {
         uVar5 = 1;
-        uVar2 = FUN_10009070(&DAT_1003ffa0 + local_10 * 0x41);
+        uVar2 = FUN_10009070(((unsigned char *)&DAT_1003ffa0) + local_10 * 0x41);
         SelectUnits(uVar2,uVar5);
       }
       else {
-        FUN_10009360(&DAT_1003ffa0 + local_10 * 0x41,&DAT_1003fd50);
+        FUN_10009360(((unsigned char *)&DAT_1003ffa0) + local_10 * 0x41,&DAT_1003fd50);
         if (cVar1 != '\0') {
           uVar5 = 1;
-          uVar2 = FUN_10009070(&DAT_1003ffa0 + local_10 * 0x41);
+          uVar2 = FUN_10009070(((unsigned char *)&DAT_1003ffa0) + local_10 * 0x41);
           SelectUnits(uVar2,uVar5);
         }
       }
@@ -1482,11 +1485,11 @@ void FUN_10004580(void)
   int local_48 [16];
   int local_8;
 for (local_8 = 0; local_8 < 0x14; local_8 = local_8 + 1) {
-    FUN_10009200(&DAT_1003ffa0 + local_8 * 0x41);
+    FUN_10009200(((unsigned char *)&DAT_1003ffa0) + local_8 * 0x41);
     if (cVar1 != '\0') {
-      FUN_10009360(&DAT_1003ffa0 + local_8 * 0x41,&DAT_1003fd50);
+      FUN_10009360(((unsigned char *)&DAT_1003ffa0) + local_8 * 0x41,&DAT_1003fd50);
       if (cVar1 == '\0') {
-        FUN_10009020(&DAT_1003ffa0 + local_8 * 0x41,&DAT_1003fd50);
+        FUN_10009020(((unsigned char *)&DAT_1003ffa0) + local_8 * 0x41,&DAT_1003fd50);
       }
     }
   }
@@ -1558,9 +1561,9 @@ void FUN_10004750(void)
 local_8 = local_8 & 0xffffff00;
   local_c = 0;
   while ((local_c < 0x14 && ((local_8 & 0xff) == 0))) {
-    FUN_10009200(&DAT_1003ffa0 + local_c * 0x41);
+    FUN_10009200(((unsigned char *)&DAT_1003ffa0) + local_c * 0x41);
     if ((cVar1 != '\0') &&
-       (FUN_100044b0(&DAT_1003ffa0 + local_c * 0x41), cVar1 != '\0')) {
+       (FUN_100044b0(((unsigned char *)&DAT_1003ffa0) + local_c * 0x41), cVar1 != '\0')) {
       local_8 = (int)1;
     }
     local_c = local_c + 1;
@@ -1568,11 +1571,11 @@ local_8 = local_8 & 0xffffff00;
   if ((DAT_100404b8 != '\0') && ((local_8 & 0xff) != 0)) {
     DAT_100404b8 = '\0';
     for (local_10 = 0; local_10 < 0x14; local_10 = local_10 + 1) {
-      FUN_10009200(&DAT_1003ffa0 + local_10 * 0x41);
+      FUN_10009200(((unsigned char *)&DAT_1003ffa0) + local_10 * 0x41);
       if (cVar1 != '\0') {
-        FUN_10008e60(&DAT_1003ffa0 + local_10 * 0x41);
-        FUN_10009020(&DAT_1003ffa0 + local_10 * 0x41,uVar2);
-        FUN_10009510((int)(&DAT_1003ffa0 + local_10 * 0x41));
+        FUN_10008e60(((unsigned char *)&DAT_1003ffa0) + local_10 * 0x41);
+        FUN_10009020(((unsigned char *)&DAT_1003ffa0) + local_10 * 0x41,uVar2);
+        FUN_10009510((int)(((unsigned char *)&DAT_1003ffa0) + local_10 * 0x41));
       }
     }
   }
@@ -1581,13 +1584,13 @@ local_8 = local_8 & 0xffffff00;
     FUN_100041a0((unsigned short *)&DAT_1003fd50,&DAT_1003fd48);
     GetUnitInfo(&DAT_1003fd48,0,local_3c);
     for (local_40 = 0; local_40 < 0x14; local_40 = local_40 + 1) {
-      FUN_10009200(&DAT_1003ffa0 + local_40 * 0x41);
+      FUN_10009200(((unsigned char *)&DAT_1003ffa0) + local_40 * 0x41);
       if (cVar1 != '\0') {
-        FUN_10008e60(&DAT_1003ffa0 + local_40 * 0x41);
+        FUN_10008e60(((unsigned char *)&DAT_1003ffa0) + local_40 * 0x41);
         FUN_100052e0();
         if (5000 < local_48) {
           FUN_10004640(local_44,local_28,local_24);
-          FUN_10009020(&DAT_1003ffa0 + local_40 * 0x41,local_44);
+          FUN_10009020(((unsigned char *)&DAT_1003ffa0) + local_40 * 0x41,local_44);
         }
       }
     }
@@ -1674,11 +1677,11 @@ uVar2 = Trigg(99);
     uVar2 = TimerDoneFirst(3);
     if ((uVar2 & 0xff) != 0) {
       for (local_8 = 0; local_8 < 0x14; local_8 = local_8 + 1) {
-        FUN_10009200(&DAT_1003ffa0 + local_8 * 0x41);
+        FUN_10009200(((unsigned char *)&DAT_1003ffa0) + local_8 * 0x41);
         if ((cVar1 != '\0') &&
-           (FUN_10009360(&DAT_1003ffa0 + local_8 * 0x41,&DAT_1003fd50), cVar1 != '\0')
+           (FUN_10009360(((unsigned char *)&DAT_1003ffa0) + local_8 * 0x41,&DAT_1003fd50), cVar1 != '\0')
            ) {
-          FUN_10009510((int)(&DAT_1003ffa0 + local_8 * 0x41));
+          FUN_10009510((int)(((unsigned char *)&DAT_1003ffa0) + local_8 * 0x41));
         }
       }
       RunTimer(3,0x32);
@@ -1689,7 +1692,7 @@ uVar2 = Trigg(99);
       FUN_10004310();
       local_c = 0;
       for (local_10 = 0; local_10 < 9; local_10 = local_10 + 1) {
-        iVar3 = GetReadyAmount(&DAT_1003fe60 + local_10 * 8,0);
+        iVar3 = GetReadyAmount(((unsigned char *)&DAT_1003fe60) + local_10 * 8,0);
         local_c = local_c + iVar3;
       }
       local_c = (4 - DAT_1003ff88) * 3000 - local_c * 10 * DAT_1003ff88;
@@ -2499,7 +2502,7 @@ void  FUN_10006490(void *this_ptr,int param_1)
   int *puVar2;
   int local_48 [17];
 *(int *)((int)this_ptr + 4) = param_1;
-  (&DAT_10040638)[DAT_10040688] = this_ptr;
+  ((long long *)&DAT_10040638)[DAT_10040688] = this_ptr;
   DAT_10040688 = DAT_10040688 + 1;
   return;
 }
@@ -2519,9 +2522,9 @@ void __cdecl FUN_10006500(short *param_1)
   int local_8;
 local_8 = DAT_10040638;
   for (local_c = 0; local_c < DAT_10040688; local_c = local_c + 1) {
-    psVar1 = (short *)FUN_100066d0((&DAT_10040638)[local_c]);
+    psVar1 = (short *)FUN_100066d0(((long long *)&DAT_10040638)[local_c]);
     if (*psVar1 == *param_1) {
-      local_8 = (&DAT_10040638)[local_c];
+      local_8 = ((long long *)&DAT_10040638)[local_c];
     }
   }
   return;

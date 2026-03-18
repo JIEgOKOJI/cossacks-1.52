@@ -48,40 +48,8 @@ long long DAT_10030520 = 0;
 long long DAT_10030528 = 0;
 long long DAT_10030530 = 0;
 long long DAT_10030538 = 0;
-
-/* Forward declarations */
-void FUN_100031e0(int param_1);
-void FUN_10003230(int param_1,char param_2);
-
-
-void __cdecl FUN_100031e0(int param_1)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-GetTotalAmount0(param_1);
-  uStack_8 = 0x1000321b;
-  return;
-}
-
-
-
-
-
-void __cdecl FUN_10003230(int param_1,char param_2)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-GetTotalAmount1(param_1,(int)param_2);
-  uStack_8 = 0x1000326f;
-  return;
-}
-
+void OnInit();
+void ProcessScenary();
 
 
 
@@ -309,7 +277,7 @@ uVar1 = Trigg(100);
   if ((uVar1 & 0xff) != 0) {
     uVar1 = Trigg(0x58);
     if ((uVar1 & 0xff) == 0) {
-      FUN_100031e0(&DAT_100304e0);
+      GetTotalAmount0(&DAT_100304e0);
       if (iVar2 == 0) {
         SetTrigg(0x57,0);
         SelectUnits1(4,&DAT_100304c8,0);
@@ -345,7 +313,7 @@ uVar1 = Trigg(100);
   }
   uVar1 = Trigg(0x68);
   if ((uVar1 & 0xff) != 0) {
-    FUN_100031e0(&DAT_100304d0);
+    GetTotalAmount0(&DAT_100304d0);
     if (iVar2 == 0) {
       SetTrigg(0x68,0);
       DisableMission(0x45);
@@ -358,7 +326,7 @@ uVar1 = Trigg(100);
   if ((uVar1 & 0xff) != 0) {
     uVar1 = Trigg(0x56);
     if ((uVar1 & 0xff) == 0) {
-      FUN_10003230(&DAT_10030488,4);
+      GetTotalAmount1(&DAT_10030488,4);
       if (iVar2 == 0) {
         iVar2 = GetAmountOfWarriors(4);
         if (iVar2 == 0) {
@@ -443,7 +411,7 @@ LAB_10002b87:
   }
   uVar1 = Trigg(0x66);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10003230(&DAT_10030470,0);
+    GetTotalAmount1(&DAT_10030470,0);
     if (iVar2 == 0) {
       iVar2 = GetAmountOfWarriors(0);
       if (iVar2 == 0) {
@@ -455,11 +423,11 @@ LAB_10002b87:
   }
   uVar1 = Trigg(0x67);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10003230(&DAT_10030470,1);
+    GetTotalAmount1(&DAT_10030470,1);
     if (iVar2 == 0) {
       iVar2 = GetAmountOfWarriors(1);
       if (iVar2 == 0) {
-        FUN_10003230(&DAT_10030470,4);
+        GetTotalAmount1(&DAT_10030470,4);
         if (iVar2 == 0) {
           iVar2 = GetAmountOfWarriors(4);
           if (iVar2 == 0) {

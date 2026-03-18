@@ -88,6 +88,9 @@ int FUN_10004a70() { return 0; }
 /* Forward declarations */
 void FUN_100044f0(DWORD param_1);
 
+void OnInit();
+void ProcessScenary();
+
 
 void __cdecl FUN_100044f0(DWORD param_1)
 

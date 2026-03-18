@@ -137,6 +137,9 @@ void FUN_10004d40(void);
 void FUN_10004d50(void);
 int FUN_10004da0(int param_1);
 
+void OnInit();
+void ProcessScenary();
+
 
 void FUN_100012d0(void)
 
@@ -1540,7 +1543,7 @@ void  FUN_10004930(void *this_ptr,int param_1)
   int *puVar2;
   int local_48 [17];
 *(int *)((int)this_ptr + 4) = param_1;
-  (&DAT_10035f20)[DAT_10035f70] = this_ptr;
+  ((long long *)&DAT_10035f20)[DAT_10035f70] = this_ptr;
   DAT_10035f70 = DAT_10035f70 + 1;
   return;
 }
@@ -1560,9 +1563,9 @@ void __cdecl FUN_100049a0(short *param_1)
   int local_8;
 local_8 = DAT_10035f20;
   for (local_c = 0; local_c < DAT_10035f70; local_c = local_c + 1) {
-    psVar1 = (short *)FUN_10004b70((&DAT_10035f20)[local_c]);
+    psVar1 = (short *)FUN_10004b70(((long long *)&DAT_10035f20)[local_c]);
     if (*psVar1 == *param_1) {
-      local_8 = (&DAT_10035f20)[local_c];
+      local_8 = ((long long *)&DAT_10035f20)[local_c];
     }
   }
   return;

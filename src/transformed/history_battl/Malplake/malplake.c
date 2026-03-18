@@ -13,7 +13,9 @@ long long DAT_1002e418 = 0;
 /* Forward declarations */
 void FUN_100011b0(void);
 void FUN_100012e0(void);
-void FUN_10001580(int param_1);
+
+void OnInit();
+void ProcessScenary();
 
 
 void FUN_100011b0(void)
@@ -29,8 +31,8 @@ RegisterUnits(&DAT_1002e410,"Group1");
   ChangeFriends(1,2);
   ChangeFriends(3,7);
   for (DAT_1002e3e0 = 0; DAT_1002e3e0 < 5; DAT_1002e3e0 = DAT_1002e3e0 + 1) {
-    (&DAT_1002e3e4)[DAT_1002e3e0] = 0;
-    (&DAT_1002e3f8)[DAT_1002e3e0] = 0;
+    ((long long *)&DAT_1002e3e4)[DAT_1002e3e0] = 0;
+    ((long long *)&DAT_1002e3f8)[DAT_1002e3e0] = 0;
   }
   uStack_8 = 0x10001295;
   return;
@@ -50,7 +52,7 @@ void FUN_100012e0(void)
   int uStack_8;
 uVar1 = Trigg(0x15);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10001580(&DAT_1002e410);
+    GetTotalAmount0(&DAT_1002e410);
     if (iVar2 < 0x173) {
       SetTrigg(0x15,0);
       ShowCentralText("TEXT3",0x96);
@@ -58,7 +60,7 @@ uVar1 = Trigg(0x15);
   }
   uVar1 = Trigg(0x15);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10001580(&DAT_1002e418);
+    GetTotalAmount0(&DAT_1002e418);
     if (iVar2 < 0x227) {
       SetTrigg(0x15,0);
       ShowCentralText("TEXT4",0x96);
@@ -84,11 +86,11 @@ uVar1 = Trigg(0x15);
   if (40000 < iVar2) {
     ProcessScenary();
   }
-  FUN_10001580(&DAT_1002e410);
+  GetTotalAmount0(&DAT_1002e410);
   if (iVar2 < 0xc9) {
     ProcessScenary();
   }
-  FUN_10001580(&DAT_1002e418);
+  GetTotalAmount0(&DAT_1002e418);
   if (iVar2 < 0x173) {
     OnInit();
   }
@@ -96,21 +98,6 @@ uVar1 = Trigg(0x15);
   return;
 }
 
-
-
-
-
-void __cdecl FUN_10001580(int param_1)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-GetTotalAmount0(param_1);
-  uStack_8 = 0x100015bb;
-  return;
-}
 
 
 

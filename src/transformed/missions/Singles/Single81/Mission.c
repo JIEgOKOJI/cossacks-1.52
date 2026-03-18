@@ -91,6 +91,9 @@ BOOL FUN_100021c0(int param_1);
 void FUN_10002230(int param_1,int param_2,int param_3);
 void FUN_10002290(int param_1,int param_2,int param_3,int param_4,unsigned int param_5);
 
+void OnInit();
+void ProcessScenary();
+
 
 BOOL __cdecl FUN_10001fb0(int param_1)
 
@@ -133,7 +136,7 @@ int __cdecl FUN_10001ff0(int param_1,int param_2,int param_3,int param_4)
   local_3d = '\0';
   local_3c = 0;
   do {
-    if ((&DAT_10008030)[local_3c] == '\x01') {
+    if (((long long *)&DAT_10008030)[local_3c] == '\x01') {
       ClearSelection(local_3c);
       iVar4 = param_3;
       iVar5 = param_2;
@@ -225,7 +228,7 @@ BOOL __cdecl FUN_100021c0(int param_1)
     UnitsCenter(auStack_8,param_1,500);
     iVar2 = 0;
     do {
-      if (((&DAT_10008030)[iVar2] == '\x01') &&
+      if ((((long long *)&DAT_10008030)[iVar2] == '\x01') &&
          ((bVar1 || (iVar3 = GetUnitsAmount0(auStack_8,iVar2), iVar3 != 0)))) {
         bVar1 = 1;
       }
@@ -591,8 +594,8 @@ void ProcessScenary(void)
     iVar6 = GetTotalAmount0(&DAT_1000adf8);
     if ((iVar6 == DAT_1000aebc) || (iVar6 = GetTotalAmount0(&DAT_1000ae00), iVar6 == DAT_1000aebc))
     {
-      RemoveGroup(&DAT_1000adf8,&DAT_1000ae20 + DAT_1000b054 * 8);
-      RemoveGroup(&DAT_1000ae00,&DAT_1000ae28 + DAT_1000b054 * 8);
+      RemoveGroup(&DAT_1000adf8,((unsigned char *)&DAT_1000ae20) + DAT_1000b054 * 8);
+      RemoveGroup(&DAT_1000ae00,((unsigned char *)&DAT_1000ae28) + DAT_1000b054 * 8);
       DAT_1000b054 = 0x14;
       RunTimer(2,DAT_1000aeb8);
     }

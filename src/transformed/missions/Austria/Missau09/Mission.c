@@ -152,11 +152,11 @@ long long DAT_10009c60 = 0;
 long long DAT_10009c68 = 0;
 long long DAT_10009c70 = 0;
 int DAT_10009c78 = 0;
-long long DAT_10009c80 = 0;
+unsigned char DAT_10009c80[40] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 long long DAT_10009ca8 = 0;
-long long DAT_10009cb0 = 0;
+unsigned char DAT_10009cb0[48] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 long long DAT_10009ce0 = 0;
-long long DAT_10009ce8 = 0;
+unsigned char DAT_10009ce8[48] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 long long DAT_10009d18 = 0;
 long long DAT_10009d20 = 0;
 int DAT_10009d28 = 0;
@@ -227,7 +227,7 @@ long long DAT_10009f38 = 0;
 long long DAT_10009f40 = 0;
 long long DAT_10009f48 = 0;
 long long DAT_10009f50 = 0;
-long long DAT_10009f58 = 0;
+unsigned char DAT_10009f58[80] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 long long DAT_10009fa8 = 0;
 long long DAT_10009fb0 = 0;
 long long DAT_10009fb8 = 0;
@@ -272,6 +272,9 @@ int DAT_1000a078_ovl = 0;
 
 /* Forward declarations */
 void FUN_10001ba0(int param_1,int *param_2,int param_3);
+
+void OnInit();
+void ProcessScenary();
 
 
 void __cdecl FUN_10001ba0(int param_1,int *param_2,int param_3)
@@ -399,14 +402,14 @@ void OnInit(void)
   RegisterDynGroup(&DAT_10009ce0);
   DAT_10009a90 = 0;
   do {
-    RegisterDynGroup(&DAT_10009ce8 + DAT_10009a90 * 8);
-    RegisterDynGroup(&DAT_10009c80 + DAT_10009a90 * 8);
-    RegisterVar(&DAT_10009cb0 + DAT_10009a90 * 8,8);
+    RegisterDynGroup(((unsigned char *)&DAT_10009ce8) + DAT_10009a90 * 8);
+    RegisterDynGroup(((unsigned char *)&DAT_10009c80) + DAT_10009a90 * 8);
+    RegisterVar(((unsigned char *)&DAT_10009cb0) + DAT_10009a90 * 8,8);
     DAT_10009a90 = DAT_10009a90 + 1;
   } while (DAT_10009a90 < 6);
   DAT_10009a90 = 0;
   do {
-    RegisterVar(&DAT_10009f58 + DAT_10009a90,4);
+    RegisterVar(((unsigned char *)&DAT_10009f58) + DAT_10009a90,4);
     DAT_10009a90 = DAT_10009a90 + 1;
   } while (DAT_10009a90 < 0x14);
   RegisterUnitType(&DAT_10009c70,"Mortira(GE)");
@@ -664,7 +667,7 @@ void ProcessScenary(void)
     TakeStone(&DAT_10009db8);
     RunTimer(1,0x32);
   }
-  if (((((&DAT_10009f58)[DAT_10009d28] == 1) && (DAT_1000a070 == 0)) && (DAT_10009a80 == 0)) &&
+  if ((((((long long *)&DAT_10009f58)[DAT_10009d28] == 1) && (DAT_1000a070 == 0)) && (DAT_10009a80 == 0)) &&
      (((((DAT_10009c30 == 0 && (DAT_10009ed8 == 0)) &&
         ((cVar1 = CheckProduction(&DAT_10009c50), cVar1 != '\0' &&
          ((cVar1 = CheckProduction(&DAT_10009c58), cVar1 != '\0' &&
@@ -672,10 +675,10 @@ void ProcessScenary(void)
        (cVar1 = CheckProduction(&DAT_10009c68), cVar1 != '\0')) &&
       ((cVar1 = CheckProduction(&DAT_10009d18), cVar1 != '\0' &&
        (cVar1 = CheckProduction(&DAT_10009d20), cVar1 != '\0')))))) {
-    (&DAT_10009f58)[DAT_10009d28] = 2;
+    ((long long *)&DAT_10009f58)[DAT_10009d28] = 2;
     RunTimer(7,100);
   }
-  if ((((&DAT_10009f58)[DAT_10009d28] == 1) && (cVar1 = Trigg(0x1c), cVar1 != '\0')) &&
+  if (((((long long *)&DAT_10009f58)[DAT_10009d28] == 1) && (cVar1 = Trigg(0x1c), cVar1 != '\0')) &&
      (cVar1 = Trigg(0x1d), cVar1 != '\0')) {
     if (0 < DAT_10009a80) {
       cVar1 = CheckProduction(&DAT_10009c50);
@@ -940,21 +943,21 @@ void ProcessScenary(void)
   iVar3 = GetDiff(0);
   iVar4 = DAT_1000a090 * 8;
   iVar2 = GetGlobalTime();
-  if ((((iVar4 - iVar3) * 3000 + 8000 < iVar2) && ((&DAT_10009f58)[DAT_10009d28] == 0)) &&
+  if ((((iVar4 - iVar3) * 3000 + 8000 < iVar2) && (((long long *)&DAT_10009f58)[DAT_10009d28] == 0)) &&
      (DAT_1000a090 < 6)) {
     cVar1 = Trigg(8);
     if (cVar1 == '\0') {
       iVar3 = GetDiff(0);
       if (iVar3 < 1) {
-        FUN_10001ba0(DAT_1000a090 * 7 + 10,&DAT_1000a070,&DAT_10009ce8 + DAT_1000a090 * 8);
-        FUN_10001ba0(DAT_1000a090 * 0xe + 0x14,&DAT_1000a0c0,&DAT_10009ce8 + DAT_1000a090 * 8);
+        FUN_10001ba0(DAT_1000a090 * 7 + 10,&DAT_1000a070,((unsigned char *)&DAT_10009ce8) + DAT_1000a090 * 8);
+        FUN_10001ba0(DAT_1000a090 * 0xe + 0x14,&DAT_1000a0c0,((unsigned char *)&DAT_10009ce8) + DAT_1000a090 * 8);
       }
       else {
-        puVar9 = &DAT_10009ce8 + DAT_1000a090 * 8;
+        puVar9 = ((unsigned char *)&DAT_10009ce8) + DAT_1000a090 * 8;
         puVar8 = &DAT_1000a070;
         iVar3 = GetDiff(0);
         FUN_10001ba0((iVar3 + 3 + DAT_1000a090) * 0xc,puVar8,puVar9);
-        puVar9 = &DAT_10009ce8 + DAT_1000a090 * 8;
+        puVar9 = ((unsigned char *)&DAT_10009ce8) + DAT_1000a090 * 8;
         puVar8 = &DAT_1000a0c0;
         iVar3 = GetDiff(0);
         FUN_10001ba0((iVar3 + 3 + DAT_1000a090) * 0x18,puVar8,puVar9);
@@ -963,34 +966,34 @@ void ProcessScenary(void)
     else {
       iVar3 = GetDiff(0);
       if (iVar3 < 1) {
-        FUN_10001ba0(DAT_1000a090 * 4 + 10,&DAT_1000a070,&DAT_10009ce8 + DAT_1000a090 * 8);
+        FUN_10001ba0(DAT_1000a090 * 4 + 10,&DAT_1000a070,((unsigned char *)&DAT_10009ce8) + DAT_1000a090 * 8);
       }
       else {
-        puVar9 = &DAT_10009ce8 + DAT_1000a090 * 8;
+        puVar9 = ((unsigned char *)&DAT_10009ce8) + DAT_1000a090 * 8;
         puVar8 = &DAT_1000a070;
         iVar3 = GetDiff(0);
         FUN_10001ba0((iVar3 + DAT_1000a090) * 6 + 0x15,puVar8,puVar9);
       }
     }
     DAT_1000a07c = DAT_10009d28;
-    (&DAT_10009f58)[DAT_10009d28] = 1;
+    ((long long *)&DAT_10009f58)[DAT_10009d28] = 1;
     DAT_1000a090 = DAT_1000a090 + 1;
   }
-  if (((&DAT_10009f58)[DAT_1000a07c] == 2) &&
+  if ((((long long *)&DAT_10009f58)[DAT_1000a07c] == 2) &&
      (cVar1 = TimerDone(7), pcVar7 = (void*)&SetTrigg, cVar1 != '\0')) {
     DAT_10009d28 = DAT_10009d28 + 1;
     SetTrigg((int)(char)DAT_1000a090 + '\'',0);
     DAT_1000a07c = 0x13;
-    SelectUnits(&DAT_10009ce0 + DAT_1000a090 * 8,0);
+    SelectUnits(((unsigned char *)&DAT_10009ce0) + DAT_1000a090 * 8,0);
     SelSendAndKill(1,&DAT_10009fe0,0x5a,0);
     RunTimer(8,10000);
   }
   cVar1 = Trigg((char)DAT_1000a090 + '\'');
   if (cVar1 == '\0') {
-    iVar3 = GetTotalAmount0(&DAT_10009ce0 + DAT_1000a090 * 8);
-    iVar2 = GetUnitsAmount1(&DAT_10009fe0,&DAT_10009ce0 + DAT_1000a090 * 8);
+    iVar3 = GetTotalAmount0(((unsigned char *)&DAT_10009ce0) + DAT_1000a090 * 8);
+    iVar2 = GetUnitsAmount1(&DAT_10009fe0,((unsigned char *)&DAT_10009ce0) + DAT_1000a090 * 8);
     if ((iVar2 == iVar3) && (cVar1 = TimerDone(8), cVar1 == '\0')) {
-      SelectUnits(&DAT_10009ce0 + DAT_1000a090 * 8,0);
+      SelectUnits(((unsigned char *)&DAT_10009ce0) + DAT_1000a090 * 8,0);
       SelSendAndKill(1,&DAT_10009f28,0x80,2);
       SelSendAndKill(1,&DAT_10009df8,0x80,2);
     }
@@ -999,7 +1002,7 @@ void ProcessScenary(void)
   if (cVar1 != '\0') {
     cVar1 = Trigg((char)DAT_1000a090 + '\'');
     if ((cVar1 == '\0') && (cVar1 = Trigg(8), cVar1 != '\0')) {
-      iVar3 = GetUnitsAmount1(&DAT_10009f48,&DAT_10009ce0 + DAT_1000a090 * 8);
+      iVar3 = GetUnitsAmount1(&DAT_10009f48,((unsigned char *)&DAT_10009ce0) + DAT_1000a090 * 8);
       if (0 < iVar3) {
         SetTrigg((char)DAT_1000a090 + '1',0);
         ShowPage("#PAGE4");
@@ -1009,10 +1012,10 @@ void ProcessScenary(void)
   cVar1 = Trigg((char)DAT_1000a090 + ';');
   if (cVar1 != '\0') {
     cVar1 = Trigg((char)DAT_1000a090 + '1');
-    if ((cVar1 == '\0') && (iVar3 = GetTotalAmount0(&DAT_10009ce0 + DAT_1000a090 * 8), iVar3 < 10))
+    if ((cVar1 == '\0') && (iVar3 = GetTotalAmount0(((unsigned char *)&DAT_10009ce0) + DAT_1000a090 * 8), iVar3 < 10))
     {
       SetTrigg((char)DAT_1000a090 + ';',0);
-      SelectUnits(&DAT_10009ce0 + DAT_1000a090 * 8,0);
+      SelectUnits(((unsigned char *)&DAT_10009ce0) + DAT_1000a090 * 8,0);
       SelSendTo(1,&DAT_10009e18,0,0);
       SelSendTo(1,&DAT_10009e20,0,2);
       SelSendTo(1,&DAT_10009e28,0x1e,2);
@@ -1028,7 +1031,7 @@ void ProcessScenary(void)
   if (cVar1 != '\0') {
     cVar1 = Trigg((char)DAT_1000a090 + ';');
     if ((cVar1 == '\0') &&
-       (iVar3 = GetUnitsAmount1(&DAT_10009f10,&DAT_10009ce0 + DAT_1000a090 * 8), 0 < iVar3)) {
+       (iVar3 = GetUnitsAmount1(&DAT_10009f10,((unsigned char *)&DAT_10009ce0) + DAT_1000a090 * 8), 0 < iVar3)) {
       SetTrigg(8,0);
       ShowPage("#PAGE15");
       cVar1 = Trigg(0xe);
@@ -1068,18 +1071,18 @@ void ProcessScenary(void)
     }
   }
   iVar3 = GetGlobalTime();
-  if (((DAT_1000a038 * 22000 + 10000 < iVar3) && ((&DAT_10009f58)[DAT_10009d28] == 0)) &&
+  if (((DAT_1000a038 * 22000 + 10000 < iVar3) && (((long long *)&DAT_10009f58)[DAT_10009d28] == 0)) &&
      (DAT_1000a038 < 6)) {
-    FUN_10001ba0(DAT_1000a038 * 6 + 0x15,&DAT_10009c30,&DAT_10009c80 + DAT_1000a038 * 8);
+    FUN_10001ba0(DAT_1000a038 * 6 + 0x15,&DAT_10009c30,((unsigned char *)&DAT_10009c80) + DAT_1000a038 * 8);
     DAT_10009c78 = DAT_10009d28;
     DAT_1000a038 = DAT_1000a038 + 1;
-    (&DAT_10009f58)[DAT_10009d28] = 1;
+    ((long long *)&DAT_10009f58)[DAT_10009d28] = 1;
   }
-  if (((&DAT_10009f58)[DAT_10009c78] == 2) && (cVar1 = TimerDone(7), cVar1 != '\0')) {
+  if ((((long long *)&DAT_10009f58)[DAT_10009c78] == 2) && (cVar1 = TimerDone(7), cVar1 != '\0')) {
     DAT_10009d28 = DAT_10009d28 + 1;
     SetTrigg((char)DAT_1000a038 + 'O',0);
     DAT_10009c78 = 0x13;
-    SelectUnits(&DAT_10009c78 + DAT_1000a038 * 2,0);
+    SelectUnits(((unsigned char *)&DAT_10009c78) + DAT_1000a038 * 2,0);
     SelSendAndKill(1,&DAT_10009f08,0x5a,0);
     SelSendAndKill(1,&DAT_10009f00,0x6e,2);
     SelSendAndKill(1,&DAT_10009ef8,0x80,2);
@@ -1097,13 +1100,13 @@ void ProcessScenary(void)
     cVar1 = Trigg((char)DAT_1000a038 + 'O');
     if (cVar1 == '\0') {
       iVar3 = DAT_1000a038 * 2;
-      iVar2 = GetUnitsAmount1(&DAT_10009e00,&DAT_10009c78 + iVar3);
-      iVar3 = GetTotalAmount0(&DAT_10009c78 + iVar3);
+      iVar2 = GetUnitsAmount1(&DAT_10009e00,((unsigned char *)&DAT_10009c78) + iVar3);
+      iVar3 = GetTotalAmount0(((unsigned char *)&DAT_10009c78) + iVar3);
       if (iVar3 == iVar2) {
         SetTrigg((char)DAT_1000a038 + 'E',0);
-        CreateObject0(&DAT_10009ca8 + DAT_1000a038 * 8,&DAT_1000a098,&DAT_10009b58,1,&DAT_10009fb0,0
+        CreateObject0(((unsigned char *)&DAT_10009ca8) + DAT_1000a038 * 8,&DAT_1000a098,&DAT_10009b58,1,&DAT_10009fb0,0
                      );
-        SelectUnits(&DAT_10009ca8 + DAT_1000a038 * 8,0);
+        SelectUnits(((unsigned char *)&DAT_10009ca8) + DAT_1000a038 * 8,0);
         SelSendTo(1,&DAT_10009e08,0x14,0);
         SelSendTo(1,&DAT_10009e10,0xf0,2);
         SelSendTo(1,&DAT_10009e18,0,2);
@@ -1122,12 +1125,12 @@ void ProcessScenary(void)
   }
   cVar1 = TimerDone((char)DAT_1000a038 + '\t');
   if (cVar1 != '\0') {
-    iVar3 = GetTotalAmount0(&DAT_10009ca8 + DAT_1000a038 * 8);
+    iVar3 = GetTotalAmount0(((unsigned char *)&DAT_10009ca8) + DAT_1000a038 * 8);
     if (0 < iVar3) {
-      iVar3 = GetTotalAmount0(&DAT_10009c78 + DAT_1000a038 * 2);
+      iVar3 = GetTotalAmount0(((unsigned char *)&DAT_10009c78) + DAT_1000a038 * 2);
       if (0 < iVar3) {
-        CreateZoneNearGroup(&DAT_1000a080,&DAT_10009f10,&DAT_10009ca8 + DAT_1000a038 * 8,500);
-        SelectUnits(&DAT_10009c78 + DAT_1000a038 * 2,0);
+        CreateZoneNearGroup(&DAT_1000a080,&DAT_10009f10,((unsigned char *)&DAT_10009ca8) + DAT_1000a038 * 8,500);
+        SelectUnits(((unsigned char *)&DAT_10009c78) + DAT_1000a038 * 2,0);
         SelSendAndKill(1,&DAT_1000a080,0x40,0);
         RunTimer((char)DAT_1000a038 + '\t',0x32);
       }
@@ -1135,27 +1138,27 @@ void ProcessScenary(void)
   }
   cVar1 = Trigg((char)DAT_1000a038 + 'E');
   if (cVar1 == '\0') {
-    iVar3 = GetUnitsAmount1(&DAT_10009df8,&DAT_10009ca8 + DAT_1000a038 * 8);
-    iVar2 = GetUnitsByNation(&DAT_10009ca8 + DAT_1000a038 * 8,0);
+    iVar3 = GetUnitsAmount1(&DAT_10009df8,((unsigned char *)&DAT_10009ca8) + DAT_1000a038 * 8);
+    iVar2 = GetUnitsByNation(((unsigned char *)&DAT_10009ca8) + DAT_1000a038 * 8,0);
     if (iVar2 == iVar3) {
-      iVar3 = GetUnitsByNation(&DAT_10009ca8 + DAT_1000a038 * 8,0);
+      iVar3 = GetUnitsByNation(((unsigned char *)&DAT_10009ca8) + DAT_1000a038 * 8,0);
       if (0 < iVar3) {
-        iVar3 = GetUnitsByNation(&DAT_10009ca8 + DAT_1000a038 * 8,0);
+        iVar3 = GetUnitsByNation(((unsigned char *)&DAT_10009ca8) + DAT_1000a038 * 8,0);
         iVar2 = GetDiff(0);
         AddResource(0,3,iVar3 * (iVar2 * -200 + 0x9c4));
-        iVar3 = GetUnitsByNation(&DAT_10009ca8 + DAT_1000a038 * 8,0);
+        iVar3 = GetUnitsByNation(((unsigned char *)&DAT_10009ca8) + DAT_1000a038 * 8,0);
         iVar2 = GetDiff(0);
         AddResource(0,1,iVar3 * (6 - iVar2) * 0x32);
-        iVar3 = GetUnitsByNation(&DAT_10009ca8 + DAT_1000a038 * 8,0);
+        iVar3 = GetUnitsByNation(((unsigned char *)&DAT_10009ca8) + DAT_1000a038 * 8,0);
         iVar2 = GetDiff(0);
         AddResource(0,4,iVar3 * (7 - iVar2) * 100);
-        iVar3 = GetUnitsByNation(&DAT_10009ca8 + DAT_1000a038 * 8,0);
+        iVar3 = GetUnitsByNation(((unsigned char *)&DAT_10009ca8) + DAT_1000a038 * 8,0);
         iVar2 = GetDiff(0);
         AddResource(0,5,iVar3 * (7 - iVar2) * 100);
         ShowPage("#PAGE2");
         SaveSelectedUnits(0,&DAT_10009ce0,0);
         ClearSelection(0);
-        SelectUnits1(0,&DAT_10009ca8 + DAT_1000a038 * 8,0);
+        SelectUnits1(0,((unsigned char *)&DAT_10009ca8) + DAT_1000a038 * 8,0);
         SelErase(0);
         SelectUnits(&DAT_10009ce0,0);
       }
@@ -1163,18 +1166,18 @@ void ProcessScenary(void)
   }
   cVar1 = Trigg((char)DAT_1000a038 + 'E');
   if (cVar1 == '\0') {
-    iVar3 = GetUnitsAmount1(&DAT_10009fc8,&DAT_10009ca8 + DAT_1000a038 * 8);
-    iVar2 = GetUnitsByNation(&DAT_10009ca8 + DAT_1000a038 * 8,1);
+    iVar3 = GetUnitsAmount1(&DAT_10009fc8,((unsigned char *)&DAT_10009ca8) + DAT_1000a038 * 8);
+    iVar2 = GetUnitsByNation(((unsigned char *)&DAT_10009ca8) + DAT_1000a038 * 8,1);
     if ((iVar3 == iVar2) &&
-       (iVar3 = GetUnitsAmount1(&DAT_10009fc8,&DAT_10009ca8 + DAT_1000a038 * 8), 0 < iVar3)) {
+       (iVar3 = GetUnitsAmount1(&DAT_10009fc8,((unsigned char *)&DAT_10009ca8) + DAT_1000a038 * 8), 0 < iVar3)) {
       ClearSelection(1);
-      SelectUnits1(1,&DAT_10009ca8 + DAT_1000a038 * 8,0);
+      SelectUnits1(1,((unsigned char *)&DAT_10009ca8) + DAT_1000a038 * 8,0);
       SelErase(1);
     }
   }
   cVar1 = Trigg(10);
   if (((cVar1 != '\0') && (iVar3 = GetGlobalTime(), pcVar5 = (void*)&GetDiff, 83000 < iVar3)) &&
-     ((&DAT_10009f58)[DAT_10009d28] == 0)) {
+     (((long long *)&DAT_10009f58)[DAT_10009d28] == 0)) {
     SetTrigg(10,0);
     SetTrigg(0xb,0);
     DAT_10009ed8 = 4;
@@ -1190,14 +1193,14 @@ void ProcessScenary(void)
     puVar8 = &DAT_1000a070;
     iVar3 = GetDiff(0);
     FUN_10001ba0((iVar3 + 3) * 3,puVar8,puVar9);
-    (&DAT_10009f58)[DAT_10009d28] = 1;
+    ((long long *)&DAT_10009f58)[DAT_10009d28] = 1;
   }
   if ((0 < DAT_10009ed8) && (cVar1 = CheckProduction(&DAT_10009d20), cVar1 != '\0')) {
     DAT_10009ed8 = DAT_10009ed8 + -1;
     ProduceUnit(&DAT_10009d20,&DAT_10009c70,&DAT_10009c00);
   }
   cVar1 = Trigg(0xb);
-  if ((cVar1 == '\0') && ((&DAT_10009f58)[DAT_10009d28] == 2)) {
+  if ((cVar1 == '\0') && (((long long *)&DAT_10009f58)[DAT_10009d28] == 2)) {
     SetTrigg(0xb,1);
     DAT_10009d28 = DAT_10009d28 + 1;
     ShowPage("#PAGE6");
@@ -1401,13 +1404,13 @@ void ProcessScenary(void)
     }
   }
   if ((((DAT_10009ed0 == 0) && (cVar1 = Trigg(0x18), cVar1 == '\0')) &&
-      ((&DAT_10009f58)[DAT_10009d28] == 0)) && (iVar3 = GetDiff(0), 0 < iVar3)) {
+      (((long long *)&DAT_10009f58)[DAT_10009d28] == 0)) && (iVar3 = GetDiff(0), 0 < iVar3)) {
     DAT_10009ed0 = 1;
-    (&DAT_10009f58)[DAT_10009d28] = 1;
+    ((long long *)&DAT_10009f58)[DAT_10009d28] = 1;
     FUN_10001ba0(0x21,&DAT_1000a070,&DAT_10009c10);
     FUN_10001ba0(0x28,&DAT_10009c30,&DAT_10009c10);
   }
-  if (((DAT_10009ed0 == 1) && ((&DAT_10009f58)[DAT_10009d28] == 2)) &&
+  if (((DAT_10009ed0 == 1) && (((long long *)&DAT_10009f58)[DAT_10009d28] == 2)) &&
      (cVar1 = TimerDone(7), cVar1 != '\0')) {
     DAT_10009d28 = DAT_10009d28 + 1;
     DAT_10009ed0 = 2;
@@ -1473,11 +1476,11 @@ void ProcessScenary(void)
     }
   }
   if ((((DAT_10009ed4 == 0) && (cVar1 = Trigg(0x1a), cVar1 == '\0')) &&
-      ((&DAT_10009f58)[DAT_10009d28] == 0)) && (iVar3 = GetDiff(0), 0 < iVar3)) {
+      (((long long *)&DAT_10009f58)[DAT_10009d28] == 0)) && (iVar3 = GetDiff(0), 0 < iVar3)) {
     puVar9 = &DAT_10009c18;
     puVar8 = &DAT_1000a070;
     DAT_10009ed4 = 1;
-    (&DAT_10009f58)[DAT_10009d28] = 1;
+    ((long long *)&DAT_10009f58)[DAT_10009d28] = 1;
     iVar3 = GetDiff(0);
     FUN_10001ba0(iVar3 * 10 + 0x2d,puVar8,puVar9);
     puVar9 = &DAT_10009c18;
@@ -1485,7 +1488,7 @@ void ProcessScenary(void)
     iVar3 = GetDiff(0);
     FUN_10001ba0(iVar3 * 7 + 0x19,puVar8,puVar9);
   }
-  if (((DAT_10009ed4 == 1) && ((&DAT_10009f58)[DAT_10009d28] == 2)) &&
+  if (((DAT_10009ed4 == 1) && (((long long *)&DAT_10009f58)[DAT_10009d28] == 2)) &&
      (cVar1 = TimerDone(7), cVar1 != '\0')) {
     DAT_10009d28 = DAT_10009d28 + 1;
     DAT_10009ed4 = 2;

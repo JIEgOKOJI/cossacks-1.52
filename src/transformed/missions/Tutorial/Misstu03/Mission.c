@@ -56,24 +56,8 @@ long long DAT_100304e0 = 0;
 long long DAT_100304e8 = 0;
 long long DAT_100304f0 = 0;
 long long DAT_100304f8 = 0;
-
-/* Forward declarations */
-void FUN_10002fd0(int param_1);
-
-
-void __cdecl FUN_10002fd0(int param_1)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-GetTotalAmount0(param_1);
-  uStack_8 = 0x1000300b;
-  return;
-}
-
-
+void OnInit();
+void ProcessScenary();
 
 
 
@@ -407,7 +391,7 @@ SetTutorial(1);
   uVar1 = GetQuestPressed();
   if ((uVar1 & 0xff) != 0) {
     SetTrigg(0x42,1);
-    FUN_10002fd0(&DAT_100303e8);
+    GetTotalAmount0(&DAT_100303e8);
     if (0 < iVar2) {
       SelectUnits(&DAT_100303e8,0);
       SelErase(1);

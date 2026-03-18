@@ -39,23 +39,8 @@ long long DAT_100304d0 = 0;
 long long DAT_100304d8 = 0;
 long long DAT_100304e0 = 0;
 long long DAT_100304e8 = 0;
-
-/* Forward declarations */
-void FUN_10003120(int param_1);
-
-
-void __cdecl FUN_10003120(int param_1)
-
-{
-  int iVar1;
-  int *puVar2;
-  int uStack_8;
-GetTotalAmount0(param_1);
-  uStack_8 = 0x1000315b;
-  return;
-}
-
-
+void OnInit();
+void ProcessScenary();
 
 
 
@@ -94,7 +79,7 @@ RegisterZone(&DAT_10030460,"Zone1");
   RegisterVar(&DAT_100304b8,8);
   DAT_100303e0 = 0;
   while (DAT_100303e0 < 0x14) {
-    local_8 = &DAT_100304e8 + DAT_100303e0 * 8;
+    local_8 = ((unsigned char *)&DAT_100304e8) + DAT_100303e0 * 8;
     DAT_100303e0 = DAT_100303e0 + 1;
     RegisterVar(local_8,8);
   }
@@ -218,7 +203,7 @@ uVar1 = Trigg(1);
       ShowPage("#PAGE2");
       SelectUnits(&DAT_10030400,0);
       SelSendAndKill(1,&DAT_10030460,0x5a,0);
-      FUN_10003120(&DAT_100303f8);
+      GetTotalAmount0(&DAT_100303f8);
       if (10 < iVar3) {
         SelectUnits(&DAT_100304a8,0);
         SelOpenGates(1);
@@ -230,7 +215,7 @@ uVar1 = Trigg(1);
   uVar1 = Trigg(0x14);
   if ((uVar1 & 0xff) != 0) {
     iVar3 = GetUnitsAmount1(&DAT_10030460,&DAT_100303f8);
-    FUN_10003120(&DAT_100303f8);
+    GetTotalAmount0(&DAT_100303f8);
     if (iVar3 == iVar2) {
       SetTrigg(0x14,0);
       SelectUnits(&DAT_100304a8,0);
@@ -299,15 +284,15 @@ uVar1 = Trigg(1);
   }
   iVar3 = GetGlobalTime();
   if ((DAT_100303e4 * 5000 + 20000 < iVar3) && (DAT_100303e4 < 0x14)) {
-    CreateObject0(&DAT_100304e8 + DAT_100303e4 * 8,&DAT_100304c8 + (DAT_100303e4 / 5) * 8,
+    CreateObject0(((unsigned char *)&DAT_100304e8) + DAT_100303e4 * 8,((unsigned char *)&DAT_100304c8) + (DAT_100303e4 / 5) * 8,
                   &DAT_10030438,1,&DAT_100304a0,0);
-    local_8 = &DAT_100304e8 + DAT_100303e4 * 8;
+    local_8 = ((unsigned char *)&DAT_100304e8) + DAT_100303e4 * 8;
     DAT_100303e4 = DAT_100303e4 + 1;
     SelectUnits(local_8,0);
     SelSendAndKill(1,&DAT_10030448,0,0);
   }
   for (DAT_100303e0 = 0; DAT_100303e0 < DAT_100303e4; DAT_100303e0 = DAT_100303e0 + 1) {
-    FUN_10003120(&DAT_100304e8 + DAT_100303e0 * 8);
+    GetTotalAmount0(((unsigned char *)&DAT_100304e8) + DAT_100303e0 * 8);
     if (0 < iVar3) {
       iVar3 = GetUnitsAmount0(&DAT_10030448,0);
       if (iVar3 < 1) {
@@ -315,15 +300,15 @@ uVar1 = Trigg(1);
         if (iVar3 < 1) {
           iVar3 = GetUnitsAmount0(&DAT_10030458,0);
           if (0 < iVar3) {
-            AttackEnemyInZone(&DAT_100304e8 + DAT_100303e0 * 8,&DAT_10030458,0);
+            AttackEnemyInZone(((unsigned char *)&DAT_100304e8) + DAT_100303e0 * 8,&DAT_10030458,0);
           }
         }
         else {
-          AttackEnemyInZone(&DAT_100304e8 + DAT_100303e0 * 8,&DAT_10030440,0);
+          AttackEnemyInZone(((unsigned char *)&DAT_100304e8) + DAT_100303e0 * 8,&DAT_10030440,0);
         }
       }
       else {
-        AttackEnemyInZone(&DAT_100304e8 + DAT_100303e0 * 8,&DAT_10030448,0);
+        AttackEnemyInZone(((unsigned char *)&DAT_100304e8) + DAT_100303e0 * 8,&DAT_10030448,0);
       }
     }
   }
@@ -341,7 +326,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) == 0) {
     iVar3 = GetUnitsAmount0(&DAT_10030458,0);
     if (0 < iVar3) {
-      FUN_10003120(&DAT_100304b8);
+      GetTotalAmount0(&DAT_100304b8);
       if (0 < iVar3) {
         AttackEnemyInZone(&DAT_100304b8,&DAT_10030458,0);
       }
@@ -367,7 +352,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(0x19);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10003120(&DAT_10030418);
+    GetTotalAmount0(&DAT_10030418);
     if (iVar3 == 0) {
       SetTrigg(0x19,0);
       ClearSelection(0);
@@ -405,7 +390,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(5);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10003120(&DAT_100303f0);
+    GetTotalAmount0(&DAT_100303f0);
     if (iVar3 == 0) {
       SetTrigg(5,0);
       iVar3 = GetResource(0,3);
@@ -420,7 +405,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(7);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10003120(&DAT_100304c0);
+    GetTotalAmount0(&DAT_100304c0);
     if (iVar3 == 0) {
       SetTrigg(7,0);
       ShowPage("#PAGE7");

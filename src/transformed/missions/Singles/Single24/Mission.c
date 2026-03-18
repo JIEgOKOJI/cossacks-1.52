@@ -20,6 +20,9 @@ long long DAT_1002f420 = 0;
 int DAT_1002f428 = 0;
 int DAT_1002f42c = 0;
 int DAT_1002f430 = 0;
+void OnInit();
+void ProcessScenary();
+
 
 void OnInit(void)
 

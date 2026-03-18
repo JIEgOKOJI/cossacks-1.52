@@ -91,6 +91,9 @@ void FUN_100022d0(DWORD param_1);
 void FUN_10002458(void);
 void FUN_10002470(void);
 
+void OnInit();
+void ProcessScenary();
+
 
 BOOL __cdecl FUN_10001a00(int param_1)
 

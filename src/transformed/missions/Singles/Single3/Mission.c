@@ -134,6 +134,9 @@ int FUN_10007590() { return 0; }
 /* Forward declarations */
 void FUN_10007010(DWORD param_1);
 
+void OnInit();
+void ProcessScenary();
+
 
 void __cdecl FUN_10007010(DWORD param_1)
 

@@ -58,40 +58,8 @@ long long DAT_10030568 = 0;
 long long DAT_10030570 = 0;
 long long DAT_10030578 = 0;
 long long DAT_10030580 = 0;
-
-/* Forward declarations */
-void FUN_10002f00(int param_1);
-void FUN_10002f50(int param_1,char param_2);
-
-
-void __cdecl FUN_10002f00(int param_1)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-GetTotalAmount0(param_1);
-  uStack_8 = 0x10002f3b;
-  return;
-}
-
-
-
-
-
-void __cdecl FUN_10002f50(int param_1,char param_2)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-GetTotalAmount1(param_1,(int)param_2);
-  uStack_8 = 0x10002f8f;
-  return;
-}
-
+void OnInit();
+void ProcessScenary();
 
 
 
@@ -155,7 +123,7 @@ RegisterZone(&DAT_100304a8,"Zone1");
   RegisterVar(&DAT_10030500,8);
   DAT_10030404 = 0;
   while (DAT_10030404 < 0x14) {
-    local_8 = &DAT_10030580 + DAT_10030404 * 8;
+    local_8 = ((unsigned char *)&DAT_10030580) + DAT_10030404 * 8;
     DAT_10030404 = DAT_10030404 + 1;
     RegisterVar(local_8,8);
   }
@@ -177,7 +145,6 @@ void ProcessScenary(void)
   unsigned int uVar1;
   int iVar2;
   int *puVar3;
-  int local_44 [15];
   int uStack_8;
 uVar1 = Trigg(1);
   if ((uVar1 & 0xff) != 0) {
@@ -266,7 +233,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(2);
   if ((uVar1 & 0xff) == 0) {
-    FUN_10002f50(&DAT_10030428,1);
+    GetTotalAmount1(&DAT_10030428,1);
     if (0 < iVar2) {
       uVar1 = Trigg(0x1e);
       if ((uVar1 & 0xff) != 0) {
@@ -294,9 +261,9 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) == 0) {
     uVar1 = Trigg(0x1e);
     if ((uVar1 & 0xff) != 0) {
-      FUN_10002f00(&DAT_10030440);
+      GetTotalAmount0(&DAT_10030440);
       if (iVar2 == 0) {
-        FUN_10002f00(&DAT_10030448);
+        GetTotalAmount0(&DAT_10030448);
         if (0 < iVar2) {
           SelectUnits(&DAT_10030458,0);
           SelAttackGroup(1,&DAT_10030448);
@@ -380,7 +347,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(0xc);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10002f00(&DAT_10030430);
+    GetTotalAmount0(&DAT_10030430);
     if (iVar2 < 1) {
       SetTrigg(0xc,0);
       iVar2 = GetResource(0,3);
@@ -395,7 +362,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(0xc);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10002f00(&DAT_10030438);
+    GetTotalAmount0(&DAT_10030438);
     if (iVar2 < 6) {
       SetTrigg(0xc,0);
       ShowPage("#PAGE6");
@@ -421,7 +388,7 @@ uVar1 = Trigg(1);
   }
   iVar2 = GetGlobalTime();
   if ((DAT_10030400 * 3000 < iVar2) && (DAT_10030400 < 0x14)) {
-    CreateObject0(&DAT_10030580 + DAT_10030400 * 8,&DAT_100304e8,&DAT_100304a0,1,&DAT_100304b0,0);
+    CreateObject0(((unsigned char *)&DAT_10030580) + DAT_10030400 * 8,&DAT_100304e8,&DAT_100304a0,1,&DAT_100304b0,0);
     DAT_10030400 = DAT_10030400 + 1;
   }
   uStack_8 = 0x10002a6b;

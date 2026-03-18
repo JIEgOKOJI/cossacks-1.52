@@ -150,6 +150,9 @@ int FUN_100029f9() { return 0; }
 void FUN_100027b0(void);
 void FUN_100027c8(void);
 
+void OnInit();
+void ProcessScenary();
+
 
 
 

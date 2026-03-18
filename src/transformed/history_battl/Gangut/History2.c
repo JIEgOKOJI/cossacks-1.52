@@ -91,6 +91,9 @@ void FUN_10002830(char param_1,char param_2);
 void FUN_100028b0(int param_1);
 int FUN_10002970(char *param_1,int param_2);
 
+void OnInit();
+void ProcessScenary();
+
 
 void __cdecl FUN_10001220(char param_1)
 
@@ -672,8 +675,8 @@ FUN_10002770(&DAT_1002f420,"Group1");
   FUN_100027e0(1,2);
   FUN_100027e0(3,7);
   for (DAT_1002f3f4 = 0; DAT_1002f3f4 < 5; DAT_1002f3f4 = DAT_1002f3f4 + 1) {
-    (&DAT_1002f3f8)[DAT_1002f3f4] = 0;
-    (&DAT_1002f40c)[DAT_1002f3f4] = 0;
+    ((long long *)&DAT_1002f3f8)[DAT_1002f3f4] = 0;
+    ((long long *)&DAT_1002f40c)[DAT_1002f3f4] = 0;
   }
   uStack_8 = 0x10002733;
   return;

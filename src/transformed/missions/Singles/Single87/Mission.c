@@ -90,9 +90,10 @@ void FUN_10001073(int param_1,int param_2);
 void FUN_1000108b(int param_1,int param_2,int param_3);
 void FUN_100010a2(int param_1,int param_2);
 void FUN_100010ba(int param_1,int param_2,int param_3);
-int FUN_100010d1(int param_1,int param_2,int param_3,int param_4,
-            int param_5);
 void FUN_100010f6(int param_1,int param_2,int param_3,int param_4);
+
+void OnInit();
+void ProcessScenary();
 
 
 int __cdecl FUN_10001012(int param_1)
@@ -180,18 +181,6 @@ void __cdecl FUN_100010ba(int param_1,int param_2,int param_3)
 
 
 
-int __cdecl
-FUN_100010d1(int param_1,int param_2,int param_3,int param_4,
-            int param_5)
-
-{
-  CreateObject0(param_1,&DAT_10007628,param_2,param_4,param_3,param_5);
-  return param_4;
-}
-
-
-
-
 
 void __cdecl
 FUN_100010f6(int param_1,int param_2,int param_3,int param_4)
@@ -204,7 +193,7 @@ FUN_100010f6(int param_1,int param_2,int param_3,int param_4)
   if (cVar1 != '\0') {
     iVar2 = GetTotalAmount0(param_1);
     if (iVar2 < 2) {
-      FUN_100010d1(&DAT_100075f0,&DAT_100076d0,param_2,5,param_4);
+      CreateObject0(&DAT_100075f0,&DAT_100076d0,param_2,5,param_4);
       RemoveGroup(&DAT_100075f0,param_1);
       FUN_100010a2(param_1,&DAT_10007740);
       RunTimer(param_3,0x10e);
@@ -447,14 +436,14 @@ LAB_10001718:
       ClearSelection(1);
     }
     for (iVar2 = (1 < DAT_100075a4) + 2; iVar2 != 0; iVar2 = iVar2 + -1) {
-      FUN_100010d1(&DAT_100075f0,&DAT_100076d0,&DAT_10007738,5,0xc4);
+      CreateObject0(&DAT_100075f0,&DAT_100076d0,&DAT_10007738,5,0xc4);
       RemoveGroup(&DAT_100075f0,&DAT_100076a0);
-      FUN_100010d1(&DAT_100075f0,&DAT_100076d0,&DAT_10007740,5,0);
+      CreateObject0(&DAT_100075f0,&DAT_100076d0,&DAT_10007740,5,0);
       RemoveGroup(&DAT_100075f0,&DAT_100076a8);
-      FUN_100010d1(&DAT_100075f0,&DAT_100076d0,&DAT_10007740,5,0);
+      CreateObject0(&DAT_100075f0,&DAT_100076d0,&DAT_10007740,5,0);
       RemoveGroup(&DAT_100075f0,&DAT_100076b8);
       if (0 < DAT_100075a4) {
-        FUN_100010d1(&DAT_100075f0,&DAT_10007588,&DAT_10007748,5,0x46);
+        CreateObject0(&DAT_100075f0,&DAT_10007588,&DAT_10007748,5,0x46);
         RemoveGroup(&DAT_100075f0,&DAT_100076b0);
       }
     }
@@ -478,7 +467,7 @@ LAB_100019ef:
     iStack_4 = 0;
     if (0 < DAT_100076d8) {
       do {
-        FUN_100010d1(&DAT_100075f0,&DAT_10007730,&DAT_10007618,1,0x40);
+        CreateObject0(&DAT_100075f0,&DAT_10007730,&DAT_10007618,1,0x40);
         RemoveGroup(&DAT_100075f0,&DAT_10007778);
         iStack_4 = iStack_4 + 1;
       } while (iStack_4 < DAT_100076d8);
@@ -486,7 +475,7 @@ LAB_100019ef:
     FUN_1000108b(&DAT_10007778,&DAT_10007618,0xac);
     iStack_4 = 0;
     do {
-      FUN_100010d1(&DAT_100075f0,&DAT_100076d0,&DAT_100076e8,2,0x80);
+      CreateObject0(&DAT_100075f0,&DAT_100076d0,&DAT_100076e8,2,0x80);
       RemoveGroup(&DAT_100075f0,&DAT_100075b0);
       if ((DAT_100075a4 == 0) && (iStack_4 == 1)) {
         iStack_4 = 2;
@@ -494,15 +483,15 @@ LAB_100019ef:
       iStack_4 = iStack_4 + 1;
     } while (iStack_4 < 3);
     if (0 < DAT_100075a4) {
-      FUN_100010d1(&DAT_100075f0,&DAT_10007788,&DAT_100076e0,2,0x80);
+      CreateObject0(&DAT_100075f0,&DAT_10007788,&DAT_100076e0,2,0x80);
       RemoveGroup(&DAT_100075f0,&DAT_100075c0);
     }
     if (2 < DAT_100075a4) {
-      FUN_100010d1(&DAT_100075f0,&DAT_10007788,&DAT_100076e0,2,0x80);
+      CreateObject0(&DAT_100075f0,&DAT_10007788,&DAT_100076e0,2,0x80);
       RemoveGroup(&DAT_100075f0,&DAT_100075c0);
     }
     if (DAT_100075a4 != 1) {
-      FUN_100010d1(&DAT_100075f0,&DAT_100075a8,&DAT_100076e0,2,0x80);
+      CreateObject0(&DAT_100075f0,&DAT_100075a8,&DAT_100076e0,2,0x80);
       RemoveGroup(&DAT_100075f0,&DAT_100075b0);
     }
     FUN_100010ba(&DAT_100075c0,&DAT_100076e0,0xa0);
@@ -526,21 +515,21 @@ LAB_100019ef:
     iStack_4 = 0;
     if (1 < DAT_100075a4 != 0xffffffff) {
       do {
-        FUN_100010d1(&DAT_100075f0,&DAT_10007580,&DAT_10007630,5,0xc4);
+        CreateObject0(&DAT_100075f0,&DAT_10007580,&DAT_10007630,5,0xc4);
         FUN_10001073(&DAT_100075f0,&DAT_100076f8);
         FUN_10001073(&DAT_100075f0,&DAT_10007700);
         RemoveGroup(&DAT_100075f0,&DAT_10007780);
-        FUN_100010d1(&DAT_100075f0,&DAT_10007580,&DAT_10007630,5,0xc4);
+        CreateObject0(&DAT_100075f0,&DAT_10007580,&DAT_10007630,5,0xc4);
         FUN_10001073(&DAT_100075f0,&DAT_10007700);
         RemoveGroup(&DAT_100075f0,&DAT_10007780);
-        FUN_100010d1(&DAT_100075f0,&DAT_10007580,&DAT_10007630,5,0xc4);
+        CreateObject0(&DAT_100075f0,&DAT_10007580,&DAT_10007630,5,0xc4);
         FUN_10001073(&DAT_100075f0,&DAT_10007718);
         RemoveGroup(&DAT_100075f0,&DAT_10007780);
-        FUN_100010d1(&DAT_100075f0,&DAT_10007580,&DAT_10007648,5,0x40);
+        CreateObject0(&DAT_100075f0,&DAT_10007580,&DAT_10007648,5,0x40);
         FUN_10001073(&DAT_100075f0,&DAT_10007708);
         FUN_10001073(&DAT_100075f0,&DAT_10007710);
         RemoveGroup(&DAT_100075f0,&DAT_10007780);
-        FUN_100010d1(&DAT_100075f0,&DAT_10007580,&DAT_10007648,5,0x40);
+        CreateObject0(&DAT_100075f0,&DAT_10007580,&DAT_10007648,5,0x40);
         FUN_10001073(&DAT_100075f0,&DAT_10007710);
         RemoveGroup(&DAT_100075f0,&DAT_10007780);
         iStack_4 = iStack_4 + 1;
@@ -591,7 +580,7 @@ LAB_100019ef:
     else {
       puVar9 = &DAT_10007630;
     }
-    FUN_100010d1(&DAT_100075f0,&DAT_10007580,puVar9,5,0xc4);
+    CreateObject0(&DAT_100075f0,&DAT_10007580,puVar9,5,0xc4);
     RemoveGroup(&DAT_100075f0,&DAT_10007780);
     cVar1 = Trigg(6);
     if (cVar1 == '\0') {
@@ -683,7 +672,7 @@ LAB_100020f7:
     if (cVar1 != '\0') {
       iVar2 = GetTotalAmount0(&DAT_100076b0);
       if (iVar2 < 2) {
-        FUN_100010d1(&DAT_100075f0,&DAT_10007588,&DAT_10007630,5,200);
+        CreateObject0(&DAT_100075f0,&DAT_10007588,&DAT_10007630,5,200);
         RemoveGroup(&DAT_100075f0,&DAT_100076b0);
         FUN_100010a2(&DAT_100076b0,&DAT_10007738);
         FUN_10001073(&DAT_100076b0,&DAT_10007740);

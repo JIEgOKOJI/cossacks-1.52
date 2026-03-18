@@ -130,6 +130,9 @@ long long DAT_10007d88 = 0;
 long long DAT_10007d90 = 0;
 long long DAT_10007d98 = 0;
 long long DAT_10007da0 = 0;
+void OnInit();
+void ProcessScenary();
+
 
 void OnInit(void)
 

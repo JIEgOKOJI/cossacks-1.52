@@ -280,6 +280,9 @@ void FUN_10004f90(int param_1,int param_2);
 void FUN_10004fd2(void);
 void FUN_10004fea(void);
 
+void OnInit();
+void ProcessScenary();
+
 
 int __cdecl
 FUN_10004e90(int param_1,int param_2,int param_3,int param_4,

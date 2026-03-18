@@ -20,7 +20,9 @@ int DAT_1002e44c = 0;
 /* Forward declarations */
 void FUN_100011b0(void);
 void FUN_10001390(void);
-void FUN_10001680(int param_1);
+
+void OnInit();
+void ProcessScenary();
 
 
 void FUN_100011b0(void)
@@ -41,8 +43,8 @@ RegisterVisibleZone(&DAT_1002e420,"Zone1");
   ChangeFriends(1,2);
   ChangeFriends(7,0x83);
   for (DAT_1002e3e0 = 0; DAT_1002e3e0 < 5; DAT_1002e3e0 = DAT_1002e3e0 + 1) {
-    (&DAT_1002e3e4)[DAT_1002e3e0] = 0;
-    (&DAT_1002e3f8)[DAT_1002e3e0] = 0;
+    ((long long *)&DAT_1002e3e4)[DAT_1002e3e0] = 0;
+    ((long long *)&DAT_1002e3f8)[DAT_1002e3e0] = 0;
   }
   uStack_8 = 0x10001324;
   return;
@@ -61,28 +63,28 @@ void FUN_10001390(void)
   int local_44 [15];
   int uStack_8;
 for (DAT_1002e3e0 = 0; DAT_1002e3e0 < 5; DAT_1002e3e0 = DAT_1002e3e0 + 1) {
-    iVar2 = GetUnitsAmount0(&DAT_1002e420 + DAT_1002e3e0 * 8,0);
+    iVar2 = GetUnitsAmount0(((unsigned char *)&DAT_1002e420) + DAT_1002e3e0 * 8,0);
     if (0 < iVar2) {
-      iVar2 = GetUnitsAmount0(&DAT_1002e420 + DAT_1002e3e0 * 8,1);
+      iVar2 = GetUnitsAmount0(((unsigned char *)&DAT_1002e420) + DAT_1002e3e0 * 8,1);
       if (iVar2 == 0) {
-        (&DAT_1002e3e4)[DAT_1002e3e0] = 1;
-        (&DAT_1002e3f8)[DAT_1002e3e0] = 0;
+        ((long long *)&DAT_1002e3e4)[DAT_1002e3e0] = 1;
+        ((long long *)&DAT_1002e3f8)[DAT_1002e3e0] = 0;
       }
     }
-    iVar2 = GetUnitsAmount0(&DAT_1002e420 + DAT_1002e3e0 * 8,1);
+    iVar2 = GetUnitsAmount0(((unsigned char *)&DAT_1002e420) + DAT_1002e3e0 * 8,1);
     if (0 < iVar2) {
-      iVar2 = GetUnitsAmount0(&DAT_1002e420 + DAT_1002e3e0 * 8,0);
+      iVar2 = GetUnitsAmount0(((unsigned char *)&DAT_1002e420) + DAT_1002e3e0 * 8,0);
       if (iVar2 == 0) {
-        (&DAT_1002e3e4)[DAT_1002e3e0] = 0;
-        (&DAT_1002e3f8)[DAT_1002e3e0] = 1;
+        ((long long *)&DAT_1002e3e4)[DAT_1002e3e0] = 0;
+        ((long long *)&DAT_1002e3f8)[DAT_1002e3e0] = 1;
       }
     }
   }
   DAT_1002e448 = 0;
   DAT_1002e44c = 0;
   for (DAT_1002e3e0 = 0; DAT_1002e3e0 < 5; DAT_1002e3e0 = DAT_1002e3e0 + 1) {
-    DAT_1002e448 = DAT_1002e448 + (&DAT_1002e3e4)[DAT_1002e3e0];
-    DAT_1002e44c = DAT_1002e44c + (&DAT_1002e3f8)[DAT_1002e3e0];
+    DAT_1002e448 = DAT_1002e448 + ((long long *)&DAT_1002e3e4)[DAT_1002e3e0];
+    DAT_1002e44c = DAT_1002e44c + ((long long *)&DAT_1002e3f8)[DAT_1002e3e0];
   }
   if (2 < DAT_1002e448) {
     OnInit();
@@ -99,11 +101,11 @@ for (DAT_1002e3e0 = 0; DAT_1002e3e0 < 5; DAT_1002e3e0 = DAT_1002e3e0 + 1) {
   if (70000 < iVar2) {
     ProcessScenary();
   }
-  FUN_10001680(&DAT_1002e410);
+  GetTotalAmount0(&DAT_1002e410);
   if (iVar2 == 0) {
     ProcessScenary();
   }
-  FUN_10001680(&DAT_1002e418);
+  GetTotalAmount0(&DAT_1002e418);
   if (iVar2 == 0) {
     OnInit();
   }
@@ -111,21 +113,6 @@ for (DAT_1002e3e0 = 0; DAT_1002e3e0 < 5; DAT_1002e3e0 = DAT_1002e3e0 + 1) {
   return;
 }
 
-
-
-
-
-void __cdecl FUN_10001680(int param_1)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-GetTotalAmount0(param_1);
-  uStack_8 = 0x100016bb;
-  return;
-}
 
 
 

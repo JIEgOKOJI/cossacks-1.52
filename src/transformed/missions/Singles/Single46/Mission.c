@@ -182,8 +182,10 @@ void FUN_10001300(void);
 void  FUN_100013a0(void *this_ptr,int param_1,byte param_2);
 void FUN_100014b0(void);
 void FUN_10002dc0(void);
-void FUN_10008650(int param_1);
 void FUN_10008800(DWORD param_1);
+
+void OnInit();
+void ProcessScenary();
 
 
 void  FUN_10001210(int param_1)
@@ -269,7 +271,6 @@ void FUN_100014b0(void)
   DWORD DVar1;
   int iVar2;
   int *puVar3;
-  int local_44 [15];
   int uStack_8;
 RegisterUnits(&DAT_10037480,"Ghetman");
   RegisterUnits(&DAT_10037548,"Gholop1");
@@ -1349,7 +1350,7 @@ LAB_100062d1:
     }
   }
   uVar2 = Trigg(0x62);
-  if (((uVar2 & 0xff) != 0) && (FUN_10008650(&DAT_10037458), iVar4 == 0)) {
+  if (((uVar2 & 0xff) != 0) && (GetTotalAmount0(&DAT_10037458), iVar4 == 0)) {
     uVar2 = Trigg(2);
     if ((uVar2 & 0xff) != 0) {
       SetTrigg(0x62,0);
@@ -1360,21 +1361,6 @@ LAB_100062d1:
   return;
 }
 
-
-
-
-
-void __cdecl FUN_10008650(int param_1)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_44 [15];
-  int uStack_8;
-GetTotalAmount0(param_1);
-  uStack_8 = 0x1000868b;
-  return;
-}
 
 
 
