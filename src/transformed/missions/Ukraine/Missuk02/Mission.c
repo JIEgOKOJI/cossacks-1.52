@@ -505,7 +505,7 @@ uVar1 = Trigg(100);
     GetTotalAmount1(&DAT_10034618,0);
     if (0 < iVar2) {
       SetTrigg(0xd,0);
-      SetTrigg(0xb,1);
+      SetTrigg(0xb,0);
       SelectUnitsType(&DAT_10034618,0,0);
       SelDie(0);
       RunTimer(0xc,100);
@@ -516,7 +516,7 @@ uVar1 = Trigg(100);
     GetTotalAmount1(&DAT_10034610,0);
     if (0 < iVar2) {
       SetTrigg(0xc,0);
-      SetTrigg(0xb,1);
+      SetTrigg(0xb,0);
       SelectUnitsType(&DAT_10034610,0,0);
       SelDie(0);
       RunTimer(0xd,100);
@@ -530,8 +530,8 @@ uVar1 = Trigg(100);
       if ((uVar1 & 0xff) == 0) goto LAB_100032f6;
     }
     SetTrigg(0xb,0);
-    SetTrigg(0xd,1);
-    SetTrigg(0xc,1);
+    SetTrigg(0xd,0);
+    SetTrigg(0xc,0);
   }
 LAB_100032f6:
   uVar1 = Trigg(0x57);
@@ -560,7 +560,7 @@ LAB_100032f6:
     if ((uVar1 & 0xff) == 0) {
       iVar2 = GetUnitsAmount0(&DAT_100344c8,0);
       if (iVar2 == 0) {
-        SetTrigg(0x56,1);
+        SetTrigg(0x56,0);
         SelectUnits(&DAT_10034690,0);
         SelSendTo(1,&DAT_100344e0,0x3c,0);
       }
@@ -580,7 +580,7 @@ LAB_100032f6:
     if ((uVar1 & 0xff) == 0) {
       iVar2 = GetUnitsAmount2(&DAT_100344d8,&DAT_10034630,0);
       if (iVar2 == 0) {
-        SetTrigg(0x53,1);
+        SetTrigg(0x53,0);
         SelectUnits(&DAT_10034668,0);
         SelSendTo(1,&DAT_10034488,0xb4,0);
       }
@@ -602,7 +602,7 @@ LAB_100032f6:
     if ((uVar1 & 0xff) == 0) {
       iVar2 = GetUnitsAmount2(&DAT_10034498,&DAT_10034630,0);
       if (iVar2 == 0) {
-        SetTrigg(0x50,1);
+        SetTrigg(0x50,0);
         SelectUnits(&DAT_10034668,0);
         SelSendTo(1,&DAT_10034488,0xb4,0);
       }
@@ -622,7 +622,7 @@ LAB_100032f6:
     if ((uVar1 & 0xff) == 0) {
       iVar2 = GetUnitsAmount2(&DAT_100344c0,&DAT_10034630,0);
       if (iVar2 == 0) {
-        SetTrigg(0x4d,1);
+        SetTrigg(0x4d,0);
         SelectUnits(&DAT_10034730,0);
         SelSendTo(1,&DAT_10034478,0x5a,0);
       }
@@ -642,7 +642,7 @@ LAB_100032f6:
     if ((uVar1 & 0xff) == 0) {
       iVar2 = GetUnitsAmount2(&DAT_100344a8,&DAT_10034630,0);
       if (iVar2 == 0) {
-        SetTrigg(0x4a,1);
+        SetTrigg(0x4a,0);
         SelectUnits(&DAT_10034730,0);
         SelSendTo(1,&DAT_10034478,0x5a,0);
       }
@@ -662,7 +662,7 @@ LAB_100032f6:
     if ((uVar1 & 0xff) == 0) {
       iVar2 = GetUnitsAmount2(&DAT_100344f0,&DAT_10034630,0);
       if (iVar2 == 0) {
-        SetTrigg(0x47,1);
+        SetTrigg(0x47,0);
         SelectUnits(&DAT_10034450,0);
         SelSendTo(1,&DAT_100344f8,0xb4,0);
       }
@@ -960,7 +960,7 @@ LAB_100048fa:
     if ((uVar1 & 0xff) == 0) {
       iVar2 = GetUnitsAmount0(&DAT_10034540,0);
       if (0 < iVar2) {
-        SetTrigg(0x2d,1);
+        SetTrigg(0x2d,0);
         AttackEnemyInZone(&DAT_10034720,&DAT_10034540,0);
         AttackEnemyInZone(&DAT_10034738,&DAT_10034540,0);
       }

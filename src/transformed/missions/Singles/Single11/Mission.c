@@ -242,20 +242,20 @@ void ProcessScenary(void)
   }
   cVar1 = Trigg(7);
   if ((cVar1 != '\0') && (iVar2 = GetUnitsAmount1(&DAT_10006630,&DAT_10006610), iVar2 == 0)) {
-    SetTrigg(6,1);
+    SetTrigg(6,0);
   }
   SetLightSpot(&DAT_10006738,2,1);
   cVar1 = Trigg(8);
   if ((cVar1 != '\0') && (iVar2 = GetUnitsAmount1(&DAT_10006630,&DAT_10006610), iVar2 != 0)) {
     SetTrigg(8,0);
-    SetTrigg(9,1);
+    SetTrigg(9,0);
     SelectUnits(&DAT_10006610,0);
     SelSendTo(3,&DAT_10006620,0,0);
   }
   cVar1 = Trigg(9);
   if ((cVar1 != '\0') && (iVar2 = GetUnitsAmount1(&DAT_10006620,&DAT_10006610), iVar2 != 0)) {
     SetTrigg(9,0);
-    SetTrigg(8,1);
+    SetTrigg(8,0);
     SelectUnits(&DAT_10006610,0);
     SelSendTo(3,&DAT_10006630,0x80,0);
   }

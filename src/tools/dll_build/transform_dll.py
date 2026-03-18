@@ -1040,6 +1040,31 @@ if __name__ == '__main__':
     # Replace xxx_exref with (void*)&xxx — Ghidra import reference artifacts
     raw_code = re.sub(r'(\w+)_exref\b', r'(void*)&\1', raw_code)
 
+    # Fix unsigned 32-bit hex constants that represent negative signed values
+    # e.g. AddResource(0,3,0xfffff830) → AddResource(0,3,-2000)
+    # Only convert values >= 0x80000000 inside function call arguments
+    def _hex_to_signed(m):
+        val = int(m.group(0), 16)
+        if val >= 0x80000000:
+            return str(val - 0x100000000)
+        return m.group(0)
+    raw_code = re.sub(r'\b0x[89a-fA-F][0-9a-fA-F]{7}\b', _hex_to_signed, raw_code)
+
+    # Fix pointer truncation: (int)local_xxx → (intptr_t)local_xxx
+    # On 64-bit, casting a pointer to int truncates it
+    # Note: (int)(local_xxx) with extra parens is legitimate data extraction, not pointer cast
+    raw_code = re.sub(r'\(int\)(local_\w+)\b', r'(intptr_t)\1', raw_code)
+    raw_code = re.sub(r'\(int\)(param_\w+)\b', r'(intptr_t)\1', raw_code)
+
+    # Fix sprintf with missing varargs (Ghidra loses cdecl varargs):
+    # sprintf(&DAT_xxx, &DAT_yyy) with no actual string args → buf[0] = '\0'
+    def _fix_sprintf_no_args(m):
+        buf_name = m.group(1)  # DAT_xxx without &
+        return buf_name + '[0] = \'\\0\';  /* fixed: sprintf had format but missing varargs */'
+    raw_code = re.sub(
+        r'sprintf\s*\(\s*&(DAT_\w+)\s*,\s*&DAT_\w+\s*\)\s*;',
+        _fix_sprintf_no_args, raw_code)
+
     # Resolve indirect calls through function pointers loaded from _exref
     # Pattern: pcVarN = (void*)&Func; ... (*pcVarN)(args) → Func(args)
     raw_code = resolve_indirect_calls(raw_code)

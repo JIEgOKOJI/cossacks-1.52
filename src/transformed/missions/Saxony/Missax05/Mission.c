@@ -462,7 +462,7 @@ void ProcessScenary(void)
     SetTrigg(0x27,0);
     SelectUnits(&DAT_100069e0,0);
     SelCloseGates(1);
-    SetTrigg(0x24,1);
+    SetTrigg(0x24,0);
   }
   cVar1 = Trigg(0x29);
   if (((cVar1 != '\0') && (cVar1 = Trigg(0x11), cVar1 == '\0')) &&

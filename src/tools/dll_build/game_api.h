@@ -68,220 +68,221 @@ typedef struct {
 } UnitExCaps;
 
 /* ---- API function declarations (imported from dmcr.exe) ---- */
+/* Full prototypes matching ActiveScenary.cpp signatures */
 
 /* Registration */
-__declspec(dllimport) BOOL RegisterUnits();
-__declspec(dllimport) BOOL RegisterUnitsForm();
-__declspec(dllimport) BOOL RegisterString();
-__declspec(dllimport) BOOL RegisterSound();
-__declspec(dllimport) void RegisterVar();
-__declspec(dllimport) void RegisterZone();
-__declspec(dllimport) void RegisterVisibleZone();
-__declspec(dllimport) BOOL RegisterUnitType();
-__declspec(dllimport) BOOL RegisterUpgrade();
-__declspec(dllimport) BOOL SafeRegisterUpgrade();
-__declspec(dllimport) BOOL RegisterFormation();
-__declspec(dllimport) void RegisterDynGroup();
+__declspec(dllimport) BOOL RegisterUnits(GAMEOBJ* GOBJ, char* Name);
+__declspec(dllimport) BOOL RegisterUnitsForm(GAMEOBJ* GOBJ, char* Name);
+__declspec(dllimport) BOOL RegisterString(GAMEOBJ* GOBJ, char* ID);
+__declspec(dllimport) BOOL RegisterSound(GAMEOBJ* GOBJ, char* Name);
+__declspec(dllimport) void RegisterVar(void* Var, int size);
+__declspec(dllimport) void RegisterZone(GAMEOBJ* GOBJ, char* Name);
+__declspec(dllimport) void RegisterVisibleZone(GAMEOBJ* GOBJ, char* Name);
+__declspec(dllimport) BOOL RegisterUnitType(GAMEOBJ* GOBJ, char* Name);
+__declspec(dllimport) BOOL RegisterUpgrade(GAMEOBJ* GOBJ, char* Name);
+__declspec(dllimport) BOOL SafeRegisterUpgrade(GAMEOBJ* GOBJ, char* Name);
+__declspec(dllimport) BOOL RegisterFormation(GAMEOBJ* GOBJ, char* Name);
+__declspec(dllimport) void RegisterDynGroup(GAMEOBJ* Units);
 
 /* Upgrades */
-__declspec(dllimport) void InitialUpgrade();
-__declspec(dllimport) void DisableUpgrade();
-__declspec(dllimport) void EnableUpgrade();
-__declspec(dllimport) void EnableUnit();
-__declspec(dllimport) BOOL IsUpgradeDone();
+__declspec(dllimport) void InitialUpgrade(char* Grp, char* Upgrade);
+__declspec(dllimport) void DisableUpgrade(byte Nat, GAMEOBJ* Upg);
+__declspec(dllimport) void EnableUpgrade(byte Nat, GAMEOBJ* Upg);
+__declspec(dllimport) void EnableUnit(byte Nat, GAMEOBJ* Type, BOOL State);
+__declspec(dllimport) BOOL IsUpgradeDone(GAMEOBJ* Upgrade, byte Nation);
 
 /* Counting units */
-__declspec(dllimport) int GetUnitsAmount0();
-__declspec(dllimport) int GetUnitsAmount1();
-__declspec(dllimport) int GetUnitsAmount2();
-__declspec(dllimport) int GetTotalAmount0();
-__declspec(dllimport) int GetTotalAmount1();
-__declspec(dllimport) int GetTotalAmount2();
-__declspec(dllimport) int GetReadyAmount();
-__declspec(dllimport) int GetAmountOfWarriors();
-__declspec(dllimport) int GetNUnits();
-__declspec(dllimport) int GetUnitsByNation();
-__declspec(dllimport) int GetKilled();
+__declspec(dllimport) int GetUnitsAmount0(GAMEOBJ* Zone, byte Nation);
+__declspec(dllimport) int GetUnitsAmount1(GAMEOBJ* Zone, GAMEOBJ* Units);
+__declspec(dllimport) int GetUnitsAmount2(GAMEOBJ* Zone, GAMEOBJ* UnitType, byte Nation);
+__declspec(dllimport) int GetTotalAmount0(GAMEOBJ* Units);
+__declspec(dllimport) int GetTotalAmount1(GAMEOBJ* UnitType, byte Nation);
+__declspec(dllimport) int GetTotalAmount2(GAMEOBJ* Units, GAMEOBJ* UnitType, byte Nation);
+__declspec(dllimport) int GetReadyAmount(GAMEOBJ* UnitType, byte Nation);
+__declspec(dllimport) int GetAmountOfWarriors(byte Nat);
+__declspec(dllimport) int GetNUnits(GAMEOBJ* Units);
+__declspec(dllimport) int GetUnitsByNation(GAMEOBJ* Units, byte Nat);
+__declspec(dllimport) int GetKilled(GAMEOBJ* Units);
 
 /* Selection */
-__declspec(dllimport) void ClearSelection();
-__declspec(dllimport) void SelectUnits();
-__declspec(dllimport) void SelectUnits1();
-__declspec(dllimport) void SelectUnitsType();
-__declspec(dllimport) void SelectUnitsInZone();
-__declspec(dllimport) void SelectTypeOfUnitsInZone();
-__declspec(dllimport) void SaveSelectedUnits();
-__declspec(dllimport) BOOL SelDie();
-__declspec(dllimport) void SelErase();
-__declspec(dllimport) void SelAttackGroup();
-__declspec(dllimport) BOOL SelOpenGates();
-__declspec(dllimport) BOOL SelCloseGates();
-__declspec(dllimport) BOOL SelSendTo();
-__declspec(dllimport) BOOL SelSendAndKill();
-__declspec(dllimport) void SelChangeNation();
-__declspec(dllimport) void SelAutoKill();
-__declspec(dllimport) BOOL SelCenter();
+__declspec(dllimport) void ClearSelection(byte Nat);
+__declspec(dllimport) void SelectUnits(GAMEOBJ* Units, BOOL Add);
+__declspec(dllimport) void SelectUnits1(byte Nat, GAMEOBJ* Units, BOOL Add);
+__declspec(dllimport) void SelectUnitsType(GAMEOBJ* UnitsType, byte Nat, BOOL Add);
+__declspec(dllimport) void SelectUnitsInZone(GAMEOBJ* Zone, byte Nation, BOOL add);
+__declspec(dllimport) void SelectTypeOfUnitsInZone(GAMEOBJ* Zone, GAMEOBJ* UnitType, byte Nation, BOOL add);
+__declspec(dllimport) void SaveSelectedUnits(byte NI, GAMEOBJ* Units, BOOL add);
+__declspec(dllimport) BOOL SelDie(byte Nat);
+__declspec(dllimport) void SelErase(byte NI);
+__declspec(dllimport) void SelAttackGroup(byte Nat, GAMEOBJ* Enemy);
+__declspec(dllimport) BOOL SelOpenGates(byte Nat);
+__declspec(dllimport) BOOL SelCloseGates(byte Nat);
+__declspec(dllimport) BOOL SelSendTo(byte Nat, GAMEOBJ* Zone, byte Dir, byte Type);
+__declspec(dllimport) BOOL SelSendAndKill(byte Nat, GAMEOBJ* Zone, byte Dir, byte Type);
+__declspec(dllimport) void SelChangeNation(byte SrcNat, byte DstNat);
+__declspec(dllimport) void SelAutoKill(byte Nat);
+__declspec(dllimport) BOOL SelCenter(GAMEOBJ* DstZone, byte Nat, int R);
 
 /* Movement & Patrol */
-__declspec(dllimport) BOOL Patrol();
-__declspec(dllimport) void SetDestPoint();
+__declspec(dllimport) BOOL Patrol(byte Nat, GAMEOBJ* Zone, byte Dir);
+__declspec(dllimport) void SetDestPoint(GAMEOBJ* Units, GAMEOBJ* Zone);
 
 /* Combat */
-__declspec(dllimport) void AttackZoneByArtillery();
-__declspec(dllimport) void AttackBuildingsInZone();
-__declspec(dllimport) void AttackEnemyInZone();
-__declspec(dllimport) void AllowAttack();
-__declspec(dllimport) void SetStandGround();
-__declspec(dllimport) void ChangeFriends();
-__declspec(dllimport) void ChangeUnitParam();
+__declspec(dllimport) void AttackZoneByArtillery(GAMEOBJ* ArtGroup, GAMEOBJ* Zone, byte Nat);
+__declspec(dllimport) void AttackBuildingsInZone(GAMEOBJ* ArtGroup, GAMEOBJ* Zone, byte Nat);
+__declspec(dllimport) void AttackEnemyInZone(GAMEOBJ* Grp, GAMEOBJ* Zone, byte EnmNation);
+__declspec(dllimport) void AllowAttack(byte Nat, byte val);
+__declspec(dllimport) void SetStandGround(byte Nat, byte val);
+__declspec(dllimport) void ChangeFriends(byte Nat, byte Flags);
+__declspec(dllimport) void ChangeUnitParam(GAMEOBJ* Type, byte Nation, byte AddDamage, byte AddShield);
 
 /* Production & Building */
-__declspec(dllimport) BOOL CreateObject0();
-__declspec(dllimport) BOOL CreateBuilding();
-__declspec(dllimport) void ProduceUnit();
-__declspec(dllimport) void ProduceUnitFast();
-__declspec(dllimport) void ProduceOneUnit();
-__declspec(dllimport) BOOL CheckProduction();
-__declspec(dllimport) BOOL CheckBuildingsComplete();
-__declspec(dllimport) void RepairBuildingsBySel();
+__declspec(dllimport) BOOL CreateObject0(GAMEOBJ* DstObj, GAMEOBJ* Form, GAMEOBJ* UnitType, byte NatID, GAMEOBJ* Zone, byte Direction);
+__declspec(dllimport) BOOL CreateBuilding(byte Nat, GAMEOBJ* Zone, GAMEOBJ* UnitType, GAMEOBJ* DestGroup);
+__declspec(dllimport) void ProduceUnit(GAMEOBJ* Units, GAMEOBJ* UnitType, GAMEOBJ* DestGroup);
+__declspec(dllimport) void ProduceUnitFast(GAMEOBJ* Units, GAMEOBJ* UnitType, GAMEOBJ* DestGroup, int Speed);
+__declspec(dllimport) void ProduceOneUnit(byte Nat, GAMEOBJ* UnitType);
+__declspec(dllimport) BOOL CheckProduction(GAMEOBJ* Units);
+__declspec(dllimport) BOOL CheckBuildingsComplete(GAMEOBJ* Buildings);
+__declspec(dllimport) void RepairBuildingsBySel(byte Nat, GAMEOBJ* Buildings);
 
 /* Unit Info */
-__declspec(dllimport) BOOL GetUnitInfo();
-__declspec(dllimport) void SetUnitInfo();
-__declspec(dllimport) BOOL GetUnitExCaps();
-__declspec(dllimport) void SetReadyState();
-__declspec(dllimport) int  InsertUnitToGroup();
-__declspec(dllimport) void RemoveUnitFromGroup();
-__declspec(dllimport) void RemoveGroup();
+__declspec(dllimport) BOOL GetUnitInfo(GAMEOBJ* Units, int Index, OneUnit* Uni);
+__declspec(dllimport) void SetUnitInfo(OneUnit* Uni);
+__declspec(dllimport) BOOL GetUnitExCaps(int Index, UnitExCaps* CAPS, BOOL NeedOrderType);
+__declspec(dllimport) void SetReadyState(GAMEOBJ* Units, BOOL State);
+__declspec(dllimport) int  InsertUnitToGroup(GAMEOBJ* Src, GAMEOBJ* Dst, int Index);
+__declspec(dllimport) void RemoveUnitFromGroup(GAMEOBJ* Src, int Index);
+__declspec(dllimport) void RemoveGroup(GAMEOBJ* Source, GAMEOBJ* Dest);
 
 /* Resources */
-__declspec(dllimport) int  GetResource();
-__declspec(dllimport) void AddResource();
-__declspec(dllimport) void SetResource();
-__declspec(dllimport) int  GetUnitCost();
-__declspec(dllimport) int  GetUpgradeCost();
-__declspec(dllimport) void TakeFood();
-__declspec(dllimport) void TakeWood();
-__declspec(dllimport) void TakeStone();
+__declspec(dllimport) int  GetResource(byte Nat, byte ID);
+__declspec(dllimport) void AddResource(byte Nat, byte ID, int Amount);
+__declspec(dllimport) void SetResource(byte Nat, byte ID, int Amount);
+__declspec(dllimport) int  GetUnitCost(byte Nat, GAMEOBJ* UnitType, byte ResID);
+__declspec(dllimport) int  GetUpgradeCost(byte Nat, GAMEOBJ* Upgrade, byte ResID);
+__declspec(dllimport) void TakeFood(GAMEOBJ* Units);
+__declspec(dllimport) void TakeWood(GAMEOBJ* Units);
+__declspec(dllimport) void TakeStone(GAMEOBJ* Units);
 
 /* Triggers & Timers */
-__declspec(dllimport) byte Trigg();
-__declspec(dllimport) void SetTrigg();
-__declspec(dllimport) word WTrigg();
-__declspec(dllimport) void SetWTrigg();
-__declspec(dllimport) void RunTimer();
-__declspec(dllimport) BOOL TimerDone();
-__declspec(dllimport) BOOL TimerDoneFirst();
-__declspec(dllimport) BOOL TimerIsEmpty();
-__declspec(dllimport) void FreeTimer();
-__declspec(dllimport) int  GetTime();
-__declspec(dllimport) int  GetGlobalTime();
+__declspec(dllimport) byte Trigg(byte ID);
+__declspec(dllimport) void SetTrigg(byte ID, byte Val);
+__declspec(dllimport) word WTrigg(byte ID);
+__declspec(dllimport) void SetWTrigg(byte ID, word Val);
+__declspec(dllimport) void RunTimer(byte ID, int Long);
+__declspec(dllimport) BOOL TimerDone(byte ID);
+__declspec(dllimport) BOOL TimerDoneFirst(byte ID);
+__declspec(dllimport) BOOL TimerIsEmpty(byte ID);
+__declspec(dllimport) void FreeTimer(byte ID);
+__declspec(dllimport) int  GetTime(byte ID);
+__declspec(dllimport) int  GetGlobalTime(void);
 
 /* Zones */
-__declspec(dllimport) BOOL UnitsCenter();
-__declspec(dllimport) BOOL CreateZoneNearUnit();
-__declspec(dllimport) BOOL CreateZoneNearGroup();
-__declspec(dllimport) BOOL GetZoneCoor();
-__declspec(dllimport) int  GetTopDst();
-__declspec(dllimport) void SetStartPoint();
-__declspec(dllimport) void ShowAlarm();
+__declspec(dllimport) BOOL UnitsCenter(GAMEOBJ* DstZone, GAMEOBJ* Units, word R);
+__declspec(dllimport) BOOL CreateZoneNearUnit(GAMEOBJ* DstZone, GAMEOBJ* Zone, GAMEOBJ* UnitType, byte Nat, int R);
+__declspec(dllimport) BOOL CreateZoneNearGroup(GAMEOBJ* DstZone, GAMEOBJ* Zone, GAMEOBJ* Grp, int R);
+__declspec(dllimport) BOOL GetZoneCoor(GAMEOBJ* Zone, int* x, int* y);
+__declspec(dllimport) int  GetTopDst(GAMEOBJ* Z1, GAMEOBJ* Z2);
+__declspec(dllimport) void SetStartPoint(GAMEOBJ* Zone);
+__declspec(dllimport) void ShowAlarm(GAMEOBJ* Zone);
 
 /* Light */
-__declspec(dllimport) void SetLightSpot();
-__declspec(dllimport) void ClearLightSpot();
+__declspec(dllimport) void SetLightSpot(GAMEOBJ* Zone, int R, byte index);
+__declspec(dllimport) void ClearLightSpot(byte index);
 
 /* Transport */
-__declspec(dllimport) int  GetNInside();
-__declspec(dllimport) int  GetMaxInside();
-__declspec(dllimport) void PushUnitAway();
-__declspec(dllimport) void PushAllUnitsAway();
-__declspec(dllimport) void SendUnitsToTransport();
-__declspec(dllimport) BOOL CheckLeaveAbility();
+__declspec(dllimport) int  GetNInside(byte Nat);
+__declspec(dllimport) int  GetMaxInside(byte Nat);
+__declspec(dllimport) void PushUnitAway(byte Nat);
+__declspec(dllimport) void PushAllUnitsAway(byte Nat);
+__declspec(dllimport) void SendUnitsToTransport(byte Nat);
+__declspec(dllimport) BOOL CheckLeaveAbility(byte Nat);
 
 /* AI */
-__declspec(dllimport) void RunAI();
-__declspec(dllimport) void RunAIWithPeasants();
-__declspec(dllimport) void StartAI();
-__declspec(dllimport) void DoNotUseSelInAI();
-__declspec(dllimport) void SetAIProperty();
-__declspec(dllimport) int AI_Torg();
-__declspec(dllimport) int  GetAINation();
-__declspec(dllimport) void SetAIRegister();
-__declspec(dllimport) int  GetAIRegister();
-__declspec(dllimport) int  GetDifficulty();
-__declspec(dllimport) int  GetStartRes();
-__declspec(dllimport) int  GetResOnMap();
-__declspec(dllimport) int  GetLandType();
-__declspec(dllimport) int  GetRandomIndex();
+__declspec(dllimport) void RunAI(byte Nat);
+__declspec(dllimport) void RunAIWithPeasants(byte Nat, char* P_Name);
+__declspec(dllimport) void StartAI(byte Nat, char* Name, int Land, int Money, int ResOnMap, int Difficulty);
+__declspec(dllimport) void DoNotUseSelInAI(byte Nat);
+__declspec(dllimport) void SetAIProperty(byte NAT, int Prop, int Val);
+__declspec(dllimport) int  AI_Torg(byte SellRes, byte BuyRes, int SellAmount);
+__declspec(dllimport) int  GetAINation(void);
+__declspec(dllimport) void SetAIRegister(int Reg, int Val);
+__declspec(dllimport) int  GetAIRegister(int Reg);
+__declspec(dllimport) int  GetDifficulty(void);
+__declspec(dllimport) int  GetStartRes(void);
+__declspec(dllimport) int  GetResOnMap(void);
+__declspec(dllimport) int  GetLandType(void);
+__declspec(dllimport) int  GetRandomIndex(void);
 
 /* AI Economy */
-__declspec(dllimport) int  TryUnit();
-__declspec(dllimport) int  TryUpgrade();
-__declspec(dllimport) void SetMineBalanse();
-__declspec(dllimport) void SetPDistribution();
-__declspec(dllimport) void SetDefSettings();
-__declspec(dllimport) void AssignAmountOfMineUpgrades();
-__declspec(dllimport) void AssignMineUpgrade();
-__declspec(dllimport) void AssignMine();
-__declspec(dllimport) void AssignPeasant();
-__declspec(dllimport) void AssignHouse();
-__declspec(dllimport) void AssignWall();
-__declspec(dllimport) void AssignFormUnit();
-__declspec(dllimport) void SET_MINE_CAPTURE_RADIUS();
-__declspec(dllimport) void SET_MINE_UPGRADE1_RADIUS();
-__declspec(dllimport) void SET_MINE_UPGRADE2_RADIUS();
-__declspec(dllimport) void SET_DEFAULT_MAX_WORKERS();
-__declspec(dllimport) void SET_MIN_PEASANT_BRIGADE();
-__declspec(dllimport) int  GetMoney();
-__declspec(dllimport) int  GetUnits();
-__declspec(dllimport) int  GetReadyUnits();
-__declspec(dllimport) int  GetMaxPeasantsInMines();
-__declspec(dllimport) int  GetUnitsByUsage();
-__declspec(dllimport) BOOL UpgIsDone();
-__declspec(dllimport) BOOL UpgIsRun();
-__declspec(dllimport) BOOL FieldExist();
-__declspec(dllimport) void SetUpgradeLock();
-__declspec(dllimport) int  GetDied();
-__declspec(dllimport) BOOL IsUpgradeDoing();
-__declspec(dllimport) BOOL IsUpgradeEnabled();
-__declspec(dllimport) void SetMinesBuildingRules();
-__declspec(dllimport) void SetMinesUpgradeRules();
-__declspec(dllimport) void SetDefenseState();
-__declspec(dllimport) int  GetTorgResult();
-__declspec(dllimport) int  GetExtraction();
-__declspec(dllimport) int  GetMaxPeaceTime();
-__declspec(dllimport) int  GetPeaceTimeLeft();
+__declspec(dllimport) BOOL TryUnit(GAMEOBJ* UnitType, int Max, byte CostPercent, byte Probability);
+__declspec(dllimport) BOOL TryUpgrade(GAMEOBJ* Upgrade, int CostPercent, int Probability);
+__declspec(dllimport) void SetMineBalanse(int N, word* Bal);
+__declspec(dllimport) void SetPDistribution(int OnFood, int OnWood, int OnStone);
+__declspec(dllimport) void SetDefSettings(int p1, int p2);
+__declspec(dllimport) void AssignAmountOfMineUpgrades(int MU);
+__declspec(dllimport) BOOL AssignMineUpgrade(word U, char* Str, word val);
+__declspec(dllimport) void AssignMine(char* Name);
+__declspec(dllimport) void AssignPeasant(char* Name);
+__declspec(dllimport) void AssignHouse(char* Name);
+__declspec(dllimport) void AssignWall(char* Name);
+__declspec(dllimport) void AssignFormUnit(char* Name);
+__declspec(dllimport) void SET_MINE_CAPTURE_RADIUS(int x);
+__declspec(dllimport) void SET_MINE_UPGRADE1_RADIUS(int x);
+__declspec(dllimport) void SET_MINE_UPGRADE2_RADIUS(int x);
+__declspec(dllimport) void SET_DEFAULT_MAX_WORKERS(int x);
+__declspec(dllimport) void SET_MIN_PEASANT_BRIGADE(int x);
+__declspec(dllimport) int  GetMoney(byte id);
+__declspec(dllimport) int  GetUnits(GAMEOBJ* UnitType);
+__declspec(dllimport) int  GetReadyUnits(GAMEOBJ* UnitType);
+__declspec(dllimport) int  GetMaxPeasantsInMines(void);
+__declspec(dllimport) int  GetUnitsByUsage(byte Nat, byte Usage);
+__declspec(dllimport) BOOL UpgIsDone(GAMEOBJ* Upgrade);
+__declspec(dllimport) BOOL UpgIsRun(GAMEOBJ* Upgrade);
+__declspec(dllimport) BOOL FieldExist(void);
+__declspec(dllimport) void SetUpgradeLock(byte Res, byte Val);
+__declspec(dllimport) int  GetDied(GAMEOBJ* UnitType, byte Nation);
+__declspec(dllimport) BOOL IsUpgradeDoing(GAMEOBJ* Upgrade, byte Nation);
+__declspec(dllimport) BOOL IsUpgradeEnabled(GAMEOBJ* Upgrade, byte Nation);
+__declspec(dllimport) void SetMinesBuildingRules(int* Table, int NElm);
+__declspec(dllimport) void SetMinesUpgradeRules(int* Table);
+__declspec(dllimport) void SetDefenseState(byte State);
+__declspec(dllimport) int  GetTorgResult(byte SellRes, byte BuyRes, int SellAmount);
+__declspec(dllimport) int  GetExtraction(byte ResID);
+__declspec(dllimport) int  GetMaxPeaceTime(void);
+__declspec(dllimport) int  GetPeaceTimeLeft(void);
 
 /* Nation */
-__declspec(dllimport) void AssignNation();
-__declspec(dllimport) int  GetMyNation();
-__declspec(dllimport) BOOL NationIsErased();
-__declspec(dllimport) void SetPlayerName();
-__declspec(dllimport) int  GetDiff();
+__declspec(dllimport) void AssignNation(byte Src, byte Dst);
+__declspec(dllimport) int  GetMyNation(void);
+__declspec(dllimport) BOOL NationIsErased(byte Nat);
+__declspec(dllimport) void SetPlayerName(byte Nat, char* ID);
+__declspec(dllimport) int  GetDiff(byte NI);
 
 /* Mission flow */
-__declspec(dllimport) void DisableMission();
-__declspec(dllimport) void EnableMission();
-__declspec(dllimport) void SetVictoryText();
-__declspec(dllimport) void SetLooseText();
-__declspec(dllimport) void ShowVictory();
-__declspec(dllimport) void LooseGame();
-__declspec(dllimport) void SetStandartVictory();
-__declspec(dllimport) void SetTutorial();
-__declspec(dllimport) BOOL GetQuestPressed();
+__declspec(dllimport) void DisableMission(char MISSID);
+__declspec(dllimport) void EnableMission(char MISSID);
+__declspec(dllimport) void SetVictoryText(char* ID);
+__declspec(dllimport) void SetLooseText(char* ID);
+__declspec(dllimport) void ShowVictory(void);
+__declspec(dllimport) void LooseGame(void);
+__declspec(dllimport) void SetStandartVictory(void);
+__declspec(dllimport) void SetTutorial(BOOL State);
+__declspec(dllimport) BOOL GetQuestPressed(void);
 
 /* UI */
-__declspec(dllimport) void ShowCentralText();
-__declspec(dllimport) void ShowPage();
-__declspec(dllimport) void ShowPageParam();
-__declspec(dllimport) BOOL AskQuestion();
-__declspec(dllimport) int  AskComplexQuestion();
-__declspec(dllimport) int  AskMultilineQuestion();
-__declspec(dllimport) void HINT();
-__declspec(dllimport) void DoMessagesBrief();
-__declspec(dllimport) void RefreshScreen();
-__declspec(dllimport) void SelectBuildingsInZone();
-__declspec(dllimport) void PastePiece();
+__declspec(dllimport) void ShowCentralText(char* ID, int time);
+__declspec(dllimport) void ShowPage(char* Name);
+__declspec(dllimport) void ShowPageParam(char* Name, ...);
+__declspec(dllimport) BOOL AskQuestion(char* Name);
+__declspec(dllimport) int  AskComplexQuestion(int Nx, char* Name1, byte or1, char* Name2, byte or2, char* Quest);
+__declspec(dllimport) int  AskMultilineQuestion(int Nx, char* Name1, byte or1, char* Quest);
+__declspec(dllimport) void HINT(GAMEOBJ* Hint, int time);
+__declspec(dllimport) void DoMessagesBrief(void);
+__declspec(dllimport) void RefreshScreen(void);
+__declspec(dllimport) void SelectBuildingsInZone(byte NI, GAMEOBJ* Zone, GAMEOBJ* UTP, BOOL Add);
+__declspec(dllimport) void PastePiece(GAMEOBJ* Zone, char* Name);
 
 /* DLL entry points (exported by each DLL) */
 /* void __cdecl OnInit(void);          */

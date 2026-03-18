@@ -188,7 +188,7 @@ void ProcessScenary(void)
     SelDie(5);
     SelectUnits(&DAT_10006460,0);
     SelSendAndKill(5,&DAT_100064a0,0xe0,0);
-    SetTrigg(0xd,1);
+    SetTrigg(0xd,0);
     ClearSelection(5);
   }
   cVar1 = Trigg(0xc);
@@ -198,7 +198,7 @@ void ProcessScenary(void)
     SelDie(5);
     SelectUnits(&DAT_10006460,0);
     SelSendAndKill(5,&DAT_100064a8,0xe0,0);
-    SetTrigg(0xd,1);
+    SetTrigg(0xd,0);
     ClearSelection(5);
   }
   cVar1 = Trigg(0xd);
@@ -208,8 +208,8 @@ void ProcessScenary(void)
     SetTrigg(0xd,0);
     SelectUnits(&DAT_10006460,0);
     SelSendAndKill(5,&DAT_10006498,0xe0,0);
-    SetTrigg(0xc,1);
-    SetTrigg(0xb,1);
+    SetTrigg(0xc,0);
+    SetTrigg(0xb,0);
     ClearSelection(5);
   }
   return;

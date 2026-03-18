@@ -193,7 +193,7 @@ FUN_100010f6(int param_1,int param_2,int param_3,int param_4)
   if (cVar1 != '\0') {
     iVar2 = GetTotalAmount0(param_1);
     if (iVar2 < 2) {
-      CreateObject0(&DAT_100075f0,&DAT_100076d0,param_2,5,param_4);
+      CreateObject0(&DAT_100075f0,&DAT_100076d0,param_2,5,param_4,0);
       RemoveGroup(&DAT_100075f0,param_1);
       FUN_100010a2(param_1,&DAT_10007740);
       RunTimer(param_3,0x10e);
@@ -436,14 +436,14 @@ LAB_10001718:
       ClearSelection(1);
     }
     for (iVar2 = (1 < DAT_100075a4) + 2; iVar2 != 0; iVar2 = iVar2 + -1) {
-      CreateObject0(&DAT_100075f0,&DAT_100076d0,&DAT_10007738,5,0xc4);
+      CreateObject0(&DAT_100075f0,&DAT_100076d0,&DAT_10007738,5,0xc4,0);
       RemoveGroup(&DAT_100075f0,&DAT_100076a0);
-      CreateObject0(&DAT_100075f0,&DAT_100076d0,&DAT_10007740,5,0);
+      CreateObject0(&DAT_100075f0,&DAT_100076d0,&DAT_10007740,5,0,0);
       RemoveGroup(&DAT_100075f0,&DAT_100076a8);
-      CreateObject0(&DAT_100075f0,&DAT_100076d0,&DAT_10007740,5,0);
+      CreateObject0(&DAT_100075f0,&DAT_100076d0,&DAT_10007740,5,0,0);
       RemoveGroup(&DAT_100075f0,&DAT_100076b8);
       if (0 < DAT_100075a4) {
-        CreateObject0(&DAT_100075f0,&DAT_10007588,&DAT_10007748,5,0x46);
+        CreateObject0(&DAT_100075f0,&DAT_10007588,&DAT_10007748,5,0x46,0);
         RemoveGroup(&DAT_100075f0,&DAT_100076b0);
       }
     }
@@ -467,7 +467,7 @@ LAB_100019ef:
     iStack_4 = 0;
     if (0 < DAT_100076d8) {
       do {
-        CreateObject0(&DAT_100075f0,&DAT_10007730,&DAT_10007618,1,0x40);
+        CreateObject0(&DAT_100075f0,&DAT_10007730,&DAT_10007618,1,0x40,0);
         RemoveGroup(&DAT_100075f0,&DAT_10007778);
         iStack_4 = iStack_4 + 1;
       } while (iStack_4 < DAT_100076d8);
@@ -475,7 +475,7 @@ LAB_100019ef:
     FUN_1000108b(&DAT_10007778,&DAT_10007618,0xac);
     iStack_4 = 0;
     do {
-      CreateObject0(&DAT_100075f0,&DAT_100076d0,&DAT_100076e8,2,0x80);
+      CreateObject0(&DAT_100075f0,&DAT_100076d0,&DAT_100076e8,2,0x80,0);
       RemoveGroup(&DAT_100075f0,&DAT_100075b0);
       if ((DAT_100075a4 == 0) && (iStack_4 == 1)) {
         iStack_4 = 2;
@@ -483,15 +483,15 @@ LAB_100019ef:
       iStack_4 = iStack_4 + 1;
     } while (iStack_4 < 3);
     if (0 < DAT_100075a4) {
-      CreateObject0(&DAT_100075f0,&DAT_10007788,&DAT_100076e0,2,0x80);
+      CreateObject0(&DAT_100075f0,&DAT_10007788,&DAT_100076e0,2,0x80,0);
       RemoveGroup(&DAT_100075f0,&DAT_100075c0);
     }
     if (2 < DAT_100075a4) {
-      CreateObject0(&DAT_100075f0,&DAT_10007788,&DAT_100076e0,2,0x80);
+      CreateObject0(&DAT_100075f0,&DAT_10007788,&DAT_100076e0,2,0x80,0);
       RemoveGroup(&DAT_100075f0,&DAT_100075c0);
     }
     if (DAT_100075a4 != 1) {
-      CreateObject0(&DAT_100075f0,&DAT_100075a8,&DAT_100076e0,2,0x80);
+      CreateObject0(&DAT_100075f0,&DAT_100075a8,&DAT_100076e0,2,0x80,0);
       RemoveGroup(&DAT_100075f0,&DAT_100075b0);
     }
     FUN_100010ba(&DAT_100075c0,&DAT_100076e0,0xa0);
@@ -513,23 +513,23 @@ LAB_100019ef:
   cVar1 = Trigg(0x10);
   if ((cVar1 != '\0') && (cVar1 = TimerDone(6), cVar1 != '\0')) {
     iStack_4 = 0;
-    if (1 < DAT_100075a4 != 0xffffffff) {
+    if (1 < DAT_100075a4 != -1) {
       do {
-        CreateObject0(&DAT_100075f0,&DAT_10007580,&DAT_10007630,5,0xc4);
+        CreateObject0(&DAT_100075f0,&DAT_10007580,&DAT_10007630,5,0xc4,0);
         FUN_10001073(&DAT_100075f0,&DAT_100076f8);
         FUN_10001073(&DAT_100075f0,&DAT_10007700);
         RemoveGroup(&DAT_100075f0,&DAT_10007780);
-        CreateObject0(&DAT_100075f0,&DAT_10007580,&DAT_10007630,5,0xc4);
+        CreateObject0(&DAT_100075f0,&DAT_10007580,&DAT_10007630,5,0xc4,0);
         FUN_10001073(&DAT_100075f0,&DAT_10007700);
         RemoveGroup(&DAT_100075f0,&DAT_10007780);
-        CreateObject0(&DAT_100075f0,&DAT_10007580,&DAT_10007630,5,0xc4);
+        CreateObject0(&DAT_100075f0,&DAT_10007580,&DAT_10007630,5,0xc4,0);
         FUN_10001073(&DAT_100075f0,&DAT_10007718);
         RemoveGroup(&DAT_100075f0,&DAT_10007780);
-        CreateObject0(&DAT_100075f0,&DAT_10007580,&DAT_10007648,5,0x40);
+        CreateObject0(&DAT_100075f0,&DAT_10007580,&DAT_10007648,5,0x40,0);
         FUN_10001073(&DAT_100075f0,&DAT_10007708);
         FUN_10001073(&DAT_100075f0,&DAT_10007710);
         RemoveGroup(&DAT_100075f0,&DAT_10007780);
-        CreateObject0(&DAT_100075f0,&DAT_10007580,&DAT_10007648,5,0x40);
+        CreateObject0(&DAT_100075f0,&DAT_10007580,&DAT_10007648,5,0x40,0);
         FUN_10001073(&DAT_100075f0,&DAT_10007710);
         RemoveGroup(&DAT_100075f0,&DAT_10007780);
         iStack_4 = iStack_4 + 1;
@@ -580,7 +580,7 @@ LAB_100019ef:
     else {
       puVar9 = &DAT_10007630;
     }
-    CreateObject0(&DAT_100075f0,&DAT_10007580,puVar9,5,0xc4);
+    CreateObject0(&DAT_100075f0,&DAT_10007580,puVar9,5,0xc4,0);
     RemoveGroup(&DAT_100075f0,&DAT_10007780);
     cVar1 = Trigg(6);
     if (cVar1 == '\0') {
@@ -635,7 +635,7 @@ LAB_1000209c:
   }
   FUN_10001073(&DAT_10007780,&DAT_10007610);
   cVar1 = Trigg(6);
-  SetTrigg(6,'\x01' - (cVar1 != '\0'));
+  SetTrigg(6,0);
   SetTrigg(0x1a,0);
   RunTimer(6,(5 - DAT_100075a4) * 1000);
   RunTimer(9,0x4b);
@@ -672,7 +672,7 @@ LAB_100020f7:
     if (cVar1 != '\0') {
       iVar2 = GetTotalAmount0(&DAT_100076b0);
       if (iVar2 < 2) {
-        CreateObject0(&DAT_100075f0,&DAT_10007588,&DAT_10007630,5,200);
+        CreateObject0(&DAT_100075f0,&DAT_10007588,&DAT_10007630,5,200,0);
         RemoveGroup(&DAT_100075f0,&DAT_100076b0);
         FUN_100010a2(&DAT_100076b0,&DAT_10007738);
         FUN_10001073(&DAT_100076b0,&DAT_10007740);

@@ -511,7 +511,7 @@ uVar1 = Trigg(99);
     iVar4 = GetUnitsAmount1(&DAT_10032658,&DAT_100324b8);
     iVar3 = GetTotalAmount0(&DAT_100324b8);
     if (iVar4 < iVar3) {
-      SetTrigg(1,1);
+      SetTrigg(1,0);
       SelectUnits(&DAT_100324b8,0);
       SelSendTo(5,&DAT_10032700,0x1e,0);
     }
@@ -547,7 +547,7 @@ uVar1 = Trigg(99);
     iVar4 = GetUnitsAmount1(&DAT_10032660,&DAT_100324b0);
     iVar3 = GetTotalAmount0(&DAT_100324b0);
     if (iVar4 < iVar3) {
-      SetTrigg(3,1);
+      SetTrigg(3,0);
       SelectUnits(&DAT_100324b0,0);
       SelSendTo(5,&DAT_10032710,0x96,0);
     }
@@ -600,8 +600,8 @@ uVar1 = Trigg(99);
       uVar1 = TimerDone(4);
       if ((uVar1 & 0xff) != 0) {
         SetTrigg(0xe,0);
-        SetTrigg(0xd,1);
-        SetTrigg(0xc,1);
+        SetTrigg(0xd,0);
+        SetTrigg(0xc,0);
         FreeTimer(4);
         RunTimer(5,0x86c4);
         RemoveGroup(&DAT_10032448,&DAT_10032460);
@@ -619,7 +619,7 @@ uVar1 = Trigg(99);
         if ((uVar1 & 0xff) == 0) goto LAB_10003c6c;
       }
       FreeTimer(5);
-      SetTrigg(0xe,1);
+      SetTrigg(0xe,0);
     }
   }
 LAB_10003c6c:
@@ -748,7 +748,7 @@ LAB_10003c6c:
 LAB_10004435:
   uVar1 = TimerDoneFirst(0xe);
   if ((uVar1 & 0xff) != 0) {
-    SetTrigg(0x17,1);
+    SetTrigg(0x17,0);
     RemoveGroup(&DAT_10032410,&DAT_10032458);
     SelectUnits(&DAT_10032458,0);
     SelSendAndKill(4,&DAT_10032688,100,0);
@@ -756,7 +756,7 @@ LAB_10004435:
   }
   uVar1 = TimerDoneFirst(0xf);
   if ((uVar1 & 0xff) != 0) {
-    SetTrigg(0x18,1);
+    SetTrigg(0x18,0);
     RemoveGroup(&DAT_10032428,&DAT_10032470);
     SelectUnits(&DAT_10032470,0);
     Patrol(4,&DAT_10032680,0);
@@ -764,7 +764,7 @@ LAB_10004435:
   }
   uVar1 = TimerDoneFirst(0x10);
   if ((uVar1 & 0xff) != 0) {
-    SetTrigg(0x19,1);
+    SetTrigg(0x19,0);
     RemoveGroup(&DAT_10032420,&DAT_10032418);
     SelectUnits(&DAT_10032418,0);
     SelSendAndKill(4,&DAT_10032678,0xe6,0);

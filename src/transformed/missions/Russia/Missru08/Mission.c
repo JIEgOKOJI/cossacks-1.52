@@ -172,7 +172,7 @@ uVar1 = Trigg(1);
       iVar2 = GetResource(0,0);
       if (99999 < iVar2) {
         SetTrigg(7,0);
-        AddResource(0,0,0xfffe7960);
+        AddResource(0,0,-100000);
         ShowPage("#PAGE7");
       }
     }

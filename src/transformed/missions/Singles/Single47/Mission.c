@@ -217,7 +217,7 @@ void ProcessScenary(void)
   cVar1 = Trigg(0xd);
   if ((cVar1 != '\0') && (iVar3 = GetUnitsAmount1(&DAT_10006438,&DAT_10006430), iVar3 != 0)) {
     SetTrigg(0xd,0);
-    SetTrigg(0xe,1);
+    SetTrigg(0xe,0);
     GetUnitInfo(&DAT_10006430,0,auStack_2c);
     if ((uStack_28 < uStack_26) && (cVar1 = AskQuestion("#PAGE10"), cVar1 != '\0')) {
       iVar3 = GetResource(0,1);
@@ -225,7 +225,7 @@ void ProcessScenary(void)
         ShowPage("#PAGE11");
       }
       else {
-        AddResource(0,1,0xfffff830);
+        AddResource(0,1,-2000);
         if (uStack_28 + 0x1996 < (unsigned int)uStack_26) {
           uStack_28 = uStack_28 + 0x1996;
           SetUnitInfo(auStack_2c);
@@ -240,7 +240,7 @@ void ProcessScenary(void)
   cVar1 = Trigg(0xe);
   if ((cVar1 != '\0') && (iVar3 = GetUnitsAmount1(&DAT_10006438,&DAT_10006430), iVar3 == 0)) {
     SetTrigg(0xe,0);
-    SetTrigg(0xd,1);
+    SetTrigg(0xd,0);
   }
   cVar1 = Trigg(0xf);
   if ((cVar1 != '\0') && (cVar1 = TimerDone(1), cVar1 != '\0')) {
@@ -251,7 +251,7 @@ void ProcessScenary(void)
   cVar1 = Trigg(0x10);
   if ((cVar1 != '\0') && (cVar1 = TimerDone(2), cVar1 != '\0')) {
     SetTrigg(0x10,0);
-    SetTrigg(0x11,1);
+    SetTrigg(0x11,0);
     CreateObject0(&DAT_10006460,&DAT_10006428,&DAT_10006468,0,&DAT_10006420,0);
     ShowPage("#PAGE12");
     iVar3 = FUN_10001000();
@@ -259,7 +259,7 @@ void ProcessScenary(void)
   }
   cVar1 = Trigg(0x11);
   if ((cVar1 != '\0') && (cVar1 = TimerDone(2), cVar1 != '\0')) {
-    SetTrigg(0x10,1);
+    SetTrigg(0x10,0);
     SetTrigg(0x11,0);
   }
   cVar1 = Trigg(0x12);

@@ -465,8 +465,8 @@ uVar1 = Trigg(1);
         SetTrigg(0xd,0);
         SetTrigg(0xe,0);
         RunTimer(1,1000);
-        SetTrigg(2,1);
-        SetTrigg(3,1);
+        SetTrigg(2,0);
+        SetTrigg(3,0);
       }
     }
     uVar1 = Trigg(2);
@@ -482,7 +482,7 @@ uVar1 = Trigg(1);
           CreateZoneNearGroup(&DAT_100366c0,&DAT_100365d8,&DAT_10036508,700);
           SelectUnits1(1,&DAT_10036510,0);
           SelSendAndKill(1,&DAT_100366c0,0xd2,0);
-          SetTrigg(4,1);
+          SetTrigg(4,0);
           ClearSelection(1);
           SelectUnits1(0,&DAT_100364b0,0);
         }
@@ -495,8 +495,8 @@ uVar1 = Trigg(1);
         SetTrigg(2,0);
         SetTrigg(3,0);
         RunTimer(2,1000);
-        SetTrigg(5,1);
-        SetTrigg(6,1);
+        SetTrigg(5,0);
+        SetTrigg(6,0);
       }
     }
     uVar1 = Trigg(5);
@@ -512,7 +512,7 @@ uVar1 = Trigg(1);
           CreateZoneNearGroup(&DAT_100366c0,&DAT_100365e0,&DAT_10036508,700);
           SelectUnits1(1,&DAT_10036510,0);
           SelSendAndKill(1,&DAT_100366c0,0xd2,0);
-          SetTrigg(4,1);
+          SetTrigg(4,0);
           ClearSelection(1);
           SelectUnits1(0,&DAT_100364b0,0);
         }
@@ -525,8 +525,8 @@ uVar1 = Trigg(1);
         SetTrigg(5,0);
         SetTrigg(6,0);
         RunTimer(3,1000);
-        SetTrigg(7,1);
-        SetTrigg(8,1);
+        SetTrigg(7,0);
+        SetTrigg(8,0);
       }
     }
     uVar1 = Trigg(7);
@@ -542,7 +542,7 @@ uVar1 = Trigg(1);
           CreateZoneNearGroup(&DAT_100366c0,&DAT_100365e8,&DAT_10036508,700);
           SelectUnits1(1,&DAT_10036510,0);
           SelSendAndKill(1,&DAT_100366c0,0xfa,0);
-          SetTrigg(4,1);
+          SetTrigg(4,0);
           ClearSelection(1);
           SelectUnits1(0,&DAT_100364b0,0);
         }
@@ -555,8 +555,8 @@ uVar1 = Trigg(1);
         SetTrigg(7,0);
         SetTrigg(8,0);
         RunTimer(4,1000);
-        SetTrigg(9,1);
-        SetTrigg(10,1);
+        SetTrigg(9,0);
+        SetTrigg(10,0);
       }
     }
     uVar1 = Trigg(9);
@@ -572,7 +572,7 @@ uVar1 = Trigg(1);
           CreateZoneNearGroup(&DAT_100366c0,&DAT_100365e0,&DAT_10036508,700);
           SelectUnits1(1,&DAT_10036510,0);
           SelSendAndKill(1,&DAT_100366c0,0x78,0);
-          SetTrigg(4,1);
+          SetTrigg(4,0);
           ClearSelection(1);
           SelectUnits1(0,&DAT_100364b0,0);
         }
@@ -585,8 +585,8 @@ uVar1 = Trigg(1);
         SetTrigg(9,0);
         SetTrigg(10,0);
         RunTimer(5,1000);
-        SetTrigg(0xb,1);
-        SetTrigg(0xc,1);
+        SetTrigg(0xb,0);
+        SetTrigg(0xc,0);
       }
     }
     uVar1 = Trigg(0xb);
@@ -602,7 +602,7 @@ uVar1 = Trigg(1);
           CreateZoneNearGroup(&DAT_100366c0,&DAT_100365d8,&DAT_10036508,700);
           SelectUnits1(1,&DAT_10036510,0);
           SelSendAndKill(1,&DAT_100366c0,0x50,0);
-          SetTrigg(4,1);
+          SetTrigg(4,0);
           ClearSelection(1);
           SelectUnits1(0,&DAT_100364b0,0);
         }
@@ -615,8 +615,8 @@ uVar1 = Trigg(1);
         SetTrigg(0xb,0);
         SetTrigg(0xc,0);
         RunTimer(6,1000);
-        SetTrigg(0xd,1);
-        SetTrigg(0xe,1);
+        SetTrigg(0xd,0);
+        SetTrigg(0xe,0);
       }
     }
     uVar1 = Trigg(0xd);
@@ -632,7 +632,7 @@ uVar1 = Trigg(1);
           CreateZoneNearGroup(&DAT_100366c0,&DAT_100366a8,&DAT_10036508,700);
           SelectUnits1(1,&DAT_10036510,0);
           SelSendAndKill(1,&DAT_100366c0,100,0);
-          SetTrigg(4,1);
+          SetTrigg(4,0);
           ClearSelection(1);
           SelectUnits1(0,&DAT_100364b0,0);
         }
@@ -653,8 +653,8 @@ uVar1 = Trigg(1);
         SetTrigg(0xf,0);
         SetTrigg(0x16,0);
         RunTimer(7,3000);
-        SetTrigg(0x10,1);
-        SetTrigg(0x11,1);
+        SetTrigg(0x10,0);
+        SetTrigg(0x11,0);
       }
     }
     uVar1 = Trigg(0x10);
@@ -670,7 +670,7 @@ uVar1 = Trigg(1);
           CreateZoneNearGroup(&DAT_100366c8,&DAT_10036678,&DAT_100364f8,700);
           SelectUnits1(3,&DAT_10036500,0);
           SelSendAndKill(3,&DAT_100366c8,0x50,0);
-          SetTrigg(0x17,1);
+          SetTrigg(0x17,0);
           ClearSelection(3);
           SelectUnits1(0,&DAT_100364b0,0);
         }
@@ -683,8 +683,8 @@ uVar1 = Trigg(1);
         SetTrigg(0x10,0);
         SetTrigg(0x11,0);
         RunTimer(8,1000);
-        SetTrigg(0x12,1);
-        SetTrigg(0x13,1);
+        SetTrigg(0x12,0);
+        SetTrigg(0x13,0);
       }
     }
     uVar1 = Trigg(0x12);
@@ -700,7 +700,7 @@ uVar1 = Trigg(1);
           CreateZoneNearGroup(&DAT_100366c8,&DAT_100365e8,&DAT_100364f8,700);
           SelectUnits1(3,&DAT_10036500,0);
           SelSendAndKill(3,&DAT_100366c8,0x6e,0);
-          SetTrigg(0x17,1);
+          SetTrigg(0x17,0);
           ClearSelection(3);
           SelectUnits1(0,&DAT_100364b0,0);
         }
@@ -713,8 +713,8 @@ uVar1 = Trigg(1);
         SetTrigg(0x12,0);
         SetTrigg(0x13,0);
         RunTimer(0xb,1000);
-        SetTrigg(0x14,1);
-        SetTrigg(0x15,1);
+        SetTrigg(0x14,0);
+        SetTrigg(0x15,0);
       }
     }
     uVar1 = Trigg(0x14);
@@ -730,7 +730,7 @@ uVar1 = Trigg(1);
           CreateZoneNearGroup(&DAT_100366c8,&DAT_10036678,&DAT_100364f8,700);
           SelectUnits1(3,&DAT_10036500,0);
           SelSendAndKill(3,&DAT_100366c8,0xfa,0);
-          SetTrigg(0x17,1);
+          SetTrigg(0x17,0);
           ClearSelection(3);
           SelectUnits1(0,&DAT_100364b0,0);
         }
@@ -743,8 +743,8 @@ uVar1 = Trigg(1);
         SetTrigg(0x14,0);
         SetTrigg(0x15,0);
         RunTimer(0xc,1000);
-        SetTrigg(0x16,1);
-        SetTrigg(0xf,1);
+        SetTrigg(0x16,0);
+        SetTrigg(0xf,0);
       }
     }
     uVar1 = Trigg(0x16);
@@ -760,7 +760,7 @@ uVar1 = Trigg(1);
           CreateZoneNearGroup(&DAT_100366c8,&DAT_10036698,&DAT_100364f8,700);
           SelectUnits1(3,&DAT_10036500,0);
           SelSendAndKill(3,&DAT_100366c8,0xdc,0);
-          SetTrigg(0x17,1);
+          SetTrigg(0x17,0);
           ClearSelection(3);
           SelectUnits1(0,&DAT_100364b0,0);
         }
@@ -1018,7 +1018,7 @@ uVar1 = Trigg(1);
     iVar3 = GetUnitsAmount1(&DAT_10036608,&DAT_100365c0);
     if (0 < iVar3) {
       SetTrigg(0x2d,0);
-      SetTrigg(0x50,1);
+      SetTrigg(0x50,0);
       SaveSelectedUnits(0,&DAT_100364b0,0);
       ClearSelection(0);
       SelectUnits1(4,&DAT_10036588,0);
@@ -1161,7 +1161,7 @@ uVar1 = Trigg(1);
       }
       ChangeFriends(0,0x41);
       ChangeFriends(2,0x82);
-      StartAI(2,"TURKISH.0",0,0,2,0xffffffff);
+      StartAI(2,"TURKISH.0",0,0,2,-1);
       SetTrigg(0x36,0);
       SetTrigg(0x31,0);
       ShowPage("#PAGE18");
@@ -1190,8 +1190,8 @@ uVar1 = Trigg(1);
           if ((uVar1 & 0xff) != 0) {
             ChangeFriends(0,0x41);
             ChangeFriends(3,0x3f);
-            SetTrigg(0x22,1);
-            SetTrigg(0x43,1);
+            SetTrigg(0x22,0);
+            SetTrigg(0x43,0);
           }
         }
       }
@@ -1258,8 +1258,8 @@ uVar1 = Trigg(1);
         SetTrigg(0x38,0);
         CreateObject0(&DAT_100364d0,&DAT_100363e8,&DAT_10036618,3,&DAT_10036680,100);
         CreateObject0(&DAT_100364d8,&DAT_100363f8,&DAT_100366b8,3,&DAT_10036648,100);
-        SetTrigg(0x3f,1);
-        SetTrigg(0x44,1);
+        SetTrigg(0x3f,0);
+        SetTrigg(0x44,0);
       }
     }
   }
@@ -1300,7 +1300,7 @@ LAB_1000678a:
         SelectUnits1(3,&DAT_100364d8,0);
         SelSendAndKill(3,&DAT_10036630,0xb4,0);
         RunTimer(0x1a,1000);
-        SetTrigg(0x40,1);
+        SetTrigg(0x40,0);
         ClearSelection(3);
         SelectUnits1(0,&DAT_100364b0,0);
       }
@@ -1317,7 +1317,7 @@ LAB_1000678a:
         SelectUnits1(3,&DAT_100364d8,0);
         SelSendAndKill(3,&DAT_10036670,0xb4,0);
         RunTimer(0x1b,3000);
-        SetTrigg(0x47,1);
+        SetTrigg(0x47,0);
         ClearSelection(3);
         SelectUnits1(0,&DAT_100364b0,0);
       }
@@ -1340,7 +1340,7 @@ LAB_1000678a:
           SelectUnits1(3,&DAT_100364d8,0);
           SelSendAndKill(3,&DAT_100366c8,0xb4,0);
           RunTimer(0x1c,1000);
-          SetTrigg(0x45,1);
+          SetTrigg(0x45,0);
           ClearSelection(3);
           SelectUnits1(0,&DAT_100364b0,0);
         }
@@ -1363,7 +1363,7 @@ LAB_1000678a:
         SelectUnits1(3,&DAT_100364d8,0);
         SelSendAndKill(3,&DAT_10036670,0xb4,0);
         RunTimer(0x1d,3000);
-        SetTrigg(0x47,1);
+        SetTrigg(0x47,0);
         ClearSelection(3);
         SelectUnits1(0,&DAT_100364b0,0);
       }
@@ -1379,7 +1379,7 @@ LAB_10006de0:
         iVar3 = GetTotalAmount0(&DAT_100364d0);
         if (iVar3 != 0) {
           SetTrigg(0x1f,0);
-          SetTrigg(0x38,1);
+          SetTrigg(0x38,0);
         }
       }
     }
@@ -1396,7 +1396,7 @@ LAB_10006de0:
         SelectUnits1(1,&DAT_100364c8,0);
         SelSendAndKill(1,&DAT_100366c0,0xb4,0);
         RunTimer(0x1e,1000);
-        SetTrigg(0x4b,1);
+        SetTrigg(0x4b,0);
         ClearSelection(1);
         SelectUnits1(0,&DAT_100364b0,0);
       }
@@ -1412,7 +1412,7 @@ LAB_10006de0:
           ClearSelection(0);
           SelectUnits1(1,&DAT_100364c8,0);
           SelSendAndKill(1,&DAT_10036670,0xb4,0);
-          SetTrigg(0x4c,1);
+          SetTrigg(0x4c,0);
           ClearSelection(1);
           SelectUnits1(0,&DAT_100364b0,0);
         }
@@ -1428,7 +1428,7 @@ LAB_10006de0:
         iVar3 = GetTotalAmount0(&DAT_100364d0);
         if (iVar3 != 0) {
           SetTrigg(0x1f,0);
-          SetTrigg(0x37,1);
+          SetTrigg(0x37,0);
         }
       }
     }

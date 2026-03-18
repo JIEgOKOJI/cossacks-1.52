@@ -229,8 +229,8 @@ uVar1 = Trigg(1);
       EnableUnit(0,&DAT_10030538,0);
       EnableUnit(0,&DAT_10030548,0);
       EnableUnit(0,&DAT_10030558,0);
-      StartAI(2,"POLAND.0",0,0,0,0xffffffff);
-      StartAI(1,"SVEDEN.0",0,0,0,0xffffffff);
+      StartAI(2,"POLAND.0",0,0,0,-1);
+      StartAI(1,"SVEDEN.0",0,0,0,-1);
       SetPlayerName(2,"POLANDS");
       SetPlayerName(1,"SVEDES");
     }
@@ -274,8 +274,8 @@ uVar1 = Trigg(1);
       EnableUnit(0,&DAT_100304a0,0);
       EnableUnit(0,&DAT_100304b8,0);
       EnableUnit(0,&DAT_100304d8,0);
-      StartAI(1,"RUSSIA.0",0,0,0,0xffffffff);
-      StartAI(2,"SVEDEN.0",0,0,0,0xffffffff);
+      StartAI(1,"RUSSIA.0",0,0,0,-1);
+      StartAI(2,"SVEDEN.0",0,0,0,-1);
       SetPlayerName(1,"RUSSIA");
       SetPlayerName(2,"SVEDES");
     }
@@ -313,8 +313,8 @@ uVar1 = Trigg(1);
       EnableUnit(0,&DAT_10030538,0);
       EnableUnit(0,&DAT_10030548,0);
       EnableUnit(0,&DAT_10030558,0);
-      StartAI(1,"RUSSIA.0",0,0,0,0xffffffff);
-      StartAI(2,"POLAND.0",0,0,0,0xffffffff);
+      StartAI(1,"RUSSIA.0",0,0,0,-1);
+      StartAI(2,"POLAND.0",0,0,0,-1);
       SetPlayerName(1,"RUSSIA");
       SetPlayerName(2,"POLANDS");
     }

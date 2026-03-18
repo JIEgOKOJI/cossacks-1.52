@@ -167,7 +167,7 @@ uVar1 = Trigg(100);
   if (0 < iVar3) {
     uVar1 = Trigg(99);
     if ((uVar1 & 0xff) == 0) {
-      SetTrigg(99,1);
+      SetTrigg(99,0);
     }
   }
   uVar1 = Trigg(99);
@@ -493,7 +493,7 @@ LAB_10002d3d:
   if (0x24 < iVar3) {
     iVar3 = GetResource(0,4);
     if (0x1a < iVar3) {
-      SetTrigg(0x10,1);
+      SetTrigg(0x10,0);
     }
   }
   uVar1 = Trigg(0x11);
@@ -506,7 +506,7 @@ LAB_10002d3d:
   }
   iVar3 = GetResource(0,1);
   if (5 < iVar3) {
-    SetTrigg(0x11,1);
+    SetTrigg(0x11,0);
   }
   iVar3 = GetUnitsAmount0(&DAT_100304b8,0);
   if (iVar3 != 0) {

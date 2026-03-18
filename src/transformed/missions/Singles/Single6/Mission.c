@@ -574,8 +574,8 @@ void ProcessScenary(void)
           ProduceUnitFast(&DAT_10007a20,&DAT_100079f0,&DAT_100077e8,0);
           iStack_4 = iStack_4 + -1;
         } while (iStack_4 != 0);
-        SetTrigg(0xc,1);
-        SetTrigg(0xd,1);
+        SetTrigg(0xc,0);
+        SetTrigg(0xd,0);
       }
       RunTimer(0xe,1000);
     }
@@ -588,7 +588,7 @@ void ProcessScenary(void)
       iVar3 = GetNInside(3);
       if ((iVar3 == iVar2) || (iVar2 = GetNInside(3), iVar2 == 0x50)) {
         SelSendTo(3,&DAT_10007868,0xc4,0);
-        SetTrigg(0x16,1);
+        SetTrigg(0x16,0);
         cVar1 = CheckLeaveAbility(3);
         if (cVar1 == '\0') {
           SetTrigg(0xc,0);
@@ -609,7 +609,7 @@ void ProcessScenary(void)
       iVar3 = GetNInside(3);
       if ((iVar3 == iVar2) || (iVar2 = GetNInside(3), iVar2 == 0x50)) {
         SelSendTo(3,&DAT_10007870,0xc4,0);
-        SetTrigg(0x17,1);
+        SetTrigg(0x17,0);
         cVar1 = CheckLeaveAbility(3);
         if (cVar1 == '\0') {
           SetTrigg(0xd,0);
@@ -680,7 +680,7 @@ LAB_10001e5c:
         AttackEnemyInZone(puVar12,puVar13,uVar14);
       }
       else {
-        AttackEnemyInZone(&DAT_10007948,&DAT_10007a40);
+        AttackEnemyInZone(&DAT_10007948,&DAT_10007a40,0);
       }
     }
 LAB_10001db8:
@@ -799,7 +799,7 @@ LAB_10001fef:
       if (cVar1 == '\0') {
         FUN_1000113d(&DAT_10007838,&DAT_10007920,0xa1);
         FUN_1000113d(&DAT_10007908,&DAT_10007920,0xa1);
-        SetTrigg(0x15,1);
+        SetTrigg(0x15,0);
       }
     }
     else {
@@ -908,8 +908,8 @@ LAB_10002099:
           ProduceUnitFast(&DAT_10007a28,&DAT_100079f0,&DAT_100077e0,0);
           iStack_4 = iStack_4 + -1;
         } while (iStack_4 != 0);
-        SetTrigg(0xe,1);
-        SetTrigg(0xf,1);
+        SetTrigg(0xe,0);
+        SetTrigg(0xf,0);
       }
       RunTimer(0xf,1000);
     }
@@ -922,7 +922,7 @@ LAB_10002099:
       iVar3 = GetNInside(4);
       if ((iVar3 == iVar2) || (iVar2 = GetNInside(4), iVar2 == 0x50)) {
         SelSendTo(4,&DAT_10007888,0xc4,0);
-        SetTrigg(0x18,1);
+        SetTrigg(0x18,0);
         cVar1 = CheckLeaveAbility(4);
         if (cVar1 == '\0') {
           SetTrigg(0xe,0);
@@ -943,7 +943,7 @@ LAB_10002099:
       iVar3 = GetNInside(4);
       if ((iVar3 == iVar2) || (iVar2 = GetNInside(4), iVar2 == 0x50)) {
         SelSendTo(4,&DAT_10007890,0xc4,0);
-        SetTrigg(0x19,1);
+        SetTrigg(0x19,0);
         cVar1 = CheckLeaveAbility(4);
         if (cVar1 == '\0') {
           SetTrigg(0xf,0);
@@ -1011,7 +1011,7 @@ LAB_1000270c:
         AttackEnemyInZone(&DAT_10007928,puVar13,uVar14);
       }
       else {
-        AttackEnemyInZone(&DAT_10007928,&DAT_10007a38);
+        AttackEnemyInZone(&DAT_10007928,&DAT_10007a38,0);
       }
     }
 LAB_100026a8:
@@ -1121,7 +1121,7 @@ LAB_100028b4:
       if (cVar1 == '\0') {
         FUN_1000113d(&DAT_10007830,&DAT_10007918,0xa0);
         FUN_1000113d(&DAT_10007900,&DAT_10007918,0xa0);
-        SetTrigg(0x1a,1);
+        SetTrigg(0x1a,0);
       }
     }
     else {
@@ -1354,7 +1354,7 @@ LAB_10002cc4:
     SelectUnits(&DAT_10007a80,0);
     SelErase(6);
     RunTimer(3,1000);
-    SetTrigg(3,1);
+    SetTrigg(3,0);
   }
   iVar2 = GetUnitsAmount1(&DAT_10007968,&DAT_10007a80);
   if (0 < iVar2) {
@@ -1372,7 +1372,7 @@ LAB_10002cc4:
   cVar1 = Trigg(4);
   if ((cVar1 == '\0') && (iVar2 = GetUnitsAmount1(&DAT_10007950,&DAT_10007a80), 0 < iVar2)) {
     RunTimer(4,500);
-    SetTrigg(4,1);
+    SetTrigg(4,0);
   }
   cVar1 = Trigg(4);
   if ((cVar1 != '\0') && (cVar1 = TimerDone(4), cVar1 != '\0')) {
@@ -1394,7 +1394,7 @@ LAB_10002cc4:
       uVar14 = 4000;
     }
     RunTimer(3,uVar14);
-    SetTrigg(3,1);
+    SetTrigg(3,0);
   }
   cVar1 = TimerDone(5);
   if (cVar1 == '\0') goto LAB_10003274;
@@ -1421,13 +1421,13 @@ LAB_10003200:
     }
     FUN_10001154(&DAT_100078d0,puVar12,puVar13,5);
     cVar1 = Trigg(6);
-    SetTrigg(6,'\x01' - (cVar1 != '\0'));
+    SetTrigg(6,0);
   }
   else {
     FUN_10001154(&DAT_100078d0,&DAT_100077b8,&DAT_10007978,5);
   }
   cVar1 = Trigg(5);
-  SetTrigg(5,'\x01' - (cVar1 != '\0'));
+  SetTrigg(5,0);
   FUN_1000113d(&DAT_100078d0,&DAT_10007b00,0x40);
   RunTimer(5,0x96);
   DAT_10007ab8 = DAT_10007ab8 + 1;

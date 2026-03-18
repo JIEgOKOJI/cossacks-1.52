@@ -526,8 +526,8 @@ void ProcessScenary(void)
     ClearSelection(2);
     InitialUpgrade("GPortLeft01","AKA06SV");
     InitialUpgrade("GPortLeft01","AKA30SV");
-// FIXME(decompiler):     iVar3 = GetDiff(0,0);
-    SelectUnits(((unsigned char *)&DAT_1000ae88) + iVar3 * 8);
+// FIXME(decompiler):     iVar3 = GetDiff(0);
+    SelectUnits(((unsigned char *)&DAT_1000ae88) + iVar3 * 8,0);
     SelErase(2);
   }
   iVar3 = GetTotalAmount0(&DAT_1000afc8);
@@ -596,7 +596,7 @@ void ProcessScenary(void)
        (((iVar3 = GetTotalAmount0(&DAT_1000b068), iVar3 == 0 ||
          (iVar3 = GetTotalAmount0(&DAT_1000b158), iVar3 == 0)) ||
         (iVar3 = GetTotalAmount0(&DAT_1000b150), iVar3 == 0)))) {
-      SetTrigg(3,1);
+      SetTrigg(3,0);
       iVar3 = GetDiff(0);
       RunTimer(2,(10 - iVar3) * 1000);
       FUN_100021e0('\x01',10,&DAT_1000b120,&DAT_1000aee0,&DAT_1000b218);
@@ -637,7 +637,7 @@ void ProcessScenary(void)
   if (((cVar1 != '\0') &&
       (iVar3 = GetTotalAmount0(&DAT_1000aee0), pcVar6 = (void*)&ShowPage, iVar3 == 0)) &&
      (iVar3 = GetTotalAmount0(&DAT_1000b128), pcVar6 = (void*)&ShowPage, iVar3 == 0)) {
-    SetTrigg(4,1);
+    SetTrigg(4,0);
     SetTrigg(5,0);
     ShowPage("#PAGE1605");
     EnableUnit(0,&DAT_1000af38,1);

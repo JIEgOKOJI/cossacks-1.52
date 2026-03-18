@@ -79,7 +79,7 @@ void __cdecl FUN_10001270(int param_1,char param_2,char param_3,char param_4)
   char local_34 [8];
   char local_2c;
   int local_8;
-SaveSelectedUnits((int)param_2,&DAT_1001f418,0);
+SaveSelectedUnits((intptr_t)param_2,&DAT_1001f418,0);
   SelectUnitsInZone(param_1,param_2,0);
   SaveSelectedUnits(param_2,&DAT_1001f408,0);
   local_8 = GetNUnits(&DAT_1001f408);
@@ -153,7 +153,7 @@ void __cdecl FUN_10001530(int param_1,int param_2,char param_3)
   int *puVar2;
   int local_48 [16];
   unsigned int local_8;
-for (local_8 = 0; (int)local_8 < 8; local_8 = local_8 + 1) {
+for (local_8 = 0; (intptr_t)local_8 < 8; local_8 = local_8 + 1) {
     SaveSelectedUnits(local_8 & 0xff,&DAT_1001f418,local_8 != 0);
     SelectUnits1(local_8 & 0xff,param_1,0);
     SaveSelectedUnits(local_8 & 0xff,param_2,param_3);
@@ -336,7 +336,7 @@ RegisterVar(&DAT_1001da40,2);
   InitialUpgrade("Army0","AKA33RU");
   iVar1 = GetMyNation();
   if (iVar1 == 1) {
-    for (local_8 = 0; (int)local_8 < 7; local_8 = local_8 + 1) {
+    for (local_8 = 0; (intptr_t)local_8 < 7; local_8 = local_8 + 1) {
       SetLightSpot(((unsigned char *)&DAT_1001f4e8) + local_8 * 8,2,local_8 & 0xff);
     }
   }

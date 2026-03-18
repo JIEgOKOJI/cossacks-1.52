@@ -183,7 +183,7 @@ FUN_10001250(param_2);
       local_50 = local_34 - local_18;
       local_54 = local_30 - local_1c;
       OnInit();
-      if ((int)local_58 < (int)local_14) {
+      if ((intptr_t)local_58 < (intptr_t)local_14) {
         local_c = local_48[0] & 0xffff;
         local_14 = local_58;
         if (local_10 == 0) {
@@ -208,7 +208,7 @@ void __cdecl FUN_100014b0(int param_1)
   int *puVar2;
   int local_48 [16];
   unsigned int local_8;
-for (local_8 = 0; (int)local_8 < 7; local_8 = local_8 + 1) {
+for (local_8 = 0; (intptr_t)local_8 < 7; local_8 = local_8 + 1) {
     iVar1 = GetUnitsByNation(param_1,local_8 & 0xff);
     if (0 < iVar1) break;
   }
@@ -226,7 +226,7 @@ void __cdecl FUN_10001530(char param_1)
   int *puVar2;
   int local_48 [16];
   unsigned int local_8;
-for (local_8 = 0; (int)local_8 < 6; local_8 = local_8 + 1) {
+for (local_8 = 0; (intptr_t)local_8 < 6; local_8 = local_8 + 1) {
     iVar1 = GetResource(param_1,local_8 & 0xff);
     if (iVar1 < DAT_10030a38) {
       AddResource(param_1,local_8 & 0xff,DAT_10030a38);
@@ -246,7 +246,7 @@ void __cdecl FUN_100015e0(char param_1,char param_2)
   int *puVar2;
   int local_44 [15];
   int uStack_8;
-iVar1 = GetResource(param_1,(int)param_2);
+iVar1 = GetResource(param_1,(intptr_t)param_2);
   if (iVar1 < 100000) {
     SetResource(param_1,param_2,1000000);
   }
@@ -366,7 +366,7 @@ void __cdecl FUN_10001930(int param_1,int param_2,int param_3)
   int local_48 [16];
   int local_8;
 local_8 = 3;
-  CreateObject0(&DAT_10032428,param_2,param_3,3);
+  CreateObject0(&DAT_10032428,param_2,param_3,3,0,0);
   RemoveGroup(&DAT_10032428,param_1);
   return;
 }
@@ -477,7 +477,7 @@ local_8 = param_1 + 10;
       FUN_10001780(param_2,param_6);
       FUN_10001780(param_3,param_6);
       FUN_10001780(param_3,&DAT_10032480);
-      SetTrigg(local_c & 0xff,1);
+      SetTrigg(local_c & 0xff,0);
     }
   }
   else {
@@ -1065,7 +1065,7 @@ LAB_10003b37:
   if ((uVar1 & 0xff) != 0) {
     uVar1 = NationIsErased(0);
     if ((uVar1 & 0xff) != 0) {
-      for (local_c = 1; (int)local_c < 0x1e; local_c = local_c + 1) {
+      for (local_c = 1; (intptr_t)local_c < 0x1e; local_c = local_c + 1) {
         uVar1 = TimerDone(local_c & 0xff);
         if ((uVar1 & 0xff) == 0) {
           RunTimer(local_c & 0xff,1);
@@ -1080,7 +1080,7 @@ LAB_10003b37:
   if ((uVar1 & 0xff) == 0) {
     uVar1 = Trigg(0x5d);
     if ((uVar1 & 0xff) == 0) {
-      for (local_10 = 1; (int)local_10 < 0x1e; local_10 = local_10 + 1) {
+      for (local_10 = 1; (intptr_t)local_10 < 0x1e; local_10 = local_10 + 1) {
         uVar1 = TimerDone(local_10 & 0xff);
         if ((uVar1 & 0xff) == 0) {
           FreeTimer(local_10 & 0xff);

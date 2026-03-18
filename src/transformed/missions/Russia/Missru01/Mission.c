@@ -356,7 +356,7 @@ uVar1 = Trigg(1);
         SelectUnits(&DAT_10031410,0);
         iVar5 = GetNInside(5);
         if (iVar5 == 0) {
-          SetTrigg(0x23,1);
+          SetTrigg(0x23,0);
           SelectUnits(&DAT_100315a0,0);
           SelSendAndKill(5,&DAT_100314a0,0,0);
           SetTrigg(0x33,0);

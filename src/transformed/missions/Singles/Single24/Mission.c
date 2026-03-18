@@ -139,7 +139,7 @@ uVar1 = Trigg(99);
     else {
       RunTimer(1,DAT_1002f42c);
       DAT_1002f42c = 0;
-      SetTrigg(2,1);
+      SetTrigg(2,0);
     }
   }
   uVar1 = Trigg(1);
@@ -153,7 +153,7 @@ uVar1 = Trigg(99);
           ShowPage("#PAGE2");
         }
         else {
-          AddResource(0,3,0xffffd8f0);
+          AddResource(0,3,-10000);
           CreateObject0(&DAT_1002f3e0,&DAT_1002f420,&DAT_1002f3f8,0,&DAT_1002f400,0);
           CreateObject0(&DAT_1002f3e0,&DAT_1002f420,&DAT_1002f3f8,0,&DAT_1002f400,0);
           ShowPage("#PAGE3");
@@ -166,7 +166,7 @@ uVar1 = Trigg(99);
   if ((uVar1 & 0xff) == 0) {
     iVar2 = GetUnitsAmount1(&DAT_1002f400,&DAT_1002f3f0);
     if (iVar2 == 0) {
-      SetTrigg(1,1);
+      SetTrigg(1,0);
     }
   }
   DAT_1002f430 = GetUnitsAmount2(&DAT_1002f408,&DAT_1002f3f8,0);

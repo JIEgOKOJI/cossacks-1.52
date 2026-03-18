@@ -281,9 +281,9 @@ void ProcessScenary(void)
     SelChangeNation(4,0);
     SelectUnits(&DAT_10006698,0);
     SelSendTo(4,&DAT_10006678,0x20,0);
-    AddResource(0,3,0xfffe7960);
-    AddResource(0,4,0xffffb1e0);
-    AddResource(0,5,0xfffff830);
+    AddResource(0,3,-100000);
+    AddResource(0,4,-20000);
+    AddResource(0,5,-2000);
     EnableMission(0x42);
     DisableMission(0x41);
     RunTimer(10,2000);
@@ -356,7 +356,7 @@ void ProcessScenary(void)
   cVar1 = Trigg(0xb);
   if ((cVar1 != '\0') && (cVar1 = TimerDone(2), cVar1 != '\0')) {
     SetTrigg(0xb,0);
-    SetTrigg(0xc,1);
+    SetTrigg(0xc,0);
     iVar2 = FUN_10001000();
     RunTimer(2,iVar2 + 8000);
     CreateObject0(&DAT_10006630,&DAT_10006690,&DAT_10006738,2,&DAT_100067a8,0xc0);
@@ -372,13 +372,13 @@ void ProcessScenary(void)
   }
   cVar1 = Trigg(0xc);
   if ((cVar1 != '\0') && (cVar1 = TimerDone(2), cVar1 != '\0')) {
-    SetTrigg(0xb,1);
+    SetTrigg(0xb,0);
     SetTrigg(0xc,0);
   }
   cVar1 = Trigg(0xd);
   if ((cVar1 != '\0') && (cVar1 = TimerDone(3), cVar1 != '\0')) {
     SetTrigg(0xd,0);
-    SetTrigg(0xe,1);
+    SetTrigg(0xe,0);
     iVar2 = FUN_10001000();
     RunTimer(3,iVar2 + 4000);
     CreateObject0(&DAT_100065f0,&DAT_10006688,&DAT_100066a0,2,&DAT_100067a0,0xc0);
@@ -397,7 +397,7 @@ void ProcessScenary(void)
   }
   cVar1 = Trigg(0xe);
   if ((cVar1 != '\0') && (cVar1 = TimerDone(3), cVar1 != '\0')) {
-    SetTrigg(0xd,1);
+    SetTrigg(0xd,0);
     SetTrigg(0xe,0);
   }
   cVar1 = Trigg(0xf);

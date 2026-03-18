@@ -180,7 +180,7 @@ int __cdecl FUN_1000111a(int param_1,int param_2,int param_3)
   iVar2 = 0;
   if (0 < DAT_10006938) {
     do {
-      CreateObject0(&DAT_10006878,param_2,param_3,iVar1);
+      CreateObject0(&DAT_10006878,param_2,param_3,iVar1,0,0);
       RemoveGroup(&DAT_10006878,param_1);
       iVar2 = iVar2 + 1;
     } while (iVar2 < DAT_10006938);
@@ -407,7 +407,7 @@ void ProcessScenary(void)
       if (cVar1 != '\0') {
         uStack_8 = DAT_100068c0;
         uStack_4 = DAT_100068c4;
-        SetTrigg(0x1f,1);
+        SetTrigg(0x1f,0);
       }
     }
     else {
@@ -416,14 +416,14 @@ void ProcessScenary(void)
       SetTrigg(0x1f,0);
       uVar2 = 0x20;
 LAB_1000182c:
-      SetTrigg(uVar2,1);
+      SetTrigg(uVar2,0);
     }
     iStack_c = 0;
     if (0 < DAT_10006938) {
       do {
-        CreateObject0(&DAT_10006878,&DAT_100068a0,&uStack_8,3);
+        CreateObject0(&DAT_10006878,&DAT_100068a0,&uStack_8,3,0,0);
         RemoveGroup(&DAT_10006878,&DAT_10006890);
-        CreateObject0(&DAT_10006878,&DAT_100069a0,&uStack_8,3);
+        CreateObject0(&DAT_10006878,&DAT_100069a0,&uStack_8,3,0,0);
         RemoveGroup(&DAT_10006878,&DAT_10006898);
         iStack_c = iStack_c + 1;
       } while (iStack_c < DAT_10006938);

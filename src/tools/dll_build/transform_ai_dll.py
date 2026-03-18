@@ -30,6 +30,56 @@ from transform_dll import (
 )
 
 
+def resolve_pe_export_thunks(pe):
+    """Read PE export table and resolve thunk (jmp) exports to their real targets.
+
+    Some exports are 5-byte thunks: E9 xx xx xx xx (jmp rel32).
+    Ghidra may skip these, leaving named exports (ProcessAI) missing from
+    the decompiled output. Returns dict: export_name → target_FUN_address.
+    Only returns exports whose body is a single jmp instruction.
+    """
+    import struct as st
+    data = pe.data
+    pe_off = st.unpack_from('<I', data, 0x3C)[0]
+    export_rva = st.unpack_from('<I', data, pe_off + 24 + 96)[0]
+    if export_rva == 0:
+        return {}
+    exp_foff = pe.rva_to_file_offset(export_rva)
+    if exp_foff is None:
+        return {}
+    n_funcs = st.unpack_from('<I', data, exp_foff + 20)[0]
+    n_names = st.unpack_from('<I', data, exp_foff + 24)[0]
+    func_tbl_rva = st.unpack_from('<I', data, exp_foff + 28)[0]
+    name_tbl_rva = st.unpack_from('<I', data, exp_foff + 32)[0]
+    ord_tbl_rva = st.unpack_from('<I', data, exp_foff + 36)[0]
+
+    thunks = {}
+    for i in range(n_names):
+        name_ptr_off = pe.rva_to_file_offset(name_tbl_rva + i * 4)
+        name_rva = st.unpack_from('<I', data, name_ptr_off)[0]
+        name_off = pe.rva_to_file_offset(name_rva)
+        end = data.index(b'\x00', name_off)
+        name = data[name_off:end].decode('ascii', errors='replace')
+
+        ord_off = pe.rva_to_file_offset(ord_tbl_rva + i * 2)
+        ordinal = st.unpack_from('<H', data, ord_off)[0]
+        func_ptr_off = pe.rva_to_file_offset(func_tbl_rva + ordinal * 4)
+        func_rva = st.unpack_from('<I', data, func_ptr_off)[0]
+
+        # Read first byte of the function
+        func_foff = pe.rva_to_file_offset(func_rva)
+        if func_foff is None:
+            continue
+        opcode = data[func_foff]
+        if opcode == 0xE9:  # jmp rel32
+            rel32 = st.unpack_from('<i', data, func_foff + 1)[0]
+            target_rva = func_rva + 5 + rel32
+            target_va = pe.image_base + target_rva
+            thunks[name] = f'FUN_{target_va:08x}'
+
+    return thunks
+
+
 def extract_api_mapping(source, pe):
     """Extract DAT_addr → API_name mapping from the GetProcAddress init function.
 
@@ -340,8 +390,10 @@ def collect_remaining_dats(code, api_mapping, pe):
 
     # Detect array sizes from API call context:
     # SetMineBalanse(N, &DAT_xxx) → word[N*2] (N pairs of threshold,value)
-    # SetMinesBuildingRules(&DAT_xxx, NElm) → int[NElm]
-    # SetMinesUpgradeRules(&DAT_xxx) → int[6] (always reads Table[0..5])
+    # SetMinesBuildingRules(&DAT_xxx, NElm) → NElm PAIRS of (RSM,ResID) ints
+    #   Engine uses ResTBL[u+u] and ResTBL[u+u+1], so array = NElm*2 ints
+    # SetMinesUpgradeRules(&DAT_xxx) → 27 ints (Table[0]..Table[26])
+    #   Engine reads 3 levels × 3 resources × 3 values = 27 ints
     array_sizes = {}  # dat_name → byte_size
 
     for m in re.finditer(r'SetMineBalanse\s*\(\s*(\w+)\s*,\s*&(DAT_[0-9a-f]+)\)', code):
@@ -357,14 +409,14 @@ def collect_remaining_dats(code, api_mapping, pe):
         dat, n_str = m.group(1), m.group(2)
         try:
             n = int(n_str, 0)
-            byte_size = n * 4  # N ints × 4 bytes
+            byte_size = n * 2 * 4  # NElm pairs × 2 ints × 4 bytes
             array_sizes[dat] = max(array_sizes.get(dat, 0), byte_size)
         except ValueError:
             pass
 
     for m in re.finditer(r'SetMinesUpgradeRules\s*\(\s*&(DAT_[0-9a-f]+)\)', code):
         dat = m.group(1)
-        array_sizes[dat] = max(array_sizes.get(dat, 0), 6 * 4)  # 6 ints
+        array_sizes[dat] = max(array_sizes.get(dat, 0), 27 * 4)  # 27 ints
 
     # Detect stride-based access patterns for per-nation arrays:
     # Pattern: iVar = expr * STRIDE; ... &DAT_xxx + iVar  (indirect stride)
@@ -510,14 +562,35 @@ def main():
         print(f"ERROR: InitAI not found in {decomp_path}", file=sys.stderr)
         sys.exit(1)
     if 'processai' not in game:
-        # Generate stub ProcessAI that calls ProcessLandAI if available
-        has_land = any(n == 'ProcessLandAI' for n, _ in game['extra_exports'])
-        if has_land:
-            game['processai'] = 'void ProcessAI(void)\n{\n  ProcessLandAI();\n}\n'
-            print("  ProcessAI not found — generated stub calling ProcessLandAI")
+        # Ghidra may miss ProcessAI if it's a thunk (jmp to real function).
+        # Resolve from the PE export table.
+        thunks = resolve_pe_export_thunks(pe)
+        target_fun = thunks.get('ProcessAI')
+        if target_fun:
+            # Find the target function block and use it as ProcessAI body
+            for i, (hname, hblock) in enumerate(game['helpers']):
+                if hname == target_fun:
+                    # Rename the helper to ProcessAI
+                    renamed = hblock.replace(
+                        f'void {target_fun}(void)',
+                        'void ProcessAI(void)', 1)
+                    game['processai'] = renamed
+                    game['helpers'].pop(i)
+                    print(f"  ProcessAI resolved via thunk → {target_fun}")
+                    break
+            else:
+                # Target not in helpers — generate forwarding call
+                game['processai'] = f'void ProcessAI(void)\n{{\n  {target_fun}();\n}}\n'
+                print(f"  ProcessAI resolved via thunk → {target_fun} (forwarding)")
         else:
-            print(f"ERROR: ProcessAI not found in {decomp_path}", file=sys.stderr)
-            sys.exit(1)
+            # Fallback: stub calling ProcessLandAI
+            has_land = any(n == 'ProcessLandAI' for n, _ in game['extra_exports'])
+            if has_land:
+                game['processai'] = 'void ProcessAI(void)\n{\n  ProcessLandAI();\n}\n'
+                print("  ProcessAI not found — generated stub calling ProcessLandAI")
+            else:
+                print(f"ERROR: ProcessAI not found in {decomp_path}", file=sys.stderr)
+                sys.exit(1)
     print(f"  Found {len(game['helpers'])} helper functions, " +
           f"{len(game['extra_exports'])} extra exports")
 
@@ -595,6 +668,29 @@ def main():
                       flags=re.MULTILINE | re.DOTALL)
     raw_code = re.sub(r'^\s*/\*\s*0x[0-9a-f]+\s+\d+\s+\w+\s*\*/$\n?', '',
                       raw_code, flags=re.MULTILINE)
+
+    # Fix unsigned 32-bit hex constants that represent negative signed values
+    # e.g. 0xfffff830 → -2000
+    def _hex_to_signed(m):
+        val = int(m.group(0), 16)
+        if val >= 0x80000000:
+            return str(val - 0x100000000)
+        return m.group(0)
+    raw_code = re.sub(r'\b0x[89a-fA-F][0-9a-fA-F]{7}\b', _hex_to_signed, raw_code)
+
+    # Fix pointer truncation: (int)local_xxx → (intptr_t)local_xxx
+    raw_code = re.sub(r'\(int\)(local_\w+)\b', r'(intptr_t)\1', raw_code)
+    raw_code = re.sub(r'\(int\)(param_\w+)\b', r'(intptr_t)\1', raw_code)
+
+    # Fix sprintf with missing varargs (Ghidra loses cdecl varargs):
+    # sprintf(&DAT_xxx, &DAT_yyy) with no actual string args → buf[0] = '\0'
+    # The format string is typically "%s%s" but no args follow → garbage/crash
+    def _fix_sprintf_no_args(m):
+        buf_name = m.group(1)  # DAT_xxx without &
+        return buf_name + '[0] = \'\\0\';  /* fixed: sprintf had format but missing varargs */'
+    raw_code = re.sub(
+        r'sprintf\s*\(\s*&(DAT_\w+)\s*,\s*&DAT_\w+\s*\)\s*;',
+        _fix_sprintf_no_args, raw_code)
 
     # Collect remaining DAT_ variables (AI state)
     var_decls = collect_remaining_dats(raw_code, api_mapping, pe)

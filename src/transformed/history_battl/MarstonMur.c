@@ -46,7 +46,7 @@ void __cdecl FUN_100011b8(int param_1,char param_2,char param_3,char param_4)
     *piVar2 = -0x33333334;
     piVar2 = piVar2 + 1;
   }
-  SaveSelectedUnits((int)param_2,&DAT_1001d4a8,0);
+  SaveSelectedUnits((intptr_t)param_2,&DAT_1001d4a8,0);
   SelectUnitsInZone(param_1,param_2,0);
   SaveSelectedUnits(param_2,&DAT_1001d4a0,0);
   GetNUnits(&DAT_1001d4a0);
@@ -123,7 +123,7 @@ void __cdecl FUN_100013c3(int param_1,int param_2,char param_3)
 {
   unsigned int local_8;
   
-  for (local_8 = 0; (int)local_8 < 8; local_8 = local_8 + 1) {
+  for (local_8 = 0; (intptr_t)local_8 < 8; local_8 = local_8 + 1) {
     SaveSelectedUnits(local_8 & 0xff,&DAT_1001d4a8,local_8 != 0);
     SelectUnits1(local_8 & 0xff,param_1,0);
     SaveSelectedUnits(local_8 & 0xff,param_2,param_3);

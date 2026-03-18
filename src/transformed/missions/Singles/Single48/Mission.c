@@ -171,7 +171,7 @@ void ProcessScenary(void)
     SelectUnits(&DAT_10006510,0);
     SelChangeNation(4,0);
     RunTimer(1,1000);
-    SetTrigg(0xb,1);
+    SetTrigg(0xb,0);
   }
   cVar1 = Trigg(6);
   if ((cVar1 != '\0') && (cVar1 = NationIsErased(0), cVar1 != '\0')) {
@@ -217,11 +217,11 @@ void ProcessScenary(void)
       if (iVar2 < 0xbb9) {
         ShowPage("#PAGE11");
         RunTimer(2,1000);
-        SetTrigg(0xc,1);
+        SetTrigg(0xc,0);
       }
       else {
         ShowPage("#PAGE10");
-        AddResource(0,1,0xfffff448);
+        AddResource(0,1,-3000);
         ChangeFriends(2,0x15);
         SelectUnits(&DAT_10006530,0);
         SelChangeNation(4,0);
@@ -238,11 +238,11 @@ void ProcessScenary(void)
       if (iVar2 < 0x4e21) {
         ShowPage("#PAGE15");
         RunTimer(3,1000);
-        SetTrigg(0xd,1);
+        SetTrigg(0xd,0);
         return;
       }
       ShowPage("#PAGE14");
-      AddResource(0,1,0xffffb1e0);
+      AddResource(0,1,-20000);
       ChangeFriends(2,0x15);
       ChangeFriends(3,0x4a);
       ChangeFriends(1,0x4a);

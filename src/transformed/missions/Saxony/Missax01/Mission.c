@@ -273,7 +273,7 @@ void ProcessScenary(void)
     SetTrigg(3,0);
     iVar2 = AskMultilineQuestion(9,"#PAGE3",0,"Qf2_1|Qf2_2");
     if (iVar2 == 0) {
-      AddResource(0,1,0xfffff448);
+      AddResource(0,1,-3000);
       SelectUnits(&DAT_10006928,0);
       SelChangeNation(4,0);
       SelectUnits(&DAT_10006928,0);
@@ -330,7 +330,7 @@ void ProcessScenary(void)
     if (iVar2 == 0) {
       SelectUnits(&DAT_10006838,0);
       SelChangeNation(4,0);
-      AddResource(0,1,0xffffec78);
+      AddResource(0,1,-5000);
       SelectUnits(&DAT_100067b8,0);
       SelSendTo(4,&DAT_10006798,0,0);
     }
@@ -388,7 +388,7 @@ void ProcessScenary(void)
       (iVar2 = GetUnitsAmount0(&DAT_100067a0,0), iVar2 == 0)))) {
     SelectUnits(&DAT_100068e8,0);
     SelCloseGates(4);
-    SetTrigg(9,1);
+    SetTrigg(9,0);
   }
   cVar1 = Trigg(0xe);
   if (((cVar1 != '\0') && (cVar1 = Trigg(10), cVar1 == '\0')) &&
@@ -396,7 +396,7 @@ void ProcessScenary(void)
       (iVar2 = GetUnitsAmount0(&DAT_10006790,0), iVar2 == 0)))) {
     SelectUnits(&DAT_100068f0,0);
     SelCloseGates(4);
-    SetTrigg(10,1);
+    SetTrigg(10,0);
   }
   cVar1 = Trigg(0xf);
   if (((cVar1 != '\0') && (cVar1 = Trigg(0xb), cVar1 == '\0')) &&
@@ -404,7 +404,7 @@ void ProcessScenary(void)
       (iVar2 = GetUnitsAmount0(&DAT_10006790,0), iVar2 == 0)))) {
     SelectUnits(&DAT_100068d8,0);
     SelCloseGates(4);
-    SetTrigg(0xb,1);
+    SetTrigg(0xb,0);
   }
   cVar1 = Trigg(0x5d);
   if ((cVar1 != '\0') && (cVar1 = TimerDone(0x1f), cVar1 != '\0')) {
@@ -440,7 +440,7 @@ void ProcessScenary(void)
       SelSendTo(6,&DAT_100067e0,0x5f,0);
       SelectUnits(&DAT_100068f8,0);
       SelSendTo(6,&DAT_100067e8,0xf0,0);
-      AddResource(0,1,0xffffec78);
+      AddResource(0,1,-5000);
       SelectUnits(&DAT_100068a8,0);
       SelOpenGates(6);
       RunTimer(0x1f,600);

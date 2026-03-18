@@ -158,10 +158,10 @@ SetPlayerName(0,"SVEDES");
   RunTimer(1,5000);
   RegisterVar(&DAT_1002ca30,4);
   RegisterVar(&DAT_1002e44c,4);
-  SetTrigg(1,1);
-  SetTrigg(2,1);
-  SetTrigg(3,1);
-  SetTrigg(4,1);
+  SetTrigg(1,0);
+  SetTrigg(2,0);
+  SetTrigg(3,0);
+  SetTrigg(4,0);
   RegisterVar(&DAT_1002e430,4);
   uStack_8 = 0x100012d9;
   return;
@@ -185,8 +185,8 @@ iVar1 = GetTotalAmount1(&DAT_1002e438,0);
       SelSendAndKill(2,&DAT_1002e410,0,0);
     }
   }
-  SetTrigg(2,1);
-  SetTrigg(3,1);
+  SetTrigg(2,0);
+  SetTrigg(3,0);
   return;
 }
 

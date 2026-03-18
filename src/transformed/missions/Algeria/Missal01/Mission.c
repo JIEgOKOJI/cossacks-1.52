@@ -553,8 +553,8 @@ void ProcessScenary(void)
     iVar2 = GetTotalAmount0(&DAT_10008a70);
     iVar3 = GetUnitsAmount1(&DAT_10008ba8,&DAT_10008a70);
     if ((iVar3 == iVar2) && (cVar1 = Trigg(9), cVar1 != '\0')) {
-      SetTrigg(1,1);
-      SetTrigg(2,1);
+      SetTrigg(1,0);
+      SetTrigg(2,0);
       iVar2 = GetDiff(0);
       iVar3 = GetTotalAmount0(&DAT_10008a70);
       ShowPageParam("#PAGE3",(10 - iVar2) * iVar3 * 0x32);
@@ -597,7 +597,7 @@ void ProcessScenary(void)
   cVar1 = Trigg(0x32);
   if (((cVar1 == '\0') && (iVar2 = GetUnitsAmount0(&DAT_10008bd8,0), iVar2 == 0)) &&
      (iVar2 = GetTotalAmount0(&DAT_10008aa8), 0 < iVar2)) {
-    SetTrigg(0x32,1);
+    SetTrigg(0x32,0);
     RunTimer(1,200);
   }
   cVar1 = Trigg(0x32);
@@ -615,7 +615,7 @@ void ProcessScenary(void)
   cVar1 = Trigg(0x33);
   if (((cVar1 == '\0') && (iVar2 = GetUnitsAmount0(&DAT_10008c58,0), iVar2 == 0)) &&
      (iVar2 = GetTotalAmount0(&DAT_10008ad0), 0 < iVar2)) {
-    SetTrigg(0x33,1);
+    SetTrigg(0x33,0);
     RunTimer(2,200);
   }
   cVar1 = Trigg(0x33);
@@ -645,7 +645,7 @@ void ProcessScenary(void)
       }
       else {
         ShowPage("#PAGE6A");
-        AddResource(0,1,0xfffff830);
+        AddResource(0,1,-2000);
         SelectUnits(&DAT_10008ad8,0);
         SelChangeNation(4,0);
       }
@@ -653,7 +653,7 @@ void ProcessScenary(void)
   }
   cVar1 = Trigg(0x34);
   if ((cVar1 == '\0') && (iVar2 = GetUnitsAmount0(&DAT_10008c60,0), iVar2 == 0)) {
-    SetTrigg(0x34,1);
+    SetTrigg(0x34,0);
   }
   cVar1 = Trigg(0x34);
   if ((((cVar1 != '\0') && (cVar1 = Trigg(0x35), cVar1 != '\0')) &&
@@ -673,7 +673,7 @@ void ProcessScenary(void)
       }
       else {
         ShowPage("#PAGE6A");
-        AddResource(0,1,0xfffff830);
+        AddResource(0,1,-2000);
         SelectUnits(&DAT_10008ad8,0);
         SelChangeNation(4,0);
       }
@@ -768,7 +768,7 @@ void ProcessScenary(void)
       iVar2 = GetDiff(0);
       iVar3 = GetTotalAmount0(&DAT_10008a48);
       if ((iVar2 + 2) * 0x32 < iVar3) {
-        SetTrigg(0x37,1);
+        SetTrigg(0x37,0);
         SetTrigg(0x38,0);
         RunTimer(8,200);
       }
@@ -789,12 +789,12 @@ void ProcessScenary(void)
     cVar1 = Trigg(0x38);
     if (((cVar1 == '\0') && (cVar1 = Trigg(0x37), cVar1 != '\0')) &&
        (iVar2 = GetUnitsAmount1(&DAT_10008cf0,&DAT_10008a48), iVar2 < 3)) {
-      SetTrigg(0x38,1);
+      SetTrigg(0x38,0);
     }
     cVar1 = Trigg(0x38);
     if (((cVar1 == '\0') && (cVar1 = Trigg(0x37), cVar1 == '\0')) &&
        (iVar2 = GetUnitsAmount1(&DAT_10008cf0,&DAT_10008a40), iVar2 < 3)) {
-      SetTrigg(0x38,1);
+      SetTrigg(0x38,0);
     }
     cVar1 = Trigg(0x39);
     if (((cVar1 != '\0') && (cVar1 = Trigg(0x37), cVar1 != '\0')) &&
@@ -816,7 +816,7 @@ void ProcessScenary(void)
     if ((cVar1 == '\0') &&
        ((iVar2 = GetTotalAmount0(&DAT_10008a48), iVar2 == 0 || (cVar1 = Trigg(0x37), cVar1 == '\0'))
        )) {
-      SetTrigg(0x39,1);
+      SetTrigg(0x39,0);
     }
     cVar1 = Trigg(0x3a);
     if (((cVar1 != '\0') && (cVar1 = Trigg(0x37), cVar1 == '\0')) &&
@@ -838,7 +838,7 @@ void ProcessScenary(void)
     if ((cVar1 == '\0') &&
        ((iVar2 = GetTotalAmount0(&DAT_10008a40), iVar2 == 0 || (cVar1 = Trigg(0x37), cVar1 != '\0'))
        )) {
-      SetTrigg(0x3a,1);
+      SetTrigg(0x3a,0);
     }
     cVar1 = Trigg(9);
     if (cVar1 == '\0') {
@@ -869,7 +869,7 @@ void ProcessScenary(void)
       }
       cVar1 = Trigg(0x45);
       if ((cVar1 == '\0') && (iVar2 = GetUnitsAmount1(&DAT_10008cf0,&DAT_10008a50), iVar2 < 3)) {
-        SetTrigg(0x45,1);
+        SetTrigg(0x45,0);
       }
       cVar1 = Trigg(0x3b);
       if (((cVar1 == '\0') && (cVar1 = Trigg(0x4e), cVar1 != '\0')) &&
@@ -889,8 +889,8 @@ void ProcessScenary(void)
       }
       cVar1 = Trigg(0x3b);
       if ((cVar1 == '\0') && (iVar2 = GetTotalAmount0(&DAT_10008a50), iVar2 == 0)) {
-        SetTrigg(0x3b,1);
-        SetTrigg(0x4e,1);
+        SetTrigg(0x3b,0);
+        SetTrigg(0x4e,0);
       }
     }
     cVar1 = Trigg(9);
@@ -926,7 +926,7 @@ LAB_10002a70:
       cVar1 = Trigg(0x38);
       if ((cVar1 == '\0') || (cVar1 = Trigg(0x45), cVar1 == '\0')) {
 LAB_10002aff:
-        SetTrigg(0x36,1);
+        SetTrigg(0x36,0);
         SelectUnits(&DAT_10008a78,0);
         SelOpenGates(3);
       }
@@ -963,7 +963,7 @@ LAB_10002aff:
     if (((cVar1 != '\0') && (iVar2 = GetTotalAmount0(&DAT_10008a28), iVar2 == 0)) &&
        (cVar1 = TimerDone(5), cVar1 != '\0')) {
       ProduceUnit(&DAT_10008b40,&DAT_10008990,&DAT_10008a28);
-      SetTrigg(0x44,1);
+      SetTrigg(0x44,0);
     }
     cVar1 = CheckProduction(&DAT_10008b50);
     if ((cVar1 != '\0') && (iVar2 = GetTotalAmount0(&DAT_10008a38), iVar2 < 4)) {
@@ -1064,14 +1064,14 @@ LAB_10002aff:
       cVar1 = Trigg(0x42);
       if ((cVar1 == '\0') && (iVar2 = GetTotalAmount0(&DAT_10008d38), iVar2 == 0)) {
         RunTimer(3,5000);
-        SetTrigg(0x3c,1);
-        SetTrigg(0x3d,1);
-        SetTrigg(0x3e,1);
-        SetTrigg(0x3f,1);
-        SetTrigg(0x40,1);
-        SetTrigg(0x41,1);
-        SetTrigg(0x42,1);
-        SetTrigg(0x43,1);
+        SetTrigg(0x3c,0);
+        SetTrigg(0x3d,0);
+        SetTrigg(0x3e,0);
+        SetTrigg(0x3f,0);
+        SetTrigg(0x40,0);
+        SetTrigg(0x41,0);
+        SetTrigg(0x42,0);
+        SetTrigg(0x43,0);
       }
     }
     iVar2 = GetTotalAmount0(&DAT_10008a28);
@@ -1109,7 +1109,7 @@ LAB_10003068:
   if (0 < iVar2) {
     cVar1 = Trigg(0xb);
     if (cVar1 == '\0') {
-      SetTrigg(0xb,1);
+      SetTrigg(0xb,0);
     }
     SelectUnits(&DAT_10008a28,0);
     DAT_10008c10 = GetNInside(1);
@@ -1129,14 +1129,14 @@ LAB_10003068:
     cVar1 = TimerDone(3);
     if (cVar1 != '\0') {
       RunTimer(3,10000);
-      SetTrigg(0x3c,1);
-      SetTrigg(0x3d,1);
-      SetTrigg(0x3e,1);
-      SetTrigg(0x3f,1);
-      SetTrigg(0x40,1);
-      SetTrigg(0x41,1);
-      SetTrigg(0x42,1);
-      SetTrigg(0x43,1);
+      SetTrigg(0x3c,0);
+      SetTrigg(0x3d,0);
+      SetTrigg(0x3e,0);
+      SetTrigg(0x3f,0);
+      SetTrigg(0x40,0);
+      SetTrigg(0x41,0);
+      SetTrigg(0x42,0);
+      SetTrigg(0x43,0);
     }
     DAT_10008c10 = 0;
   }
@@ -1275,7 +1275,7 @@ LAB_100036dc:
         if (iVar2 == 3) {
           ShowPage("#PAGE13C");
           SetTrigg(0xe,0);
-          SetTrigg(0xf,1);
+          SetTrigg(0xf,0);
         }
         goto LAB_100036e8;
       }
@@ -1311,17 +1311,17 @@ LAB_100036e8:
         if (iVar2 < 5) {
           iVar2 = AskMultilineQuestion(9,"#PAGE14A",0,"Q13_1|Q13_2");
           if (iVar2 == 0) {
-            SetTrigg(0x10,1);
+            SetTrigg(0x10,0);
           }
           else if (iVar2 == 1) {
             ShowPage("#PAGE13C");
-            SetTrigg(0xf,1);
+            SetTrigg(0xf,0);
           }
         }
         else {
           ShowPage("#PAGE14");
-          SetTrigg(0xf,1);
-          SetTrigg(0x10,1);
+          SetTrigg(0xf,0);
+          SetTrigg(0x10,0);
         }
         cVar1 = Trigg(0x10);
         if (cVar1 != '\0') {
@@ -1335,7 +1335,7 @@ LAB_100036e8:
             SetTrigg(0x10,0);
             iVar2 = GetDiff(0);
             ShowPageParam("#PAGE16A",(10 - iVar2) * 0x32);
-            SetTrigg(0x4a,1);
+            SetTrigg(0x4a,0);
           }
         }
       }
@@ -1351,7 +1351,7 @@ LAB_100036e8:
       SetTrigg(0x10,0);
       iVar2 = GetDiff(0);
       ShowPageParam("#PAGE16",(10 - iVar2) * 0x32);
-      SetTrigg(0x4a,1);
+      SetTrigg(0x4a,0);
     }
   }
   cVar1 = Trigg(0x4a);
@@ -1388,8 +1388,8 @@ LAB_100036e8:
     iVar2 = GetTotalAmount0(&DAT_10008a70);
     iVar3 = GetUnitsAmount1(&DAT_10008da8,&DAT_10008a70);
     if ((iVar3 == iVar2) && (iVar2 = GetTotalAmount0(&DAT_10008b20), 0 < iVar2)) {
-      SetTrigg(0x17,1);
-      SetTrigg(0x18,1);
+      SetTrigg(0x17,0);
+      SetTrigg(0x18,0);
       iVar2 = GetDiff(0);
       iVar3 = GetTotalAmount0(&DAT_10008a70);
       ShowPageParam("#PAGE23",(10 - iVar2) * iVar3 * 0x32);
@@ -1419,7 +1419,7 @@ LAB_100036e8:
   if ((((cVar1 == '\0') && (iVar2 = GetTotalAmount0(&DAT_10008b10), 0 < iVar2)) &&
       (iVar2 = GetTotalAmount0(&DAT_10008a58), iVar2 == 0)) &&
      (cVar1 = CheckProduction(&DAT_10008b10), cVar1 != '\0')) {
-    SetTrigg(0x47,1);
+    SetTrigg(0x47,0);
     ProduceUnit(&DAT_10008b10,&DAT_10008d30,&DAT_10008a58);
   }
   cVar1 = Trigg(0x47);
@@ -1516,7 +1516,7 @@ LAB_100036e8:
     iVar2 = GetDiff(0);
     iVar3 = GetTotalAmount0(&DAT_10008a60);
     if (iVar3 < iVar2 * 2 + 6) {
-      SetTrigg(0x48,1);
+      SetTrigg(0x48,0);
     }
   }
   cVar1 = Trigg(0x13);

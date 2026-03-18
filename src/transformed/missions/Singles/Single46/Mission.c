@@ -250,13 +250,13 @@ void  FUN_100013a0(void *this_ptr,int param_1,byte param_2)
   *(char *)((int)this_ptr + 0x21) = 0;
   local_8 = this_ptr;
   uVar1 = GetGlobalTime();
-  *(int *)((int)local_8 + 0x26) = uVar1;
-  RemoveGroup((int)local_8 + 0x10,(int)local_8 + 0x18);
-  SelectUnits((int)local_8 + 0x18,0);
+  *(int *)((intptr_t)local_8 + 0x26) = uVar1;
+  RemoveGroup((intptr_t)local_8 + 0x10,(intptr_t)local_8 + 0x18);
+  SelectUnits((intptr_t)local_8 + 0x18,0);
   uVar2 = (unsigned int)param_2;
   iVar3 = rand();
-  SelSendAndKill(*(char *)((int)local_8 + 0x2a),param_1,iVar3 % 0xfe,uVar2);
-  ClearSelection(*(char *)((int)local_8 + 0x2a));
+  SelSendAndKill(*(char *)((intptr_t)local_8 + 0x2a),param_1,iVar3 % 0xfe,uVar2);
+  ClearSelection(*(char *)((intptr_t)local_8 + 0x2a));
   local_8 = (void *)0x10001470;
   return;
 }
@@ -1392,12 +1392,12 @@ __declspec(dllexport) void OnInit()
 local_8 = this_ptr;
   RegisterVar(this_ptr,0x2e);
   RegisterUnits(local_8,param_1);
-  RegisterUnitType((int)local_8 + 8,param_2);
-  RegisterDynGroup((int)local_8 + 0x10);
-  RegisterDynGroup((int)local_8 + 0x18);
-  *(char *)((int)local_8 + 0x20) = 1;
-  *(char *)((int)local_8 + 0x21) = 0;
-  *(int *)((int)local_8 + 0x2a) = param_3;
+  RegisterUnitType((intptr_t)local_8 + 8,param_2);
+  RegisterDynGroup((intptr_t)local_8 + 0x10);
+  RegisterDynGroup((intptr_t)local_8 + 0x18);
+  *(char *)((intptr_t)local_8 + 0x20) = 1;
+  *(char *)((intptr_t)local_8 + 0x21) = 0;
+  *(int *)((intptr_t)local_8 + 0x2a) = param_3;
   local_8 = (void *)0x10001122;
   return;
 }
@@ -1417,7 +1417,7 @@ if (*(char *)((int)this_ptr + 0x20) != '\0') {
     *(char *)((int)this_ptr + 0x20) = 0;
     local_8 = this_ptr;
     for (local_c = 0; local_c < param_1; local_c = local_c + 1) {
-      ProduceUnitFast(local_8,(int)local_8 + 8,(int)local_8 + 0x10,0);
+      ProduceUnitFast(local_8,(intptr_t)local_8 + 8,(intptr_t)local_8 + 0x10,0);
     }
   }
   local_8 = (void *)0x100011df;

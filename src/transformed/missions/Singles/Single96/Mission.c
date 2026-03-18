@@ -108,7 +108,7 @@ void __cdecl FUN_100012d0(int param_1)
   int *puVar2;
   int local_48 [16];
   unsigned int local_8;
-for (local_8 = 0; (int)local_8 < 8; local_8 = local_8 + 1) {
+for (local_8 = 0; (intptr_t)local_8 < 8; local_8 = local_8 + 1) {
     iVar1 = GetUnitsByNation(param_1,local_8 & 0xff);
     if (0 < iVar1) break;
   }
@@ -270,7 +270,7 @@ void __cdecl FUN_100017d0(int param_1,int param_2,int param_3)
   int local_8;
 FUN_100012d0(param_1);
   for (local_c = 0; local_c < DAT_10031500; local_c = local_c + 1) {
-    CreateObject0(&DAT_10031418,param_2,param_3,(char)local_8,0);
+    CreateObject0(&DAT_10031418,param_2,param_3,(char)local_8,0,0);
     RemoveGroup(&DAT_10031418,param_1);
   }
   return;
@@ -503,7 +503,7 @@ LAB_1000279d:
         SelectUnitsInZone(&DAT_10031450,2,0);
         SelSendAndKill(2,&DAT_10031458,0x40,0);
         RunTimer(3,1000);
-        SetTrigg(3,1);
+        SetTrigg(3,0);
       }
       else {
         SelectUnitsInZone(&DAT_10031450,2,0);
@@ -714,7 +714,7 @@ LAB_1000279d:
       iVar3 = GetTotalAmount1(&DAT_100314c0,0);
       if (iVar5 + iVar3 != 0) goto LAB_10003bb4;
     }
-    for (local_8 = 1; (int)local_8 < 0x14; local_8 = local_8 + 1) {
+    for (local_8 = 1; (intptr_t)local_8 < 0x14; local_8 = local_8 + 1) {
       uVar1 = TimerDone(local_8 & 0xff);
       if ((uVar1 & 0xff) == 0) {
         RunTimer(local_8 & 0xff,1);
@@ -739,7 +739,7 @@ LAB_10003bb4:
       if ((uVar1 & 0xff) == 0) {
         uVar1 = Trigg(0x5f);
         if ((uVar1 & 0xff) == 0) {
-          for (local_c = 1; (int)local_c < 0x1e; local_c = local_c + 1) {
+          for (local_c = 1; (intptr_t)local_c < 0x1e; local_c = local_c + 1) {
             uVar1 = TimerDone(local_c & 0xff);
             if ((uVar1 & 0xff) == 0) {
               FreeTimer(local_c & 0xff);
@@ -765,7 +765,7 @@ __declspec(dllexport) void OnInit()
   int *puVar2;
   int local_48 [16];
   unsigned int local_8;
-for (local_8 = 0; (int)local_8 < 6; local_8 = local_8 + 1) {
+for (local_8 = 0; (intptr_t)local_8 < 6; local_8 = local_8 + 1) {
     iVar1 = GetResource(param_1,local_8 & 0xff);
     if (iVar1 < DAT_1002fa30) {
       AddResource(param_1,local_8 & 0xff,DAT_1002fa30);
@@ -786,7 +786,7 @@ __declspec(dllexport) void ProcessScenary()
   int *puVar2;
   int local_44 [15];
   int uStack_8;
-iVar1 = GetResource(param_1,(int)param_2);
+iVar1 = GetResource(param_1,(intptr_t)param_2);
   if (iVar1 < 100000) {
     SetResource(param_1,param_2,10000000);
   }

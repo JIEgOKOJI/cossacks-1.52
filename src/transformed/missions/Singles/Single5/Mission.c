@@ -188,7 +188,7 @@ FUN_10001ed0(unsigned int *param_1,int param_2,int param_3,int param_4,int param
         iVar1 = GetTotalAmount0(param_5);
         iVar3 = rand();
         RemoveUnitFromGroup(param_5,iVar3 % iVar1);
-        param_1 = (unsigned int *)((int)param_1 + -1);
+        param_1 = (unsigned int *)((intptr_t)param_1 + -1);
       } while (param_1 != (unsigned int *)0x0);
     }
   }
@@ -211,9 +211,9 @@ FUN_10001ed0(unsigned int *param_1,int param_2,int param_3,int param_4,int param
       InsertUnitToGroup(0,param_5,*puVar5);
       GetUnitInfo(param_5,0,auStack_2c);
       uVar4 = rand();
-      uVar4 = uVar4 & 0x800000ff;
+      uVar4 = uVar4 & -2147483393;
       if ((int)uVar4 < 0) {
-        uVar4 = (uVar4 - 1 | 0xffffff00) + 1;
+        uVar4 = (uVar4 - 1 | -256) + 1;
       }
       cos((long double)(int)uVar4 * (long double)DAT_1000a1d0_ovl * (long double)DAT_1000a1c8_ovl);
       lVar6 = 0;
@@ -319,9 +319,9 @@ void __cdecl FUN_10002190(int param_1,int param_2,int param_3)
         GetUnitInfo(iVar1,iVar5,auStack_2c);
         InsertUnitToGroup(0,param_2,auStack_2c[0] & 0xffff);
         uVar4 = rand();
-        uVar4 = uVar4 & 0x800000ff;
+        uVar4 = uVar4 & -2147483393;
         if ((int)uVar4 < 0) {
-          uVar4 = (uVar4 - 1 | 0xffffff00) + 1;
+          uVar4 = (uVar4 - 1 | -256) + 1;
         }
         fVar2 = (float)(int)uVar4 * (float)DAT_1000a1d0_ovl * (float)DAT_1000a1c8_ovl;
         rand();
@@ -422,9 +422,9 @@ void  FUN_10002370(char *param_1)
           GetUnitInfo(puVar1,iVar7,auStack_2c);
           InsertUnitToGroup(0,puVar2,auStack_2c[0] & 0xffff);
           uVar6 = rand();
-          uVar6 = uVar6 & 0x800000ff;
+          uVar6 = uVar6 & -2147483393;
           if ((int)uVar6 < 0) {
-            uVar6 = (uVar6 - 1 | 0xffffff00) + 1;
+            uVar6 = (uVar6 - 1 | -256) + 1;
           }
           fVar3 = (float)(int)uVar6 * (float)DAT_1000a1d0_ovl * (float)DAT_1000a1c8_ovl;
           rand();
@@ -438,7 +438,7 @@ void  FUN_10002370(char *param_1)
           SelectUnits(puVar2,0);
           uVar9 = 0;
           iVar5 = rand();
-          SelSendAndKill((int)param_1[4],&uStack_34,
+          SelSendAndKill((intptr_t)param_1[4],&uStack_34,
                          iVar5 % 0xff,uVar9);
           iVar7 = iVar7 + 1;
           iVar5 = GetTotalAmount0(puVar1);
@@ -645,10 +645,10 @@ void ProcessScenary(void)
     RunTimer(0xf,100);
     RunTimer(0x10,100);
     RunTimer(0x11,15000);
-    CreateObject0(0x1000f460,0x1000f478);
-    CreateObject0(0x1000f448,0x1000f478);
-    CreateObject0(0x1000f430,0x1000f478);
-    CreateObject0(0x1000f418,0x1000f478);
+    CreateObject0(0x1000f460,0x1000f478,0,0,0,0);
+    CreateObject0(0x1000f448,0x1000f478,0,0,0,0);
+    CreateObject0(0x1000f430,0x1000f478,0,0,0,0);
+    CreateObject0(0x1000f418,0x1000f478,0,0,0,0);
     iVar2 = 0;
     iVar5 = GetDiff(0);
     if (iVar5 != -1 && -1 < iVar5 + 1) {
@@ -716,7 +716,7 @@ void ProcessScenary(void)
   }
   cVar1 = Trigg(7);
   if ((cVar1 == '\0') && (iVar5 = GetTotalAmount0(&DAT_1000f2b0), iVar5 == 0x4b)) {
-    SetTrigg(7,1);
+    SetTrigg(7,0);
     RunTimer(0xf,500);
   }
   cVar1 = TimerDoneFirst(0xf);
@@ -747,12 +747,12 @@ void ProcessScenary(void)
      (cVar1 = TimerDone(0x10), cVar1 != '\0')) {
     PushAllUnitsAway(1);
     SetTrigg(9,0);
-    SetTrigg(10,1);
+    SetTrigg(10,0);
   }
   SelectUnits(&DAT_1000f2d0,0);
   cVar1 = Trigg(9);
   if ((cVar1 == '\0') && (iVar5 = GetNInside(1), iVar5 == 0)) {
-    SetTrigg(9,1);
+    SetTrigg(9,0);
     SelectUnits(&DAT_1000f2a8,0);
     SelectUnits(&DAT_1000f2b0,1);
     SelectUnits(&DAT_1000f2d0,1);

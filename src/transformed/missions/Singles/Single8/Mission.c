@@ -336,7 +336,7 @@ LAB_10002799:
   if ((uVar1 & 0xff) != 0) {
     FreeTimer(3);
     FreeTimer(5);
-    SetTrigg(9,1);
+    SetTrigg(9,0);
   }
   SaveSelectedUnits(5,&DAT_10031570,0);
   ClearSelection(5);
@@ -398,7 +398,7 @@ LAB_10002799:
   uVar1 = TimerDone(4);
   if ((uVar1 & 0xff) != 0) {
     FreeTimer(4);
-    SetTrigg(0xb,1);
+    SetTrigg(0xb,0);
   }
   uVar1 = Trigg(0xc);
   if ((uVar1 & 0xff) != 0) {
@@ -457,7 +457,7 @@ LAB_10002799:
     iVar4 = GetUnitsAmount1(&DAT_10031550,&DAT_10031450);
     iVar3 = GetTotalAmount0(&DAT_10031450);
     if (iVar4 < iVar3) {
-      SetTrigg(1,1);
+      SetTrigg(1,0);
       SelectUnits(&DAT_10031450,0);
       SelSendTo(5,&DAT_100315b0,0x41,0);
     }
@@ -493,7 +493,7 @@ LAB_10002799:
     iVar4 = GetUnitsAmount1(&DAT_10031558,&DAT_10031448);
     iVar3 = GetTotalAmount0(&DAT_10031448);
     if (iVar4 < iVar3) {
-      SetTrigg(3,1);
+      SetTrigg(3,0);
       SelectUnits(&DAT_10031448,0);
       SelSendTo(5,&DAT_100315c0,0,0);
     }
@@ -535,7 +535,7 @@ LAB_10002799:
   if ((uVar1 & 0xff) == 0) {
     iVar4 = GetUnitsAmount0(&DAT_10031418,0);
     if (iVar4 == 0) {
-      SetTrigg(0x60,1);
+      SetTrigg(0x60,0);
       SelectUnits(&DAT_100315a0,0);
       SelCloseGates(1);
     }

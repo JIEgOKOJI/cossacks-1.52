@@ -348,9 +348,9 @@ uVar1 = Trigg(99);
     iVar4 = GetDiff(0);
     RunTimer(0xd,(5 - iVar4) * 10000);
     DAT_10031498_ovl = rand();
-    DAT_10031498_ovl = DAT_10031498_ovl & 0x80000001;
+    DAT_10031498_ovl = DAT_10031498_ovl & -2147483647;
     if ((int)DAT_10031498_ovl < 0) {
-      DAT_10031498_ovl = (DAT_10031498_ovl - 1 | 0xfffffffe) + 1;
+      DAT_10031498_ovl = (DAT_10031498_ovl - 1 | -2) + 1;
     }
     DAT_10031498_ovl = DAT_10031498_ovl + 1;
     InitialUpgrade("Gholop1","Melnica_rus(RU)GETRES");
@@ -407,7 +407,7 @@ LAB_10002b06:
     iVar4 = GetUnitsAmount1(&DAT_100315a0,&DAT_10031490);
     iVar3 = GetTotalAmount0(&DAT_10031490);
     if (iVar4 < iVar3) {
-      SetTrigg(1,1);
+      SetTrigg(1,0);
       SelectUnits(&DAT_10031490,0);
       SelSendTo(5,&DAT_10031610,0xdc,0);
     }
@@ -441,7 +441,7 @@ LAB_10002b06:
     iVar4 = GetUnitsAmount1(&DAT_100315a8,&DAT_10031488);
     iVar3 = GetTotalAmount0(&DAT_10031488);
     if (iVar4 < iVar3) {
-      SetTrigg(0x14,1);
+      SetTrigg(0x14,0);
       SelectUnits(&DAT_10031488,0);
       SelSendTo(5,&DAT_10031620,0xaa,0);
     }
@@ -562,8 +562,8 @@ LAB_10002b06:
       uVar1 = TimerDone(3);
       if ((uVar1 & 0xff) != 0) {
         SetTrigg(4,0);
-        SetTrigg(10,1);
-        SetTrigg(9,1);
+        SetTrigg(10,0);
+        SetTrigg(9,0);
         FreeTimer(3);
         RunTimer(8,25000);
         RemoveGroup(&DAT_10031430,&DAT_10031448);
@@ -581,7 +581,7 @@ LAB_10002b06:
         if ((uVar1 & 0xff) == 0) goto LAB_100035ae;
       }
       FreeTimer(8);
-      SetTrigg(4,1);
+      SetTrigg(4,0);
     }
   }
 LAB_100035ae:
@@ -607,8 +607,8 @@ LAB_100035ae:
       uVar1 = TimerDone(4);
       if ((uVar1 & 0xff) != 0) {
         SetTrigg(5,0);
-        SetTrigg(0xc,1);
-        SetTrigg(0xb,1);
+        SetTrigg(0xc,0);
+        SetTrigg(0xb,0);
         FreeTimer(4);
         RunTimer(5,25000);
         RemoveGroup(&DAT_10031428,&DAT_10031438);
@@ -626,7 +626,7 @@ LAB_100035ae:
         if ((uVar1 & 0xff) == 0) goto LAB_1000385d;
       }
       FreeTimer(5);
-      SetTrigg(5,1);
+      SetTrigg(5,0);
     }
   }
 LAB_1000385d:

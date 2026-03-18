@@ -115,7 +115,7 @@ void ProcessScenary(void)
     ChangeFriends(2,0x74);
     ChangeFriends(0,0xb);
     ChangeFriends(1,0xb);
-    SetTrigg(0xf,1);
+    SetTrigg(0xf,0);
     SetLightSpot(&DAT_100065c8,2,1);
     SetLightSpot(&DAT_100065a8,2,2);
     iVar2 = GetDiff(0);
@@ -222,7 +222,7 @@ void ProcessScenary(void)
     SelSendTo(3,&DAT_10006560,0,0);
     SelSendTo(3,&DAT_10006530,0,2);
     SelSendTo(3,&DAT_10006558,0x60,2);
-    SetTrigg(9,1);
+    SetTrigg(9,0);
   }
   cVar1 = Trigg(9);
   if ((cVar1 != '\0') && (iVar2 = GetUnitsAmount1(&DAT_10006558,&DAT_100065b8), 0 < iVar2)) {
@@ -233,7 +233,7 @@ void ProcessScenary(void)
     SelSendTo(3,&DAT_10006530,0x80,0);
     SelSendTo(3,&DAT_10006560,0x80,2);
     SelSendTo(3,&DAT_100065c8,0x20,2);
-    SetTrigg(8,1);
+    SetTrigg(8,0);
   }
   cVar1 = Trigg(10);
   if ((cVar1 != '\0') && (iVar2 = GetUnitsAmount1(&DAT_100065a8,&DAT_10006520), 0 < iVar2)) {
@@ -244,7 +244,7 @@ void ProcessScenary(void)
     SelSendTo(3,&DAT_10006598,0x40,2);
     SelSendTo(3,&DAT_100065a0,0x20,2);
     SelSendTo(3,&DAT_10006558,0x60,2);
-    SetTrigg(0xb,1);
+    SetTrigg(0xb,0);
   }
   cVar1 = Trigg(0xb);
   if ((cVar1 != '\0') && (iVar2 = GetUnitsAmount1(&DAT_10006558,&DAT_10006520), 0 < iVar2)) {
@@ -257,14 +257,14 @@ void ProcessScenary(void)
     SelSendTo(3,&DAT_10006590,0xc0,2);
     SelSendTo(3,&DAT_10006588,0xac,2);
     SelSendTo(3,&DAT_100065a8,0x20,2);
-    SetTrigg(10,1);
+    SetTrigg(10,0);
   }
   cVar1 = Trigg(0xc);
   if ((cVar1 != '\0') && (iVar2 = GetTotalAmount0(&DAT_10006520), iVar2 == 0)) {
     SetTrigg(0xc,0);
     ShowPage("#PAGE11");
     RunTimer(2,0x1194);
-    SetTrigg(0xe,1);
+    SetTrigg(0xe,0);
   }
   cVar1 = Trigg(0xd);
   if ((cVar1 != '\0') && (cVar1 = TimerDone(1), cVar1 != '\0')) {
@@ -272,23 +272,23 @@ void ProcessScenary(void)
     CreateObject0(&DAT_10006550,&DAT_10006540,&DAT_10006538,6,&DAT_100065d8,0);
     SelectUnits(&DAT_10006550,0);
     SelSendAndKill(6,&DAT_10006570,0x80,0);
-    SetTrigg(0xf,1);
+    SetTrigg(0xf,0);
   }
   cVar1 = Trigg(0xe);
   if ((cVar1 != '\0') && (cVar1 = TimerDone(2), cVar1 != '\0')) {
     SetTrigg(0xe,0);
     CreateObject0(&DAT_10006520,&DAT_10006548,&DAT_100065c0,3,&DAT_100065a8,0x40);
     ShowPage("#PAGE12");
-    SetTrigg(0xc,1);
-    SetTrigg(0xb,1);
-    SetTrigg(10,1);
+    SetTrigg(0xc,0);
+    SetTrigg(0xb,0);
+    SetTrigg(10,0);
   }
   cVar1 = Trigg(0xf);
   if ((cVar1 != '\0') && (iVar2 = GetTotalAmount0(&DAT_10006550), iVar2 == 0)) {
     SetTrigg(0xf,0);
     ShowPage("#PAGE");
     RunTimer(1,3000);
-    SetTrigg(0xd,1);
+    SetTrigg(0xd,0);
   }
   cVar1 = Trigg(0x10);
   if ((cVar1 != '\0') && (iVar2 = GetUnitsAmount0(&DAT_100065d0,6), iVar2 == 0)) {

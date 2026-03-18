@@ -585,19 +585,19 @@ LAB_10002fb2:
     if ((uVar1 & 0xff) != 0) {
       CreateObject0(&DAT_10035410,&DAT_10035730,&DAT_100353e0,1,&DAT_10035478,0);
       SelectUnits(&DAT_10035410,0);
-      SaveSelectedUnits(1,&DAT_100356e0);
+      SaveSelectedUnits(1,&DAT_100356e0,0);
       SelSendTo(1,&DAT_100354b0,0,0);
       CreateObject0(&DAT_10035410,&DAT_10035730,&DAT_100353e0,1,&DAT_10035490,0);
       SelectUnits(&DAT_10035410,0);
-      SaveSelectedUnits(1,&DAT_100356b8);
+      SaveSelectedUnits(1,&DAT_100356b8,0);
       SelSendTo(1,&DAT_10035498,0,0);
       CreateObject0(&DAT_10035410,&DAT_10035730,&DAT_100353e0,1,&DAT_100354a0,0);
       SelectUnits(&DAT_10035410,0);
-      SaveSelectedUnits(1,&DAT_100356c0);
+      SaveSelectedUnits(1,&DAT_100356c0,0);
       SelSendTo(1,&DAT_10035488,0,0);
       CreateObject0(&DAT_10035410,&DAT_10035730,&DAT_100353e0,1,&DAT_100354c0,0);
       SelectUnits(&DAT_10035410,0);
-      SaveSelectedUnits(1,&DAT_100355f0);
+      SaveSelectedUnits(1,&DAT_100355f0,0);
       SelSendTo(1,&DAT_100354a8,0,0);
       RunTimer(7,200);
       SelectUnits(&DAT_10035668,0);
@@ -611,19 +611,19 @@ LAB_10002fb2:
   if ((uVar1 & 0xff) != 0) {
     CreateObject0(&DAT_10035410,&DAT_10035730,&DAT_100353e0,1,&DAT_10035478,0);
     SelectUnits(&DAT_10035410,0);
-    SaveSelectedUnits(1,&DAT_100356a0);
+    SaveSelectedUnits(1,&DAT_100356a0,0);
     SelSendTo(1,&DAT_100354f0,0,0);
     CreateObject0(&DAT_10035410,&DAT_10035730,&DAT_100353e0,1,&DAT_10035490,0);
     SelectUnits(&DAT_10035410,0);
-    SaveSelectedUnits(1,&DAT_10035680);
+    SaveSelectedUnits(1,&DAT_10035680,0);
     SelSendTo(1,&DAT_100354d8,0,0);
     CreateObject0(&DAT_10035410,&DAT_10035730,&DAT_100353e0,1,&DAT_100354a0,0);
     SelectUnits(&DAT_10035410,0);
-    SaveSelectedUnits(1,&DAT_10035688);
+    SaveSelectedUnits(1,&DAT_10035688,0);
     SelSendTo(1,&DAT_100354b8,0,0);
     CreateObject0(&DAT_10035410,&DAT_10035730,&DAT_100353e0,1,&DAT_100354c0,0);
     SelectUnits(&DAT_10035410,0);
-    SaveSelectedUnits(1,&DAT_100356c8);
+    SaveSelectedUnits(1,&DAT_100356c8,0);
     SelSendTo(1,&DAT_100354e8,0,0);
     RunTimer(0x1f,0x41a);
   }
@@ -1073,19 +1073,19 @@ LAB_10004d23:
     if ((uVar1 & 0xff) == 0) {
       CreateObject0(&DAT_10035410,&DAT_10035730,&DAT_100353e0,1,&DAT_100354f8,0);
       SelectUnits(&DAT_10035410,0);
-      SaveSelectedUnits(1,&DAT_10035698);
+      SaveSelectedUnits(1,&DAT_10035698,0);
       SelSendTo(1,&DAT_100354d0,0,0);
       CreateObject0(&DAT_10035410,&DAT_10035730,&DAT_100353e0,1,&DAT_10035520,0);
       SelectUnits(&DAT_10035410,0);
-      SaveSelectedUnits(1,&DAT_10035670);
+      SaveSelectedUnits(1,&DAT_10035670,0);
       SelSendTo(1,&DAT_10035528,0,0);
       CreateObject0(&DAT_10035410,&DAT_10035730,&DAT_100353e0,1,&DAT_10035538,0);
       SelectUnits(&DAT_10035410,0);
-      SaveSelectedUnits(1,&DAT_100356b0);
+      SaveSelectedUnits(1,&DAT_100356b0,0);
       SelSendTo(1,&DAT_10035500,0,0);
       CreateObject0(&DAT_10035410,&DAT_10035730,&DAT_100353e0,1,&DAT_10035558,0);
       SelectUnits(&DAT_10035410,0);
-      SaveSelectedUnits(1,&DAT_10035690);
+      SaveSelectedUnits(1,&DAT_10035690,0);
       SelSendTo(1,&DAT_100354c8,0,0);
       RunTimer(0x13,300);
       SetTrigg(0x27,0);
@@ -1100,19 +1100,19 @@ LAB_10004d23:
       if ((uVar1 & 0xff) != 0) {
         CreateObject0(&DAT_10035410,&DAT_10035730,&DAT_100353e0,1,&DAT_100354f8,0);
         SelectUnits(&DAT_10035410,0);
-        SaveSelectedUnits(1,&DAT_10035658);
+        SaveSelectedUnits(1,&DAT_10035658,0);
         SelSendTo(1,&DAT_10035510,0,0);
         CreateObject0(&DAT_10035410,&DAT_10035730,&DAT_100353e0,1,&DAT_10035520,0);
         SelectUnits(&DAT_10035410,0);
-        SaveSelectedUnits(1,&DAT_10035718);
+        SaveSelectedUnits(1,&DAT_10035718,0);
         SelSendTo(1,&DAT_100354e0,0,0);
         CreateObject0(&DAT_10035410,&DAT_10035730,&DAT_100353e0,1,&DAT_10035538,0);
         SelectUnits(&DAT_10035410,0);
-        SaveSelectedUnits(1,&DAT_10035678);
+        SaveSelectedUnits(1,&DAT_10035678,0);
         SelSendTo(1,&DAT_10035540,0,0);
         CreateObject0(&DAT_10035410,&DAT_10035730,&DAT_100353e0,1,&DAT_10035558,0);
         SelectUnits(&DAT_10035410,0);
-        SaveSelectedUnits(1,&DAT_10035650);
+        SaveSelectedUnits(1,&DAT_10035650,0);
         SelSendTo(1,&DAT_10035508,0,0);
         SetTrigg(0x28,0);
         RunTimer(0x14,0x2ce);

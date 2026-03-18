@@ -200,7 +200,7 @@ void __cdecl FUN_10001580(char param_1)
   int *puVar3;
   int local_48 [16];
   void *local_8;
-uVar1 = Trigg((int)param_1);
+uVar1 = Trigg((intptr_t)param_1);
   if ((uVar1 & 0xff) != 0) {
     iVar2 = GetResource(3,1);
     if (2000 < iVar2) {
@@ -210,7 +210,7 @@ uVar1 = Trigg((int)param_1);
       FUN_10002c50(&DAT_10035cc8,1,2,&DAT_10035d60);
       FUN_10002c50(&DAT_10035eb8,0,2,&DAT_10035d60);
       FUN_10002c50(&DAT_10035eb8,1,2,&DAT_10035d60);
-      AddResource(3,1,0xfffff830);
+      AddResource(3,1,-2000);
       SetTrigg(param_1,0);
     }
   }
@@ -222,7 +222,7 @@ uVar1 = Trigg((int)param_1);
       FUN_100025f0(local_8,&DAT_10035d60);
       FUN_10002540(local_8,&DAT_10035ef8);
       FUN_10002450(local_8,5);
-      SetTrigg(param_1,1);
+      SetTrigg(param_1,0);
     }
   }
   local_8 = (void *)0x1000170f;
@@ -328,20 +328,20 @@ void __cdecl FUN_10001ab0(int *param_1)
   int local_4c [16];
   int *local_c;
   int local_8;
-FUN_100024d0((int)param_1);
+FUN_100024d0((intptr_t)param_1);
   if (0 < iVar3) {
-    FUN_10002ab0((int)param_1);
+    FUN_10002ab0((intptr_t)param_1);
     if (cVar1 != '\0') {
       for (local_8 = 0; local_8 < 0x28; local_8 = local_8 + 1) {
         local_c = ((unsigned char *)&DAT_100357c8) + local_8 * 0x20;
-        FUN_100024d0((int)local_c);
+        FUN_100024d0((intptr_t)local_c);
         if ((0 < iVar3) && (param_1 != local_c)) {
-          FUN_10002ab0((int)local_c);
+          FUN_10002ab0((intptr_t)local_c);
           if (cVar1 != '\0') {
-            iVar3 = FUN_10002490((int)param_1);
-            iVar2 = FUN_10002490((int)local_c);
+            iVar3 = FUN_10002490((intptr_t)param_1);
+            iVar2 = FUN_10002490((intptr_t)local_c);
             if (iVar3 == iVar2) {
-              iVar3 = FUN_10002bd0((int)local_c);
+              iVar3 = FUN_10002bd0((intptr_t)local_c);
               FUN_100025f0(param_1,iVar3);
               FUN_10002450(local_c,0);
             }
@@ -392,8 +392,8 @@ FUN_10001c50(void *this_ptr,int param_1,int param_2,char param_3,int param_4)
   void *local_8;
 local_8 = this_ptr;
   RegisterUnits((int)this_ptr + 0x16,param_1);
-  RegisterZone((int)local_8 + 0x1e,param_2);
-  FUN_10001bb0(local_8,(int)local_8 + 0x16,(int)local_8 + 0x1e,param_3,param_4);
+  RegisterZone((intptr_t)local_8 + 0x1e,param_2);
+  FUN_10001bb0(local_8,(intptr_t)local_8 + 0x16,(intptr_t)local_8 + 0x1e,param_3,param_4);
   local_8 = (void *)0x10001cd2;
   return;
 }
@@ -411,8 +411,8 @@ void  FUN_10001d00(void *this_ptr,int param_1,char param_2,int param_3)
   void *local_8;
 local_8 = this_ptr;
   RegisterUnits((int)this_ptr + 0x16,param_1);
-  CreateZoneNearGroup((int)local_8 + 0x1e,&DAT_10035d38,(int)local_8 + 0x16,300);
-  FUN_10001bb0(local_8,(int)local_8 + 0x16,(int)local_8 + 0x1e,param_2,param_3);
+  CreateZoneNearGroup((intptr_t)local_8 + 0x1e,&DAT_10035d38,(intptr_t)local_8 + 0x16,300);
+  FUN_10001bb0(local_8,(intptr_t)local_8 + 0x16,(intptr_t)local_8 + 0x1e,param_2,param_3);
   local_8 = (void *)0x10001d8f;
   return;
 }
@@ -443,7 +443,7 @@ local_8 = param_1;
     iVar2 = GetUnitsAmount0(*(int *)(local_8 + 10),*local_8);
     if (iVar2 < 1) {
       FUN_10001fd0(local_8);
-      SetTrigg(local_8[2],1);
+      SetTrigg(local_8[2],0);
     }
   }
   local_8 = (char *)0x10001ebb;
@@ -570,7 +570,7 @@ void  FUN_10002270(int param_1)
 local_8 = param_1;
   FUN_100021f0(param_1);
   if (cVar1 != '\0') {
-    for (local_c = 0; (int)local_c < 8; local_c = local_c + 1) {
+    for (local_c = 0; (intptr_t)local_c < 8; local_c = local_c + 1) {
       iVar3 = GetUnitsByNation(local_8 + 0x14,local_c & 0xff);
       if ((0 < iVar3) && (local_c != *(unsigned int *)(local_8 + 4))) {
         SelectUnits1(2,local_8 + 0x14,0);
@@ -685,9 +685,9 @@ void  FUN_10002580(int *param_1)
   int local_c;
   int *local_8;
 local_8 = param_1;
-  FUN_100024d0((int)param_1);
+  FUN_100024d0((intptr_t)param_1);
   local_c = *local_8 - local_c;
-  FUN_100024d0((int)local_8);
+  FUN_100024d0((intptr_t)local_8);
   *local_8 = iVar1;
   local_8 = (int *)0x100025cc;
   return;
@@ -869,8 +869,8 @@ void  FUN_10002c50(void *this_ptr,int param_1,int param_2,int param_3)
   void *local_8;
 local_8 = this_ptr;
   for (local_c = 0; local_c < param_2; local_c = local_c + 1) {
-    ProduceUnitFast(local_8,(int)local_8 + param_1 * 8 + 8,param_3,
-                    *(int *)((int)local_8 + 0x30));
+    ProduceUnitFast(local_8,(intptr_t)local_8 + param_1 * 8 + 8,param_3,
+                    *(int *)((intptr_t)local_8 + 0x30));
   }
   local_8 = (void *)0x10002cc2;
   return;
@@ -909,7 +909,7 @@ void  FUN_10002d70(void *this_ptr,int param_1)
 if (*(int *)((int)this_ptr + 0x2c) < 4) {
     local_8 = this_ptr;
     RegisterUnitType((int)this_ptr + *(int *)((int)this_ptr + 0x2c) * 8 + 8,param_1);
-    *(int *)((int)local_8 + 0x2c) = *(int *)((int)local_8 + 0x2c) + 1;
+    *(int *)((intptr_t)local_8 + 0x2c) = *(int *)((intptr_t)local_8 + 0x2c) + 1;
   }
   local_8 = (void *)0x10002dd6;
   return;
@@ -1108,7 +1108,7 @@ uVar1 = Trigg(99);
           ShowPage("#PAGE2");
         }
         else {
-          AddResource(0,1,0xfffffe0c);
+          AddResource(0,1,-500);
           FUN_10002c50(&DAT_10035d00,0,5,&DAT_10035d68);
         }
         break;
@@ -1118,7 +1118,7 @@ uVar1 = Trigg(99);
           ShowPage("#PAGE2");
         }
         else {
-          AddResource(0,1,0xfffffd44);
+          AddResource(0,1,-700);
           FUN_10002c50(&DAT_10035d00,1,5,&DAT_10035d68);
         }
         break;
@@ -1128,7 +1128,7 @@ uVar1 = Trigg(99);
           ShowPage("#PAGE2");
         }
         else {
-          AddResource(0,1,0xfffff830);
+          AddResource(0,1,-2000);
           FUN_10002c50(&DAT_10035e08,0,5,&DAT_10035d68);
         }
         break;
@@ -1138,7 +1138,7 @@ uVar1 = Trigg(99);
           ShowPage("#PAGE2");
         }
         else {
-          AddResource(0,1,0xfffff448);
+          AddResource(0,1,-3000);
           FUN_10002c50(&DAT_10035e08,1,5,&DAT_10035d68);
         }
         break;
@@ -1148,7 +1148,7 @@ uVar1 = Trigg(99);
           ShowPage("#PAGE2");
         }
         else {
-          AddResource(0,1,0xfffffed4);
+          AddResource(0,1,-300);
           FUN_10002c50(&DAT_10035e80,1,10,&DAT_10035d68);
         }
         break;
@@ -1158,7 +1158,7 @@ uVar1 = Trigg(99);
           ShowPage("#PAGE2");
         }
         else {
-          AddResource(0,1,0xfffffe0c);
+          AddResource(0,1,-500);
           FUN_10002c50(&DAT_10035e80,0,10,&DAT_10035d68);
         }
         break;
@@ -1171,7 +1171,7 @@ uVar1 = Trigg(99);
   if ((uVar1 & 0xff) == 0) {
     iVar2 = GetUnitsAmount1(&DAT_10035db0,&DAT_10035d98);
     if (iVar2 == 0) {
-      SetTrigg(0xb,1);
+      SetTrigg(0xb,0);
     }
   }
   ProcessScenary();
@@ -1305,7 +1305,7 @@ __declspec(dllexport) void OnInit()
   unsigned int local_c;
   unsigned int local_8;
 local_8 = 0;
-  for (local_c = 0; (int)local_c < 8; local_c = local_c + 1) {
+  for (local_c = 0; (intptr_t)local_c < 8; local_c = local_c + 1) {
     iVar1 = GetUnitsByNation(param_1,local_c & 0xff);
     if (0 < iVar1) {
       local_8 = local_c;

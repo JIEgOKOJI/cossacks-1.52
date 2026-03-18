@@ -274,7 +274,7 @@ uVar1 = Trigg(99);
     iVar4 = GetUnitsAmount1(&DAT_10031540,&DAT_10031488);
     iVar3 = GetTotalAmount0(&DAT_10031488);
     if (iVar4 < iVar3) {
-      SetTrigg(1,1);
+      SetTrigg(1,0);
       SelectUnits(&DAT_10031488,0);
       SelSendTo(5,&DAT_10031588,0x41,0);
     }
@@ -310,7 +310,7 @@ uVar1 = Trigg(99);
     iVar4 = GetUnitsAmount1(&DAT_10031548,&DAT_10031480);
     iVar3 = GetTotalAmount0(&DAT_10031480);
     if (iVar4 < iVar3) {
-      SetTrigg(0x14,1);
+      SetTrigg(0x14,0);
       SelectUnits(&DAT_10031480,0);
       SelSendTo(5,&DAT_10031598,0,0);
     }
@@ -449,7 +449,7 @@ LAB_10002e4c:
   if ((uVar1 & 0xff) != 0) {
     FreeTimer(3);
     FreeTimer(2);
-    SetTrigg(10,1);
+    SetTrigg(10,0);
   }
   uVar1 = Trigg(0x5f);
   if ((uVar1 & 0xff) == 0) {
@@ -516,7 +516,7 @@ LAB_10003241:
   if ((uVar1 & 0xff) != 0) {
     FreeTimer(5);
     FreeTimer(4);
-    SetTrigg(0x18,1);
+    SetTrigg(0x18,0);
   }
   uVar1 = Trigg(0x5f);
   if ((uVar1 & 0xff) == 0) {

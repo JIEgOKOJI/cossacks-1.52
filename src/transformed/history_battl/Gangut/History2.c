@@ -102,7 +102,7 @@ void __cdecl FUN_10001220(char param_1)
   int *puVar2;
   int local_44 [15];
   int uStack_8;
-(*DAT_1002f4cc)((int)param_1);
+(*DAT_1002f4cc)((intptr_t)param_1);
   uStack_8 = 0x1000125b;
   return;
 }
@@ -118,7 +118,7 @@ void __cdecl FUN_10001270(char param_1)
   int *puVar2;
   int local_44 [15];
   int uStack_8;
-(*DAT_1002f4d0)((int)param_1);
+(*DAT_1002f4d0)((intptr_t)param_1);
   uStack_8 = 0x100012ab;
   return;
 }
@@ -150,7 +150,7 @@ void __cdecl FUN_10001310(char param_1)
   int *puVar2;
   int local_44 [15];
   int uStack_8;
-(*DAT_1002f4d8)((int)param_1);
+(*DAT_1002f4d8)((intptr_t)param_1);
   uStack_8 = 0x1000134b;
   return;
 }
@@ -166,7 +166,7 @@ void __cdecl FUN_10001360(char param_1)
   int *puVar2;
   int local_44 [15];
   int uStack_8;
-(*DAT_1002f4dc)((int)param_1);
+(*DAT_1002f4dc)((intptr_t)param_1);
   uStack_8 = 0x1000139b;
   return;
 }
@@ -182,7 +182,7 @@ void __cdecl FUN_100013b0(char param_1)
   int *puVar2;
   int local_44 [15];
   int uStack_8;
-(*DAT_1002f4e0)((int)param_1);
+(*DAT_1002f4e0)((intptr_t)param_1);
   uStack_8 = 0x100013eb;
   return;
 }
@@ -198,7 +198,7 @@ void __cdecl FUN_10001400(int param_1,int param_2,char param_3)
   int *puVar2;
   int local_44 [15];
   int uStack_8;
-(*DAT_1002f4e4)(param_1,param_2,(int)param_3);
+(*DAT_1002f4e4)(param_1,param_2,(intptr_t)param_3);
   uStack_8 = 0x10001443;
   return;
 }
@@ -214,7 +214,7 @@ void __cdecl FUN_10001460(int param_1,int param_2,char param_3)
   int *puVar2;
   int local_44 [15];
   int uStack_8;
-(*DAT_1002f4e8)(param_1,param_2,(int)param_3);
+(*DAT_1002f4e8)(param_1,param_2,(intptr_t)param_3);
   uStack_8 = 0x100014a3;
   return;
 }
@@ -249,7 +249,7 @@ void __cdecl FUN_10001520(char param_1)
   int local_44 [15];
   int uStack_8;
 if (DAT_1002f518 != (void *)0x0) {
-    (*DAT_1002f518)((int)param_1);
+    (*DAT_1002f518)((intptr_t)param_1);
   }
   uStack_8 = 0x10001564;
   return;
@@ -299,7 +299,7 @@ void __cdecl FUN_10001630(char param_1)
   int local_44 [15];
   int uStack_8;
 if (DAT_1002f590 != (void *)0x0) {
-    (*DAT_1002f590)((int)param_1);
+    (*DAT_1002f590)((intptr_t)param_1);
   }
   uStack_8 = 0x10001674;
   return;
@@ -332,7 +332,7 @@ void __cdecl FUN_100016f0(int param_1,int param_2,char param_3)
   int *puVar2;
   int local_44 [15];
   int uStack_8;
-(*DAT_1002f598)(param_1,param_2,(int)param_3);
+(*DAT_1002f598)(param_1,param_2,(intptr_t)param_3);
   uStack_8 = 0x10001733;
   return;
 }
@@ -366,7 +366,7 @@ void __cdecl FUN_100017c0(char param_1)
   int *puVar2;
   int local_44 [15];
   int uStack_8;
-(*DAT_1002f5a0)((int)param_1);
+(*DAT_1002f5a0)((intptr_t)param_1);
   uStack_8 = 0x100017fb;
   return;
 }
@@ -416,7 +416,7 @@ void __cdecl FUN_100018e0(char param_1)
   int *puVar2;
   int local_44 [15];
   int uStack_8;
-(*DAT_1002f5ac)((int)param_1);
+(*DAT_1002f5ac)((intptr_t)param_1);
   uStack_8 = 0x1000191b;
   return;
 }
@@ -518,7 +518,7 @@ void __cdecl FUN_10002370(char param_1)
   int local_44 [15];
   int uStack_8;
 if (DAT_1002f570 != (void *)0x0) {
-    (*DAT_1002f570)((int)param_1);
+    (*DAT_1002f570)((intptr_t)param_1);
   }
   uStack_8 = 0x100023b8;
   return;
@@ -712,7 +712,7 @@ void __cdecl FUN_100027e0(char param_1,char param_2)
   int local_44 [15];
   int uStack_8;
 if (DAT_1002f508 != (void *)0x0) {
-    (*DAT_1002f508)(param_1,(int)param_2);
+    (*DAT_1002f508)(param_1,(intptr_t)param_2);
   }
   uStack_8 = 0x10002828;
   return;
@@ -730,7 +730,7 @@ void __cdecl FUN_10002830(char param_1,char param_2)
   int local_44 [15];
   int uStack_8;
 if (DAT_1002f574 != (void *)0x0) {
-    (*DAT_1002f574)(param_1,(int)param_2);
+    (*DAT_1002f574)(param_1,(intptr_t)param_2);
   }
   uStack_8 = 0x10002878;
   return;
@@ -821,7 +821,7 @@ __declspec(dllexport) void ProcessScenary()
   int *puVar2;
   int local_44 [15];
   int uStack_8;
-(*DAT_1002f4b0)((int)param_1);
+(*DAT_1002f4b0)((intptr_t)param_1);
   uStack_8 = 0x1000120b;
   return;
 }

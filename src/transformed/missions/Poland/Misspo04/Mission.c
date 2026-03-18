@@ -287,7 +287,7 @@ uVar1 = Trigg(99);
       if (iVar4 < 3) {
         uVar1 = TimerDone(1);
         if ((uVar1 & 0xff) == 0) {
-          SetTrigg(1,1);
+          SetTrigg(1,0);
           ShowPage("#PAGE3");
           DisableMission(0x46);
           DisableMission(0x45);

@@ -147,7 +147,7 @@ uVar1 = Trigg(1);
     iVar2 = GetUnitsAmount0(&DAT_10030440,0);
     if (0 < iVar2) {
       SetTrigg(3,0);
-      DAT_10030438 = AskMultilineQuestion (9,"#PAGE2",0, "Kenneth\'s orders are they? Tell you what gentlemen. I have no quarrel with thee per se. Leave now in peace, but this_ptr cannon of yours is going into the sea, one way or another.|You on Kenneth\'s playrole? How about you take this_ptr 60 coins and relax in a brothel for a day or two?|To hell with you." );
+      DAT_10030438 = AskMultilineQuestion (9,"#PAGE2",0, "Kenneth\'s orders are they? Tell you what gentlemen. I have no quarrel with thee per se. Leave now in peace);
       if (DAT_10030438 == 0) {
         SetTrigg(4,0);
       }
@@ -165,7 +165,7 @@ uVar1 = Trigg(1);
           SelChangeNation(5,1);
           SelectUnits(&DAT_100303e8,0);
           SelSendTo(5,&DAT_10030478,0,0);
-          AddResource(0,1,0xffffffc4);
+          AddResource(0,1,-60);
         }
       }
       if (DAT_10030438 == 2) {
@@ -178,7 +178,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(4);
   if ((uVar1 & 0xff) == 0) {
-    SetTrigg(4,1);
+    SetTrigg(4,0);
     uVar1 = AskQuestion("#PAGE2A");
     if ((uVar1 & 0xff) == 0) {
       ShowPage("#PAGE2Ano");
@@ -199,7 +199,7 @@ uVar1 = Trigg(1);
         SelChangeNation(5,1);
         SelectUnits(&DAT_100303e8,0);
         SelSendTo(5,&DAT_10030478,0,0);
-        AddResource(0,1,0xffffffce);
+        AddResource(0,1,-50);
       }
     }
   }
@@ -260,7 +260,7 @@ uVar1 = Trigg(1);
         if (0x31 < iVar2) {
           SelectUnits(&DAT_10030418,0);
           SelChangeNation(5,0);
-          AddResource(0,1,0xffffffce);
+          AddResource(0,1,-50);
           ShowPage("#PAGE7yes");
           goto LAB_10002021;
         }
@@ -367,7 +367,7 @@ LAB_10002021:
           SelSendTo(5,&DAT_10030478,0,0);
           SelectUnits(&DAT_10030420,0);
           SelChangeNation(5,1);
-          AddResource(0,1,0xffffffc4);
+          AddResource(0,1,-60);
         }
       }
       if (DAT_1003043c == 2) {

@@ -317,8 +317,8 @@ void ProcessScenary(void)
     SetResource(1,5,10000);
     SetResource(1,0,5000);
     SetResource(1,2,5000);
-    SetTrigg(5,1);
-    SetTrigg(6,1);
+    SetTrigg(5,0);
+    SetTrigg(6,0);
     iVar3 = GetDiff(0);
     if (iVar3 == 0) {
       StartAI(1,"FRANCE.0",0,1,1,1);
@@ -351,7 +351,7 @@ void ProcessScenary(void)
   cVar1 = Trigg(5);
   if ((cVar1 != '\0') && (cVar1 = TimerDone(1), cVar1 != '\0')) {
     SetTrigg(5,0);
-    SetTrigg(7,1);
+    SetTrigg(7,0);
     uVar2 = FUN_10001000();
     RunTimer(5,uVar2);
     iVar3 = 0;
@@ -376,7 +376,7 @@ void ProcessScenary(void)
   cVar1 = Trigg(6);
   if ((cVar1 != '\0') && (cVar1 = TimerDone(2), cVar1 != '\0')) {
     SetTrigg(6,0);
-    SetTrigg(8,1);
+    SetTrigg(8,0);
     uVar2 = FUN_10001000();
     RunTimer(6,uVar2);
     iVar3 = 0;
@@ -405,7 +405,7 @@ void ProcessScenary(void)
     SelSendAndKill(2,&DAT_100067d0,0x60,2);
     RemoveGroup(&DAT_10006978,&DAT_10006980);
     RemoveGroup(&DAT_100067b0,&DAT_100067a8);
-    SetTrigg(5,1);
+    SetTrigg(5,0);
   }
   cVar1 = Trigg(8);
   if (((cVar1 != '\0') && (cVar1 = Trigg(2), cVar1 == '\0')) &&
@@ -420,7 +420,7 @@ void ProcessScenary(void)
     SelSendAndKill(2,&DAT_10006840,0x80,2);
     SelSendAndKill(2,&DAT_10006810,0x40,2);
     RemoveGroup(&DAT_10006960,&DAT_10006958);
-    SetTrigg(6,1);
+    SetTrigg(6,0);
   }
   cVar1 = Trigg(9);
   if ((cVar1 != '\0') && (iVar3 = GetUnitsAmount1(&DAT_100067f8,&DAT_10006988), iVar3 != 0)) {

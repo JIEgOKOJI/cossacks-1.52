@@ -65,7 +65,7 @@ uVar1 = Trigg(100);
     SetResource(5,2,50000);
     SetResource(5,5,50000);
     SetResource(5,4,50000);
-    StartAI(1,"VENECIA.0",2,0,1,0xffffffff);
+    StartAI(1,"VENECIA.0",2,0,1,-1);
     StartAI(4,"ALGIR.0",2,1,1,1);
     StartAI(5,"ALGIR.0",2,1,1,0);
     ShowPage("#PAGE1");

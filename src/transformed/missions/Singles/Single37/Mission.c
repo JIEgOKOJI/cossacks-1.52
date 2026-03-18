@@ -479,7 +479,7 @@ LAB_100017b9:
   if (((cVar1 == '\0') && (cVar1 = Trigg(9), cVar1 != '\0')) &&
      ((cVar1 = Trigg(1), cVar1 != '\0' &&
       (iVar3 = GetUnitsAmount1(&DAT_10007708,&DAT_10007858), iVar3 == 0)))) {
-    SetTrigg(0xb,1);
+    SetTrigg(0xb,0);
   }
   cVar1 = Trigg(0x14);
   if ((((cVar1 == '\0') && (cVar1 = Trigg(2), cVar1 != '\0')) && (cVar1 = Trigg(0xc), cVar1 != '\0')
@@ -498,7 +498,7 @@ LAB_100017b9:
   if (((cVar1 == '\0') && (cVar1 = Trigg(9), cVar1 != '\0')) &&
      ((cVar1 = Trigg(2), cVar1 != '\0' &&
       (iVar3 = GetUnitsAmount1(&DAT_10007710,&DAT_10007858), iVar3 == 0)))) {
-    SetTrigg(0xc,1);
+    SetTrigg(0xc,0);
   }
   cVar1 = Trigg(0x14);
   if (((((cVar1 == '\0') && (cVar1 = Trigg(9), cVar1 != '\0')) && (cVar1 = Trigg(3), cVar1 != '\0'))
@@ -518,7 +518,7 @@ LAB_100017b9:
   if (((cVar1 == '\0') && (cVar1 = Trigg(9), cVar1 != '\0')) &&
      ((cVar1 = Trigg(3), cVar1 != '\0' &&
       (iVar3 = GetUnitsAmount1(&DAT_10007720,&DAT_10007858), iVar3 == 0)))) {
-    SetTrigg(0xd,1);
+    SetTrigg(0xd,0);
   }
   cVar1 = Trigg(0x14);
   if ((((cVar1 == '\0') && (cVar1 = Trigg(9), cVar1 != '\0')) && (cVar1 = Trigg(4), cVar1 != '\0'))
@@ -538,7 +538,7 @@ LAB_100017b9:
   if (((cVar1 == '\0') && (cVar1 = Trigg(9), cVar1 != '\0')) &&
      ((cVar1 = Trigg(4), cVar1 != '\0' &&
       (iVar3 = GetUnitsAmount1(&DAT_10007728,&DAT_10007858), iVar3 == 0)))) {
-    SetTrigg(0xe,1);
+    SetTrigg(0xe,0);
   }
   cVar1 = Trigg(0x14);
   if ((((cVar1 == '\0') && (cVar1 = Trigg(9), cVar1 != '\0')) && (cVar1 = Trigg(5), cVar1 != '\0'))
@@ -558,7 +558,7 @@ LAB_100017b9:
   if (((cVar1 == '\0') && (cVar1 = Trigg(9), cVar1 != '\0')) &&
      ((cVar1 = Trigg(5), cVar1 != '\0' &&
       (iVar3 = GetUnitsAmount1(&DAT_10007730,&DAT_10007858), iVar3 == 0)))) {
-    SetTrigg(0xf,1);
+    SetTrigg(0xf,0);
   }
   cVar1 = Trigg(0x14);
   if (((cVar1 == '\0') && (cVar1 = Trigg(6), cVar1 != '\0')) &&
@@ -574,24 +574,24 @@ LAB_100017b9:
      (cVar1 = TimerDone(6), cVar1 != '\0')) {
     cVar1 = Trigg(7);
     if (cVar1 == '\0') {
-      CreateObject0(&DAT_100076f8,&DAT_10007660,&DAT_100077f8,3);
+      CreateObject0(&DAT_100076f8,&DAT_10007660,&DAT_100077f8,3,0,0);
       cVar1 = Trigg(8);
       if (cVar1 != '\0') {
         FUN_1000108e(&DAT_100076f8,&DAT_10007808);
       }
       FUN_1000108e(&DAT_100076f8,&DAT_10007790);
-      CreateObject0(&DAT_100076f8,&DAT_100077c8,&DAT_100077f8,3);
+      CreateObject0(&DAT_100076f8,&DAT_100077c8,&DAT_100077f8,3,0,0);
       FUN_10001030(&DAT_100076f8,&DAT_10007810);
       puVar8 = &DAT_100076f8;
     }
     else {
-      CreateObject0(&DAT_100076e0,&DAT_100077c8,&DAT_100077f8,3);
+      CreateObject0(&DAT_100076e0,&DAT_100077c8,&DAT_100077f8,3,0,0);
       cVar1 = Trigg(8);
       if (cVar1 != '\0') {
         FUN_1000108e(&DAT_100076e0,&DAT_10007808);
       }
       FUN_1000108e(&DAT_100076e0,&DAT_10007790);
-      CreateObject0(&DAT_100076e0,&DAT_100077c8,&DAT_100077f8,3);
+      CreateObject0(&DAT_100076e0,&DAT_100077c8,&DAT_100077f8,3,0,0);
       FUN_10001030(&DAT_100076e0,&DAT_10007810);
       puVar8 = &DAT_100076e0;
     }
@@ -602,27 +602,27 @@ LAB_100017b9:
     SelSendAndKill(iVar3,puVar9,uVar2,uVar10);
     RunTimer(6,700);
     cVar1 = Trigg(7);
-    SetTrigg(7,'\x01' - (cVar1 != '\0'));
+    SetTrigg(7,0);
   }
   cVar1 = Trigg(8);
   if ((cVar1 != '\0') && (cVar1 = TimerDone(8), cVar1 != '\0')) {
     iStack_4 = 5;
     do {
-      CreateObject0(&DAT_10007780,&DAT_100077c0,&DAT_10007738,4);
+      CreateObject0(&DAT_10007780,&DAT_100077c0,&DAT_10007738,4,0,0);
       RemoveGroup(&DAT_10007780,&DAT_10007658);
-      CreateObject0(&DAT_10007780,&DAT_10007650,&DAT_10007738,4);
+      CreateObject0(&DAT_10007780,&DAT_10007650,&DAT_10007738,4,0,0);
       RemoveGroup(&DAT_10007780,&DAT_10007658);
       iStack_4 = iStack_4 + -1;
     } while (iStack_4 != 0);
     iStack_4 = 2;
     do {
-      CreateObject0(&DAT_10007780,&DAT_100077b0,&DAT_10007738,4);
+      CreateObject0(&DAT_10007780,&DAT_100077b0,&DAT_10007738,4,0,0);
       RemoveGroup(&DAT_10007780,&DAT_10007658);
-      CreateObject0(&DAT_10007780,&DAT_10007868,&DAT_10007738,4);
+      CreateObject0(&DAT_10007780,&DAT_10007868,&DAT_10007738,4,0,0);
       RemoveGroup(&DAT_10007780,&DAT_10007658);
       iStack_4 = iStack_4 + -1;
     } while (iStack_4 != 0);
-    CreateObject0(&DAT_10007780,&DAT_10007770,&DAT_10007738,4);
+    CreateObject0(&DAT_10007780,&DAT_10007770,&DAT_10007738,4,0,0);
     RemoveGroup(&DAT_10007780,&DAT_10007658);
     FUN_1000105e(&DAT_10007658,&DAT_10007828,0x80);
     FUN_1000105e(&DAT_100076a8,&DAT_10007828,0x80);
@@ -661,7 +661,7 @@ LAB_100017b9:
     if (iVar3 + iVar4 + iVar5 == 0) {
       iStack_4 = 5;
       do {
-        CreateObject0(&DAT_10007780,&DAT_100077c0,&DAT_10007738,0);
+        CreateObject0(&DAT_10007780,&DAT_100077c0,&DAT_10007738,0,0,0);
         uVar10 = 2;
         uVar2 = 0x80;
         puVar8 = &DAT_10007828;
@@ -671,13 +671,13 @@ LAB_100017b9:
       } while (iStack_4 != 0);
       iStack_4 = 2;
       do {
-        CreateObject0(&DAT_10007780,&DAT_100077b0,&DAT_10007738,0);
+        CreateObject0(&DAT_10007780,&DAT_100077b0,&DAT_10007738,0,0,0);
         uVar10 = 2;
         uVar2 = 0x80;
         puVar8 = &DAT_10007828;
         iVar3 = FUN_1000105e(&DAT_10007780,&DAT_10007738,0x80);
         SelSendAndKill(iVar3,puVar8,uVar2,uVar10);
-        CreateObject0(&DAT_10007780,&DAT_10007868,&DAT_10007738,0);
+        CreateObject0(&DAT_10007780,&DAT_10007868,&DAT_10007738,0,0,0);
         uVar10 = 2;
         uVar2 = 0x80;
         puVar8 = &DAT_10007828;
@@ -685,13 +685,13 @@ LAB_100017b9:
         SelSendAndKill(iVar3,puVar8,uVar2,uVar10);
         iStack_4 = iStack_4 + -1;
       } while (iStack_4 != 0);
-      CreateObject0(&DAT_10007780,&DAT_10007770,&DAT_10007738,0);
+      CreateObject0(&DAT_10007780,&DAT_10007770,&DAT_10007738,0,0,0);
       uVar10 = 2;
       uVar2 = 0x80;
       puVar8 = &DAT_10007828;
       iVar3 = FUN_1000105e(&DAT_10007780,&DAT_10007738,0x80);
       SelSendAndKill(iVar3,puVar8,uVar2,uVar10);
-      CreateObject0(&DAT_10007780,&DAT_10007778,&DAT_10007738,0);
+      CreateObject0(&DAT_10007780,&DAT_10007778,&DAT_10007738,0,0,0);
       FUN_1000105e(&DAT_10007780,&DAT_10007738,0x80);
       SetResource(0,0,100000);
       SetResource(0,2,100000);

@@ -638,7 +638,7 @@ LAB_10001924:
       iVar2 = AskMultilineQuestion(9,"#PAGE1A",0,"Q1_1|Q1_2|Q1_3");
       if (iVar2 == 0) {
         ShowPage("#PAGE1B");
-        AddResource(0,1,0xffffffce);
+        AddResource(0,1,-50);
         SelectUnits(&DAT_10008c08,0);
         SelChangeNation(4,0);
         goto LAB_10001e35;
@@ -659,13 +659,13 @@ LAB_10001e35:
   cVar1 = Trigg(0x34);
   if (((cVar1 != '\0') && (cVar1 = Trigg(0x33), cVar1 == '\0')) &&
      (iVar2 = GetUnitsAmount1(&DAT_10008c10,&DAT_10008af8), iVar2 == 0)) {
-    SetTrigg(0x33,1);
+    SetTrigg(0x33,0);
     SetTrigg(0x34,0);
   }
   cVar1 = Trigg(0x34);
   if (((cVar1 == '\0') && (iVar2 = GetUnitsAmount1(&DAT_10008c10,&DAT_10008af8), 0 < iVar2)) &&
      (iVar2 = GetTotalAmount0(&DAT_10008c08), 0 < iVar2)) {
-    SetTrigg(0x34,1);
+    SetTrigg(0x34,0);
     iVar2 = GetResource(0,1);
     if (iVar2 < 0x32) {
       iVar2 = AskMultilineQuestion(9,"#PAGE1E",0,"Q1_2|Q1_3");
@@ -675,7 +675,7 @@ LAB_10001e35:
       iVar2 = AskMultilineQuestion(9,"#PAGE1E",0,"Q1_1|Q1_2|Q1_3");
       if (iVar2 == 0) {
         ShowPage("#PAGE1B");
-        AddResource(0,1,0xffffffce);
+        AddResource(0,1,-50);
         SelectUnits(&DAT_10008c08,0);
         SelChangeNation(4,0);
         goto LAB_10001f55;
@@ -795,7 +795,7 @@ LAB_1000223c:
             ShowPage("#PAGE6C");
             SelectUnits(&DAT_10008b20,0);
             SelChangeNation(1,0);
-            AddResource(0,1,0xffffff9c);
+            AddResource(0,1,-100);
             goto LAB_100023b4;
           }
           pcVar7 = "#PAGE6B";
@@ -889,7 +889,7 @@ LAB_100023b4:
   cVar1 = Trigg(0x3c);
   if (((cVar1 == '\0') && (GetUnitInfo(&DAT_10008c98,0,&DAT_10008f00), DAT_10008f04 == DAT_10008f06)
       ) && (iVar2 = GetTotalAmount0(&DAT_10008ca8), 0 < iVar2)) {
-    SetTrigg(0x3c,1);
+    SetTrigg(0x3c,0);
     SelectUnits(&DAT_10008ca8,0);
     SelErase(4);
   }
@@ -1058,7 +1058,7 @@ LAB_100029bb:
   }
   cVar1 = Trigg(0x41);
   if ((cVar1 == '\0') && (iVar2 = GetUnitsAmount0(&DAT_10008f40,0), iVar2 == 0)) {
-    SetTrigg(0x41,1);
+    SetTrigg(0x41,0);
     SelectUnits(&DAT_10008da8,0);
     SelCloseGates(4);
   }
@@ -1070,7 +1070,7 @@ LAB_100029bb:
   }
   cVar1 = Trigg(0x42);
   if ((cVar1 == '\0') && (iVar2 = GetUnitsAmount0(&DAT_10008f48,0), iVar2 == 0)) {
-    SetTrigg(0x42,1);
+    SetTrigg(0x42,0);
     SelectUnits(&DAT_10008db0,0);
     SelCloseGates(4);
   }
@@ -1119,7 +1119,7 @@ LAB_10002f7b:
         }
         else {
           ShowPage("#PAGE14A");
-          AddResource(0,1,0xffffff9c);
+          AddResource(0,1,-100);
           DAT_10008ce0 = DAT_10008ce0 + 10;
         }
       }
@@ -1127,14 +1127,14 @@ LAB_10002f7b:
         iVar2 = GetResource(0,1);
         if (iVar2 < 0x96) goto LAB_10002f7b;
         ShowPage("#PAGE14A");
-        AddResource(0,1,0xffffff6a);
+        AddResource(0,1,-150);
         DAT_10008cc8 = DAT_10008cc8 + 5;
       }
       else {
         if (iVar2 == 2) {
           iVar2 = GetResource(0,1);
           if (iVar2 < 300) goto LAB_10002f7b;
-          AddResource(0,1,0xfffffed4);
+          AddResource(0,1,-300);
           ShowPage("#PAGE14B");
           InitialUpgrade(DAT_10008388,"Pikiner_polan(PL)ATTACK");
           pcVar7 = "Pikiner_polan(PL)SHIELD";
@@ -1146,7 +1146,7 @@ LAB_10002f7b:
           }
           iVar2 = GetResource(0,1);
           if (iVar2 < 300) goto LAB_10002f7b;
-          AddResource(0,1,0xfffffed4);
+          AddResource(0,1,-300);
           ShowPage("#PAGE14B");
           InitialUpgrade(DAT_10008388,"Mushketer_polsha(PL)ATTACK");
           pcVar7 = "Mushketer_polsha(PL)SHIELD";
@@ -1159,7 +1159,7 @@ LAB_10002fd2:
   }
   cVar1 = Trigg(0xe);
   if ((cVar1 == '\0') && (iVar2 = GetUnitsAmount1(&DAT_10008d40,&DAT_10008af8), iVar2 == 0)) {
-    SetTrigg(0xe,1);
+    SetTrigg(0xe,0);
   }
   cVar1 = Trigg(0xf);
   if (((cVar1 != '\0') && (iVar2 = GetUnitsByNation(&DAT_10008de0,0), 0 < iVar2)) &&
@@ -1191,7 +1191,7 @@ LAB_10002fd2:
      (iVar2 = GetTotalAmount0(&DAT_10008ba8), iVar2 == 0)) {
     SetTrigg(0x47,0);
     iVar2 = GetDiff(0);
-// FIXME(decompiler):     iVar2 = GetDiff(0,(7 - iVar2) * 1000);
+// FIXME(decompiler):     iVar2 = GetDiff(0);
     ShowPageParam("#PAGE15B",(9 - iVar2) * 100);
     iVar2 = GetDiff(0);
     AddResource(0,1,(9 - iVar2) * 100);
@@ -1209,7 +1209,7 @@ LAB_10002fd2:
      (iVar2 = GetUnitsByNation(&DAT_10008dd8,0), 0 < iVar2)) {
     SetTrigg(0x48,0);
     iVar2 = GetDiff(0);
-// FIXME(decompiler):     iVar2 = GetDiff(0,(0xc - iVar2) * 500);
+// FIXME(decompiler):     iVar2 = GetDiff(0);
     ShowPageParam("#PAGE15C",(4 - iVar2) * 0x32);
     ClearSelection(0);
     SelectUnits(&DAT_10008dd8,0);

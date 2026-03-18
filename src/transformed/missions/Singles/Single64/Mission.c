@@ -945,7 +945,7 @@ LAB_1000260d:
         iVar3 = FUN_10001012(&DAT_10007c30);
         Patrol(iVar3,puVar12,uVar2);
       }
-      SetTrigg(2,cVar1 == '\0');
+      SetTrigg(2,0);
       cVar1 = Trigg(3);
       if (cVar1 == '\0') {
         FUN_10001072(&DAT_10007c38,&DAT_10007c60);
@@ -961,10 +961,10 @@ LAB_1000260d:
           iVar3 = FUN_10001012(&DAT_10007c38);
           Patrol(iVar3,puVar12,uVar2);
         }
-        SetTrigg(4,cVar1 == '\0');
+        SetTrigg(4,0);
       }
       RunTimer(3,DAT_10007b68 * -11000 + 48000);
-      SetTrigg(1,1);
+      SetTrigg(1,0);
     }
     cVar1 = TimerDone(5);
     if (cVar1 != '\0') {
@@ -1049,14 +1049,14 @@ LAB_10002f76:
     iStack_4 = 0;
     if (DAT_10007b68 * 5 != -0x19 && -1 < DAT_10007b68 * 5 + 0x19) {
       do {
-        CreateObject0(&DAT_10007c70,&DAT_10007b10,&DAT_10007ea0,3);
+        CreateObject0(&DAT_10007c70,&DAT_10007b10,&DAT_10007ea0,3,0,0);
         iStack_4 = iStack_4 + 1;
       } while (iStack_4 < DAT_10007b68 * 5 + 0x19);
     }
     iStack_4 = 0;
     if (0 < (DAT_10007b68 + 1) * 0x1e) {
       do {
-        CreateObject0(&DAT_10007c80,&DAT_10007bb8,&DAT_10007ea0,3);
+        CreateObject0(&DAT_10007c80,&DAT_10007bb8,&DAT_10007ea0,3,0,0);
         FUN_1000108a(&DAT_10007c80,&DAT_10007e48,0x40);
         iStack_4 = iStack_4 + 1;
       } while (iStack_4 < (DAT_10007b68 + 1) * 0x1e);
@@ -1064,21 +1064,21 @@ LAB_10002f76:
     iStack_4 = 0;
     if (0 < (DAT_10007b68 + 1) * 0x1e) {
       do {
-        CreateObject0(&DAT_10007c70,&DAT_10007e68,&DAT_10007ea0,3);
+        CreateObject0(&DAT_10007c70,&DAT_10007e68,&DAT_10007ea0,3,0,0);
         iStack_4 = iStack_4 + 1;
       } while (iStack_4 < (DAT_10007b68 + 1) * 0x1e);
     }
     iStack_4 = 0;
     if (0 < (DAT_10007b68 * 5 + 5) * 4) {
       do {
-        CreateObject0(&DAT_10007c70,&DAT_10007eb8,&DAT_10007ea0,3);
+        CreateObject0(&DAT_10007c70,&DAT_10007eb8,&DAT_10007ea0,3,0,0);
         iStack_4 = iStack_4 + 1;
       } while (iStack_4 < (DAT_10007b68 * 5 + 5) * 4);
     }
     iStack_4 = 0;
     if (0 < (DAT_10007b68 * 5 + 5) * 4) {
       do {
-        CreateObject0(&DAT_10007c70,&DAT_10007d88,&DAT_10007ea0,3);
+        CreateObject0(&DAT_10007c70,&DAT_10007d88,&DAT_10007ea0,3,0,0);
         iStack_4 = iStack_4 + 1;
       } while (iStack_4 < (DAT_10007b68 * 5 + 5) * 4);
     }

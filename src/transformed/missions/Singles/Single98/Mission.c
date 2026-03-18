@@ -150,9 +150,9 @@ void  FUN_10002070(void *this_ptr,int param_1,char param_2)
         return;
       }
       uVar3 = rand();
-      uVar3 = uVar3 & 0x80000001;
+      uVar3 = uVar3 & -2147483647;
       if ((int)uVar3 < 0) {
-        uVar3 = (uVar3 - 1 | 0xfffffffe) + 1;
+        uVar3 = (uVar3 - 1 | -2) + 1;
       }
       if (uVar3 == 0) {
         CreateObject0(param_1,&DAT_10013d20,&DAT_10013cc8,3,*(int *)((int)this_ptr + 4),0);
@@ -250,26 +250,26 @@ void __cdecl FUN_100021a0(int param_1,int param_2,int param_3,int param_4,int pa
           local_14 = local_2c - param_1;
           local_18 = local_30 - param_5;
           uVar4 = local_18;
-          if ((int)local_18 < 0) {
+          if ((intptr_t)local_18 < 0) {
             uVar4 = -local_18;
           }
           uVar5 = local_14;
-          if ((int)local_14 < 0) {
+          if ((intptr_t)local_14 < 0) {
             uVar5 = -local_14;
           }
           uVar6 = uVar4;
           if (uVar4 <= uVar5) {
             uVar6 = uVar5;
           }
-          if ((int)(uVar6 + uVar4 + uVar5 >> 1) < (int)local_c) {
+          if ((int)(uVar6 + uVar4 + uVar5 >> 1) < (intptr_t)local_c) {
             local_18 = local_2c - param_1;
             local_14 = local_30 - param_5;
             uVar4 = local_14;
-            if ((int)local_14 < 0) {
+            if ((intptr_t)local_14 < 0) {
               uVar4 = -local_14;
             }
             uVar5 = local_18;
-            if ((int)local_18 < 0) {
+            if ((intptr_t)local_18 < 0) {
               uVar5 = -local_18;
             }
             uVar6 = uVar4;
@@ -438,7 +438,7 @@ FUN_10002540(int param_1,int param_2,int param_3,int param_4,int param_5,
       return (int)1;
     }
   }
-  return uVar3 & 0xffffff00;
+  return uVar3 & -256;
 }
 
 
@@ -545,7 +545,7 @@ FUN_10002730(int param_1,int param_2,int param_3,unsigned int param_4,unsigned i
           local_10 = (short)local_30;
           local_8 = (unsigned int)local_18 - (local_30 & 0xffff);
           uVar2 = local_8;
-          if ((int)local_8 < 0) {
+          if ((intptr_t)local_8 < 0) {
             uVar2 = -local_8;
           }
           if ((int)uVar4 < 0) {
@@ -676,10 +676,10 @@ void __cdecl FUN_100029e0(int param_1,int param_2,unsigned short *param_3,int pa
   char *puStack_c;
   int local_8;
   
-  local_8 = 0xffffffff;
+  local_8 = -1;
   ClearSelection(param_2);
   uVar3 = param_5;
-  if (0 < (int)param_5) {
+  if (0 < (intptr_t)param_5) {
     do {
       SelectUnitsType(param_4,param_2,1);
       param_4 = param_4 + 8;
@@ -705,7 +705,7 @@ void __cdecl FUN_100029e0(int param_1,int param_2,unsigned short *param_3,int pa
         uVar3 = -uVar3;
       }
       uVar4 = param_5;
-      if ((int)param_5 < 0) {
+      if ((intptr_t)param_5 < 0) {
         uVar4 = -param_5;
       }
       uVar2 = uVar3;
@@ -764,7 +764,7 @@ void __cdecl FUN_10002b50(int param_1,unsigned int param_2)
       uVar5 = local_20 - local_4c;
       local_8 = local_24 - local_50;
       uVar3 = local_8;
-      if ((int)local_8 < 0) {
+      if ((intptr_t)local_8 < 0) {
         uVar3 = -local_8;
       }
       if ((int)uVar5 < 0) {
@@ -784,11 +784,11 @@ void __cdecl FUN_10002b50(int param_1,unsigned int param_2)
           local_8 = local_20 - local_4c;
           local_c = local_24 - local_50;
           uVar5 = local_c;
-          if ((int)local_c < 0) {
+          if ((intptr_t)local_c < 0) {
             uVar5 = -local_c;
           }
           uVar6 = local_8;
-          if ((int)local_8 < 0) {
+          if ((intptr_t)local_8 < 0) {
             uVar6 = -local_8;
           }
           uVar4 = uVar5;
@@ -799,7 +799,7 @@ void __cdecl FUN_10002b50(int param_1,unsigned int param_2)
             uVar5 = local_20 - local_4c;
             local_c = local_24 - local_50;
             uVar3 = local_c;
-            if ((int)local_c < 0) {
+            if ((intptr_t)local_c < 0) {
               uVar3 = -local_c;
             }
             if ((int)uVar5 < 0) {
@@ -920,7 +920,7 @@ void  FUN_10002ea0(void *this_ptr,int *param_1,unsigned int param_2,int *param_3
   
   puVar7 = *(int **)((int)this_ptr + 8);
   if (param_2 <= (unsigned int)(*(int *)((int)this_ptr + 0xc) - (int)puVar7 >> 2)) {
-    if ((unsigned int)((int)puVar7 - (int)param_1 >> 2) < param_2) {
+    if ((unsigned int)((int)puVar7 - (intptr_t)param_1 >> 2) < param_2) {
       puVar5 = param_1 + param_2;
       if (param_1 != puVar7) {
         puVar4 = puVar5 + -param_2;
@@ -933,7 +933,7 @@ void  FUN_10002ea0(void *this_ptr,int *param_1,unsigned int param_2,int *param_3
         } while (puVar4 != puVar7);
       }
       puVar7 = *(int **)((int)this_ptr + 8);
-      for (iVar2 = param_2 - ((int)puVar7 - (int)param_1 >> 2); iVar2 != 0; iVar2 = iVar2 + -1) {
+      for (iVar2 = param_2 - ((int)puVar7 - (intptr_t)param_1 >> 2); iVar2 != 0; iVar2 = iVar2 + -1) {
         if (puVar7 != (int *)0x0) {
           *puVar7 = *param_3;
         }
@@ -1000,7 +1000,7 @@ void  FUN_10002ea0(void *this_ptr,int *param_1,unsigned int param_2,int *param_3
   puVar1 = *(int **)((int)this_ptr + 8);
   puVar7 = puVar5 + param_2;
   if (param_1 != puVar1) {
-    puVar5 = (int *)((int)puVar7 + (param_2 * -4 - (int)puVar5) + (int)param_1);
+    puVar5 = (int *)((int)puVar7 + (param_2 * -4 - (int)puVar5) + (intptr_t)param_1);
     do {
       if (puVar7 != (int *)0x0) {
         *puVar7 = *puVar5;
@@ -1624,12 +1624,12 @@ int __cdecl FUN_100047e1(int param_1,int param_2,int param_3,unsigned int *param
   uVar4 = uVar5;
   uVar3 = uVar5;
   while (uVar2 = uVar4, -1 < param_2) {
-    if (uVar5 == 0xffffffff) {
+    if (uVar5 == -1) {
       FUN_100057cd();
     }
     uVar5 = uVar5 - 1;
     if (((*(int *)(iVar1 + 4 + uVar5 * 0x14) < param_3) &&
-        (param_3 <= *(int *)(iVar1 + uVar5 * 0x14 + 8))) || (uVar4 = uVar2, uVar5 == 0xffffffff)) {
+        (param_3 <= *(int *)(iVar1 + uVar5 * 0x14 + 8))) || (uVar4 = uVar2, uVar5 == -1)) {
       param_2 = param_2 + -1;
       uVar4 = uVar5;
       uVar3 = uVar2;
@@ -1962,11 +1962,11 @@ void ProcessScenary(void)
                 local_10 = local_54 - local_28;
                 local_14 = local_58 - local_2c;
                 uVar4 = local_14;
-                if ((int)local_14 < 0) {
+                if ((intptr_t)local_14 < 0) {
                   uVar4 = -local_14;
                 }
                 uVar6 = local_10;
-                if ((int)local_10 < 0) {
+                if ((intptr_t)local_10 < 0) {
                   uVar6 = -local_10;
                 }
                 uVar5 = uVar4;
@@ -2000,7 +2000,7 @@ void ProcessScenary(void)
     cVar1 = TimerDone(2);
     if ((cVar1 != '\0') &&
        (iVar2 = FUN_100030b0(0x10013cd0,2), pcVar10 = (void*)&SetTrigg, iVar2 != 0)) {
-      SetTrigg(2,1);
+      SetTrigg(2,0);
     }
     cVar1 = Trigg(2);
     if (cVar1 != '\0') {
@@ -2008,9 +2008,9 @@ void ProcessScenary(void)
       if (cVar1 != '\0') {
         puVar8 = &DAT_10013db8;
         uVar4 = rand();
-        uVar4 = uVar4 & 0x80000003;
+        uVar4 = uVar4 & -2147483645;
         if ((int)uVar4 < 0) {
-          uVar4 = (uVar4 - 1 | 0xfffffffc) + 1;
+          uVar4 = (uVar4 - 1 | -4) + 1;
         }
         iVar2 = FUN_100032b0(&DAT_100139d8,uVar4);
         ProduceUnit(&DAT_10013a08,iVar2,puVar8);
@@ -2028,7 +2028,7 @@ void ProcessScenary(void)
   if ((iVar2 != 0) && (cVar1 = TimerDone(1), cVar1 != '\0')) {
     cVar1 = TimerDone(3);
     if ((cVar1 != '\0') && (iVar2 = FUN_100030b0(0x10013ce0,2), iVar2 != 0)) {
-      SetTrigg(3,1);
+      SetTrigg(3,0);
     }
     cVar1 = Trigg(3);
     if (cVar1 != '\0') {
@@ -2049,7 +2049,7 @@ void ProcessScenary(void)
   if ((iVar2 != 0) && (cVar1 = TimerDone(1), cVar1 != '\0')) {
     cVar1 = TimerDone(4);
     if ((cVar1 != '\0') && (iVar2 = FUN_100030b0(0x10013cf0,2), iVar2 != 0)) {
-      SetTrigg(4,1);
+      SetTrigg(4,0);
     }
     cVar1 = Trigg(4);
     if (cVar1 != '\0') {

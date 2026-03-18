@@ -902,7 +902,7 @@ void ProcessScenary(void)
        (((iVar3 = GetUnitsAmount1(&DAT_10011028,&DAT_10010cb8), iVar3 != 0 ||
          (iVar3 = GetUnitsAmount1(&DAT_10010ff8,&DAT_10010cb8), iVar3 != 0)) ||
         (iVar3 = GetUnitsAmount1(&DAT_10011000,&DAT_10010cb8), iVar3 != 0)))) {
-      SetTrigg(0x3b,1);
+      SetTrigg(0x3b,0);
       SetTrigg(0x3e,0);
       RunTimer(0xd,500);
       ShowPage("#PAGE77");
@@ -910,20 +910,20 @@ void ProcessScenary(void)
     cVar1 = TimerDone(0xd);
     if ((cVar1 != '\0') && (cVar1 = Trigg(0x3b), cVar1 != '\0')) {
       SetTrigg(0x3b,0);
-      SetTrigg(0x3d,1);
+      SetTrigg(0x3d,0);
       ShowPage("#PAGE78");
     }
     cVar1 = Trigg(0x3d);
     if ((cVar1 != '\0') && (iVar3 = GetUnitsAmount1(&DAT_10011138,&DAT_10010cb8), iVar3 != 0)) {
       SetTrigg(0x3d,0);
-      SetTrigg(0x3c,1);
+      SetTrigg(0x3c,0);
       RunTimer(0xe,500);
       ShowPage("#PAGE79");
     }
     cVar1 = Trigg(0x3c);
     if ((cVar1 != '\0') && (cVar1 = TimerDone(0xe), cVar1 != '\0')) {
       SetTrigg(0x3c,0);
-      SetTrigg(0x3e,1);
+      SetTrigg(0x3e,0);
       ShowPage("#PAGE80");
       iVar3 = GetDiff(0);
       AddResource(0,5,(10 - iVar3) * 100);
@@ -935,13 +935,13 @@ void ProcessScenary(void)
         (iVar3 = GetUnitsAmount1(&DAT_10010ff8,&DAT_10010cb8), iVar3 == 0)) &&
        (iVar3 = GetUnitsAmount1(&DAT_10011000,&DAT_10010cb8), iVar3 == 0)) {
       SetTrigg(0x3b,0);
-      SetTrigg(0x3e,1);
+      SetTrigg(0x3e,0);
       ShowPage("#PAGE81");
     }
     cVar1 = Trigg(0x3c);
     if ((cVar1 != '\0') && (iVar3 = GetUnitsAmount1(&DAT_10011138,&DAT_10010cb8), iVar3 == 0)) {
       SetTrigg(0x3c,0);
-      SetTrigg(0x3d,1);
+      SetTrigg(0x3d,0);
       ShowPage("#PAGE82");
     }
     cVar1 = Trigg(0x44);
@@ -1062,7 +1062,7 @@ LAB_10002c3a:
       SelectUnits(&DAT_10010d78,0);
       SelSendTo(1,&DAT_100110b8,0xb4,0);
       RunTimer(0xf,100);
-      SetTrigg(0x42,1);
+      SetTrigg(0x42,0);
       DAT_100112c0 = 0;
     }
     SelectUnits(&DAT_10010d78,0);
@@ -1091,7 +1091,7 @@ LAB_10002c3a:
         iVar4 = GetTotalAmount0(&DAT_10010f08);
         iVar5 = GetNInside(1);
         if (iVar3 + iVar4 == iVar5) {
-          SetTrigg(0x41,1);
+          SetTrigg(0x41,0);
         }
       }
     }
@@ -1100,9 +1100,9 @@ LAB_10002c3a:
       SetTrigg(0x41,0);
       SelectUnits(&DAT_10010d78,0);
       uVar6 = rand();
-      DAT_1000d038 = uVar6 & 0x80000001;
+      DAT_1000d038 = uVar6 & -2147483647;
       if ((int)DAT_1000d038 < 0) {
-        DAT_1000d038 = (DAT_1000d038 - 1 | 0xfffffffe) + 1;
+        DAT_1000d038 = (DAT_1000d038 - 1 | -2) + 1;
       }
       if (DAT_1000d038 == 0) {
         SelSendTo(1,&DAT_10010f28,0x3c,0);
@@ -1123,7 +1123,7 @@ LAB_10002f24:
       cVar1 = CheckLeaveAbility(1);
       if (cVar1 != '\0') {
         SetTrigg(0x42,0);
-        SetTrigg(0x40,1);
+        SetTrigg(0x40,0);
         PushAllUnitsAway(1);
       }
     }
@@ -1235,25 +1235,25 @@ LAB_10002f24:
   if (cVar1 != '\0') {
     uVar7 = FUN_10004e90(&DAT_10011178,&DAT_10010d28,&DAT_10010f20,"#PAGE11",0,2000,0,200,0
                          ,0);
-    SetTrigg(8,uVar7);
+    SetTrigg(8,0);
   }
   cVar1 = Trigg(9);
   if (cVar1 != '\0') {
     uVar7 = FUN_10004e90(&DAT_10011170,&DAT_10010d20,&DAT_10010f30,"#PAGE12",0,1000,0,100,
                          200,0);
-    SetTrigg(9,uVar7);
+    SetTrigg(9,0);
   }
   cVar1 = Trigg(10);
   if (cVar1 != '\0') {
     uVar7 = FUN_10004e90(&DAT_10011188,&DAT_10010d10,&DAT_10010f38,"#PAGE12",0,1000,0,100,0
                          ,200);
-    SetTrigg(10,uVar7);
+    SetTrigg(10,0);
   }
   cVar1 = Trigg(0xb);
   if (cVar1 != '\0') {
     uVar7 = FUN_10004e90(&DAT_10011180,&DAT_10010cf8,&DAT_10010f48,"#PAGE12",0,500,0,200,
                          100,100);
-    SetTrigg(0xb,uVar7);
+    SetTrigg(0xb,0);
   }
   cVar1 = Trigg(0xc);
   if ((cVar1 != '\0') && (iVar3 = GetUnitsAmount0(&DAT_10010f50,0), iVar3 != 0)) {
@@ -1368,7 +1368,7 @@ switchD_100036bf_default:
   cVar1 = Trigg(0x10);
   if (((cVar1 == '\0') && (cVar1 = Trigg(0x13), cVar1 != '\0')) &&
      (iVar3 = GetUnitsAmount1(&DAT_10010de8,&DAT_100110b0), iVar3 != 0)) {
-    SetTrigg(0x10,1);
+    SetTrigg(0x10,0);
     ShowPage("#PAGE35");
     SetLightSpot(&DAT_10010c30,1,5);
     SelectUnits(&DAT_10011120,0);
@@ -1460,13 +1460,13 @@ switchD_100036bf_default:
   }
   cVar1 = CheckLeaveAbility(1);
   if (cVar1 != '\0') {
-    SetTrigg(0x15,1);
+    SetTrigg(0x15,0);
     SelectUnits(&DAT_10010bc0,0);
     SelectUnits(&DAT_10010e20,1);
     SelectUnits(&DAT_10010c10,1);
     SendUnitsToTransport(1);
     SetTrigg(0x16,0);
-    SetTrigg(0x15,1);
+    SetTrigg(0x15,0);
   }
   cVar1 = Trigg(0x16);
   if (cVar1 == '\0') {
@@ -1484,7 +1484,7 @@ switchD_100036bf_default:
         SelDie(1);
         ClearLightSpot(5);
         ChangeFriends(0,0xd);
-        SetTrigg(0x16,1);
+        SetTrigg(0x16,0);
         ShowPage("#PAGE51");
         SetLightSpot(&DAT_10011278,1,7);
         SetTrigg(0x20,0);
@@ -1594,7 +1594,7 @@ switchD_100036bf_default:
       }
       cVar1 = TimerDoneFirst(0xf);
       if (cVar1 != '\0') {
-        SetTrigg(0x19,1);
+        SetTrigg(0x19,0);
       }
       iVar3 = GetTotalAmount0(&DAT_10010e28);
       if (iVar3 != 0) {
@@ -1715,7 +1715,7 @@ switchD_100036bf_default:
       SetTrigg(0x22,0);
     }
     else {
-      iVar3 = GetDiff();
+      iVar3 = GetDiff(0);
       iVar4 = GetResource(0,1);
       if (iVar4 < (iVar3 + 1) * 5000) {
         ShowPage("#PAGE85");
@@ -1733,7 +1733,7 @@ switchD_100036bf_default:
   }
   iVar3 = GetUnitsAmount1(&DAT_10011228,&DAT_100110b0);
   if (iVar3 == 0) {
-    SetTrigg(0x22,1);
+    SetTrigg(0x22,0);
   }
   cVar1 = Trigg(0x28);
   if ((cVar1 != '\0') && (iVar3 = GetUnitsAmount1(&DAT_100110c0,&DAT_100110b0), iVar3 != 0)) {
@@ -1849,7 +1849,7 @@ LAB_100049cc:
   }
   if (DAT_100112a4 == 10) {
     DAT_100112a4 = 0;
-    SetTrigg(0x29,1);
+    SetTrigg(0x29,0);
     iVar3 = GetDiff(0);
     RunTimer(3,(6 - iVar3) * 2000);
     SelectUnits(&DAT_10010de0,0);

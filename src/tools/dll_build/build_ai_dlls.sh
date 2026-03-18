@@ -47,6 +47,9 @@ for decomp_c in "$DECOMP_DIR"/*.c; do
         continue
     fi
 
+    # Fix argument counts (Ghidra sometimes omits/adds arguments)
+    python3 "$SCRIPT_DIR/fix_arg_counts.py" --file "$out_c" 2>/dev/null
+
     # Compile + Link
     if ! $CC $CFLAGS $LDFLAGS -o "$out_dll" "$out_c" $LDLIBS 2>&1; then
         echo "FAIL compile: $base"

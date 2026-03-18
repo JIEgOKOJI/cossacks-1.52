@@ -165,7 +165,7 @@ void ProcessScenary(void)
   if ((cVar1 != '\0') && (cVar1 = TimerDone(1), cVar1 != '\0')) {
     SetTrigg(9,0);
     ShowPage("#PAGE6");
-    SetTrigg(10,1);
+    SetTrigg(10,0);
     SelectUnitsType(&DAT_100054f0,0,0);
     SelectUnitsType(&DAT_10005490,0,1);
     SelectUnitsType(&DAT_100054d8,0,1);
@@ -177,7 +177,7 @@ void ProcessScenary(void)
   cVar1 = Trigg(10);
   if ((cVar1 != '\0') && (cVar1 = TimerDone(1), cVar1 != '\0')) {
     SetTrigg(10,0);
-    SetTrigg(9,1);
+    SetTrigg(9,0);
   }
   return;
 }

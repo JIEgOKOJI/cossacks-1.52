@@ -227,8 +227,8 @@ uVar1 = Trigg(0x32);
     if ((uVar1 & 0xff) != 0) {
       SetTrigg(2,0);
       SetStartPoint(&DAT_100304f0);
-      StartAI(1,"RUSSIA.0",1,0,1,0xffffffff);
-      StartAI(3,"RUSSIA.0",1,0,1,0xffffffff);
+      StartAI(1,"RUSSIA.0",1,0,1,-1);
+      StartAI(3,"RUSSIA.0",1,0,1,-1);
       RunTimer(2,20000);
       RunTimer(3,100000);
     }
@@ -359,7 +359,7 @@ LAB_10002186:
   }
   else {
 LAB_100026f9:
-    SetTrigg(0xb,1);
+    SetTrigg(0xb,0);
   }
   uVar1 = Trigg(3);
   if ((uVar1 & 0xff) == 0) {
@@ -367,8 +367,8 @@ LAB_100026f9:
     if ((uVar1 & 0xff) == 0) {
       iVar2 = GetUnitsByNation(&DAT_10030550,0);
       if (iVar2 < 0x3c) {
-        SetTrigg(0xd,1);
-        SetTrigg(0xb,1);
+        SetTrigg(0xd,0);
+        SetTrigg(0xb,0);
       }
     }
   }
@@ -410,9 +410,9 @@ LAB_10002793:
         SetTrigg(7,0);
         ShowPage("#PAGE5");
         SetLightSpot(&DAT_100304c0,1,4);
-        AddResource(0,3,0xfffff830);
-        AddResource(0,0,0xfffffc18);
-        AddResource(0,4,0xfffffed4);
+        AddResource(0,3,-2000);
+        AddResource(0,0,-1000);
+        AddResource(0,4,-300);
       }
     }
   }
@@ -424,7 +424,7 @@ LAB_10002793:
       if (0 < iVar2) {
         SaveSelectedUnits(0,&DAT_10030438,0);
         SetTrigg(8,0);
-        SetTrigg(4,1);
+        SetTrigg(4,0);
         ShowPage("#PAGE8");
         ShowPage("#PAGE6");
         SelectUnits(&DAT_10030530,0);
@@ -435,10 +435,10 @@ LAB_10002793:
         SelChangeNation(2,0);
         RemoveGroup(&DAT_10030520,&DAT_10030528);
         ClearSelection(0);
-        SetTrigg(7,1);
-        SetTrigg(9,1);
-        SetTrigg(5,1);
-        SetTrigg(6,1);
+        SetTrigg(7,0);
+        SetTrigg(9,0);
+        SetTrigg(5,0);
+        SetTrigg(6,0);
         AddResource(2,3,2000);
         AddResource(2,0,1000);
         AddResource(2,4,300);
@@ -452,7 +452,7 @@ LAB_10002793:
     iVar2 = GetUnitsAmount1(&DAT_100304c0,&DAT_10030478);
     if (iVar2 == 0) {
       SetTrigg(9,0);
-      SetTrigg(8,1);
+      SetTrigg(8,0);
     }
   }
   uVar1 = Trigg(10);

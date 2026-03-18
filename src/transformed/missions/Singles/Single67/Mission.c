@@ -334,7 +334,7 @@ void ProcessScenary(void)
     SelectUnits(&DAT_100076a8,0);
     SelSendTo(4,&DAT_100076f0,0x80,0);
     SelSendTo(4,&DAT_10007750,0,2);
-    SetTrigg(5,1);
+    SetTrigg(5,0);
     RunTimer(1,300);
   }
   cVar1 = Trigg(5);
@@ -348,7 +348,7 @@ void ProcessScenary(void)
     SelectUnits(&DAT_100076a8,0);
     SelSendTo(4,&DAT_100076f0,0xe0,0);
     SelSendTo(4,&DAT_100076f8,0x60,2);
-    SetTrigg(4,1);
+    SetTrigg(4,0);
     RunTimer(1,300);
   }
   cVar1 = Trigg(6);
@@ -362,7 +362,7 @@ void ProcessScenary(void)
     SelSendTo(4,&DAT_10007700,0xa0,0);
     SelSendTo(4,&DAT_100076f0,0x80,2);
     SelSendTo(4,&DAT_10007750,0,2);
-    SetTrigg(7,1);
+    SetTrigg(7,0);
     RunTimer(2,300);
   }
   cVar1 = Trigg(7);
@@ -378,7 +378,7 @@ void ProcessScenary(void)
     SelSendTo(4,&DAT_100076f0,0x20,0);
     SelSendTo(4,&DAT_10007700,0xe0,2);
     SelSendTo(4,&DAT_10007708,0x70,2);
-    SetTrigg(6,1);
+    SetTrigg(6,0);
     RunTimer(2,300);
   }
   cVar1 = Trigg(8);
@@ -393,7 +393,7 @@ void ProcessScenary(void)
     SelSendTo(4,&DAT_10007700,0xa0,2);
     SelSendTo(4,&DAT_100076f0,0x80,2);
     SelSendTo(4,&DAT_10007750,0,2);
-    SetTrigg(9,1);
+    SetTrigg(9,0);
     RunTimer(3,300);
   }
   cVar1 = Trigg(9);
@@ -409,7 +409,7 @@ void ProcessScenary(void)
     SelSendTo(4,&DAT_10007700,0x20,2);
     SelSendTo(4,&DAT_10007718,0xe0,2);
     SelSendTo(4,&DAT_10007728,0x60,2);
-    SetTrigg(8,1);
+    SetTrigg(8,0);
     RunTimer(3,300);
   }
   cVar1 = Trigg(10);
@@ -424,7 +424,7 @@ void ProcessScenary(void)
     SelSendTo(4,&DAT_10007700,0xa0,2);
     SelSendTo(4,&DAT_100076f0,0x80,2);
     SelSendTo(4,&DAT_10007750,0,2);
-    SetTrigg(0xb,1);
+    SetTrigg(0xb,0);
     RunTimer(4,300);
   }
   cVar1 = Trigg(0xb);
@@ -441,7 +441,7 @@ void ProcessScenary(void)
     SelSendTo(4,&DAT_10007700,0x20,2);
     SelSendTo(4,&DAT_10007718,0xe0,2);
     SelSendTo(4,&DAT_10007738,0xa0,2);
-    SetTrigg(10,1);
+    SetTrigg(10,0);
     RunTimer(4,300);
   }
   cVar1 = Trigg(0xc);
@@ -453,7 +453,7 @@ void ProcessScenary(void)
   if ((cVar1 != '\0') && (iVar3 = GetUnitsAmount1(&DAT_10007710,&DAT_100076c8), iVar3 != 0)) {
     SelectUnits(&DAT_100076c8,0);
     SelSendTo(4,&DAT_10007750,0x20,0);
-    SetTrigg(0xd,1);
+    SetTrigg(0xd,0);
     RunTimer(5,300);
   }
   cVar1 = Trigg(0xd);
@@ -466,7 +466,7 @@ void ProcessScenary(void)
     AddResource(0,4,2000);
     SelectUnits(&DAT_100076c8,0);
     SelSendTo(4,&DAT_10007710,0xa0,0);
-    SetTrigg(0xc,1);
+    SetTrigg(0xc,0);
     RunTimer(5,300);
   }
   cVar1 = Trigg(0xe);
@@ -481,7 +481,7 @@ void ProcessScenary(void)
     SelSendTo(4,&DAT_10007720,0xc0,2);
     SelSendTo(4,&DAT_10007710,0xa0,2);
     SelSendTo(4,&DAT_10007750,0x20,2);
-    SetTrigg(0xf,1);
+    SetTrigg(0xf,0);
     RunTimer(6,300);
   }
   cVar1 = Trigg(0xf);
@@ -498,7 +498,7 @@ void ProcessScenary(void)
     SelSendTo(4,&DAT_10007720,0x20,2);
     SelSendTo(4,&DAT_10007730,0,2);
     SelSendTo(4,&DAT_10007740,0x80,2);
-    SetTrigg(0xe,1);
+    SetTrigg(0xe,0);
     RunTimer(6,300);
   }
   cVar1 = Trigg(0x10);
@@ -512,7 +512,7 @@ void ProcessScenary(void)
     SelSendAndKill(5,&DAT_10007670,0xc0,2);
     uVar2 = FUN_10001000();
     RunTimer(7,uVar2);
-    SetTrigg(0x10,1);
+    SetTrigg(0x10,0);
   }
   cVar1 = Trigg(0x12);
   if ((cVar1 != '\0') && (cVar1 = TimerDone(8), cVar1 != '\0')) {
@@ -525,7 +525,7 @@ void ProcessScenary(void)
     SelSendAndKill(5,&DAT_10007670,0x80,2);
     uVar2 = FUN_10001000();
     RunTimer(8,uVar2);
-    SetTrigg(0x12,1);
+    SetTrigg(0x12,0);
   }
   cVar1 = Trigg(0x13);
   if ((cVar1 != '\0') && (cVar1 = TimerDone(0x14), cVar1 != '\0')) {
@@ -569,7 +569,7 @@ void ProcessScenary(void)
   if ((cVar1 != '\0') && (iVar3 = GetTotalAmount0(&DAT_100076a0), iVar3 == 0)) {
     CreateObject0(&DAT_100076a0,&DAT_10007850,&DAT_10007848,4,&DAT_10007708,0x80);
     RunTimer(10,100);
-    SetTrigg(0x17,1);
+    SetTrigg(0x17,0);
   }
   cVar1 = Trigg(0x18);
   if ((cVar1 != '\0') && (iVar3 = GetTotalAmount0(&DAT_100076b8), iVar3 == 0)) {
@@ -581,7 +581,7 @@ void ProcessScenary(void)
   if ((cVar1 != '\0') && (iVar3 = GetTotalAmount0(&DAT_100076b8), iVar3 == 0)) {
     CreateObject0(&DAT_100076b8,&DAT_10007850,&DAT_10007848,4,&DAT_10007728,0x60);
     RunTimer(0xb,100);
-    SetTrigg(0x18,1);
+    SetTrigg(0x18,0);
   }
   cVar1 = Trigg(0x19);
   if ((cVar1 != '\0') && (iVar3 = GetTotalAmount0(&DAT_100076b0), iVar3 == 0)) {
@@ -593,7 +593,7 @@ void ProcessScenary(void)
   if ((cVar1 != '\0') && (iVar3 = GetTotalAmount0(&DAT_100076b0), iVar3 == 0)) {
     CreateObject0(&DAT_100076b0,&DAT_10007850,&DAT_10007848,4,&DAT_10007738,0xa0);
     RunTimer(0xc,100);
-    SetTrigg(0x19,1);
+    SetTrigg(0x19,0);
   }
   cVar1 = Trigg(0x1a);
   if ((cVar1 != '\0') && (iVar3 = GetTotalAmount0(&DAT_100076c8), iVar3 == 0)) {
@@ -605,7 +605,7 @@ void ProcessScenary(void)
   if ((cVar1 != '\0') && (iVar3 = GetTotalAmount0(&DAT_100076c8), iVar3 == 0)) {
     CreateObject0(&DAT_100076c8,&DAT_10007850,&DAT_10007848,4,&DAT_10007710,0xa0);
     RunTimer(0xd,1000);
-    SetTrigg(0x1a,1);
+    SetTrigg(0x1a,0);
   }
   cVar1 = Trigg(0x1b);
   if ((cVar1 != '\0') && (iVar3 = GetTotalAmount0(&DAT_100076c0), iVar3 == 0)) {
@@ -617,7 +617,7 @@ void ProcessScenary(void)
   if ((cVar1 != '\0') && (iVar3 = GetTotalAmount0(&DAT_100076c0), iVar3 == 0)) {
     CreateObject0(&DAT_100076c0,&DAT_10007850,&DAT_10007848,4,&DAT_10007740,0x80);
     RunTimer(0xe,100);
-    SetTrigg(0x1b,1);
+    SetTrigg(0x1b,0);
   }
   cVar1 = Trigg(0x1c);
   if ((cVar1 != '\0') && (iVar3 = GetUnitsAmount0(&DAT_10007758,4), iVar3 == 0)) {

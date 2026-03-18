@@ -49,7 +49,7 @@ void __cdecl FUN_10001260(int param_1,char param_2,char param_3,char param_4)
   char local_34 [8];
   char local_2c;
   int local_8;
-SaveSelectedUnits((int)param_2,&DAT_1001f410,0);
+SaveSelectedUnits((intptr_t)param_2,&DAT_1001f410,0);
   SelectUnitsInZone(param_1,param_2,0);
   SaveSelectedUnits(param_2,&DAT_1001f400,0);
   local_8 = GetNUnits(&DAT_1001f400);
@@ -123,7 +123,7 @@ void __cdecl FUN_10001520(int param_1,int param_2,char param_3)
   int *puVar2;
   int local_48 [16];
   unsigned int local_8;
-for (local_8 = 0; (int)local_8 < 8; local_8 = local_8 + 1) {
+for (local_8 = 0; (intptr_t)local_8 < 8; local_8 = local_8 + 1) {
     SaveSelectedUnits(local_8 & 0xff,&DAT_1001f410,local_8 != 0);
     SelectUnits1(local_8 & 0xff,param_1,0);
     SaveSelectedUnits(local_8 & 0xff,param_2,param_3);
@@ -237,7 +237,7 @@ FUN_10001880();
   ChangeFriends(0,1);
   ChangeFriends(1,2);
   ChangeFriends(2,1);
-  ChangeUnitParam(&DAT_1001f460,0,2,0,2);
+  ChangeUnitParam(&DAT_1001f460,0,2,0);
   SetLightSpot(&DAT_1001f428,5,1);
   SetPlayerName(2,"NPT_NN_Guard");
   uStack_8 = 0x10001a5f;
@@ -273,7 +273,7 @@ uVar1 = Trigg(1);
     SelectUnits(&DAT_1001f410,0);
   }
   iVar3 = GetUnitsAmount0(&DAT_1001f428,1);
-  SetTrigg(0x1f,iVar3 == 0);
+  SetTrigg(0x1f,0);
   uVar1 = Trigg(0x28);
   if ((uVar1 & 0xff) != 0) {
     uVar1 = Trigg(0x1f);
@@ -290,7 +290,7 @@ uVar1 = Trigg(1);
       iVar3 = GetTotalAmount0(&DAT_1001f420);
       iVar2 = GetUnitsAmount1(&DAT_1001f430,&DAT_1001f420);
       if (iVar3 != iVar2) {
-        SetTrigg(0x1e,1);
+        SetTrigg(0x1e,0);
         SelectUnits1(2,&DAT_1001f420,0);
         SelSendTo(2,&DAT_1001f430,0x78,0);
       }

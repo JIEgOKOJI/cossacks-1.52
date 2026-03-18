@@ -38,6 +38,9 @@ for src_c in "$BUILD_DIR"/*.c; do
 
     TOTAL=$((TOTAL + 1))
 
+    # Fix argument counts (Ghidra sometimes omits/adds arguments)
+    python3 "$SCRIPT_DIR/fix_arg_counts.py" --file "$src_c" 2>/dev/null
+
     if ! $CC $CFLAGS $LDFLAGS -o "$out_dylib" "$src_c" 2>&1; then
         echo "FAIL: $base"
         FAIL=$((FAIL + 1))

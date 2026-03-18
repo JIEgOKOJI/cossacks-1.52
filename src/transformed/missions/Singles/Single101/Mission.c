@@ -308,8 +308,8 @@ char __cdecl FUN_100010b0(unsigned int param_1,unsigned int param_2)
   if ((param_1 == 0) && (param_2 == 0)) {
     return -0x40;
   }
-  iVar3 = (param_1 ^ (int)param_1 >> 0x1f) - ((int)param_1 >> 0x1f);
-  iVar1 = (param_2 ^ (int)param_2 >> 0x1f) - ((int)param_2 >> 0x1f);
+  iVar3 = (param_1 ^ (intptr_t)param_1 >> 0x1f) - ((intptr_t)param_1 >> 0x1f);
+  iVar1 = (param_2 ^ (intptr_t)param_2 >> 0x1f) - ((intptr_t)param_2 >> 0x1f);
   if (iVar1 < iVar3) {
     iVar1 = FUN_10003b63(iVar1 * 0x100,iVar3);
     cVar2 = ((long long *)&DAT_100125e8)[iVar1 * 2];
@@ -318,10 +318,10 @@ char __cdecl FUN_100010b0(unsigned int param_1,unsigned int param_2)
     iVar1 = FUN_10003b63(iVar3 * 0x100,iVar1);
     cVar2 = '@' - ((long long *)&DAT_100125e8)[iVar1 * 2];
   }
-  if ((int)param_1 < 0) {
+  if ((intptr_t)param_1 < 0) {
     cVar2 = -0x80 - cVar2;
   }
-  if ((int)param_2 < 0) {
+  if ((intptr_t)param_2 < 0) {
     cVar2 = -cVar2;
   }
   return cVar2;
@@ -824,23 +824,23 @@ int *  FUN_10003240(int *param_1)
   int *puVar2;
   
   FUN_10003230(param_1);
-  FUN_10003200((int *)((int)param_1 + 0x3d));
-  FUN_100032e0((int)param_1 + 0xa9);
-  puVar2 = (int *)((int)param_1 + 0x3e5);
+  FUN_10003200((int *)((intptr_t)param_1 + 0x3d));
+  FUN_100032e0((intptr_t)param_1 + 0xa9);
+  puVar2 = (int *)((intptr_t)param_1 + 0x3e5);
   iVar1 = 100;
   do {
     FUN_10003200(puVar2);
     puVar2 = puVar2 + 0xd;
     iVar1 = iVar1 + -1;
   } while (iVar1 != 0);
-  *(int *)((int)param_1 + 0x185a) = 5;
-  *(int *)((int)param_1 + 0x1835) = 0;
-  *(char *)((int)param_1 + 0x184d) = 0;
-  *(int *)((int)param_1 + 0x184e) = 0;
-  *(int *)((int)param_1 + 0x1852) = 0;
-  *(int *)((int)param_1 + 0x1856) = 0;
-  *(int *)((int)param_1 + 0x185e) = 10;
-  RegisterDynGroup((int)param_1 + 0x1862);
+  *(int *)((intptr_t)param_1 + 0x185a) = 5;
+  *(int *)((intptr_t)param_1 + 0x1835) = 0;
+  *(char *)((intptr_t)param_1 + 0x184d) = 0;
+  *(int *)((intptr_t)param_1 + 0x184e) = 0;
+  *(int *)((intptr_t)param_1 + 0x1852) = 0;
+  *(int *)((intptr_t)param_1 + 0x1856) = 0;
+  *(int *)((intptr_t)param_1 + 0x185e) = 10;
+  RegisterDynGroup((intptr_t)param_1 + 0x1862);
   return param_1;
 }
 
@@ -852,7 +852,7 @@ int *  FUN_100032c0(int *param_1)
 
 {
   FUN_10003230(param_1);
-  *(char *)((int)param_1 + 0x41) = 0;
+  *(char *)((intptr_t)param_1 + 0x41) = 0;
   *(char *)(param_1 + 0xd) = 1;
   return param_1;
 }
@@ -971,7 +971,7 @@ int  FUN_10003440(int param_1)
   iVar7 = param_1 + 0x14;
   iVar4 = GetTotalAmount0(iVar7);
   if (*(int *)(param_1 + 0x24) < iVar4 + iVar3) {
-    return 0xffffffff;
+    return -1;
   }
   bVar1 = FUN_10003420(param_1);
   if (bVar1) {
@@ -1086,7 +1086,7 @@ int *  FUN_10003690(int *param_1)
     iVar1 = iVar1 + -1;
   } while (iVar1 != 0);
   RegisterVar(param_1,0xf29);
-  *(short *)((int)param_1 + 0xf1e) = 0;
+  *(short *)((intptr_t)param_1 + 0xf1e) = 0;
   param_1[0x3c8] = 0;
   param_1[0x3c9] = 6;
   return param_1;
@@ -1138,7 +1138,7 @@ unsigned int  FUN_10003730(void *this_ptr,unsigned int param_1,int param_2,int p
   
   uVar2 = *(unsigned short *)((int)this_ptr + 0xf1e);
   if (0x31 < uVar2) {
-    return in_EAX & 0xffffff00;
+    return in_EAX & -256;
   }
   *(unsigned short *)((int)this_ptr + 0xf1e) = uVar2 + 1;
   *(int *)((int)this_ptr + (unsigned int)uVar2 * 0x47 + 0x35) = param_2;
@@ -1566,8 +1566,8 @@ void ProcessScenary(void)
     SetResource(DAT_10012c00_ovl & 0xff,5,(8 - iVar4) * 3000);
     FUN_10002f60(&DAT_10012c09,15000);
     FUN_10002f60(&DAT_10012c12,15000);
-    StartAI(DAT_10012c09,"HOLLAND.0",0,0,0,0xffffffff);
-    StartAI(DAT_10012c12,"HOLLAND.0",3,0,0,0xffffffff);
+    StartAI(DAT_10012c09,"HOLLAND.0",0,0,0,-1);
+    StartAI(DAT_10012c12,"HOLLAND.0",3,0,0,-1);
     ClearSelection(DAT_10012cfa);
     SelectUnits(&DAT_10023bd8,0);
     uVar7 = 0;
@@ -1732,7 +1732,7 @@ void ProcessScenary(void)
         SelectUnits(&DAT_10012cd8,0);
         SelSendTo(DAT_10012cf1,&DAT_10012fc0,0,0);
         RunTimer(1,1000);
-        SetTrigg(7,1);
+        SetTrigg(7,0);
         RunTimer(3,1000);
         ShowPage("#Start_att");
         DisableMission(0x41);
@@ -1886,8 +1886,8 @@ void ProcessScenary(void)
                     iVar4);
       SelectUnits(&DAT_10023c48,0);
       FUN_10003730(&DAT_10022ca8,DAT_10023c68,0,0,0x10012ffc);
-      AddResource(DAT_10012c09,1,0xfffffe0c);
-      AddResource(DAT_10012c12,1,0xfffffe0c);
+      AddResource(DAT_10012c09,1,-500);
+      AddResource(DAT_10012c12,1,-500);
     }
     FUN_10003440(0x10012fe8);
   }

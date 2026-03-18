@@ -59,8 +59,8 @@ uVar1 = Trigg(1);
     SetResource(2,2,10000);
     SetResource(2,5,10000);
     SetResource(2,4,10000);
-    StartAI(1,"TURKISH.0",0,1,1,0xffffffff);
-    StartAI(2,"RUSSIA.0",0,1,1,0xffffffff);
+    StartAI(1,"TURKISH.0",0,1,1,-1);
+    StartAI(2,"RUSSIA.0",0,1,1,-1);
   }
   uStack_8 = 0x100013f4;
   return;

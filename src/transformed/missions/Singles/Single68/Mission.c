@@ -293,7 +293,7 @@ unsigned int  FUN_10002770(int param_1)
       puVar3 = puVar3 + 0xe;
     } while (iVar2 < *(int *)(param_1 + 0x16) + 7);
   }
-  return uVar1 & 0xffffff00;
+  return uVar1 & -256;
 }
 
 
@@ -1154,9 +1154,9 @@ LAB_100020e7:
     DVar5 = FUN_100034af((int *)0x0);
     FUN_10003480(DVar5);
     uVar6 = rand();
-    uVar6 = uVar6 & 0x80000007;
+    uVar6 = uVar6 & -2147483641;
     if ((int)uVar6 < 0) {
-      uVar6 = (uVar6 - 1 | 0xfffffff8) + 1;
+      uVar6 = (uVar6 - 1 | -8) + 1;
     }
     switch(uVar6) {
     case 1:

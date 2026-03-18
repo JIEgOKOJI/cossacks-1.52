@@ -1231,6 +1231,9 @@ word City::FindNeedProject()
 		CurAINation = Nat->NNUM;
 		NT->ProcessAIinDLL();
 		AiIsRunNow = false;
+		static int fnp_dbg_counter = 0;
+		if ((fnp_dbg_counter++ % 200) == 0)
+			fprintf(stderr, "[AI] FindNeedProject: Nat=%d NBestProjects=%d\n", Nat->NNUM, NBestProjects);
 		return NBestProjects;
 	};
 

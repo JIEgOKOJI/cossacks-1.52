@@ -165,9 +165,9 @@ uVar1 = Trigg(1);
     if (0 < iVar3) {
       SetTrigg(2,0);
       ShowPage("#PAGE2");
-      AddResource(0,1,0xfffffc18);
-      AddResource(0,4,0xfffffed4);
-      AddResource(0,5,0xffffff38);
+      AddResource(0,1,-1000);
+      AddResource(0,4,-300);
+      AddResource(0,5,-200);
       SelectUnits(&DAT_100313f8,0);
       SelSendTo(5,&DAT_10031498,0,0);
     }
@@ -711,7 +711,7 @@ LAB_100039fc:
   if (0x24 < iVar3) {
     iVar3 = GetResource(0,4);
     if (0x1a < iVar3) {
-      SetTrigg(0x10,1);
+      SetTrigg(0x10,0);
     }
   }
   uVar1 = Trigg(0x11);
@@ -737,7 +737,7 @@ LAB_100039fc:
   }
   iVar3 = GetResource(0,1);
   if (5 < iVar3) {
-    SetTrigg(0x11,1);
+    SetTrigg(0x11,0);
   }
   uVar1 = Trigg(0x47);
   if ((uVar1 & 0xff) != 0) {

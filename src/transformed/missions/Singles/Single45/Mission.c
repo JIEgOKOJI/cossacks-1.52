@@ -256,7 +256,7 @@ void ProcessScenary(void)
   cVar1 = Trigg(0xe);
   if ((cVar1 != '\0') && (cVar1 = TimerDone(1), cVar1 != '\0')) {
     SetTrigg(0xe,0);
-    SetTrigg(0xd,1);
+    SetTrigg(0xd,0);
     CreateObject0(&DAT_100064a8,&DAT_100064b0,&DAT_10006518,0,&DAT_10006500,0x40);
     ShowPage("#PAGE8");
     CreateObject0(&DAT_100064d0,&DAT_100064b8,&DAT_100064d8,5,&DAT_10006490,0x20);
@@ -270,7 +270,7 @@ void ProcessScenary(void)
   }
   cVar1 = Trigg(0xf);
   if ((cVar1 != '\0') && (cVar1 = TimerDone(1), cVar1 != '\0')) {
-    SetTrigg(0xe,1);
+    SetTrigg(0xe,0);
     SetTrigg(0xd,0);
   }
   return;

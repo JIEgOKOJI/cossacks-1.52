@@ -441,7 +441,7 @@ void ProcessScenary(void)
       iVar3 = GetUnitsAmount0(&DAT_100066f0,0);
       if (iVar2 <= iVar3) goto LAB_10001e64;
     }
-    SetTrigg(8,1);
+    SetTrigg(8,0);
     SelectUnits(&DAT_10006678,0);
     SelOpenGates(1);
   }
@@ -449,7 +449,7 @@ LAB_10001e64:
   iVar2 = GetDiff(1);
   iVar3 = GetGlobalTime();
   if (((10 - iVar2) * 4000 < iVar3) && (cVar1 = Trigg(3), pcVar6 = (void*)&ShowPage, cVar1 == '\0')) {
-    SetTrigg(3,1);
+    SetTrigg(3,0);
     ShowPage("#PAGE11");
     ChangeFriends(1,2);
     iVar2 = GetDiff(1);

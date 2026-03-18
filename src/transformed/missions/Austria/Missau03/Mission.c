@@ -375,7 +375,7 @@ void ProcessScenary(void)
     iVar2 = GetTotalAmount0(&DAT_10009fa8);
     iVar3 = GetUnitsAmount1(&DAT_1000a020,&DAT_10009fa8);
     if (iVar3 < iVar2) {
-      SetTrigg(2,1);
+      SetTrigg(2,0);
       FreeTimer(2);
       ShowPage("#PAGE4");
     }
@@ -391,9 +391,9 @@ void ProcessScenary(void)
     iVar2 = GetTotalAmount0(&DAT_10009fa8);
     iVar3 = GetUnitsAmount1(&DAT_1000a198,&DAT_10009fa8);
     if ((iVar3 == iVar2) && (iVar2 = GetTotalAmount0(&DAT_10009fa8), 0 < iVar2)) {
-      SetTrigg(1,1);
-      SetTrigg(2,1);
-      SetTrigg(3,1);
+      SetTrigg(1,0);
+      SetTrigg(2,0);
+      SetTrigg(3,0);
       ShowPage("#PAGE6");
       iVar2 = GetDiff(1);
       iVar3 = GetTotalAmount0(&DAT_10009fa8);
@@ -612,7 +612,7 @@ void ProcessScenary(void)
     iVar2 = GetUnitsAmount1(&DAT_1000a110,&DAT_1000a098);
     iVar3 = GetUnitsByNation(&DAT_1000a098,1);
     if (iVar2 < iVar3) {
-      SelectUnits1(1,&DAT_1000a098);
+      SelectUnits1(1,&DAT_1000a098,0);
       SelSendTo(1,&DAT_1000a110,0x50,0);
     }
     else {
@@ -635,7 +635,7 @@ void ProcessScenary(void)
     iVar2 = GetUnitsAmount1(&DAT_1000a128,&DAT_1000a0a8);
     iVar3 = GetUnitsByNation(&DAT_1000a0a8,1);
     if (iVar2 < iVar3) {
-      SelectUnits1(1,&DAT_1000a0a8);
+      SelectUnits1(1,&DAT_1000a0a8,0);
       SelSendTo(1,&DAT_1000a128,100,0);
     }
     else {
@@ -658,7 +658,7 @@ void ProcessScenary(void)
     iVar2 = GetUnitsAmount1(&DAT_1000a138,&DAT_1000a0b8);
     iVar3 = GetUnitsByNation(&DAT_1000a0b8,1);
     if (iVar2 < iVar3) {
-      SelectUnits1(1,&DAT_1000a0b8);
+      SelectUnits1(1,&DAT_1000a0b8,0);
       SelSendTo(1,&DAT_1000a138,100,0);
     }
     else {
@@ -677,7 +677,7 @@ void ProcessScenary(void)
     iVar2 = GetUnitsAmount1(&DAT_1000a140,&DAT_1000a0c0);
     iVar3 = GetUnitsByNation(&DAT_1000a0c0,1);
     if (iVar2 < iVar3) {
-      SelectUnits1(1,&DAT_1000a0c0);
+      SelectUnits1(1,&DAT_1000a0c0,0);
       SelSendTo(1,&DAT_1000a140,100,0);
     }
     else {
@@ -700,7 +700,7 @@ void ProcessScenary(void)
     iVar2 = GetUnitsAmount1(&DAT_1000a148,&DAT_1000a0d0);
     iVar3 = GetUnitsByNation(&DAT_1000a0d0,1);
     if (iVar2 < iVar3) {
-      SelectUnits1(1,&DAT_1000a0d0);
+      SelectUnits1(1,&DAT_1000a0d0,0);
       SelSendTo(1,&DAT_1000a148,100,0);
     }
     else {
@@ -723,7 +723,7 @@ void ProcessScenary(void)
     iVar2 = GetUnitsAmount1(&DAT_10009f88,&DAT_1000a040);
     iVar3 = GetUnitsByNation(&DAT_1000a040,1);
     if (iVar2 < iVar3) {
-      SelectUnits1(1,&DAT_1000a040);
+      SelectUnits1(1,&DAT_1000a040,0);
       SelSendTo(1,&DAT_10009f88,100,0);
     }
     else {
@@ -746,7 +746,7 @@ void ProcessScenary(void)
     iVar2 = GetUnitsAmount1(&DAT_10009f90,&DAT_1000a050);
     iVar3 = GetUnitsByNation(&DAT_1000a050,1);
     if (iVar2 < iVar3) {
-      SelectUnits1(1,&DAT_1000a050);
+      SelectUnits1(1,&DAT_1000a050,0);
       SelSendTo(1,&DAT_10009f90,0x50,0);
     }
     else {
@@ -765,7 +765,7 @@ void ProcessScenary(void)
     iVar2 = GetUnitsAmount1(&DAT_10009f98,&DAT_1000a058);
     iVar3 = GetUnitsByNation(&DAT_1000a058,1);
     if (iVar2 < iVar3) {
-      SelectUnits1(1,&DAT_1000a058);
+      SelectUnits1(1,&DAT_1000a058,0);
       SelSendTo(1,&DAT_10009f98,0x50,0);
     }
     else {

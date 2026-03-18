@@ -291,7 +291,7 @@ void ProcessScenary(void)
     if (cVar1 == '\x01') {
       SelectUnits(&DAT_10006748,0);
       SelChangeNation(4,0);
-      AddResource(0,1,0xfffffc18);
+      AddResource(0,1,-1000);
     }
     else {
       SelectUnits(&DAT_10006748,0);
@@ -308,8 +308,8 @@ void ProcessScenary(void)
   if ((cVar1 != '\0') && (cVar1 = TimerDone(3), pcVar4 = (void*)&ShowPage, cVar1 != '\0')) {
     SetTrigg(0xb,0);
     ShowPage("#PAGE4");
-// FIXME(decompiler):     iVar2 = GetDiff(0,&DAT_100066a8,0,&DAT_10006768,0x40);
-    CreateObject0(&DAT_10006680,(((int*)0))[iVar2]);
+// FIXME(decompiler):     iVar2 = GetDiff(0);
+    CreateObject0(&DAT_10006680,(((int*)0))[iVar2],0,0,0,0);
   }
   cVar1 = Trigg(8);
   if ((cVar1 != '\0') && (iVar2 = GetUnitsByNation(&DAT_10006658,1), iVar2 < 5)) {

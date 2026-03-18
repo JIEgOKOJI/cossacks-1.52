@@ -241,13 +241,13 @@ uVar1 = Trigg(99);
             local_10 = AskMultilineQuestion(9,"#PAGE2E",0,"Q9_1|Q9_2|Q9_4");
             if (local_10 == 0) {
               ShowPage("#PAGE2A");
-              SetTrigg(0x21,1);
+              SetTrigg(0x21,0);
             }
             else if (local_10 == 1) {
               ShowPage("#PAGE2B");
               SelectUnits(&DAT_10031410,0);
               SelChangeNation(1,2);
-              SetTrigg(0x21,1);
+              SetTrigg(0x21,0);
             }
             else if (local_10 == 2) {
               ShowPage("#PAGE2C");
@@ -259,22 +259,22 @@ uVar1 = Trigg(99);
             switch(local_14) {
             case 0:
               ShowPage("#PAGE2A");
-              SetTrigg(0x21,1);
+              SetTrigg(0x21,0);
               break;
             case 1:
               ShowPage("#PAGE2B");
               SelectUnits(&DAT_10031410,0);
               SelChangeNation(1,2);
-              SetTrigg(0x21,1);
+              SetTrigg(0x21,0);
               break;
             case 2:
               ShowPage("#PAGE2D");
-              AddResource(0,1,0xfffff448);
+              AddResource(0,1,-3000);
               SelectUnits(&DAT_10031480,0);
               SelOpenGates(1);
               SelectUnits(&DAT_10031408,0);
               SelChangeNation(1,0);
-              SetTrigg(0x21,1);
+              SetTrigg(0x21,0);
               break;
             case 3:
               ShowPage("#PAGE2C");
@@ -312,7 +312,7 @@ uVar1 = Trigg(99);
               break;
             case 2:
               ShowPage("#PAGE2D");
-              AddResource(0,1,0xfffff448);
+              AddResource(0,1,-3000);
               SelectUnits(&DAT_10031480,0);
               SelOpenGates(1);
               SelectUnits(&DAT_10031408,0);
@@ -333,7 +333,7 @@ uVar1 = Trigg(99);
     if ((uVar1 & 0xff) == 0) {
       iVar3 = GetUnitsAmount1(&DAT_10031450,&DAT_100313f0);
       if (iVar3 == 0) {
-        SetTrigg(2,1);
+        SetTrigg(2,0);
       }
     }
   }
@@ -428,7 +428,7 @@ uVar1 = Trigg(99);
         }
         else {
           ShowPage("#PAGE5A");
-          AddResource(0,1,0xfffffc18);
+          AddResource(0,1,-1000);
           AddResource(5,1,1000);
         }
         iVar3 = GetDiff(1);
@@ -507,7 +507,7 @@ uVar1 = Trigg(99);
             }
             else {
               ShowPage("#PAGE5G");
-              AddResource(0,1,0xfffffc18);
+              AddResource(0,1,-1000);
               AddResource(5,1,1000);
             }
             SelectUnits(&DAT_10031420,0);
@@ -714,7 +714,7 @@ uVar1 = Trigg(99);
                 break;
               case 1:
                 ShowPage("#PAGE8F");
-                AddResource(0,1,0xfffffe0c);
+                AddResource(0,1,-500);
                 SelectUnits(&DAT_10031400,0);
                 SelChangeNation(4,0);
                 SetTrigg(8,0);
@@ -738,7 +738,7 @@ uVar1 = Trigg(99);
   if ((uVar1 & 0xff) == 0) {
     iVar3 = GetUnitsAmount1(&DAT_10031448,&DAT_100313f0);
     if (iVar3 == 0) {
-      SetTrigg(0x34,1);
+      SetTrigg(0x34,0);
     }
   }
   uVar1 = TimerDoneFirst(2);

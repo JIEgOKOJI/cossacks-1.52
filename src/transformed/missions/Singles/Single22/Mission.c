@@ -169,7 +169,7 @@ uVar1 = Trigg(99);
           ShowPage("#PAGE6");
         }
         else {
-          AddResource(0,3,0xfffffc18);
+          AddResource(0,3,-1000);
           CreateObject0(&DAT_1002f3f8,&DAT_1002f4c0,&DAT_1002f460,0,&DAT_1002f418,0x94);
           SaveSelectedUnits(0,&DAT_1002f498,0);
           SelectUnits(&DAT_1002f3f8,0);
@@ -183,7 +183,7 @@ uVar1 = Trigg(99);
           ShowPage("#PAGE6");
         }
         else {
-          AddResource(0,3,0xfffffc18);
+          AddResource(0,3,-1000);
           CreateObject0(&DAT_1002f3f8,&DAT_1002f4c0,&DAT_1002f460,0,&DAT_1002f418,0x94);
           SaveSelectedUnits(0,&DAT_1002f498,0);
           SelectUnits(&DAT_1002f3f8,0);
@@ -206,7 +206,7 @@ uVar1 = Trigg(99);
   if ((uVar1 & 0xff) == 0) {
     iVar2 = GetUnitsAmount1(&DAT_1002f418,&DAT_1002f4a0);
     if (iVar2 == 0) {
-      SetTrigg(1,1);
+      SetTrigg(1,0);
     }
   }
   iVar2 = GetUnitsAmount0(&DAT_1002f438,0);
@@ -320,7 +320,7 @@ uVar1 = Trigg(99);
   if ((uVar1 & 0xff) == 0) {
     iVar2 = GetUnitsAmount2(&DAT_1002f4c8,&DAT_1002f460,0);
     if (iVar2 == 0) {
-      SetTrigg(9,1);
+      SetTrigg(9,0);
     }
   }
   uVar1 = Trigg(0xb);
@@ -333,14 +333,14 @@ uVar1 = Trigg(99);
         if (local_c == 0) {
           iVar2 = GetResource(0,1);
           if (500 < iVar2) {
-            AddResource(0,1,0xfffffe0c);
+            AddResource(0,1,-500);
             ProduceUnitFast(&DAT_1002f4a8,&DAT_1002f3e8,&DAT_1002f3f8,900);
           }
         }
         else if (local_c == 1) {
           iVar2 = GetResource(0,1);
           if (200 < iVar2) {
-            AddResource(0,1,0xffffff38);
+            AddResource(0,1,-200);
             ProduceUnitFast(&DAT_1002f4a8,&DAT_1002f3e0,&DAT_1002f3f8,900);
           }
         }
@@ -354,7 +354,7 @@ uVar1 = Trigg(99);
   if ((uVar1 & 0xff) == 0) {
     iVar2 = GetUnitsAmount1(&DAT_1002f420,&DAT_1002f4a0);
     if (iVar2 == 0) {
-      SetTrigg(10,1);
+      SetTrigg(10,0);
     }
   }
   uVar1 = Trigg(0xb);

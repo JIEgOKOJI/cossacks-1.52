@@ -219,7 +219,7 @@ FUN_10001bb0(int param_1,int param_2,int param_3,int param_4,int param_5,
       return (int)1;
     }
   }
-  return uVar3 & 0xffffff00;
+  return uVar3 & -256;
 }
 
 
@@ -326,7 +326,7 @@ FUN_10001da0(int param_1,int param_2,int param_3,unsigned int param_4,unsigned i
           local_10 = (short)local_30;
           local_8 = (unsigned int)local_18 - (local_30 & 0xffff);
           uVar2 = local_8;
-          if ((int)local_8 < 0) {
+          if ((intptr_t)local_8 < 0) {
             uVar2 = -local_8;
           }
           if ((int)uVar4 < 0) {
@@ -754,7 +754,7 @@ void ProcessScenary(void)
   if ((iVar6 != 0) && (cVar1 = TimerDone(5), cVar1 != '\0')) {
     cVar1 = TimerDone(1);
     if ((cVar1 != '\0') && (iVar6 = FUN_100020d0(0x1000f610,4), iVar6 != 0)) {
-      SetTrigg(3,1);
+      SetTrigg(3,0);
     }
     cVar1 = Trigg(3);
     if (cVar1 != '\0') {
@@ -778,7 +778,7 @@ void ProcessScenary(void)
   if ((iVar6 != 0) && (cVar1 = TimerDone(5), cVar1 != '\0')) {
     cVar1 = TimerDone(2);
     if ((cVar1 != '\0') && (iVar6 = FUN_100020d0(0x1000f630,4), iVar6 != 0)) {
-      SetTrigg(4,1);
+      SetTrigg(4,0);
     }
     cVar1 = Trigg(4);
     if (cVar1 != '\0') {
@@ -802,7 +802,7 @@ void ProcessScenary(void)
   if ((iVar6 != 0) && (cVar1 = TimerDone(5), cVar1 != '\0')) {
     cVar1 = TimerDone(3);
     if ((cVar1 != '\0') && (iVar6 = FUN_100020d0(0x1000f650,4), iVar6 != 0)) {
-      SetTrigg(5,1);
+      SetTrigg(5,0);
     }
     cVar1 = Trigg(5);
     if (cVar1 != '\0') {
@@ -826,7 +826,7 @@ void ProcessScenary(void)
   if ((iVar6 != 0) && (cVar1 = TimerDone(5), cVar1 != '\0')) {
     cVar1 = TimerDone(4);
     if ((cVar1 != '\0') && (iVar6 = FUN_100020d0(0x1000f670,4), iVar6 != 0)) {
-      SetTrigg(6,1);
+      SetTrigg(6,0);
     }
     cVar1 = Trigg(6);
     if (cVar1 != '\0') {

@@ -511,7 +511,7 @@ void ProcessScenary(void)
       SelectUnits(&DAT_10006860,0);
       SelSendTo(5,&DAT_10006828,0,1);
       SelChangeNation(5,0);
-      AddResource(0,1,0xffffc568);
+      AddResource(0,1,-15000);
       ShowPage("#PAGE2");
       SelectUnits(&DAT_10006950,0);
       SelSendTo(3,&DAT_10006848,0,0);
@@ -561,7 +561,7 @@ void ProcessScenary(void)
         if (iVar2 != 2) goto LAB_10002153;
         iVar2 = GetResource(0,1);
         if (1000 < iVar2) {
-          AddResource(0,1,0xfffffc18);
+          AddResource(0,1,-1000);
           SelectUnits(&DAT_10006978,0);
           SelOpenGates(2);
           SelectUnits(&DAT_100068f8,0);

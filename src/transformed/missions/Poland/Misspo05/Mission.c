@@ -390,7 +390,7 @@ uVar1 = Trigg(99);
     if (0 < iVar2) {
       iVar2 = GetUnitsAmount0(&DAT_100304c8,0);
       if (iVar2 == 0) {
-        SetTrigg(0x32,1);
+        SetTrigg(0x32,0);
         SelectUnits(&DAT_10030430,0);
         SelOpenGates(2);
       }

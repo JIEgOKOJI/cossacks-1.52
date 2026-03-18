@@ -658,7 +658,7 @@ LAB_1000429e:
     iVar4 = GetUnitsAmount1(&DAT_100346b0,&DAT_10034558);
     iVar3 = GetTotalAmount0(&DAT_10034558);
     if (iVar4 < iVar3) {
-      SetTrigg(1,1);
+      SetTrigg(1,0);
       SelectUnits(&DAT_10034558,0);
       SelSendTo(5,&DAT_10034788,0,0);
     }
@@ -779,12 +779,12 @@ LAB_1000429e:
             SetTrigg(4,0);
             FreeTimer(0xf);
             RunTimer(8,8000);
-            SetTrigg(0x10,1);
+            SetTrigg(0x10,0);
             RemoveGroup(&DAT_100344a0,&DAT_10034458);
             SelectUnits(&DAT_10034458,0);
             SelSendAndKill(2,&DAT_100346d8,100,0);
             ClearSelection(2);
-            SetTrigg(9,1);
+            SetTrigg(9,0);
           }
         }
       }
@@ -798,7 +798,7 @@ LAB_1000429e:
             if ((uVar1 & 0xff) == 0) goto LAB_10004b20;
           }
           FreeTimer(8);
-          SetTrigg(4,1);
+          SetTrigg(4,0);
         }
       }
 LAB_10004b20:
@@ -836,12 +836,12 @@ LAB_10004b20:
             SetTrigg(5,0);
             RunTimer(9,6000);
             FreeTimer(0x10);
-            SetTrigg(0x11,1);
+            SetTrigg(0x11,0);
             RemoveGroup(&DAT_10034490,&DAT_10034450);
             SelectUnits(&DAT_10034450,0);
             SelSendAndKill(2,&DAT_100346e0,0x41,0);
             ClearSelection(2);
-            SetTrigg(10,1);
+            SetTrigg(10,0);
           }
         }
       }
@@ -855,7 +855,7 @@ LAB_10004b20:
             if ((uVar1 & 0xff) == 0) goto LAB_10004e6d;
           }
           FreeTimer(9);
-          SetTrigg(5,1);
+          SetTrigg(5,0);
         }
       }
 LAB_10004e6d:
@@ -893,12 +893,12 @@ LAB_10004e6d:
             SetTrigg(6,0);
             FreeTimer(0x11);
             RunTimer(10,6000);
-            SetTrigg(0x12,1);
+            SetTrigg(0x12,0);
             RemoveGroup(&DAT_100344b8,&DAT_10034468);
             SelectUnits(&DAT_10034468,0);
             SelSendAndKill(2,&DAT_100346c8,0x82,0);
             ClearSelection(2);
-            SetTrigg(0x14,1);
+            SetTrigg(0x14,0);
           }
         }
       }
@@ -912,7 +912,7 @@ LAB_10004e6d:
             if ((uVar1 & 0xff) == 0) goto LAB_100051bd;
           }
           FreeTimer(10);
-          SetTrigg(6,1);
+          SetTrigg(6,0);
         }
       }
 LAB_100051bd:
@@ -950,12 +950,12 @@ LAB_100051bd:
             SetTrigg(0x16,0);
             FreeTimer(0x12);
             RunTimer(0xb,8000);
-            SetTrigg(0x13,1);
+            SetTrigg(0x13,0);
             RemoveGroup(&DAT_100344a8,&DAT_10034460);
             SelectUnits(&DAT_10034460,0);
             SelSendAndKill(2,&DAT_100346d0,0x82,0);
             ClearSelection(2);
-            SetTrigg(0x15,1);
+            SetTrigg(0x15,0);
           }
         }
       }
@@ -969,7 +969,7 @@ LAB_100051bd:
             if ((uVar1 & 0xff) == 0) goto LAB_10005510;
           }
           FreeTimer(0xb);
-          SetTrigg(0x16,1);
+          SetTrigg(0x16,0);
         }
       }
     }
@@ -1141,7 +1141,7 @@ LAB_10005996:
             if (iVar4 < 3) {
               CreateObject0(&DAT_100345f8,&DAT_10034550,&DAT_10034448,1,&DAT_10034708,0x5a);
               RemoveGroup(&DAT_100345f8,&DAT_10034470);
-              SetTrigg(0x1c,1);
+              SetTrigg(0x1c,0);
             }
           }
           iVar4 = GetTotalAmount0(&DAT_10034428);
@@ -1150,7 +1150,7 @@ LAB_10005996:
             if (iVar4 < 3) {
               CreateObject0(&DAT_100345f8,&DAT_10034550,&DAT_10034448,1,&DAT_10034710,0x5a);
               RemoveGroup(&DAT_100345f8,&DAT_100345d0);
-              SetTrigg(0x1d,1);
+              SetTrigg(0x1d,0);
             }
           }
           iVar4 = GetTotalAmount0(&DAT_10034418);
@@ -1159,7 +1159,7 @@ LAB_10005996:
             if (iVar4 < 3) {
               CreateObject0(&DAT_100345f8,&DAT_10034550,&DAT_10034448,1,&DAT_10034718,0x5a);
               RemoveGroup(&DAT_100345f8,&DAT_100345c8);
-              SetTrigg(0x1e,1);
+              SetTrigg(0x1e,0);
             }
           }
           iVar4 = GetTotalAmount0(&DAT_10034430);
@@ -1168,7 +1168,7 @@ LAB_10005996:
             if (iVar4 < 3) {
               CreateObject0(&DAT_100345f8,&DAT_10034550,&DAT_10034448,1,&DAT_10034720,0x5a);
               RemoveGroup(&DAT_100345f8,&DAT_10034600);
-              SetTrigg(0x1f,1);
+              SetTrigg(0x1f,0);
             }
           }
         }

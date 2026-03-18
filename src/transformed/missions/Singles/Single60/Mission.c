@@ -221,7 +221,7 @@ void ProcessScenary(void)
     SelSendAndKill(4,&DAT_10006620,0,0);
     SelSendAndKill(4,&DAT_10006628,0xe0,2);
     SelSendAndKill(4,&DAT_10006630,0xc0,2);
-    SetTrigg(10,1);
+    SetTrigg(10,0);
   }
   cVar1 = Trigg(10);
   if ((cVar1 != '\0') && (iVar2 = GetUnitsAmount1(&DAT_10006630,&DAT_10006638), 0 < iVar2)) {
@@ -230,7 +230,7 @@ void ProcessScenary(void)
     SelSendAndKill(4,&DAT_10006628,0x40,0);
     SelSendAndKill(4,&DAT_10006620,0x60,2);
     SelSendAndKill(4,&DAT_10006618,0x80,2);
-    SetTrigg(9,1);
+    SetTrigg(9,0);
   }
   return;
 }

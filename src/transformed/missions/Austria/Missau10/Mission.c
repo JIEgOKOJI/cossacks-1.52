@@ -191,7 +191,7 @@ void ProcessScenary(void)
     iVar2 = GetTotalAmount0(&DAT_10006450);
     iVar3 = GetUnitsAmount1(&DAT_100064f8,&DAT_10006450);
     if (iVar3 == iVar2) {
-      AttackZoneByArtillery(&DAT_10006450,&DAT_10006548);
+      AttackZoneByArtillery(&DAT_10006450,&DAT_10006548,0);
     }
     else {
       SelectUnits(&DAT_10006450,0);
@@ -203,7 +203,7 @@ void ProcessScenary(void)
     iVar2 = GetTotalAmount0(&DAT_10006458);
     iVar3 = GetUnitsAmount1(&DAT_10006500,&DAT_10006458);
     if (iVar3 == iVar2) {
-      AttackZoneByArtillery(&DAT_10006458,&DAT_10006550);
+      AttackZoneByArtillery(&DAT_10006458,&DAT_10006550,0);
     }
     else {
       SelectUnits(&DAT_10006458,0);
@@ -215,7 +215,7 @@ void ProcessScenary(void)
     iVar2 = GetTotalAmount0(&DAT_10006460);
     iVar3 = GetUnitsAmount1(&DAT_10006508,&DAT_10006460);
     if (iVar3 == iVar2) {
-      AttackZoneByArtillery(&DAT_10006460,&DAT_10006558);
+      AttackZoneByArtillery(&DAT_10006460,&DAT_10006558,0);
     }
     else {
       SelectUnits(&DAT_10006460,0);
@@ -227,7 +227,7 @@ void ProcessScenary(void)
     iVar2 = GetTotalAmount0(&DAT_10006468);
     iVar3 = GetUnitsAmount1(&DAT_10006510,&DAT_10006468);
     if (iVar3 == iVar2) {
-      AttackZoneByArtillery(&DAT_10006468,&DAT_10006560);
+      AttackZoneByArtillery(&DAT_10006468,&DAT_10006560,0);
     }
     else {
       SelectUnits(&DAT_10006468,0);
@@ -239,7 +239,7 @@ void ProcessScenary(void)
     iVar2 = GetTotalAmount0(&DAT_10006470);
     iVar3 = GetUnitsAmount1(&DAT_10006518,&DAT_10006470);
     if (iVar3 == iVar2) {
-      AttackZoneByArtillery(&DAT_10006470,&DAT_10006568);
+      AttackZoneByArtillery(&DAT_10006470,&DAT_10006568,0);
     }
     else {
       SelectUnits(&DAT_10006470,0);

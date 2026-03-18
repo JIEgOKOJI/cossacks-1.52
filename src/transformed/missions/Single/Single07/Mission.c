@@ -115,7 +115,7 @@ uVar1 = Trigg(100);
     SetResource(5,2,100000);
     SetResource(5,5,1000000);
     SetResource(5,4,1000000);
-    StartAI(1,"ENGLAND.0",2,1,0,0xffffffff);
+    StartAI(1,"ENGLAND.0",2,1,0,-1);
     ShowPage("#PAGE1");
     ShowPage("#PAGE16");
     RunTimer(1,5000);
@@ -124,10 +124,10 @@ uVar1 = Trigg(100);
     EnableUnit(0,&DAT_10030480,0);
     SelectUnits1(1,&DAT_100303e0,0);
     SelChangeNation(1,5);
-    SetTrigg(99,100);
-    SetTrigg(0x5e,100);
-    SetTrigg(0x57,100);
-    SetTrigg(0x51,100);
+    SetTrigg(99,0);
+    SetTrigg(0x5e,0);
+    SetTrigg(0x57,0);
+    SetTrigg(0x51,0);
     SelectUnits1(1,&DAT_100303f0,0);
     SelectUnits1(1,&DAT_10030488,1);
     SelectUnits1(1,&DAT_10030420,1);
@@ -147,11 +147,11 @@ uVar1 = Trigg(100);
     uVar1 = Trigg(0x62);
     if ((uVar1 & 0xff) != 0) {
       uVar1 = Trigg(99);
-      SetTrigg(99,(uVar1 & 0xff) - 1);
+      SetTrigg(99,0);
       SetTrigg(0x62,0);
       SelectUnits1(5,&DAT_100304b0,0);
       SelSendTo(5,&DAT_10030438,0xd3,0);
-      SetTrigg(0x61,1);
+      SetTrigg(0x61,0);
     }
   }
   uVar1 = Trigg(0x61);
@@ -162,8 +162,8 @@ uVar1 = Trigg(100);
       if (0 < iVar2) {
         SetTrigg(0x61,0);
         RunTimer(3,300);
-        SetTrigg(0x49,1);
-        SetTrigg(0x60,1);
+        SetTrigg(0x49,0);
+        SetTrigg(0x60,0);
       }
     }
   }
@@ -187,7 +187,7 @@ uVar1 = Trigg(100);
       SetTrigg(0x60,0);
       SelectUnits1(5,&DAT_100304b0,0);
       SelSendTo(5,&DAT_10030448,0x87,0);
-      SetTrigg(0x5a,1);
+      SetTrigg(0x5a,0);
     }
   }
   uVar1 = Trigg(0x5a);
@@ -198,7 +198,7 @@ uVar1 = Trigg(100);
       if (0 < iVar2) {
         SetTrigg(0x5a,0);
         RunTimer(4,300);
-        SetTrigg(0x5f,1);
+        SetTrigg(0x5f,0);
       }
     }
   }
@@ -207,7 +207,7 @@ uVar1 = Trigg(100);
     uVar1 = TimerDone(4);
     if ((uVar1 & 0xff) != 0) {
       SetTrigg(0x5f,0);
-      SetTrigg(0x62,1);
+      SetTrigg(0x62,0);
     }
   }
   uVar1 = Trigg(0x5e);
@@ -215,11 +215,11 @@ uVar1 = Trigg(100);
     uVar1 = Trigg(0x5d);
     if ((uVar1 & 0xff) != 0) {
       uVar1 = Trigg(0x5e);
-      SetTrigg(0x5e,(uVar1 & 0xff) - 1);
+      SetTrigg(0x5e,0);
       SetTrigg(0x5d,0);
       SelectUnits1(5,&DAT_10030498,0);
       SelSendTo(5,&DAT_10030448,0x87,0);
-      SetTrigg(0x5c,1);
+      SetTrigg(0x5c,0);
     }
   }
   uVar1 = Trigg(0x5c);
@@ -230,7 +230,7 @@ uVar1 = Trigg(100);
       if (0 < iVar2) {
         SetTrigg(0x5c,0);
         RunTimer(5,300);
-        SetTrigg(0x5b,1);
+        SetTrigg(0x5b,0);
       }
     }
   }
@@ -241,7 +241,7 @@ uVar1 = Trigg(100);
       SetTrigg(0x5b,0);
       SelectUnits1(5,&DAT_10030498,0);
       SelSendTo(5,&DAT_10030438,0xd3,0);
-      SetTrigg(0x59,1);
+      SetTrigg(0x59,0);
     }
   }
   uVar1 = Trigg(0x59);
@@ -252,8 +252,8 @@ uVar1 = Trigg(100);
       if (0 < iVar2) {
         SetTrigg(0x59,0);
         RunTimer(6,300);
-        SetTrigg(0x48,1);
-        SetTrigg(0x58,1);
+        SetTrigg(0x48,0);
+        SetTrigg(0x58,0);
       }
     }
   }
@@ -275,7 +275,7 @@ uVar1 = Trigg(100);
     uVar1 = TimerDone(6);
     if ((uVar1 & 0xff) != 0) {
       SetTrigg(0x58,0);
-      SetTrigg(0x5d,1);
+      SetTrigg(0x5d,0);
     }
   }
   uVar1 = Trigg(0x57);
@@ -283,11 +283,11 @@ uVar1 = Trigg(100);
     uVar1 = Trigg(0x56);
     if ((uVar1 & 0xff) != 0) {
       uVar1 = Trigg(0x57);
-      SetTrigg(0x57,(uVar1 & 0xff) - 1);
+      SetTrigg(0x57,0);
       SetTrigg(0x56,0);
       SelectUnits1(5,&DAT_100304a0,0);
       SelSendTo(5,&DAT_10030450,0x2d,0);
-      SetTrigg(0x55,1);
+      SetTrigg(0x55,0);
     }
   }
   uVar1 = Trigg(0x55);
@@ -298,7 +298,7 @@ uVar1 = Trigg(100);
       if (0 < iVar2) {
         SetTrigg(0x55,0);
         RunTimer(7,300);
-        SetTrigg(0x54,1);
+        SetTrigg(0x54,0);
       }
     }
   }
@@ -309,7 +309,7 @@ uVar1 = Trigg(100);
       SetTrigg(0x54,0);
       SelectUnits1(5,&DAT_100304a0,0);
       SelSendTo(5,&DAT_10030440,0x87,0);
-      SetTrigg(0x53,1);
+      SetTrigg(0x53,0);
     }
   }
   uVar1 = Trigg(0x53);
@@ -320,8 +320,8 @@ uVar1 = Trigg(100);
       if (0 < iVar2) {
         SetTrigg(0x53,0);
         RunTimer(8,300);
-        SetTrigg(0x47,1);
-        SetTrigg(0x52,1);
+        SetTrigg(0x47,0);
+        SetTrigg(0x52,0);
       }
     }
   }
@@ -343,7 +343,7 @@ uVar1 = Trigg(100);
     uVar1 = TimerDone(8);
     if ((uVar1 & 0xff) != 0) {
       SetTrigg(0x52,0);
-      SetTrigg(0x56,1);
+      SetTrigg(0x56,0);
     }
   }
   uVar1 = Trigg(0x51);
@@ -351,11 +351,11 @@ uVar1 = Trigg(100);
     uVar1 = Trigg(0x50);
     if ((uVar1 & 0xff) != 0) {
       uVar1 = Trigg(0x51);
-      SetTrigg(0x51,(uVar1 & 0xff) - 1);
+      SetTrigg(0x51,0);
       SetTrigg(0x50,0);
       SelectUnits1(5,&DAT_10030490,0);
       SelSendTo(5,&DAT_10030440,0x87,0);
-      SetTrigg(0x4f,1);
+      SetTrigg(0x4f,0);
     }
   }
   uVar1 = Trigg(0x4f);
@@ -366,8 +366,8 @@ uVar1 = Trigg(100);
       if (0 < iVar2) {
         SetTrigg(0x4f,0);
         RunTimer(9,300);
-        SetTrigg(0x46,1);
-        SetTrigg(0x4e,1);
+        SetTrigg(0x46,0);
+        SetTrigg(0x4e,0);
       }
     }
   }
@@ -392,7 +392,7 @@ uVar1 = Trigg(100);
       SetTrigg(0x4e,0);
       SelectUnits1(5,&DAT_10030490,0);
       SelSendTo(5,&DAT_10030450,0x87,0);
-      SetTrigg(0x4d,1);
+      SetTrigg(0x4d,0);
     }
   }
   uVar1 = Trigg(0x4d);
@@ -403,7 +403,7 @@ uVar1 = Trigg(100);
       if (0 < iVar2) {
         SetTrigg(0x4d,0);
         RunTimer(10,300);
-        SetTrigg(0x4c,1);
+        SetTrigg(0x4c,0);
       }
     }
   }
@@ -412,7 +412,7 @@ uVar1 = Trigg(100);
     uVar1 = TimerDone(10);
     if ((uVar1 & 0xff) != 0) {
       SetTrigg(0x4c,0);
-      SetTrigg(0x50,1);
+      SetTrigg(0x50,0);
     }
   }
   uVar1 = Trigg(0x4b);
@@ -423,7 +423,7 @@ uVar1 = Trigg(100);
       if (0 < iVar2) {
         SetTrigg(0x4b,0);
         ShowPage("#PAGE3");
-        SetTrigg(0x4a,1);
+        SetTrigg(0x4a,0);
       }
     }
   }
@@ -437,7 +437,7 @@ uVar1 = Trigg(100);
         if (0 < iVar2) {
           SetTrigg(0x4a,0);
           ShowPage("#PAGE4");
-          SetTrigg(0x4b,1);
+          SetTrigg(0x4b,0);
         }
       }
     }

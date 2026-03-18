@@ -537,7 +537,7 @@ LAB_100022f5:
       RunTimer(2,100);
       goto switchD_10002115_default;
     }
-    AddResource(0,1,0xfffff448);
+    AddResource(0,1,-3000);
     DAT_10007a44 = 0;
     do {
       ProduceUnitFast(&DAT_10007d90,&DAT_10007d00,&DAT_10007aa8,3);
@@ -552,7 +552,7 @@ LAB_100022f5:
       iVar2 = 0x5dc - iVar2;
       goto LAB_100022f5;
     }
-    AddResource(0,1,0xfffffa24);
+    AddResource(0,1,-1500);
     DAT_10007a40 = 0;
     do {
       ProduceUnitFast(&DAT_10007d90,&DAT_10007d70,&DAT_10007aa0,3);
@@ -567,7 +567,7 @@ LAB_100022f5:
       iVar2 = 5000;
       goto LAB_100022f2;
     }
-    AddResource(0,1,0xffffec78);
+    AddResource(0,1,-5000);
     DAT_10007a48 = 0;
     do {
       ProduceUnitFast(&DAT_10007c20,&DAT_10007c40,&DAT_10007ac8,3);
@@ -582,7 +582,7 @@ LAB_100022f5:
       iVar2 = 5000 - iVar2;
       goto LAB_100022f5;
     }
-    AddResource(0,1,0xffffec78);
+    AddResource(0,1,-5000);
     DAT_10007a4c = 0;
     do {
       ProduceUnitFast(&DAT_10007c20,&DAT_10007cf8,&DAT_10007ab8,3);
@@ -597,14 +597,14 @@ LAB_100022f5:
       iVar2 = 0xdac;
       goto LAB_100022f2;
     }
-    AddResource(0,1,0xfffff254);
+    AddResource(0,1,-3500);
     DAT_10007a50 = 0;
     do {
       InitialUpgrade("Gkomandirz","AKA25SA");
       RunTimer(4,800);
       SetTrigg(0xd,0);
       SetTrigg(0xe,0);
-      SetTrigg(0x10,1);
+      SetTrigg(0x10,0);
       RunTimer(6,800);
       DAT_10007a50 = DAT_10007a50 + 1;
     } while (DAT_10007a50 < 1);
@@ -618,7 +618,7 @@ LAB_100022f5:
       RunTimer(2,100);
       goto switchD_10002115_default;
     }
-    AddResource(0,1,0xfffffc18);
+    AddResource(0,1,-1000);
     DAT_10007a54 = 0;
     do {
       ProduceUnitFast(&DAT_10007be8,&DAT_10007a58,&DAT_10007a90,3);
@@ -681,15 +681,15 @@ switchD_10002115_default:
      (cVar1 = TimerDoneFirst(2), pcVar7 = (void*)&SetTrigg, pcVar8 = (void*)&RunTimer, cVar1 != '\0')) {
     cVar1 = AskQuestion("#PAGE5");
     if (cVar1 == '\0') goto switchD_10002115_caseD_6;
-    SetTrigg(10,1);
+    SetTrigg(10,0);
   }
 LAB_100026a3:
   cVar1 = TimerDone(5);
   if (((cVar1 != '\0') && (cVar1 = Trigg(10), cVar1 == '\0')) &&
      (cVar1 = Trigg(0x10), cVar1 == '\0')) {
     FreeTimer(5);
-    SetTrigg(10,1);
-    SetTrigg(0x10,1);
+    SetTrigg(10,0);
+    SetTrigg(0x10,0);
   }
   cVar1 = Trigg(0xe);
   if ((cVar1 == '\0') && (cVar1 = TimerDoneFirst(6), cVar1 != '\0')) {
@@ -724,7 +724,7 @@ LAB_10002820:
       RunTimer(2,100);
     }
     else {
-      AddResource(0,1,0xfffff448);
+      AddResource(0,1,-3000);
       DAT_10007a44 = 0;
       do {
         ProduceUnitFast(&DAT_10007d90,&DAT_10007d00,&DAT_10007aa8,3);
@@ -737,7 +737,7 @@ LAB_10002820:
   case 1:
     iVar2 = GetResource(0,1);
     if (0x5db < iVar2) {
-      AddResource(0,1,0xfffffa24);
+      AddResource(0,1,-1500);
       DAT_10007a40 = 0;
       do {
         ProduceUnitFast(&DAT_10007d90,&DAT_10007d70,&DAT_10007aa0,3);
@@ -757,7 +757,7 @@ LAB_10002820:
       iVar4 = 5000;
       goto LAB_1000281d;
     }
-    AddResource(0,1,0xffffec78);
+    AddResource(0,1,-5000);
     DAT_10007a48 = 0;
     do {
       ProduceUnitFast(&DAT_10007c20,&DAT_10007c40,&DAT_10007ac8,3);
@@ -773,7 +773,7 @@ LAB_10002820:
       iVar4 = 5000 - iVar4;
       goto LAB_10002820;
     }
-    AddResource(0,1,0xffffec78);
+    AddResource(0,1,-5000);
     DAT_10007a4c = 0;
     do {
       ProduceUnitFast(&DAT_10007c20,&DAT_10007cf8,&DAT_10007ab8,3);
@@ -789,7 +789,7 @@ LAB_10002820:
       iVar4 = 1000;
       goto LAB_1000281d;
     }
-    AddResource(0,1,0xfffffc18);
+    AddResource(0,1,-1000);
     DAT_10007a54 = 0;
     do {
       ProduceUnitFast(&DAT_10007be8,&DAT_10007a58,&DAT_10007a90,3);
@@ -819,7 +819,7 @@ switchD_100027f7_default:
     SelChangeNation(0,2);
     RunTimer(0x14,1000);
     RunTimer(0x1c,3000);
-    SetTrigg(0x59,1);
+    SetTrigg(0x59,0);
     pcVar7 = pcVar5;
   }
   cVar1 = Trigg(0x59);
@@ -827,11 +827,11 @@ switchD_100027f7_default:
   {
     SetTrigg(0x59,0);
     iVar2 = GetUnitsByNation(&DAT_10007a98,2);
-    uVar3 = GetUnitsByNation(&DAT_10007a98,2,iVar2 * 300);
+    uVar3 = GetUnitsByNation(&DAT_10007a98,2);
     ShowPageParam("#PAGE8",uVar3);
     iVar2 = GetUnitsByNation(&DAT_10007a98,2);
     AddResource(0,1,iVar2 * 300);
-    SetTrigg(0x14,1);
+    SetTrigg(0x14,0);
   }
   cVar1 = TimerDone(0x1a);
   if ((cVar1 != '\0') && (iVar2 = GetUnitsAmount2(&DAT_10007d08,&DAT_10007a80,2), 3 < iVar2)) {
@@ -854,15 +854,15 @@ switchD_100027f7_default:
     SelectUnits(&DAT_10007ca0,0);
     SelSendTo(4,&DAT_10007d58,0x23,0);
     RunTimer(0x16,1000);
-    SetTrigg(0x17,1);
+    SetTrigg(0x17,0);
   }
   cVar1 = Trigg(0x17);
   if ((cVar1 != '\0') && (cVar1 = TimerDone(0x16), cVar1 != '\0')) {
     SetTrigg(0x17,0);
     SelectUnits(&DAT_10007ca0,0);
     SelSendTo(4,&DAT_10007b48,0x80,0);
-    SetTrigg(0x16,1);
-    SetTrigg(0x18,1);
+    SetTrigg(0x16,0);
+    SetTrigg(0x18,0);
   }
   cVar1 = Trigg(0x1b);
   if (cVar1 != '\0') {
@@ -877,15 +877,15 @@ switchD_100027f7_default:
     SelectUnits(&DAT_10007d68,0);
     SelSendTo(4,&DAT_10007b48,0x23,0);
     RunTimer(0x19,900);
-    SetTrigg(0x1a,1);
+    SetTrigg(0x1a,0);
   }
   cVar1 = Trigg(0x1a);
   if ((cVar1 != '\0') && (cVar1 = TimerDone(0x19), cVar1 != '\0')) {
     SetTrigg(0x1a,0);
     SelectUnits(&DAT_10007d68,0);
     SelSendTo(4,&DAT_10007d58,0x80,0);
-    SetTrigg(0x19,1);
-    SetTrigg(0x1b,1);
+    SetTrigg(0x19,0);
+    SetTrigg(0x1b,0);
   }
   cVar1 = Trigg(0x28);
   if (cVar1 != '\0') {

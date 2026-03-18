@@ -145,7 +145,7 @@ void __cdecl FUN_10001330(int param_1)
     }
     iVar1 = GetUnitsAmount0(&DAT_10006630,0);
     if (0 < iVar1) {
-      AttackEnemyInZone(param_1,&DAT_10006630);
+      AttackEnemyInZone(param_1,&DAT_10006630,0);
       return;
     }
     iVar1 = GetUnitsAmount0(&DAT_10006638,0);
@@ -369,7 +369,7 @@ void ProcessScenary(void)
       if (iVar2 < 1) {
         iVar2 = GetTotalAmount0(&DAT_10006528);
         if (iVar2 < 1) {
-          SetTrigg(2,1);
+          SetTrigg(2,0);
           SelectUnits(&DAT_10006500,0);
           SelSendAndKill(1,&DAT_10006640,0,0);
         }
@@ -402,7 +402,7 @@ void ProcessScenary(void)
         if (iVar2 < 1) {
           iVar2 = GetTotalAmount0(&DAT_10006528);
           if (iVar2 < 1) {
-            SetTrigg(6,1);
+            SetTrigg(6,0);
             SelectUnits(&DAT_10006530,0);
             SelSendAndKill(1,&DAT_10006640,0,0);
           }
@@ -436,7 +436,7 @@ void ProcessScenary(void)
     if (iVar2 < 1) {
       iVar2 = GetTotalAmount0(&DAT_10006598);
       if (iVar2 < 1) {
-        SetTrigg(7,1);
+        SetTrigg(7,0);
         SelectUnits(&DAT_10006550,0);
         SelSendAndKill(1,&DAT_10006640,0,0);
       }
@@ -531,7 +531,7 @@ void ProcessScenary(void)
       if (iVar2 < 1) {
         iVar2 = GetTotalAmount0(&DAT_10006598);
         if (iVar2 < 1) {
-          SetTrigg(10,1);
+          SetTrigg(10,0);
           SelectUnits(&DAT_10006580,0);
           SelSendAndKill(1,&DAT_10006638,0,0);
         }

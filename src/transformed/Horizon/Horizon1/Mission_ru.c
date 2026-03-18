@@ -166,7 +166,7 @@ uVar1 = Trigg(1);
           SelChangeNation(5,1);
           SelectUnits(&DAT_100303e8,0);
           SelSendTo(5,&DAT_10030478,0,0);
-          AddResource(0,1,0xffffffc4);
+          AddResource(0,1,-60);
         }
       }
       if (DAT_10030438 == 2) {
@@ -179,7 +179,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(4);
   if ((uVar1 & 0xff) == 0) {
-    SetTrigg(4,1);
+    SetTrigg(4,0);
     uVar1 = AskQuestion("#PAGE2A");
     if ((uVar1 & 0xff) == 0) {
       ShowPage("#PAGE2Ano");
@@ -200,7 +200,7 @@ uVar1 = Trigg(1);
         SelChangeNation(5,1);
         SelectUnits(&DAT_100303e8,0);
         SelSendTo(5,&DAT_10030478,0,0);
-        AddResource(0,1,0xffffffce);
+        AddResource(0,1,-50);
       }
     }
   }
@@ -261,7 +261,7 @@ uVar1 = Trigg(1);
         if (0x31 < iVar2) {
           SelectUnits(&DAT_10030418,0);
           SelChangeNation(5,0);
-          AddResource(0,1,0xffffffce);
+          AddResource(0,1,-50);
           ShowPage("#PAGE7yes");
           goto LAB_10002021;
         }
@@ -368,7 +368,7 @@ LAB_10002021:
           SelSendTo(5,&DAT_10030478,0,0);
           SelectUnits(&DAT_10030420,0);
           SelChangeNation(5,1);
-          AddResource(0,1,0xffffffc4);
+          AddResource(0,1,-60);
         }
       }
       if (DAT_1003043c == 2) {

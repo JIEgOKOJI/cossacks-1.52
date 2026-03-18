@@ -219,15 +219,15 @@ uVar1 = Trigg(1);
     DisableUpgrade(0,&DAT_100304c0);
     ShowPage("#PAGE1");
     ShowPage("#PAGE2");
-    SetTrigg(9,1);
-    SetTrigg(0x10,1);
+    SetTrigg(9,0);
+    SetTrigg(0x10,0);
     SetStartPoint(&DAT_100304c8);
     SetTrigg(0x13,0);
   }
   uVar1 = Trigg(2);
   if ((uVar1 & 0xff) != 0) {
     SetTrigg(2,0);
-    StartAI(1,"TURKISH.0",0,0,2,0xffffffff);
+    StartAI(1,"TURKISH.0",0,0,2,-1);
     RunTimer(1,500);
     RunTimer(5,20000);
     RunTimer(6,15000);
@@ -264,8 +264,8 @@ uVar1 = Trigg(1);
         SelectUnits1(2,&DAT_10030468,1);
         SelectUnits1(2,&DAT_10030470,1);
         SendUnitsToTransport(2);
-        SetTrigg(6,1);
-        SetTrigg(7,1);
+        SetTrigg(6,0);
+        SetTrigg(7,0);
         SetTrigg(5,0);
         SelectUnits1(0,&DAT_10030480,0);
       }
@@ -284,8 +284,8 @@ uVar1 = Trigg(1);
         SetTrigg(6,0);
         SetTrigg(7,0);
         RunTimer(2,8000);
-        SetTrigg(0x10,1);
-        SetTrigg(8,1);
+        SetTrigg(0x10,0);
+        SetTrigg(8,0);
       }
     }
     SelectUnits1(0,&DAT_10030480,0);
@@ -301,7 +301,7 @@ uVar1 = Trigg(1);
       if ((uVar1 & 0xff) != 0) {
         SelectUnits1(2,&DAT_10030458,0);
         PushAllUnitsAway(2);
-        SetTrigg(9,1);
+        SetTrigg(9,0);
       }
       SelectUnits1(0,&DAT_10030480,0);
     }
@@ -333,9 +333,9 @@ LAB_10002797:
   }
   SaveSelectedUnits(0,&DAT_10030480,0);
   ClearSelection(0);
-  SetTrigg(4,1);
-  SetTrigg(3,1);
-  SetTrigg(5,1);
+  SetTrigg(4,0);
+  SetTrigg(3,0);
+  SetTrigg(5,0);
   SetTrigg(9,0);
   SelectUnits1(2,&DAT_10030458,0);
   SelDie(2);
@@ -351,8 +351,8 @@ LAB_10002887:
       CreateObject0(&DAT_10030488,&DAT_10030500,&DAT_10030558,2,&DAT_100304f0,0);
       SelectUnits1(2,&DAT_10030488,0);
       SelSendAndKill(2,&DAT_100304f8,0,0);
-      SetTrigg(0xb,1);
-      SetTrigg(0xc,1);
+      SetTrigg(0xb,0);
+      SetTrigg(0xc,0);
       SelectUnits1(0,&DAT_10030480,0);
     }
   }
@@ -373,7 +373,7 @@ LAB_10002887:
     iVar2 = GetTotalAmount0(&DAT_10030488);
     if (iVar2 < 1) {
       SetTrigg(0xc,0);
-      SetTrigg(10,1);
+      SetTrigg(10,0);
     }
   }
   uVar1 = Trigg(0xd);
@@ -386,8 +386,8 @@ LAB_10002887:
       CreateObject0(&DAT_10030490,&DAT_10030500,&DAT_10030558,2,&DAT_100304f0,0);
       SelectUnits1(2,&DAT_10030490,0);
       SelSendAndKill(2,&DAT_10030548,0,0);
-      SetTrigg(0xf,1);
-      SetTrigg(0xe,1);
+      SetTrigg(0xf,0);
+      SetTrigg(0xe,0);
       SelectUnits1(0,&DAT_10030480,0);
     }
   }
@@ -408,7 +408,7 @@ LAB_10002887:
     iVar2 = GetTotalAmount0(&DAT_10030490);
     if (iVar2 < 1) {
       SetTrigg(0xf,0);
-      SetTrigg(0xd,1);
+      SetTrigg(0xd,0);
     }
   }
   uVar1 = Trigg(0xf);
@@ -420,10 +420,10 @@ LAB_10002887:
         SaveSelectedUnits(0,&DAT_10030480,0);
         SelectUnits1(2,&DAT_10030488,0);
         SelSendAndKill(2,&DAT_100304f8,0,0);
-        SetTrigg(0xb,1);
+        SetTrigg(0xb,0);
         SelectUnits1(2,&DAT_10030490,0);
         Patrol(2,&DAT_10030550,0x82);
-        SetTrigg(0xe,1);
+        SetTrigg(0xe,0);
       }
     }
   }
@@ -440,7 +440,7 @@ LAB_10002887:
   if ((uVar1 & 0xff) == 0) {
     iVar2 = GetTotalAmount1(&DAT_10030408,0);
     if (iVar2 < 4) {
-      SetTrigg(0x11,1);
+      SetTrigg(0x11,0);
       EnableUnit(0,&DAT_10030408,1);
     }
   }
@@ -467,7 +467,7 @@ LAB_10002887:
             ShowPage("#PAGE12");
           }
           else {
-            AddResource(0,1,0xffffd8f0);
+            AddResource(0,1,-10000);
             SaveSelectedUnits(0,&DAT_10030480,0);
             SelectUnits1(4,&DAT_10030498,0);
             SelChangeNation(4,3);
@@ -486,7 +486,7 @@ LAB_10002887:
   if ((uVar1 & 0xff) == 0) {
     iVar2 = GetUnitsAmount0(&DAT_10030508,0);
     if (iVar2 == 0) {
-      SetTrigg(0x13,1);
+      SetTrigg(0x13,0);
     }
   }
   uVar1 = Trigg(0x16);
@@ -510,7 +510,7 @@ LAB_10002887:
             ShowPage("#PAGE12");
           }
           else {
-            AddResource(0,1,0xffffd8f0);
+            AddResource(0,1,-10000);
             SaveSelectedUnits(0,&DAT_10030480,0);
             SelectUnits1(4,&DAT_10030498,0);
             SelChangeNation(4,3);

@@ -389,7 +389,7 @@ LAB_100029b3:
     iVar5 = GetUnitsAmount1(&DAT_10032598,&DAT_100324a8);
     iVar4 = GetTotalAmount0(&DAT_100324a8);
     if (iVar5 < iVar4) {
-      SetTrigg(1,1);
+      SetTrigg(1,0);
       SelectUnits(&DAT_100324a8,0);
       SelSendTo(5,&DAT_10032648,0x41,0);
     }
@@ -425,7 +425,7 @@ LAB_100029b3:
     iVar5 = GetUnitsAmount1(&DAT_100325a0,&DAT_100324a0);
     iVar4 = GetTotalAmount0(&DAT_100324a0);
     if (iVar5 < iVar4) {
-      SetTrigg(0x14,1);
+      SetTrigg(0x14,0);
       SelectUnits(&DAT_100324a0,0);
       SelSendTo(5,&DAT_10032658,0x1e,0);
     }
@@ -522,7 +522,7 @@ LAB_100029b3:
   if ((uVar1 & 0xff) == 0) {
     iVar5 = GetUnitsAmount0(&DAT_10032458,0);
     if (iVar5 == 0) {
-      SetTrigg(0x60,1);
+      SetTrigg(0x60,0);
       SelectUnits(&DAT_10032628,0);
       SelCloseGates(1);
     }
@@ -540,7 +540,7 @@ LAB_100029b3:
   if ((uVar1 & 0xff) == 0) {
     iVar5 = GetUnitsAmount0(&DAT_10032450,0);
     if (iVar5 == 0) {
-      SetTrigg(0x5a,1);
+      SetTrigg(0x5a,0);
       SelectUnits(&DAT_10032630,0);
       SelCloseGates(1);
     }
@@ -644,7 +644,7 @@ LAB_1000398b:
   if ((uVar1 & 0xff) != 0) {
     FreeTimer(3);
     FreeTimer(2);
-    SetTrigg(5,1);
+    SetTrigg(5,0);
   }
   uVar1 = Trigg(0xb);
   if ((uVar1 & 0xff) != 0) {
@@ -694,7 +694,7 @@ LAB_10003ce5:
   if ((uVar1 & 0xff) != 0) {
     FreeTimer(5);
     FreeTimer(4);
-    SetTrigg(7,1);
+    SetTrigg(7,0);
   }
   uVar1 = Trigg(8);
   if ((uVar1 & 0xff) != 0) {
@@ -771,12 +771,12 @@ LAB_10003ce5:
                   if (iVar5 == 5) {
                     SetTrigg(0x11,0);
                     ShowPage("#PAGE10A");
-                    AddResource(0,1,0xffffec78);
-                    AddResource(0,0,0xffffec78);
-                    AddResource(0,2,0xffffec78);
-                    AddResource(0,5,0xffffec78);
-                    AddResource(0,4,0xffffec78);
-                    AddResource(0,3,0xffffec78);
+                    AddResource(0,1,-5000);
+                    AddResource(0,0,-5000);
+                    AddResource(0,2,-5000);
+                    AddResource(0,5,-5000);
+                    AddResource(0,4,-5000);
+                    AddResource(0,3,-5000);
                   }
                 }
               }

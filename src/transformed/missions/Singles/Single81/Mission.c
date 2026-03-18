@@ -180,7 +180,7 @@ int __cdecl FUN_10001ff0(int param_1,int param_2,int param_3,int param_4)
     uVar1 = InsertUnitToGroup(0,param_1,uVar3);
     uVar2 = (int)((unsigned int)uVar1 >> 8);
   }
-  return (int)local_3d;
+  return (intptr_t)local_3d;
 }
 
 
@@ -207,7 +207,7 @@ FUN_10002150(int param_1,int param_2,int param_3,int param_4,int param_5)
       return (int)1;
     }
   }
-  return uVar2 & 0xffffff00;
+  return uVar2 & -256;
 }
 
 
@@ -299,7 +299,7 @@ FUN_10002290(int param_1,int param_2,int param_3,int param_4,unsigned int param_
           local_8 = local_28 - (unsigned int)local_10;
           uVar2 = local_24 - (unsigned int)uStack_e;
           uVar3 = local_8;
-          if ((int)local_8 < 0) {
+          if ((intptr_t)local_8 < 0) {
             uVar3 = -local_8;
           }
           if ((int)uVar2 < 0) {
@@ -608,10 +608,10 @@ void ProcessScenary(void)
         if ((char)uVar4 == '\0') {
           FUN_10002290(puVar7,4,&DAT_1000aee0,0,0x1000af90);
         }
-        SetTrigg(4,1);
+        SetTrigg(4,0);
       }
       else {
-        cVar1 = Trigg();
+        cVar1 = Trigg(0);
         if (cVar1 != '\0') {
           FUN_10002230(puVar7,&DAT_1000aee0,4);
           SetTrigg(4,0);

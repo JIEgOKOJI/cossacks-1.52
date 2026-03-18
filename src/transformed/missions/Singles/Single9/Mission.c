@@ -99,7 +99,7 @@ LAB_10001a1a:
   SelectUnits(param_5,0);
   SelSendTo(param_1,param_4,0x3e,1);
   AllowAttack(param_1,0);
-  SetTrigg(0xc,1);
+  SetTrigg(0xc,0);
 LAB_10001a67:
   cVar1 = Trigg(0xc);
   if ((cVar1 != '\0') && (iVar2 = GetUnitsAmount0(param_3,param_2), 0 < iVar2)) {
@@ -115,7 +115,7 @@ LAB_10001a67:
     AddResource(param_2,2,param_10);
     AddResource(param_2,4,param_11);
     AddResource(param_2,5,param_12);
-    return uVar4 & 0xffffff00;
+    return uVar4 & -256;
   }
   return (int)1;
 }
@@ -340,7 +340,7 @@ void ProcessScenary(void)
   if (cVar1 != '\0') {
     uVar3 = FUN_100019c0(5,0,&DAT_10006718,&DAT_10006838,&DAT_10006820,"#PAGE15",5000,0,0,0
                          ,0,0);
-    SetTrigg(0x16,uVar3);
+    SetTrigg(0x16,0);
   }
   cVar1 = Trigg(0x5c);
   if ((cVar1 != '\0') && (cVar1 = NationIsErased(2), pcVar6 = (void*)&ShowPage, cVar1 != '\0')) {

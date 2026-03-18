@@ -202,7 +202,7 @@ int __cdecl FUN_100010c0(int param_1,int param_2,int param_3)
   iVar2 = 0;
   if (0 < DAT_10006868) {
     do {
-      CreateObject0(&DAT_10006740,param_2,param_3,iVar1);
+      CreateObject0(&DAT_10006740,param_2,param_3,iVar1,0,0);
       RemoveGroup(&DAT_10006740,param_1);
       iVar2 = iVar2 + 1;
     } while (iVar2 < DAT_10006868);
@@ -622,7 +622,7 @@ LAB_10001b55:
   if (((cVar1 != '\0') && (cVar1 = Trigg(4), cVar1 == '\0')) &&
      (iVar2 = GetUnitsAmount0(&DAT_10006780,0), iVar2 == 0)) {
     ShowPage("#PAGE3");
-    SetTrigg(4,1);
+    SetTrigg(4,0);
   }
   cVar1 = Trigg(3);
   if ((cVar1 != '\0') && (cVar1 = Trigg(4), cVar1 == '\0')) {

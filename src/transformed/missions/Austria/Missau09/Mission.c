@@ -767,13 +767,13 @@ void ProcessScenary(void)
       SetTrigg(2,0);
       cVar1 = Trigg(0xe);
       if (cVar1 == '\0') {
-        SetTrigg(0xe,1);
+        SetTrigg(0xe,0);
         SelectUnits(&DAT_10009d48,0);
         SelOpenGates(1);
         RunTimer(2,0x14);
       }
       else {
-        RunTimer(2);
+        RunTimer(2,0);
       }
       SetTrigg(3,0);
     }
@@ -788,7 +788,7 @@ void ProcessScenary(void)
     iVar3 = GetUnitsAmount1(&DAT_10009fc8,&DAT_10009c40);
     iVar2 = GetUnitsByNation(&DAT_10009c40,1);
     if ((iVar3 == iVar2) && (iVar3 = GetUnitsAmount1(&DAT_10009fc8,&DAT_10009c40), 0 < iVar3)) {
-      SetTrigg(3,1);
+      SetTrigg(3,0);
       iVar3 = GetUnitsByNation(&DAT_10009c40,0);
       AddResource(1,3,iVar3 * 2000);
       iVar3 = GetUnitsByNation(&DAT_10009c40,0);
@@ -821,14 +821,14 @@ void ProcessScenary(void)
     ShowPage("#PAGE3");
     cVar1 = Trigg(0xe);
     if (cVar1 == '\0') {
-      SetTrigg(0xe,1);
+      SetTrigg(0xe,0);
       SelectUnits(&DAT_10009d48,0);
       SelOpenGates(1);
       RunTimer(3,0x14);
       SetTrigg(6,0);
     }
     else {
-      RunTimer(3);
+      RunTimer(3,0);
       SetTrigg(6,0);
     }
   }
@@ -847,7 +847,7 @@ void ProcessScenary(void)
       iVar3 = GetTotalAmount0(&DAT_10009c48);
       iVar2 = GetUnitsAmount1(&DAT_10009f38,&DAT_10009c48);
       if (iVar2 == iVar3) {
-        SetTrigg(6,1);
+        SetTrigg(6,0);
         SelectUnits(&DAT_10009d60,0);
         SelectUnits(&DAT_10009c48,1);
         SelSendAndKill(1,&DAT_10009f08,0x5a,0);
@@ -897,13 +897,13 @@ void ProcessScenary(void)
     ShowPage("#PAGE15");
     cVar1 = Trigg(0xe);
     if (cVar1 == '\0') {
-      SetTrigg(0xe,1);
+      SetTrigg(0xe,0);
       SelectUnits(&DAT_10009d48,0);
       SelOpenGates(1);
       RunTimer(4,0x14);
     }
     else {
-      RunTimer(4);
+      RunTimer(4,0);
     }
     SetTrigg(9,0);
   }
@@ -917,7 +917,7 @@ void ProcessScenary(void)
     iVar3 = GetTotalAmount0(&DAT_10009d70);
     iVar2 = GetUnitsAmount1(&DAT_10009f38,&DAT_10009d70);
     if (iVar2 == iVar3) {
-      SetTrigg(9,1);
+      SetTrigg(9,0);
       SelectUnits(&DAT_10009d70,0);
       SelSendAndKill(1,&DAT_10009f08,0x5a,0);
       SelSendAndKill(1,&DAT_10009f00,0x6e,2);
@@ -1036,13 +1036,13 @@ void ProcessScenary(void)
       ShowPage("#PAGE15");
       cVar1 = Trigg(0xe);
       if (cVar1 == '\0') {
-        SetTrigg(0xe,1);
+        SetTrigg(0xe,0);
         SelectUnits(&DAT_10009d48,0);
         SelOpenGates(1);
         RunTimer(4,0x14);
       }
       else {
-        RunTimer(4);
+        RunTimer(4,0);
       }
       SetTrigg(9,0);
     }
@@ -1057,7 +1057,7 @@ void ProcessScenary(void)
     iVar3 = GetTotalAmount0(&DAT_10009d70);
     iVar2 = GetUnitsAmount1(&DAT_10009f38,&DAT_10009d70);
     if (iVar2 == iVar3) {
-      SetTrigg(9,1);
+      SetTrigg(9,0);
       SelectUnits(&DAT_10009d70,0);
       SelSendAndKill(1,&DAT_10009f08,0x5a,0);
       SelSendAndKill(1,&DAT_10009f00,0x6e,2);
@@ -1201,18 +1201,18 @@ void ProcessScenary(void)
   }
   cVar1 = Trigg(0xb);
   if ((cVar1 == '\0') && (((long long *)&DAT_10009f58)[DAT_10009d28] == 2)) {
-    SetTrigg(0xb,1);
+    SetTrigg(0xb,0);
     DAT_10009d28 = DAT_10009d28 + 1;
     ShowPage("#PAGE6");
     cVar1 = Trigg(0xe);
     if (cVar1 == '\0') {
-      SetTrigg(0xe,1);
+      SetTrigg(0xe,0);
       SelectUnits(&DAT_10009d48,0);
       SelOpenGates(1);
       RunTimer(5,0x14);
     }
     else {
-      RunTimer(5);
+      RunTimer(5,0);
     }
     SetTrigg(0xc,0);
   }
@@ -1229,7 +1229,7 @@ void ProcessScenary(void)
     iVar3 = GetTotalAmount0(&DAT_10009c00);
     iVar2 = GetUnitsAmount1(&DAT_10009f38,&DAT_10009c00);
     if (iVar2 == iVar3) {
-      SetTrigg(0xc,1);
+      SetTrigg(0xc,0);
       SelectUnits(&DAT_10009c00,0);
       SelSendAndKill(1,&DAT_10009f08,0x5a,0);
       SelSendAndKill(1,&DAT_10009f00,0x6e,2);
@@ -1276,7 +1276,7 @@ void ProcessScenary(void)
   cVar1 = Trigg(0xe);
   if (((cVar1 == '\0') && (iVar3 = GetTotalAmount0(&DAT_10009d48), 0 < iVar3)) &&
      (iVar3 = GetUnitsAmount0(&DAT_10009f20,0), iVar3 == 0)) {
-    SetTrigg(0xe,1);
+    SetTrigg(0xe,0);
     SelectUnits(&DAT_10009d48,0);
     SelOpenGates(1);
   }
@@ -1291,7 +1291,7 @@ void ProcessScenary(void)
   cVar1 = Trigg(0xf);
   if (((cVar1 == '\0') && (iVar3 = GetTotalAmount0(&DAT_10009d58), 0 < iVar3)) &&
      (iVar3 = GetUnitsAmount0(&DAT_10009f30,0), iVar3 == 0)) {
-    SetTrigg(0xf,1);
+    SetTrigg(0xf,0);
     SelectUnits(&DAT_10009d58,0);
     SelOpenGates(1);
   }
@@ -1306,7 +1306,7 @@ void ProcessScenary(void)
   cVar1 = Trigg(0x10);
   if (((cVar1 == '\0') && (iVar3 = GetTotalAmount0(&DAT_10009d68), 0 < iVar3)) &&
      (iVar3 = GetUnitsAmount0(&DAT_10009f40,0), iVar3 == 0)) {
-    SetTrigg(0x10,1);
+    SetTrigg(0x10,0);
     SelectUnits(&DAT_10009d68,0);
     SelOpenGates(1);
   }
@@ -1321,7 +1321,7 @@ void ProcessScenary(void)
   cVar1 = Trigg(0x11);
   if (((cVar1 == '\0') && (iVar3 = GetTotalAmount0(&DAT_10009d78), 0 < iVar3)) &&
      (iVar3 = GetUnitsAmount0(&DAT_10009f50,0), iVar3 == 0)) {
-    SetTrigg(0x11,1);
+    SetTrigg(0x11,0);
     SelectUnits(&DAT_10009d78,0);
     SelOpenGates(1);
   }
@@ -1347,7 +1347,7 @@ void ProcessScenary(void)
   }
   cVar1 = Trigg(0x15);
   if ((cVar1 == '\0') && (iVar3 = GetUnitsByNation(&DAT_10009c28,0), 0 < iVar3)) {
-    SetTrigg(0x15,1);
+    SetTrigg(0x15,0);
   }
   iVar3 = GetUnitsByNation(&DAT_10009c20,1);
   if (0 < iVar3) {
@@ -1547,16 +1547,16 @@ void ProcessScenary(void)
   if (4999 < iVar3) {
     iVar3 = GetDiff(0);
     ShowPageParam("#PAGE21",(10 - iVar3) * 100);
-    AddResource(0,0,0xffffec78);
+    AddResource(0,0,-5000);
     iVar3 = GetDiff(0);
     AddResource(0,1,(10 - iVar3) * 100);
   }
   iVar3 = GetResource(0,2);
   if (4999 < iVar3) {
     iVar3 = GetDiff(0);
-// FIXME(decompiler):     iVar3 = GetDiff(0,(10 - iVar3) * 100);
+// FIXME(decompiler):     iVar3 = GetDiff(0);
     ShowPageParam("#PAGE22",(10 - iVar3) * 100);
-    AddResource(0,2,0xffffec78);
+    AddResource(0,2,-5000);
     iVar3 = GetDiff(0);
     AddResource(0,4,(10 - iVar3) * 100);
     iVar3 = GetDiff(0);
@@ -1572,7 +1572,7 @@ void ProcessScenary(void)
         ShowPage("#PAGE23A");
         return;
       }
-      AddResource(0,1,0xfffffe0c);
+      AddResource(0,1,-500);
       ShowPage("#PAGE23B");
       SetLightSpot(&DAT_10009fc8,4,1);
       SetLightSpot(&DAT_10009fd0,4,2);

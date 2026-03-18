@@ -463,7 +463,7 @@ uVar1 = Trigg(1);
             }
             SetTrigg(0xf,0);
             SelectUnits(&DAT_10031558,0);
-            AddResource(0,1,0xffffff9c);
+            AddResource(0,1,-100);
             SelChangeNation(4,0);
           }
         }
@@ -483,7 +483,7 @@ uVar1 = Trigg(1);
             }
             SetTrigg(0xf,0);
             SelectUnits(&DAT_10031558,0);
-            AddResource(0,1,0xffffff9c);
+            AddResource(0,1,-100);
             SelChangeNation(4,0);
           }
         }
@@ -496,7 +496,7 @@ uVar1 = Trigg(1);
     if ((uVar1 & 0xff) == 0) {
       iVar2 = GetUnitsAmount1(&DAT_100314a0,&DAT_10031410);
       if (iVar2 == 0) {
-        SetTrigg(0x33,1);
+        SetTrigg(0x33,0);
       }
     }
   }
@@ -515,7 +515,7 @@ LAB_10002f8d:
   if (0xd < iVar2) {
     iVar2 = GetResource(0,4);
     if (10 < iVar2) {
-      SetTrigg(0x11,1);
+      SetTrigg(0x11,0);
     }
   }
   uVar1 = Trigg(0x1e);

@@ -505,7 +505,7 @@ int  FUN_10002ce0(int param_1)
   iVar7 = param_1 + 0x14;
   iVar4 = GetTotalAmount0(iVar7);
   if (*(int *)(param_1 + 0x24) < iVar4 + iVar3) {
-    return 0xffffffff;
+    return -1;
   }
   bVar1 = FUN_10002cc0(param_1);
   if (bVar1) {
@@ -700,10 +700,10 @@ void  FUN_10003100(int *param_1)
   int uVar2;
   int iVar3;
   
-  bVar1 = FUN_10002cc0((int)param_1);
+  bVar1 = FUN_10002cc0((intptr_t)param_1);
   if (bVar1) {
-    FUN_10002ce0((int)param_1);
-    uVar2 = FUN_10002de0((int)param_1);
+    FUN_10002ce0((intptr_t)param_1);
+    uVar2 = FUN_10002de0((intptr_t)param_1);
     if ((char)uVar2 != '\0') {
       FUN_10001910(*param_1);
       SelectUnits(param_1 + 7,0);
@@ -711,7 +711,7 @@ void  FUN_10003100(int *param_1)
       iVar3 = rand();
       SelSendAndKill((char)*param_1,param_1 + 0x19,iVar3,uVar2);
       FUN_10001950(*param_1);
-      FUN_100030d0((int)param_1);
+      FUN_100030d0((intptr_t)param_1);
     }
   }
   return;
@@ -842,7 +842,7 @@ int  FUN_10003310(int *param_1)
       return (int)1;
     }
   }
-  return uVar2 & 0xffffff00;
+  return uVar2 & -256;
 }
 
 
@@ -890,7 +890,7 @@ int  FUN_100033e0(void *this_ptr,char param_1)
     uVar2 = FUN_10003310(this_ptr);
     if ((char)uVar2 != '\0') {
       uVar3 = (int)(uVar2 >> 8);
-      uVar2 = (int)param_1;
+      uVar2 = (intptr_t)param_1;
       if (param_1 != '\0') {
         uVar2 = (int)*(char *)((int)this_ptr + 0x34);
         if (*(char *)((int)this_ptr + 0x34) != '\0') {
@@ -903,7 +903,7 @@ int  FUN_100033e0(void *this_ptr,char param_1)
     *(char *)((int)this_ptr + 0x34) = 1;
   }
 LAB_10003414:
-  return uVar2 & 0xffffff00;
+  return uVar2 & -256;
 }
 
 
@@ -917,23 +917,23 @@ int *  FUN_10003420(int *param_1)
   int *puVar2;
   
   FUN_10003390(param_1);
-  FUN_100032c0((int *)((int)param_1 + 0x3d));
-  FUN_100034c0((int)param_1 + 0xa9);
-  puVar2 = (int *)((int)param_1 + 0x3e5);
+  FUN_100032c0((int *)((intptr_t)param_1 + 0x3d));
+  FUN_100034c0((intptr_t)param_1 + 0xa9);
+  puVar2 = (int *)((intptr_t)param_1 + 0x3e5);
   iVar1 = 100;
   do {
     FUN_100032c0(puVar2);
     puVar2 = puVar2 + 0xd;
     iVar1 = iVar1 + -1;
   } while (iVar1 != 0);
-  *(int *)((int)param_1 + 0x185a) = 5;
-  *(int *)((int)param_1 + 0x1835) = 0;
-  *(char *)((int)param_1 + 0x184d) = 0;
-  *(int *)((int)param_1 + 0x184e) = 0;
-  *(int *)((int)param_1 + 0x1852) = 0;
-  *(int *)((int)param_1 + 0x1856) = 0;
-  *(int *)((int)param_1 + 0x185e) = 10;
-  RegisterDynGroup((int)param_1 + 0x1862);
+  *(int *)((intptr_t)param_1 + 0x185a) = 5;
+  *(int *)((intptr_t)param_1 + 0x1835) = 0;
+  *(char *)((intptr_t)param_1 + 0x184d) = 0;
+  *(int *)((intptr_t)param_1 + 0x184e) = 0;
+  *(int *)((intptr_t)param_1 + 0x1852) = 0;
+  *(int *)((intptr_t)param_1 + 0x1856) = 0;
+  *(int *)((intptr_t)param_1 + 0x185e) = 10;
+  RegisterDynGroup((intptr_t)param_1 + 0x1862);
   return param_1;
 }
 
@@ -945,7 +945,7 @@ int *  FUN_100034a0(int *param_1)
 
 {
   FUN_10003390(param_1);
-  *(char *)((int)param_1 + 0x41) = 0;
+  *(char *)((intptr_t)param_1 + 0x41) = 0;
   *(char *)(param_1 + 0xd) = 1;
   return param_1;
 }
@@ -1328,7 +1328,7 @@ void ProcessScenary(void)
   }
   cVar1 = Trigg(2);
   if ((cVar1 == '\0') && (bVar2)) {
-    SetTrigg(2,1);
+    SetTrigg(2,0);
     DisableMission(0x57);
     EnableMission(0x49);
     EnableMission(0x41);
@@ -1370,7 +1370,7 @@ void ProcessScenary(void)
   cVar1 = Trigg(5);
   if (((cVar1 == '\0') && (iVar3 = GetReadyAmount(&DAT_10012c88,0), iVar3 < 2)) &&
      (iVar3 = GetReadyAmount(&DAT_100266a8,0), iVar3 < 2)) {
-    SetTrigg(5,1);
+    SetTrigg(5,0);
     FUN_10002c60(&DAT_10022570,2);
     FUN_10002c80(&DAT_10022570,2);
     FUN_10002c60(&DAT_100225e8,2);
@@ -1391,7 +1391,7 @@ void ProcessScenary(void)
   cVar1 = Trigg(6);
   if (((cVar1 == '\0') && (iVar3 = GetReadyAmount(&DAT_10022990,0), iVar3 == 0)) &&
      (iVar3 = GetReadyAmount(&DAT_10022530,0), iVar3 == 0)) {
-    SetTrigg(6,1);
+    SetTrigg(6,0);
     FUN_10002c60(&DAT_10022570,2);
     FUN_10002c80(&DAT_10022570,2);
     FUN_10002c60(&DAT_100225e8,2);
@@ -1462,7 +1462,7 @@ void ProcessScenary(void)
   }
   cVar1 = Trigg(0xb);
   if ((cVar1 == '\0') && (cVar1 = Trigg(8), cVar1 != '\0')) {
-    SetTrigg(0xb,1);
+    SetTrigg(0xb,0);
     uVar4 = GetGlobalTime();
     FUN_10002bb0(&DAT_10022850,uVar4);
     uVar4 = GetGlobalTime();
@@ -1539,7 +1539,7 @@ void ProcessScenary(void)
      (((iVar3 = GetUnitsAmount0(&DAT_10022758,5), iVar3 != 0 ||
        (iVar3 = GetUnitsAmount0(&DAT_10022760,5), iVar3 != 0)) ||
       (iVar3 = GetUnitsAmount0(&DAT_10022768,5), pcVar7 = (void*)&SelectUnits, iVar3 != 0)))) {
-    SetTrigg(9,1);
+    SetTrigg(9,0);
     FUN_10001910(6);
     SelectUnits(&DAT_10012d70,0);
     SelSendTo(6,&DAT_10022770,100,0);
@@ -1547,7 +1547,7 @@ void ProcessScenary(void)
   }
   cVar1 = Trigg(8);
   if ((cVar1 == '\0') && (iVar3 = GetUnitsAmount1(&DAT_10022770,&DAT_10012d70), iVar3 != 0)) {
-    SetTrigg(8,1);
+    SetTrigg(8,0);
     SetStartPoint(&DAT_10022770);
     RefreshScreen();
     ShowPage("#fishers_help");
@@ -1561,7 +1561,7 @@ void ProcessScenary(void)
       (iVar3 = GetUnitsAmount0(&DAT_10022758,5), iVar3 == 0)) &&
      ((iVar3 = GetUnitsAmount0(&DAT_10022760,5), iVar3 == 0 &&
       (iVar3 = GetUnitsAmount0(&DAT_10022768,5), iVar3 == 0)))) {
-    SetTrigg(0xc,1);
+    SetTrigg(0xc,0);
     FUN_10001910(6);
     SelectUnits(&DAT_10013090,0);
     SelectUnits(&DAT_10013098,1);

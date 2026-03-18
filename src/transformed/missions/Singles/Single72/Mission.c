@@ -214,7 +214,7 @@ void ProcessScenary(void)
     SetTrigg(4,0);
     ShowPage("#PAGE5");
     ClearLightSpot(1);
-    SetTrigg(5,1);
+    SetTrigg(5,0);
     SelectUnits(&DAT_100065d0,0);
     SelChangeNation(4,0);
     SelectUnits(&DAT_100065b8,0);
@@ -235,7 +235,7 @@ void ProcessScenary(void)
     SelSendAndKill(5,&DAT_10006548,0x20,0);
     uVar2 = FUN_10001000();
     RunTimer(1,uVar2);
-    SetTrigg(5,1);
+    SetTrigg(5,0);
   }
   cVar1 = Trigg(6);
   if ((cVar1 != '\0') && (iVar3 = GetUnitsAmount0(&DAT_10006518,5), iVar3 == 0)) {

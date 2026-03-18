@@ -571,7 +571,7 @@ void ProcessScenary(void)
     SelSendAndKill(1,&DAT_10007c98,0x40,0);
     SelectUnits(&DAT_10007c68,0);
     SelSendAndKill(1,&DAT_10007c98,0x40,0);
-    SetTrigg(0xf,1);
+    SetTrigg(0xf,0);
     cVar1 = Trigg(99);
     if ((cVar1 != '\0') && ((iVar2 = GetDiff(0), iVar2 == 2 || (iVar2 = GetDiff(0), iVar2 == 3)))) {
       SetTrigg(99,0);

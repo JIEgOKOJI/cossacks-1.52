@@ -409,7 +409,7 @@ uVar1 = Trigg(99);
     iVar4 = GetUnitsAmount1(&DAT_100335d0,&DAT_100334b8);
     iVar3 = GetTotalAmount0(&DAT_100334b8);
     if (iVar4 < iVar3) {
-      SetTrigg(1,1);
+      SetTrigg(1,0);
       SelectUnits(&DAT_100334b8,0);
       SelSendTo(5,&DAT_100336f0,0x41,0);
     }
@@ -445,7 +445,7 @@ uVar1 = Trigg(99);
     iVar4 = GetUnitsAmount1(&DAT_100335d8,&DAT_100334b0);
     iVar3 = GetTotalAmount0(&DAT_100334b0);
     if (iVar4 < iVar3) {
-      SetTrigg(3,1);
+      SetTrigg(3,0);
       SelectUnits(&DAT_100334b0,0);
       SelSendTo(5,&DAT_10033700,0,0);
     }
@@ -525,7 +525,7 @@ LAB_10003526:
   if ((uVar1 & 0xff) != 0) {
     FreeTimer(3);
     FreeTimer(2);
-    SetTrigg(9,1);
+    SetTrigg(9,0);
   }
   SaveSelectedUnits(5,&DAT_10033638,0);
   ClearSelection(5);
@@ -590,7 +590,7 @@ LAB_10003964:
   if ((uVar1 & 0xff) != 0) {
     FreeTimer(4);
     FreeTimer(5);
-    SetTrigg(0xb,1);
+    SetTrigg(0xb,0);
   }
   SaveSelectedUnits(5,&DAT_10033638,0);
   ClearSelection(5);
@@ -685,7 +685,7 @@ LAB_10003964:
   if ((uVar1 & 0xff) == 0) {
     iVar4 = GetUnitsAmount0(&DAT_10033458,0);
     if (iVar4 == 0) {
-      SetTrigg(0x60,1);
+      SetTrigg(0x60,0);
       SelectUnits(&DAT_100336c0,0);
       SelCloseGates(1);
     }
@@ -813,7 +813,7 @@ LAB_10004740:
   if ((uVar1 & 0xff) != 0) {
     FreeTimer(7);
     FreeTimer(6);
-    SetTrigg(0xd,1);
+    SetTrigg(0xd,0);
   }
   SaveSelectedUnits(5,&DAT_10033638,0);
   ClearSelection(5);
@@ -834,7 +834,7 @@ LAB_10004740:
     iVar4 = GetUnitsAmount1(&DAT_100335e0,&DAT_100334c0);
     iVar3 = GetTotalAmount0(&DAT_100334c0);
     if (iVar4 < iVar3) {
-      SetTrigg(6,1);
+      SetTrigg(6,0);
       SelectUnits(&DAT_100334c0,0);
       SelSendTo(5,&DAT_100336e0,0,0);
     }
@@ -938,7 +938,7 @@ LAB_10004c97:
   uVar1 = TimerDone(8);
   if ((uVar1 & 0xff) != 0) {
     FreeTimer(8);
-    SetTrigg(0x10,1);
+    SetTrigg(0x10,0);
   }
   uVar1 = Trigg(0xf);
   if ((uVar1 & 0xff) == 0) {
@@ -982,7 +982,7 @@ LAB_10004c97:
   uVar1 = TimerDone(9);
   if ((uVar1 & 0xff) != 0) {
     FreeTimer(9);
-    SetTrigg(0x15,1);
+    SetTrigg(0x15,0);
   }
   uVar1 = Trigg(0x11);
   if ((uVar1 & 0xff) != 0) {

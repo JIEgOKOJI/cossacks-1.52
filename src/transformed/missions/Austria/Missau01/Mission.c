@@ -203,7 +203,7 @@ void ProcessScenary(void)
         cVar1 = AskQuestion("#PAGE1");
         if (cVar1 != '\0') {
           SetTrigg(0x32,0);
-          AddResource(0,1,0xfffff830);
+          AddResource(0,1,-2000);
         }
         SelectUnits(&DAT_100064c8,0);
         SelSendTo(2,&DAT_10006550,0,0);
@@ -239,7 +239,7 @@ void ProcessScenary(void)
       }
       else {
         ShowPage("#PAGE3A");
-        AddResource(0,1,0xffffff38);
+        AddResource(0,1,-200);
         SelectUnits(&DAT_100064d8,0);
         SelChangeNation(2,0);
       }
@@ -310,7 +310,7 @@ void ProcessScenary(void)
         StartAI(1,"AUSTRIA.0",1,1,1,0);
       }
       else {
-        iVar2 = GetDiff();
+        iVar2 = GetDiff(0);
         StartAI(1,"AUSTRIA.0",1,1,1,iVar2 + -1);
       }
       iVar2 = GetDiff(0);

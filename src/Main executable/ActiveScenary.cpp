@@ -3401,6 +3401,7 @@ void LoadAIFromDLL( byte Nat, char* Name );
 
 extern "C" __declspec( dllexport ) void RunAI( byte Nat )
 {
+	fprintf(stderr, "[AI] RunAI called: Nat=%d\n", Nat);
 	Nat = AssignTBL[Nat];
 	if ( Nat < 1 || Nat>7 )
 	{
@@ -5947,6 +5948,7 @@ void LoadAIFromDLL( byte Nat, char* Name )
 {
 	Nat = AssignTBL[Nat];
 	Nation* NT = NATIONS + Nat;
+	fprintf(stderr, "[AI] LoadAIFromDLL: Nat=%d Name=%s\n", Nat, Name ? Name : "(null)");
 	AiIsRunNow = true;
 	CNAT = NATIONS + Nat;
 	CCIT = CNAT->CITY;
@@ -5997,7 +5999,9 @@ void LoadAIFromDLL( byte Nat, char* Name )
 				assert( 0 );
 			}
 			AiIsRunNow = true;
+			fprintf(stderr, "[AI] Calling InitAI for Nat=%d\n", Nat);
 			INITAI();
+			fprintf(stderr, "[AI] InitAI done for Nat=%d\n", Nat);
 			AiIsRunNow = false;
 			NT->DLLName = Name;
 		}

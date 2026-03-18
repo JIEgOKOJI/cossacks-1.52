@@ -355,7 +355,7 @@ uVar1 = Trigg(99);
     iVar4 = GetUnitsAmount1(&DAT_10032608,&DAT_100324c0);
     iVar3 = GetTotalAmount0(&DAT_100324c0);
     if (iVar4 < iVar3) {
-      SetTrigg(1,1);
+      SetTrigg(1,0);
       SelectUnits(&DAT_100324c0,0);
       SelSendTo(5,&DAT_100326a8,0x1e,0);
     }
@@ -438,7 +438,7 @@ uVar1 = Trigg(99);
   if ((uVar1 & 0xff) == 0) {
     iVar4 = GetUnitsAmount0(&DAT_10032470,0);
     if (iVar4 == 0) {
-      SetTrigg(0x60,1);
+      SetTrigg(0x60,0);
       SelectUnits(&DAT_10032688,0);
       SelCloseGates(1);
     }
@@ -522,7 +522,7 @@ LAB_10003325:
   if ((uVar1 & 0xff) != 0) {
     FreeTimer(3);
     FreeTimer(2);
-    SetTrigg(5,1);
+    SetTrigg(5,0);
   }
   uVar1 = Trigg(8);
   if ((uVar1 & 0xff) != 0) {
@@ -545,7 +545,7 @@ LAB_10003325:
   if ((uVar1 & 0xff) == 0) {
     iVar4 = GetUnitsAmount0(&DAT_10032468,0);
     if (iVar4 == 0) {
-      SetTrigg(0x5a,1);
+      SetTrigg(0x5a,0);
       SelectUnits(&DAT_10032690,0);
       SelCloseGates(1);
     }
@@ -604,9 +604,9 @@ LAB_10003325:
             if (iVar4 == 3) {
               SetTrigg(0x11,0);
               ShowPage("#PAGE10A");
-              AddResource(0,1,0xffffb1e0);
-              AddResource(0,0,0xffff3cb0);
-              AddResource(0,2,0xffff3cb0);
+              AddResource(0,1,-20000);
+              AddResource(0,0,-50000);
+              AddResource(0,2,-50000);
             }
           }
         }
@@ -793,7 +793,7 @@ LAB_100043be:
   if ((uVar1 & 0xff) != 0) {
     FreeTimer(5);
     FreeTimer(4);
-    SetTrigg(7,1);
+    SetTrigg(7,0);
   }
   uVar1 = Trigg(0xb);
   if ((uVar1 & 0xff) != 0) {

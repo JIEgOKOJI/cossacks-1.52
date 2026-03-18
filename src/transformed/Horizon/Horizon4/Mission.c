@@ -165,7 +165,7 @@ uVar1 = Trigg(1);
     iVar3 = GetUnitsAmount1(&DAT_10030460,&DAT_100303f8);
     iVar2 = GetTotalAmount0(&DAT_100303f8);
     if (iVar3 == iVar2) {
-      SetTrigg(7,1);
+      SetTrigg(7,0);
       SetTrigg(3,0);
       SetTrigg(4,0);
       SetTrigg(0x13,0);
@@ -207,7 +207,7 @@ uVar1 = Trigg(1);
         }
       }
     }
-    SetTrigg(4,1);
+    SetTrigg(4,0);
     SetTrigg(5,0);
     SetTrigg(6,0);
     SelectUnits1(1,&DAT_100303e0,0);
@@ -258,11 +258,11 @@ LAB_1000202f:
     if ((uVar1 & 0xff) == 0) {
       SetTrigg(10,0);
       SetTrigg(2,0);
-      SetTrigg(7,1);
+      SetTrigg(7,0);
       SetTrigg(3,0);
-      SetTrigg(4,1);
+      SetTrigg(4,0);
       SetTrigg(5,0);
-      SetTrigg(6,1);
+      SetTrigg(6,0);
     }
   }
   uVar1 = Trigg(0xb);

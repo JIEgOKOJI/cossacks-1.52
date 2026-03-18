@@ -113,7 +113,7 @@ uVar1 = Trigg(99);
     SelectUnits(&DAT_1002f3f0,0);
     SelSendTo(1,&DAT_1002f400,0,0);
     ShowPage("#PAGE1");
-    SetTrigg(1,1);
+    SetTrigg(1,0);
   }
   uVar1 = Trigg(1);
   if ((uVar1 & 0xff) != 0) {
@@ -123,7 +123,7 @@ uVar1 = Trigg(99);
       SetLightSpot(&DAT_1002f400,1,1);
       RunTimer(2,3000);
       SetTrigg(1,0);
-      SetTrigg(2,1);
+      SetTrigg(2,0);
     }
   }
   uVar1 = Trigg(2);
@@ -155,7 +155,7 @@ uVar1 = Trigg(99);
             }
           }
           else {
-            AddResource(0,1,0xfffffc18);
+            AddResource(0,1,-1000);
             AddResource(1,1,1000);
             iVar2 = GetResource(0,1);
             if (iVar2 < 1000) {
@@ -167,7 +167,7 @@ uVar1 = Trigg(99);
                 ChangeFriends(2,0xe);
               }
               else {
-                AddResource(0,1,0xfffffc18);
+                AddResource(0,1,-1000);
                 AddResource(2,1,1000);
                 ChangeFriends(2,0xf);
               }

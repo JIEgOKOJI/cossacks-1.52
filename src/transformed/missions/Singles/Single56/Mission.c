@@ -803,12 +803,12 @@ uVar1 = Trigg(99);
             SetTrigg(4,0);
             FreeTimer(3);
             RunTimer(8,6000);
-            SetTrigg(10,1);
+            SetTrigg(10,0);
             RemoveGroup(&DAT_10035460,&DAT_10035430);
             SelectUnits(&DAT_10035430,0);
             SelSendAndKill(2,&DAT_100356f0,0x96,0);
             ClearSelection(2);
-            SetTrigg(9,1);
+            SetTrigg(9,0);
           }
         }
       }
@@ -822,7 +822,7 @@ uVar1 = Trigg(99);
             if ((uVar1 & 0xff) == 0) goto LAB_10004dee;
           }
           FreeTimer(8);
-          SetTrigg(4,1);
+          SetTrigg(4,0);
         }
       }
     }
@@ -856,12 +856,12 @@ LAB_10004dee:
             SetTrigg(7,0);
             FreeTimer(4);
             RunTimer(9,6000);
-            SetTrigg(1,1);
+            SetTrigg(1,0);
             RemoveGroup(&DAT_10035458,&DAT_10035428);
             SelectUnits(&DAT_10035428,0);
             SelSendAndKill(2,&DAT_100356f8,0x82,0);
             ClearSelection(2);
-            SetTrigg(0xb,1);
+            SetTrigg(0xb,0);
           }
         }
       }
@@ -875,7 +875,7 @@ LAB_10004dee:
             if ((uVar1 & 0xff) == 0) goto LAB_100050e3;
           }
           FreeTimer(9);
-          SetTrigg(7,1);
+          SetTrigg(7,0);
         }
       }
     }
@@ -909,12 +909,12 @@ LAB_100050e3:
             SetTrigg(8,0);
             FreeTimer(5);
             RunTimer(10,0x1194);
-            SetTrigg(2,1);
+            SetTrigg(2,0);
             RemoveGroup(&DAT_10035470,&DAT_10035440);
             SelectUnits(&DAT_10035440,0);
             SelSendAndKill(2,&DAT_10035700,0x96,0);
             ClearSelection(2);
-            SetTrigg(0xd,1);
+            SetTrigg(0xd,0);
           }
         }
       }
@@ -928,7 +928,7 @@ LAB_100050e3:
             if ((uVar1 & 0xff) == 0) goto LAB_100053d8;
           }
           FreeTimer(10);
-          SetTrigg(8,1);
+          SetTrigg(8,0);
         }
       }
     }
@@ -962,12 +962,12 @@ LAB_100053d8:
             SetTrigg(0x12,0);
             FreeTimer(6);
             RunTimer(0xb,0x1194);
-            SetTrigg(3,1);
+            SetTrigg(3,0);
             RemoveGroup(&DAT_10035468,&DAT_10035590);
             SelectUnits(&DAT_10035590,0);
             SelSendAndKill(2,&DAT_100356e0,0xe6,0);
             ClearSelection(2);
-            SetTrigg(0xe,1);
+            SetTrigg(0xe,0);
           }
         }
       }
@@ -981,7 +981,7 @@ LAB_100053d8:
             if ((uVar1 & 0xff) == 0) goto LAB_100056cd;
           }
           FreeTimer(0xb);
-          SetTrigg(0x12,1);
+          SetTrigg(0x12,0);
         }
       }
     }
@@ -1022,12 +1022,12 @@ LAB_100056cd:
           SetTrigg(0x16,0);
           FreeTimer(0x17);
           RunTimer(0x18,15000);
-          SetTrigg(0x15,1);
+          SetTrigg(0x15,0);
           RemoveGroup(&DAT_10035420,&DAT_10035588);
           SelectUnits(&DAT_10035588,0);
           SelSendAndKill(2,&DAT_100356e8,100,0);
           ClearSelection(2);
-          SetTrigg(0x14,1);
+          SetTrigg(0x14,0);
         }
       }
     }
@@ -1053,7 +1053,7 @@ LAB_100056cd:
           if ((uVar1 & 0xff) == 0) goto LAB_10005abd;
         }
         FreeTimer(0x18);
-        SetTrigg(0x16,1);
+        SetTrigg(0x16,0);
       }
     }
   }
@@ -1102,12 +1102,12 @@ LAB_10005b61:
           SetTrigg(0x19,0);
           FreeTimer(0x19);
           RunTimer(0x1a,15000);
-          SetTrigg(0x18,1);
+          SetTrigg(0x18,0);
           RemoveGroup(&DAT_10035418,&DAT_100355c8);
           SelectUnits(&DAT_100355c8,0);
           SelSendAndKill(2,&DAT_100356e8,100,0);
           ClearSelection(2);
-          SetTrigg(0x17,1);
+          SetTrigg(0x17,0);
         }
       }
     }
@@ -1133,7 +1133,7 @@ LAB_10005b61:
           if ((uVar1 & 0xff) == 0) goto LAB_10005f0a;
         }
         FreeTimer(0x1a);
-        SetTrigg(0x19,1);
+        SetTrigg(0x19,0);
       }
     }
   }

@@ -458,7 +458,7 @@ void ProcessScenary(void)
         AttackEnemyInZone(&DAT_10006778,&DAT_10006808,0);
         return;
       }
-      AddResource(0,1,0xfffffe0c);
+      AddResource(0,1,-500);
       ShowPage("#PAGE13A");
       SelectUnits(&DAT_10006778,0);
       SelChangeNation(5,0);

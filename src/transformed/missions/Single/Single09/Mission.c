@@ -172,7 +172,7 @@ uVar1 = Trigg(100);
     SelectUnits1(1,&DAT_1002f490,1);
     SelectUnits1(1,&DAT_1002f520,1);
     DoNotUseSelInAI(1);
-    StartAI(1,"FRANCE.0",1,1,0,0xffffffff);
+    StartAI(1,"FRANCE.0",1,1,0,-1);
     RunTimer(1,100);
     RunTimer(3,800);
     EnableUnit(0,&DAT_1002f458,0);
@@ -217,7 +217,7 @@ uVar1 = Trigg(100);
       SelectUnitsType(&DAT_1002f478,0,0);
       SelDie(0);
       RunTimer(2,200);
-      SetTrigg(0x5e,1);
+      SetTrigg(0x5e,0);
     }
   }
   uVar1 = Trigg(0x5e);
@@ -225,7 +225,7 @@ uVar1 = Trigg(100);
     uVar1 = TimerDone(2);
     if ((uVar1 & 0xff) != 0) {
       SetTrigg(0x5e,0);
-      SetTrigg(0x5f,1);
+      SetTrigg(0x5f,0);
     }
   }
   uVar1 = Trigg(0x5d);

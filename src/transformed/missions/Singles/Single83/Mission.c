@@ -207,7 +207,7 @@ int __cdecl FUN_10001860(int param_1,int param_2,int param_3,int param_4)
     uVar1 = InsertUnitToGroup(0,param_1,uVar3);
     uVar2 = (int)((unsigned int)uVar1 >> 8);
   }
-  return (int)local_3d;
+  return (intptr_t)local_3d;
 }
 
 
@@ -234,7 +234,7 @@ FUN_100019c0(int param_1,int param_2,int param_3,int param_4,int param_5)
       return (int)1;
     }
   }
-  return uVar2 & 0xffffff00;
+  return uVar2 & -256;
 }
 
 
@@ -256,7 +256,7 @@ int __cdecl FUN_10001a30(int param_1)
     return (int)1;
   }
   ClearLightSpot(1);
-  return uVar3 & 0xffffff00;
+  return uVar3 & -256;
 }
 
 
@@ -503,12 +503,12 @@ void ProcessScenary(void)
     }
     uVar3 = 0x40;
     uVar4 = rand();
-    uVar4 = uVar4 & 0x80000003;
+    uVar4 = uVar4 & -2147483645;
     if ((int)uVar4 < 0) {
-      uVar4 = (uVar4 - 1 | 0xfffffffc) + 1;
+      uVar4 = (uVar4 - 1 | -4) + 1;
     }
-// FIXME(decompiler):     iVar6 = GetDiff(0,&DAT_1000bd40,1,((unsigned char *)&DAT_1000be18) + uVar4 * 8,uVar3);
-    CreateObject0(&DAT_1000bd48,((unsigned char *)&DAT_1000bd20) + iVar6 * 8);
+// FIXME(decompiler):     iVar6 = GetDiff(0);
+    CreateObject0(&DAT_1000bd48,((unsigned char *)&DAT_1000bd20) + iVar6 * 8,0,0,0,0);
   }
   iVar6 = GetTotalAmount0(&DAT_1000bd48);
   if ((iVar6 == 0) && (cVar1 = TimerDone(2), cVar1 != '\0')) {
@@ -518,7 +518,7 @@ void ProcessScenary(void)
   bVar2 = FUN_10001a80(&DAT_1000bd48);
   if (bVar2) {
     FUN_100019c0(&DAT_1000bd18,0x1000be38,0x14,&DAT_1000bd48,1);
-    SetTrigg(3,1);
+    SetTrigg(3,0);
   }
   else {
     cVar1 = Trigg(3);

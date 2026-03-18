@@ -124,7 +124,7 @@ uVar1 = Trigg(1);
     SetResource(1,4,3000);
     ChangeFriends(2,7);
     StartAI(1,"FRANCE.0",2,0,0,DAT_1002f450);
-    SetTrigg(99,1);
+    SetTrigg(99,0);
     DisableMission(0x45);
     if (0 < DAT_1002f450) {
       InitialUpgrade(DAT_1002a09c,"AKA17EN");
@@ -167,7 +167,7 @@ uVar1 = Trigg(1);
           ShowPage("#PAGE3");
         }
         else {
-          AddResource(0,4,0xfffff830);
+          AddResource(0,4,-2000);
           CreateObject0(&DAT_1002f3f0,&DAT_1002f410,&DAT_1002f418,2,&DAT_1002f400,0x6e);
           SelectUnits(&DAT_1002f3f0,0);
           SelSendTo(2,&DAT_1002f3f8,0x80,0);
@@ -180,7 +180,7 @@ uVar1 = Trigg(1);
           ShowPage("#PAGE3");
         }
         else {
-          AddResource(0,4,0xffffe890);
+          AddResource(0,4,-6000);
           CreateObject0(&DAT_1002f3f0,&DAT_1002f410,&DAT_1002f460,2,&DAT_1002f400,0x6e);
           SelectUnits(&DAT_1002f3f0,0);
           SelSendTo(2,&DAT_1002f3f8,0x80,0);
@@ -196,7 +196,7 @@ uVar1 = Trigg(1);
   if (iVar6 == 0) {
     uVar1 = Trigg(99);
     if ((uVar1 & 0xff) == 0) {
-      SetTrigg(99,1);
+      SetTrigg(99,0);
     }
   }
   iVar6 = GetUnitsAmount0(&DAT_1002f408,2);
@@ -238,7 +238,7 @@ uVar1 = Trigg(1);
   if (iVar6 == 0) {
     uVar1 = Trigg(2);
     if ((uVar1 & 0xff) == 0) {
-      SetTrigg(2,1);
+      SetTrigg(2,0);
       SelectUnitsInZone(&DAT_1002f4a8,5,0);
       SelSendAndKill(5,&DAT_1002f4b0,0x80,0);
     }

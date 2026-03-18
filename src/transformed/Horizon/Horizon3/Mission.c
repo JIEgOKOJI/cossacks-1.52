@@ -292,10 +292,10 @@ uVar1 = Trigg(1);
     CreateObject0(&DAT_100305a8,&DAT_10030450,&DAT_10030500,1,&DAT_10030468,0);
     CreateObject0(&DAT_100305c0,&DAT_10030458,&DAT_10030508,1,&DAT_10030488,0x20);
     SelectUnits(&DAT_100305a8,0);
-    SaveSelectedUnits(1,&DAT_100305a0);
+    SaveSelectedUnits(1,&DAT_100305a0,0);
     SelSendAndKill(1,&DAT_10030498,0x40,0);
     SelectUnits(&DAT_100305c0,0);
-    SaveSelectedUnits(1,&DAT_100303f0);
+    SaveSelectedUnits(1,&DAT_100303f0,0);
     SelSendAndKill(1,&DAT_10030498,0x40,0);
     RunTimer(0x12,600);
   }

@@ -165,7 +165,7 @@ uVar1 = Trigg(1);
       GetTotalAmount0(&DAT_1002f3f8);
       if (iVar3 == iVar2) {
         SetTrigg(3,0);
-        SetTrigg(0x43,1);
+        SetTrigg(0x43,0);
         ClearSelection(0);
         SelectUnits1(0,&DAT_1002f3f8,0);
         SelChangeNation(0,4);
@@ -297,7 +297,7 @@ uVar1 = Trigg(1);
     if ((uVar1 & 0xff) != 0) {
       iVar3 = GetUnitsAmount0(&DAT_1002f430,0);
       if (iVar3 == 0) {
-        SetTrigg(0x28,1);
+        SetTrigg(0x28,0);
         SelectUnits(&DAT_1002f498,0);
         SelCloseGates(5);
       }
@@ -316,7 +316,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) == 0) {
     iVar3 = GetUnitsAmount0(&DAT_1002f428,0);
     if (iVar3 == 0) {
-      SetTrigg(0x29,1);
+      SetTrigg(0x29,0);
       SelectUnits(&DAT_1002f4a0,0);
       SelCloseGates(5);
     }
@@ -334,7 +334,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) == 0) {
     iVar3 = GetUnitsAmount0(&DAT_1002f440,0);
     if (iVar3 == 0) {
-      SetTrigg(0x2a,1);
+      SetTrigg(0x2a,0);
       SelectUnits(&DAT_1002f4a8,0);
       SelCloseGates(5);
     }

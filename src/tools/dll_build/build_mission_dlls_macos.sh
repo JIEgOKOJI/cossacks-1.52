@@ -62,6 +62,9 @@ find "$DECOMP_DIR" -name "*.c" -not -path "*/ai/*" -not -path "*/unrar/*" | sort
         continue
     fi
 
+    # Fix argument counts (Ghidra sometimes omits/adds arguments)
+    python3 "$SCRIPT_DIR/fix_arg_counts.py" --file "$out_c" 2>/dev/null
+
     # Compile + link in one step
     if ! $CC $CFLAGS $LDFLAGS -o "$out_dylib" "$out_c" 2>/dev/null; then
         echo "FAIL compile: $rel"

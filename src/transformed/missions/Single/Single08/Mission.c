@@ -90,7 +90,7 @@ uVar1 = Trigg(100);
     SelectUnits1(1,&DAT_1002e420,1);
     SelectUnits1(1,&DAT_1002e418,1);
     DoNotUseSelInAI(1);
-    StartAI(1,"SVEDEN.0",0,1,1,0xffffffff);
+    StartAI(1,"SVEDEN.0",0,1,1,-1);
     ShowPage("#PAGE1");
     ShowPage("#PAGE2");
     RunTimer(1,500);

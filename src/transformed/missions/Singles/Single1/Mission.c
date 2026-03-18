@@ -183,7 +183,7 @@ void __cdecl FUN_100012d0(int param_1)
   int *puVar2;
   int local_48 [16];
   unsigned int local_8;
-for (local_8 = 0; (int)local_8 < 8; local_8 = local_8 + 1) {
+for (local_8 = 0; (intptr_t)local_8 < 8; local_8 = local_8 + 1) {
     iVar1 = GetUnitsByNation(param_1,local_8 & 0xff);
     if (0 < iVar1) break;
   }
@@ -362,7 +362,7 @@ void __cdecl FUN_100017f0(int param_1,int param_2,int param_3)
   int local_8;
 FUN_100012d0(param_1);
   for (local_c = 0; local_c < DAT_10032570; local_c = local_c + 1) {
-    CreateObject0(&DAT_10032460,param_2,param_3,(char)local_8,0);
+    CreateObject0(&DAT_10032460,param_2,param_3,(char)local_8,0,0);
     RemoveGroup(&DAT_10032460,param_1);
   }
   return;
@@ -851,7 +851,7 @@ LAB_100038e4:
   if (((uVar1 & 0xff) != 0) && (FUN_100012d0(&DAT_10032420), iVar3 == 0)) {
     RunTimer(1,100);
     SetTrigg(1,0);
-    SetTrigg(2,1);
+    SetTrigg(2,0);
   }
   uVar1 = Trigg(2);
   if ((uVar1 & 0xff) != 0) {
@@ -884,7 +884,7 @@ LAB_100038e4:
                       (4 - DAT_100323f8) * 0x5dc,(4 - DAT_100323f8) * 500);
       }
       else {
-        SetTrigg(1,1);
+        SetTrigg(1,0);
       }
     }
   }
@@ -976,7 +976,7 @@ LAB_100038e4:
   if ((uVar1 & 0xff) != 0) {
     uVar1 = NationIsErased(0);
     if ((uVar1 & 0xff) != 0) {
-      for (local_1c = 1; (int)local_1c < 0x14; local_1c = local_1c + 1) {
+      for (local_1c = 1; (intptr_t)local_1c < 0x14; local_1c = local_1c + 1) {
         uVar1 = TimerDone(local_1c & 0xff);
         if ((uVar1 & 0xff) == 0) {
           RunTimer(local_1c & 0xff,1);
@@ -991,7 +991,7 @@ LAB_100038e4:
   if ((uVar1 & 0xff) == 0) {
     uVar1 = Trigg(0x5c);
     if ((uVar1 & 0xff) == 0) {
-      for (local_20 = 1; (int)local_20 < 0x1e; local_20 = local_20 + 1) {
+      for (local_20 = 1; (intptr_t)local_20 < 0x1e; local_20 = local_20 + 1) {
         uVar1 = TimerDone(local_20 & 0xff);
         if ((uVar1 & 0xff) == 0) {
           FreeTimer(local_20 & 0xff);
@@ -1015,7 +1015,7 @@ __declspec(dllexport) void OnInit()
   int *puVar2;
   int local_48 [16];
   unsigned int local_8;
-for (local_8 = 0; (int)local_8 < 6; local_8 = local_8 + 1) {
+for (local_8 = 0; (intptr_t)local_8 < 6; local_8 = local_8 + 1) {
     iVar1 = GetResource(param_1,local_8 & 0xff);
     if (iVar1 < DAT_10030a30) {
       AddResource(param_1,local_8 & 0xff,DAT_10030a30);
@@ -1036,7 +1036,7 @@ __declspec(dllexport) void ProcessScenary()
   int *puVar2;
   int local_44 [15];
   int uStack_8;
-iVar1 = GetResource(param_1,(int)param_2);
+iVar1 = GetResource(param_1,(intptr_t)param_2);
   if (iVar1 < 100000) {
     SetResource(param_1,param_2,10000000);
   }

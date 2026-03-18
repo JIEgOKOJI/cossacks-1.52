@@ -129,10 +129,10 @@ uVar1 = Trigg(1);
       SelectUnits(&DAT_1002f3f8,0);
       SelectUnits(&DAT_1002f3f0,1);
       SelChangeNation(4,0);
-      SetTrigg(3,1);
+      SetTrigg(3,0);
       uVar1 = AskQuestion("#PAGE2A");
       if ((uVar1 & 0xff) != 0) {
-        AddResource(0,1,0xffffd8f0);
+        AddResource(0,1,-10000);
         SelectUnits(&DAT_1002f418,0);
         SelChangeNation(4,0);
       }
@@ -156,7 +156,7 @@ uVar1 = Trigg(1);
       else {
         uVar1 = Trigg(3);
         if ((uVar1 & 0xff) == 0) {
-          SetTrigg(3,1);
+          SetTrigg(3,0);
           FreeTimer(1);
         }
       }
@@ -207,7 +207,7 @@ uVar1 = Trigg(1);
           ShowPage("#PAGE4B");
         }
         else {
-          AddResource(0,1,0xffffd8f0);
+          AddResource(0,1,-10000);
           SelectUnits(&DAT_1002f400,0);
           SelOpenGates(1);
           SelectUnits(&DAT_1002f408,0);
@@ -277,7 +277,7 @@ uVar1 = Trigg(1);
     if (0 < iVar3) {
       SetTrigg(10,0);
       ShowPage("#PAGE10");
-      AddResource(0,1,0xfffffe0c);
+      AddResource(0,1,-500);
     }
   }
   uVar1 = Trigg(0xb);

@@ -49,7 +49,7 @@ uVar1 = Trigg(1);
     SetResource(1,2,10000);
     SetResource(1,5,10000);
     SetResource(1,4,10000);
-    StartAI(1,"PIEMONT.0",0,1,0,0xffffffff);
+    StartAI(1,"PIEMONT.0",0,1,0,-1);
   }
   uStack_8 = 0x100012c1;
   return;

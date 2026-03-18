@@ -79,9 +79,9 @@ uVar1 = Trigg(1);
     SetResource(5,2,10000);
     SetResource(5,5,9999999);
     SetResource(5,4,9999999);
-    StartAI(1,"PIEMONT.0",0,1,1,0xffffffff);
-    StartAI(2,"TURKISH.0",0,1,1,0xffffffff);
-    StartAI(3,"ALGIR.0",0,1,1,0xffffffff);
+    StartAI(1,"PIEMONT.0",0,1,1,-1);
+    StartAI(2,"TURKISH.0",0,1,1,-1);
+    StartAI(3,"ALGIR.0",0,1,1,-1);
   }
   uVar1 = Trigg(2);
   if ((uVar1 & 0xff) != 0) {

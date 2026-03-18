@@ -692,7 +692,7 @@ void ProcessScenary(void)
     uVar3 = AskMultilineQuestion(9,"#PAGE1",0,"Qb1|Qb2|Qb3|Qb4");
     switch(uVar3) {
     case 0:
-      SetTrigg(10,1);
+      SetTrigg(10,0);
       DAT_1000adf0 = 1;
       break;
     case 1:
@@ -758,7 +758,7 @@ void ProcessScenary(void)
   uVar3 = AskMultilineQuestion(9,"#PAGE1",0,"Qb1_1|Qb2_2|Qb3_3|Qb4_4|Qb5_5|Qb6_6");
   switch(uVar3) {
   case 0:
-    SetTrigg(0x11,1);
+    SetTrigg(0x11,0);
     InitialUpgrade("Gorgren1","AKA31GE");
     InitialUpgrade("Gorgren1","KUZ04GE");
     InitialUpgrade("Gorgren1","AKA33GE");
@@ -1037,7 +1037,7 @@ switchD_10002ab8_default:
     }
     else if (iVar2 == 1) {
       RunTimer(1,1000);
-      SetTrigg(0x1d,1);
+      SetTrigg(0x1d,0);
     }
   }
   cVar1 = Trigg(0x1e);
@@ -1087,7 +1087,7 @@ switchD_10002ab8_default:
     }
     else if (iVar2 == 1) {
       RunTimer(2,1000);
-      SetTrigg(0x1e,1);
+      SetTrigg(0x1e,0);
     }
   }
   cVar1 = Trigg(0x1f);
@@ -1137,7 +1137,7 @@ switchD_10002ab8_default:
     }
     else if (iVar2 == 1) {
       RunTimer(3,1000);
-      SetTrigg(0x1f,1);
+      SetTrigg(0x1f,0);
     }
   }
   cVar1 = Trigg(0x20);
@@ -1170,7 +1170,7 @@ switchD_10002ab8_default:
     }
     else if (iVar2 == 1) {
       RunTimer(4,1000);
-      SetTrigg(0x20,1);
+      SetTrigg(0x20,0);
     }
   }
   cVar1 = Trigg(0x28);
@@ -1318,7 +1318,7 @@ switchD_10002ab8_default:
       SelectUnits(&DAT_1000af60,0);
       SelSendAndKill(1,&DAT_1000b118,0x40,0);
     }
-    SetTrigg(0x2c,1);
+    SetTrigg(0x2c,0);
   }
   cVar1 = Trigg(0x2c);
   if (((((cVar1 != '\0') && (cVar1 = Trigg(0x2a), cVar1 == '\0')) &&
@@ -1379,7 +1379,7 @@ switchD_10002ab8_default:
     SelSendTo(1,&DAT_1000b0b8,0x40,0);
     SelectUnits(&DAT_1000af80,0);
     SelSendTo(1,&DAT_1000b0c0,0x45,0);
-    SetTrigg(0x2a,1);
+    SetTrigg(0x2a,0);
   }
   cVar1 = Trigg(0x2d);
   if (((cVar1 != '\0') &&
@@ -1405,7 +1405,7 @@ switchD_10002ab8_default:
     SelectUnits(&DAT_1000b1e0,1);
     SelSendAndKill(1,&DAT_1000ae70,0x40,0);
     RunTimer(0x12,700);
-    SetTrigg(0x2d,1);
+    SetTrigg(0x2d,0);
     DAT_1000af30 = 1;
   }
   cVar1 = Trigg(0x2f);
@@ -1432,7 +1432,7 @@ switchD_10002ab8_default:
     SelectUnits(&DAT_1000b1e0,1);
     SelSendAndKill(1,&DAT_1000ae78,0x40,0);
     RunTimer(0x12,700);
-    SetTrigg(0x2f,1);
+    SetTrigg(0x2f,0);
     DAT_1000af34 = 1;
   }
   cVar1 = Trigg(0x30);
@@ -1459,7 +1459,7 @@ switchD_10002ab8_default:
     SelectUnits(&DAT_1000b1e0,1);
     SelSendAndKill(1,&DAT_1000ae80,0x40,0);
     RunTimer(0x12,700);
-    SetTrigg(0x30,1);
+    SetTrigg(0x30,0);
     DAT_1000af38 = 1;
   }
   cVar1 = Trigg(0x2e);
@@ -1471,7 +1471,7 @@ switchD_10002ab8_default:
         (iVar2 = GetUnitsAmount0(&DAT_1000ae70,4), iVar2 == 0)))))) &&
      (((DAT_1000af30 == 1 || (DAT_1000af34 == 1)) || (DAT_1000af38 == 1)))) {
     SetTrigg(0x2e,0);
-    SetTrigg(0x2a,1);
+    SetTrigg(0x2a,0);
     DAT_1000af30 = 0;
     DAT_1000af34 = 0;
     DAT_1000af38 = 0;
@@ -1503,7 +1503,7 @@ switchD_10002ab8_default:
     SelSendTo(1,&DAT_1000b138,0x40,0);
     SelectUnits(&DAT_1000afa8,0);
     SelSendTo(1,&DAT_1000b140,0x48,0);
-    SetTrigg(0x2e,1);
+    SetTrigg(0x2e,0);
   }
   cVar1 = Trigg(0x31);
   if (((cVar1 != '\0') && (iVar2 = GetUnitsByNation(&DAT_1000af78,1), iVar2 < 0x12)) &&
@@ -1516,7 +1516,7 @@ switchD_10002ab8_default:
     SelectUnits(&DAT_1000af48,0);
     SelSendAndKill(1,&DAT_1000b0c8,0x40,0);
     RunTimer(0x10,400);
-    SetTrigg(0x31,1);
+    SetTrigg(0x31,0);
   }
   cVar1 = Trigg(0x32);
   if ((((cVar1 != '\0') && (iVar2 = GetUnitsByNation(&DAT_1000af70,1), iVar2 < 0x12)) &&
@@ -1529,7 +1529,7 @@ switchD_10002ab8_default:
     SelectUnits(&DAT_1000af48,0);
     SelSendAndKill(1,&DAT_1000b0b0,0x40,0);
     RunTimer(0x10,400);
-    SetTrigg(0x32,1);
+    SetTrigg(0x32,0);
   }
   cVar1 = Trigg(0x33);
   if (((cVar1 != '\0') && (iVar2 = GetUnitsByNation(&DAT_1000af88,1), iVar2 < 0x12)) &&
@@ -1542,7 +1542,7 @@ switchD_10002ab8_default:
     SelectUnits(&DAT_1000af48,0);
     SelSendAndKill(1,&DAT_1000b0b8,0x40,0);
     RunTimer(0x10,400);
-    SetTrigg(0x33,1);
+    SetTrigg(0x33,0);
   }
   cVar1 = Trigg(0x34);
   if (((cVar1 != '\0') && (iVar2 = GetUnitsByNation(&DAT_1000af80,1), iVar2 < 0x12)) &&
@@ -1555,7 +1555,7 @@ switchD_10002ab8_default:
     SelectUnits(&DAT_1000af48,0);
     SelSendAndKill(1,&DAT_1000b0c0,0x40,0);
     RunTimer(0x10,400);
-    SetTrigg(0x34,1);
+    SetTrigg(0x34,0);
   }
   cVar1 = Trigg(0x35);
   if ((cVar1 != '\0') &&
@@ -1585,7 +1585,7 @@ switchD_10002ab8_default:
     SelSendAndKill(1,&DAT_1000ae70,0x40,2);
     SelSendAndKill(1,&DAT_1000aee0,0x40,2);
     RunTimer(0xf,600);
-    SetTrigg(0x35,1);
+    SetTrigg(0x35,0);
   }
   cVar1 = Trigg(0x36);
   if (((cVar1 != '\0') &&
@@ -1616,7 +1616,7 @@ switchD_10002ab8_default:
     SelSendAndKill(1,&DAT_1000ae80,0x40,2);
     SelSendAndKill(1,&DAT_1000aee0,0x40,2);
     RunTimer(0xf,600);
-    SetTrigg(0x36,1);
+    SetTrigg(0x36,0);
   }
   cVar1 = Trigg(0x37);
   if (((cVar1 != '\0') &&
@@ -1645,7 +1645,7 @@ switchD_10002ab8_default:
     SelSendAndKill(1,&DAT_1000ae78,0x40,2);
     SelSendAndKill(1,&DAT_1000aee0,0x40,2);
     RunTimer(0xf,1000);
-    SetTrigg(0x37,1);
+    SetTrigg(0x37,0);
   }
   cVar1 = Trigg(0x3f);
   if ((cVar1 != '\0') &&

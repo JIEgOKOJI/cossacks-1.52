@@ -801,28 +801,28 @@ LAB_1000214c:
      (iVar3 = GetUnitsAmount0(&DAT_10007c70,1), iVar3 < DAT_10007a98 + 1)) {
     FUN_1000136a(&DAT_10007ac8,&DAT_10007b20,&DAT_10007c88,&DAT_10007c78,&DAT_10007bd8,0x10007b78,
                  &DAT_10007bf8);
-    SetTrigg(0xd,1);
+    SetTrigg(0xd,0);
   }
   cVar1 = Trigg(0x15);
   if (((cVar1 != '\0') && (cVar1 = Trigg(0xc), cVar1 != '\0')) &&
      (iVar3 = GetUnitsAmount0(&DAT_10007c78,2), iVar3 < DAT_10007a98 + 1)) {
     FUN_1000136a(&DAT_10007ad0,&DAT_10007b18,&DAT_10007c70,&DAT_10007c80,&DAT_10007be0,0x10007b80,
                  &DAT_10007c00);
-    SetTrigg(0xe,1);
+    SetTrigg(0xe,0);
   }
   cVar1 = Trigg(0x15);
   if (((cVar1 != '\0') && (cVar1 = Trigg(0xd), cVar1 != '\0')) &&
      (iVar3 = GetUnitsAmount0(&DAT_10007c80,2), iVar3 < DAT_10007a98 + 1)) {
     FUN_1000136a(&DAT_10007ad8,&DAT_10007b30,&DAT_10007c88,&DAT_10007c78,&DAT_10007bc8,0x10007b68,
                  &DAT_10007be8);
-    SetTrigg(0xb,1);
+    SetTrigg(0xb,0);
   }
   cVar1 = Trigg(0x15);
   if (((cVar1 != '\0') && (cVar1 = Trigg(0xe), cVar1 != '\0')) &&
      (iVar3 = GetUnitsAmount0(&DAT_10007c88,1), iVar3 < DAT_10007a98 + 1)) {
     FUN_1000136a(&DAT_10007ae8,&DAT_10007b28,&DAT_10007c70,&DAT_10007c80,&DAT_10007bd0,0x10007b70,
                  &DAT_10007bf0);
-    SetTrigg(0xc,1);
+    SetTrigg(0xc,0);
   }
   cVar1 = Trigg(0xd);
   if (((cVar1 != '\0') && (cVar1 = Trigg(0x15), cVar1 == '\0')) &&

@@ -233,7 +233,7 @@ uVar1 = Trigg(1);
           }
           else {
             ShowPage("#PAGE4A");
-            SetTrigg(6,1);
+            SetTrigg(6,0);
             ClearSelection(4);
             SelectUnits1(4,&DAT_10031440,0);
             SelectUnits1(4,&DAT_10031438,1);
@@ -418,7 +418,7 @@ LAB_100028de:
   if (0xd < iVar3) {
     iVar3 = GetResource(0,4);
     if (10 < iVar3) {
-      SetTrigg(0x11,1);
+      SetTrigg(0x11,0);
     }
   }
   uVar1 = Trigg(0x1e);

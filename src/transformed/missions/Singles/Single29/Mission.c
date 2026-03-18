@@ -543,28 +543,28 @@ LAB_10001ce8:
   SetStandGround(1,1);
   if ((DAT_100077b8 != 0) && (DAT_100077ac = 0, 0 < DAT_100077e0)) {
     do {
-      CreateObject0(&DAT_10007990,&DAT_10007a58,&DAT_100078d8,1);
+      CreateObject0(&DAT_10007990,&DAT_10007a58,&DAT_100078d8,1,0,0);
       DAT_100077ac = DAT_100077ac + 1;
     } while (DAT_100077ac < DAT_100077e0);
   }
   DAT_100077ac = 0;
   if (0 < DAT_100079d8) {
     do {
-      CreateObject0(&DAT_10007838,&DAT_10007940,&DAT_10007a18,2);
+      CreateObject0(&DAT_10007838,&DAT_10007940,&DAT_10007a18,2,0,0);
       DAT_100077ac = DAT_100077ac + 1;
     } while (DAT_100077ac < DAT_100079d8);
   }
   DAT_100077ac = 0;
   if (0 < DAT_100079d8) {
     do {
-      CreateObject0(&DAT_10007828,&DAT_10007928,&DAT_10007a18,2);
+      CreateObject0(&DAT_10007828,&DAT_10007928,&DAT_10007a18,2,0,0);
       DAT_100077ac = DAT_100077ac + 1;
     } while (DAT_100077ac < DAT_100079d8);
   }
   DAT_100077ac = 0;
   if (0 < DAT_100077e0) {
     do {
-      CreateObject0(&DAT_10007990,&DAT_10007a58,&DAT_100078d8,1);
+      CreateObject0(&DAT_10007990,&DAT_10007a58,&DAT_100078d8,1,0,0);
       RemoveGroup(&DAT_10007990,&DAT_10007978);
       DAT_100077ac = DAT_100077ac + 1;
     } while (DAT_100077ac < DAT_100077e0);
@@ -574,7 +574,7 @@ LAB_10001ce8:
   DAT_100077ac = 0;
   if (0 < DAT_100077e0) {
     do {
-      CreateObject0(&DAT_10007990,&DAT_10007a58,&DAT_100078d8,1);
+      CreateObject0(&DAT_10007990,&DAT_10007a58,&DAT_100078d8,1,0,0);
       RemoveGroup(&DAT_10007990,&DAT_10007980);
       DAT_100077ac = DAT_100077ac + 1;
     } while (DAT_100077ac < DAT_100077e0);
@@ -584,7 +584,7 @@ LAB_10001ce8:
   DAT_100077ac = 0;
   if (0 < DAT_100079d8) {
     do {
-      CreateObject0(&DAT_10007990,&DAT_10007a70,&DAT_100078d8,1);
+      CreateObject0(&DAT_10007990,&DAT_10007a70,&DAT_100078d8,1,0,0);
       RemoveGroup(&DAT_10007990,&DAT_10007988);
       DAT_100077ac = DAT_100077ac + 1;
     } while (DAT_100077ac < DAT_100079d8);
@@ -778,7 +778,7 @@ LAB_10002004:
     iVar11 = GetUnitsAmount0(&DAT_10007788,0);
     iVar12 = GetUnitsAmount0(&DAT_10007780,0);
     if (iVar3 + iVar4 + iVar5 + iVar6 + iVar7 + iVar8 + iVar9 + iVar10 + iVar11 + iVar12 == 0) {
-      SetTrigg(0xb,1);
+      SetTrigg(0xb,0);
     }
   }
   cVar1 = Trigg(5);
@@ -930,7 +930,7 @@ LAB_10002004:
       SelectUnits(&DAT_100079a0,0);
       SelSendAndKill(2,&DAT_10007880,0,0);
       AllowAttack(2,1);
-      SetTrigg(8,1);
+      SetTrigg(8,0);
       CreateObject0(&DAT_10007820,&DAT_100078e0,&DAT_10007918,2,&DAT_100079f0,0);
       SelectUnits(&DAT_10007820,0);
       SelSendTo(2,&DAT_10007b48,0x8c,0);
@@ -950,7 +950,7 @@ LAB_10002004:
     SelectUnits(&DAT_10007968,0);
     SelOpenGates(2);
     RunTimer(5,200);
-    SetTrigg(6,1);
+    SetTrigg(6,0);
     SetTrigg(7,0);
   }
   cVar1 = Trigg(7);
@@ -961,9 +961,9 @@ LAB_10002004:
       SelSendAndKill(2,&DAT_10007880,0,0);
       SetTrigg(10,0);
     }
-    SetTrigg(7,1);
+    SetTrigg(7,0);
     SetTrigg(8,0);
-    SetTrigg(9,1);
+    SetTrigg(9,0);
     RunTimer(5,(DAT_10007998 + 10) * 100);
   }
   cVar1 = Trigg(8);
@@ -990,7 +990,7 @@ LAB_10002004:
     SelSendAndKill(1,&DAT_100078b8,0x20,0);
     SelectUnits(&DAT_10007980,0);
     SelSendAndKill(1,&DAT_100078c8,0x20,0);
-    SetTrigg(0xc,1);
+    SetTrigg(0xc,0);
   }
   cVar1 = Trigg(0xe);
   if ((cVar1 != '\0') && (iVar3 = GetUnitsAmount0(&DAT_10007a78,0), 0 < iVar3)) {
@@ -1002,7 +1002,7 @@ LAB_10002004:
   if ((cVar1 == '\0') && (iVar3 = GetUnitsAmount0(&DAT_10007a78,0), iVar3 == 0)) {
     SelectUnits(&DAT_100079b8,0);
     SelSendAndKill(1,&DAT_100078b0,0x20,0);
-    SetTrigg(0xe,1);
+    SetTrigg(0xe,0);
   }
   cVar1 = Trigg(0x14);
   if ((cVar1 != '\0') &&
@@ -1035,21 +1035,21 @@ LAB_10002004:
     DAT_100077ac = 0;
     if (0 < DAT_100077e0 * 3) {
       do {
-        CreateObject0(&DAT_10007990,&DAT_10007a90,&DAT_100079f8,3);
+        CreateObject0(&DAT_10007990,&DAT_10007a90,&DAT_100079f8,3,0,0);
         DAT_100077ac = DAT_100077ac + 1;
       } while (DAT_100077ac < DAT_100077e0 * 3);
     }
     DAT_100077ac = 0;
     if (0 < DAT_100079d8 * 2) {
       do {
-        CreateObject0(&DAT_10007990,&DAT_10007aa0,&DAT_100079f8,3);
+        CreateObject0(&DAT_10007990,&DAT_10007aa0,&DAT_100079f8,3,0,0);
         DAT_100077ac = DAT_100077ac + 1;
       } while (DAT_100077ac < DAT_100079d8 * 2);
     }
     DAT_100077ac = 0;
     if (0 < DAT_100079d8 * 2) {
       do {
-        CreateObject0(&DAT_10007990,&DAT_10007ab8,&DAT_100079f8,3);
+        CreateObject0(&DAT_10007990,&DAT_10007ab8,&DAT_100079f8,3,0,0);
         DAT_100077ac = DAT_100077ac + 1;
       } while (DAT_100077ac < DAT_100079d8 * 2);
     }

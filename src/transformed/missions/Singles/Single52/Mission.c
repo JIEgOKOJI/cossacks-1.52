@@ -277,7 +277,7 @@ int  FUN_10001d60(int param_1)
     RemoveGroup(param_1 + 0x3c,param_1 + 0x4c);
     return (int)1;
   }
-  return uVar1 & 0xffffff00;
+  return uVar1 & -256;
 }
 
 
@@ -452,14 +452,14 @@ void ProcessScenary(void)
     SetResource(1,1,5000);
     SetResource(1,4,5000);
     SetResource(1,5,8000);
-    StartAI(1,"BAVARIA.0",0,2,2,0xffffffff);
+    StartAI(1,"BAVARIA.0",0,2,2,-1);
     SetResource(2,3,5000);
     SetResource(2,0,5000);
     SetResource(2,2,5000);
     SetResource(2,1,5000);
     SetResource(2,4,5000);
     SetResource(2,5,8000);
-    StartAI(2,"BAVARIA.0",0,2,2,0xffffffff);
+    StartAI(2,"BAVARIA.0",0,2,2,-1);
     RunTimer(0,20000);
     RunTimer(1,6000);
   }
@@ -533,7 +533,7 @@ void ProcessScenary(void)
     SetResource(3,1,10000);
     SetResource(3,4,10000);
     SetResource(3,5,10000);
-    StartAI(3,"BAVARIA.0",0,2,2,0xffffffff);
+    StartAI(3,"BAVARIA.0",0,2,2,-1);
   }
   cVar1 = Trigg(5);
   if ((cVar1 != '\0') && (cVar1 = NationIsErased(1), cVar1 != '\0')) {

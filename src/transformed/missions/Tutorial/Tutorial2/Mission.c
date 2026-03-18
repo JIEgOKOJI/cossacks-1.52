@@ -394,7 +394,7 @@ uVar1 = Trigg(1);
       SetTrigg(2,0);
       EnableUnit(0,&DAT_10032498,1);
       ShowPage("#PAGE1");
-      SetTrigg(3,1);
+      SetTrigg(3,0);
     }
   }
   uVar1 = Trigg(3);
@@ -408,7 +408,7 @@ uVar1 = Trigg(1);
       EnableUnit(0,&DAT_10032498,0);
       ShowPage("#PAGE2");
       EnableUnit(0,&DAT_100323e8,1);
-      SetTrigg(4,1);
+      SetTrigg(4,0);
       RunTimer(2,200);
     }
   }
@@ -418,7 +418,7 @@ uVar1 = Trigg(1);
     if ((uVar1 & 0xff) != 0) {
       SetTrigg(4,0);
       ShowPage("#PAGE3");
-      SetTrigg(5,1);
+      SetTrigg(5,0);
     }
   }
   uVar1 = Trigg(5);
@@ -430,8 +430,8 @@ uVar1 = Trigg(1);
       EnableMission(0x4b);
       EnableMission(0x51);
       DisableMission(0x41);
-      SetTrigg(6,1);
-      SetTrigg(9,1);
+      SetTrigg(6,0);
+      SetTrigg(9,0);
       RunTimer(3,0x96);
     }
   }
@@ -441,7 +441,7 @@ uVar1 = Trigg(1);
     if ((uVar1 & 0xff) != 0) {
       SetTrigg(6,0);
       ShowPage("#PAGE5");
-      SetTrigg(7,1);
+      SetTrigg(7,0);
       RunTimer(4,0x96);
     }
   }
@@ -451,8 +451,8 @@ uVar1 = Trigg(1);
     if ((uVar1 & 0xff) != 0) {
       SetTrigg(7,0);
       ShowPage("#PAGE6");
-      SetTrigg(10,1);
-      SetTrigg(8,1);
+      SetTrigg(10,0);
+      SetTrigg(8,0);
     }
   }
   uVar1 = Trigg(8);
@@ -468,7 +468,7 @@ uVar1 = Trigg(1);
       SelectUnits1(5,&DAT_100324c0,0);
       SelSendAndKill(5,&DAT_10032528,0,0);
       ClearSelection(5);
-      SetTrigg(0xc,1);
+      SetTrigg(0xc,0);
       SelectUnits1(0,&DAT_100324b0,0);
     }
   }
@@ -485,7 +485,7 @@ uVar1 = Trigg(1);
     iVar2 = GetTotalAmount1(&DAT_10032428,0);
     if (99 < iVar2) {
       SetTrigg(10,0);
-      SetTrigg(0xb,1);
+      SetTrigg(0xb,0);
       EnableUnit(0,&DAT_10032428,0);
     }
   }
@@ -493,7 +493,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) != 0) {
     iVar2 = GetTotalAmount1(&DAT_10032428,0);
     if (iVar2 < 100) {
-      SetTrigg(10,1);
+      SetTrigg(10,0);
       SetTrigg(0xb,0);
       EnableUnit(0,&DAT_10032428,1);
     }
@@ -508,7 +508,7 @@ uVar1 = Trigg(1);
       ShowPage("#PAGE23");
       DisableMission(0x42);
       EnableMission(0x4c);
-      SetTrigg(0xd,1);
+      SetTrigg(0xd,0);
       RunTimer(5,2000);
     }
   }
@@ -523,7 +523,7 @@ uVar1 = Trigg(1);
       SelectUnits1(5,&DAT_100324c0,0);
       SelSendAndKill(5,&DAT_10032528,0,0);
       RunTimer(6,100);
-      SetTrigg(0xe,1);
+      SetTrigg(0xe,0);
       ClearSelection(5);
       SelectUnits1(0,&DAT_100324b0,0);
     }
@@ -538,7 +538,7 @@ uVar1 = Trigg(1);
       DisableMission(0x4c);
       EnableMission(0x4d);
       SetStartPoint(&DAT_10032540);
-      SetTrigg(0xf,1);
+      SetTrigg(0xf,0);
     }
   }
   uVar1 = Trigg(0xf);
@@ -548,7 +548,7 @@ uVar1 = Trigg(1);
       SetTrigg(0xf,0);
       ShowPage("#PAGE11");
       EnableUnit(0,&DAT_100324b8,1);
-      SetTrigg(0x10,1);
+      SetTrigg(0x10,0);
       RunTimer(6,200);
     }
   }
@@ -560,7 +560,7 @@ uVar1 = Trigg(1);
       DisableMission(0x4d);
       EnableMission(0x43);
       ShowPage("#PAGE12");
-      SetTrigg(0x11,1);
+      SetTrigg(0x11,0);
     }
   }
   uVar1 = Trigg(0x11);
@@ -573,7 +573,7 @@ uVar1 = Trigg(1);
       DisableMission(0x43);
       EnableMission(0x52);
       EnableMission(0x44);
-      SetTrigg(0x12,1);
+      SetTrigg(0x12,0);
     }
   }
   uVar1 = Trigg(0x12);
@@ -587,8 +587,8 @@ uVar1 = Trigg(1);
         DisableMission(0x44);
         EnableMission(0x49);
         ShowPage("#PAGE14");
-        SetTrigg(0x13,1);
-        SetTrigg(0x14,1);
+        SetTrigg(0x13,0);
+        SetTrigg(0x14,0);
       }
     }
   }
@@ -614,7 +614,7 @@ uVar1 = Trigg(1);
       EnableMission(0x4e);
       ClearSelection(5);
       SelectUnits1(0,&DAT_100324b0,0);
-      SetTrigg(0x15,1);
+      SetTrigg(0x15,0);
     }
   }
   uVar1 = Trigg(0x15);
@@ -626,7 +626,7 @@ uVar1 = Trigg(1);
         SetTrigg(0x15,0);
         ShowPage("#PAGE17");
         RunTimer(7,400);
-        SetTrigg(0x16,1);
+        SetTrigg(0x16,0);
       }
     }
   }
@@ -641,8 +641,8 @@ uVar1 = Trigg(1);
       DisableMission(0x4e);
       EnableMission(0x45);
       EnableMission(0x48);
-      SetTrigg(0x17,1);
-      SetTrigg(0x18,1);
+      SetTrigg(0x17,0);
+      SetTrigg(0x18,0);
     }
   }
   uVar1 = Trigg(0x17);
@@ -666,8 +666,8 @@ uVar1 = Trigg(1);
       DisableMission(0x48);
       EnableMission(0x54);
       EnableMission(0x47);
-      SetTrigg(0x1a,1);
-      SetTrigg(0x19,1);
+      SetTrigg(0x1a,0);
+      SetTrigg(0x19,0);
     }
   }
   uVar1 = Trigg(0x19);
@@ -702,7 +702,7 @@ uVar1 = Trigg(1);
       SelectUnits1(5,&DAT_100324e0,1);
       SelectUnits1(5,&DAT_100324e8,1);
       SelSendAndKill(5,&DAT_10032528,0,0);
-      SetTrigg(0x1b,1);
+      SetTrigg(0x1b,0);
       ClearSelection(5);
       SelectUnits1(0,&DAT_100324b0,0);
     }
@@ -734,7 +734,7 @@ uVar1 = Trigg(1);
     iVar2 = GetTotalAmount1(&DAT_10032468,0);
     if (9 < iVar2) {
       SetTrigg(0x5d,0);
-      SetTrigg(0x5e,1);
+      SetTrigg(0x5e,0);
       EnableUnit(0,&DAT_10032468,0);
     }
   }
@@ -743,7 +743,7 @@ uVar1 = Trigg(1);
     iVar2 = GetTotalAmount1(&DAT_10032468,0);
     if (iVar2 < 10) {
       SetTrigg(0x5e,0);
-      SetTrigg(0x5d,1);
+      SetTrigg(0x5d,0);
       EnableUnit(0,&DAT_10032468,1);
     }
   }
@@ -752,7 +752,7 @@ uVar1 = Trigg(1);
     iVar2 = GetTotalAmount1(&DAT_10032480,0);
     if (9 < iVar2) {
       SetTrigg(0x5f,0);
-      SetTrigg(0x60,1);
+      SetTrigg(0x60,0);
       EnableUnit(0,&DAT_10032480,0);
     }
   }
@@ -761,7 +761,7 @@ uVar1 = Trigg(1);
     iVar2 = GetTotalAmount1(&DAT_10032480,0);
     if (iVar2 < 10) {
       SetTrigg(0x60,0);
-      SetTrigg(0x5f,1);
+      SetTrigg(0x5f,0);
       EnableUnit(0,&DAT_10032480,1);
     }
   }
@@ -770,7 +770,7 @@ uVar1 = Trigg(1);
     iVar2 = GetTotalAmount1(&DAT_10032490,0);
     if (0x3b < iVar2) {
       SetTrigg(0x61,0);
-      SetTrigg(0x62,1);
+      SetTrigg(0x62,0);
       EnableUnit(0,&DAT_10032490,0);
     }
   }
@@ -779,7 +779,7 @@ uVar1 = Trigg(1);
     iVar2 = GetTotalAmount1(&DAT_10032490,0);
     if (iVar2 < 0x3c) {
       SetTrigg(0x62,0);
-      SetTrigg(0x61,1);
+      SetTrigg(0x61,0);
       EnableUnit(0,&DAT_10032490,1);
     }
   }

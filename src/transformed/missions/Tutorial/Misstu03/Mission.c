@@ -390,7 +390,7 @@ SetTutorial(1);
   }
   uVar1 = GetQuestPressed();
   if ((uVar1 & 0xff) != 0) {
-    SetTrigg(0x42,1);
+    SetTrigg(0x42,0);
     GetTotalAmount0(&DAT_100303e8);
     if (0 < iVar2) {
       SelectUnits(&DAT_100303e8,0);
@@ -438,7 +438,7 @@ SetTutorial(1);
       SelErase(1);
     }
   }
-  SetTrigg(0x41,1);
+  SetTrigg(0x41,0);
   uStack_8 = 0x10002a8d;
   return;
 }

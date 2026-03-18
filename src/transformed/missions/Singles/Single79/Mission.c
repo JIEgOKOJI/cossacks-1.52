@@ -152,8 +152,8 @@ char __cdecl FUN_10001000(unsigned int param_1,unsigned int param_2)
   if ((param_1 == 0) && (param_2 == 0)) {
     return -0x40;
   }
-  iVar3 = (param_1 ^ (int)param_1 >> 0x1f) - ((int)param_1 >> 0x1f);
-  iVar1 = (param_2 ^ (int)param_2 >> 0x1f) - ((int)param_2 >> 0x1f);
+  iVar3 = (param_1 ^ (intptr_t)param_1 >> 0x1f) - ((intptr_t)param_1 >> 0x1f);
+  iVar1 = (param_2 ^ (intptr_t)param_2 >> 0x1f) - ((intptr_t)param_2 >> 0x1f);
   if (iVar1 < iVar3) {
     iVar1 = FUN_10002f27(iVar1 * 0x100,iVar3);
     cVar2 = ((long long *)&DAT_10011498)[iVar1 * 2];
@@ -162,10 +162,10 @@ char __cdecl FUN_10001000(unsigned int param_1,unsigned int param_2)
     iVar1 = FUN_10002f27(iVar3 * 0x100,iVar1);
     cVar2 = '@' - ((long long *)&DAT_10011498)[iVar1 * 2];
   }
-  if ((int)param_1 < 0) {
+  if ((intptr_t)param_1 < 0) {
     cVar2 = -0x80 - cVar2;
   }
-  if ((int)param_2 < 0) {
+  if ((intptr_t)param_2 < 0) {
     cVar2 = -cVar2;
   }
   return cVar2;
@@ -456,7 +456,7 @@ int  FUN_10002200(int param_1)
   iVar7 = param_1 + 0x14;
   iVar4 = GetTotalAmount0(iVar7);
   if (*(int *)(param_1 + 0x24) < iVar4 + iVar3) {
-    return 0xffffffff;
+    return -1;
   }
   bVar1 = FUN_100021e0(param_1);
   if (bVar1) {
@@ -534,10 +534,10 @@ void  FUN_10002350(int *param_1)
   int uVar2;
   int iVar3;
   
-  bVar1 = FUN_100021e0((int)param_1);
+  bVar1 = FUN_100021e0((intptr_t)param_1);
   if (bVar1) {
-    FUN_10002200((int)param_1);
-    uVar2 = FUN_100022f0((int)param_1);
+    FUN_10002200((intptr_t)param_1);
+    uVar2 = FUN_100022f0((intptr_t)param_1);
     if ((char)uVar2 != '\0') {
       FUN_10001660(*param_1);
       SelectUnits(param_1 + 7,0);
@@ -545,7 +545,7 @@ void  FUN_10002350(int *param_1)
       iVar3 = rand();
       SelSendAndKill((char)*param_1,param_1 + 0x19,iVar3,uVar2);
       FUN_100016a0(*param_1);
-      FUN_10002320((int)param_1);
+      FUN_10002320((intptr_t)param_1);
     }
   }
   return;
@@ -664,7 +664,7 @@ int  FUN_10002540(int *param_1)
       return (int)1;
     }
   }
-  return uVar2 & 0xffffff00;
+  return uVar2 & -256;
 }
 
 
@@ -712,7 +712,7 @@ int  FUN_10002610(void *this_ptr,char param_1)
     uVar2 = FUN_10002540(this_ptr);
     if ((char)uVar2 != '\0') {
       uVar3 = (int)(uVar2 >> 8);
-      uVar2 = (int)param_1;
+      uVar2 = (intptr_t)param_1;
       if (param_1 != '\0') {
         uVar2 = (int)*(char *)((int)this_ptr + 0x34);
         if (*(char *)((int)this_ptr + 0x34) != '\0') {
@@ -725,7 +725,7 @@ int  FUN_10002610(void *this_ptr,char param_1)
     *(char *)((int)this_ptr + 0x34) = 1;
   }
 LAB_10002644:
-  return uVar2 & 0xffffff00;
+  return uVar2 & -256;
 }
 
 
@@ -739,23 +739,23 @@ int *  FUN_10002650(int *param_1)
   int *puVar2;
   
   FUN_100025c0(param_1);
-  FUN_100024a0((int *)((int)param_1 + 0x3d));
-  FUN_100026f0((int)param_1 + 0xa9);
-  puVar2 = (int *)((int)param_1 + 0x3e5);
+  FUN_100024a0((int *)((intptr_t)param_1 + 0x3d));
+  FUN_100026f0((intptr_t)param_1 + 0xa9);
+  puVar2 = (int *)((intptr_t)param_1 + 0x3e5);
   iVar1 = 100;
   do {
     FUN_100024a0(puVar2);
     puVar2 = puVar2 + 0xd;
     iVar1 = iVar1 + -1;
   } while (iVar1 != 0);
-  *(int *)((int)param_1 + 0x185a) = 5;
-  *(int *)((int)param_1 + 0x1835) = 0;
-  *(char *)((int)param_1 + 0x184d) = 0;
-  *(int *)((int)param_1 + 0x184e) = 0;
-  *(int *)((int)param_1 + 0x1852) = 0;
-  *(int *)((int)param_1 + 0x1856) = 0;
-  *(int *)((int)param_1 + 0x185e) = 10;
-  RegisterDynGroup((int)param_1 + 0x1862);
+  *(int *)((intptr_t)param_1 + 0x185a) = 5;
+  *(int *)((intptr_t)param_1 + 0x1835) = 0;
+  *(char *)((intptr_t)param_1 + 0x184d) = 0;
+  *(int *)((intptr_t)param_1 + 0x184e) = 0;
+  *(int *)((intptr_t)param_1 + 0x1852) = 0;
+  *(int *)((intptr_t)param_1 + 0x1856) = 0;
+  *(int *)((intptr_t)param_1 + 0x185e) = 10;
+  RegisterDynGroup((intptr_t)param_1 + 0x1862);
   return param_1;
 }
 
@@ -767,7 +767,7 @@ int *  FUN_100026d0(int *param_1)
 
 {
   FUN_100025c0(param_1);
-  *(char *)((int)param_1 + 0x41) = 0;
+  *(char *)((intptr_t)param_1 + 0x41) = 0;
   *(char *)(param_1 + 0xd) = 1;
   return param_1;
 }
@@ -867,21 +867,21 @@ unsigned int  FUN_10002830(void *this_ptr,void *param_1)
   RefreshScreen();
   if ((*(int *)((int)this_ptr + 4) == 0) && (*(int *)((int)this_ptr + 0x14) == 0)) {
     ShowPage("#Menu_port3");
-    return uVar1 & 0xffffff00;
+    return uVar1 & -256;
   }
   ShowPage("#Menu_port2");
   FUN_100024d0(param_1,6);
   iVar2 = 0;
   if (0 < *(int *)((int)this_ptr + 4)) {
     do {
-      ProduceUnitFast((int)param_1 + 0xc,(int)this_ptr + 8,(int)this_ptr + 0x28,6);
+      ProduceUnitFast((intptr_t)param_1 + 0xc,(int)this_ptr + 8,(int)this_ptr + 0x28,6);
       iVar2 = iVar2 + 1;
     } while (iVar2 < *(int *)((int)this_ptr + 4));
   }
   iVar2 = 0;
   if (0 < *(int *)((int)this_ptr + 0x14)) {
     do {
-      ProduceUnitFast((int)param_1 + 0xc,(int)this_ptr + 0x18,(int)this_ptr + 0x28,6);
+      ProduceUnitFast((intptr_t)param_1 + 0xc,(int)this_ptr + 0x18,(int)this_ptr + 0x28,6);
       iVar2 = iVar2 + 1;
     } while (iVar2 < *(int *)((int)this_ptr + 0x14));
   }
@@ -993,7 +993,7 @@ int *  FUN_10002a80(int *param_1)
     iVar1 = iVar1 + -1;
   } while (iVar1 != 0);
   RegisterVar(param_1,0xf29);
-  *(short *)((int)param_1 + 0xf1e) = 0;
+  *(short *)((intptr_t)param_1 + 0xf1e) = 0;
   param_1[0x3c8] = 0;
   param_1[0x3c9] = 6;
   return param_1;
@@ -1045,7 +1045,7 @@ unsigned int  FUN_10002b20(void *this_ptr,unsigned int param_1,int param_2,int p
   
   uVar2 = *(unsigned short *)((int)this_ptr + 0xf1e);
   if (0x31 < uVar2) {
-    return in_EAX & 0xffffff00;
+    return in_EAX & -256;
   }
   *(unsigned short *)((int)this_ptr + 0xf1e) = uVar2 + 1;
   *(int *)((int)this_ptr + (unsigned int)uVar2 * 0x47 + 0x35) = param_2;
@@ -1407,10 +1407,10 @@ void ProcessScenary(void)
     FUN_10002750(&DAT_100234b1,6000);
     FUN_10002750(&DAT_10011ab0,6000);
     FUN_10002750(&DAT_10011ab8,6000);
-    StartAI(DAT_10011e58,"ENGLAND.0",3,0,0,0xffffffff);
-    StartAI(DAT_100234b1,"SPAIN.0",0,0,0,0xffffffff);
-    StartAI(DAT_10011ab0,"SPAIN.0",3,0,0,0xffffffff);
-    StartAI(DAT_10011ab8,"FRANCE.0",3,0,0,0xffffffff);
+    StartAI(DAT_10011e58,"ENGLAND.0",3,0,0,-1);
+    StartAI(DAT_100234b1,"SPAIN.0",0,0,0,-1);
+    StartAI(DAT_10011ab0,"SPAIN.0",3,0,0,-1);
+    StartAI(DAT_10011ab8,"FRANCE.0",3,0,0,-1);
   }
   cVar1 = NationIsErased(DAT_100234b1);
   if (cVar1 != '\0') {
@@ -1437,7 +1437,7 @@ void ProcessScenary(void)
      (iVar2 = GetUnitsAmount0(&DAT_100232a8,DAT_100234a8 & 0xff), iVar2 == 0)) {
     RunTimer(0,4000);
     CreateObject0(&DAT_100232b8,&DAT_10011bb0,&DAT_100232c0,DAT_100234a8 & 0xff,&DAT_100232a8,100);
-    AddResource(DAT_10011e58,1,0xffffff38);
+    AddResource(DAT_10011e58,1,-200);
     SelectUnits(&DAT_100232b8,0);
     FUN_10002b20(&DAT_100222d0,DAT_100234a8,0,0,0);
   }
@@ -1446,7 +1446,7 @@ void ProcessScenary(void)
      (iVar2 = GetUnitsAmount0(&DAT_10023298,DAT_100234c0 & 0xff), iVar2 == 0)) {
     RunTimer(1,4000);
     CreateObject0(&DAT_100232b8,&DAT_10011bb0,&DAT_10023278,DAT_100234c0 & 0xff,&DAT_10023298,100);
-    AddResource(DAT_100234b1,1,0xffffff38);
+    AddResource(DAT_100234b1,1,-200);
     SelectUnits(&DAT_100232b8,0);
     FUN_10002b20(&DAT_100213a0,DAT_100234c0,0,0,0);
   }
@@ -1456,7 +1456,7 @@ void ProcessScenary(void)
   if (iVar2 != 0) {
     cVar1 = Trigg(1);
     if (cVar1 == '\0') {
-      SetTrigg(1,1);
+      SetTrigg(1,0);
       ShowPage("#Ali0");
     }
     uVar6 = DAT_100271b8;

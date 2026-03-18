@@ -999,7 +999,7 @@ void ProcessScenary(void)
     SelSendAndKill(4,&DAT_10008de0,0xc4,0);
     SelSendAndKill(4,&DAT_10009128,0xcc,2);
     RunTimer(0x1d,400);
-    SetTrigg(0x52,1);
+    SetTrigg(0x52,0);
   }
   cVar1 = Trigg(0x52);
   if ((cVar1 != '\0') && (cVar1 = TimerDone(0x1d), cVar1 != '\0')) {
@@ -1013,7 +1013,7 @@ void ProcessScenary(void)
     SelSendAndKill(4,&DAT_10008de0,0xc4,0);
     SelSendAndKill(4,&DAT_10009128,0xcc,2);
     RunTimer(0x1d,700);
-    SetTrigg(0x54,1);
+    SetTrigg(0x54,0);
   }
   cVar1 = Trigg(0x54);
   if ((cVar1 != '\0') && (cVar1 = TimerDone(0x1d), cVar1 != '\0')) {
@@ -1026,7 +1026,7 @@ void ProcessScenary(void)
     SelectUnits(&DAT_10009018,0);
     SelSendAndKill(4,&DAT_10009120,0xb4,0);
     RunTimer(0x1d,400);
-    SetTrigg(0x56,1);
+    SetTrigg(0x56,0);
   }
   cVar1 = Trigg(0x56);
   if ((cVar1 != '\0') && (cVar1 = TimerDone(0x1d), cVar1 != '\0')) {

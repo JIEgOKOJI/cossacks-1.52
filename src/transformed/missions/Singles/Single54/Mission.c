@@ -90,7 +90,7 @@ FUN_10001c10(void *this_ptr,char param_1,int param_2,int param_3,int param_4,
   unsigned int uVar1;
   int uVar2;
   
-  uVar1 = (int)param_1;
+  uVar1 = (intptr_t)param_1;
   if (param_1 != '\0') {
     uVar1 = GetTotalAmount0((int)this_ptr + 0x10);
     if (uVar1 == 0) {
@@ -103,7 +103,7 @@ FUN_10001c10(void *this_ptr,char param_1,int param_2,int param_3,int param_4,
       return (int)1;
     }
   }
-  return uVar1 & 0xffffff00;
+  return uVar1 & -256;
 }
 
 
@@ -351,14 +351,14 @@ void ProcessScenary(void)
     RunTimer(3,300);
     DAT_10009de0 = '\x01';
     DAT_1000a040 = '\0';
-// FIXME(decompiler):     iVar3 = GetDiff(0,1);
-    SetLightSpot(&DAT_1000a1f0,4 - iVar3);
-// FIXME(decompiler):     iVar3 = GetDiff(0,2);
-    SetLightSpot(&DAT_1000a1f8,4 - iVar3);
-// FIXME(decompiler):     iVar3 = GetDiff(0,3);
-    SetLightSpot(&DAT_1000a200,4 - iVar3);
-// FIXME(decompiler):     iVar3 = GetDiff(0,4);
-    SetLightSpot(&DAT_1000a208,4 - iVar3);
+// FIXME(decompiler):     iVar3 = GetDiff(0);
+    SetLightSpot(&DAT_1000a1f0,4 - iVar3,0);
+// FIXME(decompiler):     iVar3 = GetDiff(0);
+    SetLightSpot(&DAT_1000a1f8,4 - iVar3,0);
+// FIXME(decompiler):     iVar3 = GetDiff(0);
+    SetLightSpot(&DAT_1000a200,4 - iVar3,0);
+// FIXME(decompiler):     iVar3 = GetDiff(0);
+    SetLightSpot(&DAT_1000a208,4 - iVar3,0);
     ShowPage("#PAGE1701");
     uVar4 = GetDiff(0);
     switch(uVar4) {

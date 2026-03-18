@@ -184,7 +184,7 @@ void ProcessScenary(void)
     SelectUnits1(1,&DAT_10006648,0);
     SelSendAndKill(1,&DAT_10006750,0x25,0);
     SelSendAndKill(1,&DAT_10006650,0x25,2);
-    SetTrigg(0xb,1);
+    SetTrigg(0xb,0);
   }
   cVar1 = Trigg(0xb);
   if ((((cVar1 != '\0') && (cVar1 = Trigg(10), cVar1 == '\0')) &&
@@ -194,7 +194,7 @@ void ProcessScenary(void)
     ClearSelection(1);
     SelectUnits1(1,&DAT_10006648,0);
     SelSendAndKill(1,&DAT_100066b0,0,0);
-    SetTrigg(10,1);
+    SetTrigg(10,0);
   }
   cVar1 = Trigg(0xc);
   if ((cVar1 != '\0') && (iVar2 = GetUnitsAmount0(&DAT_10006758,0), 0 < iVar2)) {
@@ -203,7 +203,7 @@ void ProcessScenary(void)
     SelectUnits1(1,&DAT_100066a8,0);
     SelSendAndKill(1,&DAT_10006758,0,0);
     SelSendAndKill(1,&DAT_10006658,0xeb,2);
-    SetTrigg(0xd,1);
+    SetTrigg(0xd,0);
   }
   cVar1 = Trigg(0xd);
   if (((cVar1 != '\0') && (cVar1 = Trigg(0xc), cVar1 == '\0')) &&
@@ -213,7 +213,7 @@ void ProcessScenary(void)
     ClearSelection(1);
     SelectUnits1(1,&DAT_100066a8,0);
     SelSendAndKill(1,&DAT_100066c8,10,0);
-    SetTrigg(0xc,1);
+    SetTrigg(0xc,0);
   }
   cVar1 = Trigg(0xe);
   if ((cVar1 != '\0') && (iVar2 = GetUnitsAmount0(&DAT_10006760,0), 0 < iVar2)) {
@@ -222,7 +222,7 @@ void ProcessScenary(void)
     SelectUnits1(2,&DAT_100066a0,0);
     SelSendAndKill(2,&DAT_10006760,0x80,0);
     SelSendAndKill(2,&DAT_10006668,0x80,2);
-    SetTrigg(0xf,1);
+    SetTrigg(0xf,0);
   }
   cVar1 = Trigg(0xf);
   if ((((cVar1 != '\0') && (cVar1 = Trigg(0xe), cVar1 == '\0')) &&
@@ -232,7 +232,7 @@ void ProcessScenary(void)
     ClearSelection(2);
     SelectUnits1(2,&DAT_100066a0,0);
     SelSendAndKill(2,&DAT_100066d0,0x82,0);
-    SetTrigg(0xe,1);
+    SetTrigg(0xe,0);
   }
   cVar1 = Trigg(0x10);
   if ((cVar1 != '\0') && (iVar2 = GetUnitsAmount0(&DAT_10006768,0), 0 < iVar2)) {
@@ -241,7 +241,7 @@ void ProcessScenary(void)
     SelectUnits1(2,&DAT_10006698,0);
     SelSendAndKill(2,&DAT_10006768,0x80,0);
     SelSendAndKill(2,&DAT_10006670,100,2);
-    SetTrigg(0x11,1);
+    SetTrigg(0x11,0);
   }
   cVar1 = Trigg(0x11);
   if (((cVar1 != '\0') && (cVar1 = Trigg(0x10), cVar1 == '\0')) &&
@@ -251,7 +251,7 @@ void ProcessScenary(void)
     ClearSelection(2);
     SelectUnits1(2,&DAT_10006698,0);
     SelSendAndKill(2,&DAT_100066b8,0x80,0);
-    SetTrigg(0x10,1);
+    SetTrigg(0x10,0);
   }
   cVar1 = Trigg(0x12);
   if ((cVar1 != '\0') && (iVar2 = GetUnitsAmount0(&DAT_10006778,0), 0 < iVar2)) {
@@ -259,7 +259,7 @@ void ProcessScenary(void)
     ClearSelection(3);
     SelectUnits1(3,&DAT_10006690,0);
     SelSendAndKill(3,&DAT_10006778,0,0);
-    SetTrigg(0x13,1);
+    SetTrigg(0x13,0);
   }
   cVar1 = Trigg(0x13);
   if (((cVar1 != '\0') && (cVar1 = Trigg(0x12), cVar1 == '\0')) &&
@@ -268,7 +268,7 @@ void ProcessScenary(void)
     ClearSelection(3);
     SelectUnits1(3,&DAT_10006690,0);
     SelSendAndKill(3,&DAT_100066c0,0,0);
-    SetTrigg(0x12,1);
+    SetTrigg(0x12,0);
   }
   cVar1 = Trigg(0x14);
   if ((cVar1 != '\0') && (iVar2 = GetUnitsAmount0(&DAT_10006780,0), 0 < iVar2)) {
@@ -277,7 +277,7 @@ void ProcessScenary(void)
     SelectUnits1(3,&DAT_10006688,0);
     SelSendAndKill(3,&DAT_10006780,0,0);
     SelSendAndKill(3,&DAT_10006678,0,2);
-    SetTrigg(0x15,1);
+    SetTrigg(0x15,0);
   }
   cVar1 = Trigg(0x15);
   if (((cVar1 != '\0') && (cVar1 = Trigg(0x14), cVar1 == '\0')) &&
@@ -286,7 +286,7 @@ void ProcessScenary(void)
     ClearSelection(3);
     SelectUnits1(3,&DAT_10006688,0);
     SelSendAndKill(3,&DAT_100066d8,0,0);
-    SetTrigg(0x14,1);
+    SetTrigg(0x14,0);
   }
   cVar1 = Trigg(0x1e);
   if (cVar1 != '\0') {
@@ -348,7 +348,7 @@ void ProcessScenary(void)
       SelSendAndKill(5,&DAT_10006728,0xa0,0);
       SelectUnits(&DAT_100066e8,0);
       SelSendAndKill(5,&DAT_10006730,0xd7,0);
-      AddResource(0,1,0xfffff060);
+      AddResource(0,1,-4000);
       DAT_10006620 = 1;
       SetLightSpot(&DAT_10006748,3,3);
     }
@@ -404,7 +404,7 @@ void ProcessScenary(void)
     SelectUnits(&DAT_10006770,0);
     SelChangeNation(4,0);
     ChangeFriends(0,0x11);
-    SetTrigg(0x1e,1);
+    SetTrigg(0x1e,0);
     RunTimer(2,6000);
   }
   cVar1 = Trigg(0x33);

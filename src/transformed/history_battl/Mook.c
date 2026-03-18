@@ -60,7 +60,7 @@ void __cdecl FUN_10001340(int param_1,char param_2)
   int local_c;
   unsigned int local_8;
 UnitsCenter(&DAT_1001f4b0,param_1,0x5dc);
-  for (local_8 = 0; (int)local_8 < 8; local_8 = local_8 + 1) {
+  for (local_8 = 0; (intptr_t)local_8 < 8; local_8 = local_8 + 1) {
     SaveSelectedUnits(local_8 & 0xff,&DAT_1001f3e8,local_8 != 0);
     ClearSelection(local_8 & 0xff);
     iVar1 = GetUnitsByNation(param_1,local_8 & 0xff);
@@ -233,13 +233,13 @@ GetTotalAmount0(&DAT_1001f428);
     if (iVar2 == 0) {
       SetTrigg(2,0);
       ShowCentralText("MK_R_Dutch",100);
-      ChangeUnitParam(&DAT_1001f3f8,1,2,0,2);
-      ChangeUnitParam(&DAT_1001f468,1,2,0,2);
-      ChangeUnitParam(&DAT_1001f480,1,2,0,2);
-      ChangeUnitParam(&DAT_1001f418,1,2,0,2);
-      ChangeUnitParam(&DAT_1001f430,1,2,0,2);
-      ChangeUnitParam(&DAT_1001f448,1,2,0,2);
-      ChangeUnitParam(&DAT_1001f438,1,2,0,2);
+      ChangeUnitParam(&DAT_1001f3f8,1,2,0);
+      ChangeUnitParam(&DAT_1001f468,1,2,0);
+      ChangeUnitParam(&DAT_1001f480,1,2,0);
+      ChangeUnitParam(&DAT_1001f418,1,2,0);
+      ChangeUnitParam(&DAT_1001f430,1,2,0);
+      ChangeUnitParam(&DAT_1001f448,1,2,0);
+      ChangeUnitParam(&DAT_1001f438,1,2,0);
     }
   }
   uVar1 = Trigg(3);
@@ -248,13 +248,13 @@ GetTotalAmount0(&DAT_1001f428);
     if (iVar2 == 0) {
       SetTrigg(3,0);
       ShowCentralText("MK_R_Spain",100);
-      ChangeUnitParam(&DAT_1001f400,0,2,0,2);
-      ChangeUnitParam(&DAT_1001f480,0,2,0,2);
-      ChangeUnitParam(&DAT_1001f410,0,2,0,2);
-      ChangeUnitParam(&DAT_1001f4d8,0,2,0,2);
-      ChangeUnitParam(&DAT_1001f4c8,0,2,0,2);
-      ChangeUnitParam(&DAT_1001f3f0,0,2,0,2);
-      ChangeUnitParam(&DAT_1001f468,0,2,0,2);
+      ChangeUnitParam(&DAT_1001f400,0,2,0);
+      ChangeUnitParam(&DAT_1001f480,0,2,0);
+      ChangeUnitParam(&DAT_1001f410,0,2,0);
+      ChangeUnitParam(&DAT_1001f4d8,0,2,0);
+      ChangeUnitParam(&DAT_1001f4c8,0,2,0);
+      ChangeUnitParam(&DAT_1001f3f0,0,2,0);
+      ChangeUnitParam(&DAT_1001f468,0,2,0);
     }
   }
   iVar2 = GetResource(1,1);
@@ -276,7 +276,7 @@ GetTotalAmount0(&DAT_1001f428);
   }
   uVar1 = TimerDoneFirst(4);
   if ((uVar1 & 0xff) != 0) {
-    SetTrigg(4,1);
+    SetTrigg(4,0);
   }
   iVar2 = GetResource(0,1);
   if (iVar2 == 0) {
@@ -297,7 +297,7 @@ GetTotalAmount0(&DAT_1001f428);
   }
   uVar1 = TimerDoneFirst(5);
   if ((uVar1 & 0xff) != 0) {
-    SetTrigg(5,1);
+    SetTrigg(5,0);
   }
   FUN_10001540(&DAT_1001f470);
   FUN_10001540(&DAT_1001f478);
@@ -348,7 +348,7 @@ __declspec(dllexport) void ProcessScenary()
   int local_c;
   unsigned int local_8;
 UnitsCenter(&DAT_1001f4b0,param_1,0x5dc);
-  for (local_8 = 0; (int)local_8 < 8; local_8 = local_8 + 1) {
+  for (local_8 = 0; (intptr_t)local_8 < 8; local_8 = local_8 + 1) {
     SaveSelectedUnits(local_8 & 0xff,&DAT_1001f3e8,local_8 != 0);
     ClearSelection(local_8 & 0xff);
     iVar1 = GetUnitsByNation(param_1,local_8 & 0xff);

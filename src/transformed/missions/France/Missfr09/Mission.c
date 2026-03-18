@@ -250,7 +250,7 @@ uVar1 = Trigg(1);
     if ((uVar1 & 0xff) == 0) {
       iVar2 = GetUnitsAmount0(&DAT_100304a8,0);
       if (iVar2 == 0) {
-        SetTrigg(0x2b,1);
+        SetTrigg(0x2b,0);
         SelectUnits(&DAT_100303f0,0);
         SelCloseGates(4);
       }
@@ -268,7 +268,7 @@ uVar1 = Trigg(1);
     if ((uVar1 & 0xff) == 0) {
       iVar2 = GetUnitsAmount0(&DAT_100304b0,0);
       if (iVar2 == 0) {
-        SetTrigg(0x2c,1);
+        SetTrigg(0x2c,0);
         SelectUnits(&DAT_10030408,0);
         SelCloseGates(4);
       }
@@ -286,7 +286,7 @@ uVar1 = Trigg(1);
     if ((uVar1 & 0xff) == 0) {
       iVar2 = GetUnitsAmount0(&DAT_100304b8,0);
       if (iVar2 == 0) {
-        SetTrigg(0x2d,1);
+        SetTrigg(0x2d,0);
         SelectUnits(&DAT_10030400,0);
         SelCloseGates(4);
       }

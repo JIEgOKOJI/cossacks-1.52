@@ -624,7 +624,7 @@ void ProcessScenary(void)
     iVar6 = GetDiff(0);
     AddResource(0,4,(5 - iVar6) * 1000);
     ShowPage("#PAGE1502");
-    SetTrigg(4,1);
+    SetTrigg(4,0);
     SelectUnits(&DAT_1000c028,0);
     EnableMission(0x49);
     EnableMission(0x43);
@@ -663,7 +663,7 @@ void ProcessScenary(void)
     }
     iVar6 = GetUnitsAmount1(&DAT_1000bdc8,&DAT_1000bff8);
     if (iVar6 == 0) {
-      SetTrigg(3,1);
+      SetTrigg(3,0);
     }
   }
   cVar1 = Trigg(4);
@@ -674,11 +674,11 @@ void ProcessScenary(void)
   }
   iVar6 = GetDiff(0);
   DAT_1000c104 = DAT_1000c000 / ((4 - iVar6) * 10);
-// FIXME(decompiler):   iVar6 = GetDiff(0,&DAT_1000be68);
+// FIXME(decompiler):   iVar6 = GetDiff(0);
   FUN_10001260(&DAT_1000c030,DAT_1000c104 + iVar6 * 3);
-// FIXME(decompiler):   iVar6 = GetDiff(0,&DAT_1000be60);
+// FIXME(decompiler):   iVar6 = GetDiff(0);
   FUN_10001260(&DAT_1000c070,DAT_1000c104 + iVar6 * 3);
-// FIXME(decompiler):   iVar6 = GetDiff(0,&DAT_1000bea8);
+// FIXME(decompiler):   iVar6 = GetDiff(0);
   FUN_10001260(&DAT_1000c0b0,DAT_1000c104 + iVar6 * 3);
   FUN_100010f0(&DAT_1000c030,&DAT_1000bfb8,&DAT_1000bfb0,&DAT_1000bfa8,&DAT_1000be38);
   FUN_100010f0(&DAT_1000c070,&DAT_1000bdd0,&DAT_1000bde0,&DAT_1000bdd8,&DAT_1000bef8);

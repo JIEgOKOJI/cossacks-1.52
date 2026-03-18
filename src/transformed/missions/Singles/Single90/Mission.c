@@ -158,9 +158,9 @@ void  FUN_10001de0(void *this_ptr,int param_1,char param_2)
         return;
       }
       uVar3 = rand();
-      uVar3 = uVar3 & 0x80000001;
+      uVar3 = uVar3 & -2147483647;
       if ((int)uVar3 < 0) {
-        uVar3 = (uVar3 - 1 | 0xfffffffe) + 1;
+        uVar3 = (uVar3 - 1 | -2) + 1;
       }
       if (uVar3 == 0) {
         CreateObject0(param_1,&DAT_10012758,&DAT_10012770,1,*(int *)((int)this_ptr + 4),0);
@@ -235,7 +235,7 @@ void __cdecl FUN_10001f00(int param_1,int param_2,int param_3,int param_4,int pa
       uVar5 = local_28 - param_1;
       local_10 = local_2c - param_5;
       uVar6 = local_10;
-      if ((int)local_10 < 0) {
+      if ((intptr_t)local_10 < 0) {
         uVar6 = -local_10;
       }
       if ((int)uVar5 < 0) {
@@ -253,11 +253,11 @@ void __cdecl FUN_10001f00(int param_1,int param_2,int param_3,int param_4,int pa
           local_10 = local_28 - param_1;
           local_14 = local_2c - param_5;
           uVar5 = local_14;
-          if ((int)local_14 < 0) {
+          if ((intptr_t)local_14 < 0) {
             uVar5 = -local_14;
           }
           uVar8 = local_10;
-          if ((int)local_10 < 0) {
+          if ((intptr_t)local_10 < 0) {
             uVar8 = -local_10;
           }
           uVar7 = uVar5;
@@ -268,11 +268,11 @@ void __cdecl FUN_10001f00(int param_1,int param_2,int param_3,int param_4,int pa
             local_14 = local_28 - param_1;
             local_10 = local_2c - param_5;
             uVar6 = local_10;
-            if ((int)local_10 < 0) {
+            if ((intptr_t)local_10 < 0) {
               uVar6 = -local_10;
             }
             uVar5 = local_14;
-            if ((int)local_14 < 0) {
+            if ((intptr_t)local_14 < 0) {
               uVar5 = -local_14;
             }
             uVar8 = uVar6;
@@ -357,10 +357,10 @@ void __cdecl FUN_10002150(int param_1,int param_2,unsigned short *param_3,int pa
   char *puStack_c;
   int local_8;
   
-  local_8 = 0xffffffff;
+  local_8 = -1;
   ClearSelection(param_2);
   uVar3 = param_5;
-  if (0 < (int)param_5) {
+  if (0 < (intptr_t)param_5) {
     do {
       SelectUnitsType(param_4,param_2,1);
       param_4 = param_4 + 8;
@@ -386,7 +386,7 @@ void __cdecl FUN_10002150(int param_1,int param_2,unsigned short *param_3,int pa
         uVar3 = -uVar3;
       }
       uVar4 = param_5;
-      if ((int)param_5 < 0) {
+      if ((intptr_t)param_5 < 0) {
         uVar4 = -param_5;
       }
       uVar2 = uVar3;
@@ -445,7 +445,7 @@ void __cdecl FUN_100022c0(int param_1,unsigned int param_2)
       uVar5 = local_20 - local_4c;
       local_8 = local_24 - local_50;
       uVar3 = local_8;
-      if ((int)local_8 < 0) {
+      if ((intptr_t)local_8 < 0) {
         uVar3 = -local_8;
       }
       if ((int)uVar5 < 0) {
@@ -465,11 +465,11 @@ void __cdecl FUN_100022c0(int param_1,unsigned int param_2)
           local_8 = local_20 - local_4c;
           local_c = local_24 - local_50;
           uVar5 = local_c;
-          if ((int)local_c < 0) {
+          if ((intptr_t)local_c < 0) {
             uVar5 = -local_c;
           }
           uVar6 = local_8;
-          if ((int)local_8 < 0) {
+          if ((intptr_t)local_8 < 0) {
             uVar6 = -local_8;
           }
           uVar4 = uVar5;
@@ -480,7 +480,7 @@ void __cdecl FUN_100022c0(int param_1,unsigned int param_2)
             uVar5 = local_20 - local_4c;
             local_c = local_24 - local_50;
             uVar3 = local_c;
-            if ((int)local_c < 0) {
+            if ((intptr_t)local_c < 0) {
               uVar3 = -local_c;
             }
             if ((int)uVar5 < 0) {
@@ -601,7 +601,7 @@ void  FUN_10002610(void *this_ptr,int *param_1,unsigned int param_2,int *param_3
   
   puVar7 = *(int **)((int)this_ptr + 8);
   if (param_2 <= (unsigned int)(*(int *)((int)this_ptr + 0xc) - (int)puVar7 >> 2)) {
-    if ((unsigned int)((int)puVar7 - (int)param_1 >> 2) < param_2) {
+    if ((unsigned int)((int)puVar7 - (intptr_t)param_1 >> 2) < param_2) {
       puVar5 = param_1 + param_2;
       if (param_1 != puVar7) {
         puVar4 = puVar5 + -param_2;
@@ -614,7 +614,7 @@ void  FUN_10002610(void *this_ptr,int *param_1,unsigned int param_2,int *param_3
         } while (puVar4 != puVar7);
       }
       puVar7 = *(int **)((int)this_ptr + 8);
-      for (iVar2 = param_2 - ((int)puVar7 - (int)param_1 >> 2); iVar2 != 0; iVar2 = iVar2 + -1) {
+      for (iVar2 = param_2 - ((int)puVar7 - (intptr_t)param_1 >> 2); iVar2 != 0; iVar2 = iVar2 + -1) {
         if (puVar7 != (int *)0x0) {
           *puVar7 = *param_3;
         }
@@ -681,7 +681,7 @@ void  FUN_10002610(void *this_ptr,int *param_1,unsigned int param_2,int *param_3
   puVar1 = *(int **)((int)this_ptr + 8);
   puVar7 = puVar5 + param_2;
   if (param_1 != puVar1) {
-    puVar5 = (int *)((int)puVar7 + (param_2 * -4 - (int)puVar5) + (int)param_1);
+    puVar5 = (int *)((int)puVar7 + (param_2 * -4 - (int)puVar5) + (intptr_t)param_1);
     do {
       if (puVar7 != (int *)0x0) {
         *puVar7 = *puVar5;
@@ -1188,12 +1188,12 @@ int __cdecl FUN_10003c81(int param_1,int param_2,int param_3,unsigned int *param
   uVar4 = uVar5;
   uVar3 = uVar5;
   while (uVar2 = uVar4, -1 < param_2) {
-    if (uVar5 == 0xffffffff) {
+    if (uVar5 == -1) {
       FUN_10004c6d();
     }
     uVar5 = uVar5 - 1;
     if (((*(int *)(iVar1 + 4 + uVar5 * 0x14) < param_3) &&
-        (param_3 <= *(int *)(iVar1 + uVar5 * 0x14 + 8))) || (uVar4 = uVar2, uVar5 == 0xffffffff)) {
+        (param_3 <= *(int *)(iVar1 + uVar5 * 0x14 + 8))) || (uVar4 = uVar2, uVar5 == -1)) {
       param_2 = param_2 + -1;
       uVar4 = uVar5;
       uVar3 = uVar2;
@@ -1541,11 +1541,11 @@ switchD_10001625_default:
                 local_10 = local_54 - local_28;
                 local_14 = local_58 - local_2c;
                 uVar4 = local_14;
-                if ((int)local_14 < 0) {
+                if ((intptr_t)local_14 < 0) {
                   uVar4 = -local_14;
                 }
                 uVar8 = local_10;
-                if ((int)local_10 < 0) {
+                if ((intptr_t)local_10 < 0) {
                   uVar8 = -local_10;
                 }
                 uVar5 = uVar4;

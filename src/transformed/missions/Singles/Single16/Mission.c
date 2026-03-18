@@ -367,7 +367,7 @@ void ProcessScenary(void)
     EnableMission(0x46);
     ShowPage("#PAGE7");
     SetTrigg(0x37,0);
-    SetTrigg(0x38,1);
+    SetTrigg(0x38,0);
     SetTrigg(3,0);
     SetTrigg(4,0);
     SetTrigg(5,0);
@@ -384,17 +384,17 @@ void ProcessScenary(void)
       SelectUnits(&DAT_100066e8,0);
       SelErase(4);
       CreateObject0(&DAT_100065b0,&DAT_100065b8,&DAT_100065c0,0,&DAT_10006770,0x8c);
-      AddResource(0,1,0xfffffc18);
+      AddResource(0,1,-1000);
       DisableMission(0x46);
       EnableMission(0x47);
-      SetTrigg(0x37,1);
+      SetTrigg(0x37,0);
       SetTrigg(0x38,0);
     }
   }
   cVar1 = Trigg(0x38);
   if (((cVar1 == '\0') && (cVar1 = Trigg(0x37), cVar1 == '\0')) &&
      (iVar3 = GetUnitsAmount0(&DAT_10006610,0), iVar3 == 0)) {
-    SetTrigg(0x38,1);
+    SetTrigg(0x38,0);
   }
   cVar1 = Trigg(5);
   if (((cVar1 != '\0') && (cVar1 = Trigg(2), cVar1 == '\0')) &&
@@ -494,7 +494,7 @@ LAB_10001c4a:
     }
     iVar3 = GetUnitsAmount0(&DAT_10006670,0);
     if (iVar3 == 0) {
-      SetTrigg(0x24,1);
+      SetTrigg(0x24,0);
       cVar1 = TimerDone(0x15);
       if (cVar1 == '\0') {
         cVar1 = Trigg(0x15);
@@ -505,10 +505,10 @@ LAB_10001c4a:
           SelectUnits(&DAT_100066a0,0);
           AllowAttack(5,1);
           SelSendAndKill(5,&DAT_10006710,0x80,0);
-          SetTrigg(0x1e,1);
-          SetTrigg(0x1f,1);
-          SetTrigg(0x20,1);
-          SetTrigg(0x21,1);
+          SetTrigg(0x1e,0);
+          SetTrigg(0x1f,0);
+          SetTrigg(0x20,0);
+          SetTrigg(0x21,0);
           SetTrigg(0x28,0);
           SetTrigg(0x29,0);
           SetTrigg(0x2a,0);
@@ -523,7 +523,7 @@ LAB_10001c4a:
         SelSendTo(5,&DAT_10006710,0x80,0);
         cVar1 = Trigg(0x25);
         if (cVar1 == '\0') {
-          SetTrigg(0x25,1);
+          SetTrigg(0x25,0);
         }
         else {
           CreateObject0(&DAT_100065e8,&DAT_100066d0,&DAT_10006730,5,&DAT_10006750,0x80);
@@ -538,11 +538,11 @@ LAB_10001c4a:
         SetTrigg(0x1f,0);
         SetTrigg(0x20,0);
         SetTrigg(0x21,0);
-        SetTrigg(0x28,1);
-        SetTrigg(0x29,1);
-        SetTrigg(0x2a,1);
-        SetTrigg(0x2b,1);
-        SetTrigg(0x15,1);
+        SetTrigg(0x28,0);
+        SetTrigg(0x29,0);
+        SetTrigg(0x2a,0);
+        SetTrigg(0x2b,0);
+        SetTrigg(0x15,0);
         RunTimer(0x15,5000);
       }
     }
@@ -551,7 +551,7 @@ LAB_10001c4a:
       SelectUnits(&DAT_100065e0,0);
       SelectUnits(&DAT_100066a0,1);
       SelSendAndKill(5,&DAT_10006668,0x6e,0);
-      SetTrigg(0x1e,1);
+      SetTrigg(0x1e,0);
     }
     cVar1 = Trigg(0x1f);
     if ((cVar1 == '\0') && (iVar3 = GetUnitsAmount1(&DAT_10006778,&DAT_100065e0), 0 < iVar3)) {
@@ -559,7 +559,7 @@ LAB_10001c4a:
       SelectUnits(&DAT_100065e0,0);
       SelectUnits(&DAT_100066a0,1);
       SelSendAndKill(5,&DAT_10006678,0x28,0);
-      SetTrigg(0x1f,1);
+      SetTrigg(0x1f,0);
     }
     cVar1 = Trigg(0x20);
     if ((cVar1 == '\0') && (iVar3 = GetUnitsAmount1(&DAT_10006780,&DAT_100065e0), 0 < iVar3)) {
@@ -567,7 +567,7 @@ LAB_10001c4a:
       SelectUnits(&DAT_100065e0,0);
       SelectUnits(&DAT_100066a0,1);
       SelSendAndKill(5,&DAT_10006688,0xdc,0);
-      SetTrigg(0x20,1);
+      SetTrigg(0x20,0);
     }
     cVar1 = Trigg(0x21);
     if ((cVar1 == '\0') && (iVar3 = GetUnitsAmount1(&DAT_10006788,&DAT_100065e0), 0 < iVar3)) {
@@ -575,34 +575,34 @@ LAB_10001c4a:
       SelectUnits(&DAT_100065e0,0);
       SelectUnits(&DAT_100066a0,1);
       SelSendAndKill(5,&DAT_10006648,0x80,0);
-      SetTrigg(0x21,1);
+      SetTrigg(0x21,0);
     }
     cVar1 = Trigg(0x28);
     if ((cVar1 == '\0') && (iVar3 = GetUnitsAmount1(&DAT_10006590,&DAT_100066a0), 0 < iVar3)) {
       SelectUnits(&DAT_100066a0,0);
       SelSendAndKill(5,&DAT_10006668,0x6e,0);
-      SetTrigg(0x28,1);
+      SetTrigg(0x28,0);
     }
     cVar1 = Trigg(0x29);
     if ((cVar1 == '\0') && (iVar3 = GetUnitsAmount1(&DAT_10006778,&DAT_100066a0), 0 < iVar3)) {
       DAT_10006618 = DAT_10006618 + 1;
       SelectUnits(&DAT_100066a0,0);
       SelSendAndKill(5,&DAT_10006678,0x28,0);
-      SetTrigg(0x29,1);
+      SetTrigg(0x29,0);
     }
     cVar1 = Trigg(0x2a);
     if ((cVar1 == '\0') && (iVar3 = GetUnitsAmount1(&DAT_10006780,&DAT_100066a0), 0 < iVar3)) {
       DAT_10006748 = DAT_10006748 + 1;
       SelectUnits(&DAT_100066a0,0);
       SelSendAndKill(5,&DAT_10006688,0xdc,0);
-      SetTrigg(0x2a,1);
+      SetTrigg(0x2a,0);
     }
     cVar1 = Trigg(0x2b);
     if ((cVar1 == '\0') && (iVar3 = GetUnitsAmount1(&DAT_10006788,&DAT_100066a0), 0 < iVar3)) {
       DAT_1000661c = DAT_1000661c + 1;
       SelectUnits(&DAT_100066a0,0);
       SelSendAndKill(5,&DAT_10006648,0x80,0);
-      SetTrigg(0x2b,1);
+      SetTrigg(0x2b,0);
     }
     cVar1 = NationIsErased(5);
     if ((cVar1 != '\0') || (iVar3 = GetUnitsAmount0(&DAT_10006698,5), iVar3 < 10)) {

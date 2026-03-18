@@ -510,12 +510,12 @@ uVar1 = Trigg(99);
         uVar1 = Trigg(0x11);
         if ((uVar1 & 0xff) != 0) {
           SetTrigg(6,0);
-          SetTrigg(8,1);
-          SetTrigg(0xd,1);
+          SetTrigg(8,0);
+          SetTrigg(0xd,0);
           local_14 = rand();
-          local_14 = local_14 & 0x80000003;
-          if ((int)local_14 < 0) {
-            local_14 = (local_14 - 1 | 0xfffffffc) + 1;
+          local_14 = local_14 & -2147483645;
+          if ((intptr_t)local_14 < 0) {
+            local_14 = (local_14 - 1 | -4) + 1;
           }
           switch(local_14) {
           case 0:
@@ -598,7 +598,7 @@ uVar1 = Trigg(99);
       local_20 = DAT_100378dc * (iVar4 + 1);
       lVar6 = 0;
       AddResource(0,1,(int)lVar6);
-      SetTrigg(6,1);
+      SetTrigg(6,0);
       iVar4 = rand();
       RunTimer(6,iVar4 % 8000 + 4000);
     }
@@ -703,8 +703,8 @@ LAB_1000337b:
       local_34 = DAT_100378dc * (iVar4 + 1);
       lVar6 = 0;
       AddResource(0,1,(int)lVar6);
-      SetTrigg(6,1);
-      SetTrigg(7,1);
+      SetTrigg(6,0);
+      SetTrigg(7,0);
       iVar4 = rand();
       RunTimer(6,iVar4 % 8000 + 4000);
     }
@@ -721,8 +721,8 @@ LAB_1000337b:
       AddResource(1,1,(int)lVar6);
       SelectUnits(&DAT_10037790,0);
       SelChangeNation(6,1);
-      SetTrigg(6,1);
-      SetTrigg(7,1);
+      SetTrigg(6,0);
+      SetTrigg(7,0);
       iVar4 = rand();
       RunTimer(6,iVar4 % 8000 + 4000);
     }
@@ -739,8 +739,8 @@ LAB_1000337b:
       AddResource(1,1,(int)lVar6);
       SelectUnits(&DAT_10037790,0);
       SelChangeNation(6,1);
-      SetTrigg(6,1);
-      SetTrigg(7,1);
+      SetTrigg(6,0);
+      SetTrigg(7,0);
       iVar4 = rand();
       RunTimer(6,iVar4 % 8000 + 4000);
     }
@@ -757,8 +757,8 @@ LAB_1000337b:
       AddResource(2,1,(int)lVar6);
       SelectUnits(&DAT_10037790,0);
       SelChangeNation(6,2);
-      SetTrigg(6,1);
-      SetTrigg(7,1);
+      SetTrigg(6,0);
+      SetTrigg(7,0);
       iVar4 = rand();
       RunTimer(6,iVar4 % 8000 + 4000);
     }
@@ -775,8 +775,8 @@ LAB_1000337b:
       AddResource(2,1,(int)lVar6);
       SelectUnits(&DAT_10037790,0);
       SelChangeNation(6,2);
-      SetTrigg(6,1);
-      SetTrigg(7,1);
+      SetTrigg(6,0);
+      SetTrigg(7,0);
       iVar4 = rand();
       RunTimer(6,iVar4 % 8000 + 4000);
     }
@@ -817,7 +817,7 @@ LAB_100040b4:
     iVar4 = GetUnitsAmount1(&DAT_10037950,&DAT_10037828);
     iVar3 = GetTotalAmount0(&DAT_10037828);
     if (iVar4 < iVar3) {
-      SetTrigg(1,1);
+      SetTrigg(1,0);
       SelectUnits(&DAT_10037828,0);
       SelSendTo(5,&DAT_10037a00,0x41,0);
     }
@@ -853,7 +853,7 @@ LAB_100040b4:
     iVar4 = GetUnitsAmount1(&DAT_10037958,&DAT_10037820);
     iVar3 = GetTotalAmount0(&DAT_10037820);
     if (iVar4 < iVar3) {
-      SetTrigg(0x14,1);
+      SetTrigg(0x14,0);
       SelectUnits(&DAT_10037820,0);
       SelSendTo(5,&DAT_10037a10,0xaa,0);
     }
@@ -947,8 +947,8 @@ LAB_100040b4:
         uVar1 = TimerDone(3);
         if ((uVar1 & 0xff) != 0) {
           SetTrigg(4,0);
-          SetTrigg(10,1);
-          SetTrigg(9,1);
+          SetTrigg(10,0);
+          SetTrigg(9,0);
           FreeTimer(3);
           RunTimer(8,10000);
           RemoveGroup(&DAT_100377c8,&DAT_100377e0);
@@ -969,7 +969,7 @@ LAB_100040b4:
           if ((uVar1 & 0xff) == 0) goto LAB_10004a30;
         }
         FreeTimer(8);
-        SetTrigg(4,1);
+        SetTrigg(4,0);
       }
     }
   }
@@ -998,8 +998,8 @@ LAB_10004a30:
         uVar1 = TimerDone(4);
         if ((uVar1 & 0xff) != 0) {
           SetTrigg(5,0);
-          SetTrigg(0xc,1);
-          SetTrigg(0xb,1);
+          SetTrigg(0xc,0);
+          SetTrigg(0xb,0);
           FreeTimer(4);
           RunTimer(5,10000);
           RemoveGroup(&DAT_100377c0,&DAT_100377d0);
@@ -1020,7 +1020,7 @@ LAB_10004a30:
           if ((uVar1 & 0xff) == 0) goto LAB_10004d1d;
         }
         FreeTimer(5);
-        SetTrigg(5,1);
+        SetTrigg(5,0);
       }
     }
   }
