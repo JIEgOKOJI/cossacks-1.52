@@ -372,7 +372,7 @@ void  FUN_10001330(int param_1)
   int iVar1;
   int iVar2;
   
-  GetTotalAmount0(param_1);
+  iVar1 = GetTotalAmount0(param_1);
   iVar2 = 0;
   *(int *)(param_1 + 0x340) = iVar1;
   if (0 < iVar1) {
@@ -449,11 +449,11 @@ void  FUN_100014c0(int param_1)
   if (*(int *)(param_1 + 0x34a) < 0x3e9) {
     return;
   }
-  GetTotalAmount0(param_1);
+  iVar1 = GetTotalAmount0(param_1);
   if (*(int *)(param_1 + 0x344) <= iVar1) {
     return;
   }
-  GetTotalAmount0(param_1);
+  uVar2 = GetTotalAmount0(param_1);
   *(int *)(param_1 + 0x340) = uVar2;
   iVar1 = *(int *)(param_1 + 0x33c);
   if (((iVar1 != 0) && (iVar1 != 1)) && (iVar1 != 2)) goto LAB_1000157f;
@@ -534,7 +534,7 @@ void  FUN_100016e0(int param_1)
   int iVar1;
   
   if (*(int *)(param_1 + 0x2ff) == 1) {
-    GetTotalAmount0(param_1);
+    iVar1 = GetTotalAmount0(param_1);
     ShowPageParam("#PAGE11",param_1 + 0x2e8,((unsigned char *)&DAT_1000f728) + *(int *)(param_1 + 0x33c) * 5,
                   &DAT_1000f728,*(int *)(param_1 + 0x30b),&DAT_1000f73c,
                   *(int *)(param_1 + 0x30f),&DAT_1000f750,*(int *)(param_1 + 0x313),

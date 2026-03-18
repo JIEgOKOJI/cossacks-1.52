@@ -212,7 +212,7 @@ uVar1 = Trigg(100);
   }
   uVar1 = Trigg(0x5f);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount1(&DAT_1002f478,0);
+    iVar2 = GetTotalAmount1(&DAT_1002f478,0);
     if (0 < iVar2) {
       SetTrigg(0x5f,0);
       SelectUnitsType(&DAT_1002f478,0,0);
@@ -284,7 +284,7 @@ uVar1 = Trigg(100);
     if ((uVar1 & 0xff) != 0) {
       uVar1 = TimerDone(1);
       if ((uVar1 & 0xff) != 0) {
-        GetTotalAmount1(&DAT_1002f480,0);
+        iVar2 = GetTotalAmount1(&DAT_1002f480,0);
         if (iVar2 == 0) {
           SetTrigg(0x5a,0);
           ShowPage("#PAGE5");

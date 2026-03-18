@@ -629,7 +629,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(0x31);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount1(&DAT_10034490,0);
+    iVar2 = GetTotalAmount1(&DAT_10034490,0);
     if (3 < iVar2) {
       DisableMission(0x4a);
       EnableMission(0x6a);
@@ -641,7 +641,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(0x32);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount1(&DAT_100344a8,0);
+    iVar2 = GetTotalAmount1(&DAT_100344a8,0);
     if (0 < iVar2) {
       DisableMission(0x4b);
       EnableMission(0x6b);

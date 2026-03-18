@@ -117,11 +117,11 @@ FUN_100010b0(0,1);
   if (2 < iVar1) {
     FUN_10001180(0,0x1001ca40);
   }
-  GetTotalAmount0(&DAT_1001e428);
+  iVar1 = GetTotalAmount0(&DAT_1001e428);
   if (iVar1 < 0x14) {
     FUN_10001180(1,0x1001ca30);
   }
-  GetTotalAmount0(&DAT_1001e430);
+  iVar1 = GetTotalAmount0(&DAT_1001e430);
   if (iVar1 < 0x14) {
     FUN_10001180(0,0x1001ca38);
   }

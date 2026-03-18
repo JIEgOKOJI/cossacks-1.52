@@ -240,13 +240,13 @@ uVar1 = Trigg(99);
     SelDie(1);
   }
   uVar1 = Trigg(2);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_1002f470), iVar4 < 3)) {
+  if (((uVar1 & 0xff) != 0) && (iVar4 = GetTotalAmount0(&DAT_1002f470), iVar4 < 3)) {
     SetTrigg(2,0);
     ShowPage("#PAGE4");
     LooseGame();
   }
   uVar1 = Trigg(2);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_1002f468), iVar4 < 3)) {
+  if (((uVar1 & 0xff) != 0) && (iVar4 = GetTotalAmount0(&DAT_1002f468), iVar4 < 3)) {
     uVar1 = TimerDone(1);
     if ((uVar1 & 0xff) == 0) {
       SetTrigg(2,0);
@@ -350,7 +350,7 @@ uVar1 = Trigg(99);
     DAT_1002f404 = DAT_1002f404 + 1;
   }
   for (DAT_1002f400 = 0; DAT_1002f400 < DAT_1002f404; DAT_1002f400 = DAT_1002f400 + 1) {
-    GetTotalAmount0(((unsigned char *)&DAT_1002f418) + DAT_1002f400 * 8);
+    iVar4 = GetTotalAmount0(((unsigned char *)&DAT_1002f418) + DAT_1002f400 * 8);
     if (0 < iVar4) {
       SelectUnits(((unsigned char *)&DAT_1002f418) + DAT_1002f400 * 8,0);
       SelAttackGroup(1,&DAT_1002f470);

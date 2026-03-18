@@ -2537,21 +2537,21 @@ void ProcessScenary(void)
     }
   }
   FUN_10002b90(&DAT_100250d8,1);
-  GetTotalAmount0(0x100250d8);
+  iVar4 = GetTotalAmount0(0x100250d8);
   if (iVar4 < 0x14) {
     FUN_10002b90(&DAT_100250d8,4);
   }
-  GetTotalAmount0(0x100250d8);
+  iVar4 = GetTotalAmount0(0x100250d8);
   if (0x32 < iVar4) {
     FUN_10002b90(&DAT_100250d8,0);
   }
   FUN_10002e30(&DAT_100250d8,(int *)&DAT_10015bf8,(int *)&DAT_10025058);
   FUN_10002b90(&DAT_10025150,1);
-  GetTotalAmount0(0x10025150);
+  iVar4 = GetTotalAmount0(0x10025150);
   if (iVar4 < 0x14) {
     FUN_10002b90(&DAT_10025150,4);
   }
-  GetTotalAmount0(0x10025150);
+  iVar4 = GetTotalAmount0(0x10025150);
   if (0x32 < iVar4) {
     FUN_10002b90(&DAT_10025150,0);
   }
@@ -2559,21 +2559,21 @@ void ProcessScenary(void)
     FUN_10002e30(&DAT_10025150,(int *)&DAT_10015bf8,(int *)&DAT_10025068);
   }
   FUN_10002b90(&DAT_100251c8,1);
-  GetTotalAmount0(0x100251c8);
+  iVar4 = GetTotalAmount0(0x100251c8);
   if (iVar4 < 0x14) {
     FUN_10002b90(&DAT_100251c8,4);
   }
-  GetTotalAmount0(0x100251c8);
+  iVar4 = GetTotalAmount0(0x100251c8);
   if (0x3c < iVar4) {
     FUN_10002b90(&DAT_100251c8,0);
   }
   FUN_10002e30(&DAT_100251c8,(int *)&DAT_10015780,(int *)&DAT_10025050);
   FUN_10002b90(&DAT_10025240,1);
-  GetTotalAmount0(0x10025240);
+  iVar4 = GetTotalAmount0(0x10025240);
   if (iVar4 < 0x14) {
     FUN_10002b90(&DAT_10025240,4);
   }
-  GetTotalAmount0(0x10025240);
+  iVar4 = GetTotalAmount0(0x10025240);
   if (0x46 < iVar4) {
     FUN_10002b90(&DAT_10025240,0);
   }
@@ -2581,11 +2581,11 @@ void ProcessScenary(void)
     FUN_10002e30(&DAT_10025240,(int *)&DAT_10015bf8,(int *)&DAT_10025058);
   }
   FUN_10002b90(&DAT_100252b8,1);
-  GetTotalAmount0(0x100252b8);
+  iVar3 = GetTotalAmount0(0x100252b8);
   if (iVar3 < 10) {
     FUN_10002b90(&DAT_100252b8,4);
   }
-  GetTotalAmount0(0x100252b8);
+  iVar3 = GetTotalAmount0(0x100252b8);
   if (0x28 < iVar3) {
     FUN_10002b90(&DAT_100252b8,0);
   }

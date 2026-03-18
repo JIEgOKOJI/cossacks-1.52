@@ -220,7 +220,7 @@ uVar1 = Trigg(1);
     }
   }
   uVar1 = TimerDone(2);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_10031428), 0 < iVar2)) {
+  if (((uVar1 & 0xff) != 0) && (iVar2 = GetTotalAmount0(&DAT_10031428), 0 < iVar2)) {
     iVar2 = GetUnitsAmount0(&DAT_100314c8,0);
     if (iVar2 != 0) {
       AttackEnemyInZone(&DAT_10031428,&DAT_100314c8,0);
@@ -228,7 +228,7 @@ uVar1 = Trigg(1);
     }
   }
   uVar1 = Trigg(3);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_10031440), iVar2 == 0)) {
+  if (((uVar1 & 0xff) != 0) && (iVar2 = GetTotalAmount0(&DAT_10031440), iVar2 == 0)) {
     SetTrigg(3,0);
     SelectUnits(&DAT_10031530,0);
     SelDie(1);
@@ -236,8 +236,8 @@ uVar1 = Trigg(1);
     AddResource(0,1,10000);
   }
   uVar1 = Trigg(4);
-  if ((((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_10031598), iVar2 == 0)) &&
-     (GetTotalAmount0(&DAT_100315a0), 0 < iVar2)) {
+  if ((((uVar1 & 0xff) != 0) && (iVar2 = GetTotalAmount0(&DAT_10031598), iVar2 == 0)) &&
+     (iVar2 = GetTotalAmount0(&DAT_100315a0), 0 < iVar2)) {
     iVar2 = GetUnitsAmount0(&DAT_10031460,0);
     if (0 < iVar2) {
       SetTrigg(4,0);
@@ -247,7 +247,7 @@ uVar1 = Trigg(1);
     }
   }
   uVar1 = Trigg(5);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_10031580), 0 < iVar2)) {
+  if (((uVar1 & 0xff) != 0) && (iVar2 = GetTotalAmount0(&DAT_10031580), 0 < iVar2)) {
     iVar2 = GetUnitsAmount0(&DAT_10031478,0);
     if (0 < iVar2) {
       SetTrigg(5,0);
@@ -270,7 +270,7 @@ uVar1 = Trigg(1);
   uVar1 = Trigg(6);
   if ((uVar1 & 0xff) == 0) {
     uVar1 = Trigg(7);
-    if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_100315d8), 0 < iVar2)) {
+    if (((uVar1 & 0xff) != 0) && (iVar2 = GetTotalAmount0(&DAT_100315d8), 0 < iVar2)) {
       iVar2 = GetUnitsAmount1(&DAT_100314a8,&DAT_10031410);
       if (0 < iVar2) {
         uVar1 = Trigg(8);
@@ -287,7 +287,7 @@ uVar1 = Trigg(1);
   uVar1 = Trigg(7);
   if ((uVar1 & 0xff) == 0) {
     uVar1 = Trigg(0x2c);
-    if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_100315d8), 0 < iVar2)) {
+    if (((uVar1 & 0xff) != 0) && (iVar2 = GetTotalAmount0(&DAT_100315d8), 0 < iVar2)) {
       iVar2 = GetUnitsAmount1(&DAT_10031508,&DAT_10031410);
       if (0 < iVar2) {
         uVar1 = Trigg(8);
@@ -304,7 +304,7 @@ uVar1 = Trigg(1);
   uVar1 = Trigg(0x2c);
   if ((uVar1 & 0xff) == 0) {
     uVar1 = Trigg(0x2d);
-    if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_100315d8), 0 < iVar2)) {
+    if (((uVar1 & 0xff) != 0) && (iVar2 = GetTotalAmount0(&DAT_100315d8), 0 < iVar2)) {
       iVar2 = GetUnitsAmount1(&DAT_100314c8,&DAT_10031410);
       if (0 < iVar2) {
         uVar1 = Trigg(8);
@@ -321,7 +321,7 @@ uVar1 = Trigg(1);
   uVar1 = Trigg(0x2d);
   if ((uVar1 & 0xff) == 0) {
     uVar1 = Trigg(0x2e);
-    if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_100315d8), 0 < iVar2)) {
+    if (((uVar1 & 0xff) != 0) && (iVar2 = GetTotalAmount0(&DAT_100315d8), 0 < iVar2)) {
       iVar2 = GetUnitsAmount1(&DAT_10031500,&DAT_10031410);
       if (0 < iVar2) {
         uVar1 = Trigg(8);
@@ -339,7 +339,7 @@ uVar1 = Trigg(1);
   uVar1 = Trigg(0x2e);
   if ((uVar1 & 0xff) == 0) {
     uVar1 = Trigg(0x2f);
-    if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_100315d8), 0 < iVar2)) {
+    if (((uVar1 & 0xff) != 0) && (iVar2 = GetTotalAmount0(&DAT_100315d8), 0 < iVar2)) {
       iVar2 = GetUnitsAmount1(&DAT_10031468,&DAT_10031410);
       if (0 < iVar2) {
         uVar1 = Trigg(8);
@@ -356,7 +356,7 @@ uVar1 = Trigg(1);
   uVar1 = Trigg(0x2b);
   if ((uVar1 & 0xff) == 0) {
     uVar1 = Trigg(8);
-    if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_100315c0), 0 < iVar2)) {
+    if (((uVar1 & 0xff) != 0) && (iVar2 = GetTotalAmount0(&DAT_100315c0), 0 < iVar2)) {
       iVar2 = GetUnitsAmount1(&DAT_100314f8,&DAT_10031410);
       if (0 < iVar2) {
         SetTrigg(8,0);
@@ -385,7 +385,7 @@ uVar1 = Trigg(1);
   uVar1 = Trigg(9);
   if ((uVar1 & 0xff) == 0) {
     uVar1 = Trigg(10);
-    if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_100315a8), 0 < iVar2)) {
+    if (((uVar1 & 0xff) != 0) && (iVar2 = GetTotalAmount0(&DAT_100315a8), 0 < iVar2)) {
       iVar2 = GetUnitsAmount1(&DAT_100314a8,&DAT_10031410);
       if (0 < iVar2) {
         SetTrigg(10,0);
@@ -396,13 +396,13 @@ uVar1 = Trigg(1);
     }
   }
   uVar1 = Trigg(0xb);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_10031568), iVar2 == 0)) {
+  if (((uVar1 & 0xff) != 0) && (iVar2 = GetTotalAmount0(&DAT_10031568), iVar2 == 0)) {
     SetTrigg(0xb,0);
     ShowPage("#PAGE11");
     ShowVictory();
   }
   uVar1 = Trigg(0xc);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_10031410), iVar2 == 0)) {
+  if (((uVar1 & 0xff) != 0) && (iVar2 = GetTotalAmount0(&DAT_10031410), iVar2 == 0)) {
     SetTrigg(0xc,0);
     iVar2 = GetResource(0,3);
     if (iVar2 == 0) {
@@ -424,7 +424,7 @@ uVar1 = Trigg(1);
     }
   }
   uVar1 = Trigg(0xe);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_10031578), iVar2 == 0)) {
+  if (((uVar1 & 0xff) != 0) && (iVar2 = GetTotalAmount0(&DAT_10031578), iVar2 == 0)) {
     SetTrigg(0xe,0);
     ClearSelection(0);
     SelectUnits(&DAT_10031540,0);
@@ -532,7 +532,7 @@ LAB_10002f8d:
   uVar1 = Trigg(0x1e);
   if ((uVar1 & 0xff) == 0) {
     uVar1 = TimerDone(1);
-    if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_10031420), 0 < iVar2)) {
+    if (((uVar1 & 0xff) != 0) && (iVar2 = GetTotalAmount0(&DAT_10031420), 0 < iVar2)) {
       AttackEnemyInZone(&DAT_10031420,&DAT_100314c0,0);
       RunTimer(1,100);
     }
@@ -545,7 +545,7 @@ LAB_10002f8d:
     }
   }
   uVar1 = Trigg(0x1f);
-  if (((uVar1 & 0xff) == 0) && (GetTotalAmount0(&DAT_10031418), 0 < iVar2)) {
+  if (((uVar1 & 0xff) == 0) && (iVar2 = GetTotalAmount0(&DAT_10031418), 0 < iVar2)) {
     SelectUnits(&DAT_10031418,0);
     SelAttackGroup(1,&DAT_10031450);
   }
@@ -630,8 +630,8 @@ LAB_10002f8d:
     }
   }
   uVar1 = Trigg(0x25);
-  if ((((uVar1 & 0xff) == 0) && (GetTotalAmount0(&DAT_10031550), 0 < iVar2)) &&
-     (GetTotalAmount0(&DAT_10031450), 0 < iVar2)) {
+  if ((((uVar1 & 0xff) == 0) && (iVar2 = GetTotalAmount0(&DAT_10031550), 0 < iVar2)) &&
+     (iVar2 = GetTotalAmount0(&DAT_10031450), 0 < iVar2)) {
     SelectUnits(&DAT_10031550,0);
     SelAttackGroup(1,&DAT_10031450);
   }

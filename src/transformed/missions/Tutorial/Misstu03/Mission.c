@@ -392,7 +392,7 @@ SetTutorial(1);
   uVar1 = GetQuestPressed();
   if ((uVar1 & 0xff) != 0) {
     SetTrigg(0x42,0);
-    GetTotalAmount0(&DAT_100303e8);
+    iVar2 = GetTotalAmount0(&DAT_100303e8);
     if (0 < iVar2) {
       SelectUnits(&DAT_100303e8,0);
       SelErase(1);

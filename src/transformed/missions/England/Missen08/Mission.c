@@ -119,33 +119,33 @@ uVar1 = Trigg(1);
     Patrol(1,&DAT_1002f458,0);
   }
   uVar1 = Trigg(2);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount1(&DAT_1002f438,0), 0 < iVar2)) {
+  if (((uVar1 & 0xff) != 0) && (iVar2 = GetTotalAmount1(&DAT_1002f438,0), 0 < iVar2)) {
     SetTrigg(2,0);
     ShowPage("#PAGE2");
     AddResource(0,1,10000);
   }
   uVar1 = Trigg(3);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount1(&DAT_1002f498,0), 0 < iVar2)) {
+  if (((uVar1 & 0xff) != 0) && (iVar2 = GetTotalAmount1(&DAT_1002f498,0), 0 < iVar2)) {
     SetTrigg(3,0);
     ShowPage("#PAGE3");
     AddResource(0,1,100000);
     ShowVictory();
   }
   uVar1 = Trigg(4);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount1(&DAT_1002f430,0), 0 < iVar2)) {
+  if (((uVar1 & 0xff) != 0) && (iVar2 = GetTotalAmount1(&DAT_1002f430,0), 0 < iVar2)) {
     SetTrigg(4,0);
     ShowPage("#PAGE4");
     AddResource(0,1,20000);
   }
   uVar1 = Trigg(5);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount1(&DAT_1002f4c0,0), 0 < iVar2)) {
+  if (((uVar1 & 0xff) != 0) && (iVar2 = GetTotalAmount1(&DAT_1002f4c0,0), 0 < iVar2)) {
     SetTrigg(5,0);
     ShowPage("#PAGE5");
     AddResource(0,4,5000);
     AddResource(0,5,10000);
   }
   uVar1 = Trigg(6);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount1(&DAT_1002f440,0), 0 < iVar2)) {
+  if (((uVar1 & 0xff) != 0) && (iVar2 = GetTotalAmount1(&DAT_1002f440,0), 0 < iVar2)) {
     SetTrigg(6,0);
     ShowPage("#PAGE6");
     AddResource(0,1,10000);
@@ -153,14 +153,14 @@ uVar1 = Trigg(1);
   uVar1 = Trigg(7);
   if ((uVar1 & 0xff) != 0) {
     uVar1 = Trigg(3);
-    if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_1002f4b0), iVar2 == 0)) {
+    if (((uVar1 & 0xff) != 0) && (iVar2 = GetTotalAmount0(&DAT_1002f4b0), iVar2 == 0)) {
       SetTrigg(7,0);
       ShowPage("#PAGE7");
       LooseGame();
     }
   }
   uVar1 = Trigg(8);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount1(&DAT_1002f3e0,0), 0 < iVar2)) {
+  if (((uVar1 & 0xff) != 0) && (iVar2 = GetTotalAmount1(&DAT_1002f3e0,0), 0 < iVar2)) {
     SetTrigg(8,0);
     ShowPage("#PAGE8");
     AddResource(0,3,30000);
@@ -237,7 +237,7 @@ uVar1 = Trigg(1);
     }
   }
   uVar1 = Trigg(10);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_1002f3e8), iVar2 == 0)) {
+  if (((uVar1 & 0xff) != 0) && (iVar2 = GetTotalAmount0(&DAT_1002f3e8), iVar2 == 0)) {
     SetTrigg(10,0);
     ShowPage("#PAGE10");
     LooseGame();
@@ -254,7 +254,7 @@ uVar1 = Trigg(1);
     }
   }
   uVar1 = Trigg(0xc);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_1002f4a8), iVar2 == 0)) {
+  if (((uVar1 & 0xff) != 0) && (iVar2 = GetTotalAmount0(&DAT_1002f4a8), iVar2 == 0)) {
     SetTrigg(0xc,0);
     ShowPage("#PAGE12");
     AddResource(0,1,5000);
@@ -304,7 +304,7 @@ LAB_10002160:
       SelSendAndKill(1,&DAT_1002f480,0,0);
     }
   }
-  GetTotalAmount1(&DAT_1002f450,0);
+  iVar2 = GetTotalAmount1(&DAT_1002f450,0);
   if (0 < iVar2) {
     ClearSelection(0);
     SelectUnitsType(&DAT_1002f450,0,0);

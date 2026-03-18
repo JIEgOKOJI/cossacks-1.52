@@ -2599,7 +2599,7 @@ LAB_100034d4:
     }
     SelectUnits(&DAT_10039df0,0);
   }
-  GetTotalAmount0(&DAT_10039f08);
+  iVar6 = GetTotalAmount0(&DAT_10039f08);
   if (iVar6 < 1) {
     ShowPage(0);
     LooseGame();

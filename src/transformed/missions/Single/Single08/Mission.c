@@ -103,7 +103,7 @@ uVar1 = Trigg(100);
   }
   uVar1 = Trigg(0x62);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_1002e3e8);
+    iVar2 = GetTotalAmount0(&DAT_1002e3e8);
     if (iVar2 == 0) {
       SetTrigg(0x62,0);
       SetTrigg(99,0);
@@ -116,7 +116,7 @@ uVar1 = Trigg(100);
   }
   uVar1 = Trigg(0x60);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_1002e3e0);
+    iVar2 = GetTotalAmount0(&DAT_1002e3e0);
     if (iVar2 == 0) {
       SetTrigg(0x60,0);
       SetTrigg(0x61,0);
@@ -129,7 +129,7 @@ uVar1 = Trigg(100);
   }
   uVar1 = Trigg(0x5e);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_1002e3f8);
+    iVar2 = GetTotalAmount0(&DAT_1002e3f8);
     if (iVar2 == 0) {
       SetTrigg(0x5e,0);
       SetTrigg(0x5f,0);

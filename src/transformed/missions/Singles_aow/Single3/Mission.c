@@ -1251,7 +1251,7 @@ LAB_10004e6f:
   }
   uVar1 = Trigg(0x3a);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_10035468);
+    iVar2 = GetTotalAmount0(&DAT_10035468);
     if (iVar2 < 0xf) {
       SetTrigg(0x3a,0);
       SetTrigg(0x2b,0);

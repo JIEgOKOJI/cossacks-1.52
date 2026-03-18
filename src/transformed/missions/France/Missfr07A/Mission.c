@@ -200,11 +200,11 @@ uVar1 = Trigg(1);
     }
   }
   iVar3 = GetUnitsAmount0(&DAT_10030468,0);
-  if ((0 < iVar3) && (GetTotalAmount0(&DAT_100303f0), 0 < iVar3)) {
+  if ((0 < iVar3) && (iVar3 = GetTotalAmount0(&DAT_100303f0), 0 < iVar3)) {
     AttackEnemyInZone(&DAT_100303f0,&DAT_10030468,0);
   }
   uVar1 = Trigg(3);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_100303f0), iVar3 == 0)) {
+  if (((uVar1 & 0xff) != 0) && (iVar3 = GetTotalAmount0(&DAT_100303f0), iVar3 == 0)) {
     SetTrigg(3,0);
     ShowPage("#PAGE3");
     DisableMission(0x43);
@@ -212,11 +212,11 @@ uVar1 = Trigg(1);
     AddResource(0,3,20000);
   }
   iVar3 = GetUnitsAmount0(&DAT_10030470,0);
-  if ((0 < iVar3) && (GetTotalAmount0(&DAT_10030408), 0 < iVar3)) {
+  if ((0 < iVar3) && (iVar3 = GetTotalAmount0(&DAT_10030408), 0 < iVar3)) {
     AttackEnemyInZone(&DAT_10030408,&DAT_10030470,0);
   }
   uVar1 = Trigg(0x32);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_10030408), iVar3 < 7)) {
+  if (((uVar1 & 0xff) != 0) && (iVar3 = GetTotalAmount0(&DAT_10030408), iVar3 < 7)) {
     SetTrigg(0x32,0);
     ClearSelection(1);
     SelectUnits1(1,&DAT_100304e8,0);
@@ -226,23 +226,23 @@ uVar1 = Trigg(1);
     SelDie(0);
   }
   uVar1 = Trigg(4);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_10030408), iVar3 == 0)) {
+  if (((uVar1 & 0xff) != 0) && (iVar3 = GetTotalAmount0(&DAT_10030408), iVar3 == 0)) {
     SetTrigg(4,0);
     ShowPage("#PAGE4");
     DisableMission(0x46);
     EnableMission(0x47);
   }
   iVar3 = GetUnitsAmount0(&DAT_10030478,0);
-  if ((0 < iVar3) && (GetTotalAmount0(&DAT_10030400), 0 < iVar3)) {
+  if ((0 < iVar3) && (iVar3 = GetTotalAmount0(&DAT_10030400), 0 < iVar3)) {
     AttackEnemyInZone(&DAT_10030400,&DAT_10030478,0);
   }
   uVar1 = Trigg(5);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_10030400), iVar3 == 0)) {
+  if (((uVar1 & 0xff) != 0) && (iVar3 = GetTotalAmount0(&DAT_10030400), iVar3 == 0)) {
     SetTrigg(5,0);
     ShowPage("#PAGE5");
     DisableMission(0x42);
     EnableMission(0x44);
-    GetTotalAmount0(&DAT_100304f0);
+    iVar3 = GetTotalAmount0(&DAT_100304f0);
     if (0 < iVar3) {
       SelectUnits(&DAT_100304f0,0);
       SelChangeNation(1,0);
@@ -263,7 +263,7 @@ uVar1 = Trigg(1);
     }
   }
   iVar3 = GetUnitsAmount0(&DAT_10030488,0);
-  if ((0 < iVar3) && (GetTotalAmount0(&DAT_10030418), 0 < iVar3)) {
+  if ((0 < iVar3) && (iVar3 = GetTotalAmount0(&DAT_10030418), 0 < iVar3)) {
     AttackEnemyInZone(&DAT_10030418,&DAT_10030488,0);
   }
   uVar1 = Trigg(6);
@@ -282,8 +282,8 @@ uVar1 = Trigg(1);
   uVar1 = Trigg(7);
   if ((uVar1 & 0xff) != 0) {
     iVar3 = GetUnitsAmount1(&DAT_10030440,&DAT_10030410);
-    GetTotalAmount0(&DAT_10030410);
-    if ((iVar2 / 2 < iVar3) && (GetTotalAmount0(&DAT_10030410), 8 < iVar3)) {
+    iVar2 = GetTotalAmount0(&DAT_10030410);
+    if ((iVar2 / 2 < iVar3) && (iVar3 = GetTotalAmount0(&DAT_10030410), 8 < iVar3)) {
       SetTrigg(7,0);
       ShowPage("#PAGE7");
       DisableMission(0x4b);
@@ -296,22 +296,22 @@ uVar1 = Trigg(1);
     }
   }
   uVar1 = Trigg(8);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_10030410), iVar3 < 9)) {
+  if (((uVar1 & 0xff) != 0) && (iVar3 = GetTotalAmount0(&DAT_10030410), iVar3 < 9)) {
     SetTrigg(8,0);
     ShowPage("#PAGE8");
     LooseGame();
   }
   iVar3 = GetUnitsAmount0(&DAT_100304a0,0);
-  if ((0 < iVar3) && (GetTotalAmount0(&DAT_10030420), 0 < iVar3)) {
+  if ((0 < iVar3) && (iVar3 = GetTotalAmount0(&DAT_10030420), 0 < iVar3)) {
     AttackEnemyInZone(&DAT_10030420,&DAT_100304a0,0);
   }
   uVar1 = Trigg(9);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_10030420), iVar3 < 4)) {
+  if (((uVar1 & 0xff) != 0) && (iVar3 = GetTotalAmount0(&DAT_10030420), iVar3 < 4)) {
     SetTrigg(9,0);
     ShowPage("#PAGE9");
   }
   uVar1 = Trigg(10);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_100303e8), iVar3 == 0)) {
+  if (((uVar1 & 0xff) != 0) && (iVar3 = GetTotalAmount0(&DAT_100303e8), iVar3 == 0)) {
     SetTrigg(10,0);
     iVar3 = GetResource(0,3);
     if (iVar3 < 1) {
@@ -378,11 +378,11 @@ uVar1 = Trigg(1);
     }
   }
   iVar3 = GetUnitsAmount0(&DAT_10030450,0);
-  if ((0 < iVar3) && (GetTotalAmount0(&DAT_100304c8), 0 < iVar3)) {
+  if ((0 < iVar3) && (iVar3 = GetTotalAmount0(&DAT_100304c8), 0 < iVar3)) {
     AttackEnemyInZone(&DAT_100304c8,&DAT_10030450,0);
   }
   uVar1 = Trigg(0xe);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount1(&DAT_100304f8,0), 0 < iVar3)) {
+  if (((uVar1 & 0xff) != 0) && (iVar3 = GetTotalAmount1(&DAT_100304f8,0), 0 < iVar3)) {
     SetTrigg(0xe,0);
     ShowPage("#PAGE14");
     DisableMission(0x48);
@@ -394,7 +394,7 @@ uVar1 = Trigg(1);
     AddResource(0,3,20000);
   }
   uVar1 = Trigg(0xe);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_100304b8), iVar3 == 0)) {
+  if (((uVar1 & 0xff) != 0) && (iVar3 = GetTotalAmount0(&DAT_100304b8), iVar3 == 0)) {
     SetTrigg(0xe,0);
     ShowPage("#PAGE14A");
     DisableMission(0x48);

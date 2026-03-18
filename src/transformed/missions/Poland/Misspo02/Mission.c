@@ -189,7 +189,7 @@ uVar1 = Trigg(99);
     DoNotUseSelInAI(5);
   }
   uVar1 = Trigg(0x62);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_100313f0), iVar3 == 0)) {
+  if (((uVar1 & 0xff) != 0) && (iVar3 = GetTotalAmount0(&DAT_100313f0), iVar3 == 0)) {
     SetTrigg(0x62,0);
     iVar3 = GetResource(0,3);
     if (iVar3 < 1) {
@@ -221,7 +221,7 @@ uVar1 = Trigg(99);
   uVar1 = Trigg(1);
   if ((uVar1 & 0xff) != 0) {
     iVar3 = GetUnitsAmount0(&DAT_10031440,0);
-    if ((0 < iVar3) && (GetTotalAmount0(&DAT_100313f8), 0 < iVar3)) {
+    if ((0 < iVar3) && (iVar3 = GetTotalAmount0(&DAT_100313f8), 0 < iVar3)) {
       SetTrigg(1,0);
       ShowPage("#PAGE1");
       SelectUnits(&DAT_100313f8,0);
@@ -339,7 +339,7 @@ uVar1 = Trigg(99);
     }
   }
   uVar1 = Trigg(3);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_10031418), 0 < iVar3)) {
+  if (((uVar1 & 0xff) != 0) && (iVar3 = GetTotalAmount0(&DAT_10031418), 0 < iVar3)) {
     iVar3 = GetUnitsAmount1(&DAT_10031460,&DAT_10031420);
     if (0 < iVar3) {
       SetTrigg(3,0);
@@ -349,7 +349,7 @@ uVar1 = Trigg(99);
     }
   }
   uVar1 = Trigg(3);
-  if (((uVar1 & 0xff) == 0) && (GetTotalAmount0(&DAT_10031418), 0 < iVar3)) {
+  if (((uVar1 & 0xff) == 0) && (iVar3 = GetTotalAmount0(&DAT_10031418), 0 < iVar3)) {
     SelectUnits(&DAT_10031420,0);
     SelAttackGroup(5,&DAT_10031418);
   }
@@ -366,7 +366,7 @@ uVar1 = Trigg(99);
     SelDie(5);
   }
   uVar1 = Trigg(0x31);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_10031418), iVar3 == 0)) {
+  if (((uVar1 & 0xff) != 0) && (iVar3 = GetTotalAmount0(&DAT_10031418), iVar3 == 0)) {
     SetTrigg(0x31,0);
     SelectUnits(&DAT_10031420,0);
     SelSendAndKill(5,&DAT_10031470,0,0);
@@ -390,8 +390,8 @@ uVar1 = Trigg(99);
     SelDie(5);
   }
   uVar1 = Trigg(0x22);
-  if ((((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_100314a8), iVar3 == 0)) &&
-     (GetTotalAmount0(&DAT_10031428), iVar3 == 0)) {
+  if ((((uVar1 & 0xff) != 0) && (iVar3 = GetTotalAmount0(&DAT_100314a8), iVar3 == 0)) &&
+     (iVar3 = GetTotalAmount0(&DAT_10031428), iVar3 == 0)) {
     SetTrigg(0x22,0);
     ChangeFriends(5,0x29);
     ClearLightSpot(1);
@@ -654,7 +654,7 @@ uVar1 = Trigg(99);
   uVar1 = Trigg(8);
   if ((uVar1 & 0xff) != 0) {
     iVar3 = GetUnitsAmount1(&DAT_10031448,&DAT_100313f0);
-    if ((0 < iVar3) && (GetTotalAmount0(&DAT_10031400), 0 < iVar3)) {
+    if ((0 < iVar3) && (iVar3 = GetTotalAmount0(&DAT_10031400), 0 < iVar3)) {
       uVar1 = Trigg(0x34);
       if ((uVar1 & 0xff) != 0) {
         SetTrigg(0x34,0);

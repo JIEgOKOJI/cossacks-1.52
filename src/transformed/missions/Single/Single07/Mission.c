@@ -487,7 +487,7 @@ uVar1 = Trigg(100);
   }
   uVar1 = Trigg(0x43);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_100303e0);
+    iVar2 = GetTotalAmount0(&DAT_100303e0);
     if (iVar2 == 0) {
       SetTrigg(0x43,0);
       ShowPage("#PAGE13");

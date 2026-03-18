@@ -255,11 +255,11 @@ void ProcessScenary(void)
   if (2 < iVar1) {
     FUN_100010d3(0,0x1001ba30);
   }
-  GetTotalAmount0(&DAT_1001d4d8);
+  iVar1 = GetTotalAmount0(&DAT_1001d4d8);
   if (iVar1 < 0x14) {
     FUN_100010d3(1,0x1001ba38);
   }
-  GetTotalAmount0(&DAT_1001d4e0);
+  iVar1 = GetTotalAmount0(&DAT_1001d4e0);
   if (iVar1 < 0x14) {
     FUN_100010d3(0,0x1001ba30);
   }

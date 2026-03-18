@@ -278,7 +278,7 @@ uVar1 = Trigg(100);
   if ((uVar1 & 0xff) != 0) {
     uVar1 = Trigg(0x58);
     if ((uVar1 & 0xff) == 0) {
-      GetTotalAmount0(&DAT_100304e0);
+      iVar2 = GetTotalAmount0(&DAT_100304e0);
       if (iVar2 == 0) {
         SetTrigg(0x57,0);
         SelectUnits1(4,&DAT_100304c8,0);
@@ -314,7 +314,7 @@ uVar1 = Trigg(100);
   }
   uVar1 = Trigg(0x68);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_100304d0);
+    iVar2 = GetTotalAmount0(&DAT_100304d0);
     if (iVar2 == 0) {
       SetTrigg(0x68,0);
       DisableMission(0x45);
@@ -327,7 +327,7 @@ uVar1 = Trigg(100);
   if ((uVar1 & 0xff) != 0) {
     uVar1 = Trigg(0x56);
     if ((uVar1 & 0xff) == 0) {
-      GetTotalAmount1(&DAT_10030488,4);
+      iVar2 = GetTotalAmount1(&DAT_10030488,4);
       if (iVar2 == 0) {
         iVar2 = GetAmountOfWarriors(4);
         if (iVar2 == 0) {
@@ -412,7 +412,7 @@ LAB_10002b87:
   }
   uVar1 = Trigg(0x66);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount1(&DAT_10030470,0);
+    iVar2 = GetTotalAmount1(&DAT_10030470,0);
     if (iVar2 == 0) {
       iVar2 = GetAmountOfWarriors(0);
       if (iVar2 == 0) {
@@ -424,11 +424,11 @@ LAB_10002b87:
   }
   uVar1 = Trigg(0x67);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount1(&DAT_10030470,1);
+    iVar2 = GetTotalAmount1(&DAT_10030470,1);
     if (iVar2 == 0) {
       iVar2 = GetAmountOfWarriors(1);
       if (iVar2 == 0) {
-        GetTotalAmount1(&DAT_10030470,4);
+        iVar2 = GetTotalAmount1(&DAT_10030470,4);
         if (iVar2 == 0) {
           iVar2 = GetAmountOfWarriors(4);
           if (iVar2 == 0) {

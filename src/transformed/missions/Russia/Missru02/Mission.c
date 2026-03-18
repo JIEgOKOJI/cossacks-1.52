@@ -220,12 +220,12 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(4);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_10031430);
+    iVar3 = GetTotalAmount0(&DAT_10031430);
     if (iVar3 == 0) {
-      GetTotalAmount0(&DAT_10031448);
+      iVar3 = GetTotalAmount0(&DAT_10031448);
       if (iVar3 == 0) {
-        GetTotalAmount1(&DAT_100314c0,4);
-        GetTotalAmount1(&DAT_100314c0,0);
+        iVar3 = GetTotalAmount1(&DAT_100314c0,4);
+        iVar2 = GetTotalAmount1(&DAT_100314c0,0);
         if (1 < iVar3 + iVar2) {
           SetTrigg(4,0);
           uVar1 = AskQuestion("#PAGE4");
@@ -249,7 +249,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) != 0) {
     iVar3 = GetUnitsAmount1(&DAT_10031500,&DAT_10031410);
     if (0 < iVar3) {
-      GetTotalAmount0(&DAT_10031540);
+      iVar3 = GetTotalAmount0(&DAT_10031540);
       if (0 < iVar3) {
         SetTrigg(5,0);
         ShowPage("#PAGE5");
@@ -345,7 +345,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(0xc);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_10031410);
+    iVar3 = GetTotalAmount0(&DAT_10031410);
     if (iVar3 == 0) {
       SetTrigg(0xc,0);
       iVar3 = GetResource(0,3);
@@ -360,7 +360,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(0xd);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_100315d0);
+    iVar3 = GetTotalAmount0(&DAT_100315d0);
     if (iVar3 == 0) {
       SetTrigg(0xd,0);
       ShowPage("#PAGE13");
@@ -370,7 +370,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(0x32);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_10031578);
+    iVar3 = GetTotalAmount0(&DAT_10031578);
     if (iVar3 == 0) {
       SetTrigg(0x32,0);
       SelectUnits(&DAT_10031400,0);
@@ -379,7 +379,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(0xe);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_10031400);
+    iVar3 = GetTotalAmount0(&DAT_10031400);
     if (iVar3 == 0) {
       SetTrigg(0xe,0);
       ShowPage("#PAGE14");
@@ -450,10 +450,10 @@ LAB_100028de:
   }
   uVar1 = Trigg(0x21);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_10031420);
+    iVar3 = GetTotalAmount0(&DAT_10031420);
     if (iVar3 == 0) {
-      GetTotalAmount1(&DAT_100314c0,4);
-      GetTotalAmount1(&DAT_100314c0,0);
+      iVar3 = GetTotalAmount1(&DAT_100314c0,4);
+      iVar2 = GetTotalAmount1(&DAT_100314c0,0);
       if (iVar3 + iVar2 < 2) {
         SetTrigg(0x21,0);
         ClearSelection(1);
@@ -490,7 +490,7 @@ LAB_100028de:
   }
   uVar1 = TimerDone(10);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_10031530);
+    iVar3 = GetTotalAmount0(&DAT_10031530);
     if (0 < iVar3) {
       SelectUnits(&DAT_10031530,0);
       SelSendAndKill(1,&DAT_100314f0,0,0);
@@ -517,7 +517,7 @@ LAB_100028de:
   }
   uVar1 = TimerDone(0xb);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_10031598);
+    iVar3 = GetTotalAmount0(&DAT_10031598);
     if (0 < iVar3) {
       SelectUnits(&DAT_10031598,0);
       SelSendAndKill(1,&DAT_100314f0,0,0);

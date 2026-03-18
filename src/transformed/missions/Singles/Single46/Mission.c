@@ -1392,7 +1392,7 @@ LAB_100062d1:
     }
   }
   uVar2 = Trigg(0x62);
-  if (((uVar2 & 0xff) != 0) && (GetTotalAmount0(&DAT_10037458), iVar4 == 0)) {
+  if (((uVar2 & 0xff) != 0) && (iVar4 = GetTotalAmount0(&DAT_10037458), iVar4 == 0)) {
     uVar2 = Trigg(2);
     if ((uVar2 & 0xff) != 0) {
       SetTrigg(0x62,0);

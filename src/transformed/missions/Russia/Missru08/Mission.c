@@ -73,13 +73,13 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(2);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount1(&DAT_1002e3f8,1);
+    iVar2 = GetTotalAmount1(&DAT_1002e3f8,1);
     if (iVar2 == 0) {
-      GetTotalAmount1(&DAT_1002e400,1);
+      iVar2 = GetTotalAmount1(&DAT_1002e400,1);
       if (iVar2 == 0) {
-        GetTotalAmount1(&DAT_1002e420,1);
+        iVar2 = GetTotalAmount1(&DAT_1002e420,1);
         if (iVar2 == 0) {
-          GetTotalAmount1(&DAT_1002e418,1);
+          iVar2 = GetTotalAmount1(&DAT_1002e418,1);
           if (iVar2 == 0) {
             SetTrigg(2,0);
             ShowPage("#PAGE2");
@@ -91,13 +91,13 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(3);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount1(&DAT_1002e3f8,0);
+    iVar2 = GetTotalAmount1(&DAT_1002e3f8,0);
     if (iVar2 == 0) {
-      GetTotalAmount1(&DAT_1002e400,0);
+      iVar2 = GetTotalAmount1(&DAT_1002e400,0);
       if (iVar2 == 0) {
-        GetTotalAmount1(&DAT_1002e420,0);
+        iVar2 = GetTotalAmount1(&DAT_1002e420,0);
         if (iVar2 == 0) {
-          GetTotalAmount1(&DAT_1002e418,0);
+          iVar2 = GetTotalAmount1(&DAT_1002e418,0);
           if (iVar2 == 0) {
             SetTrigg(3,0);
             ShowPage("#PAGE3");
@@ -111,7 +111,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) != 0) {
     iVar2 = GetGlobalTime();
     if (20000 < iVar2) {
-      GetTotalAmount0(&DAT_1002e3f0);
+      iVar2 = GetTotalAmount0(&DAT_1002e3f0);
       if (0 < iVar2) {
         SetTrigg(0x32,0);
         SelectUnits(&DAT_1002e3f0,0);
@@ -128,7 +128,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(4);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_1002e3e8);
+    iVar2 = GetTotalAmount0(&DAT_1002e3e8);
     if (0 < iVar2) {
       iVar2 = GetUnitsAmount0(&DAT_1002e410,0);
       if (0 < iVar2) {
@@ -139,7 +139,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(4);
   if ((uVar1 & 0xff) == 0) {
-    GetTotalAmount0(&DAT_1002e3e8);
+    iVar2 = GetTotalAmount0(&DAT_1002e3e8);
     if (0 < iVar2) {
       iVar2 = GetUnitsAmount0(&DAT_1002e410,0);
       if (0 < iVar2) {

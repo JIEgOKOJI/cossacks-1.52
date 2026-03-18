@@ -194,7 +194,7 @@ uVar1 = Trigg(0xff);
       FUN_100010c0();
     }
     uVar1 = Trigg(0xf);
-    if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_1002e410), iVar2 < 0x14)) {
+    if (((uVar1 & 0xff) != 0) && (iVar2 = GetTotalAmount0(&DAT_1002e410), iVar2 < 0x14)) {
       SetTrigg(0xf,0);
       iVar2 = GetMyNation();
       if (iVar2 == 1) {
@@ -202,28 +202,28 @@ uVar1 = Trigg(0xff);
       }
     }
     uVar1 = Trigg(0x10);
-    if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_1002e418), iVar2 < 0x14)) {
+    if (((uVar1 & 0xff) != 0) && (iVar2 = GetTotalAmount0(&DAT_1002e418), iVar2 < 0x14)) {
       SetTrigg(0x10,0);
       iVar2 = GetMyNation();
       if (iVar2 == 0) {
         ShowCentralText("TEXT8",100);
       }
     }
-    GetTotalAmount0(&DAT_1002e410);
+    iVar2 = GetTotalAmount0(&DAT_1002e410);
     if (iVar2 == 0) {
       FUN_10001140();
     }
-    GetTotalAmount0(&DAT_1002e418);
+    iVar2 = GetTotalAmount0(&DAT_1002e418);
     if (iVar2 == 0) {
       FUN_100010c0();
     }
     uVar1 = Trigg(0xb);
-    if (((uVar1 & 0xff) != 0) && (GetTotalAmount1(&DAT_1002e420,0), iVar2 == 0)) {
+    if (((uVar1 & 0xff) != 0) && (iVar2 = GetTotalAmount1(&DAT_1002e420,0), iVar2 == 0)) {
       SetTrigg(0xb,0);
       FUN_100011c0();
     }
     uVar1 = Trigg(0xc);
-    if (((uVar1 & 0xff) != 0) && (GetTotalAmount1(&DAT_1002e420,1), iVar2 == 0)) {
+    if (((uVar1 & 0xff) != 0) && (iVar2 = GetTotalAmount1(&DAT_1002e420,1), iVar2 == 0)) {
       SetTrigg(0xc,0);
       FUN_10001230();
     }

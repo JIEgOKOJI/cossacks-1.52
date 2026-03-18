@@ -204,7 +204,7 @@ uVar1 = Trigg(99);
   }
   uVar1 = Trigg(1);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_100303e8);
+    iVar2 = GetTotalAmount0(&DAT_100303e8);
     if (0 < iVar2) {
       SetTrigg(1,0);
       SelectUnits1(1,&DAT_100303e8,0);
@@ -220,9 +220,9 @@ uVar1 = Trigg(99);
   }
   uVar1 = Trigg(2);
   if ((uVar1 & 0xff) == 0) {
-    GetTotalAmount0(&DAT_100303e8);
+    iVar2 = GetTotalAmount0(&DAT_100303e8);
     if (iVar2 < 1) goto LAB_10001c59;
-    GetTotalAmount0(&DAT_10030478);
+    iVar2 = GetTotalAmount0(&DAT_10030478);
     if (iVar2 < 1) goto LAB_10001c59;
     SelectUnits(&DAT_100303e8,0);
     SelAttackGroup(1,&DAT_10030478);
@@ -231,9 +231,9 @@ uVar1 = Trigg(99);
 LAB_10001c59:
     uVar1 = Trigg(2);
     if ((uVar1 & 0xff) == 0) {
-      GetTotalAmount0(&DAT_100303e8);
+      iVar2 = GetTotalAmount0(&DAT_100303e8);
       if (0 < iVar2) {
-        GetTotalAmount0(&DAT_10030488);
+        iVar2 = GetTotalAmount0(&DAT_10030488);
         if (0 < iVar2) {
           SelectUnits(&DAT_100303e8,0);
           SelAttackGroup(1,&DAT_10030488);
@@ -243,11 +243,11 @@ LAB_10001c59:
   }
   uVar1 = Trigg(3);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_100303e8);
+    iVar2 = GetTotalAmount0(&DAT_100303e8);
     if (0 < iVar2) {
-      GetTotalAmount0(&DAT_10030478);
+      iVar2 = GetTotalAmount0(&DAT_10030478);
       if (iVar2 == 0) {
-        GetTotalAmount0(&DAT_10030488);
+        iVar2 = GetTotalAmount0(&DAT_10030488);
         if (iVar2 == 0) {
           SetTrigg(3,0);
           SelectUnits1(1,&DAT_100303e8,0);
@@ -268,9 +268,9 @@ LAB_10001c59:
   }
   uVar1 = Trigg(4);
   if ((uVar1 & 0xff) == 0) {
-    GetTotalAmount0(&DAT_100303e8);
+    iVar2 = GetTotalAmount0(&DAT_100303e8);
     if (0 < iVar2) {
-      GetTotalAmount0(&DAT_100303f8);
+      iVar2 = GetTotalAmount0(&DAT_100303f8);
       if (0 < iVar2) {
         SelectUnits(&DAT_100303e8,0);
         SelAttackGroup(1,&DAT_100303f8);
@@ -279,7 +279,7 @@ LAB_10001c59:
   }
   uVar1 = Trigg(5);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_100303f0);
+    iVar2 = GetTotalAmount0(&DAT_100303f0);
     if (0 < iVar2) {
       SetTrigg(5,0);
       SelectUnits1(1,&DAT_100303f0,0);
@@ -295,9 +295,9 @@ LAB_10001c59:
   }
   uVar1 = Trigg(6);
   if ((uVar1 & 0xff) == 0) {
-    GetTotalAmount0(&DAT_100303f0);
+    iVar2 = GetTotalAmount0(&DAT_100303f0);
     if (iVar2 < 1) goto LAB_10001f8f;
-    GetTotalAmount0(&DAT_100304b0);
+    iVar2 = GetTotalAmount0(&DAT_100304b0);
     if (iVar2 < 1) goto LAB_10001f8f;
     SelectUnits(&DAT_100303f0,0);
     SelAttackGroup(1,&DAT_100304b0);
@@ -306,9 +306,9 @@ LAB_10001c59:
 LAB_10001f8f:
     uVar1 = Trigg(6);
     if ((uVar1 & 0xff) == 0) {
-      GetTotalAmount0(&DAT_100303f0);
+      iVar2 = GetTotalAmount0(&DAT_100303f0);
       if (0 < iVar2) {
-        GetTotalAmount0(&DAT_100304c0);
+        iVar2 = GetTotalAmount0(&DAT_100304c0);
         if (0 < iVar2) {
           SelectUnits(&DAT_100303f0,0);
           SelAttackGroup(1,&DAT_100304c0);
@@ -318,11 +318,11 @@ LAB_10001f8f:
   }
   uVar1 = Trigg(7);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_100303f0);
+    iVar2 = GetTotalAmount0(&DAT_100303f0);
     if (0 < iVar2) {
-      GetTotalAmount0(&DAT_100304b0);
+      iVar2 = GetTotalAmount0(&DAT_100304b0);
       if (iVar2 == 0) {
-        GetTotalAmount0(&DAT_100304c0);
+        iVar2 = GetTotalAmount0(&DAT_100304c0);
         if (iVar2 == 0) {
           SetTrigg(7,0);
           SelectUnits1(1,&DAT_100303f0,0);
@@ -343,9 +343,9 @@ LAB_10001f8f:
   }
   uVar1 = Trigg(8);
   if ((uVar1 & 0xff) == 0) {
-    GetTotalAmount0(&DAT_100303f0);
+    iVar2 = GetTotalAmount0(&DAT_100303f0);
     if (0 < iVar2) {
-      GetTotalAmount0(&DAT_100303f8);
+      iVar2 = GetTotalAmount0(&DAT_100303f8);
       if (0 < iVar2) {
         SelectUnits(&DAT_100303f0,0);
         SelAttackGroup(1,&DAT_100303f8);
@@ -354,7 +354,7 @@ LAB_10001f8f:
   }
   uVar1 = TimerDone(1);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_100303e8);
+    iVar2 = GetTotalAmount0(&DAT_100303e8);
     if (0 < iVar2) {
       CreateZoneNearGroup(&DAT_10030520,&DAT_100304d0,&DAT_100303e8,400);
       iVar2 = GetUnitsAmount1(&DAT_10030520,&DAT_10030468);
@@ -363,7 +363,7 @@ LAB_10001f8f:
         SelSendAndKill(1,&DAT_10030520,0,0);
       }
     }
-    GetTotalAmount0(&DAT_100303f0);
+    iVar2 = GetTotalAmount0(&DAT_100303f0);
     if (0 < iVar2) {
       CreateZoneNearGroup(&DAT_10030528,&DAT_100304d0,&DAT_100303f0,400);
       iVar2 = GetUnitsAmount1(&DAT_10030528,&DAT_100304a0);
@@ -372,7 +372,7 @@ LAB_10001f8f:
         SelSendAndKill(1,&DAT_10030528,0,0);
       }
     }
-    GetTotalAmount0(&DAT_10030408);
+    iVar2 = GetTotalAmount0(&DAT_10030408);
     if (0 < iVar2) {
       CreateZoneNearGroup(&DAT_10030530,&DAT_100304d0,&DAT_10030408,400);
       iVar2 = GetUnitsAmount1(&DAT_10030530,&DAT_100304e8);
@@ -381,7 +381,7 @@ LAB_10001f8f:
         SelSendAndKill(1,&DAT_10030530,0,0);
       }
     }
-    GetTotalAmount0(&DAT_10030410);
+    iVar2 = GetTotalAmount0(&DAT_10030410);
     if (0 < iVar2) {
       CreateZoneNearGroup(&DAT_10030538,&DAT_100304d0,&DAT_10030410,400);
       iVar2 = GetUnitsAmount1(&DAT_10030538,&DAT_100304f0);
@@ -394,7 +394,7 @@ LAB_10001f8f:
   }
   uVar1 = Trigg(9);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_100303f8);
+    iVar2 = GetTotalAmount0(&DAT_100303f8);
     if (iVar2 == 0) {
       SetTrigg(9,0);
       SaveSelectedUnits(0,&DAT_10030428,0);
@@ -407,9 +407,9 @@ LAB_10001f8f:
       SelSendAndKill(1,&DAT_10030460,0,0);
     }
   }
-  GetTotalAmount0(&DAT_10030400);
+  iVar2 = GetTotalAmount0(&DAT_10030400);
   if (0 < iVar2) {
-    GetTotalAmount0(&DAT_100304e0);
+    iVar2 = GetTotalAmount0(&DAT_100304e0);
     if (0 < iVar2) {
       SelectUnits(&DAT_10030400,0);
       SelAttackGroup(1,&DAT_100304e0);
@@ -425,9 +425,9 @@ LAB_100025b4:
       SelSendAndKill(1,&DAT_10030490,0,0);
     }
     else {
-      GetTotalAmount0(&DAT_10030478);
+      iVar2 = GetTotalAmount0(&DAT_10030478);
       if (iVar2 == 0) {
-        GetTotalAmount0(&DAT_10030488);
+        iVar2 = GetTotalAmount0(&DAT_10030488);
         if (iVar2 == 0) goto LAB_100025b4;
       }
     }
@@ -441,7 +441,7 @@ LAB_100025b4:
   }
   uVar1 = Trigg(0xb);
   if ((uVar1 & 0xff) == 0) {
-    GetTotalAmount0(&DAT_100303f8);
+    iVar2 = GetTotalAmount0(&DAT_100303f8);
     if (0 < iVar2) {
       iVar2 = GetUnitsByNation(&DAT_10030408,1);
       if (0 < iVar2) {
@@ -454,9 +454,9 @@ LAB_100025b4:
   if ((uVar1 & 0xff) == 0) goto LAB_1000277c;
   iVar2 = GetUnitsByNation(&DAT_100303f0,1);
   if (iVar2 != 0) {
-    GetTotalAmount0(&DAT_100304b0);
+    iVar2 = GetTotalAmount0(&DAT_100304b0);
     if (iVar2 != 0) goto LAB_1000277c;
-    GetTotalAmount0(&DAT_100304c0);
+    iVar2 = GetTotalAmount0(&DAT_100304c0);
     if (iVar2 != 0) goto LAB_1000277c;
   }
   SetTrigg(0xc,0);
@@ -472,7 +472,7 @@ LAB_1000277c:
   }
   uVar1 = Trigg(0xd);
   if ((uVar1 & 0xff) == 0) {
-    GetTotalAmount0(&DAT_100303f8);
+    iVar2 = GetTotalAmount0(&DAT_100303f8);
     if (0 < iVar2) {
       iVar2 = GetUnitsByNation(&DAT_10030410,1);
       if (0 < iVar2) {
@@ -497,7 +497,7 @@ LAB_1000277c:
   }
   uVar1 = Trigg(0xe);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_100303e0);
+    iVar2 = GetTotalAmount0(&DAT_100303e0);
     if (iVar2 == 0) {
       SetTrigg(0xe,0);
       ShowPage("#PAGE2");
@@ -508,10 +508,10 @@ LAB_1000277c:
   if ((uVar1 & 0xff) != 0) {
     iVar2 = GetUnitsByNation(&DAT_10030438,1);
     if (iVar2 == 0) {
-      GetTotalAmount0(&DAT_10030448);
+      iVar2 = GetTotalAmount0(&DAT_10030448);
       if (iVar2 == 0) {
         SetTrigg(0xf,0);
-        GetTotalAmount0(&DAT_10030420);
+        iVar2 = GetTotalAmount0(&DAT_10030420);
         if (iVar2 == 0x7f) {
           ShowPage("#PAGE3");
           ShowVictory();
@@ -526,7 +526,7 @@ LAB_1000277c:
   }
   uVar1 = Trigg(0x10);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_10030440);
+    iVar2 = GetTotalAmount0(&DAT_10030440);
     if (iVar2 < 0x14) {
       SetTrigg(0x10,0);
       ShowPage("#PAGE5");
@@ -545,9 +545,9 @@ LAB_1000277c:
   }
   uVar1 = Trigg(0x11);
   if ((uVar1 & 0xff) == 0) {
-    GetTotalAmount0(&DAT_10030500);
+    iVar2 = GetTotalAmount0(&DAT_10030500);
     if (0 < iVar2) {
-      GetTotalAmount0(&DAT_10030448);
+      iVar2 = GetTotalAmount0(&DAT_10030448);
       if (0 < iVar2) {
         SelectUnits(&DAT_10030448,0);
         SelAttackGroup(1,&DAT_10030500);
@@ -556,16 +556,16 @@ LAB_1000277c:
   }
   uVar1 = Trigg(0x12);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_10030500);
+    iVar2 = GetTotalAmount0(&DAT_10030500);
     if (iVar2 == 0) {
       SetTrigg(0x12,0);
     }
   }
   uVar1 = Trigg(0x12);
   if ((uVar1 & 0xff) == 0) {
-    GetTotalAmount0(&DAT_10030450);
+    iVar2 = GetTotalAmount0(&DAT_10030450);
     if (0 < iVar2) {
-      GetTotalAmount0(&DAT_10030448);
+      iVar2 = GetTotalAmount0(&DAT_10030448);
       if (0 < iVar2) {
         SelectUnits(&DAT_10030448,0);
         SelAttackGroup(1,&DAT_10030450);
@@ -574,7 +574,7 @@ LAB_1000277c:
   }
   uVar1 = Trigg(0x13);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_10030450);
+    iVar2 = GetTotalAmount0(&DAT_10030450);
     if (iVar2 == 0) {
       SetTrigg(0x13,0);
       SelectUnits(&DAT_10030448,0);
@@ -593,9 +593,9 @@ LAB_1000277c:
   }
   uVar1 = Trigg(0x14);
   if ((uVar1 & 0xff) == 0) {
-    GetTotalAmount0(&DAT_10030508);
+    iVar2 = GetTotalAmount0(&DAT_10030508);
     if (0 < iVar2) {
-      GetTotalAmount0(&DAT_10030448);
+      iVar2 = GetTotalAmount0(&DAT_10030448);
       if (0 < iVar2) {
         SelectUnits(&DAT_10030448,0);
         SelAttackGroup(1,&DAT_10030508);
@@ -604,7 +604,7 @@ LAB_1000277c:
   }
   uVar1 = Trigg(0x15);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_10030508);
+    iVar2 = GetTotalAmount0(&DAT_10030508);
     if (iVar2 == 0) {
       SetTrigg(0x15,0);
       SelectUnits(&DAT_10030448,0);
@@ -623,9 +623,9 @@ LAB_1000277c:
   }
   uVar1 = Trigg(0x16);
   if ((uVar1 & 0xff) == 0) {
-    GetTotalAmount0(&DAT_10030510);
+    iVar2 = GetTotalAmount0(&DAT_10030510);
     if (0 < iVar2) {
-      GetTotalAmount0(&DAT_10030448);
+      iVar2 = GetTotalAmount0(&DAT_10030448);
       if (0 < iVar2) {
         SelectUnits(&DAT_10030448,0);
         SelAttackGroup(1,&DAT_10030510);
@@ -634,7 +634,7 @@ LAB_1000277c:
   }
   uVar1 = Trigg(0x17);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_10030510);
+    iVar2 = GetTotalAmount0(&DAT_10030510);
     if (iVar2 == 0) {
       SetTrigg(0x17,0);
       SelectUnits(&DAT_10030448,0);
@@ -653,9 +653,9 @@ LAB_1000277c:
   }
   uVar1 = Trigg(0x18);
   if ((uVar1 & 0xff) == 0) {
-    GetTotalAmount0(&DAT_10030518);
+    iVar2 = GetTotalAmount0(&DAT_10030518);
     if (0 < iVar2) {
-      GetTotalAmount0(&DAT_10030448);
+      iVar2 = GetTotalAmount0(&DAT_10030448);
       if (0 < iVar2) {
         SelectUnits(&DAT_10030448,0);
         SelAttackGroup(1,&DAT_10030518);

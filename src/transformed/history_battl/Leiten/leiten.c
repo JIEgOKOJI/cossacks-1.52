@@ -110,7 +110,7 @@ uVar1 = Trigg(10);
   }
   uVar1 = Trigg(0xf);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_1002e410);
+    iVar2 = GetTotalAmount0(&DAT_1002e410);
     if (iVar2 < 0x14) {
       SetTrigg(0xf,0);
       iVar2 = GetMyNation();
@@ -121,7 +121,7 @@ uVar1 = Trigg(10);
   }
   uVar1 = Trigg(0x10);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_1002e418);
+    iVar2 = GetTotalAmount0(&DAT_1002e418);
     if (iVar2 < 0x14) {
       SetTrigg(0x10,0);
       iVar2 = GetMyNation();
@@ -130,11 +130,11 @@ uVar1 = Trigg(10);
       }
     }
   }
-  GetTotalAmount0(&DAT_1002e410);
+  iVar2 = GetTotalAmount0(&DAT_1002e410);
   if (iVar2 == 0) {
     FUN_10001130();
   }
-  GetTotalAmount0(&DAT_1002e418);
+  iVar2 = GetTotalAmount0(&DAT_1002e418);
   if (iVar2 == 0) {
     FUN_100010b0();
   }

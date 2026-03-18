@@ -316,7 +316,7 @@ void FUN_10001960(void)
   int local_48 [16];
   int local_8;
 local_8 = 0;
-  while ((local_8 < 3 && (GetTotalAmount0(((unsigned char *)&DAT_1001f448) + local_8 * 8), iVar1 < 1))) {
+  while ((local_8 < 3 && (iVar1 = GetTotalAmount0(((unsigned char *)&DAT_1001f448) + local_8 * 8), iVar1 < 1))) {
     local_8 = local_8 + 1;
   }
   return;
@@ -482,7 +482,7 @@ LAB_10002294:
       }
       uVar1 = Trigg(0x14);
       if ((uVar1 & 0xff) != 0) {
-        GetTotalAmount0(&DAT_1001f420);
+        iVar2 = GetTotalAmount0(&DAT_1001f420);
         if (iVar2 < 0x32) {
           SetTrigg(0x14,0);
           iVar2 = GetMyNation();
@@ -519,11 +519,11 @@ LAB_10002294:
           FUN_10001110(0,0x1001da30);
         }
       }
-      GetTotalAmount0(&DAT_1001f4a8);
+      iVar2 = GetTotalAmount0(&DAT_1001f4a8);
       if (iVar2 < 0x14) {
         FUN_10001110(0,0x1001da30);
       }
-      GetTotalAmount0(&DAT_1001f4a0);
+      iVar2 = GetTotalAmount0(&DAT_1001f4a0);
       if (iVar2 < 0x14) {
         FUN_10001110(1,0x1001da38);
       }

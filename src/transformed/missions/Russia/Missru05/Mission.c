@@ -234,7 +234,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(2);
   if ((uVar1 & 0xff) == 0) {
-    GetTotalAmount1(&DAT_10030428,1);
+    iVar2 = GetTotalAmount1(&DAT_10030428,1);
     if (0 < iVar2) {
       uVar1 = Trigg(0x1e);
       if ((uVar1 & 0xff) != 0) {
@@ -262,9 +262,9 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) == 0) {
     uVar1 = Trigg(0x1e);
     if ((uVar1 & 0xff) != 0) {
-      GetTotalAmount0(&DAT_10030440);
+      iVar2 = GetTotalAmount0(&DAT_10030440);
       if (iVar2 == 0) {
-        GetTotalAmount0(&DAT_10030448);
+        iVar2 = GetTotalAmount0(&DAT_10030448);
         if (0 < iVar2) {
           SelectUnits(&DAT_10030458,0);
           SelAttackGroup(1,&DAT_10030448);
@@ -348,7 +348,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(0xc);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_10030430);
+    iVar2 = GetTotalAmount0(&DAT_10030430);
     if (iVar2 < 1) {
       SetTrigg(0xc,0);
       iVar2 = GetResource(0,3);
@@ -363,7 +363,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(0xc);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_10030438);
+    iVar2 = GetTotalAmount0(&DAT_10030438);
     if (iVar2 < 6) {
       SetTrigg(0xc,0);
       ShowPage("#PAGE6");

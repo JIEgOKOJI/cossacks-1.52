@@ -773,44 +773,15 @@ if __name__ == '__main__':
     # Remove any remaining __chkesp() calls
     raw_code = re.sub(r'\b__chkesp\s*\(\)', '0', raw_code)
 
-    # Fix void function return value assignments: var = void_FUN_xxx(...) → void_FUN_xxx(...)
-    for vfn in helper_names_void:
-        # Remove "var = " (optionally with cast) before void function calls
-        raw_code = re.sub(r'\b\w+\s*=\s*(?:\([^)]*\)\s*)*(' + re.escape(vfn) + r'\b)',
-                          r'\1', raw_code)
-
-    # Fix void API function return value assignments
-    VOID_API_FUNCS = [
-        'AddResource', 'AllowAttack', 'AssignNation',
-        'AttackBuildingsInZone', 'AttackEnemyInZone', 'AttackZoneByArtillery',
-        'ChangeFriends', 'ChangeUnitParam', 'ClearLightSpot', 'ClearSelection',
-        'DisableMission', 'DisableUpgrade', 'DoMessagesBrief', 'DoNotUseSelInAI',
-        'EnableMission', 'EnableUnit', 'EnableUpgrade', 'FreeTimer', 'HINT',
-        'InitialUpgrade', 'LooseGame', 'PastePiece',
-        'ProduceOneUnit', 'ProduceUnit', 'ProduceUnitFast',
-        'PushAllUnitsAway', 'PushUnitAway', 'RefreshScreen',
-        'RegisterDynGroup', 'RegisterVar', 'RegisterVisibleZone', 'RegisterZone',
-        'RemoveGroup', 'RemoveUnitFromGroup', 'RepairBuildingsBySel',
-        'RunAI', 'RunTimer', 'SaveSelectedUnits',
-        'SelAttackGroup', 'SelAutoKill', 'SelChangeNation', 'SelErase',
-        'SelectBuildingsInZone', 'SelectTypeOfUnitsInZone',
-        'SelectUnits', 'SelectUnits1', 'SelectUnitsInZone', 'SelectUnitsType',
-        'SendUnitsToTransport', 'SetAIProperty', 'SetDestPoint',
-        'SetLightSpot', 'SetLooseText', 'SetPlayerName', 'SetReadyState',
-        'SetResource', 'SetStandGround', 'SetStandartVictory',
-        'SetStartPoint', 'SetTrigg', 'SetTutorial', 'SetUnitInfo',
-        'SetVictoryText', 'SetWTrigg',
-        'ShowAlarm', 'ShowCentralText', 'ShowPage', 'ShowPageParam', 'ShowVictory',
-        'StartAI', 'TakeFood', 'TakeStone', 'TakeWood',
-    ]
-    for vfn in VOID_API_FUNCS:
-        raw_code = re.sub(r'\b\w+\s*=\s*(' + re.escape(vfn) + r'\b)',
-                          r'\1', raw_code)
-
-    # Remove Ghidra stack-fill boilerplate
+    # Remove Ghidra stack-fill boilerplate (needed before wrapper detection)
     raw_code = remove_stack_fill(raw_code)
 
-    # Inline simple API wrapper functions.
+    # Inline simple API wrapper functions BEFORE void-assignment stripping.
+    # This ensures that void wrappers calling non-void APIs (e.g. void FUN_xxx
+    # wrapping GetTotalAmount0) are inlined first, so the assignment
+    # (iVar8 = FUN_xxx(...) → iVar8 = GetTotalAmount0(...)) is preserved.
+    # If void stripping ran first, it would remove iVar8= for the void wrapper,
+    # then inlining would replace the name, leaving GetTotalAmount0() without assignment.
     # Pattern: FUN_xxx(params) { ApiCall(params); return; }
     # These wrappers use `undefined4` / `int` params which truncate 64-bit pointers.
     # By inlining, &DAT_xxx args go directly to properly-typed API functions.
@@ -908,6 +879,41 @@ if __name__ == '__main__':
         raw_code = re.sub(
             r'^(?:void|int|undefined\w*)\s+' + re.escape(api_name) + r'\s*\([^)]*\)\s*;\s*\n',
             '', raw_code, count=1, flags=re.MULTILINE)
+
+    # Fix void function return value assignments: var = void_FUN_xxx(...) → void_FUN_xxx(...)
+    # Runs AFTER wrapper inlining so inlined wrappers (now real API names) won't be affected.
+    for vfn in helper_names_void:
+        # Remove "var = " (optionally with cast) before void function calls
+        raw_code = re.sub(r'\b\w+\s*=\s*(?:\([^)]*\)\s*)*(' + re.escape(vfn) + r'\b)',
+                          r'\1', raw_code)
+
+    # Fix void API function return value assignments
+    VOID_API_FUNCS = [
+        'AddResource', 'AllowAttack', 'AssignNation',
+        'AttackBuildingsInZone', 'AttackEnemyInZone', 'AttackZoneByArtillery',
+        'ChangeFriends', 'ChangeUnitParam', 'ClearLightSpot', 'ClearSelection',
+        'DisableMission', 'DisableUpgrade', 'DoMessagesBrief', 'DoNotUseSelInAI',
+        'EnableMission', 'EnableUnit', 'EnableUpgrade', 'FreeTimer', 'HINT',
+        'InitialUpgrade', 'LooseGame', 'PastePiece',
+        'ProduceOneUnit', 'ProduceUnit', 'ProduceUnitFast',
+        'PushAllUnitsAway', 'PushUnitAway', 'RefreshScreen',
+        'RegisterDynGroup', 'RegisterVar', 'RegisterVisibleZone', 'RegisterZone',
+        'RemoveGroup', 'RemoveUnitFromGroup', 'RepairBuildingsBySel',
+        'RunAI', 'RunTimer', 'SaveSelectedUnits',
+        'SelAttackGroup', 'SelAutoKill', 'SelChangeNation', 'SelErase',
+        'SelectBuildingsInZone', 'SelectTypeOfUnitsInZone',
+        'SelectUnits', 'SelectUnits1', 'SelectUnitsInZone', 'SelectUnitsType',
+        'SendUnitsToTransport', 'SetAIProperty', 'SetDestPoint',
+        'SetLightSpot', 'SetLooseText', 'SetPlayerName', 'SetReadyState',
+        'SetResource', 'SetStandGround', 'SetStandartVictory',
+        'SetStartPoint', 'SetTrigg', 'SetTutorial', 'SetUnitInfo',
+        'SetVictoryText', 'SetWTrigg',
+        'ShowAlarm', 'ShowCentralText', 'ShowPage', 'ShowPageParam', 'ShowVictory',
+        'StartAI', 'TakeFood', 'TakeStone', 'TakeWood',
+    ]
+    for vfn in VOID_API_FUNCS:
+        raw_code = re.sub(r'\b\w+\s*=\s*(' + re.escape(vfn) + r'\b)',
+                          r'\1', raw_code)
 
     # Remove 'undefined4' type → replace with 'int'
     raw_code = re.sub(r'\bundefined8\b', 'long long', raw_code)

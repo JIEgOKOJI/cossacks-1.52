@@ -75,7 +75,7 @@ uVar1 = Trigg(100);
   if ((uVar1 & 0xff) != 0) {
     iVar2 = GetAmountOfWarriors(4);
     if (iVar2 == 0) {
-      GetTotalAmount1(&DAT_1002e3e0,4);
+      iVar2 = GetTotalAmount1(&DAT_1002e3e0,4);
       if (iVar2 == 0) {
         SetTrigg(99,0);
         ShowPage("#PAGE2");
@@ -88,7 +88,7 @@ uVar1 = Trigg(100);
   if ((uVar1 & 0xff) != 0) {
     iVar2 = GetAmountOfWarriors(5);
     if (iVar2 == 0) {
-      GetTotalAmount1(&DAT_1002e3e0,5);
+      iVar2 = GetTotalAmount1(&DAT_1002e3e0,5);
       if (iVar2 == 0) {
         SetTrigg(0x62,0);
         ShowPage("#PAGE3");

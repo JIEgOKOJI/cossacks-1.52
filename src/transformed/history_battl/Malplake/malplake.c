@@ -98,7 +98,7 @@ void ProcessScenary(void)
   int uStack_8;
 uVar1 = Trigg(0x15);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_1002e410);
+    iVar2 = GetTotalAmount0(&DAT_1002e410);
     if (iVar2 < 0x173) {
       SetTrigg(0x15,0);
       ShowCentralText("TEXT3",0x96);
@@ -106,7 +106,7 @@ uVar1 = Trigg(0x15);
   }
   uVar1 = Trigg(0x15);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_1002e418);
+    iVar2 = GetTotalAmount0(&DAT_1002e418);
     if (iVar2 < 0x227) {
       SetTrigg(0x15,0);
       ShowCentralText("TEXT4",0x96);
@@ -132,11 +132,11 @@ uVar1 = Trigg(0x15);
   if (40000 < iVar2) {
     FUN_10001130();
   }
-  GetTotalAmount0(&DAT_1002e410);
+  iVar2 = GetTotalAmount0(&DAT_1002e410);
   if (iVar2 < 0xc9) {
     FUN_10001130();
   }
-  GetTotalAmount0(&DAT_1002e418);
+  iVar2 = GetTotalAmount0(&DAT_1002e418);
   if (iVar2 < 0x173) {
     FUN_100010b0();
   }

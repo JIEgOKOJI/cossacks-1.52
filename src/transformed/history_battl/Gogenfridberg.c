@@ -280,11 +280,11 @@ FUN_100016c0(0,1);
   if (2 < iVar1) {
     FUN_10001100(0,0x1001ca30);
   }
-  GetTotalAmount0(&DAT_1001e438);
+  iVar1 = GetTotalAmount0(&DAT_1001e438);
   if (iVar1 < 0x14) {
     FUN_10001100(1,0x1001ca38);
   }
-  GetTotalAmount0(&DAT_1001e440);
+  iVar1 = GetTotalAmount0(&DAT_1001e440);
   if (iVar1 < 0x14) {
     FUN_10001100(0,0x1001ca30);
   }

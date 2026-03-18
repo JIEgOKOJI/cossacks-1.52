@@ -1264,7 +1264,7 @@ LAB_100066e1:
     }
   }
   uVar1 = Trigg(0xf);
-  if (((uVar1 & 0xff) != 0) && (GetTotalAmount0(&DAT_10036458), iVar4 == 0)) {
+  if (((uVar1 & 0xff) != 0) && (iVar4 = GetTotalAmount0(&DAT_10036458), iVar4 == 0)) {
     SetTrigg(0xf,0);
     ShowPage("#PAGE10");
     DisableMission(0x42);

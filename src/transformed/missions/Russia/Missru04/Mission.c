@@ -204,7 +204,7 @@ uVar1 = Trigg(1);
       ShowPage("#PAGE2");
       SelectUnits(&DAT_10030400,0);
       SelSendAndKill(1,&DAT_10030460,0x5a,0);
-      GetTotalAmount0(&DAT_100303f8);
+      iVar3 = GetTotalAmount0(&DAT_100303f8);
       if (10 < iVar3) {
         SelectUnits(&DAT_100304a8,0);
         SelOpenGates(1);
@@ -216,7 +216,7 @@ uVar1 = Trigg(1);
   uVar1 = Trigg(0x14);
   if ((uVar1 & 0xff) != 0) {
     iVar3 = GetUnitsAmount1(&DAT_10030460,&DAT_100303f8);
-    GetTotalAmount0(&DAT_100303f8);
+    iVar2 = GetTotalAmount0(&DAT_100303f8);
     if (iVar3 == iVar2) {
       SetTrigg(0x14,0);
       SelectUnits(&DAT_100304a8,0);
@@ -293,7 +293,7 @@ uVar1 = Trigg(1);
     SelSendAndKill(1,&DAT_10030448,0,0);
   }
   for (DAT_100303e0 = 0; DAT_100303e0 < DAT_100303e4; DAT_100303e0 = DAT_100303e0 + 1) {
-    GetTotalAmount0(((unsigned char *)&DAT_100304e8) + DAT_100303e0 * 8);
+    iVar3 = GetTotalAmount0(((unsigned char *)&DAT_100304e8) + DAT_100303e0 * 8);
     if (0 < iVar3) {
       iVar3 = GetUnitsAmount0(&DAT_10030448,0);
       if (iVar3 < 1) {
@@ -327,7 +327,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) == 0) {
     iVar3 = GetUnitsAmount0(&DAT_10030458,0);
     if (0 < iVar3) {
-      GetTotalAmount0(&DAT_100304b8);
+      iVar3 = GetTotalAmount0(&DAT_100304b8);
       if (0 < iVar3) {
         AttackEnemyInZone(&DAT_100304b8,&DAT_10030458,0);
       }
@@ -353,7 +353,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(0x19);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_10030418);
+    iVar3 = GetTotalAmount0(&DAT_10030418);
     if (iVar3 == 0) {
       SetTrigg(0x19,0);
       ClearSelection(0);
@@ -391,7 +391,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(5);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_100303f0);
+    iVar3 = GetTotalAmount0(&DAT_100303f0);
     if (iVar3 == 0) {
       SetTrigg(5,0);
       iVar3 = GetResource(0,3);
@@ -406,7 +406,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(7);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_100304c0);
+    iVar3 = GetTotalAmount0(&DAT_100304c0);
     if (iVar3 == 0) {
       SetTrigg(7,0);
       ShowPage("#PAGE7");

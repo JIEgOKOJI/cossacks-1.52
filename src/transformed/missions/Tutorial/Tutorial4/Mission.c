@@ -645,7 +645,7 @@ LAB_10003897:
   if ((uVar1 & 0xff) != 0) {
     iVar2 = GetTotalAmount0(&DAT_100334d8);
     if (iVar2 == 0) {
-      GetTotalAmount0(&DAT_100334e0);
+      iVar2 = GetTotalAmount0(&DAT_100334e0);
       if (iVar2 == 0) {
         SetTrigg(10,0);
         ShowPage("#PAGE7");

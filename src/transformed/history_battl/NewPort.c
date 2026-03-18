@@ -354,11 +354,11 @@ uVar1 = Trigg(1);
   if (2 < iVar3) {
     FUN_10001100(0,0x1001da30);
   }
-  GetTotalAmount0(&DAT_1001f470);
+  iVar3 = GetTotalAmount0(&DAT_1001f470);
   if (iVar3 < 0x14) {
     FUN_10001100(1,0x1001da38);
   }
-  GetTotalAmount0(&DAT_1001f478);
+  iVar3 = GetTotalAmount0(&DAT_1001f478);
   if (iVar3 < 0x14) {
     FUN_10001100(0,0x1001da30);
   }

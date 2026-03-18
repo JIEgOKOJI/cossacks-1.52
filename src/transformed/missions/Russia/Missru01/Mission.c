@@ -320,7 +320,7 @@ uVar1 = Trigg(1);
     if ((uVar1 & 0xff) != 0) {
       SelectUnits(&DAT_10031410,0);
       iVar5 = GetNInside(5);
-      GetTotalAmount0(&DAT_100315a0);
+      iVar2 = GetTotalAmount0(&DAT_100315a0);
       if (iVar5 == iVar2) {
         SetTrigg(0x22,0);
         SelectUnits(&DAT_10031410,0);
@@ -397,7 +397,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) != 0) {
     iVar5 = GetUnitsAmount0(&DAT_100314f8,0);
     if (0 < iVar5) {
-      GetTotalAmount0(&DAT_10031428);
+      iVar5 = GetTotalAmount0(&DAT_10031428);
       if (0 < iVar5) {
         SetTrigg(2,0);
         ShowPage("#PAGE2");
@@ -446,18 +446,18 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) != 0) {
     uVar1 = Trigg(3);
     if ((uVar1 & 0xff) == 0) {
-      GetTotalAmount0(&DAT_10031558);
+      iVar5 = GetTotalAmount0(&DAT_10031558);
       if (iVar5 == 0) {
-        GetTotalAmount0(&DAT_10031548);
+        iVar5 = GetTotalAmount0(&DAT_10031548);
         if (0 < iVar5) {
           SetTrigg(4,0);
           ShowPage("#PAGE4");
           ShowPage("#PAGE4A");
           ShowPage("#PAGE4B");
           SelectUnits(&DAT_10031548,0);
-          GetTotalAmount1(&DAT_100314f0,0);
+          iVar5 = GetTotalAmount1(&DAT_100314f0,0);
           if (iVar5 < 1) {
-            GetTotalAmount1(&DAT_100314f0,5);
+            iVar5 = GetTotalAmount1(&DAT_100314f0,5);
             if (iVar5 < 1) {
               SelSendTo(1,&DAT_10031528,0x5a,2);
               SelSendTo(1,&DAT_10031530,0x5a,2);
@@ -481,7 +481,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) != 0) {
     iVar5 = GetUnitsAmount0(&DAT_10031510,0);
     if (0 < iVar5) {
-      GetTotalAmount0(&DAT_10031420);
+      iVar5 = GetTotalAmount0(&DAT_10031420);
       if (0 < iVar5) {
         SetTrigg(5,0);
         CreateZoneNearUnit(&DAT_100314e8,&DAT_10031510,&DAT_100314d8,0,0x1e);
@@ -495,7 +495,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) != 0) {
     iVar5 = GetUnitsAmount0(&DAT_10031518,0);
     if (0 < iVar5) {
-      GetTotalAmount0(&DAT_10031418);
+      iVar5 = GetTotalAmount0(&DAT_10031418);
       if (0 < iVar5) {
         SetTrigg(6,0);
         ShowPage("#PAGE6");
@@ -509,7 +509,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) != 0) {
     iVar5 = GetUnitsAmount0(&DAT_10031520,0);
     if (10 < iVar5) {
-      GetTotalAmount0(&DAT_100315a8);
+      iVar5 = GetTotalAmount0(&DAT_100315a8);
       if (0 < iVar5) {
         SetTrigg(7,0);
         SelectUnits(&DAT_100315a8,0);
@@ -525,7 +525,7 @@ uVar1 = Trigg(1);
     if (0 < iVar5) {
       SetTrigg(8,0);
       EnableMission(0x44);
-      GetTotalAmount0(&DAT_10031408);
+      iVar5 = GetTotalAmount0(&DAT_10031408);
       if (iVar5 < 1) {
         ShowPage("#PAGE15A");
         ShowPage("#PAGE15B");
@@ -599,10 +599,10 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(0xb);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_100315b0);
-    GetTotalAmount0(&DAT_10031590);
-    GetTotalAmount0(&DAT_100315a0);
-    GetTotalAmount0(&DAT_10031588);
+    iVar5 = GetTotalAmount0(&DAT_100315b0);
+    iVar2 = GetTotalAmount0(&DAT_10031590);
+    iVar3 = GetTotalAmount0(&DAT_100315a0);
+    iVar4 = GetTotalAmount0(&DAT_10031588);
     if (iVar5 + iVar2 + iVar3 + iVar4 == 0) {
       SetTrigg(0xb,0);
       ShowPage("#PAGE11");
@@ -611,7 +611,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(0xc);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_100313e8);
+    iVar5 = GetTotalAmount0(&DAT_100313e8);
     if (iVar5 == 0) {
       SetTrigg(0xc,0);
       iVar5 = GetResource(0,3);
@@ -656,7 +656,7 @@ uVar1 = Trigg(1);
       EnableMission(0x43);
       SetTrigg(4,0);
       SetTrigg(6,0);
-      GetTotalAmount0(&DAT_10031408);
+      iVar5 = GetTotalAmount0(&DAT_10031408);
       if (iVar5 < 1) {
         SetTrigg(8,0);
         ShowPage("#PAGE15A");
@@ -677,7 +677,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) != 0) {
     iVar5 = GetUnitsAmount0(&DAT_10031458,0);
     if (0 < iVar5) {
-      GetTotalAmount0(&DAT_10031598);
+      iVar5 = GetTotalAmount0(&DAT_10031598);
       if (0 < iVar5) {
         SetTrigg(0x10,0);
         CreateZoneNearUnit(&DAT_10031430,&DAT_10031458,&DAT_100314d8,0,0x1e);
@@ -691,7 +691,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) != 0) {
     iVar5 = GetUnitsAmount0(&DAT_10031488,0);
     if (0 < iVar5) {
-      GetTotalAmount0(&DAT_10031570);
+      iVar5 = GetTotalAmount0(&DAT_10031570);
       if (0 < iVar5) {
         SetTrigg(0x11,0);
         CreateZoneNearUnit(&DAT_100314e0,&DAT_10031488,&DAT_100314d8,0,0x1e);
@@ -705,7 +705,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) != 0) {
     iVar5 = GetUnitsAmount0(&DAT_10031478,0);
     if (0 < iVar5) {
-      GetTotalAmount0(&DAT_10031580);
+      iVar5 = GetTotalAmount0(&DAT_10031580);
       if (0 < iVar5) {
         SetTrigg(0x12,0);
         ShowPage("#PAGE18");
@@ -718,7 +718,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) != 0) {
     iVar5 = GetUnitsAmount0(&DAT_100314a8,0);
     if (0 < iVar5) {
-      GetTotalAmount0(&DAT_10031550);
+      iVar5 = GetTotalAmount0(&DAT_10031550);
       if (0 < iVar5) {
         SetTrigg(0x46,0);
         ShowPage("#PAGE19");
@@ -730,7 +730,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) == 0) {
     iVar5 = GetUnitsAmount0(&DAT_100314a8,0);
     if (0 < iVar5) {
-      GetTotalAmount0(&DAT_10031550);
+      iVar5 = GetTotalAmount0(&DAT_10031550);
       if (0 < iVar5) {
         AttackEnemyInZone(&DAT_10031550,&DAT_100314a8,0);
       }
@@ -740,7 +740,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) != 0) {
     iVar5 = GetUnitsAmount0(&DAT_10031498,0);
     if (0 < iVar5) {
-      GetTotalAmount0(&DAT_10031560);
+      iVar5 = GetTotalAmount0(&DAT_10031560);
       if (0 < iVar5) {
         SetTrigg(0x47,0);
         ShowPage("#PAGE20");
@@ -753,7 +753,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) == 0) {
     iVar5 = GetUnitsAmount0(&DAT_10031498,0);
     if (0 < iVar5) {
-      GetTotalAmount0(&DAT_10031560);
+      iVar5 = GetTotalAmount0(&DAT_10031560);
       if (0 < iVar5) {
         AttackEnemyInZone(&DAT_10031560,&DAT_10031498,0);
       }
@@ -761,7 +761,7 @@ uVar1 = Trigg(1);
   }
   uVar1 = Trigg(0x49);
   if ((uVar1 & 0xff) != 0) {
-    GetTotalAmount0(&DAT_10031560);
+    iVar5 = GetTotalAmount0(&DAT_10031560);
     if (iVar5 == 0) {
       iVar5 = GetUnitsAmount0(&DAT_100315c8,0);
       if (0 < iVar5) {
@@ -780,7 +780,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) != 0) {
     iVar5 = GetUnitsAmount0(&DAT_100314b8,0);
     if (0 < iVar5) {
-      GetTotalAmount0(&DAT_100315b8);
+      iVar5 = GetTotalAmount0(&DAT_100315b8);
       if (0 < iVar5) {
         SetTrigg(0x48,0);
         ShowPage("#PAGE21");
@@ -792,7 +792,7 @@ uVar1 = Trigg(1);
   if ((uVar1 & 0xff) == 0) {
     iVar5 = GetUnitsAmount0(&DAT_100314b8,0);
     if (0 < iVar5) {
-      GetTotalAmount0(&DAT_100315b8);
+      iVar5 = GetTotalAmount0(&DAT_100315b8);
       if (0 < iVar5) {
         AttackEnemyInZone(&DAT_100315b8,&DAT_100314b8,0);
       }

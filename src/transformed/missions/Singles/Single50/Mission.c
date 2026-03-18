@@ -1070,7 +1070,7 @@ LAB_10005996:
         if ((uVar1 & 0xff) != 0) {
           uVar1 = Trigg(0x1c);
           if ((uVar1 & 0xff) != 0) {
-            GetTotalAmount0(&DAT_10034750);
+            iVar4 = GetTotalAmount0(&DAT_10034750);
             if (iVar4 == 0) {
               SetTrigg(0x1c,0);
               SelectUnits(&DAT_10034470,0);
@@ -1087,7 +1087,7 @@ LAB_10005996:
           }
           uVar1 = Trigg(0x1d);
           if ((uVar1 & 0xff) != 0) {
-            GetTotalAmount0(&DAT_100345b0);
+            iVar4 = GetTotalAmount0(&DAT_100345b0);
             if (iVar4 == 0) {
               SetTrigg(0x1d,0);
               SelectUnits(&DAT_100345d0,0);
@@ -1104,7 +1104,7 @@ LAB_10005996:
           }
           uVar1 = Trigg(0x1e);
           if ((uVar1 & 0xff) != 0) {
-            GetTotalAmount0(&DAT_100345c0);
+            iVar4 = GetTotalAmount0(&DAT_100345c0);
             if (iVar4 == 0) {
               SetTrigg(0x1e,0);
               SelectUnits(&DAT_100345c8,0);
@@ -1121,7 +1121,7 @@ LAB_10005996:
           }
           uVar1 = Trigg(0x1f);
           if ((uVar1 & 0xff) != 0) {
-            GetTotalAmount0(&DAT_10034758);
+            iVar4 = GetTotalAmount0(&DAT_10034758);
             if (iVar4 == 0) {
               SetTrigg(0x1f,0);
               SelectUnits(&DAT_10034600,0);

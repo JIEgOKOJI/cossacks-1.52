@@ -1385,19 +1385,19 @@ void ProcessScenary(void)
   FUN_10002b80(&DAT_100225e8,0);
   FUN_10002b80(&DAT_10022660,0);
   FUN_10002b80(&DAT_100226d8,0);
-  GetTotalAmount0(0x10022570);
+  iVar3 = GetTotalAmount0(0x10022570);
   if (iVar3 < 0x23) {
     FUN_10002b80(&DAT_10022570,2);
   }
-  GetTotalAmount0(0x100225e8);
+  iVar3 = GetTotalAmount0(0x100225e8);
   if (iVar3 < 0x2d) {
     FUN_10002b80(&DAT_100225e8,3);
   }
-  GetTotalAmount0(0x10022660);
+  iVar3 = GetTotalAmount0(0x10022660);
   if (iVar3 < 0x3c) {
     FUN_10002b80(&DAT_10022660,3);
   }
-  GetTotalAmount0(0x100226d8);
+  iVar3 = GetTotalAmount0(0x100226d8);
   if (iVar3 < 0x50) {
     FUN_10002b80(&DAT_100226d8,3);
   }
