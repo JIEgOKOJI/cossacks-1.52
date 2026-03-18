@@ -20,6 +20,7 @@
 | CMake / сборка | ✅ | ✅ 100% | 3 платформы (macOS, Win32, Win64), toolchain-файлы |
 | Мультиплеер sync | ✅ | ⚠️ 70% | TSin/TCos/TAtg исправлены; FPU-риски + double-rando() остаются |
 | AI DLL | ✅ | ✅ 100% | 20 AI .dylib (Mach-O bundle arm64) собраны, dist/macOS-arm64/ai/ |
+| Mission DLL | ✅ | ✅ 100% | 220 mission + 1 usermission .dylib собраны, OnInit вызывается явно через dlsym |
 
 # 🌟 Cossacks: Back to War 1.52
 

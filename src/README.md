@@ -102,11 +102,18 @@ cmake --build . -j$(nproc)
 
 ---
 
-## Сборка миссионных DLL (только Windows x64)
+## Сборка миссионных DLL
 
 Миссии в игре реализованы как DLL-плагины, загружаемые в рантайме. Исходники DLL получены
 декомпиляцией оригинальных 32-битных DLL через Ghidra и автоматически трансформируются
 скриптом `transform_dll.py` в компилируемый C-код.
+
+Трансформатор выполняет:
+- Замена типов Ghidra (`undefined4` → `int` и т.д.)
+- Приведение указательной арифметики к 64-bit
+- Детекция и ограничение stride (MAX_STRIDE = 0x10000)
+- **Инлайнинг врапперов** — автоматическое распознавание и устранение однострочных
+  обёрток `FUN_xxx()` → прямой вызов API (329 врапперов в 109 из 194 миссий)
 
 ### Когда нужно пересобирать DLL
 
@@ -117,9 +124,7 @@ cmake --build . -j$(nproc)
 - Изменился `dmcr.def`
 - Изменился `transform_dll.py` (исправления в трансформации декомпилированного кода)
 
-Файлы `SDL2.dll`, `SDL2_mixer.dll` и `unrar.dll` — это сторонние библиотеки, они **не пересобираются** скриптом. Их нужно обновлять вручную только при обновлении версий SDL2/SDL2_mixer.
-
-### Команда сборки
+### Windows x64 (кросс-компиляция)
 
 ```bash
 cd src/tools/dll_build
@@ -132,6 +137,24 @@ bash build_all_dlls.sh
 3. Компилирует и линкует через `x86_64-w64-mingw32-gcc` → `dist/Windows-x64/`
 
 Результат: ~220 DLL в `dist/Windows-x64/missions/`, `dist/Windows-x64/history_battl/` и т.д.
+
+### macOS ARM64
+
+```bash
+cd src/tools/dll_build
+bash build_mission_dlls_macos.sh
+```
+
+Скрипт:
+1. Находит все декомпилированные `.c` файлы в `decompiled/`
+2. Трансформирует через `transform_dll.py` → `transformed/`
+3. Компилирует как Mach-O bundle (`-bundle -bundle_loader dmcr`) → `dist/macOS-arm64/`
+
+Результат: ~220 `.dylib` в `dist/macOS-arm64/missions/`, `dist/macOS-arm64/history_battl/` и т.д.
+
+> **Примечание:** macOS `dlopen()` не вызывает `DllMain()` как Windows `LoadLibrary()`.
+> Вместо этого `ActiveScenary.cpp` явно вызывает экспортированную функцию `OnInit()`
+> после загрузки каждой DLL.
 
 > **Примечание:** 32-битные DLL не пересобираются. Для 32-битной версии используются оригинальные DLL из дистрибутива игры.
 
@@ -170,7 +193,10 @@ GAME_DIR=/path/to/cossacks bash build_ai_dlls.sh
 | Файл | Назначение |
 |------|------------|
 | `game_api.h` | Общий заголовок API (42+ функций экспортируемых dmcr) |
+| `transform_dll.py` | Трансформация Ghidra C → компилируемый C для миссионных DLL |
 | `transform_ai_dll.py` | Трансформация Ghidra C → компилируемый C для AI DLL |
+| `build_all_dlls.sh` | Сборка миссионных DLL для Windows x64 |
+| `build_mission_dlls_macos.sh` | Сборка миссионных DLL для macOS ARM64 |
 | `build_ai_dlls.sh` | Сборка AI DLL для Windows x64 |
 | `build_ai_dlls_macos.sh` | Сборка AI DLL для macOS ARM64 |
 | `dmcr.def` / `libdmcr.a` | Import library для линковки DLL → exe (Windows) |
@@ -180,20 +206,46 @@ GAME_DIR=/path/to/cossacks bash build_ai_dlls.sh
 ## Установка и запуск
 
 Скопируйте собранный бинарник (`dmcr` / `dmcr.exe`) в каталог с данными игры.
-Для Windows x64 также скопируйте содержимое `dist/Windows-x64/` (DLL миссий, SDL2, unrar).
+
+### Windows x64
+
+Скопируйте содержимое `dist/Windows-x64/` (DLL миссий, AI DLL, SDL2, unrar).
+
+Файлы `SDL2.dll`, `SDL2_mixer.dll` и `unrar.dll` — сторонние библиотеки, они **не пересобираются** скриптами сборки. Их нужно обновлять вручную только при обновлении версий SDL2/SDL2_mixer.
+
+### macOS ARM64
+
+Скопируйте содержимое `dist/macOS-arm64/` (dylib миссий, AI dylib).
+
+Миссии содержат `.rar` архивы с картами `.m3d`. На Windows для их распаковки используется
+`unrar.dll`, но на macOS его нет. Вместо этого нужно **предварительно распаковать все RAR-архивы**:
+
+```bash
+cd /path/to/cossacks
+bash extract_mission_rars.sh
+```
+
+Скрипт `extract_mission_rars.sh` (из `dist/macOS-arm64/` или `tools/`) находит все `.rar` файлы
+в каталогах миссий и распаковывает `.m3d` карты рядом с архивами. После этого игра находит
+файлы на диске напрямую, минуя `unrar.dll`.
+
+### Структура каталога с данными
 
 ```
 cossacks/
-  dmcr(.exe)        # собранный бинарник
-  SDL2.dll          # (Windows) — из dist/
-  SDL2_mixer.dll    # (Windows) — из dist/
-  unrar.dll         # (Windows) — из dist/
-  all.gsc           # основной архив данных
-  all_ru.gsc        # русская локализация (опционально)
-  mode.dat          # настройки (разрешение, звук и т.д.)
-  Tracks/           # музыка (Track_10.wav .. Track_20.wav)
-  ai/               # AI DLL (.dylib на macOS, .dll на Windows) — из dist/
-  missions/         # DLL миссий — из dist/ (x64) или оригинальные (x86)
+  dmcr(.exe)                # собранный бинарник
+  SDL2.dll                  # (Windows) — из dist/
+  SDL2_mixer.dll            # (Windows) — из dist/
+  unrar.dll                 # (Windows) — из dist/
+  extract_mission_rars.sh   # (macOS) — предварительная распаковка RAR
+  all.gsc                   # основной архив данных
+  all_ru.gsc                # русская локализация (опционально)
+  mode.dat                  # настройки (разрешение, звук и т.д.)
+  Tracks/                   # музыка (Track_10.wav .. Track_20.wav)
+  ai/                       # AI DLL (.dylib на macOS, .dll на Windows) — из dist/
+  missions/                 # DLL миссий (.dylib на macOS, .dll на Windows) — из dist/
+  history_battl/            # DLL исторических битв — из dist/
+  usermissions/             # DLL пользовательских миссий — из dist/
 ```
 
 **Важно:** рабочий каталог при запуске должен быть каталогом с данными игры:
@@ -237,19 +289,21 @@ src/
 ├── transformed/                # Трансформированные .c после transform_dll.py
 ├── tools/
 │   ├── dll_build/
-│   │   ├── build_all_dlls.sh   # Скрипт сборки всех DLL
-│   │   ├── transform_dll.py    # Трансформация Ghidra C → компилируемый C
+│   │   ├── build_all_dlls.sh   # Сборка миссионных DLL (Windows x64)
+│   │   ├── build_mission_dlls_macos.sh # Сборка миссионных DLL (macOS ARM64)
+│   │   ├── transform_dll.py    # Трансформация Ghidra C → компилируемый C (миссии)
 │   │   ├── transform_ai_dll.py # Трансформация AI DLL (20 наций)
 │   │   ├── build_ai_dlls.sh    # Сборка AI DLL (Windows x64)
 │   │   ├── build_ai_dlls_macos.sh # Сборка AI DLL (macOS ARM64)
-│   │   ├── game_api.h          # API-заголовок для AI DLL
+│   │   ├── game_api.h          # API-заголовок для DLL
 │   │   ├── dmcr.def            # Экспортируемые символы exe
 │   │   └── libdmcr.a           # Import library для линковки DLL → exe
+│   ├── extract_mission_rars.sh # Предварительная распаковка RAR для macOS
 │   └── decompile_all.sh        # Пакетная декомпиляция через Ghidra
 ├── dist/                       # Готовые бинарники
-│   ├── macOS-arm64/            # dmcr (Mach-O) + ai/*.dylib (20 AI DLL)
+│   ├── macOS-arm64/            # dmcr + ai/*.dylib + missions/*.dylib + extract_mission_rars.sh
 │   ├── Windows-x86/            # dmcr.exe (PE32) + SDL2.dll, SDL2_mixer.dll
-│   └── Windows-x64/            # dmcr.exe (PE32+) + SDL2/SDL2_mixer/unrar.dll + ai/*.dll + ~220 DLL миссий
+│   └── Windows-x64/            # dmcr.exe (PE32+) + SDL2/SDL2_mixer/unrar.dll + ai/*.dll + missions/*.dll
 ├── IChat library/              # GameSpy чат (опционально, серверы закрыты)
 └── IntExplorer library/        # GameSpy браузер (опционально)
 ```
@@ -275,4 +329,7 @@ src/
 - **IChat / IntExplorer**: Зависят от серверов GameSpy (закрыты), отключены по умолчанию.
 - **DirectPlay**: Полностью заменён на CommCore UDP на всех платформах.
 - **32-bit DLL миссий**: Не пересобираются, используются оригинальные из дистрибутива игры.
-  Для 64-bit DLL получены декомпиляцией и пересобраны как x64.
+- **unrar.dll**: На macOS отсутствует — вместо рантайм-распаковки используется предварительная
+  распаковка RAR-архивов скриптом `extract_mission_rars.sh`.
+- **DllMain на macOS**: `dlopen()` не вызывает `DllMain()` автоматически. Исполняемый файл
+  явно вызывает `OnInit()` после загрузки каждой DLL (миссионной и AI).
