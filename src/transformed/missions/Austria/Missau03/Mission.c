@@ -5,7 +5,7 @@
 #include <time.h>
 
 /* Global variables */
-long long DAT_10008150 = 0;
+char DAT_10008150[] = "ffffff\xe6?";
 char DAT_10009060[] = "Za8a";
 char DAT_10009068[] = "Za6a";
 char DAT_10009070[] = "Za5a";

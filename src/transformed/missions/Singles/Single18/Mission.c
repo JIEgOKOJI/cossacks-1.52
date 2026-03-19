@@ -6,9 +6,9 @@
 
 /* Global variables */
 int this_ptr = 0;
-long long DAT_1000a040 = 0;
+char DAT_1000a040[] = "@\xd2";
 long long DAT_1000a044 = 0;
-long long DAT_1000a048 = 0;
+char DAT_1000a048[] = "p\xd6";
 long long DAT_1000a4dc = 0;
 char DAT_1000a4e0[] = "RESC";
 char DAT_1000a4e8[] = "RESI";
@@ -22,7 +22,7 @@ char DAT_1000a534[] = "IRON";
 char DAT_1000a53c[] = "GOLD";
 char DAT_1000a54c[] = "FOOD";
 char DAT_1000a554[] = "WOOD";
-char DAT_1000a574[] = "r";
+long long DAT_1000a574 = 0;
 long long DAT_1000d218 = 0;
 long long DAT_1000d220 = 0;
 long long DAT_1000d228 = 0;
@@ -1841,7 +1841,7 @@ void ProcessScenary(void)
                     
   if (DAT_1000ddf4 == '\0') {
     DAT_1000ddf4 = '\x01';
-    FUN_10003b6f("Missions//miss_vic.txt",DAT_1000a574);
+    FUN_10003b6f("Missions//miss_vic.txt",&DAT_1000a574);
     if (pFVar3 == (FILE *)0x0) {
       uVar9 = -1;
       pcVar17 = DAT_1000a554;

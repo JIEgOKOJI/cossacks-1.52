@@ -15,7 +15,7 @@ long long DAT_1000e1d8 = 0;
 long long DAT_1000e210 = 0;
 long long DAT_1000ea54 = 0;
 long long DAT_1001020c = 0;
-char DAT_10010244[] = "r";
+long long DAT_10010244 = 0;
 long long DAT_10010318 = 0;
 char DAT_100104a0[] = "OR";
 char DAT_100104a4[] = "AND";
@@ -3366,7 +3366,7 @@ void OnInit(void)
   local_8 = -1;
   FUN_10005470();
   local_8 = 0;
-  FUN_10005172("UserMissions\\start.dat",DAT_10010244);
+  FUN_10005172("UserMissions\\start.dat",&DAT_10010244);
   if (pFVar1 == (FILE *)0x0) {
                     
   }

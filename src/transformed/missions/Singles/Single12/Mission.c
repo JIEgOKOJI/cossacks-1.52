@@ -24,7 +24,7 @@ char DAT_1000a2fc[] = "IRON";
 char DAT_1000a304[] = "GOLD";
 char DAT_1000a314[] = "FOOD";
 char DAT_1000a31c[] = "WOOD";
-char DAT_1000a33c[] = "r";
+long long DAT_1000a33c = 0;
 long long DAT_1000cfd8 = 0;
 long long DAT_1000cfe0 = 0;
 long long DAT_1000cfe8 = 0;
@@ -1610,7 +1610,7 @@ void ProcessScenary(void)
                     
   if (DAT_1000d728 == '\0') {
     DAT_1000d728 = '\x01';
-    FUN_1000316f("Missions//miss_vic.txt",DAT_1000a33c);
+    FUN_1000316f("Missions//miss_vic.txt",&DAT_1000a33c);
     if (pFVar3 == (FILE *)0x0) {
       uVar9 = -1;
       pcVar15 = DAT_1000a31c;

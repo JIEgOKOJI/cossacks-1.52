@@ -10,7 +10,7 @@ int DAT_1000b050 = 1;
 long long DAT_1000b054 = 0;
 long long DAT_1000b058 = 0;
 long long DAT_1000b05c = 0;
-long long DAT_1000b060 = 0;
+char DAT_1000b060[] = "@\xeb";
 long long DAT_1000b598 = 0;
 char DAT_1000b59c[] = "RESC";
 char DAT_1000b5a4[] = "RESI";
@@ -25,7 +25,7 @@ char DAT_1000b5f8[] = "IRON";
 char DAT_1000b600[] = "GOLD";
 char DAT_1000b610[] = "FOOD";
 char DAT_1000b618[] = "WOOD";
-char DAT_1000b638[] = "r";
+long long DAT_1000b638 = 0;
 long long DAT_1000e2d8 = 0;
 long long DAT_1000e318 = 0;
 long long DAT_1000e358 = 0;
@@ -2028,7 +2028,7 @@ void ProcessScenary(void)
                     
   if (DAT_1000f266 == '\0') {
     DAT_1000f266 = '\x01';
-    FUN_100049cf("Missions//miss_vic.txt",DAT_1000b638);
+    FUN_100049cf("Missions//miss_vic.txt",&DAT_1000b638);
     if (pFVar3 == (FILE *)0x0) {
       uVar10 = -1;
       pcVar18 = DAT_1000b618;

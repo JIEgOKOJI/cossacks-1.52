@@ -183,13 +183,13 @@ class PEData:
         return None
 
     def read_string_at_va(self, va):
-        """Read null-terminated ASCII string at virtual address."""
+        """Read null-terminated string at virtual address (supports CP1251)."""
         rva = va - self.image_base
         off = self.rva_to_file_offset(rva)
         if off is None:
             return None
         end = self.data.index(b'\x00', off)
-        return self.data[off:end].decode('ascii', errors='replace')
+        return self.data[off:end].decode('latin1')
 
     def read_bytes_at_va(self, va, size):
         """Read raw bytes at virtual address."""
@@ -251,9 +251,7 @@ def resolve_string_refs(source, pe):
         addr = int(m.group(1), 16)
         s = pe.read_string_at_va(addr)
         if s is not None:
-            # Escape backslashes and quotes
-            s = s.replace('\\', '\\\\').replace('"', '\\"')
-            return f'"{s}"'
+            return _escape_c_string(s)
         return full
     return re.sub(r's_\w+_([\da-fA-F]+)', repl_str, source)
 
@@ -299,7 +297,7 @@ def classify_dat_refs(source, pe):
             # Only used as &DAT_xxx → pointer to something
             # Check if it's a string
             s = pe.read_string_at_va(va)
-            if s and len(s) >= 1 and all(c in _PRINTABLE for c in s):
+            if _is_printable_string(s):
                 refs[addr_hex] = 'string'
             else:
                 refs[addr_hex] = 'gameobj'
@@ -308,7 +306,7 @@ def classify_dat_refs(source, pe):
         else:
             # Used both ways → check content
             s = pe.read_string_at_va(va)
-            if s and len(s) >= 1 and all(c in _PRINTABLE for c in s):
+            if _is_printable_string(s):
                 refs[addr_hex] = 'string'
             else:
                 refs[addr_hex] = 'gameobj'
@@ -319,6 +317,50 @@ _PRINTABLE = set(
     'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
     '0123456789_#() .,;:!?-+*/=<>@&%$^~[]{}|\\\'"'
 )
+
+# CP1251 printable characters (Russian Cyrillic)
+# А-я: 0xC0-0xFF, Ё: 0xA8, ё: 0xB8, №: 0xB9, «: 0xAB, »: 0xBB
+_CP1251_PRINTABLE = set(chr(c) for c in range(0xC0, 0x100)) | {
+    chr(0xA8), chr(0xB8), chr(0xB9), chr(0xAB), chr(0xBB),
+    chr(0xA0),  # non-breaking space
+}
+
+_PRINTABLE_EXTENDED = _PRINTABLE | _CP1251_PRINTABLE
+
+def _is_printable_string(s):
+    """Check if string is a printable text string (ASCII or CP1251).
+    Requires all chars to be in extended printable set and at least
+    some ASCII content (spaces, letters) to avoid false positives on binary data."""
+    if not s or len(s) < 2:
+        return False
+    if not all(c in _PRINTABLE_EXTENDED for c in s):
+        return False
+    # For strings with high bytes, require at least some ASCII text content
+    has_high = any(ord(c) >= 0x80 for c in s)
+    if has_high:
+        ascii_content = sum(1 for c in s if c in _PRINTABLE and c not in '\\\'\"')
+        return ascii_content >= 1  # at least 1 ASCII char (space, letter, digit, punct)
+    return True
+
+_HEX_CHARS = set('0123456789abcdefABCDEF')
+
+def _escape_c_string(s):
+    """Escape a string for C, handling non-ASCII bytes as \\xNN.
+    Splits string literal when a hex escape is followed by a hex digit
+    to avoid C compiler greedily consuming extra digits (e.g. \\x90d)."""
+    s = s.replace('\\', '\\\\').replace('"', '\\"')
+    parts = []
+    cur = '"'
+    for i, c in enumerate(s):
+        if ord(c) >= 0x80:
+            cur += f'\\x{ord(c):02x}'
+            # If next char is a hex digit, close and reopen string
+            if i + 1 < len(s) and s[i + 1] in _HEX_CHARS:
+                cur += '" "'
+        else:
+            cur += c
+    cur += '"'
+    return cur
 
 
 def transform_chkesp(code):
@@ -601,8 +643,8 @@ def generate_var_declarations(dat_types, pe, code=''):
         elif dtype == 'string':
             s = pe.read_string_at_va(va)
             if s:
-                s_esc = s.replace('\\', '\\\\').replace('"', '\\"')
-                lines.append(f'char DAT_{addr_hex}[] = "{s_esc}";')
+                s_esc = _escape_c_string(s)
+                lines.append(f'char DAT_{addr_hex}[] = {s_esc};')
             else:
                 lines.append(f'char DAT_{addr_hex}[] = "";')
         elif dtype == 'funcptr':
