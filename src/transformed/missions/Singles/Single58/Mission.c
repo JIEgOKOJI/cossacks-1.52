@@ -77,7 +77,7 @@ int FUN_10006050() { return 0; }
 
 
 /* Forward declarations */
-void FUN_10001330(int param_1,int param_2);
+void FUN_10001330(intptr_t param_1,int param_2);
 void FUN_10001480(int param_1);
 void FUN_10001550(int param_1);
 void FUN_10001e40(void *param_1);
@@ -130,6 +130,7 @@ void  FUN_100048f0(void *this_ptr,int param_1);
 void  FUN_10004960(void *this_ptr,int param_1,int param_2,int param_3);
 void  FUN_10004a00(void *this_ptr,int param_1,int param_2);
 int  FUN_10004b50(int param_1);
+void  FUN_10004b90(intptr_t param_1);
 void  FUN_10004c00(void *this_ptr,int param_1);
 void  FUN_10004c80(void *this_ptr,int param_1,int param_2);
 BOOL  FUN_10004d20(int param_1);
@@ -137,7 +138,7 @@ void  FUN_10004d70(void *this_ptr,int param_1,int param_2,int param_3);
 void  FUN_10004e40(int param_1);
 void  FUN_10004ef0(int param_1);
 void  FUN_10004f90(int param_1);
-void  FUN_10005010(int param_1);
+void  FUN_10005010(intptr_t param_1);
 void FUN_10005220(int param_1);
 void FUN_10005250(int param_1,int param_2,int param_3);
 int FUN_10005440(char *param_1,int param_2);
@@ -150,7 +151,7 @@ void OnInit();
 void ProcessScenary();
 
 
-void __cdecl FUN_10001330(int param_1,int param_2)
+void __cdecl FUN_10001330(intptr_t param_1,int param_2)
 
 {
   int iVar1;
@@ -1130,7 +1131,7 @@ void  FUN_100045c0(void *param_1)
   int local_48 [16];
   void *local_8;
 local_8 = param_1;
-  iVar2 = GetUnitsByNation((intptr_t)param_1,0);
+  FUN_10004b90((intptr_t)param_1);
   if ((0 < iVar2) && (*(int *)((intptr_t)local_8 + 0x1c) + 1 < *(int *)((intptr_t)local_8 + 0x20))) {
     if (*(int *)((intptr_t)local_8 + *(int *)((intptr_t)local_8 + 0x1c) * 8 + 0x2c) == 1) {
       FUN_10004c00(local_8,*(int *)
@@ -1251,7 +1252,7 @@ void  FUN_10004a00(void *this_ptr,int param_1,int param_2)
   int local_c;
   int *local_8;
 local_8 = this_ptr;
-  iVar2 = GetUnitsByNation((intptr_t)this_ptr,0);
+  FUN_10004b90((intptr_t)this_ptr);
   if (iVar2 == 0) {
     ClearSelection(*(char *)(local_8 + 9));
     for (local_c = 0; uVar1 = (int)((unsigned int)local_c >> 8), local_c < param_2;
@@ -1286,6 +1287,21 @@ return param_1 + 0xc;
 
 
 
+void  FUN_10004b90(intptr_t param_1)
+
+{
+  int iVar1;
+  int *puVar2;
+  int local_48 [16];
+  int local_8;
+local_8 = param_1;
+  GetUnitsByNation(param_1 + 0xc,*(char *)(param_1 + 0x24));
+  return;
+}
+
+
+
+
 
 void  FUN_10004c00(void *this_ptr,int param_1)
 
@@ -1299,7 +1315,7 @@ void  FUN_10004c00(void *this_ptr,int param_1)
 local_c = 0;
   local_8 = this_ptr;
   iVar2 = GetUnitsAmount1(param_1,(intptr_t)this_ptr + 0xc);
-  iVar1 = GetUnitsByNation((intptr_t)local_8,0);
+  FUN_10004b90((intptr_t)local_8);
   if (iVar2 == iVar1) {
     local_c = 1;
   }
@@ -1431,7 +1447,7 @@ local_8 = param_1;
 
 
 
-void  FUN_10005010(int param_1)
+void  FUN_10005010(intptr_t param_1)
 
 {
   char cVar1;
@@ -1663,7 +1679,7 @@ SetPlayerName(0,"SWEDEN");
     FUN_10005440(local_10,0x1003101c);
     RegisterUnits(((unsigned char *)&DAT_10036818) + local_14 * 0x28,local_10);
   }
-  FUN_10001330(0x10036818,0x12);
+  FUN_10001330((intptr_t)&DAT_10036818,0x12);
   FUN_10001330(0x10036840,0x13);
   FUN_10001330(0x10036868,1);
   FUN_10001330(0x10036890,3);
@@ -1788,7 +1804,7 @@ uVar1 = Trigg(99);
     }
     RunTimer(1,200);
   }
-  FUN_10005010(0x10036c58);
+  FUN_10005010((intptr_t)&DAT_10036c58);
   FUN_100045c0(&DAT_10036a28);
   FUN_100045c0(&DAT_10036b40);
   local_10 = GetUnitsAmount2(&DAT_10036c88,&DAT_10036c80,1);
@@ -1800,11 +1816,11 @@ uVar1 = Trigg(99);
   }
   uVar1 = TimerDoneFirst(0xb);
   if ((uVar1 & 0xff) != 0) {
-    iVar4 = GetUnitsByNation(0x10036a28,0);
+    FUN_10004b90((intptr_t)&DAT_10036a28);
     if (iVar4 == 0) {
       FUN_10001e40(&DAT_10036a28);
     }
-    iVar4 = GetUnitsByNation(0x10036b40,0);
+    FUN_10004b90((intptr_t)&DAT_10036b40);
     if (iVar4 == 0) {
       FUN_10001ef0(&DAT_10036b40);
     }

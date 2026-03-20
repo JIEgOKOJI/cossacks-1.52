@@ -77,7 +77,7 @@ int FUN_10006dd0() { return 0; }
 
 
 /* Forward declarations */
-int  FUN_10001100(int param_1);
+int  FUN_10001100(intptr_t param_1);
 void  FUN_10001140(int *param_1);
 void FUN_100011c0(void);
 void  FUN_100011f0(void *this_ptr,int param_1);
@@ -105,7 +105,7 @@ void OnInit();
 void ProcessScenary();
 
 
-int  FUN_10001100(int param_1)
+int  FUN_10001100(intptr_t param_1)
 
 {
   int iVar1;
@@ -389,14 +389,14 @@ void FUN_10001670(void)
   int *puVar2;
   int local_44 [15];
   int uStack_8;
-FUN_10001100(0x10032898);
-  FUN_10001100(0x100328d0);
-  FUN_10001100(0x100326f0);
-  FUN_10001100(0x10032728);
-  FUN_10001100(0x10032760);
-  FUN_10001100(0x10032798);
-  FUN_10001100(0x100327d0);
-  FUN_10001100(0x10032808);
+FUN_10001100((intptr_t)&DAT_10032898);
+  FUN_10001100((intptr_t)&DAT_100328d0);
+  FUN_10001100((intptr_t)&DAT_100326f0);
+  FUN_10001100((intptr_t)&DAT_10032728);
+  FUN_10001100((intptr_t)&DAT_10032760);
+  FUN_10001100((intptr_t)&DAT_10032798);
+  FUN_10001100((intptr_t)&DAT_100327d0);
+  FUN_10001100((intptr_t)&DAT_10032808);
   uStack_8 = 0x100016e5;
   return;
 }

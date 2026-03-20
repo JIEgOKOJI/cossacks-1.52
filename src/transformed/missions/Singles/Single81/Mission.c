@@ -11,14 +11,14 @@ long long DAT_1000ae00 = 0;
 long long DAT_1000ae08 = 0;
 long long DAT_1000ae10 = 0;
 long long DAT_1000ae18 = 0;
-long long DAT_1000ae20 = 0;
-long long DAT_1000ae28 = 0;
-long long DAT_1000ae30 = 0;
-long long DAT_1000ae38 = 0;
-long long DAT_1000ae40 = 0;
-long long DAT_1000ae48 = 0;
-long long DAT_1000ae50 = 0;
-long long DAT_1000ae58 = 0;
+unsigned char DAT_1000ae20[64] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+#define DAT_1000ae28 (*(long long *)((char *)DAT_1000ae20 + 0x8))
+#define DAT_1000ae30 (*(long long *)((char *)DAT_1000ae20 + 0x10))
+#define DAT_1000ae38 (*(long long *)((char *)DAT_1000ae20 + 0x18))
+#define DAT_1000ae40 (*(long long *)((char *)DAT_1000ae20 + 0x20))
+#define DAT_1000ae48 (*(long long *)((char *)DAT_1000ae20 + 0x28))
+#define DAT_1000ae50 (*(long long *)((char *)DAT_1000ae20 + 0x30))
+#define DAT_1000ae58 (*(long long *)((char *)DAT_1000ae20 + 0x38))
 long long DAT_1000ae60 = 0;
 long long DAT_1000ae68 = 0;
 long long DAT_1000ae70 = 0;
@@ -58,26 +58,26 @@ long long DAT_1000af70 = 0;
 long long DAT_1000af78 = 0;
 long long DAT_1000af80 = 0;
 long long DAT_1000af88 = 0;
-long long DAT_1000af90 = 0;
-long long DAT_1000af98 = 0;
+unsigned char DAT_1000af90[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+#define DAT_1000af98 (*(long long *)((char *)DAT_1000af90 + 0x8))
 long long DAT_1000afa0 = 0;
 long long DAT_1000afa8 = 0;
-long long DAT_1000afb0 = 0;
-long long DAT_1000afb8 = 0;
-long long DAT_1000afc0 = 0;
-long long DAT_1000afc8 = 0;
-long long DAT_1000afd0 = 0;
-long long DAT_1000afd8 = 0;
-long long DAT_1000afe0 = 0;
-long long DAT_1000afe8 = 0;
-long long DAT_1000aff0 = 0;
-long long DAT_1000aff8 = 0;
-long long DAT_1000b000 = 0;
-long long DAT_1000b008 = 0;
-long long DAT_1000b010 = 0;
-long long DAT_1000b018 = 0;
-long long DAT_1000b020 = 0;
-long long DAT_1000b028 = 0;
+unsigned char DAT_1000afb0[128] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x00, 0x64, 0x03, 0x00, 0x00, 0x32, 0x30, 0x3C, 0x30, 0x53, 0x30, 0x5D, 0x30, 0x65, 0x30, 0x6A, 0x30, 0x6F, 0x30, 0x76, 0x30, 0x7B, 0x30, 0x82, 0x30, 0x87, 0x30, 0x8E, 0x30, 0x93, 0x30, 0x9A, 0x30, 0x9F, 0x30, 0xA6, 0x30, 0xAB, 0x30, 0xB2, 0x30, 0xB7, 0x30, 0xC1, 0x30};
+#define DAT_1000afb8 (*(long long *)((char *)DAT_1000afb0 + 0x8))
+#define DAT_1000afc0 (*(long long *)((char *)DAT_1000afb0 + 0x10))
+#define DAT_1000afc8 (*(long long *)((char *)DAT_1000afb0 + 0x18))
+#define DAT_1000afd0 (*(long long *)((char *)DAT_1000afb0 + 0x20))
+#define DAT_1000afd8 (*(long long *)((char *)DAT_1000afb0 + 0x28))
+#define DAT_1000afe0 (*(long long *)((char *)DAT_1000afb0 + 0x30))
+#define DAT_1000afe8 (*(long long *)((char *)DAT_1000afb0 + 0x38))
+#define DAT_1000aff0 (*(long long *)((char *)DAT_1000afb0 + 0x40))
+#define DAT_1000aff8 (*(long long *)((char *)DAT_1000afb0 + 0x48))
+#define DAT_1000b000 (*(long long *)((char *)DAT_1000afb0 + 0x50))
+#define DAT_1000b008 (*(long long *)((char *)DAT_1000afb0 + 0x58))
+#define DAT_1000b010 (*(long long *)((char *)DAT_1000afb0 + 0x60))
+#define DAT_1000b018 (*(long long *)((char *)DAT_1000afb0 + 0x68))
+#define DAT_1000b020 (*(long long *)((char *)DAT_1000afb0 + 0x70))
+#define DAT_1000b028 (*(long long *)((char *)DAT_1000afb0 + 0x78))
 long long DAT_1000b030 = 0;
 long long DAT_1000b038 = 0;
 long long DAT_1000b040 = 0;
@@ -582,7 +582,7 @@ void ProcessScenary(void)
         }
         puVar7 = puVar7 + 0x10;
         iStack_30 = iStack_30 + 2;
-      } while ((int)puVar7 < 0x1000ae68);
+      } while ((int)puVar7 < (intptr_t)&DAT_1000ae68);
       cVar1 = CheckProduction(&DAT_1000af50);
       if ((cVar1 != '\0') && (DAT_1000b054 != 0x14)) {
         ProduceUnit(&DAT_1000af50,&DAT_1000af60,&DAT_1000adf8);
@@ -605,9 +605,9 @@ void ProcessScenary(void)
     do {
       bVar2 = FUN_100021c0(puVar7);
       if (bVar2) {
-        uVar4 = FUN_10002150(&DAT_1000aee0,0x1000afb0,0x10,puVar7,4);
+        uVar4 = FUN_10002150(&DAT_1000aee0,(intptr_t)&DAT_1000afb0,0x10,puVar7,4);
         if ((char)uVar4 == '\0') {
-          FUN_10002290(puVar7,4,&DAT_1000aee0,0,0x1000af90);
+          FUN_10002290(puVar7,4,&DAT_1000aee0,0,(intptr_t)&DAT_1000af90);
         }
         SetTrigg(4,0);
       }
@@ -619,7 +619,7 @@ void ProcessScenary(void)
         }
       }
       puVar7 = puVar7 + 8;
-    } while ((int)puVar7 < 0x1000ae60);
+    } while ((int)puVar7 < (intptr_t)&DAT_1000ae60);
     SelectUnits(&DAT_1000afa8,0);
   }
   iVar6 = GetTotalAmount0(&DAT_1000af80);

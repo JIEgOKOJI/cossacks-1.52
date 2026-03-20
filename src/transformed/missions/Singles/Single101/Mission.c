@@ -200,14 +200,14 @@ FUN_10003300(void *this_ptr,int param_1,int param_2,int param_3,int param_4);
 void  FUN_100033b0(void *this_ptr,int param_1);
 void  FUN_100033c0(void *this_ptr,int param_1,int param_2,int param_3);
 void  FUN_100033f0(void *this_ptr,int param_1,int param_2,int param_3);
-BOOL  FUN_10003420(int param_1);
-int  FUN_10003440(int param_1);
+BOOL  FUN_10003420(intptr_t param_1);
+int  FUN_10003440(intptr_t param_1);
 void FUN_10003530(int param_1,int param_2,int param_3,int param_4,int param_5);
 void FUN_10003600(int *param_1,int param_2,int param_3,int param_4);
 void 
 FUN_10003650(void *this_ptr,int param_1,int param_2,int param_3,int param_4);
 int *  FUN_10003690(int *param_1);
-int  FUN_100036e0(int param_1);
+int  FUN_100036e0(intptr_t param_1);
 unsigned int  FUN_10003730(void *this_ptr,unsigned int param_1,int param_2,int param_3,int param_4);
 void  FUN_10003800(void *this_ptr,int *param_1);
 void  FUN_10003aa0(void *this_ptr,int param_1,int param_2);
@@ -944,7 +944,7 @@ void  FUN_100033f0(void *this_ptr,int param_1,int param_2,int param_3)
 
 
 
-BOOL  FUN_10003420(int param_1)
+BOOL  FUN_10003420(intptr_t param_1)
 
 {
   int iVar1;
@@ -957,7 +957,7 @@ BOOL  FUN_10003420(int param_1)
 
 
 
-int  FUN_10003440(int param_1)
+int  FUN_10003440(intptr_t param_1)
 
 {
   BOOL bVar1;
@@ -1097,7 +1097,7 @@ int *  FUN_10003690(int *param_1)
 
 
 
-int  FUN_100036e0(int param_1)
+int  FUN_100036e0(intptr_t param_1)
 
 {
   int iVar1;
@@ -1826,21 +1826,21 @@ void ProcessScenary(void)
       }
     }
   }
-  FUN_10003440(0x10022860);
-  FUN_10003440(0x100228d8);
-  FUN_10003440(0x10022950);
-  FUN_10003440(0x10013060);
-  FUN_10003440(0x100130d8);
-  FUN_10003440(0x10013150);
-  FUN_10003440(0x100131c8);
-  FUN_10003440(0x10013240);
-  FUN_10003440(0x100132b8);
-  FUN_10003440(0x100229c8);
-  FUN_10003440(0x10022a40);
-  FUN_10003440(0x10022ab8);
-  FUN_10003440(0x10022b30);
-  FUN_10003440(0x10022ba8);
-  FUN_10003440(0x10022c28);
+  FUN_10003440((intptr_t)&DAT_10022860);
+  FUN_10003440((intptr_t)&DAT_100228d8);
+  FUN_10003440((intptr_t)&DAT_10022950);
+  FUN_10003440((intptr_t)&DAT_10013060);
+  FUN_10003440((intptr_t)&DAT_100130d8);
+  FUN_10003440((intptr_t)&DAT_10013150);
+  FUN_10003440((intptr_t)&DAT_100131c8);
+  FUN_10003440((intptr_t)&DAT_10013240);
+  FUN_10003440((intptr_t)&DAT_100132b8);
+  FUN_10003440((intptr_t)&DAT_100229c8);
+  FUN_10003440((intptr_t)&DAT_10022a40);
+  FUN_10003440((intptr_t)&DAT_10022ab8);
+  FUN_10003440((intptr_t)&DAT_10022b30);
+  FUN_10003440((intptr_t)&DAT_10022ba8);
+  FUN_10003440((intptr_t)&DAT_10022c28);
   iVar4 = GetGlobalTime();
   if (DAT_1002275c < iVar4) {
     iVar4 = GetGlobalTime();
@@ -1859,15 +1859,15 @@ void ProcessScenary(void)
   if (DAT_10023c3c < iVar4) {
     iVar4 = GetGlobalTime();
     DAT_10023c3c = iVar4 + 200;
-    FUN_10003600((int *)&DAT_10022860,DAT_10012c00_ovl,0x10022760,3000);
-    FUN_10003600((int *)&DAT_100228d8,DAT_10012c00_ovl,0x10022778,3000);
-    FUN_10003600((int *)&DAT_10022950,DAT_10012c00_ovl,0x10022790,3000);
-    FUN_10003600((int *)&DAT_10013060,DAT_10012c00_ovl,0x10022818,0x5dc);
-    FUN_10003600((int *)&DAT_100130d8,DAT_10012c00_ovl,0x10022830,0x5dc);
-    FUN_10003600((int *)&DAT_10013150,DAT_10012c00_ovl,0x10022848,0x5dc);
-    FUN_10003600((int *)&DAT_100229c8,DAT_10012c00_ovl,0x100227b8,0x5dc);
-    FUN_10003600((int *)&DAT_10022a40,DAT_10012c00_ovl,0x100227d0,0x5dc);
-    FUN_10003600((int *)&DAT_10022ab8,DAT_10012c00_ovl,0x100227f0,0x5dc);
+    FUN_10003600((int *)&DAT_10022860,DAT_10012c00_ovl,(intptr_t)&DAT_10022760,3000);
+    FUN_10003600((int *)&DAT_100228d8,DAT_10012c00_ovl,(intptr_t)&DAT_10022778,3000);
+    FUN_10003600((int *)&DAT_10022950,DAT_10012c00_ovl,(intptr_t)&DAT_10022790,3000);
+    FUN_10003600((int *)&DAT_10013060,DAT_10012c00_ovl,(intptr_t)&DAT_10022818,0x5dc);
+    FUN_10003600((int *)&DAT_100130d8,DAT_10012c00_ovl,(intptr_t)&DAT_10022830,0x5dc);
+    FUN_10003600((int *)&DAT_10013150,DAT_10012c00_ovl,(intptr_t)&DAT_10022848,0x5dc);
+    FUN_10003600((int *)&DAT_100229c8,DAT_10012c00_ovl,(intptr_t)&DAT_100227b8,0x5dc);
+    FUN_10003600((int *)&DAT_10022a40,DAT_10012c00_ovl,(intptr_t)&DAT_100227d0,0x5dc);
+    FUN_10003600((int *)&DAT_10022ab8,DAT_10012c00_ovl,(intptr_t)&DAT_100227f0,0x5dc);
     FUN_10003530(&DAT_10023ca0,DAT_10012c00_ovl,0x100131dc,DAT_100131c8,&DAT_100131d4);
     FUN_10003530(&DAT_10023ca0,DAT_10012c00_ovl,0x10013254,DAT_10013240,&DAT_1001324c);
     FUN_10003530(&DAT_10023ca0,DAT_10012c00_ovl,0x100132cc,DAT_100132b8,&DAT_100132c4);
@@ -1875,10 +1875,10 @@ void ProcessScenary(void)
     FUN_10003530(&DAT_10023ca0,DAT_10012c00_ovl,0x10022bbc,DAT_10022ba8,&DAT_10022bb4);
     FUN_10003530(&DAT_10023ca0,DAT_10012c00_ovl,0x10022c3c,DAT_10022c28,&DAT_10022c34);
   }
-  bVar3 = FUN_10003420(0x10012fe8);
+  bVar3 = FUN_10003420((intptr_t)&DAT_10012fe8);
   if (bVar3) {
     iVar4 = GetGlobalTime();
-    if (((DAT_10022ca4 < iVar4) && (iVar4 = FUN_100036e0(0x10022ca8), iVar4 < 4)) &&
+    if (((DAT_10022ca4 < iVar4) && (iVar4 = FUN_100036e0((intptr_t)&DAT_10022ca8), iVar4 < 4)) &&
        (iVar4 = GetUnitsAmount0(&DAT_10023a8e,DAT_10023c68 & 0xff), iVar4 == 0)) {
       iVar4 = GetGlobalTime();
       DAT_10022ca4 = iVar4 + 4000;
@@ -1890,7 +1890,7 @@ void ProcessScenary(void)
       AddResource(DAT_10012c09,1,-500);
       AddResource(DAT_10012c12,1,-500);
     }
-    FUN_10003440(0x10012fe8);
+    FUN_10003440((intptr_t)&DAT_10012fe8);
   }
   cVar2 = NationIsErased(DAT_10012c09);
   if ((cVar2 != '\0') && (cVar2 = NationIsErased(DAT_10012c12), cVar2 != '\0')) {

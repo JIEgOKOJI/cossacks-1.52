@@ -28,12 +28,12 @@ long long DAT_1000aca0 = 0;
 long long DAT_1000aca8 = 0;
 long long DAT_1000acb0 = 0;
 long long DAT_1000acb8 = 0;
-long long DAT_1000acc0 = 0;
-long long DAT_1000acc8 = 0;
-long long DAT_1000acd0 = 0;
-long long DAT_1000acd8 = 0;
-long long DAT_1000ace0 = 0;
-long long DAT_1000ace8 = 0;
+unsigned char DAT_1000acc0[48] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+#define DAT_1000acc8 (*(long long *)((char *)DAT_1000acc0 + 0x8))
+#define DAT_1000acd0 (*(long long *)((char *)DAT_1000acc0 + 0x10))
+#define DAT_1000acd8 (*(long long *)((char *)DAT_1000acc0 + 0x18))
+#define DAT_1000ace0 (*(long long *)((char *)DAT_1000acc0 + 0x20))
+#define DAT_1000ace8 (*(long long *)((char *)DAT_1000acc0 + 0x28))
 
 /* Forward declarations */
 BOOL FUN_100015f0(int param_1);
@@ -378,7 +378,7 @@ LAB_1000139c:
   }
   bVar2 = FUN_10001850(&DAT_1000ac70);
   if ((bVar2) && (iVar6 = GetTotalAmount0(&DAT_1000ac80), iVar6 != 0)) {
-    FUN_10001790(&DAT_1000ac20,0x1000acc0,6,&DAT_1000ac70,1);
+    FUN_10001790(&DAT_1000ac20,(intptr_t)&DAT_1000acc0,6,&DAT_1000ac70,1);
     SetTrigg(3,0);
   }
   else {

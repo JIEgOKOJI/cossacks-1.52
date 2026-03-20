@@ -83,9 +83,10 @@ void FUN_10001dd0(int param_1,int param_2,int param_3,int param_4,int param_5,
 BOOL FUN_10001e90(int param_1);
 void FUN_10001ed0(unsigned int *param_1,int param_2,int param_3,int param_4,int param_5);
 void  FUN_100020a0(int param_1);
+void FUN_100020e0(intptr_t param_1,int param_2);
 int FUN_10002100(int param_1,int param_2,int param_3);
 void FUN_10002190(int param_1,int param_2,int param_3);
-void  FUN_100022e0(int param_1);
+void  FUN_100022e0(intptr_t param_1);
 void  FUN_10002320(void *this_ptr,int param_1,int param_2);
 void  FUN_10002370(char *param_1);
 void FUN_100025eb(int *param_1);
@@ -250,6 +251,16 @@ void  FUN_100020a0(int param_1)
 
 
 
+void __cdecl FUN_100020e0(intptr_t param_1,int param_2)
+
+{
+  CreateObject0(param_1 + 0x10,param_2,param_2 + 0x10,6,param_1,0);
+  return;
+}
+
+
+
+
 
 int __cdecl FUN_10002100(int param_1,int param_2,int param_3)
 
@@ -346,7 +357,7 @@ void __cdecl FUN_10002190(int param_1,int param_2,int param_3)
 
 
 
-void  FUN_100022e0(int param_1)
+void  FUN_100022e0(intptr_t param_1)
 
 {
   RegisterDynGroup(param_1 + 0xd);
@@ -548,15 +559,15 @@ void OnInit(void)
   RegisterZone(&DAT_1000f32d,"ZSeaPatrol7");
   RegisterZone(&DAT_1000f30d,"ZSeaPatrol8");
   RegisterZone(&DAT_1000f2ed,"ZSeaPatrol9");
-  FUN_100022e0(0x1000f3e8);
-  FUN_100022e0(0x1000f3c8);
-  FUN_100022e0(0x1000f3a8);
-  FUN_100022e0(0x1000f388);
-  FUN_100022e0(0x1000f368);
-  FUN_100022e0(0x1000f348);
-  FUN_100022e0(0x1000f328);
-  FUN_100022e0(0x1000f308);
-  FUN_100022e0(0x1000f2e8);
+  FUN_100022e0((intptr_t)&DAT_1000f3e8);
+  FUN_100022e0((intptr_t)&DAT_1000f3c8);
+  FUN_100022e0((intptr_t)&DAT_1000f3a8);
+  FUN_100022e0((intptr_t)&DAT_1000f388);
+  FUN_100022e0((intptr_t)&DAT_1000f368);
+  FUN_100022e0((intptr_t)&DAT_1000f348);
+  FUN_100022e0((intptr_t)&DAT_1000f328);
+  FUN_100022e0((intptr_t)&DAT_1000f308);
+  FUN_100022e0((intptr_t)&DAT_1000f2e8);
   RegisterUnits(&DAT_1000f2e0,"GWorota");
   RegisterUnits(&DAT_1000f2d8,"GBarack");
   RegisterUnits(&DAT_1000f2d0,"GPlot");
@@ -629,10 +640,10 @@ void ProcessScenary(void)
     RunTimer(0xf,100);
     RunTimer(0x10,100);
     RunTimer(0x11,15000);
-    CreateObject0(0x1000f460,0x1000f478,0,0,0,0);
-    CreateObject0(0x1000f448,0x1000f478,0,0,0,0);
-    CreateObject0(0x1000f430,0x1000f478,0,0,0,0);
-    CreateObject0(0x1000f418,0x1000f478,0,0,0,0);
+    FUN_100020e0((intptr_t)&DAT_1000f460,0x1000f478);
+    FUN_100020e0((intptr_t)&DAT_1000f448,0x1000f478);
+    FUN_100020e0((intptr_t)&DAT_1000f430,0x1000f478);
+    FUN_100020e0((intptr_t)&DAT_1000f418,0x1000f478);
     iVar2 = 0;
     iVar5 = GetDiff(0);
     if (iVar5 != -1 && -1 < iVar5 + 1) {
@@ -675,10 +686,10 @@ void ProcessScenary(void)
     FUN_10001ed0((unsigned int *)&DAT_1000f498,3,0x1e,400,&DAT_1000f490);
     RunTimer(1,300);
   }
-  FUN_10001dd0(2,0x1000f460,0x1000f478,2,&DAT_1000f490,3);
-  FUN_10001dd0(3,0x1000f448,0x1000f478,3,&DAT_1000f490,3);
-  FUN_10001dd0(4,0x1000f430,0x1000f478,4,&DAT_1000f490,3);
-  FUN_10001dd0(5,0x1000f418,0x1000f478,5,&DAT_1000f490,3);
+  FUN_10001dd0(2,(intptr_t)&DAT_1000f460,0x1000f478,2,&DAT_1000f490,3);
+  FUN_10001dd0(3,(intptr_t)&DAT_1000f448,0x1000f478,3,&DAT_1000f490,3);
+  FUN_10001dd0(4,(intptr_t)&DAT_1000f430,0x1000f478,4,&DAT_1000f490,3);
+  FUN_10001dd0(5,(intptr_t)&DAT_1000f418,0x1000f478,5,&DAT_1000f490,3);
   FUN_10002370(&DAT_1000f3e8);
   FUN_10002370(&DAT_1000f3c8);
   FUN_10002370(&DAT_1000f3a8);

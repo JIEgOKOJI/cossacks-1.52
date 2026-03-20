@@ -29,23 +29,23 @@ long long DAT_10038480 = 0;
 long long DAT_10038488 = 0;
 long long DAT_10038490 = 0;
 long long DAT_10038498 = 0;
-long long DAT_100384a0 = 0;
-long long DAT_100384a8 = 0;
-long long DAT_100384b0 = 0;
-long long DAT_100384b8 = 0;
+unsigned char DAT_100384a0[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+#define DAT_100384a8 (*(long long *)((char *)DAT_100384a0 + 0x8))
+#define DAT_100384b0 (*(long long *)((char *)DAT_100384a8 + 0x8))
+#define DAT_100384b8 (*(long long *)((char *)DAT_100384b0 + 0x8))
 long long DAT_100384c0 = 0;
 long long DAT_100384c8 = 0;
-long long DAT_100384d0 = 0;
-long long DAT_100384d8 = 0;
-long long DAT_100384e0 = 0;
-long long DAT_100384e8 = 0;
-long long DAT_100384f0 = 0;
-long long DAT_100384f8 = 0;
-long long DAT_10038500 = 0;
-long long DAT_10038508 = 0;
-long long DAT_10038510 = 0;
-long long DAT_10038518 = 0;
-long long DAT_10038520 = 0;
+unsigned char DAT_100384d0[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+#define DAT_100384d8 (*(long long *)((char *)DAT_100384d0 + 0x8))
+#define DAT_100384e0 (*(long long *)((char *)DAT_100384d8 + 0x8))
+#define DAT_100384e8 (*(long long *)((char *)DAT_100384e0 + 0x8))
+#define DAT_100384f0 (*(long long *)((char *)DAT_100384e8 + 0x8))
+#define DAT_100384f8 (*(long long *)((char *)DAT_100384f0 + 0x8))
+#define DAT_10038500 (*(long long *)((char *)DAT_100384f8 + 0x8))
+#define DAT_10038508 (*(long long *)((char *)DAT_10038500 + 0x8))
+#define DAT_10038510 (*(long long *)((char *)DAT_10038508 + 0x8))
+#define DAT_10038518 (*(long long *)((char *)DAT_10038510 + 0x8))
+#define DAT_10038520 (*(long long *)((char *)DAT_10038518 + 0x8))
 long long DAT_10038528 = 0;
 long long DAT_10038530 = 0;
 long long DAT_10038538 = 0;

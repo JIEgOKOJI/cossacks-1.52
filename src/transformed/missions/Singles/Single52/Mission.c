@@ -12,7 +12,7 @@ long long DAT_1000bf78 = 0;
 long long DAT_1000bf80 = 0;
 long long DAT_1000bf88 = 0;
 long long DAT_1000bf90 = 0;
-long long DAT_1000bf98 = 0;
+unsigned char DAT_1000bf98[104] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 long long DAT_1000c000 = 0;
 long long DAT_1000c008 = 0;
 long long DAT_1000c010 = 0;
@@ -34,15 +34,15 @@ int FUN_10001fdd() { return 0; }
 void FUN_10001020(void *param_1);
 void  FUN_100019c0(void *this_ptr,int param_1);
 void  FUN_10001a10(void *this_ptr,int param_1,int param_2);
-void  FUN_10001a70(int param_1);
+void  FUN_10001a70(intptr_t param_1);
 int  FUN_10001ac0(int param_1);
 void  FUN_10001b10(void *this_ptr,int param_1);
 void  FUN_10001b20(void *this_ptr,int param_1);
 void  FUN_10001b30(void *this_ptr,int param_1);
 void  FUN_10001be0(void *this_ptr,int param_1);
 void  FUN_10001cc0(void *this_ptr,int param_1);
-int  FUN_10001d60(int param_1);
-BOOL  FUN_10001da0(int param_1);
+int  FUN_10001d60(intptr_t param_1);
+BOOL  FUN_10001da0(intptr_t param_1);
 int FUN_10001dc0(char *param_1,byte *param_2);
 
 void OnInit();
@@ -119,7 +119,7 @@ void  FUN_10001a10(void *this_ptr,int param_1,int param_2)
 
 
 
-void  FUN_10001a70(int param_1)
+void  FUN_10001a70(intptr_t param_1)
 
 {
   int iVar1;
@@ -266,7 +266,7 @@ void  FUN_10001cc0(void *this_ptr,int param_1)
 
 
 
-int  FUN_10001d60(int param_1)
+int  FUN_10001d60(intptr_t param_1)
 
 {
   unsigned int uVar1;
@@ -285,7 +285,7 @@ int  FUN_10001d60(int param_1)
 
 
 
-BOOL  FUN_10001da0(int param_1)
+BOOL  FUN_10001da0(intptr_t param_1)
 
 {
   int iVar1;
@@ -467,7 +467,7 @@ void ProcessScenary(void)
   iVar4 = GetGlobalTime();
   bVar2 = Trigg(8);
   if ((bVar2 & 2000 < iVar4) != 0) {
-    bVar3 = FUN_10001da0(0x1000bf98);
+    bVar3 = FUN_10001da0((intptr_t)&DAT_1000bf98);
     if (bVar3) {
       SetTrigg(8,0);
       iVar4 = GetDiff(0);
@@ -480,7 +480,7 @@ void ProcessScenary(void)
     FUN_10001cc0(&DAT_1000bf98,&DAT_1000bf88);
     cVar1 = TimerDone(2);
     if ((cVar1 != '\0') &&
-       (uVar5 = FUN_10001d60(0x1000bf98), pcVar7 = (void*)&ShowPage, (char)uVar5 != '\0')) {
+       (uVar5 = FUN_10001d60((intptr_t)&DAT_1000bf98), pcVar7 = (void*)&ShowPage, (char)uVar5 != '\0')) {
       iVar4 = GetDiff(0);
       RunTimer(2,(8 - iVar4) * 500);
       FUN_10001be0(&DAT_1000bf98,1);
@@ -494,7 +494,7 @@ void ProcessScenary(void)
   }
   cVar1 = Trigg(1);
   if (cVar1 != '\0') {
-    FUN_10001a70(0x1000c038);
+    FUN_10001a70((intptr_t)&DAT_1000c038);
     cVar1 = TimerDone(0);
     if (cVar1 != '\0') {
       SetTrigg(1,0);
@@ -505,7 +505,7 @@ void ProcessScenary(void)
   }
   cVar1 = Trigg(2);
   if (cVar1 != '\0') {
-    FUN_10001a70(0x1000c088);
+    FUN_10001a70((intptr_t)&DAT_1000c088);
     cVar1 = TimerDone(0);
     if ((cVar1 != '\0') && (cVar1 = Trigg(1), cVar1 == '\0')) {
       SetTrigg(2,0);
@@ -516,7 +516,7 @@ void ProcessScenary(void)
   }
   cVar1 = Trigg(3);
   if (cVar1 != '\0') {
-    FUN_10001a70(0x1000c0d8);
+    FUN_10001a70((intptr_t)&DAT_1000c0d8);
     cVar1 = TimerDone(0);
     if ((cVar1 != '\0') && (cVar1 = Trigg(2), cVar1 == '\0')) {
       SetTrigg(3,0);

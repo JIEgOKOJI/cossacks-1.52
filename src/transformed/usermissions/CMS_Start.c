@@ -99,7 +99,7 @@ void  FUN_10002ab0(int param_1);
 void  FUN_10002b10(void *this_ptr,int param_1);
 void  FUN_10002b80(void *this_ptr,int param_1);
 byte * FUN_10002bf0(int param_1,byte *param_2);
-void  FUN_100030c0(int param_1);
+void  FUN_100030c0(intptr_t param_1);
 void  FUN_10003100(int param_1);
 int  FUN_10003140(void *this_ptr,char *param_1);
 char *  FUN_100036d0(void *this_ptr,char *param_1);
@@ -172,7 +172,7 @@ void ProcessScenary();
 void FUN_10001010(void)
 
 {
-  FUN_100030c0(0x10013300);
+  FUN_100030c0((intptr_t)&DAT_10013300);
   return;
 }
 
@@ -712,7 +712,7 @@ byte * __cdecl FUN_10002bf0(int param_1,byte *param_2)
 
 
 
-void  FUN_100030c0(int param_1)
+void  FUN_100030c0(intptr_t param_1)
 
 {
   int *puVar1;

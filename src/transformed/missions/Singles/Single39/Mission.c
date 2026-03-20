@@ -72,7 +72,7 @@ long long DAT_10035d50 = 0;
 long long DAT_10035d60 = 0;
 int DAT_10035dc0 = 0;
 long long DAT_10035dc8 = 0;
-long long DAT_10035dd8 = 0;
+unsigned char DAT_10035dd8[48] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 int DAT_10035f20 = 0;
 int DAT_10035f70 = 0;
 int DAT_10035f84 = 0;
@@ -116,7 +116,7 @@ void  FUN_10004260(void *param_1);
 void  FUN_100042e0(void *this_ptr,int param_1);
 void  FUN_10004340(void *param_1);
 void  FUN_100043c0(void *this_ptr,int param_1);
-void  FUN_10004400(int param_1);
+void  FUN_10004400(intptr_t param_1);
 void  FUN_10004450(void *this_ptr,int param_1,int param_2);
 void  FUN_100044a0(void *param_1);
 void  FUN_100047c0(void *param_1);
@@ -194,14 +194,14 @@ void FUN_10001310(void)
   int *puVar2;
   int local_44 [15];
   int uStack_8;
-FUN_10004400(0x10035958);
-  FUN_10004400(0x10035988);
-  FUN_10004400(0x100359b8);
-  FUN_10004400(0x100359e8);
-  FUN_10004400(0x10035a48);
-  FUN_10004400(0x10035aa8);
-  FUN_10004400(0x10035b08);
-  FUN_10004400(0x10035b68);
+FUN_10004400((intptr_t)&DAT_10035958);
+  FUN_10004400((intptr_t)&DAT_10035988);
+  FUN_10004400((intptr_t)&DAT_100359b8);
+  FUN_10004400((intptr_t)&DAT_100359e8);
+  FUN_10004400((intptr_t)&DAT_10035a48);
+  FUN_10004400((intptr_t)&DAT_10035aa8);
+  FUN_10004400((intptr_t)&DAT_10035b08);
+  FUN_10004400((intptr_t)&DAT_10035b68);
   uStack_8 = 0x10001385;
   return;
 }
@@ -844,7 +844,7 @@ void  FUN_100043c0(void *this_ptr,int param_1)
 
 
 
-void  FUN_10004400(int param_1)
+void  FUN_10004400(intptr_t param_1)
 
 {
   int iVar1;

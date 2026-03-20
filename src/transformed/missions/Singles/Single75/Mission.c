@@ -144,7 +144,7 @@ int * FUN_10001020(void)
     return &DAT_1000b158;
   }
   iVar1 = GetTotalAmount0(&DAT_1000b150);
-  return (int *)(~-(unsigned int)(iVar1 != 0) & 0x1000b150);
+  return (int *)(~-(unsigned int)(iVar1 != 0) & (intptr_t)&DAT_1000b150);
 }
 
 
@@ -165,7 +165,7 @@ int * FUN_10001070(void)
     return &DAT_1000b210;
   }
   iVar1 = GetTotalAmount0(&DAT_1000b220);
-  return (int *)(~-(unsigned int)(iVar1 != 0) & 0x1000b220);
+  return (int *)(~-(unsigned int)(iVar1 != 0) & (intptr_t)&DAT_1000b220);
 }
 
 

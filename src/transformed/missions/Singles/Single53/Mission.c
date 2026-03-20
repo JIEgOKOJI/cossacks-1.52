@@ -11,32 +11,32 @@ long long DAT_10011080 = 0;
 char DAT_10011328[] = "mill";
 char DAT_1001137c[] = "depo";
 long long DAT_100148f8 = 0;
-long long DAT_10014f08 = 0;
-long long DAT_10014f68 = 0;
-long long DAT_10014fc8 = 0;
+unsigned char DAT_10014f08[96] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+unsigned char DAT_10014f68[96] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+unsigned char DAT_10014fc8[96] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x00, 0xE4, 0x00, 0x00, 0x00, 0x4B, 0x30, 0x6A, 0x30, 0xB1, 0x30, 0xC4, 0x30, 0xCB, 0x30, 0xE8, 0x30, 0xF5, 0x30, 0xFC, 0x30, 0x06, 0x31, 0x10, 0x31, 0x17, 0x31, 0x28, 0x31, 0x2F, 0x31, 0x38, 0x31, 0x63, 0x31, 0x71, 0x31};
 long long DAT_10015090 = 0;
 unsigned char DAT_10015094[60] = {0};
 long long DAT_100150d0 = 0;
 long long DAT_100150d8 = 0;
 long long DAT_100150e0 = 0;
-long long DAT_100150f0 = 0;
-long long DAT_10015260 = 0;
-long long DAT_100153d0 = 0;
-long long DAT_10015540 = 0;
+unsigned char DAT_100150f0[368] = {0};
+unsigned char DAT_10015260[368] = {0};
+unsigned char DAT_100153d0[368] = {0};
+unsigned char DAT_10015540[368] = {0};
 long long DAT_100156b0 = 0;
 long long DAT_100156b8 = 0;
 long long DAT_100156c0 = 0;
-long long DAT_100156c8 = 0;
+unsigned char DAT_100156c8[176] = {0};
 long long DAT_10015778 = 0;
 long long DAT_10015780 = 0;
 long long DAT_10015788 = 0;
 long long DAT_10015790 = 0;
 long long DAT_10015798 = 0;
-unsigned char DAT_100157a0[57] = {0};
-long long DAT_100157d9 = 0;
-unsigned char DAT_100157dd[603] = {0};
-long long DAT_10015a38 = 0;
-long long DAT_10015b80 = 0;
+unsigned char DAT_100157a0[664] = {0};
+#define DAT_100157d9 (*(long long *)((char *)DAT_100157a0 + 0x39))
+#define DAT_100157dd (*(long long *)((char *)DAT_100157a0 + 0x3d))
+unsigned char DAT_10015a38[328] = {0};
+unsigned char DAT_10015b80[96] = {0};
 long long DAT_10015be0 = 0;
 long long DAT_10015be8 = 0;
 long long DAT_10015bf0 = 0;
@@ -44,24 +44,24 @@ long long DAT_10015bf8 = 0;
 long long DAT_10015c00 = 0;
 int *DAT_10015c08 = 0;
 long long DAT_10015c18 = 0;
-unsigned char DAT_10015c28[6213] = {0};
-unsigned char DAT_1001746d[56291] = {0};
+unsigned char DAT_10015c28[62504] = {0};
+#define DAT_1001746d (*(long long *)((char *)DAT_10015c28 + 0x1845))
 long long DAT_10025050 = 0;
 long long DAT_10025058 = 0;
 int DAT_10025060 = 0;
 long long DAT_10025068 = 0;
-long long DAT_10025070 = 0;
-long long DAT_100250d8 = 0;
-long long DAT_10025150 = 0;
-long long DAT_100251c8 = 0;
-long long DAT_10025240 = 0;
-long long DAT_100252b8 = 0;
+unsigned char DAT_10025070[104] = {0};
+unsigned char DAT_100250d8[120] = {0};
+unsigned char DAT_10025150[120] = {0};
+unsigned char DAT_100251c8[120] = {0};
+unsigned char DAT_10025240[120] = {0};
+unsigned char DAT_100252b8[120] = {0};
 long long DAT_10025330 = 0;
 long long DAT_10025338 = 0;
 long long DAT_10025340 = 0;
 long long DAT_10025348 = 0;
-long long DAT_10025350 = 0;
-long long DAT_100256f8 = 0;
+unsigned char DAT_10025350[936] = {0};
+unsigned char DAT_100256f8[15600] = {0};
 long long DAT_100293e8 = 0;
 long long DAT_100293ec = 0;
 long long DAT_100293f4 = 0;
@@ -96,7 +96,7 @@ void  FUN_10001200(void *this_ptr,int param_1);
 void  FUN_10001210(void *this_ptr,int param_1);
 void  FUN_100012a0(void *this_ptr,int param_1);
 void  FUN_10001380(void *this_ptr,int param_1);
-int  FUN_100013d0(int param_1);
+int  FUN_100013d0(intptr_t param_1);
 void  FUN_10001430(void *this_ptr,int param_1);
 void  FUN_10001440(void *this_ptr,int param_1,int param_2);
 void  FUN_10001480(void *this_ptr,int param_1);
@@ -108,8 +108,8 @@ int  FUN_10001840(void *this_ptr,int param_1);
 char  FUN_10001870(char *param_1);
 int 
 FUN_100018f0(void *this_ptr,int param_1,int param_2,int param_3);
-void  FUN_10001950(int param_1);
-void  FUN_100019a0(int param_1);
+void  FUN_10001950(intptr_t param_1);
+void  FUN_100019a0(intptr_t param_1);
 int  FUN_10001a10(void *this_ptr,int param_1);
 void  FUN_10001a50(char *param_1);
 void  FUN_10001ae0(int param_1);
@@ -169,6 +169,7 @@ void  FUN_10002c00(void *this_ptr,int param_1,int param_2,int param_3);
 void  FUN_10002c30(void *this_ptr,int *param_1);
 BOOL  FUN_10002c50(int param_1);
 int  FUN_10002c70(int param_1);
+void  FUN_10002d60(intptr_t param_1);
 int  FUN_10002d70(int param_1);
 void  FUN_10002da0(int param_1);
 void  FUN_10002dd0(int *param_1);
@@ -384,7 +385,7 @@ void  FUN_10001380(void *this_ptr,int param_1)
 
 
 
-int  FUN_100013d0(int param_1)
+int  FUN_100013d0(intptr_t param_1)
 
 {
   unsigned int uVar1;
@@ -638,7 +639,7 @@ FUN_100018f0(void *this_ptr,int param_1,int param_2,int param_3)
 
 
 
-void  FUN_10001950(int param_1)
+void  FUN_10001950(intptr_t param_1)
 
 {
   int iVar1;
@@ -667,7 +668,7 @@ void  FUN_10001950(int param_1)
 
 
 
-void  FUN_100019a0(int param_1)
+void  FUN_100019a0(intptr_t param_1)
 
 {
   int iVar1;
@@ -1904,6 +1905,16 @@ int  FUN_10002c70(int param_1)
 
 
 
+void  FUN_10002d60(intptr_t param_1)
+
+{
+  GetTotalAmount0(param_1 + 0x14);
+  return;
+}
+
+
+
+
 
 int  FUN_10002d70(int param_1)
 
@@ -2514,7 +2525,7 @@ void ProcessScenary(void)
     if (cVar1 != '\0') {
       SetTrigg(1,0);
       ShowPage("#Allert0");
-      FUN_10001950(0x10015a38);
+      FUN_10001950((intptr_t)&DAT_10015a38);
       RunTimer(1,6000);
     }
     FUN_100014e0(&DAT_100150f0);
@@ -2522,7 +2533,7 @@ void ProcessScenary(void)
     FUN_100014e0(&DAT_100153d0);
     FUN_100014e0(&DAT_10015540);
     cVar1 = TimerDone(1);
-    if ((cVar1 != '\0') && (uVar5 = FUN_100013d0(0x10025070), (char)uVar5 != '\0')) {
+    if ((cVar1 != '\0') && (uVar5 = FUN_100013d0((intptr_t)&DAT_10025070), (char)uVar5 != '\0')) {
       iVar4 = GetDiff(0);
       RunTimer(1,(0xc - iVar4) * 500);
       FUN_100012a0(&DAT_10025070,1);
@@ -2537,21 +2548,21 @@ void ProcessScenary(void)
     }
   }
   FUN_10002b90(&DAT_100250d8,1);
-  iVar4 = GetTotalAmount0(0x100250d8);
+  FUN_10002d60((intptr_t)&DAT_100250d8);
   if (iVar4 < 0x14) {
     FUN_10002b90(&DAT_100250d8,4);
   }
-  iVar4 = GetTotalAmount0(0x100250d8);
+  FUN_10002d60((intptr_t)&DAT_100250d8);
   if (0x32 < iVar4) {
     FUN_10002b90(&DAT_100250d8,0);
   }
   FUN_10002e30(&DAT_100250d8,(int *)&DAT_10015bf8,(int *)&DAT_10025058);
   FUN_10002b90(&DAT_10025150,1);
-  iVar4 = GetTotalAmount0(0x10025150);
+  FUN_10002d60((intptr_t)&DAT_10025150);
   if (iVar4 < 0x14) {
     FUN_10002b90(&DAT_10025150,4);
   }
-  iVar4 = GetTotalAmount0(0x10025150);
+  FUN_10002d60((intptr_t)&DAT_10025150);
   if (0x32 < iVar4) {
     FUN_10002b90(&DAT_10025150,0);
   }
@@ -2559,21 +2570,21 @@ void ProcessScenary(void)
     FUN_10002e30(&DAT_10025150,(int *)&DAT_10015bf8,(int *)&DAT_10025068);
   }
   FUN_10002b90(&DAT_100251c8,1);
-  iVar4 = GetTotalAmount0(0x100251c8);
+  FUN_10002d60((intptr_t)&DAT_100251c8);
   if (iVar4 < 0x14) {
     FUN_10002b90(&DAT_100251c8,4);
   }
-  iVar4 = GetTotalAmount0(0x100251c8);
+  FUN_10002d60((intptr_t)&DAT_100251c8);
   if (0x3c < iVar4) {
     FUN_10002b90(&DAT_100251c8,0);
   }
   FUN_10002e30(&DAT_100251c8,(int *)&DAT_10015780,(int *)&DAT_10025050);
   FUN_10002b90(&DAT_10025240,1);
-  iVar4 = GetTotalAmount0(0x10025240);
+  FUN_10002d60((intptr_t)&DAT_10025240);
   if (iVar4 < 0x14) {
     FUN_10002b90(&DAT_10025240,4);
   }
-  iVar4 = GetTotalAmount0(0x10025240);
+  FUN_10002d60((intptr_t)&DAT_10025240);
   if (0x46 < iVar4) {
     FUN_10002b90(&DAT_10025240,0);
   }
@@ -2581,11 +2592,11 @@ void ProcessScenary(void)
     FUN_10002e30(&DAT_10025240,(int *)&DAT_10015bf8,(int *)&DAT_10025058);
   }
   FUN_10002b90(&DAT_100252b8,1);
-  iVar3 = GetTotalAmount0(0x100252b8);
+  FUN_10002d60((intptr_t)&DAT_100252b8);
   if (iVar3 < 10) {
     FUN_10002b90(&DAT_100252b8,4);
   }
-  iVar3 = GetTotalAmount0(0x100252b8);
+  FUN_10002d60((intptr_t)&DAT_100252b8);
   if (0x28 < iVar3) {
     FUN_10002b90(&DAT_100252b8,0);
   }
@@ -2643,7 +2654,7 @@ void ProcessScenary(void)
     SelectUnits(&DAT_10025340,1);
     SelectUnits(&DAT_10025338,1);
     SelChangeNation(3,0);
-    FUN_100019a0(0x10015a38);
+    FUN_100019a0((intptr_t)&DAT_10015a38);
     uVar5 = GetGlobalTime();
     FUN_10002bc0(&DAT_10025150,uVar5);
     uVar5 = GetGlobalTime();

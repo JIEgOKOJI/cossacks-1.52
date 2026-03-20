@@ -601,6 +601,35 @@ def generate_var_declarations(dat_types, pe, code=''):
     # Detect stride patterns
     stride_sizes = detect_stride_sizes(code, dat_types) if code else {}
 
+    # Detect RegisterVar struct blocks: RegisterVar(&DAT_xxx, N) with N > 8
+    # means DAT_xxx must be a contiguous block of N bytes
+    regvar_blocks = {}  # addr_hex -> size
+    if code:
+        for m in re.finditer(r'RegisterVar\s*\(\s*&DAT_([0-9a-fA-F]+)\s*,\s*(0x[0-9a-fA-F]+|\d+)\s*\)', code):
+            addr_hex = m.group(1).lower()
+            size = int(m.group(2), 0)
+            if size > 8:
+                # Don't convert to byte array if the variable is used as a scalar
+                # (assigned to, used in arithmetic) — arrays can't be assigned.
+                if dat_types.get(addr_hex) == 'var':
+                    continue
+                # Pad to 8-byte alignment
+                padded = (size + 7) & ~7
+                regvar_blocks[addr_hex] = padded
+
+    # Build set of addresses covered by regvar blocks (intermediate DAT_)
+    covered_by_block = {}  # addr_hex -> (base_addr_hex, offset)
+    for base_hex, block_size in regvar_blocks.items():
+        base_va = int(base_hex, 16)
+        for addr_hex in sorted_addrs:
+            va = int(addr_hex, 16)
+            if va > base_va and va < base_va + block_size:
+                offset = va - base_va
+                # Don't absorb intermediate vars that are used as scalars
+                if dat_types.get(addr_hex) == 'var':
+                    continue
+                covered_by_block[addr_hex] = (base_hex, offset)
+
     # Build sorted address list for extent calculation
     all_vas = sorted(int(a, 16) for a in dat_types.keys())
 
@@ -614,6 +643,27 @@ def generate_var_declarations(dat_types, pe, code=''):
     for addr_hex in sorted_addrs:
         dtype = dat_types[addr_hex]
         va = int(addr_hex, 16)
+
+        # If this address is covered by a RegisterVar block, emit a #define alias
+        if addr_hex in covered_by_block:
+            base_hex, offset = covered_by_block[addr_hex]
+            if dtype == 'var':
+                lines.append(f'#define DAT_{addr_hex} (*(int *)((char *)DAT_{base_hex} + 0x{offset:x}))')
+            else:
+                # gameobj, ptr, or other — used with &, so define as lvalue
+                lines.append(f'#define DAT_{addr_hex} (*(long long *)((char *)DAT_{base_hex} + 0x{offset:x}))')
+            continue
+
+        # If this is a RegisterVar block base, declare as byte array
+        if addr_hex in regvar_blocks:
+            byte_size = regvar_blocks[addr_hex]
+            raw = pe.read_bytes_at_va(va, byte_size)
+            if raw and len(raw) == byte_size:
+                hex_vals = ', '.join(f'0x{b:02X}' for b in raw)
+                lines.append(f'unsigned char DAT_{addr_hex}[{byte_size}] = {{{hex_vals}}};')
+            else:
+                lines.append(f'unsigned char DAT_{addr_hex}[{byte_size}] = {{0}};')
+            continue
 
         # If stride detection found this needs to be a large array
         if addr_hex in stride_sizes:
@@ -909,7 +959,12 @@ if __name__ == '__main__':
         if len(body_lines) == 1:
             call_m = re.match(r'(\w+)\s*\(', body_lines[0])
             if call_m and call_m.group(1) in API_NAMES:
-                wrapper_map[fn_name] = call_m.group(1)
+                # Only inline if the API call's arguments are just param_N
+                # (no arithmetic like param_1 + 0x20). Otherwise the inliner
+                # would lose the argument transformation.
+                call_args = body_lines[0][body_lines[0].index('('):]
+                if not re.search(r'param_\d+\s*[+\-*/&|^]', call_args):
+                    wrapper_map[fn_name] = call_m.group(1)
 
     # Replace all calls to wrapper FUN_xxx(args) → ApiName(args)
     # and remove the wrapper function definitions entirely
@@ -957,7 +1012,7 @@ if __name__ == '__main__':
         'StartAI', 'TakeFood', 'TakeStone', 'TakeWood',
     ]
     for vfn in VOID_API_FUNCS:
-        raw_code = re.sub(r'\b\w+\s*=\s*(' + re.escape(vfn) + r'\b)',
+        raw_code = re.sub(r'\b\w+\s*=\s*(?:\([^)]*\)\s*)*(' + re.escape(vfn) + r'\b)',
                           r'\1', raw_code)
 
     # Remove 'undefined4' type → replace with 'int'
@@ -1321,6 +1376,27 @@ if __name__ == '__main__':
 
     # Generate variable declarations (pass code for stride detection)
     var_decls = generate_var_declarations(dat_types, pe, raw_code)
+
+    # Fix raw PE addresses in FUN_ calls: replace 0x100XXXXX with (intptr_t)&DAT_xxx
+    # These are pointers to data section that Ghidra output as numeric constants.
+    known_dat_addrs = set(dat_types.keys())
+    def _fix_raw_pe_addr(m):
+        addr_hex = m.group(1).lower()
+        if addr_hex in known_dat_addrs:
+            return f'(intptr_t)&DAT_{addr_hex}'
+        return m.group(0)
+    raw_code = re.sub(r'\b0x(10[0-9a-fA-F]{4,6})\b', _fix_raw_pe_addr, raw_code)
+
+    # Fix FUN_ parameter types: if a FUN_ is called with (intptr_t)&DAT_xxx,
+    # its param_1 must be intptr_t, not int (int truncates 64-bit pointers).
+    funs_with_dat_args = set()
+    for m in re.finditer(r'(FUN_[0-9a-fA-F]+)\s*\(\s*\(intptr_t\)\s*&DAT_', raw_code):
+        funs_with_dat_args.add(m.group(1))
+    for fun_name in funs_with_dat_args:
+        # Fix forward declaration: void FUN_xxx(int param_1) → (intptr_t param_1)
+        raw_code = re.sub(
+            r'(\b' + fun_name + r'\s*\(\s*)int(\s+param_1\b)',
+            r'\1intptr_t\2', raw_code)
 
     # Fix &DAT_xxx pointer arithmetic: when a DAT_ is declared as an array
     # (unsigned char DAT_xxx[N]), &DAT_xxx gives unsigned char(*)[N] and

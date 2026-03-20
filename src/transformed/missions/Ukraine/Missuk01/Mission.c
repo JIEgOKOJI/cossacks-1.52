@@ -15,13 +15,13 @@ long long DAT_1003c410 = 0;
 long long DAT_1003c418 = 0;
 long long DAT_1003c420 = 0;
 long long DAT_1003c428 = 0;
-long long DAT_1003c430 = 0;
-long long DAT_1003c438 = 0;
-long long DAT_1003c440 = 0;
-long long DAT_1003c448 = 0;
-long long DAT_1003c450 = 0;
-long long DAT_1003c458 = 0;
-long long DAT_1003c460 = 0;
+unsigned char DAT_1003c430[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+#define DAT_1003c438 (*(long long *)((char *)DAT_1003c430 + 0x8))
+unsigned char DAT_1003c440[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+#define DAT_1003c448 (*(long long *)((char *)DAT_1003c440 + 0x8))
+#define DAT_1003c450 (*(long long *)((char *)DAT_1003c448 + 0x8))
+unsigned char DAT_1003c458[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+#define DAT_1003c460 (*(long long *)((char *)DAT_1003c458 + 0x8))
 long long DAT_1003c468 = 0;
 long long DAT_1003c470 = 0;
 long long DAT_1003c478 = 0;
@@ -113,8 +113,8 @@ long long DAT_1003c720 = 0;
 long long DAT_1003c728 = 0;
 long long DAT_1003c730 = 0;
 long long DAT_1003c738 = 0;
-long long DAT_1003c740 = 0;
-long long DAT_1003c748 = 0;
+unsigned char DAT_1003c740[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+#define DAT_1003c748 (*(long long *)((char *)DAT_1003c740 + 0x8))
 long long DAT_1003c750 = 0;
 long long DAT_1003c758 = 0;
 long long DAT_1003c760 = 0;

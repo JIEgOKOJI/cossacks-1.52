@@ -10,8 +10,8 @@ long long DAT_100343f0 = 0;
 long long DAT_100343f8 = 0;
 long long DAT_10034400 = 0;
 long long DAT_10034408 = 0;
-long long DAT_10034410 = 0;
-long long DAT_10034418 = 0;
+unsigned char DAT_10034410[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+#define DAT_10034418 (*(long long *)((char *)DAT_10034410 + 0x8))
 long long DAT_10034420 = 0;
 long long DAT_10034428 = 0;
 long long DAT_10034430 = 0;

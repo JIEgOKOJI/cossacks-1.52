@@ -5,10 +5,10 @@
 #include <time.h>
 
 /* Global variables */
-long long DAT_100363e0 = 0;
-long long DAT_100363e8 = 0;
-long long DAT_100363f0 = 0;
-long long DAT_100363f8 = 0;
+unsigned char DAT_100363e0[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+#define DAT_100363e8 (*(long long *)((char *)DAT_100363e0 + 0x8))
+#define DAT_100363f0 (*(long long *)((char *)DAT_100363e8 + 0x8))
+#define DAT_100363f8 (*(long long *)((char *)DAT_100363f0 + 0x8))
 long long DAT_10036400 = 0;
 long long DAT_10036408 = 0;
 long long DAT_10036410 = 0;
@@ -117,8 +117,8 @@ long long DAT_10036740 = 0;
 long long DAT_10036748 = 0;
 long long DAT_10036750 = 0;
 long long DAT_10036758 = 0;
-long long DAT_10036760 = 0;
-long long DAT_10036768 = 0;
+unsigned char DAT_10036760[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+#define DAT_10036768 (*(long long *)((char *)DAT_10036760 + 0x8))
 long long DAT_10036770 = 0;
 long long DAT_10036778 = 0;
 long long DAT_10036780 = 0;
@@ -131,22 +131,22 @@ long long DAT_100367b0 = 0;
 long long DAT_100367b8 = 0;
 long long DAT_100367c0 = 0;
 long long DAT_100367c8 = 0;
-long long DAT_100367d0 = 0;
-long long DAT_100367d8 = 0;
-long long DAT_100367e0 = 0;
-long long DAT_100367e8 = 0;
-long long DAT_100367f0 = 0;
+unsigned char DAT_100367d0[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+#define DAT_100367d8 (*(long long *)((char *)DAT_100367d0 + 0x8))
+unsigned char DAT_100367e0[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+#define DAT_100367e8 (*(long long *)((char *)DAT_100367e0 + 0x8))
+#define DAT_100367f0 (*(long long *)((char *)DAT_100367e8 + 0x8))
 long long DAT_100367f8 = 0;
 long long DAT_10036800 = 0;
 long long DAT_10036808 = 0;
 long long DAT_10036810 = 0;
 long long DAT_10036818 = 0;
-long long DAT_10036820 = 0;
-long long DAT_10036828 = 0;
+unsigned char DAT_10036820[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+#define DAT_10036828 (*(long long *)((char *)DAT_10036820 + 0x8))
 long long DAT_10036830 = 0;
 long long DAT_10036838 = 0;
-long long DAT_10036840 = 0;
-long long DAT_10036848 = 0;
+unsigned char DAT_10036840[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+#define DAT_10036848 (*(long long *)((char *)DAT_10036840 + 0x8))
 long long DAT_10036850 = 0;
 long long DAT_10036858 = 0;
 long long DAT_10036860 = 0;
@@ -157,8 +157,8 @@ long long DAT_10036880 = 0;
 long long DAT_10036888 = 0;
 long long DAT_10036890 = 0;
 long long DAT_10036898 = 0;
-long long DAT_100368a0 = 0;
-long long DAT_100368a8 = 0;
+unsigned char DAT_100368a0[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+#define DAT_100368a8 (*(long long *)((char *)DAT_100368a0 + 0x8))
 long long DAT_100368b0 = 0;
 void OnInit();
 void ProcessScenary();

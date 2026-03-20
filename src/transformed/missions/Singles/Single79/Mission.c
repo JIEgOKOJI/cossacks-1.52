@@ -101,7 +101,7 @@ void  FUN_10002160(void *this_ptr,int param_1,int param_2,int param_3);
 void  FUN_10002190(void *this_ptr,int param_1,int param_2,int param_3);
 void  FUN_100021c0(void *this_ptr,int *param_1);
 BOOL  FUN_100021e0(int param_1);
-int  FUN_10002200(int param_1);
+int  FUN_10002200(intptr_t param_1);
 int  FUN_100022f0(int param_1);
 void  FUN_10002320(int param_1);
 void  FUN_10002350(int *param_1);
@@ -129,7 +129,7 @@ void FUN_10002970(int param_1,int param_2,int param_3,int param_4,int param_5);
 void 
 FUN_10002a40(void *this_ptr,int param_1,int param_2,int param_3,int param_4);
 int *  FUN_10002a80(int *param_1);
-int  FUN_10002ad0(int param_1);
+int  FUN_10002ad0(intptr_t param_1);
 unsigned int  FUN_10002b20(void *this_ptr,unsigned int param_1,int param_2,int param_3,int param_4);
 void  FUN_10002bf0(void *this_ptr,int *param_1);
 void  FUN_10002e90(void *this_ptr,int param_1,int param_2);
@@ -442,7 +442,7 @@ BOOL  FUN_100021e0(int param_1)
 
 
 
-int  FUN_10002200(int param_1)
+int  FUN_10002200(intptr_t param_1)
 
 {
   BOOL bVar1;
@@ -1004,7 +1004,7 @@ int *  FUN_10002a80(int *param_1)
 
 
 
-int  FUN_10002ad0(int param_1)
+int  FUN_10002ad0(intptr_t param_1)
 
 {
   int iVar1;
@@ -1434,7 +1434,7 @@ void ProcessScenary(void)
     LooseGame();
   }
   cVar1 = TimerDone(0);
-  if (((cVar1 != '\0') && (iVar2 = FUN_10002ad0(0x100222d0), iVar2 < 3)) &&
+  if (((cVar1 != '\0') && (iVar2 = FUN_10002ad0((intptr_t)&DAT_100222d0), iVar2 < 3)) &&
      (iVar2 = GetUnitsAmount0(&DAT_100232a8,DAT_100234a8 & 0xff), iVar2 == 0)) {
     RunTimer(0,4000);
     CreateObject0(&DAT_100232b8,&DAT_10011bb0,&DAT_100232c0,DAT_100234a8 & 0xff,&DAT_100232a8,100);
@@ -1443,7 +1443,7 @@ void ProcessScenary(void)
     FUN_10002b20(&DAT_100222d0,DAT_100234a8,0,0,0);
   }
   cVar1 = TimerDone(1);
-  if (((cVar1 != '\0') && (iVar2 = FUN_10002ad0(0x100213a0), iVar2 < 4)) &&
+  if (((cVar1 != '\0') && (iVar2 = FUN_10002ad0((intptr_t)&DAT_100213a0), iVar2 < 4)) &&
      (iVar2 = GetUnitsAmount0(&DAT_10023298,DAT_100234c0 & 0xff), iVar2 == 0)) {
     RunTimer(1,4000);
     CreateObject0(&DAT_100232b8,&DAT_10011bb0,&DAT_10023278,DAT_100234c0 & 0xff,&DAT_10023298,100);
@@ -1470,13 +1470,13 @@ LAB_10001c9d:
   if ((char)uVar4 != '\0') {
     FUN_10001d60();
   }
-  FUN_100028f0(&DAT_10023208,0x10023238);
-  FUN_10002200(0x100232c8);
-  FUN_10002200(0x10023340);
-  FUN_10002200(0x100233b8);
-  FUN_10002200(0x10023430);
-  FUN_10002200(0x100212a0);
-  FUN_10002200(0x10021318);
+  FUN_100028f0(&DAT_10023208,(intptr_t)&DAT_10023238);
+  FUN_10002200((intptr_t)&DAT_100232c8);
+  FUN_10002200((intptr_t)&DAT_10023340);
+  FUN_10002200((intptr_t)&DAT_100233b8);
+  FUN_10002200((intptr_t)&DAT_10023430);
+  FUN_10002200((intptr_t)&DAT_100212a0);
+  FUN_10002200((intptr_t)&DAT_10021318);
   FUN_100023b0(&DAT_100232c8,(int *)&DAT_10023288,(int *)&DAT_10023290);
   FUN_100023b0(&DAT_10023340,(int *)&DAT_10023280,(int *)&DAT_10023288);
   FUN_100023b0(&DAT_100233b8,(int *)&DAT_10023290,(int *)&DAT_10023280);

@@ -41,18 +41,18 @@ long long DAT_1000beb8 = 0;
 long long DAT_1000bec0 = 0;
 long long DAT_1000bec8 = 0;
 long long DAT_1000bed0 = 0;
-long long DAT_1000bed8 = 0;
-long long DAT_1000bee8 = 0;
+unsigned char DAT_1000bed8[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+unsigned char DAT_1000bee8[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 long long DAT_1000bef8 = 0;
 long long DAT_1000bf00 = 0;
-long long DAT_1000bf08 = 0;
-long long DAT_1000bf18 = 0;
-long long DAT_1000bf28 = 0;
-long long DAT_1000bf38 = 0;
+unsigned char DAT_1000bf08[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+unsigned char DAT_1000bf18[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+unsigned char DAT_1000bf28[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+unsigned char DAT_1000bf38[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 long long DAT_1000bf48 = 0;
-long long DAT_1000bf50 = 0;
+unsigned char DAT_1000bf50[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 long long DAT_1000bf60 = 0;
-long long DAT_1000bf68 = 0;
+unsigned char DAT_1000bf68[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 long long DAT_1000bf78 = 0;
 long long DAT_1000bf80 = 0;
 long long DAT_1000bf88 = 0;
@@ -76,9 +76,9 @@ long long DAT_1000c010 = 0;
 long long DAT_1000c018 = 0;
 long long DAT_1000c020 = 0;
 long long DAT_1000c028 = 0;
-long long DAT_1000c030 = 0;
-long long DAT_1000c070 = 0;
-long long DAT_1000c0b0 = 0;
+unsigned char DAT_1000c030[64] = {0};
+unsigned char DAT_1000c070[64] = {0};
+unsigned char DAT_1000c0b0[64] = {0};
 long long DAT_1000c0f0 = 0;
 long long DAT_1000c0f8 = 0;
 int DAT_1000c104 = 0;
@@ -93,7 +93,7 @@ FUN_10001020(void *this_ptr,int param_1,int param_2,int param_3,int param_4,
             int param_5,int param_6,int param_7);
 void 
 FUN_100010f0(void *this_ptr,int param_1,int param_2,int param_3,int param_4);
-BOOL  FUN_100012e0(int param_1);
+BOOL  FUN_100012e0(intptr_t param_1);
 int *  FUN_10001420(void *this_ptr,int param_1);
 void  FUN_10001440(int param_1);
 void  FUN_10001460(void *this_ptr,int param_1);
@@ -175,7 +175,7 @@ FUN_100010f0(void *this_ptr,int param_1,int param_2,int param_3,int param_4)
 
 
 
-BOOL  FUN_100012e0(int param_1)
+BOOL  FUN_100012e0(intptr_t param_1)
 
 {
   int iVar1;
@@ -586,14 +586,14 @@ void ProcessScenary(void)
 LAB_10002135:
   cVar1 = Trigg(7);
   if (cVar1 == '\0') {
-    bVar2 = FUN_100012e0(0x1000c0b0);
-    bVar3 = FUN_100012e0(0x1000c070);
-    bVar4 = FUN_100012e0(0x1000c030);
+    bVar2 = FUN_100012e0((intptr_t)&DAT_1000c0b0);
+    bVar3 = FUN_100012e0((intptr_t)&DAT_1000c070);
+    bVar4 = FUN_100012e0((intptr_t)&DAT_1000c030);
     iVar6 = GetDiff(0);
     if ((int)bVar2 + (int)bVar3 +
         (int)bVar4 < iVar6) {
       iVar6 = GetUnitsAmount0(&DAT_1000c010,0);
-      if ((iVar6 == 0) && (bVar2 = FUN_100012e0(0x1000c030), (int)bVar2 == 0))
+      if ((iVar6 == 0) && (bVar2 = FUN_100012e0((intptr_t)&DAT_1000c030), (int)bVar2 == 0))
       {
         uVar12 = 0x15;
         uVar5 = 0x14;
@@ -606,7 +606,7 @@ LAB_10002135:
       }
       else {
         iVar6 = GetUnitsAmount0(&DAT_1000c018,0);
-        if ((iVar6 == 0) && (bVar2 = FUN_100012e0(0x1000c070), (int)bVar2 == 0)
+        if ((iVar6 == 0) && (bVar2 = FUN_100012e0((intptr_t)&DAT_1000c070), (int)bVar2 == 0)
            ) {
           uVar12 = 0x17;
           uVar5 = 0x16;
@@ -620,7 +620,7 @@ LAB_10002135:
         else {
           iVar6 = GetUnitsAmount0(&DAT_1000c020,0);
           if ((iVar6 != 0) ||
-             (bVar2 = FUN_100012e0(0x1000c0b0), (int)bVar2 != 0))
+             (bVar2 = FUN_100012e0((intptr_t)&DAT_1000c0b0), (int)bVar2 != 0))
           goto LAB_10002283;
           uVar12 = 0x19;
           uVar5 = 0x18;
