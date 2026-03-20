@@ -111,7 +111,7 @@ void *  FUN_10003b20(void *this_ptr,int *param_1,unsigned int param_2);
 void  FUN_10003bc0(void *this_ptr,int param_1);
 int  FUN_10003be0(void *this_ptr,unsigned int param_1,char param_2);
 int FUN_10003d00(void);
-void FUN_10003d10(unsigned int param_1);
+int FUN_10003d10(unsigned int param_1);
 void FUN_10003d90(void);
 void  FUN_10003e20(void *param_1);
 int FUN_10003f40(byte *param_1,char *param_2);
@@ -123,7 +123,7 @@ int  FUN_10004320(void *this_ptr,void *param_1);
 void *  FUN_10004590(void *this_ptr,unsigned int param_1,unsigned int param_2);
 unsigned int  FUN_100046b0(void *this_ptr,unsigned int param_1,unsigned int param_2,byte *param_3,unsigned int param_4);
 void  FUN_10004720(void *param_1);
-void FUN_100047d0(int *param_1);
+int FUN_100047d0(int *param_1);
 int * FUN_10004835(void);
 void FUN_100048c3(void);
 int *  FUN_10004900(void *this_ptr,byte param_1);
@@ -150,7 +150,7 @@ int FUN_10004f27(char *param_1);
 int FUN_10005088(int *param_1,int param_2,DWORD param_3);
 int FUN_100050b4(int *param_1,int param_2,DWORD param_3);
 int * FUN_10005141(LPCSTR param_1,char *param_2,unsigned int param_3);
-void FUN_10005172(LPCSTR param_1,char *param_2);
+int FUN_10005172(LPCSTR param_1,char *param_2);
 int FUN_100053f0(int param_1,int param_2,int param_3,unsigned int *param_4,unsigned int *param_5);
 void FUN_10005470(void);
 void FUN_10005576(void);
@@ -1192,7 +1192,7 @@ int  FUN_10003be0(void *this_ptr,unsigned int param_1,char param_2)
           *(int *)((intptr_t)this_ptr + 0xc) = 0;
           return (unsigned int)pcVar2 & -256;
         }
-        FUN_100047d0(pcVar2);
+        uVar3 = FUN_100047d0(pcVar2);
       }
       *(int *)((intptr_t)this_ptr + 4) = 0;
       *(int *)((intptr_t)this_ptr + 8) = 0;
@@ -1208,7 +1208,7 @@ int  FUN_10003be0(void *this_ptr,unsigned int param_1,char param_2)
             *(int *)((intptr_t)this_ptr + 4) = 0;
             *(int *)((intptr_t)this_ptr + 8) = 0;
             *(int *)((intptr_t)this_ptr + 0xc) = 0;
-            FUN_10003d10(param_1);
+            uVar4 = FUN_10003d10(param_1);
             return (int)1;
           }
           FUN_100047d0(puVar5 + -1);
@@ -1216,7 +1216,7 @@ int  FUN_10003be0(void *this_ptr,unsigned int param_1,char param_2)
         *(int *)((intptr_t)this_ptr + 4) = 0;
         *(int *)((intptr_t)this_ptr + 8) = 0;
         *(int *)((intptr_t)this_ptr + 0xc) = 0;
-        FUN_10003d10(param_1);
+        uVar4 = FUN_10003d10(param_1);
         return (int)1;
       }
       goto LAB_10003cf0;
@@ -1230,7 +1230,7 @@ int  FUN_10003be0(void *this_ptr,unsigned int param_1,char param_2)
     *(int *)((intptr_t)this_ptr + 0xc) = 0;
     return (unsigned int)uVar6 << 8;
   }
-  FUN_10003d10(param_1);
+  puVar5 = (char *)FUN_10003d10(param_1);
 LAB_10003cf0:
   return (int)1;
 }
@@ -1249,7 +1249,7 @@ int FUN_10003d00(void)
 
 
 
-void FUN_10003d10(unsigned int param_1)
+int FUN_10003d10(unsigned int param_1)
 
 {
   unsigned int uVar1;
@@ -1268,7 +1268,7 @@ void FUN_10003d10(unsigned int param_1)
   }
   malloc(uVar1);
   FUN_10003d90();
-  return;
+  return 0;
 }
 
 
@@ -1970,11 +1970,11 @@ LAB_10004789:
 
 
 
-void __cdecl FUN_100047d0(int *param_1)
+int __cdecl FUN_100047d0(int *param_1)
 
 {
   FUN_10005e59(param_1);
-  return;
+  return 0;
 }
 
 
@@ -2650,11 +2650,11 @@ int * __cdecl FUN_10005141(LPCSTR param_1,char *param_2,unsigned int param_3)
 
 
 
-void __cdecl FUN_10005172(LPCSTR param_1,char *param_2)
+int __cdecl FUN_10005172(LPCSTR param_1,char *param_2)
 
 {
   FUN_10005141(param_1,param_2,0x40);
-  return;
+  return 0;
 }
 
 
@@ -3366,7 +3366,7 @@ void OnInit(void)
   local_8 = -1;
   FUN_10005470();
   local_8 = 0;
-  FUN_10005172("UserMissions\\start.dat",&DAT_10010244);
+  pFVar1 = (FILE *)FUN_10005172("UserMissions\\start.dat",&DAT_10010244);
   if (pFVar1 == (FILE *)0x0) {
                     
   }

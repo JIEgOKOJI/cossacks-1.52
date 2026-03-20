@@ -175,8 +175,8 @@ long long DAT_10037a30 = 0;
 /* Forward declarations */
 void  FUN_10001060(void *this_ptr,int param_1,int param_2,int param_3);
 void  FUN_10001160(void *this_ptr,int param_1);
-void  FUN_10001210(intptr_t param_1);
-void FUN_10001300(void);
+int  FUN_10001210(intptr_t param_1);
+int FUN_10001300(void);
 void  FUN_100013a0(void *this_ptr,int param_1,byte param_2);
 
 void OnInit();
@@ -229,7 +229,7 @@ if (*(char *)((intptr_t)this_ptr + 0x20) != '\0') {
 
 
 
-void  FUN_10001210(intptr_t param_1)
+int  FUN_10001210(intptr_t param_1)
 
 {
   unsigned int uVar1;
@@ -253,14 +253,14 @@ local_8 = param_1;
   if (*(char *)(local_8 + 0x21) != '\0') {
     GetGlobalTime();
   }
-  return;
+  return 0;
 }
 
 
 
 
 
-void FUN_10001300(void)
+int FUN_10001300(void)
 
 {
   int iVar1;
@@ -271,7 +271,7 @@ void FUN_10001300(void)
   int local_8;
 local_c = GetGlobalTime();
   local_10 = GetTotalAmount0(local_8 + 0x18);
-  return;
+  return 0;
 }
 
 
@@ -1124,15 +1124,15 @@ LAB_100062d1:
   FUN_10001160(&DAT_10037768,DAT_10037610);
   FUN_10001160(&DAT_10037798,DAT_10037640);
   FUN_10001160(&DAT_100377c8,DAT_10037670);
-  FUN_10001210((intptr_t)&DAT_10037738);
-  if ((((cVar1 != '\0') && (FUN_10001210((intptr_t)&DAT_10037768), cVar1 != '\0')) &&
-      (FUN_10001210((intptr_t)&DAT_10037798), cVar1 != '\0')) &&
-     (FUN_10001210((intptr_t)&DAT_100377c8), cVar1 != '\0')) {
+  cVar1 = FUN_10001210((intptr_t)&DAT_10037738);
+  if ((((cVar1 != '\0') && (cVar1 = FUN_10001210((intptr_t)&DAT_10037768), cVar1 != '\0')) &&
+      (cVar1 = FUN_10001210((intptr_t)&DAT_10037798), cVar1 != '\0')) &&
+     (cVar1 = FUN_10001210((intptr_t)&DAT_100377c8), cVar1 != '\0')) {
     uVar2 = Trigg(0x5d);
-    if ((((uVar2 & 0xff) == 0) && (FUN_10001300(), cVar1 == '\0')) &&
-       ((FUN_10001300(), cVar1 == '\0' &&
-        ((FUN_10001300(), cVar1 == '\0' &&
-         (FUN_10001300(), cVar1 == '\0')))))) {
+    if ((((uVar2 & 0xff) == 0) && (cVar1 = FUN_10001300(), cVar1 == '\0')) &&
+       ((cVar1 = FUN_10001300(), cVar1 == '\0' &&
+        ((cVar1 = FUN_10001300(), cVar1 == '\0' &&
+         (cVar1 = FUN_10001300(), cVar1 == '\0')))))) {
       FUN_100013a0(&DAT_10037738,&DAT_10037728,0);
       FUN_100013a0(&DAT_10037738,&DAT_10037720,2);
       FUN_100013a0(&DAT_10037768,&DAT_10037728,0);
@@ -1155,15 +1155,15 @@ LAB_100062d1:
   FUN_10001160(&DAT_10037838,DAT_10037708);
   FUN_10001160(&DAT_10037868,DAT_10037730);
   FUN_10001160(&DAT_100378a8,DAT_10037920);
-  FUN_10001210((intptr_t)&DAT_10037800);
-  if ((((cVar1 != '\0') && (FUN_10001210((intptr_t)&DAT_10037838), cVar1 != '\0')) &&
-      (FUN_10001210((intptr_t)&DAT_10037868), cVar1 != '\0')) &&
-     (FUN_10001210((intptr_t)&DAT_100378a8), cVar1 != '\0')) {
+  cVar1 = FUN_10001210((intptr_t)&DAT_10037800);
+  if ((((cVar1 != '\0') && (cVar1 = FUN_10001210((intptr_t)&DAT_10037838), cVar1 != '\0')) &&
+      (cVar1 = FUN_10001210((intptr_t)&DAT_10037868), cVar1 != '\0')) &&
+     (cVar1 = FUN_10001210((intptr_t)&DAT_100378a8), cVar1 != '\0')) {
     uVar2 = Trigg(0x5d);
-    if ((((uVar2 & 0xff) == 0) && (FUN_10001300(), cVar1 == '\0')) &&
-       ((FUN_10001300(), cVar1 == '\0' &&
-        ((FUN_10001300(), cVar1 == '\0' &&
-         (FUN_10001300(), cVar1 == '\0')))))) {
+    if ((((uVar2 & 0xff) == 0) && (cVar1 = FUN_10001300(), cVar1 == '\0')) &&
+       ((cVar1 = FUN_10001300(), cVar1 == '\0' &&
+        ((cVar1 = FUN_10001300(), cVar1 == '\0' &&
+         (cVar1 = FUN_10001300(), cVar1 == '\0')))))) {
       FUN_100013a0(&DAT_10037800,&DAT_10037710,0);
       FUN_100013a0(&DAT_10037800,&DAT_10037720,2);
       FUN_100013a0(&DAT_10037838,&DAT_10037710,0);
@@ -1186,15 +1186,15 @@ LAB_100062d1:
   FUN_10001160(&DAT_100379d0,DAT_1003770c);
   FUN_10001160(&DAT_100379a0,DAT_100378a0);
   FUN_10001160(&DAT_10037a00,DAT_10037924);
-  FUN_10001210((intptr_t)&DAT_100378d8);
-  if ((((cVar1 != '\0') && (FUN_10001210((intptr_t)&DAT_100379d0), cVar1 != '\0')) &&
-      (FUN_10001210((intptr_t)&DAT_100379a0), cVar1 != '\0')) &&
-     (FUN_10001210((intptr_t)&DAT_10037a00), cVar1 != '\0')) {
+  cVar1 = FUN_10001210((intptr_t)&DAT_100378d8);
+  if ((((cVar1 != '\0') && (cVar1 = FUN_10001210((intptr_t)&DAT_100379d0), cVar1 != '\0')) &&
+      (cVar1 = FUN_10001210((intptr_t)&DAT_100379a0), cVar1 != '\0')) &&
+     (cVar1 = FUN_10001210((intptr_t)&DAT_10037a00), cVar1 != '\0')) {
     uVar2 = Trigg(0x5d);
-    if ((((uVar2 & 0xff) == 0) && (FUN_10001300(), cVar1 == '\0')) &&
-       ((FUN_10001300(), cVar1 == '\0' &&
-        ((FUN_10001300(), cVar1 == '\0' &&
-         (FUN_10001300(), cVar1 == '\0')))))) {
+    if ((((uVar2 & 0xff) == 0) && (cVar1 = FUN_10001300(), cVar1 == '\0')) &&
+       ((cVar1 = FUN_10001300(), cVar1 == '\0' &&
+        ((cVar1 = FUN_10001300(), cVar1 == '\0' &&
+         (cVar1 = FUN_10001300(), cVar1 == '\0')))))) {
       FUN_100013a0(&DAT_100378d8,&DAT_10037718,0);
       FUN_100013a0(&DAT_100378d8,&DAT_10037720,2);
       FUN_100013a0(&DAT_100379d0,&DAT_10037718,0);

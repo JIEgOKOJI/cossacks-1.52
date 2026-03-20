@@ -94,7 +94,7 @@ int FUN_1000b991() { return 0; }
 /* Forward declarations */
 char FUN_10001000(unsigned int param_1,unsigned int param_2);
 void FUN_10001a50(int param_1);
-void FUN_10001a90(int param_1);
+int FUN_10001a90(int param_1);
 void FUN_100023d0(void);
 void FUN_100027e0(void);
 void FUN_100027f0(void);
@@ -110,7 +110,7 @@ void  FUN_100029c0(void *this_ptr,int param_1,int param_2,int param_3);
 void  FUN_100029f0(void *this_ptr,int *param_1);
 BOOL  FUN_10002a10(int param_1);
 int  FUN_10002a30(int param_1);
-void  FUN_10002b20(intptr_t param_1);
+int  FUN_10002b20(intptr_t param_1);
 int  FUN_10002b30(int param_1);
 void  FUN_10002b60(int param_1);
 void  FUN_10002b90(int *param_1);
@@ -227,12 +227,12 @@ void __cdecl FUN_10001a50(int param_1)
 
 
 
-void __cdecl FUN_10001a90(int param_1)
+int __cdecl FUN_10001a90(int param_1)
 
 {
   ClearSelection(param_1);
   SelectUnits(((unsigned char *)&DAT_10013d78) + param_1 * 8,0);
-  return;
+  return 0;
 }
 
 
@@ -594,11 +594,11 @@ int  FUN_10002a30(int param_1)
 
 
 
-void  FUN_10002b20(intptr_t param_1)
+int  FUN_10002b20(intptr_t param_1)
 
 {
   GetTotalAmount0(param_1 + 0x14);
-  return;
+  return 0;
 }
 
 
@@ -831,7 +831,7 @@ int  FUN_10002e80(void *this_ptr,int param_1)
   FUN_10001a50(*(int *)this_ptr);
   SelectUnits((intptr_t)this_ptr + 0xc,0);
   SelChangeNation(*(char *)this_ptr,param_1);
-  FUN_10001a90(*(int *)this_ptr);
+  uVar1 = FUN_10001a90(*(int *)this_ptr);
   *(int *)this_ptr = param_1;
   return uVar1;
 }
@@ -2256,15 +2256,15 @@ void ProcessScenary(void)
   FUN_10002950(&DAT_10023590,0);
   FUN_10002950(&DAT_10023608,0);
   FUN_10002950(&DAT_10023680,0);
-  FUN_10002b20((intptr_t)&DAT_10023590);
+  iVar3 = FUN_10002b20((intptr_t)&DAT_10023590);
   if (iVar3 < 0x50) {
     FUN_10002950(&DAT_10023590,2);
   }
-  FUN_10002b20((intptr_t)&DAT_10023608);
+  iVar3 = FUN_10002b20((intptr_t)&DAT_10023608);
   if (iVar3 < 0x4b) {
     FUN_10002950(&DAT_10023608,2);
   }
-  FUN_10002b20((intptr_t)&DAT_10023680);
+  iVar3 = FUN_10002b20((intptr_t)&DAT_10023680);
   if (iVar3 < 0x55) {
     FUN_10002950(&DAT_10023680,2);
   }

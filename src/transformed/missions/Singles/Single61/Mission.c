@@ -157,7 +157,7 @@ void  FUN_10002a40(void *this_ptr,int param_1,int param_2);
 void  FUN_10002a90(void *this_ptr,int param_1,int param_2);
 void 
 FUN_10002ae0(void *this_ptr,int param_1,int param_2,int param_3,int param_4);
-void FUN_10003e60(int param_1,int param_2,int param_3);
+int FUN_10003e60(int param_1,int param_2,int param_3);
 void FUN_10003f50(int *param_1);
 int FUN_10004060(byte *param_1,byte *param_2);
 unsigned int * FUN_100040a0(unsigned int *param_1,char *param_2);
@@ -168,7 +168,7 @@ int FUN_100042e4(char *param_1);
 int FUN_10004445(int *param_1,int param_2,DWORD param_3);
 int FUN_10004471(int *param_1,int param_2,DWORD param_3);
 int * FUN_100044fe(LPCSTR param_1,char *param_2,unsigned int param_3);
-void FUN_1000452f(LPCSTR param_1,char *param_2);
+int FUN_1000452f(LPCSTR param_1,char *param_2);
 
 void OnInit();
 void ProcessScenary();
@@ -721,7 +721,7 @@ unsigned int  FUN_10001a40(void *param_1)
               FUN_10001c20(param_1,(int)pvVar7);
               FUN_10001c60(param_1,(int)pvVar7);
             }
-            FUN_10003e60(pvVar7,*(int *)((int)pvVar7 + 0x38),*(int *)((int)pvVar7 + 0x3c));
+            uVar5 = FUN_10003e60(pvVar7,*(int *)((int)pvVar7 + 0x38),*(int *)((int)pvVar7 + 0x3c));
             return (int)1;
           }
         }
@@ -752,7 +752,7 @@ unsigned int  FUN_10001a40(void *param_1)
                 iVar2 = *(int *)((intptr_t)param_1 + uStack_8 * 4 + 0x2d4);
                 *(int *)(iVar2 + iVar3 + 0x40) = *(int *)(iVar2 + 0x38 + iVar3);
                 iVar3 = *(int *)((intptr_t)param_1 + uStack_8 * 4 + 0x2d4) + iVar3;
-                FUN_10003e60(iVar3,*(int *)(iVar3 + 0x3c),*(int *)(iVar3 + 0x38));
+                uVar5 = FUN_10003e60(iVar3,*(int *)(iVar3 + 0x3c),*(int *)(iVar3 + 0x38));
                 return (int)1;
               }
             }
@@ -1525,7 +1525,7 @@ FUN_10002ae0(void *this_ptr,int param_1,int param_2,int param_3,int param_4)
 
 
 
-void __cdecl FUN_10003e60(int param_1,int param_2,int param_3)
+int __cdecl FUN_10003e60(int param_1,int param_2,int param_3)
 
 {
   SelectUnits(param_1,0);
@@ -1535,7 +1535,7 @@ void __cdecl FUN_10003e60(int param_1,int param_2,int param_3)
       SelSendTo(7,&DAT_1000f228,0,2);
       SelSendTo(7,&DAT_1000f220,0,2);
       SelSendTo(7,&DAT_1000f1d0,0,2);
-      return;
+      return 0;
     }
     if (param_3 == 2) {
       SelSendTo(7,&DAT_1000f258,0,0);
@@ -1546,14 +1546,14 @@ void __cdecl FUN_10003e60(int param_1,int param_2,int param_3)
   else if (param_2 == 1) {
     if (param_3 == 0) {
       SelSendTo(7,&DAT_1000f210,0,0);
-      return;
+      return 0;
     }
   }
   else if ((param_2 == 2) && (param_3 == 0)) {
     SelSendTo(7,&DAT_1000f248,0,0);
-    return;
+    return 0;
   }
-  return;
+  return 0;
 }
 
 
@@ -2024,11 +2024,11 @@ int * __cdecl FUN_100044fe(LPCSTR param_1,char *param_2,unsigned int param_3)
 
 
 
-void __cdecl FUN_1000452f(LPCSTR param_1,char *param_2)
+int __cdecl FUN_1000452f(LPCSTR param_1,char *param_2)
 
 {
   FUN_100044fe(param_1,param_2,0x40);
-  return;
+  return 0;
 }
 
 
@@ -2136,7 +2136,7 @@ void ProcessScenary(void)
                     
   if (DAT_1000fef0 == '\0') {
     DAT_1000fef0 = '\x01';
-    FUN_1000452f("Missions//miss_vic.txt",&DAT_1000c504);
+    pFVar3 = (FILE *)FUN_1000452f("Missions//miss_vic.txt",&DAT_1000c504);
     if (pFVar3 == (FILE *)0x0) {
       uVar9 = -1;
       pcVar14 = DAT_1000c4e4;

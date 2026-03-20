@@ -70,7 +70,7 @@ long long DAT_10031548 = 0;
 void FUN_10001120(char param_1);
 void FUN_100011d0(char param_1,char param_2);
 void FUN_10001260(char param_1);
-void FUN_100012d0(int param_1);
+int FUN_100012d0(int param_1);
 void FUN_10001350(int param_1,int param_2,char param_3,char param_4);
 void FUN_10001450(int param_1,int param_2);
 void FUN_100014a0(int param_1,int param_2,char param_3);
@@ -141,7 +141,7 @@ for (local_8 = 0; local_8 < 6; local_8 = local_8 + 1) {
 
 
 
-void __cdecl FUN_100012d0(int param_1)
+int __cdecl FUN_100012d0(int param_1)
 
 {
   int iVar1;
@@ -152,7 +152,7 @@ for (local_8 = 0; (intptr_t)local_8 < 8; local_8 = local_8 + 1) {
     iVar1 = GetUnitsByNation(param_1,local_8 & 0xff);
     if (0 < iVar1) break;
   }
-  return;
+  return 0;
 }
 
 
@@ -167,7 +167,7 @@ FUN_10001350(int param_1,int param_2,char param_3,char param_4)
   int *puVar2;
   int local_48 [16];
   unsigned int local_8;
-FUN_100012d0(param_1);
+local_8 = FUN_100012d0(param_1);
   iVar1 = GetUnitsByNation(param_1,local_8 & 0xff);
   if (iVar1 != 0) {
     SelectUnits1(local_8 & 0xff,param_1,0);
@@ -254,7 +254,7 @@ FUN_10001590(int param_1,int param_2,char param_3,char param_4)
   int *puVar2;
   int local_48 [16];
   unsigned int local_8;
-FUN_100012d0(param_1);
+local_8 = FUN_100012d0(param_1);
   iVar1 = GetUnitsByNation(param_1,local_8 & 0xff);
   if (iVar1 != 0) {
     SelectUnits1(local_8 & 0xff,param_1,0);
@@ -308,7 +308,7 @@ void __cdecl FUN_100017d0(int param_1,int param_2,int param_3)
   int *puVar2;
   int local_c;
   int local_8;
-FUN_100012d0(param_1);
+local_8 = FUN_100012d0(param_1);
   for (local_c = 0; local_c < DAT_10031500; local_c = local_c + 1) {
     CreateObject0(&DAT_10031418,param_2,param_3,(char)local_8,0,0);
     RemoveGroup(&DAT_10031418,param_1);

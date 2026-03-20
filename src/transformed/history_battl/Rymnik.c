@@ -59,7 +59,7 @@ void FUN_10001270(int param_1,char param_2,char param_3,char param_4);
 void FUN_100013e0(int param_1,char param_2,char param_3,char param_4);
 void FUN_10001470(int param_1);
 void FUN_10001530(int param_1,int param_2,char param_3);
-void FUN_10001630(intptr_t param_1,int param_2,int param_3);
+int FUN_10001630(intptr_t param_1,int param_2,int param_3);
 void FUN_100016d0(char param_1,char param_2);
 void FUN_100017a0(void);
 void FUN_10001890(void);
@@ -208,7 +208,7 @@ for (local_8 = 0; (intptr_t)local_8 < 8; local_8 = local_8 + 1) {
 
 
 
-void __cdecl FUN_10001630(intptr_t param_1,int param_2,int param_3)
+int __cdecl FUN_10001630(intptr_t param_1,int param_2,int param_3)
 
 {
   int iVar1;
@@ -221,7 +221,7 @@ local_8 = 0;
     iVar1 = GetUnitsAmount1(param_1 + local_c * 8,param_3);
     local_8 = local_8 + iVar1;
   }
-  return;
+  return 0;
 }
 
 
@@ -409,9 +409,9 @@ LAB_10002104:
     if ((uVar1 & 0xff) != 0) goto LAB_10002121;
   }
   else {
-    FUN_10001630((intptr_t)&DAT_1001f530,3,&DAT_1001f490);
+    iVar2 = FUN_10001630((intptr_t)&DAT_1001f530,3,&DAT_1001f490);
     if (iVar2 < 1) {
-      FUN_10001630((intptr_t)&DAT_1001f530,3,&DAT_1001f4a0);
+      iVar2 = FUN_10001630((intptr_t)&DAT_1001f530,3,&DAT_1001f4a0);
       if (iVar2 < 1) goto LAB_10002104;
     }
 LAB_10002121:
@@ -425,7 +425,7 @@ LAB_10002121:
   }
   uVar1 = Trigg(1);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10001630((intptr_t)&DAT_1001f4e8,7,&DAT_1001f4a0);
+    iVar2 = FUN_10001630((intptr_t)&DAT_1001f4e8,7,&DAT_1001f4a0);
     if (iVar2 < 1) {
       uVar1 = Trigg(10);
       if ((uVar1 & 0xff) != 0) {
@@ -446,7 +446,7 @@ LAB_10002121:
 LAB_10002294:
   uVar1 = Trigg(2);
   if ((uVar1 & 0xff) != 0) {
-    FUN_10001630((intptr_t)&DAT_1001f4e8,7,&DAT_1001f490);
+    iVar2 = FUN_10001630((intptr_t)&DAT_1001f4e8,7,&DAT_1001f490);
     if (0 < iVar2) {
       SetTrigg(2,0);
       iVar2 = GetMyNation();

@@ -982,10 +982,43 @@ if __name__ == '__main__':
 
     # Fix void function return value assignments: var = void_FUN_xxx(...) → void_FUN_xxx(...)
     # Runs AFTER wrapper inlining so inlined wrappers (now real API names) won't be affected.
-    for vfn in helper_names_void:
+    # Fix 47: Don't void-strip helpers whose return value is used by any caller.
+    # Ghidra sometimes declares functions as 'void' even though callers use EAX return.
+    not_really_void = set()
+    for vfn in list(helper_names_void):
+        if re.search(r'\b\w+\s*=\s*(?:\([^)]*\)\s*)*' + re.escape(vfn) + r'\s*\(', raw_code):
+            helper_names_void.discard(vfn)
+            not_really_void.add(vfn)
+            continue
         # Remove "var = " (optionally with cast) before void function calls
         raw_code = re.sub(r'\b\w+\s*=\s*(?:\([^)]*\)\s*)*(' + re.escape(vfn) + r'\b)',
                           r'\1', raw_code)
+
+    # Fix 47: Change void → int in definitions/declarations of not-really-void helpers
+    # Also fix bare 'return;' → 'return 0;' inside their bodies
+    for vfn in not_really_void:
+        raw_code = re.sub(r'^(void)\s+(__\w+\s+)?' + re.escape(vfn) + r'\s*\(',
+                          lambda m: 'int ' + (m.group(2) or '') + vfn + '(',
+                          raw_code, flags=re.MULTILINE)
+        # Fix bare 'return;' inside function body: find definition and replace returns
+        def_pat = re.compile(r'^int\s+(?:__\w+\s+)?' + re.escape(vfn) + r'\s*\([^)]*\)\s*\n\{',
+                             re.MULTILINE)
+        def_m = def_pat.search(raw_code)
+        if def_m:
+            start = def_m.end()
+            # Find matching closing brace
+            depth = 1
+            i = start
+            while i < len(raw_code) and depth > 0:
+                if raw_code[i] == '{':
+                    depth += 1
+                elif raw_code[i] == '}':
+                    depth -= 1
+                i += 1
+            body = raw_code[start:i-1]
+            new_body = body.replace('return;', 'return 0;')
+            if new_body != body:
+                raw_code = raw_code[:start] + new_body + raw_code[i-1:]
 
     # Fix void API function return value assignments
     VOID_API_FUNCS = [

@@ -87,7 +87,7 @@ int FUN_1000cc81() { return 0; }
 /* Forward declarations */
 char FUN_10001000(unsigned int param_1,unsigned int param_2);
 void FUN_100010e0(int param_1);
-void FUN_10001120(int param_1);
+int FUN_10001120(int param_1);
 void FUN_10001160(void);
 void FUN_10001170(void);
 int  FUN_100011a0(int param_1);
@@ -169,7 +169,7 @@ void  FUN_10002c00(void *this_ptr,int param_1,int param_2,int param_3);
 void  FUN_10002c30(void *this_ptr,int *param_1);
 BOOL  FUN_10002c50(int param_1);
 int  FUN_10002c70(int param_1);
-void  FUN_10002d60(intptr_t param_1);
+int  FUN_10002d60(intptr_t param_1);
 int  FUN_10002d70(int param_1);
 void  FUN_10002da0(int param_1);
 void  FUN_10002dd0(int *param_1);
@@ -236,12 +236,12 @@ void __cdecl FUN_100010e0(int param_1)
 
 
 
-void __cdecl FUN_10001120(int param_1)
+int __cdecl FUN_10001120(int param_1)
 
 {
   ClearSelection(param_1);
   SelectUnits(((unsigned char *)&DAT_10015090) + param_1 * 8,0);
-  return;
+  return 0;
 }
 
 
@@ -873,7 +873,7 @@ int  FUN_10001d00(void *this_ptr,int param_1)
   FUN_100010e0(*(int *)this_ptr);
   SelectUnits((intptr_t)this_ptr + 0xc,0);
   SelChangeNation(*(char *)this_ptr,param_1);
-  FUN_10001120(*(int *)this_ptr);
+  uVar1 = FUN_10001120(*(int *)this_ptr);
   *(int *)this_ptr = param_1;
   return uVar1;
 }
@@ -1905,11 +1905,11 @@ int  FUN_10002c70(int param_1)
 
 
 
-void  FUN_10002d60(intptr_t param_1)
+int  FUN_10002d60(intptr_t param_1)
 
 {
   GetTotalAmount0(param_1 + 0x14);
-  return;
+  return 0;
 }
 
 
@@ -2548,21 +2548,21 @@ void ProcessScenary(void)
     }
   }
   FUN_10002b90(&DAT_100250d8,1);
-  FUN_10002d60((intptr_t)&DAT_100250d8);
+  iVar4 = FUN_10002d60((intptr_t)&DAT_100250d8);
   if (iVar4 < 0x14) {
     FUN_10002b90(&DAT_100250d8,4);
   }
-  FUN_10002d60((intptr_t)&DAT_100250d8);
+  iVar4 = FUN_10002d60((intptr_t)&DAT_100250d8);
   if (0x32 < iVar4) {
     FUN_10002b90(&DAT_100250d8,0);
   }
   FUN_10002e30(&DAT_100250d8,(int *)&DAT_10015bf8,(int *)&DAT_10025058);
   FUN_10002b90(&DAT_10025150,1);
-  FUN_10002d60((intptr_t)&DAT_10025150);
+  iVar4 = FUN_10002d60((intptr_t)&DAT_10025150);
   if (iVar4 < 0x14) {
     FUN_10002b90(&DAT_10025150,4);
   }
-  FUN_10002d60((intptr_t)&DAT_10025150);
+  iVar4 = FUN_10002d60((intptr_t)&DAT_10025150);
   if (0x32 < iVar4) {
     FUN_10002b90(&DAT_10025150,0);
   }
@@ -2570,21 +2570,21 @@ void ProcessScenary(void)
     FUN_10002e30(&DAT_10025150,(int *)&DAT_10015bf8,(int *)&DAT_10025068);
   }
   FUN_10002b90(&DAT_100251c8,1);
-  FUN_10002d60((intptr_t)&DAT_100251c8);
+  iVar4 = FUN_10002d60((intptr_t)&DAT_100251c8);
   if (iVar4 < 0x14) {
     FUN_10002b90(&DAT_100251c8,4);
   }
-  FUN_10002d60((intptr_t)&DAT_100251c8);
+  iVar4 = FUN_10002d60((intptr_t)&DAT_100251c8);
   if (0x3c < iVar4) {
     FUN_10002b90(&DAT_100251c8,0);
   }
   FUN_10002e30(&DAT_100251c8,(int *)&DAT_10015780,(int *)&DAT_10025050);
   FUN_10002b90(&DAT_10025240,1);
-  FUN_10002d60((intptr_t)&DAT_10025240);
+  iVar4 = FUN_10002d60((intptr_t)&DAT_10025240);
   if (iVar4 < 0x14) {
     FUN_10002b90(&DAT_10025240,4);
   }
-  FUN_10002d60((intptr_t)&DAT_10025240);
+  iVar4 = FUN_10002d60((intptr_t)&DAT_10025240);
   if (0x46 < iVar4) {
     FUN_10002b90(&DAT_10025240,0);
   }
@@ -2592,11 +2592,11 @@ void ProcessScenary(void)
     FUN_10002e30(&DAT_10025240,(int *)&DAT_10015bf8,(int *)&DAT_10025058);
   }
   FUN_10002b90(&DAT_100252b8,1);
-  FUN_10002d60((intptr_t)&DAT_100252b8);
+  iVar3 = FUN_10002d60((intptr_t)&DAT_100252b8);
   if (iVar3 < 10) {
     FUN_10002b90(&DAT_100252b8,4);
   }
-  FUN_10002d60((intptr_t)&DAT_100252b8);
+  iVar3 = FUN_10002d60((intptr_t)&DAT_100252b8);
   if (0x28 < iVar3) {
     FUN_10002b90(&DAT_100252b8,0);
   }

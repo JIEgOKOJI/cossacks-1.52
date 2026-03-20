@@ -78,7 +78,7 @@ int FUN_10006dd0() { return 0; }
 
 /* Forward declarations */
 int  FUN_10001100(intptr_t param_1);
-void  FUN_10001140(int *param_1);
+int  FUN_10001140(int *param_1);
 void FUN_100011c0(void);
 void  FUN_100011f0(void *this_ptr,int param_1);
 int  FUN_10001230(int param_1);
@@ -86,7 +86,7 @@ int  FUN_10001270(int param_1);
 void  FUN_100012b0(void *param_1);
 int *  FUN_100013b0(void *this_ptr,int *param_1);
 void FUN_10001400(void *param_1,int param_2,int param_3,int param_4);
-void FUN_10001540(unsigned int param_1);
+int FUN_10001540(unsigned int param_1);
 void FUN_100015b0(void *param_1);
 void FUN_10001630(void);
 void FUN_10001670(void);
@@ -95,7 +95,7 @@ void FUN_10001760(void);
 void FUN_10001c10(void *param_1,int param_2,int param_3,int param_4,
             int param_5);
 void  FUN_10002920(void *this_ptr,void *param_1);
-void FUN_100029d0(void *param_1);
+int FUN_100029d0(void *param_1);
 int FUN_10002d40(int param_1,int param_2,int param_3,unsigned int *param_4,unsigned int *param_5);
 void FUN_10002ea6(void);
 int FUN_10002ec0(int param_1);
@@ -119,7 +119,7 @@ int  FUN_10001100(intptr_t param_1)
 
 
 
-void  FUN_10001140(int *param_1)
+int  FUN_10001140(int *param_1)
 
 {
   int uVar1;
@@ -138,7 +138,7 @@ puVar3 = param_1;
   local_8[0xc] = uVar1;
   local_8[0xb] = 0;
   local_8 = (int *)0x10001199;
-  return;
+  return 0;
 }
 
 
@@ -220,7 +220,7 @@ while (iVar1 = FUN_10001230((intptr_t)local_18), iVar1 != 0) {
     local_18 = (void *)FUN_10001230((intptr_t)local_18);
   }
   uStackY_78 = 0x10001308;
-  FUN_100029d0((void *)0x34);
+  local_20 = (int *)FUN_100029d0((void *)0x34);
   local_8 = 0;
   if (local_20 == (int *)0x0) {
     local_24 = 0;
@@ -232,7 +232,7 @@ while (iVar1 = FUN_10001230((intptr_t)local_18), iVar1 != 0) {
       *puVar2 = *(int *)0;
       puVar2 = puVar2 + 1;
     }
-    FUN_10001140(local_20);
+    local_24 = FUN_10001140(local_20);
   }
   local_1c = local_24;
   local_8 = -1;
@@ -304,7 +304,7 @@ iVar4 = FUN_10001230((intptr_t)param_1);
         local_6c = 0;
       }
       else {
-        FUN_10001540(1);
+        local_6c = FUN_10001540(1);
       }
       FUN_10001400(param_1,param_2,param_3,param_4);
     }
@@ -317,7 +317,7 @@ iVar4 = FUN_10001230((intptr_t)param_1);
 
 
 
-void FUN_10001540(unsigned int param_1)
+int FUN_10001540(unsigned int param_1)
 
 {
   int iVar1;
@@ -329,7 +329,7 @@ FUN_100011c0();
     FUN_10002920(local_8,local_8);
   }
   local_8 = (void *)0x1000158b;
-  return;
+  return 0;
 }
 
 
@@ -524,11 +524,11 @@ void  FUN_10002920(void *this_ptr,void *param_1)
 
 
 
-void __cdecl FUN_100029d0(void *param_1)
+int __cdecl FUN_100029d0(void *param_1)
 
 {
   FUN_10003c30(param_1,1);
-  return;
+  return 0;
 }
 
 

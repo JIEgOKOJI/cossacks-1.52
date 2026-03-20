@@ -24,7 +24,7 @@ void FUN_100012db(int param_1,char param_2,char param_3,char param_4);
 void FUN_1000132b(int param_1);
 void FUN_100013c3(int param_1,int param_2,char param_3);
 void FUN_1000147b(int param_1,int param_2,int param_3);
-void FUN_100014ed(char param_1,char param_2);
+int FUN_100014ed(char param_1,char param_2);
 void FUN_10001588(void);
 void FUN_10001622(void);
 
@@ -186,7 +186,7 @@ void __cdecl FUN_1000147b(int param_1,int param_2,int param_3)
 
 
 
-void __cdecl FUN_100014ed(char param_1,char param_2)
+int __cdecl FUN_100014ed(char param_1,char param_2)
 
 {
   int iVar1;
@@ -198,7 +198,7 @@ void __cdecl FUN_100014ed(char param_1,char param_2)
       GetUnitsAmount0(((unsigned char *)&DAT_1001d4b0) + local_c * 8,param_2);
     }
   }
-  return;
+  return 0;
 }
 
 
@@ -251,7 +251,7 @@ void ProcessScenary(void)
 {
   int iVar1;
   
-  FUN_100014ed(0,1);
+  iVar1 = FUN_100014ed(0,1);
   if (2 < iVar1) {
     FUN_100010d3(0,0x1001ba30);
   }

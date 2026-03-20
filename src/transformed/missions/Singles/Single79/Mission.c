@@ -90,7 +90,7 @@ char FUN_10001000(unsigned int param_1,unsigned int param_2);
 void FUN_100010a0(int param_1);
 void FUN_100010d0(int param_1,int param_2,int param_3,int param_4);
 void FUN_10001660(int param_1);
-void FUN_100016a0(int param_1);
+int FUN_100016a0(int param_1);
 void FUN_10001d60(void);
 void FUN_10002020(void);
 void FUN_10002030(void);
@@ -235,12 +235,12 @@ void __cdecl FUN_10001660(int param_1)
 
 
 
-void __cdecl FUN_100016a0(int param_1)
+int __cdecl FUN_100016a0(int param_1)
 
 {
   ClearSelection(param_1);
   SelectUnits(((unsigned char *)&DAT_10011b28) + param_1 * 8,0);
-  return;
+  return 0;
 }
 
 
@@ -622,7 +622,7 @@ int  FUN_100024d0(void *this_ptr,int param_1)
   FUN_10001660(*(int *)this_ptr);
   SelectUnits((intptr_t)this_ptr + 0xc,0);
   SelChangeNation(*(char *)this_ptr,param_1);
-  FUN_100016a0(*(int *)this_ptr);
+  uVar1 = FUN_100016a0(*(int *)this_ptr);
   *(int *)this_ptr = param_1;
   return uVar1;
 }

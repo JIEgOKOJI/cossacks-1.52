@@ -104,7 +104,7 @@ BOOL FUN_10002600(int param_1,int param_2,int param_3,int param_4);
 void FUN_10002670(int param_1,int param_2,int param_3,int param_4,int param_5);
 void FUN_10002730(int param_1,int param_2,int param_3,unsigned int param_4,unsigned int param_5);
 unsigned int FUN_100028b0(int param_1,int param_2);
-void FUN_10002920(int param_1,int param_2);
+int FUN_10002920(int param_1,int param_2);
 void FUN_10002960(int param_1,int param_2,int param_3,unsigned int param_4,int param_5,
             int param_6,int param_7,int param_8,unsigned int param_9);
 void FUN_100029e0(int param_1,int param_2,unsigned short *param_3,int param_4,unsigned int param_5);
@@ -424,7 +424,7 @@ FUN_10002540(int param_1,int param_2,int param_3,int param_4,int param_5,
   bVar1 = FUN_100023f0(param_1,param_2,param_3,auStack_8,param_6,param_7);
   uVar3 = (int)bVar1;
   if (bVar1) {
-    FUN_10002920(param_4,param_1);
+    iVar2 = FUN_10002920(param_4,param_1);
     uVar3 = FUN_100028b0(param_4,param_1);
     if (iVar2 * 0x23 < (int)uVar3) {
       SelectUnits(param_4,0);
@@ -610,7 +610,7 @@ unsigned int __cdecl FUN_100028b0(int param_1,int param_2)
 
 
 
-void __cdecl FUN_10002920(int param_1,int param_2)
+int __cdecl FUN_10002920(int param_1,int param_2)
 
 {
   char auStack_10 [8];
@@ -619,7 +619,7 @@ void __cdecl FUN_10002920(int param_1,int param_2)
   UnitsCenter(local_8,param_1,0x32);
   UnitsCenter(auStack_10,param_2,0x32);
   GetTopDst(local_8,auStack_10);
-  return;
+  return 0;
 }
 
 

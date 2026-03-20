@@ -108,11 +108,11 @@ long long DAT_10032620 = 0;
 long long DAT_10032628 = 0;
 
 /* Forward declarations */
-void FUN_10001150(void);
+int FUN_10001150(void);
 void FUN_100011b0(int param_1);
 void FUN_10001250(int param_1);
-void FUN_10001310(unsigned short *param_1,int param_2);
-void FUN_100014b0(int param_1);
+int FUN_10001310(unsigned short *param_1,int param_2);
+int FUN_100014b0(int param_1);
 void FUN_10001530(char param_1);
 void FUN_100015e0(char param_1,char param_2);
 void FUN_10001670(char param_1);
@@ -134,7 +134,7 @@ void OnInit();
 void ProcessScenary();
 
 
-void FUN_10001150(void)
+int FUN_10001150(void)
 
 {
   int iVar1;
@@ -142,7 +142,7 @@ void FUN_10001150(void)
   int local_44 [15];
   int uStack_8;
 uStack_8 = 0x10001199;
-  return;
+  return 0;
 }
 
 
@@ -189,7 +189,7 @@ ClearSelection(0);
 
 
 
-void __cdecl FUN_10001310(unsigned short *param_1,int param_2)
+int __cdecl FUN_10001310(unsigned short *param_1,int param_2)
 
 {
   int iVar1;
@@ -219,7 +219,7 @@ FUN_10001250(param_2);
       GetUnitInfo(param_2,local_4c,local_48);
       local_50 = local_34 - local_18;
       local_54 = local_30 - local_1c;
-      FUN_10001150();
+      local_58 = FUN_10001150();
       if ((intptr_t)local_58 < (intptr_t)local_14) {
         local_c = local_48[0] & 0xffff;
         local_14 = local_58;
@@ -231,14 +231,14 @@ FUN_10001250(param_2);
     FUN_100011b0(param_2);
     InsertUnitToGroup(0,param_2,local_c);
   }
-  return;
+  return 0;
 }
 
 
 
 
 
-void __cdecl FUN_100014b0(int param_1)
+int __cdecl FUN_100014b0(int param_1)
 
 {
   int iVar1;
@@ -249,7 +249,7 @@ for (local_8 = 0; (intptr_t)local_8 < 7; local_8 = local_8 + 1) {
     iVar1 = GetUnitsByNation(param_1,local_8 & 0xff);
     if (0 < iVar1) break;
   }
-  return;
+  return 0;
 }
 
 
@@ -320,7 +320,7 @@ FUN_100016e0(int param_1,int param_2,char param_3,char param_4)
   int *puVar2;
   int local_48 [16];
   unsigned int local_8;
-FUN_100014b0(param_1);
+local_8 = FUN_100014b0(param_1);
   SelectUnits(param_1,0);
   SelSendAndKill(local_8 & 0xff,param_2,param_3,param_4);
   return;
@@ -421,7 +421,7 @@ FUN_100019b0(int param_1,int param_2,int param_3,int param_4,
   int *puVar2;
   int local_48 [16];
   int local_8;
-FUN_100014b0(param_1);
+local_8 = FUN_100014b0(param_1);
   FUN_10001670((char)local_8);
   iVar1 = GetTotalAmount0(param_1);
   if (iVar1 < param_6) {
@@ -442,7 +442,7 @@ void __cdecl FUN_10001a80(int param_1,int param_2,int param_3,int param_4)
   int *puVar2;
   int local_48 [16];
   int local_8;
-FUN_100014b0(param_1);
+local_8 = FUN_100014b0(param_1);
   FUN_10001670((char)local_8);
   iVar1 = GetTotalAmount0(param_1);
   if (iVar1 < param_4) {
@@ -465,7 +465,7 @@ FUN_10001b30(int param_1,int param_2,int param_3,int param_4,
   int local_4c [16];
   int local_c;
   int local_8;
-FUN_100014b0(param_1);
+local_8 = FUN_100014b0(param_1);
   FUN_10001670((char)local_8);
   for (local_c = 0; local_c < param_6; local_c = local_c + 1) {
     ProduceUnitFast(param_2,param_3,param_1,0);
@@ -498,7 +498,7 @@ local_8 = param_1 + 10;
   if (0 < iVar2) {
     CreateZoneNearGroup(&DAT_10032420,param_4,param_2,1000);
   }
-  FUN_10001310((unsigned short *)&DAT_10032420,&DAT_100323f0);
+  iVar2 = FUN_10001310((unsigned short *)&DAT_10032420,&DAT_100323f0);
   if (iVar2 == 0) {
     uVar1 = Trigg(local_c & 0xff);
     if ((uVar1 & 0xff) == 0) {

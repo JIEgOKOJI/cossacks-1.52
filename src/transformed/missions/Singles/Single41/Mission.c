@@ -46,7 +46,7 @@ long long DAT_1002f5a0 = 0;
 long long DAT_1002f5a8 = 0;
 
 /* Forward declarations */
-void FUN_100010d0(int param_1);
+int FUN_100010d0(int param_1);
 void 
 FUN_10001170(void *this_ptr,int param_1,int param_2,char param_3,int param_4);
 void 
@@ -60,7 +60,7 @@ void OnInit();
 void ProcessScenary();
 
 
-void __cdecl FUN_100010d0(int param_1)
+int __cdecl FUN_100010d0(int param_1)
 
 {
   int iVar1;
@@ -75,7 +75,7 @@ local_8 = 0;
       local_c = 8;
     }
   }
-  return;
+  return 0;
 }
 
 
@@ -94,7 +94,7 @@ FUN_10001170(void *this_ptr,int param_1,int param_2,char param_3,int param_4)
 *(int *)((intptr_t)this_ptr + 6) = param_1;
   *(int *)((intptr_t)this_ptr + 10) = param_2;
   local_8 = this_ptr;
-  FUN_100010d0(param_1);
+  uVar1 = FUN_100010d0(param_1);
   local_8[1] = uVar1;
   *local_8 = param_3;
   *(int *)(local_8 + 2) = param_4;

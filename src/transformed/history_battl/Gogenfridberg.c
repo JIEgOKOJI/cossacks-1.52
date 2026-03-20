@@ -24,7 +24,7 @@ void FUN_100013d0(int param_1,char param_2,char param_3,char param_4);
 void FUN_10001460(int param_1);
 void FUN_10001520(int param_1,int param_2,char param_3);
 void FUN_10001620(int param_1,int param_2,int param_3);
-void FUN_100016c0(char param_1,char param_2);
+int FUN_100016c0(char param_1,char param_2);
 void FUN_10001790(void);
 void FUN_10001880(void);
 
@@ -190,7 +190,7 @@ local_8 = 0;
 
 
 
-void __cdecl FUN_100016c0(char param_1,char param_2)
+int __cdecl FUN_100016c0(char param_1,char param_2)
 
 {
   int iVar1;
@@ -208,7 +208,7 @@ local_8 = 0;
       }
     }
   }
-  return;
+  return 0;
 }
 
 
@@ -276,7 +276,7 @@ void ProcessScenary(void)
   int *puVar2;
   int local_44 [15];
   int uStack_8;
-FUN_100016c0(0,1);
+iVar1 = FUN_100016c0(0,1);
   if (2 < iVar1) {
     FUN_10001100(0,0x1001ca30);
   }
