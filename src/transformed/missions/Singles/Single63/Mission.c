@@ -5,7 +5,7 @@
 #include <time.h>
 
 /* Global variables */
-int this_ptr = 0;
+intptr_t this_ptr = 0;
 long long DAT_1000bdc0 = 0;
 long long DAT_1000bdc8 = 0;
 long long DAT_1000bdd0 = 0;
@@ -111,20 +111,20 @@ FUN_10001020(void *this_ptr,int param_1,int param_2,int param_3,int param_4,
             int param_5,int param_6,int param_7)
 
 {
-  *(int *)((int)this_ptr + 8) = param_5;
+  *(int *)((intptr_t)this_ptr + 8) = param_5;
   *(int *)this_ptr = param_4;
-  *(int *)((int)this_ptr + 4) = 0;
-  *(int *)((int)this_ptr + 0xc) = param_6;
-  *(int *)((int)this_ptr + 0x10) = param_7;
-  *(char *)((int)this_ptr + 0x14) = 0;
+  *(int *)((intptr_t)this_ptr + 4) = 0;
+  *(int *)((intptr_t)this_ptr + 0xc) = param_6;
+  *(int *)((intptr_t)this_ptr + 0x10) = param_7;
+  *(char *)((intptr_t)this_ptr + 0x14) = 0;
   CreateObject0(&DAT_1000bf78,&DAT_1000be18,&DAT_1000bff0,param_4,param_1,0);
-  RemoveGroup(&DAT_1000bf78,(int)this_ptr + 0x15);
+  RemoveGroup(&DAT_1000bf78,(intptr_t)this_ptr + 0x15);
   CreateObject0(&DAT_1000bf78,&DAT_1000be18,&DAT_1000bff0,param_4,param_2,0);
-  RemoveGroup(&DAT_1000bf78,(int)this_ptr + 0x1d);
+  RemoveGroup(&DAT_1000bf78,(intptr_t)this_ptr + 0x1d);
   CreateObject0(&DAT_1000bf78,&DAT_1000be18,&DAT_1000bff0,param_4,param_3,0);
-  RemoveGroup(&DAT_1000bf78,(int)this_ptr + 0x25);
-  RunTimer(*(char *)((int)this_ptr + 0xc),10);
-  RunTimer(*(char *)((int)this_ptr + 0x10),param_5);
+  RemoveGroup(&DAT_1000bf78,(intptr_t)this_ptr + 0x25);
+  RunTimer(*(char *)((intptr_t)this_ptr + 0xc),10);
+  RunTimer(*(char *)((intptr_t)this_ptr + 0x10),param_5);
   return;
 }
 
@@ -139,32 +139,32 @@ FUN_100010f0(void *this_ptr,int param_1,int param_2,int param_3,int param_4)
   char cVar1;
   int iVar2;
   
-  cVar1 = TimerDone(*(char *)((int)this_ptr + 0xc));
-  if ((cVar1 != '\0') && (*(int *)((int)this_ptr + 4) != 0)) {
-    RunTimer(*(char *)((int)this_ptr + 0xc),0x14);
-    *(int *)((int)this_ptr + 4) = *(int *)((int)this_ptr + 4) + -1;
-    iVar2 = GetTotalAmount0((int)this_ptr + 0x15);
+  cVar1 = TimerDone(*(char *)((intptr_t)this_ptr + 0xc));
+  if ((cVar1 != '\0') && (*(int *)((intptr_t)this_ptr + 4) != 0)) {
+    RunTimer(*(char *)((intptr_t)this_ptr + 0xc),0x14);
+    *(int *)((intptr_t)this_ptr + 4) = *(int *)((intptr_t)this_ptr + 4) + -1;
+    iVar2 = GetTotalAmount0((intptr_t)this_ptr + 0x15);
     if (iVar2 != 0) {
       CreateObject0(&DAT_1000bf78,&DAT_1000be18,&DAT_1000bf88,*(char *)this_ptr,param_1,0);
       SelectUnits(&DAT_1000bf78,0);
       SelSendAndKill(*(char *)this_ptr,param_4,0,0);
-      RemoveGroup(&DAT_1000bf78,(int)this_ptr + 0x2d);
+      RemoveGroup(&DAT_1000bf78,(intptr_t)this_ptr + 0x2d);
       ClearSelection(*(char *)this_ptr);
     }
-    iVar2 = GetTotalAmount0((int)this_ptr + 0x1d);
+    iVar2 = GetTotalAmount0((intptr_t)this_ptr + 0x1d);
     if (iVar2 != 0) {
       CreateObject0(&DAT_1000bf78,&DAT_1000be18,&DAT_1000bf88,*(char *)this_ptr,param_2,0);
       SelectUnits(&DAT_1000bf78,0);
       SelSendAndKill(*(char *)this_ptr,param_4,0,0);
-      RemoveGroup(&DAT_1000bf78,(int)this_ptr + 0x2d);
+      RemoveGroup(&DAT_1000bf78,(intptr_t)this_ptr + 0x2d);
       ClearSelection(*(char *)this_ptr);
     }
-    iVar2 = GetTotalAmount0((int)this_ptr + 0x25);
+    iVar2 = GetTotalAmount0((intptr_t)this_ptr + 0x25);
     if (iVar2 != 0) {
       CreateObject0(&DAT_1000bf78,&DAT_1000be18,&DAT_1000bed0,*(char *)this_ptr,param_3,0);
       SelectUnits(&DAT_1000bf78,0);
       SelSendAndKill(*(char *)this_ptr,param_4,0,0);
-      RemoveGroup(&DAT_1000bf78,(int)this_ptr + 0x35);
+      RemoveGroup(&DAT_1000bf78,(intptr_t)this_ptr + 0x35);
       ClearSelection(*(char *)this_ptr);
     }
   }
@@ -199,7 +199,7 @@ BOOL  FUN_100012e0(int param_1)
 int *  FUN_10001420(void *this_ptr,int param_1)
 
 {
-  RegisterDynGroup((int)this_ptr + 4);
+  RegisterDynGroup((intptr_t)this_ptr + 4);
   *(int *)this_ptr = param_1;
   return this_ptr;
 }
@@ -231,10 +231,10 @@ void  FUN_10001460(void *this_ptr,int param_1)
 {
   int iVar1;
   
-  if (*(int *)((int)this_ptr + 0xc) == 0) {
+  if (*(int *)((intptr_t)this_ptr + 0xc) == 0) {
     iVar1 = GetDiff(0);
-    ProduceUnitFast(param_1,&DAT_1000bf60,(int)this_ptr + 4,(10 - iVar1) * 1000);
-    *(int *)((int)this_ptr + 0xc) = 1;
+    ProduceUnitFast(param_1,&DAT_1000bf60,(intptr_t)this_ptr + 4,(10 - iVar1) * 1000);
+    *(int *)((intptr_t)this_ptr + 0xc) = 1;
   }
   return;
 }
@@ -248,12 +248,12 @@ void  FUN_100014b0(void *this_ptr,int param_1,int param_2)
 {
   int iVar1;
   
-  if (*(int *)((int)this_ptr + 0xc) == 1) {
-    iVar1 = GetUnitsAmount1(param_1,(int)this_ptr + 4);
+  if (*(int *)((intptr_t)this_ptr + 0xc) == 1) {
+    iVar1 = GetUnitsAmount1(param_1,(intptr_t)this_ptr + 4);
     if (iVar1 != 0) {
-      SelectUnits((int)this_ptr + 4,0);
+      SelectUnits((intptr_t)this_ptr + 4,0);
       SelSendTo(*(char *)this_ptr,param_2,0,0);
-      *(int *)((int)this_ptr + 0xc) = 2;
+      *(int *)((intptr_t)this_ptr + 0xc) = 2;
     }
   }
   return;
@@ -268,12 +268,12 @@ void  FUN_10001500(void *this_ptr,int param_1,int param_2)
 {
   int iVar1;
   
-  if (*(int *)((int)this_ptr + 0xc) == 2) {
-    iVar1 = GetUnitsAmount1(param_1,(int)this_ptr + 4);
+  if (*(int *)((intptr_t)this_ptr + 0xc) == 2) {
+    iVar1 = GetUnitsAmount1(param_1,(intptr_t)this_ptr + 4);
     if (iVar1 != 0) {
-      SelectUnits((int)this_ptr + 4,0);
+      SelectUnits((intptr_t)this_ptr + 4,0);
       Patrol(*(char *)this_ptr,param_2,0);
-      *(int *)((int)this_ptr + 0xc) = 3;
+      *(int *)((intptr_t)this_ptr + 0xc) = 3;
     }
   }
   return;
@@ -287,7 +287,7 @@ void
 FUN_10001550(void *this_ptr,int param_1,int param_2,int param_3,int param_4)
 
 {
-  FUN_10001440((int)this_ptr);
+  FUN_10001440((intptr_t)this_ptr);
   FUN_10001460(this_ptr,param_1);
   FUN_100014b0(this_ptr,param_2,param_3);
   FUN_10001500(this_ptr,param_3,param_4);
@@ -400,12 +400,12 @@ void ProcessScenary(void)
   BOOL bVar4;
   int uVar5;
   int iVar6;
-  int extraout_var;
-  int extraout_var_00;
-  int extraout_var_01;
-  int extraout_var_02;
-  int extraout_var_03;
-  int extraout_var_04;
+  int extraout_var = 0;
+  int extraout_var_00 = 0;
+  int extraout_var_01 = 0;
+  int extraout_var_02 = 0;
+  int extraout_var_03 = 0;
+  int extraout_var_04 = 0;
   int *this_ptr;
   int iVar7;
   void *pcVar8;

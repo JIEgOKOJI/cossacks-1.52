@@ -5,7 +5,7 @@
 #include <time.h>
 
 /* Global variables */
-int this_ptr = 0;
+intptr_t this_ptr = 0;
 int DAT_1000b050 = 1;
 long long DAT_1000b054 = 0;
 long long DAT_1000b058 = 0;
@@ -209,22 +209,22 @@ FUN_10001020(void *this_ptr,char param_1,int param_2,char *param_3,int param_4,
   char *pcVar4;
   char *pcVar5;
   
-  *(int *)((int)this_ptr + 0x2a7) = param_2;
-  *(int *)((int)this_ptr + 0x28c) = param_10;
-  *(int *)((int)this_ptr + 0x2ab) = param_4;
-  *(int *)((int)this_ptr + 0x284) = param_8;
-  *(int *)((int)this_ptr + 0x290) = param_11;
-  *(int *)((int)this_ptr + 0x288) = param_9;
-  *(int *)((int)this_ptr + 0x2f1) = param_13 * 0xf;
-  *(int *)((int)this_ptr + 0x280) = param_7;
-  *(int *)((int)this_ptr + 0x294) = param_12;
-  *(char *)((int)this_ptr + 0x2e8) = (char)param_5;
-  *(int *)((int)this_ptr + 0x2e9) = param_6;
+  *(int *)((intptr_t)this_ptr + 0x2a7) = param_2;
+  *(int *)((intptr_t)this_ptr + 0x28c) = param_10;
+  *(int *)((intptr_t)this_ptr + 0x2ab) = param_4;
+  *(int *)((intptr_t)this_ptr + 0x284) = param_8;
+  *(int *)((intptr_t)this_ptr + 0x290) = param_11;
+  *(int *)((intptr_t)this_ptr + 0x288) = param_9;
+  *(int *)((intptr_t)this_ptr + 0x2f1) = param_13 * 0xf;
+  *(int *)((intptr_t)this_ptr + 0x280) = param_7;
+  *(int *)((intptr_t)this_ptr + 0x294) = param_12;
+  *(char *)((intptr_t)this_ptr + 0x2e8) = (char)param_5;
+  *(int *)((intptr_t)this_ptr + 0x2e9) = param_6;
   uVar2 = -1;
-  *(char *)((int)this_ptr + 0x2f5) = 1;
-  *(char *)((int)this_ptr + 0x2f6) = 1;
-  *(int *)((int)this_ptr + 0x2fb) = 1;
-  *(char *)((int)this_ptr + 0x2ff) = 1;
+  *(char *)((intptr_t)this_ptr + 0x2f5) = 1;
+  *(char *)((intptr_t)this_ptr + 0x2f6) = 1;
+  *(int *)((intptr_t)this_ptr + 0x2fb) = 1;
+  *(char *)((intptr_t)this_ptr + 0x2ff) = 1;
   do {
     pcVar4 = param_3;
     if (uVar2 == 0) break;
@@ -235,7 +235,7 @@ FUN_10001020(void *this_ptr,char param_1,int param_2,char *param_3,int param_4,
   } while (cVar1 != '\0');
   uVar2 = ~uVar2;
   pcVar4 = pcVar4 + -uVar2;
-  pcVar5 = (char *)((int)this_ptr + 0x298);
+  pcVar5 = (char *)((intptr_t)this_ptr + 0x298);
   for (uVar3 = uVar2 >> 2; uVar3 != 0; uVar3 = uVar3 - 1) {
     *(int *)pcVar5 = *(int *)pcVar4;
     pcVar4 = pcVar4 + 4;
@@ -246,35 +246,35 @@ FUN_10001020(void *this_ptr,char param_1,int param_2,char *param_3,int param_4,
     pcVar4 = pcVar4 + 1;
     pcVar5 = pcVar5 + 1;
   }
-  *(char *)((int)this_ptr + 0x2af) = param_1;
-  *(int *)((int)this_ptr + 700) = 1000;
-  *(int *)((int)this_ptr + 0x2cc) = 0;
-  *(int *)((int)this_ptr + 0x2c8) = 0;
-  *(int *)((int)this_ptr + 0x2c4) = 0;
-  *(int *)((int)this_ptr + 0x2c0) = 0;
-  *(int *)((int)this_ptr + 0x2b8) = 0;
+  *(char *)((intptr_t)this_ptr + 0x2af) = param_1;
+  *(int *)((intptr_t)this_ptr + 700) = 1000;
+  *(int *)((intptr_t)this_ptr + 0x2cc) = 0;
+  *(int *)((intptr_t)this_ptr + 0x2c8) = 0;
+  *(int *)((intptr_t)this_ptr + 0x2c4) = 0;
+  *(int *)((intptr_t)this_ptr + 0x2c0) = 0;
+  *(int *)((intptr_t)this_ptr + 0x2b8) = 0;
   if (param_1 != '\0') {
     return;
   }
   if (((param_6 == 0) || (param_6 == 1)) || (param_6 == 2)) {
-    RegisterDynGroup((int)this_ptr + 0x2b0);
+    RegisterDynGroup((intptr_t)this_ptr + 0x2b0);
     CreateObject0(&DAT_1000e7a8,&DAT_1000ee78,&DAT_1000e440,param_5,param_4,0);
-    RemoveGroup(&DAT_1000e7a8,(int)this_ptr + 0x2b0);
+    RemoveGroup(&DAT_1000e7a8,(intptr_t)this_ptr + 0x2b0);
   }
   if (param_6 == 0) {
-    TakeWood((int)this_ptr + 0x2b0);
+    TakeWood((intptr_t)this_ptr + 0x2b0);
   }
   else if (param_6 != 1) {
     if (param_6 != 2) {
-      *(int *)((int)this_ptr + 0x2ed) = 0xf;
+      *(int *)((intptr_t)this_ptr + 0x2ed) = 0xf;
       return;
     }
     goto LAB_100011a6;
   }
-  TakeFood((int)this_ptr + 0x2b0);
+  TakeFood((intptr_t)this_ptr + 0x2b0);
 LAB_100011a6:
-  TakeStone((int)this_ptr + 0x2b0);
-  *(int *)((int)this_ptr + 0x2ed) = 0xf;
+  TakeStone((intptr_t)this_ptr + 0x2b0);
+  *(int *)((intptr_t)this_ptr + 0x2ed) = 0xf;
   return;
 }
 
@@ -287,13 +287,13 @@ FUN_100011d0(void *this_ptr,int param_1,int param_2,int param_3,int param_4,
             int param_5,int param_6,int param_7)
 
 {
-  *(int *)((int)this_ptr + 0x284) = param_3;
-  *(int *)((int)this_ptr + 0x288) = param_4;
-  *(int *)((int)this_ptr + 0x28c) = param_5;
-  *(int *)((int)this_ptr + 0x290) = param_6;
-  *(int *)((int)this_ptr + 0x294) = param_7;
-  *(int *)((int)this_ptr + 0x280) = param_2;
-  *(int *)((int)this_ptr + 0x2ab) = param_1;
+  *(int *)((intptr_t)this_ptr + 0x284) = param_3;
+  *(int *)((intptr_t)this_ptr + 0x288) = param_4;
+  *(int *)((intptr_t)this_ptr + 0x28c) = param_5;
+  *(int *)((intptr_t)this_ptr + 0x290) = param_6;
+  *(int *)((intptr_t)this_ptr + 0x294) = param_7;
+  *(int *)((intptr_t)this_ptr + 0x280) = param_2;
+  *(int *)((intptr_t)this_ptr + 0x2ab) = param_1;
   return;
 }
 
@@ -475,32 +475,32 @@ void  FUN_10001510(void *this_ptr,int param_1)
   int iVar1;
   int uVar2;
   
-  if ((*(char *)((int)this_ptr + 0x2af) == '\0') && (*(char *)((int)this_ptr + 0x2f6) != '\0')) {
-    if ((*(char *)((int)this_ptr + 0x2ff) != '\0') &&
-       (iVar1 = GetUnitsAmount2(*(int *)((int)this_ptr + 0x2ab),&DAT_1000ee50,param_1),
+  if ((*(char *)((intptr_t)this_ptr + 0x2af) == '\0') && (*(char *)((intptr_t)this_ptr + 0x2f6) != '\0')) {
+    if ((*(char *)((intptr_t)this_ptr + 0x2ff) != '\0') &&
+       (iVar1 = GetUnitsAmount2(*(int *)((intptr_t)this_ptr + 0x2ab),&DAT_1000ee50,param_1),
        iVar1 != 0)) {
       uVar2 = AskMultilineQuestion(9,"#PAGE1",0,"VI1_1|VI1_2|VI1_3|VI1_4");
       switch(uVar2) {
       case 0:
-        FUN_100015f0((int)this_ptr);
-        *(char *)((int)this_ptr + 0x2ff) = 1;
+        FUN_100015f0((intptr_t)this_ptr);
+        *(char *)((intptr_t)this_ptr + 0x2ff) = 1;
         break;
       case 1:
-        uVar2 = FUN_10001690((int)this_ptr);
-        *(char *)((int)this_ptr + 0x2ff) = (char)uVar2;
+        uVar2 = FUN_10001690((intptr_t)this_ptr);
+        *(char *)((intptr_t)this_ptr + 0x2ff) = (char)uVar2;
         break;
       case 2:
         uVar2 = FUN_100016c0(this_ptr);
-        *(char *)((int)this_ptr + 0x2ff) = (char)uVar2;
+        *(char *)((intptr_t)this_ptr + 0x2ff) = (char)uVar2;
         break;
       case 3:
-        *(char *)((int)this_ptr + 0x2ff) = 0;
+        *(char *)((intptr_t)this_ptr + 0x2ff) = 0;
       }
     }
-    if ((*(char *)((int)this_ptr + 0x2ff) == '\0') &&
-       (iVar1 = GetUnitsAmount2(*(int *)((int)this_ptr + 0x2ab),&DAT_1000ee50,param_1),
+    if ((*(char *)((intptr_t)this_ptr + 0x2ff) == '\0') &&
+       (iVar1 = GetUnitsAmount2(*(int *)((intptr_t)this_ptr + 0x2ab),&DAT_1000ee50,param_1),
        iVar1 == 0)) {
-      *(char *)((int)this_ptr + 0x2ff) = 1;
+      *(char *)((intptr_t)this_ptr + 0x2ff) = 1;
     }
   }
   return;
@@ -691,7 +691,7 @@ void  FUN_10001980(void *this_ptr,int param_1)
   int iVar3;
   int iVar4;
   
-  iVar1 = AskMultilineQuestion(9,"#PAGE4",0,*(int *)((int)this_ptr + 0x280));
+  iVar1 = AskMultilineQuestion(9,"#PAGE4",0,*(int *)((intptr_t)this_ptr + 0x280));
   uVar2 = AskMultilineQuestion(9,"#PAGE5",0,"R1|R2|R3|R4|R5|R6");
   iVar4 = param_1;
   switch(uVar2) {
@@ -734,11 +734,11 @@ void  FUN_10001980(void *this_ptr,int param_1)
   case 5:
     iVar3 = 5;
   }
-  iVar1 = *(int *)((int)this_ptr + iVar1 * 4 + 0x284);
-  this_00 = (void *)(param_1 * 0x40 + (int)this_ptr);
+  iVar1 = *(int *)((intptr_t)this_ptr + iVar1 * 4 + 0x284);
+  this_00 = (void *)(param_1 * 0x40 + (intptr_t)this_ptr);
   FUN_10002160(this_00,(char *)(iVar1 + 0x298),*(int *)(iVar1 + 0x2a7),iVar4,iVar3);
   SelectUnits(this_00,0);
-  SelSendTo(*(char *)((int)this_00 + 8),*(int *)((int)this_ptr + 0x2ab),0,0);
+  SelSendTo(*(char *)((int)this_00 + 8),*(int *)((intptr_t)this_ptr + 0x2ab),0,0);
   *(char *)((int)this_00 + 0x19) = 0;
   return;
 }
@@ -867,7 +867,7 @@ void  FUN_10001cb0(void *this_ptr,int param_1,void *param_2)
   int iVar3;
   int uVar4;
   
-  if (*(char *)((int)this_ptr + 0x2af) == '\0') {
+  if (*(char *)((intptr_t)this_ptr + 0x2af) == '\0') {
     iVar1 = FUN_10001f80(this_ptr,*(int *)(param_1 + 9));
     iVar1 = iVar1 * *(int *)(param_1 + 0xd);
     iVar2 = FUN_10001f80(this_ptr,*(int *)(param_1 + 0x11));
@@ -894,35 +894,35 @@ void  FUN_10001cb0(void *this_ptr,int param_1,void *param_2)
   iVar1 = FUN_10001f80(param_2,*(int *)(param_1 + 9));
   iVar1 = iVar1 * *(int *)(param_1 + 0xd);
   iVar2 = FUN_100020d0(*(int *)(param_1 + 0x11));
-  iVar3 = GetResource(*(char *)((int)this_ptr + 0x2e8) + -1,iVar2);
+  iVar3 = GetResource(*(char *)((intptr_t)this_ptr + 0x2e8) + -1,iVar2);
   iVar2 = FUN_10001f80(param_2,*(int *)(param_1 + 0x11));
   iVar3 = iVar3 * iVar2;
   if (iVar1 <= iVar3) {
     uVar4 = *(int *)(param_1 + 0xd);
     iVar2 = FUN_100020d0(*(int *)(param_1 + 9));
-    AddResource(*(char *)((int)this_ptr + 0x2e8) + -1,iVar2,uVar4);
+    AddResource(*(char *)((intptr_t)this_ptr + 0x2e8) + -1,iVar2,uVar4);
     *(int *)(param_1 + 0xd) = 0;
     iVar2 = FUN_10001f80(param_2,*(int *)(param_1 + 0x11));
     *(int *)(param_1 + 0x15) = iVar1 / iVar2;
     iVar1 = FUN_100020d0(*(int *)(param_1 + 0x11));
-    iVar1 = GetResource(*(char *)((int)this_ptr + 0x2e8) + -1,iVar1);
+    iVar1 = GetResource(*(char *)((intptr_t)this_ptr + 0x2e8) + -1,iVar1);
     iVar1 = iVar1 - *(int *)(param_1 + 0x15);
     iVar2 = FUN_100020d0(*(int *)(param_1 + 0x11));
-    SetResource(*(char *)((int)this_ptr + 0x2e8) + -1,iVar2,iVar1);
+    SetResource(*(char *)((intptr_t)this_ptr + 0x2e8) + -1,iVar2,iVar1);
     return;
   }
   iVar1 = FUN_100020d0(*(int *)(param_1 + 0x11));
-  uVar4 = GetResource(*(char *)((int)this_ptr + 0x2e8) + -1,iVar1);
+  uVar4 = GetResource(*(char *)((intptr_t)this_ptr + 0x2e8) + -1,iVar1);
   *(int *)(param_1 + 0x15) = uVar4;
   uVar4 = 0;
   iVar1 = FUN_100020d0(*(int *)(param_1 + 0x11));
-  SetResource(*(char *)((int)this_ptr + 0x2e8) + -1,iVar1,uVar4);
+  SetResource(*(char *)((intptr_t)this_ptr + 0x2e8) + -1,iVar1,uVar4);
   iVar1 = FUN_10001f80(param_2,*(int *)(param_1 + 9));
   *(int *)(param_1 + 0xd) = *(int *)(param_1 + 0xd) - iVar3 / iVar1;
   iVar1 = FUN_10001f80(param_2,*(int *)(param_1 + 9));
   iVar3 = iVar3 / iVar1;
   iVar1 = FUN_100020d0(*(int *)(param_1 + 9));
-  AddResource(*(char *)((int)this_ptr + 0x2e8) + -1,iVar1,iVar3);
+  AddResource(*(char *)((intptr_t)this_ptr + 0x2e8) + -1,iVar1,iVar3);
   return;
 }
 
@@ -935,17 +935,17 @@ int  FUN_10001f10(void *this_ptr,int param_1)
 {
   switch(param_1) {
   case 0:
-    return *(int *)((int)this_ptr + 0x2b8);
+    return *(int *)((intptr_t)this_ptr + 0x2b8);
   case 1:
-    return *(int *)((int)this_ptr + 700);
+    return *(int *)((intptr_t)this_ptr + 700);
   case 2:
-    return *(int *)((int)this_ptr + 0x2c0);
+    return *(int *)((intptr_t)this_ptr + 0x2c0);
   case 3:
-    return *(int *)((int)this_ptr + 0x2c4);
+    return *(int *)((intptr_t)this_ptr + 0x2c4);
   case 4:
-    return *(int *)((int)this_ptr + 0x2c8);
+    return *(int *)((intptr_t)this_ptr + 0x2c8);
   case 5:
-    return *(int *)((int)this_ptr + 0x2cc);
+    return *(int *)((intptr_t)this_ptr + 0x2cc);
   default:
     return 0;
   }
@@ -960,17 +960,17 @@ int  FUN_10001f80(void *this_ptr,int param_1)
 {
   switch(param_1) {
   case 0:
-    return *(int *)((int)this_ptr + 0x2d0);
+    return *(int *)((intptr_t)this_ptr + 0x2d0);
   case 1:
-    return *(int *)((int)this_ptr + 0x2d4);
+    return *(int *)((intptr_t)this_ptr + 0x2d4);
   case 2:
-    return *(int *)((int)this_ptr + 0x2d8);
+    return *(int *)((intptr_t)this_ptr + 0x2d8);
   case 3:
-    return *(int *)((int)this_ptr + 0x2dc);
+    return *(int *)((intptr_t)this_ptr + 0x2dc);
   case 4:
-    return *(int *)((int)this_ptr + 0x2e0);
+    return *(int *)((intptr_t)this_ptr + 0x2e0);
   case 5:
-    return *(int *)((int)this_ptr + 0x2e4);
+    return *(int *)((intptr_t)this_ptr + 0x2e4);
   default:
     return 0;
   }
@@ -985,22 +985,22 @@ void  FUN_10001ff0(void *this_ptr,int param_1,int param_2)
 {
   switch(param_1) {
   case 0:
-    *(int *)((int)this_ptr + 0x2b8) = *(int *)((int)this_ptr + 0x2b8) + param_2;
+    *(int *)((intptr_t)this_ptr + 0x2b8) = *(int *)((intptr_t)this_ptr + 0x2b8) + param_2;
     return;
   case 1:
-    *(int *)((int)this_ptr + 700) = *(int *)((int)this_ptr + 700) + param_2;
+    *(int *)((intptr_t)this_ptr + 700) = *(int *)((intptr_t)this_ptr + 700) + param_2;
     return;
   case 2:
-    *(int *)((int)this_ptr + 0x2c0) = *(int *)((int)this_ptr + 0x2c0) + param_2;
+    *(int *)((intptr_t)this_ptr + 0x2c0) = *(int *)((intptr_t)this_ptr + 0x2c0) + param_2;
     return;
   case 3:
-    *(int *)((int)this_ptr + 0x2c4) = *(int *)((int)this_ptr + 0x2c4) + param_2;
+    *(int *)((intptr_t)this_ptr + 0x2c4) = *(int *)((intptr_t)this_ptr + 0x2c4) + param_2;
     return;
   case 4:
-    *(int *)((int)this_ptr + 0x2c8) = *(int *)((int)this_ptr + 0x2c8) + param_2;
+    *(int *)((intptr_t)this_ptr + 0x2c8) = *(int *)((intptr_t)this_ptr + 0x2c8) + param_2;
     return;
   case 5:
-    *(int *)((int)this_ptr + 0x2cc) = *(int *)((int)this_ptr + 0x2cc) + param_2;
+    *(int *)((intptr_t)this_ptr + 0x2cc) = *(int *)((intptr_t)this_ptr + 0x2cc) + param_2;
   }
   return;
 }
@@ -1012,9 +1012,9 @@ void  FUN_10001ff0(void *this_ptr,int param_1,int param_2)
 void  FUN_100020a0(void *this_ptr,int param_1,char param_2,char param_3)
 
 {
-  *(char *)((int)this_ptr + 0x2f5) = param_2;
-  *(int *)((int)this_ptr + 0x2f1) = param_1 * 0xf;
-  *(char *)((int)this_ptr + 0x2f6) = param_3;
+  *(char *)((intptr_t)this_ptr + 0x2f5) = param_2;
+  *(int *)((intptr_t)this_ptr + 0x2f1) = param_1 * 0xf;
+  *(char *)((intptr_t)this_ptr + 0x2f6) = param_3;
   return;
 }
 
@@ -1060,7 +1060,7 @@ FUN_100020f0(void *this_ptr,char *param_1,int param_2,int param_3,int param_4)
   } while (cVar1 != '\0');
   uVar2 = ~uVar2;
   pcVar4 = pcVar4 + -uVar2;
-  pcVar5 = (char *)((int)this_ptr + 0x1a);
+  pcVar5 = (char *)((intptr_t)this_ptr + 0x1a);
   for (uVar3 = uVar2 >> 2; uVar3 != 0; uVar3 = uVar3 - 1) {
     *(int *)pcVar5 = *(int *)pcVar4;
     pcVar4 = pcVar4 + 4;
@@ -1071,11 +1071,11 @@ FUN_100020f0(void *this_ptr,char *param_1,int param_2,int param_3,int param_4)
     pcVar4 = pcVar4 + 1;
     pcVar5 = pcVar5 + 1;
   }
-  *(int *)((int)this_ptr + 0x38) = param_2;
-  *(char *)((int)this_ptr + 8) = (char)param_3;
-  *(char *)((int)this_ptr + 0x19) = 0;
-  *(int *)((int)this_ptr + 0x15) = 0;
-  *(int *)((int)this_ptr + 0xd) = 0;
+  *(int *)((intptr_t)this_ptr + 0x38) = param_2;
+  *(char *)((intptr_t)this_ptr + 8) = (char)param_3;
+  *(char *)((intptr_t)this_ptr + 0x19) = 0;
+  *(int *)((intptr_t)this_ptr + 0x15) = 0;
+  *(int *)((intptr_t)this_ptr + 0xd) = 0;
   return;
 }
 
@@ -1104,7 +1104,7 @@ FUN_10002160(void *this_ptr,char *param_1,int param_2,int param_3,int param_4)
   } while (cVar1 != '\0');
   uVar2 = ~uVar2;
   pcVar4 = pcVar4 + -uVar2;
-  pcVar5 = (char *)((int)this_ptr + 0x29);
+  pcVar5 = (char *)((intptr_t)this_ptr + 0x29);
   for (uVar3 = uVar2 >> 2; uVar3 != 0; uVar3 = uVar3 - 1) {
     *(int *)pcVar5 = *(int *)pcVar4;
     pcVar4 = pcVar4 + 4;
@@ -1115,12 +1115,12 @@ FUN_10002160(void *this_ptr,char *param_1,int param_2,int param_3,int param_4)
     pcVar4 = pcVar4 + 1;
     pcVar5 = pcVar5 + 1;
   }
-  *(char *)((int)this_ptr + 0x19) = 0;
-  *(int *)((int)this_ptr + 0x3c) = param_2;
-  *(int *)((int)this_ptr + 0x15) = 0;
-  *(int *)((int)this_ptr + 0xd) = 0;
-  *(int *)((int)this_ptr + 9) = param_3;
-  *(int *)((int)this_ptr + 0x11) = param_4;
+  *(char *)((intptr_t)this_ptr + 0x19) = 0;
+  *(int *)((intptr_t)this_ptr + 0x3c) = param_2;
+  *(int *)((intptr_t)this_ptr + 0x15) = 0;
+  *(int *)((intptr_t)this_ptr + 0xd) = 0;
+  *(int *)((intptr_t)this_ptr + 9) = param_3;
+  *(int *)((intptr_t)this_ptr + 0x11) = param_4;
   return;
 }
 
@@ -1133,20 +1133,20 @@ FUN_100021b0(void *this_ptr,int param_1,int param_2,int param_3,int param_4,
             int param_5,int param_6,int param_7)
 
 {
-  *(int *)((int)this_ptr + 8) = param_5;
+  *(int *)((intptr_t)this_ptr + 8) = param_5;
   *(int *)this_ptr = param_4;
-  *(int *)((int)this_ptr + 4) = 0;
-  *(int *)((int)this_ptr + 0xc) = param_6;
-  *(int *)((int)this_ptr + 0x10) = param_7;
-  *(char *)((int)this_ptr + 0x14) = 0;
+  *(int *)((intptr_t)this_ptr + 4) = 0;
+  *(int *)((intptr_t)this_ptr + 0xc) = param_6;
+  *(int *)((intptr_t)this_ptr + 0x10) = param_7;
+  *(char *)((intptr_t)this_ptr + 0x14) = 0;
   CreateObject0(&DAT_1000e7a8,&DAT_1000e390,&DAT_1000ee68,param_4,param_1,0);
-  RemoveGroup(&DAT_1000e7a8,(int)this_ptr + 0x15);
+  RemoveGroup(&DAT_1000e7a8,(intptr_t)this_ptr + 0x15);
   CreateObject0(&DAT_1000e7a8,&DAT_1000e390,&DAT_1000ee68,param_4,param_2,0);
-  RemoveGroup(&DAT_1000e7a8,(int)this_ptr + 0x1d);
+  RemoveGroup(&DAT_1000e7a8,(intptr_t)this_ptr + 0x1d);
   CreateObject0(&DAT_1000e7a8,&DAT_1000e390,&DAT_1000ee68,param_4,param_3,0);
-  RemoveGroup(&DAT_1000e7a8,(int)this_ptr + 0x25);
-  RunTimer(*(char *)((int)this_ptr + 0xc),10);
-  RunTimer(*(char *)((int)this_ptr + 0x10),param_5);
+  RemoveGroup(&DAT_1000e7a8,(intptr_t)this_ptr + 0x25);
+  RunTimer(*(char *)((intptr_t)this_ptr + 0xc),10);
+  RunTimer(*(char *)((intptr_t)this_ptr + 0x10),param_5);
   return;
 }
 
@@ -1161,30 +1161,30 @@ FUN_10002280(void *this_ptr,int param_1,int param_2,int param_3,int param_4)
   char cVar1;
   int iVar2;
   
-  cVar1 = TimerDone(*(char *)((int)this_ptr + 0xc));
-  if ((cVar1 != '\0') && (*(int *)((int)this_ptr + 4) != 0)) {
-    RunTimer(*(char *)((int)this_ptr + 0xc),0x14);
-    *(int *)((int)this_ptr + 4) = *(int *)((int)this_ptr + 4) + -1;
-    iVar2 = GetTotalAmount0((int)this_ptr + 0x15);
+  cVar1 = TimerDone(*(char *)((intptr_t)this_ptr + 0xc));
+  if ((cVar1 != '\0') && (*(int *)((intptr_t)this_ptr + 4) != 0)) {
+    RunTimer(*(char *)((intptr_t)this_ptr + 0xc),0x14);
+    *(int *)((intptr_t)this_ptr + 4) = *(int *)((intptr_t)this_ptr + 4) + -1;
+    iVar2 = GetTotalAmount0((intptr_t)this_ptr + 0x15);
     if (iVar2 != 0) {
       CreateObject0(&DAT_1000e7a8,&DAT_1000e390,&DAT_1000e488,*(char *)this_ptr,param_1,0);
       SelectUnits(&DAT_1000e7a8,0);
       SelSendAndKill(*(char *)this_ptr,param_4,0,0);
-      RemoveGroup(&DAT_1000e7a8,(int)this_ptr + 0x2d);
+      RemoveGroup(&DAT_1000e7a8,(intptr_t)this_ptr + 0x2d);
     }
-    iVar2 = GetTotalAmount0((int)this_ptr + 0x1d);
+    iVar2 = GetTotalAmount0((intptr_t)this_ptr + 0x1d);
     if (iVar2 != 0) {
       CreateObject0(&DAT_1000e7a8,&DAT_1000e390,&DAT_1000e488,*(char *)this_ptr,param_2,0);
       SelectUnits(&DAT_1000e7a8,0);
       SelSendAndKill(*(char *)this_ptr,param_4,0,0);
-      RemoveGroup(&DAT_1000e7a8,(int)this_ptr + 0x2d);
+      RemoveGroup(&DAT_1000e7a8,(intptr_t)this_ptr + 0x2d);
     }
-    iVar2 = GetTotalAmount0((int)this_ptr + 0x25);
+    iVar2 = GetTotalAmount0((intptr_t)this_ptr + 0x25);
     if (iVar2 != 0) {
       CreateObject0(&DAT_1000e7a8,&DAT_1000e390,&DAT_1000e430,*(char *)this_ptr,param_3,0);
       SelectUnits(&DAT_1000e7a8,0);
       SelSendAndKill(*(char *)this_ptr,param_4,0,0);
-      RemoveGroup(&DAT_1000e7a8,(int)this_ptr + 0x35);
+      RemoveGroup(&DAT_1000e7a8,(intptr_t)this_ptr + 0x35);
     }
   }
   return;
@@ -1200,18 +1200,18 @@ void  FUN_100023d0(void *this_ptr,int param_1,int param_2)
   char cVar1;
   int iVar2;
   
-  cVar1 = TimerDone(*(char *)((int)this_ptr + 0x10));
+  cVar1 = TimerDone(*(char *)((intptr_t)this_ptr + 0x10));
   if (cVar1 != '\0') {
-    iVar2 = GetTotalAmount0((int)this_ptr + 0x2d);
+    iVar2 = GetTotalAmount0((intptr_t)this_ptr + 0x2d);
     if (iVar2 < 0x33) {
-      iVar2 = GetTotalAmount0((int)this_ptr + 0x35);
+      iVar2 = GetTotalAmount0((intptr_t)this_ptr + 0x35);
       if (iVar2 < 0x15) {
-        *(int *)((int)this_ptr + 4) = param_1;
-        *(char *)((int)this_ptr + 0x14) = 1;
-        SelectUnits((int)this_ptr + 0x2d,0);
-        SelectUnits((int)this_ptr + 0x35,1);
+        *(int *)((intptr_t)this_ptr + 4) = param_1;
+        *(char *)((intptr_t)this_ptr + 0x14) = 1;
+        SelectUnits((intptr_t)this_ptr + 0x2d,0);
+        SelectUnits((intptr_t)this_ptr + 0x35,1);
         SelSendAndKill(*(char *)this_ptr,param_2,0,0);
-        RunTimer(*(char *)((int)this_ptr + 0x10),*(int *)((int)this_ptr + 8));
+        RunTimer(*(char *)((intptr_t)this_ptr + 0x10),*(int *)((intptr_t)this_ptr + 8));
       }
     }
   }

@@ -5,7 +5,7 @@
 #include <time.h>
 
 /* Global variables */
-int this_ptr = 0;
+intptr_t this_ptr = 0;
 long long DAT_1000ae88 = 0;
 long long DAT_1000ae90 = 0;
 long long DAT_1000ae98 = 0;
@@ -175,7 +175,7 @@ int * FUN_10001070(void)
 int *  FUN_100010c0(void *this_ptr,int param_1)
 
 {
-  RegisterDynGroup((int)this_ptr + 4);
+  RegisterDynGroup((intptr_t)this_ptr + 4);
   *(int *)this_ptr = param_1;
   return this_ptr;
 }
@@ -205,9 +205,9 @@ void  FUN_100010e0(int param_1)
 void  FUN_10001100(void *this_ptr,int param_1)
 
 {
-  if (*(int *)((int)this_ptr + 0xc) == 0) {
-    ProduceUnitFast(param_1,&DAT_1000b148,(int)this_ptr + 4,15000);
-    *(int *)((int)this_ptr + 0xc) = 1;
+  if (*(int *)((intptr_t)this_ptr + 0xc) == 0) {
+    ProduceUnitFast(param_1,&DAT_1000b148,(intptr_t)this_ptr + 4,15000);
+    *(int *)((intptr_t)this_ptr + 0xc) = 1;
   }
   return;
 }
@@ -221,12 +221,12 @@ void  FUN_10001140(void *this_ptr,int param_1,int param_2)
 {
   int iVar1;
   
-  if (*(int *)((int)this_ptr + 0xc) == 1) {
-    iVar1 = GetUnitsAmount1(param_1,(int)this_ptr + 4);
+  if (*(int *)((intptr_t)this_ptr + 0xc) == 1) {
+    iVar1 = GetUnitsAmount1(param_1,(intptr_t)this_ptr + 4);
     if (iVar1 != 0) {
-      SelectUnits((int)this_ptr + 4,0);
+      SelectUnits((intptr_t)this_ptr + 4,0);
       SelSendTo(*(char *)this_ptr,param_2,0,0);
-      *(int *)((int)this_ptr + 0xc) = 2;
+      *(int *)((intptr_t)this_ptr + 0xc) = 2;
     }
   }
   return;
@@ -241,12 +241,12 @@ void  FUN_10001190(void *this_ptr,int param_1,int param_2)
 {
   int iVar1;
   
-  if (*(int *)((int)this_ptr + 0xc) == 2) {
-    iVar1 = GetUnitsAmount1(param_1,(int)this_ptr + 4);
+  if (*(int *)((intptr_t)this_ptr + 0xc) == 2) {
+    iVar1 = GetUnitsAmount1(param_1,(intptr_t)this_ptr + 4);
     if (iVar1 != 0) {
-      SelectUnits((int)this_ptr + 4,0);
+      SelectUnits((intptr_t)this_ptr + 4,0);
       Patrol(*(char *)this_ptr,param_2,0);
-      *(int *)((int)this_ptr + 0xc) = 3;
+      *(int *)((intptr_t)this_ptr + 0xc) = 3;
     }
   }
   return;
@@ -260,7 +260,7 @@ void
 FUN_100011e0(void *this_ptr,int param_1,int param_2,int param_3,int param_4)
 
 {
-  FUN_100010e0((int)this_ptr);
+  FUN_100010e0((intptr_t)this_ptr);
   FUN_10001100(this_ptr,param_1);
   FUN_10001140(this_ptr,param_2,param_3);
   FUN_10001190(this_ptr,param_3,param_4);

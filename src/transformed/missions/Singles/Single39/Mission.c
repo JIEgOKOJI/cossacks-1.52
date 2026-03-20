@@ -5,7 +5,7 @@
 #include <time.h>
 
 /* Global variables */
-int this_ptr = 0;
+intptr_t this_ptr = 0;
 char DAT_10030054[] = "Z16";
 char DAT_10030058[] = "Z15";
 char DAT_1003005c[] = "Z14";
@@ -91,12 +91,9 @@ void FUN_100014c0(void);
 void  FUN_10001560(int param_1);
 void FUN_10002080(unsigned int param_1);
 void FUN_100021c0(unsigned int param_1);
-void  FUN_10003800(int param_1);
 void  FUN_10003860(int param_1);
-void  FUN_100038d0(int param_1);
 void  FUN_10003930(int param_1);
 int  FUN_10003990(int param_1);
-void  FUN_100039c0(int param_1);
 void  FUN_10003a20(void *this_ptr,int param_1);
 void  FUN_10003a60(void *this_ptr,int param_1);
 void  FUN_10003ae0(void *this_ptr,int param_1,int param_2);
@@ -165,7 +162,7 @@ void FUN_10001290(void)
   int *puVar2;
   int local_44 [15];
   int uStack_8;
-FUN_100039c0(&DAT_100358a0);
+RegisterDynGroup(&DAT_100358a0);
   uStack_8 = 0x100012bf;
   return;
 }
@@ -253,7 +250,7 @@ void  FUN_10001430(int param_1)
   int local_48 [16];
   int local_8;
 local_8 = param_1;
-  FUN_100039c0(param_1);
+  RegisterDynGroup(param_1);
   return;
 }
 
@@ -374,21 +371,6 @@ if ((intptr_t)param_1 < 4) {
 
 
 
-void  FUN_10003800(int param_1)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_48 [16];
-  int local_8;
-local_8 = param_1;
-  SelectUnits(param_1,0);
-  return;
-}
-
-
-
-
 
 void  FUN_10003860(int param_1)
 
@@ -398,26 +380,11 @@ void  FUN_10003860(int param_1)
   int local_48 [16];
   int local_8;
 local_8 = param_1;
-  FUN_10003800(param_1);
+  SelectUnits(param_1,0);
   SelDie(*(char *)(local_8 + 0x10));
   return;
 }
 
-
-
-
-
-void  FUN_100038d0(int param_1)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_48 [16];
-  int local_8;
-local_8 = param_1;
-  GetTotalAmount0(param_1);
-  return;
-}
 
 
 
@@ -433,7 +400,7 @@ void  FUN_10003930(int param_1)
   int local_8;
 local_c = 0;
   local_8 = param_1;
-  FUN_100038d0(param_1);
+  iVar1 = GetTotalAmount0(param_1);
   if (0 < iVar1) {
     local_c = 1;
   }
@@ -457,21 +424,6 @@ return param_1;
 
 
 
-void  FUN_100039c0(int param_1)
-
-{
-  int iVar1;
-  int *puVar2;
-  int local_48 [16];
-  int local_8;
-local_8 = param_1;
-  RegisterDynGroup(param_1);
-  return;
-}
-
-
-
-
 
 void  FUN_10003a20(void *this_ptr,int param_1)
 
@@ -479,7 +431,7 @@ void  FUN_10003a20(void *this_ptr,int param_1)
   int iVar1;
   int *puVar2;
   int local_48 [17];
-*(int *)((int)this_ptr + 0x14) = param_1;
+*(int *)((intptr_t)this_ptr + 0x14) = param_1;
   return;
 }
 
@@ -495,7 +447,7 @@ void  FUN_10003a60(void *this_ptr,int param_1)
   int local_48 [16];
   void *local_8;
 local_8 = this_ptr;
-  CreateZoneNearGroup((int)this_ptr + 8,*(int *)((int)this_ptr + 0x14),this_ptr,param_1);
+  CreateZoneNearGroup((intptr_t)this_ptr + 8,*(int *)((intptr_t)this_ptr + 0x14),this_ptr,param_1);
   local_8 = (void *)0x10003ab8;
   return;
 }
@@ -514,7 +466,7 @@ void  FUN_10003ae0(void *this_ptr,int param_1,int param_2)
   int local_c;
   void *local_8;
 local_8 = this_ptr;
-  FUN_100038d0(this_ptr);
+  iVar2 = GetTotalAmount0(this_ptr);
   if (iVar2 == 0) {
     ClearSelection(*(char *)((intptr_t)local_8 + 0x10));
     for (local_c = 0; uVar1 = (int)((unsigned int)local_c >> 8), local_c < param_2;
@@ -540,7 +492,7 @@ void  FUN_10003c00(void *this_ptr,int param_1)
   int iVar1;
   int *puVar2;
   int local_48 [17];
-*(int *)((int)this_ptr + 0x18) = param_1;
+*(int *)((intptr_t)this_ptr + 0x18) = param_1;
   return;
 }
 
@@ -554,7 +506,7 @@ void  FUN_10003c40(void *this_ptr,int param_1)
   int iVar1;
   int *puVar2;
   int local_48 [17];
-*(int *)((int)this_ptr + 0x1c) = param_1;
+*(int *)((intptr_t)this_ptr + 0x1c) = param_1;
   return;
 }
 
@@ -594,7 +546,7 @@ void  FUN_10003d30(void *this_ptr,int param_1)
   int iVar1;
   int *puVar2;
   int local_48 [17];
-*(int *)((int)this_ptr + 0x10) = param_1;
+*(int *)((intptr_t)this_ptr + 0x10) = param_1;
   return;
 }
 
@@ -608,9 +560,9 @@ void  FUN_10003d70(void *this_ptr,int param_1,int param_2,int param_3)
   int iVar1;
   int *puVar2;
   int local_48 [17];
-*(int *)((int)this_ptr + 0x18) = param_1;
-  *(int *)((int)this_ptr + 0x1c) = param_2;
-  *(int *)((int)this_ptr + 0x10) = param_3;
+*(int *)((intptr_t)this_ptr + 0x18) = param_1;
+  *(int *)((intptr_t)this_ptr + 0x1c) = param_2;
+  *(int *)((intptr_t)this_ptr + 0x10) = param_3;
   return;
 }
 
@@ -675,7 +627,7 @@ void  FUN_10003f30(void *this_ptr,unsigned int param_1)
   int local_48 [16];
   void *local_8;
 local_8 = this_ptr;
-  FUN_10003800(this_ptr);
+  SelectUnits(this_ptr,0);
   SelChangeNation(*(char *)((intptr_t)local_8 + 0x10),param_1 & 0xff);
   *(unsigned int *)((intptr_t)local_8 + 0x10) = param_1;
   local_8 = (void *)0x10003f88;
@@ -707,7 +659,7 @@ void  FUN_10003fe0(void *this_ptr,int param_1)
   int local_48 [16];
   void *local_8;
 local_8 = this_ptr;
-  FUN_10003800(this_ptr);
+  SelectUnits(this_ptr,0);
   SelSendTo(*(char *)((intptr_t)local_8 + 0x10),param_1,0,0);
   *(int *)((intptr_t)local_8 + 0x20) = param_1;
   local_8 = (void *)0x1000403c;
@@ -726,7 +678,7 @@ void  FUN_10004060(void *this_ptr,int param_1)
   int local_48 [16];
   void *local_8;
 local_8 = this_ptr;
-  FUN_10003800(this_ptr);
+  SelectUnits(this_ptr,0);
   Patrol(*(char *)((intptr_t)local_8 + 0x10),param_1,0);
   local_8 = (void *)0x100040b1;
   return;
@@ -785,7 +737,7 @@ void  FUN_100041b0(void *this_ptr,int param_1)
   int iVar1;
   int *puVar2;
   int local_48 [17];
-*(int *)((int)this_ptr + 0x20) = param_1;
+*(int *)((intptr_t)this_ptr + 0x20) = param_1;
   return;
 }
 
@@ -801,7 +753,7 @@ void  FUN_100041f0(int param_1)
   int local_48 [16];
   int local_8;
 local_8 = param_1;
-  FUN_10003800(param_1);
+  SelectUnits(param_1,0);
   SetStandGround(*(char *)(local_8 + 0x10),1);
   return;
 }
@@ -884,7 +836,7 @@ void  FUN_100043c0(void *this_ptr,int param_1)
   int iVar1;
   int *puVar2;
   int local_48 [17];
-*(int *)((int)this_ptr + 0x2c) = param_1;
+*(int *)((intptr_t)this_ptr + 0x2c) = param_1;
   return;
 }
 
@@ -915,8 +867,8 @@ void  FUN_10004450(void *this_ptr,int param_1,int param_2)
   int iVar1;
   int *puVar2;
   int local_48 [17];
-*(int *)((int)this_ptr + 0x24) = param_1;
-  *(int *)((int)this_ptr + 0x28) = param_2;
+*(int *)((intptr_t)this_ptr + 0x24) = param_1;
+  *(int *)((intptr_t)this_ptr + 0x28) = param_2;
   return;
 }
 
@@ -975,7 +927,7 @@ if (((*(char *)((intptr_t)param_1 + 0x2c) != '\0') &&
         }
         AddResource(0,*(char *)((intptr_t)local_8 + 0x24),*(int *)((intptr_t)local_8 + 0x28));
         FUN_10004450(local_8,0,0);
-        FUN_10003800(local_8);
+        SelectUnits(local_8,0);
         uVar6 = 0;
         uVar2 = FUN_10003990(local_8);
         SaveSelectedUnits(7,uVar2,uVar6);
@@ -1077,7 +1029,7 @@ void  FUN_10004930(void *this_ptr,int param_1)
   int iVar1;
   int *puVar2;
   int local_48 [17];
-*(int *)((int)this_ptr + 4) = param_1;
+*(int *)((intptr_t)this_ptr + 4) = param_1;
   ((long long *)&DAT_10035f20)[DAT_10035f70] = this_ptr;
   DAT_10035f70 = DAT_10035f70 + 1;
   return;
@@ -1116,7 +1068,7 @@ void  FUN_10004a40(void *this_ptr,int param_1)
   int iVar1;
   int *puVar2;
   int local_48 [17];
-*(int *)((int)this_ptr + 8) = param_1;
+*(int *)((intptr_t)this_ptr + 8) = param_1;
   return;
 }
 
@@ -1130,7 +1082,7 @@ void  FUN_10004a80(void *this_ptr,int param_1)
   int iVar1;
   int *puVar2;
   int local_48 [17];
-*(int *)((int)this_ptr + 0xc) = param_1;
+*(int *)((intptr_t)this_ptr + 0xc) = param_1;
   return;
 }
 
@@ -1144,7 +1096,7 @@ void  FUN_10004ac0(void *this_ptr,int param_1)
   int iVar1;
   int *puVar2;
   int local_48 [17];
-*(int *)((int)this_ptr + 0x10) = param_1;
+*(int *)((intptr_t)this_ptr + 0x10) = param_1;
   return;
 }
 
@@ -1160,7 +1112,7 @@ void  FUN_10004b00(void *this_ptr,void *param_1)
   int local_48 [16];
   void *local_8;
 local_8 = this_ptr;
-  FUN_10004450(param_1,*(int *)((int)this_ptr + 0xc),*(int *)((int)this_ptr + 0x10));
+  FUN_10004450(param_1,*(int *)((intptr_t)this_ptr + 0xc),*(int *)((intptr_t)this_ptr + 0x10));
   FUN_10003fe0(param_1,*(int *)((intptr_t)local_8 + 8));
   local_8 = (void *)0x10004b4f;
   return;

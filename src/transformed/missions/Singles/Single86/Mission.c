@@ -5,7 +5,7 @@
 #include <time.h>
 
 /* Global variables */
-int this_ptr = 0;
+intptr_t this_ptr = 0;
 long long DAT_1000c030 = 0;
 int DAT_1000c038 = 100;
 long long DAT_1000f4f0 = 0;
@@ -194,7 +194,7 @@ FUN_10001bb0(int param_1,int param_2,int param_3,int param_4,int param_5,
 {
   BOOL bVar1;
   int iVar2;
-  int extraout_var;
+  int extraout_var = 0;
   unsigned int uVar3;
   int uVar4;
   char auStack_8 [8];
@@ -505,35 +505,35 @@ void  FUN_10002110(void *this_ptr,char param_1)
   switch(param_1) {
   case 0:
     RegisterUnitType(this_ptr,"Rundashir_Avstria_DIP(au)");
-    RegisterUnitType((int)this_ptr + 8,"Pehota_turki_DIP(au)");
-    RegisterUnitType((int)this_ptr + 0x10,"Strelec_Algir_DIP(au)");
-    RegisterUnitType((int)this_ptr + 0x18,"Grenader_DIP(au)");
-    RegisterUnitType((int)this_ptr + 0x20,"Kozak_loshad_DIP(au)");
-    RegisterUnitType((int)this_ptr + 0x28,"Dragun_18_DIP(au)");
+    RegisterUnitType((intptr_t)this_ptr + 8,"Pehota_turki_DIP(au)");
+    RegisterUnitType((intptr_t)this_ptr + 0x10,"Strelec_Algir_DIP(au)");
+    RegisterUnitType((intptr_t)this_ptr + 0x18,"Grenader_DIP(au)");
+    RegisterUnitType((intptr_t)this_ptr + 0x20,"Kozak_loshad_DIP(au)");
+    RegisterUnitType((intptr_t)this_ptr + 0x28,"Dragun_18_DIP(au)");
     return;
   case 1:
     RegisterUnitType(this_ptr,"Rundashir_Avstria_DIP(GE)");
-    RegisterUnitType((int)this_ptr + 8,"Pehota_turki_DIP(GE)");
-    RegisterUnitType((int)this_ptr + 0x10,"Strelec_Algir_DIP(GE)");
-    RegisterUnitType((int)this_ptr + 0x18,"Grenader_DIP(GE)");
-    RegisterUnitType((int)this_ptr + 0x20,"Kozak_loshad_DIP(GE)");
-    RegisterUnitType((int)this_ptr + 0x28,"Dragun_18_DIP(GE)");
+    RegisterUnitType((intptr_t)this_ptr + 8,"Pehota_turki_DIP(GE)");
+    RegisterUnitType((intptr_t)this_ptr + 0x10,"Strelec_Algir_DIP(GE)");
+    RegisterUnitType((intptr_t)this_ptr + 0x18,"Grenader_DIP(GE)");
+    RegisterUnitType((intptr_t)this_ptr + 0x20,"Kozak_loshad_DIP(GE)");
+    RegisterUnitType((intptr_t)this_ptr + 0x28,"Dragun_18_DIP(GE)");
     return;
   case 2:
     RegisterUnitType(this_ptr,"Rundashir_Avstria_DIP(SA)");
-    RegisterUnitType((int)this_ptr + 8,"Pehota_turki_DIP(SA)");
-    RegisterUnitType((int)this_ptr + 0x10,"Strelec_Algir_DIP(SA)");
-    RegisterUnitType((int)this_ptr + 0x18,"Grenader_DIP(SA)");
-    RegisterUnitType((int)this_ptr + 0x20,"Kozak_loshad_DIP(SA)");
-    RegisterUnitType((int)this_ptr + 0x28,"Dragun_18_DIP(SA)");
+    RegisterUnitType((intptr_t)this_ptr + 8,"Pehota_turki_DIP(SA)");
+    RegisterUnitType((intptr_t)this_ptr + 0x10,"Strelec_Algir_DIP(SA)");
+    RegisterUnitType((intptr_t)this_ptr + 0x18,"Grenader_DIP(SA)");
+    RegisterUnitType((intptr_t)this_ptr + 0x20,"Kozak_loshad_DIP(SA)");
+    RegisterUnitType((intptr_t)this_ptr + 0x28,"Dragun_18_DIP(SA)");
     return;
   case 3:
     RegisterUnitType(this_ptr,"Rundashir_Avstria_DIP(PO)");
-    RegisterUnitType((int)this_ptr + 8,"Pehota_turki_DIP(PO)");
-    RegisterUnitType((int)this_ptr + 0x10,"Strelec_Algir_DIP(PO)");
-    RegisterUnitType((int)this_ptr + 0x18,"Grenader_DIP(PO)");
-    RegisterUnitType((int)this_ptr + 0x20,"Kozak_loshad_DIP(PO)");
-    RegisterUnitType((int)this_ptr + 0x28,"Dragun_18_DIP(PO)");
+    RegisterUnitType((intptr_t)this_ptr + 8,"Pehota_turki_DIP(PO)");
+    RegisterUnitType((intptr_t)this_ptr + 0x10,"Strelec_Algir_DIP(PO)");
+    RegisterUnitType((intptr_t)this_ptr + 0x18,"Grenader_DIP(PO)");
+    RegisterUnitType((intptr_t)this_ptr + 0x20,"Kozak_loshad_DIP(PO)");
+    RegisterUnitType((intptr_t)this_ptr + 0x28,"Dragun_18_DIP(PO)");
   }
   return;
 }
@@ -549,19 +549,19 @@ int  FUN_10002280(void *this_ptr,int param_1)
   case 0:
     break;
   case 1:
-    return (int)this_ptr + 8;
+    return (intptr_t)this_ptr + 8;
   case 2:
-    return (int)this_ptr + 0x10;
+    return (intptr_t)this_ptr + 0x10;
   case 3:
-    return (int)this_ptr + 0x18;
+    return (intptr_t)this_ptr + 0x18;
   case 4:
-    return (int)this_ptr + 0x28;
+    return (intptr_t)this_ptr + 0x28;
   case 5:
-    return (int)this_ptr + 0x20;
+    return (intptr_t)this_ptr + 0x20;
   default:
     this_ptr = (void *)0x0;
   }
-  return (int)this_ptr;
+  return (intptr_t)this_ptr;
 }
 
 

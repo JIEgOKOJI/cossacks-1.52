@@ -5,7 +5,7 @@
 #include <time.h>
 
 /* Global variables */
-int this_ptr = 0;
+intptr_t this_ptr = 0;
 char DAT_1003002c[] = "SUXX";
 char DAT_100303ec[] = "Zk4b";
 char DAT_100303f4[] = "Zk3b";
@@ -214,8 +214,8 @@ void  FUN_10001160(void *this_ptr,int param_1)
   int *puVar2;
   int local_c;
   void *local_8;
-if (*(char *)((int)this_ptr + 0x20) != '\0') {
-    *(char *)((int)this_ptr + 0x20) = 0;
+if (*(char *)((intptr_t)this_ptr + 0x20) != '\0') {
+    *(char *)((intptr_t)this_ptr + 0x20) = 0;
     local_8 = this_ptr;
     for (local_c = 0; local_c < param_1; local_c = local_c + 1) {
       ProduceUnitFast(local_8,(intptr_t)local_8 + 8,(intptr_t)local_8 + 0x10,0);
@@ -287,8 +287,8 @@ void  FUN_100013a0(void *this_ptr,int param_1,byte param_2)
   int *puVar4;
   int local_48 [16];
   void *local_8;
-*(char *)((int)this_ptr + 0x20) = 1;
-  *(char *)((int)this_ptr + 0x21) = 0;
+*(char *)((intptr_t)this_ptr + 0x20) = 1;
+  *(char *)((intptr_t)this_ptr + 0x21) = 0;
   local_8 = this_ptr;
   uVar1 = GetGlobalTime();
   *(int *)((intptr_t)local_8 + 0x26) = uVar1;

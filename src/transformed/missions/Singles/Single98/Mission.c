@@ -5,7 +5,7 @@
 #include <time.h>
 
 /* Global variables */
-int this_ptr = 0;
+intptr_t this_ptr = 0;
 long long DAT_1000f040 = 0;
 int DAT_1000f048 = 10;
 int DAT_1000f04c = 100;
@@ -137,11 +137,11 @@ void  FUN_10002070(void *this_ptr,int param_1,char param_2)
   
   iVar2 = GetTotalAmount0(*(int *)this_ptr);
   if ((iVar2 != 0) && (param_1 != 0)) {
-    cVar1 = TimerDone(*(char *)((int)this_ptr + 9));
+    cVar1 = TimerDone(*(char *)((intptr_t)this_ptr + 9));
     if (cVar1 != '\0') {
-      RunTimer(*(char *)((int)this_ptr + 9),*(int *)((int)this_ptr + 0xd));
+      RunTimer(*(char *)((intptr_t)this_ptr + 9),*(int *)((intptr_t)this_ptr + 0xd));
       if (param_2 != '\0') {
-        CreateObject0(param_1,&DAT_10013d20,&DAT_10013e50,3,*(int *)((int)this_ptr + 4),0);
+        CreateObject0(param_1,&DAT_10013d20,&DAT_10013e50,3,*(int *)((intptr_t)this_ptr + 4),0);
         return;
       }
       uVar3 = rand();
@@ -150,10 +150,10 @@ void  FUN_10002070(void *this_ptr,int param_1,char param_2)
         uVar3 = (uVar3 - 1 | -2) + 1;
       }
       if (uVar3 == 0) {
-        CreateObject0(param_1,&DAT_10013d20,&DAT_10013cc8,3,*(int *)((int)this_ptr + 4),0);
+        CreateObject0(param_1,&DAT_10013d20,&DAT_10013cc8,3,*(int *)((intptr_t)this_ptr + 4),0);
       }
       else if (uVar3 == 1) {
-        CreateObject0(param_1,&DAT_10013d20,&DAT_10013d00,3,*(int *)((int)this_ptr + 4),0);
+        CreateObject0(param_1,&DAT_10013d20,&DAT_10013d00,3,*(int *)((intptr_t)this_ptr + 4),0);
         return;
       }
     }
@@ -410,7 +410,7 @@ FUN_10002540(int param_1,int param_2,int param_3,int param_4,int param_5,
 {
   BOOL bVar1;
   int iVar2;
-  int extraout_var;
+  int extraout_var = 0;
   unsigned int uVar3;
   int uVar4;
   char auStack_8 [8];
@@ -828,9 +828,9 @@ int __cdecl FUN_10002cd0(unsigned int param_1,int param_2,int param_3,int param_
 
 {
   int iVar1;
-  int extraout_var;
-  int extraout_var_00;
-  int extraout_var_01;
+  int extraout_var = 0;
+  int extraout_var_00 = 0;
+  int extraout_var_01 = 0;
   unsigned short auStack_34 [4];
   unsigned int auStack_2c [11];
   
@@ -913,8 +913,8 @@ void  FUN_10002ea0(void *this_ptr,int *param_1,unsigned int param_2,int *param_3
   unsigned int uVar6;
   int *puVar7;
   
-  puVar7 = *(int **)((int)this_ptr + 8);
-  if (param_2 <= (unsigned int)(*(int *)((int)this_ptr + 0xc) - (int)puVar7 >> 2)) {
+  puVar7 = *(int **)((intptr_t)this_ptr + 8);
+  if (param_2 <= (unsigned int)(*(int *)((intptr_t)this_ptr + 0xc) - (int)puVar7 >> 2)) {
     if ((unsigned int)((int)puVar7 - (intptr_t)param_1 >> 2) < param_2) {
       puVar5 = param_1 + param_2;
       if (param_1 != puVar7) {
@@ -927,18 +927,18 @@ void  FUN_10002ea0(void *this_ptr,int *param_1,unsigned int param_2,int *param_3
           puVar5 = puVar5 + 1;
         } while (puVar4 != puVar7);
       }
-      puVar7 = *(int **)((int)this_ptr + 8);
+      puVar7 = *(int **)((intptr_t)this_ptr + 8);
       for (iVar2 = param_2 - ((int)puVar7 - (intptr_t)param_1 >> 2); iVar2 != 0; iVar2 = iVar2 + -1) {
         if (puVar7 != (int *)0x0) {
           *puVar7 = *param_3;
         }
         puVar7 = puVar7 + 1;
       }
-      puVar7 = *(int **)((int)this_ptr + 8);
+      puVar7 = *(int **)((intptr_t)this_ptr + 8);
       for (; param_1 != puVar7; param_1 = param_1 + 1) {
         *param_1 = *param_3;
       }
-      *(unsigned int *)((int)this_ptr + 8) = *(int *)((int)this_ptr + 8) + param_2 * 4;
+      *(unsigned int *)((intptr_t)this_ptr + 8) = *(int *)((intptr_t)this_ptr + 8) + param_2 * 4;
       return;
     }
     if (param_2 != 0) {
@@ -949,7 +949,7 @@ void  FUN_10002ea0(void *this_ptr,int *param_1,unsigned int param_2,int *param_3
         }
         puVar5 = puVar5 + 1;
       }
-      puVar7 = *(int **)((int)this_ptr + 8);
+      puVar7 = *(int **)((intptr_t)this_ptr + 8);
       for (puVar5 = puVar7 + -param_2; param_1 != puVar5; puVar5 = puVar5 + -1) {
         puVar7 = puVar7 + -1;
         *puVar7 = puVar5[-1];
@@ -958,11 +958,11 @@ void  FUN_10002ea0(void *this_ptr,int *param_1,unsigned int param_2,int *param_3
       for (; param_1 != puVar7; param_1 = param_1 + 1) {
         *param_1 = *param_3;
       }
-      *(int *)((int)this_ptr + 8) = *(int *)((int)this_ptr + 8) + param_2 * 4;
+      *(int *)((intptr_t)this_ptr + 8) = *(int *)((intptr_t)this_ptr + 8) + param_2 * 4;
     }
     return;
   }
-  iVar2 = *(int *)((int)this_ptr + 4);
+  iVar2 = *(int *)((intptr_t)this_ptr + 4);
   if ((iVar2 == 0) || (uVar6 = (int)puVar7 - iVar2 >> 2, uVar6 <= param_2)) {
     uVar6 = param_2;
   }
@@ -979,7 +979,7 @@ void  FUN_10002ea0(void *this_ptr,int *param_1,unsigned int param_2,int *param_3
   }
   puVar4 = malloc(iVar3 * 4);
   puVar5 = puVar4;
-  for (puVar7 = *(int **)((int)this_ptr + 4); uVar6 = param_2, puVar1 = puVar5, puVar7 != param_1
+  for (puVar7 = *(int **)((intptr_t)this_ptr + 4); uVar6 = param_2, puVar1 = puVar5, puVar7 != param_1
       ; puVar7 = puVar7 + 1) {
     if (puVar5 != (int *)0x0) {
       *puVar5 = *puVar7;
@@ -992,7 +992,7 @@ void  FUN_10002ea0(void *this_ptr,int *param_1,unsigned int param_2,int *param_3
     }
     puVar1 = puVar1 + 1;
   }
-  puVar1 = *(int **)((int)this_ptr + 8);
+  puVar1 = *(int **)((intptr_t)this_ptr + 8);
   puVar7 = puVar5 + param_2;
   if (param_1 != puVar1) {
     puVar5 = (int *)((int)puVar7 + (param_2 * -4 - (int)puVar5) + (intptr_t)param_1);
@@ -1004,16 +1004,16 @@ void  FUN_10002ea0(void *this_ptr,int *param_1,unsigned int param_2,int *param_3
       puVar7 = puVar7 + 1;
     } while (puVar5 != puVar1);
   }
-  FUN_1000456b(*(int **)((int)this_ptr + 4));
-  *(int **)((int)this_ptr + 0xc) = puVar4 + iVar2;
-  iVar2 = *(int *)((int)this_ptr + 4);
+  FUN_1000456b(*(int **)((intptr_t)this_ptr + 4));
+  *(int **)((intptr_t)this_ptr + 0xc) = puVar4 + iVar2;
+  iVar2 = *(int *)((intptr_t)this_ptr + 4);
   if (iVar2 == 0) {
-    *(int **)((int)this_ptr + 4) = puVar4;
-    *(int **)((int)this_ptr + 8) = puVar4 + param_2;
+    *(int **)((intptr_t)this_ptr + 4) = puVar4;
+    *(int **)((intptr_t)this_ptr + 8) = puVar4 + param_2;
     return;
   }
-  *(int **)((int)this_ptr + 4) = puVar4;
-  *(int **)((int)this_ptr + 8) = puVar4 + (*(int *)((int)this_ptr + 8) - iVar2 >> 2) + param_2;
+  *(int **)((intptr_t)this_ptr + 4) = puVar4;
+  *(int **)((intptr_t)this_ptr + 8) = puVar4 + (*(int *)((intptr_t)this_ptr + 8) - iVar2 >> 2) + param_2;
   return;
 }
 
@@ -1053,43 +1053,43 @@ void  FUN_100030f0(void *this_ptr,char param_1)
   switch(param_1) {
   case 0:
     RegisterUnitType(this_ptr,"Rundashir_Avstria_DIP(au)");
-    RegisterUnitType((int)this_ptr + 8,"Pehota_turki_DIP(au)");
-    RegisterUnitType((int)this_ptr + 0x10,"Strelec_Algir_DIP(au)");
-    RegisterUnitType((int)this_ptr + 0x18,"Grenader_DIP(au)");
-    RegisterUnitType((int)this_ptr + 0x20,"Kozak_loshad_DIP(au)");
-    RegisterUnitType((int)this_ptr + 0x28,"Dragun_18_DIP(au)");
+    RegisterUnitType((intptr_t)this_ptr + 8,"Pehota_turki_DIP(au)");
+    RegisterUnitType((intptr_t)this_ptr + 0x10,"Strelec_Algir_DIP(au)");
+    RegisterUnitType((intptr_t)this_ptr + 0x18,"Grenader_DIP(au)");
+    RegisterUnitType((intptr_t)this_ptr + 0x20,"Kozak_loshad_DIP(au)");
+    RegisterUnitType((intptr_t)this_ptr + 0x28,"Dragun_18_DIP(au)");
     return;
   case 1:
     RegisterUnitType(this_ptr,"Rundashir_Avstria_DIP(GE)");
-    RegisterUnitType((int)this_ptr + 8,"Pehota_turki_DIP(GE)");
-    RegisterUnitType((int)this_ptr + 0x10,"Strelec_Algir_DIP(GE)");
-    RegisterUnitType((int)this_ptr + 0x18,"Grenader_DIP(GE)");
-    RegisterUnitType((int)this_ptr + 0x20,"Kozak_loshad_DIP(GE)");
-    RegisterUnitType((int)this_ptr + 0x28,"Dragun_18_DIP(GE)");
+    RegisterUnitType((intptr_t)this_ptr + 8,"Pehota_turki_DIP(GE)");
+    RegisterUnitType((intptr_t)this_ptr + 0x10,"Strelec_Algir_DIP(GE)");
+    RegisterUnitType((intptr_t)this_ptr + 0x18,"Grenader_DIP(GE)");
+    RegisterUnitType((intptr_t)this_ptr + 0x20,"Kozak_loshad_DIP(GE)");
+    RegisterUnitType((intptr_t)this_ptr + 0x28,"Dragun_18_DIP(GE)");
     return;
   case 2:
     RegisterUnitType(this_ptr,"Rundashir_Avstria_DIP(SA)");
-    RegisterUnitType((int)this_ptr + 8,"Pehota_turki_DIP(SA)");
-    RegisterUnitType((int)this_ptr + 0x10,"Strelec_Algir_DIP(SA)");
-    RegisterUnitType((int)this_ptr + 0x18,"Grenader_DIP(SA)");
-    RegisterUnitType((int)this_ptr + 0x20,"Kozak_loshad_DIP(SA)");
-    RegisterUnitType((int)this_ptr + 0x28,"Dragun_18_DIP(SA)");
+    RegisterUnitType((intptr_t)this_ptr + 8,"Pehota_turki_DIP(SA)");
+    RegisterUnitType((intptr_t)this_ptr + 0x10,"Strelec_Algir_DIP(SA)");
+    RegisterUnitType((intptr_t)this_ptr + 0x18,"Grenader_DIP(SA)");
+    RegisterUnitType((intptr_t)this_ptr + 0x20,"Kozak_loshad_DIP(SA)");
+    RegisterUnitType((intptr_t)this_ptr + 0x28,"Dragun_18_DIP(SA)");
     return;
   case 3:
     RegisterUnitType(this_ptr,"Rundashir_Avstria_DIP(PO)");
-    RegisterUnitType((int)this_ptr + 8,"Pehota_turki_DIP(PO)");
-    RegisterUnitType((int)this_ptr + 0x10,"Strelec_Algir_DIP(PO)");
-    RegisterUnitType((int)this_ptr + 0x18,"Grenader_DIP(PO)");
-    RegisterUnitType((int)this_ptr + 0x20,"Kozak_loshad_DIP(PO)");
-    RegisterUnitType((int)this_ptr + 0x28,"Dragun_18_DIP(PO)");
+    RegisterUnitType((intptr_t)this_ptr + 8,"Pehota_turki_DIP(PO)");
+    RegisterUnitType((intptr_t)this_ptr + 0x10,"Strelec_Algir_DIP(PO)");
+    RegisterUnitType((intptr_t)this_ptr + 0x18,"Grenader_DIP(PO)");
+    RegisterUnitType((intptr_t)this_ptr + 0x20,"Kozak_loshad_DIP(PO)");
+    RegisterUnitType((intptr_t)this_ptr + 0x28,"Dragun_18_DIP(PO)");
     return;
   case 4:
     RegisterUnitType(this_ptr,"Rundashir_Avstria_DIP(SV)");
-    RegisterUnitType((int)this_ptr + 8,"Pehota_turki_DIP(SV)");
-    RegisterUnitType((int)this_ptr + 0x10,"Strelec_Algir_DIP(SV)");
-    RegisterUnitType((int)this_ptr + 0x18,"Grenader_DIP(SV)");
-    RegisterUnitType((int)this_ptr + 0x20,"Kozak_loshad_DIP(SV)");
-    RegisterUnitType((int)this_ptr + 0x28,"Dragun_18_DIP(SV)");
+    RegisterUnitType((intptr_t)this_ptr + 8,"Pehota_turki_DIP(SV)");
+    RegisterUnitType((intptr_t)this_ptr + 0x10,"Strelec_Algir_DIP(SV)");
+    RegisterUnitType((intptr_t)this_ptr + 0x18,"Grenader_DIP(SV)");
+    RegisterUnitType((intptr_t)this_ptr + 0x20,"Kozak_loshad_DIP(SV)");
+    RegisterUnitType((intptr_t)this_ptr + 0x28,"Dragun_18_DIP(SV)");
   }
   return;
 }
@@ -1105,19 +1105,19 @@ int  FUN_100032b0(void *this_ptr,int param_1)
   case 0:
     break;
   case 1:
-    return (int)this_ptr + 8;
+    return (intptr_t)this_ptr + 8;
   case 2:
-    return (int)this_ptr + 0x10;
+    return (intptr_t)this_ptr + 0x10;
   case 3:
-    return (int)this_ptr + 0x18;
+    return (intptr_t)this_ptr + 0x18;
   case 4:
-    return (int)this_ptr + 0x28;
+    return (intptr_t)this_ptr + 0x28;
   case 5:
-    return (int)this_ptr + 0x20;
+    return (intptr_t)this_ptr + 0x20;
   default:
     this_ptr = (void *)0x0;
   }
-  return (int)this_ptr;
+  return (intptr_t)this_ptr;
 }
 
 

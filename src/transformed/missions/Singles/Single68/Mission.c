@@ -5,7 +5,7 @@
 #include <time.h>
 
 /* Global variables */
-int this_ptr = 0;
+intptr_t this_ptr = 0;
 char DAT_1000b088[] = "G9";
 char DAT_1000b08c[] = "G8";
 char DAT_1000b090[] = "G7";
@@ -227,7 +227,7 @@ void ProcessScenary();
 void  FUN_100026e0(void *this_ptr,int param_1)
 
 {
-  *(int *)((int)this_ptr + 0x16) = param_1;
+  *(int *)((intptr_t)this_ptr + 0x16) = param_1;
   return;
 }
 
@@ -243,23 +243,23 @@ FUN_100026f0(void *this_ptr,char param_1,int param_2,int param_3,int param_4,
   int *puVar1;
   int iVar2;
   
-  *(char *)((int)this_ptr + 0x14) = param_1;
-  *(int *)((int)this_ptr + 0x10) = param_2;
+  *(char *)((intptr_t)this_ptr + 0x14) = param_1;
+  *(int *)((intptr_t)this_ptr + 0x10) = param_2;
   RegisterZone(this_ptr,param_3);
-  RegisterZone((int)this_ptr + 8,param_4);
-  *(int *)((int)this_ptr + 0x1a) = param_5;
-  iVar2 = *(int *)((int)this_ptr + 0x16);
-  *(int *)((int)this_ptr + 0x1e) = param_6;
-  *(char *)((int)this_ptr + 0x15) = param_7;
+  RegisterZone((intptr_t)this_ptr + 8,param_4);
+  *(int *)((intptr_t)this_ptr + 0x1a) = param_5;
+  iVar2 = *(int *)((intptr_t)this_ptr + 0x16);
+  *(int *)((intptr_t)this_ptr + 0x1e) = param_6;
+  *(char *)((intptr_t)this_ptr + 0x15) = param_7;
   if (iVar2 < iVar2 + 7) {
     puVar1 = (int *)(((unsigned char *)&DAT_1000df68) + iVar2 * 0xe);
     do {
       iVar2 = iVar2 + 1;
-      *(char *)(puVar1 + 1) = *(char *)((int)this_ptr + 0x14);
+      *(char *)(puVar1 + 1) = *(char *)((intptr_t)this_ptr + 0x14);
       *puVar1 = param_2;
       *(char *)((int)puVar1 + 5) = 0;
       puVar1 = (int *)((int)puVar1 + 0xe);
-    } while (iVar2 < *(int *)((int)this_ptr + 0x16) + 7);
+    } while (iVar2 < *(int *)((intptr_t)this_ptr + 0x16) + 7);
   }
   return;
 }
@@ -372,7 +372,7 @@ void  FUN_10002910(int param_1)
   BOOL bVar1;
   int iVar2;
   int iVar3;
-  int extraout_EDX;
+  int extraout_EDX = 0;
   int *puVar4;
   
   iVar2 = GetUnitsAmount2(param_1 + 8,&DAT_1000e3d8,*(char *)(param_1 + 0x14));
@@ -466,11 +466,11 @@ void  FUN_100029f0(int param_1)
 void  FUN_10002b40(void *this_ptr,char param_1)
 
 {
-  FUN_100029f0((int)this_ptr);
+  FUN_100029f0((intptr_t)this_ptr);
   if (param_1 != '\0') {
-    FUN_100027c0((int)this_ptr);
-    FUN_10002880((int)this_ptr);
-    FUN_10002910((int)this_ptr);
+    FUN_100027c0((intptr_t)this_ptr);
+    FUN_10002880((intptr_t)this_ptr);
+    FUN_10002910((intptr_t)this_ptr);
   }
   return;
 }

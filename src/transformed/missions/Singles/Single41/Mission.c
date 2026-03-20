@@ -5,7 +5,7 @@
 #include <time.h>
 
 /* Global variables */
-int this_ptr = 0;
+intptr_t this_ptr = 0;
 char DAT_1002a03c[] = "Z13";
 char DAT_1002a040[] = "Z12";
 char DAT_1002a044[] = "Z11";
@@ -91,8 +91,8 @@ FUN_10001170(void *this_ptr,int param_1,int param_2,char param_3,int param_4)
   int *puVar3;
   int local_48 [16];
   char *local_8;
-*(int *)((int)this_ptr + 6) = param_1;
-  *(int *)((int)this_ptr + 10) = param_2;
+*(int *)((intptr_t)this_ptr + 6) = param_1;
+  *(int *)((intptr_t)this_ptr + 10) = param_2;
   local_8 = this_ptr;
   FUN_100010d0(param_1);
   local_8[1] = uVar1;
@@ -116,7 +116,7 @@ FUN_10001210(void *this_ptr,int param_1,int param_2,char param_3,int param_4)
   int local_48 [16];
   void *local_8;
 local_8 = this_ptr;
-  RegisterUnits((int)this_ptr + 0x16,param_1);
+  RegisterUnits((intptr_t)this_ptr + 0x16,param_1);
   RegisterZone((intptr_t)local_8 + 0x1e,param_2);
   FUN_10001170(local_8,(intptr_t)local_8 + 0x16,(intptr_t)local_8 + 0x1e,param_3,param_4);
   local_8 = (void *)0x10001292;
@@ -135,7 +135,7 @@ void  FUN_100012c0(void *this_ptr,int param_1,char param_2,int param_3)
   int local_48 [16];
   void *local_8;
 local_8 = this_ptr;
-  RegisterUnits((int)this_ptr + 0x16,param_1);
+  RegisterUnits((intptr_t)this_ptr + 0x16,param_1);
   CreateZoneNearGroup((intptr_t)local_8 + 0x1e,&DAT_1002f4a8,(intptr_t)local_8 + 0x16,300);
   FUN_10001170(local_8,(intptr_t)local_8 + 0x16,(intptr_t)local_8 + 0x1e,param_2,param_3);
   local_8 = (void *)0x1000134f;

@@ -901,6 +901,9 @@ if __name__ == '__main__':
                 continue
             if stripped == '0;':  # leftover from __chkesp() → 0
                 continue
+            # Skip debug-mode param copies: local_N = param_N;
+            if re.match(r'^local_\w+\s*=\s*param_\d+\s*;$', stripped):
+                continue
             body_lines.append(stripped)
         # A simple wrapper has exactly one meaningful statement: an API call
         if len(body_lines) == 1:
@@ -1207,6 +1210,7 @@ if __name__ == '__main__':
     # Note: (int)(local_xxx) with extra parens is legitimate data extraction, not pointer cast
     raw_code = re.sub(r'\(int\)(local_\w+)\b', r'(intptr_t)\1', raw_code)
     raw_code = re.sub(r'\(int\)(param_\w+)\b', r'(intptr_t)\1', raw_code)
+    raw_code = raw_code.replace('(int)this_ptr', '(intptr_t)this_ptr')
 
     # Fix sprintf with missing varargs (Ghidra loses cdecl varargs):
     # sprintf(&DAT_xxx, &DAT_yyy) with no actual string args → buf[0] = '\0'
@@ -1308,8 +1312,9 @@ if __name__ == '__main__':
 
     # Fix extraout_ECX Ghidra artifacts: these represent x86 ECX register
     # output from function calls. On non-x86, they're meaningless.
+    # Also fix extraout_EDX, extraout_var, extraout_ST0, etc.
     raw_code = re.sub(
-        r'^(\s*(?:int|void\s*\*)\s+extraout_ECX\w*)\s*;',
+        r'^(\s*(?:int|short|void\s*\*|float|double)\s+extraout_\w+)\s*;',
         r'\1 = 0;',
         raw_code, flags=re.MULTILINE
     )
@@ -1389,7 +1394,7 @@ if __name__ == '__main__':
     if re.search(r'\bptr_var\b', raw_code):
         header += 'int ptr_var = 0;\n'
     if re.search(r'\bthis_ptr\b', raw_code):
-        header += 'int this_ptr = 0;\n'
+        header += 'intptr_t this_ptr = 0;\n'
     header += var_decls + '\n'
     if fun_stubs:
         header += '\n/* Stubs for missing internal functions */\n'

@@ -5,7 +5,7 @@
 #include <time.h>
 
 /* Global variables */
-int this_ptr = 0;
+intptr_t this_ptr = 0;
 long long DAT_1000a1c8 = 0;
 long long DAT_1000a1d0 = 0;
 long long DAT_1000c060 = 0;
@@ -368,13 +368,13 @@ void  FUN_10002320(void *this_ptr,int param_1,int param_2)
   int iVar1;
   int iVar2;
   
-  iVar1 = (int)this_ptr + 0x15;
+  iVar1 = (intptr_t)this_ptr + 0x15;
   FUN_10001e90(iVar1);
   iVar2 = rand();
   CreateObject0(iVar1,param_2,param_1,
-                (int)*(char *)((int)this_ptr + 4),
-                (int)this_ptr + 5,iVar2 % 0xff);
-  RemoveGroup(iVar1,(int)this_ptr + 0xd);
+                (int)*(char *)((intptr_t)this_ptr + 4),
+                (intptr_t)this_ptr + 5,iVar2 % 0xff);
+  RemoveGroup(iVar1,(intptr_t)this_ptr + 0xd);
   return;
 }
 

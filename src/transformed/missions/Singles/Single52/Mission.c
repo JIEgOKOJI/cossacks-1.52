@@ -5,7 +5,7 @@
 #include <time.h>
 
 /* Global variables */
-int this_ptr = 0;
+intptr_t this_ptr = 0;
 char DAT_10009038[] = "HELP";
 char DAT_100092c4[] = "%s";
 long long DAT_1000bf78 = 0;
@@ -92,8 +92,8 @@ void __cdecl FUN_10001020(void *param_1)
 void  FUN_100019c0(void *this_ptr,int param_1)
 
 {
-  RegisterUnits((int)this_ptr + 0x18,param_1);
-  FUN_10001dc0((char *)((int)this_ptr + 0x20),DAT_100092c4);
+  RegisterUnits((intptr_t)this_ptr + 0x18,param_1);
+  FUN_10001dc0((char *)((intptr_t)this_ptr + 0x20),DAT_100092c4);
   return;
 }
 
@@ -105,12 +105,12 @@ void  FUN_100019c0(void *this_ptr,int param_1)
 void  FUN_10001a10(void *this_ptr,int param_1,int param_2)
 
 {
-  TakeFood((int)this_ptr + 0x10);
+  TakeFood((intptr_t)this_ptr + 0x10);
   ClearSelection(param_1);
-  SelectUnits((int)this_ptr + 0x48,0);
+  SelectUnits((intptr_t)this_ptr + 0x48,0);
   SelDie(param_1);
   SelectUnits(this_ptr,0);
-  SelectUnits((int)this_ptr + 8,1);
+  SelectUnits((intptr_t)this_ptr + 8,1);
   SelChangeNation(param_1,param_2);
   return;
 }
@@ -167,7 +167,7 @@ int  FUN_10001ac0(int param_1)
 void  FUN_10001b10(void *this_ptr,int param_1)
 
 {
-  *(int *)((int)this_ptr + 0x54) = param_1;
+  *(int *)((intptr_t)this_ptr + 0x54) = param_1;
   return;
 }
 
@@ -192,7 +192,7 @@ void  FUN_10001b30(void *this_ptr,int param_1)
   char local_8 [8];
   
   RegisterUnits(local_8,param_1);
-  RemoveGroup(local_8,(int)this_ptr + 4);
+  RemoveGroup(local_8,(intptr_t)this_ptr + 4);
   return;
 }
 
@@ -211,31 +211,31 @@ void  FUN_10001be0(void *this_ptr,int param_1)
   int iVar2;
   int iVar3;
   
-  iVar2 = GetTotalAmount0((int)this_ptr + 0x34);
-  if ((((iVar2 != 0) || (iVar2 = GetTotalAmount0((int)this_ptr + 0x3c), iVar2 != 0)) ||
-      (cVar1 = CheckProduction((int)this_ptr + 0xc), cVar1 == '\0')) &&
-     (iVar2 = GetGlobalTime(), iVar2 <= *(int *)((int)this_ptr + 0x5c))) {
+  iVar2 = GetTotalAmount0((intptr_t)this_ptr + 0x34);
+  if ((((iVar2 != 0) || (iVar2 = GetTotalAmount0((intptr_t)this_ptr + 0x3c), iVar2 != 0)) ||
+      (cVar1 = CheckProduction((intptr_t)this_ptr + 0xc), cVar1 == '\0')) &&
+     (iVar2 = GetGlobalTime(), iVar2 <= *(int *)((intptr_t)this_ptr + 0x5c))) {
     return;
   }
   iVar2 = GetGlobalTime();
-  *(int *)((int)this_ptr + 0x5c) = iVar2 + *(int *)((int)this_ptr + 0x58);
-  iVar2 = GetUnitsByNation((int)this_ptr + 4,*(char *)this_ptr);
-  iVar3 = (iVar2 + 1) * *(int *)((int)this_ptr + 0x54);
+  *(int *)((intptr_t)this_ptr + 0x5c) = iVar2 + *(int *)((intptr_t)this_ptr + 0x58);
+  iVar2 = GetUnitsByNation((intptr_t)this_ptr + 4,*(char *)this_ptr);
+  iVar3 = (iVar2 + 1) * *(int *)((intptr_t)this_ptr + 0x54);
   iVar2 = iVar3 / 3;
   if (0 < iVar2) {
     do {
-      ProduceUnitFast((int)this_ptr + 0xc,(int)this_ptr + 0x1c,(int)this_ptr + 0x34,0);
+      ProduceUnitFast((intptr_t)this_ptr + 0xc,(intptr_t)this_ptr + 0x1c,(intptr_t)this_ptr + 0x34,0);
       iVar2 = iVar2 + -1;
     } while (iVar2 != 0);
   }
   if (0 < iVar3) {
     do {
-      ProduceUnitFast((int)this_ptr + 0xc,(int)this_ptr + 0x24,(int)this_ptr + 0x3c,0);
+      ProduceUnitFast((intptr_t)this_ptr + 0xc,(intptr_t)this_ptr + 0x24,(intptr_t)this_ptr + 0x3c,0);
       iVar3 = iVar3 + -1;
     } while (iVar3 != 0);
   }
   iVar2 = GetDiff(0);
-  *(int *)((int)this_ptr + 0x54) = *(int *)((int)this_ptr + 0x54) + iVar2 * param_1;
+  *(int *)((intptr_t)this_ptr + 0x54) = *(int *)((intptr_t)this_ptr + 0x54) + iVar2 * param_1;
   return;
 }
 
@@ -252,12 +252,12 @@ void  FUN_10001cc0(void *this_ptr,int param_1)
   
   UnitsCenter(local_8,param_1,1000);
   ClearSelection(*(char *)this_ptr);
-  SelectUnits((int)this_ptr + 0x4c,0);
+  SelectUnits((intptr_t)this_ptr + 0x4c,0);
   uVar2 = 0;
   iVar1 = rand();
   SelSendAndKill(*(char *)this_ptr,local_8,iVar1,uVar2);
   ClearSelection(*(char *)this_ptr);
-  SelectUnits((int)this_ptr + 0x44,0);
+  SelectUnits((intptr_t)this_ptr + 0x44,0);
   SelAttackGroup(*(char *)this_ptr,param_1);
   return;
 }

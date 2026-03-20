@@ -5,7 +5,7 @@
 #include <time.h>
 
 /* Global variables */
-int this_ptr = 0;
+intptr_t this_ptr = 0;
 long long DAT_1000e040 = 0;
 int DAT_1000e048 = 20;
 int DAT_1000f6c4 = 0;
@@ -145,11 +145,11 @@ void  FUN_10001de0(void *this_ptr,int param_1,char param_2)
   
   iVar2 = GetTotalAmount0(*(int *)this_ptr);
   if ((iVar2 != 0) && (param_1 != 0)) {
-    cVar1 = TimerDone(*(char *)((int)this_ptr + 9));
+    cVar1 = TimerDone(*(char *)((intptr_t)this_ptr + 9));
     if (cVar1 != '\0') {
-      RunTimer(*(char *)((int)this_ptr + 9),*(int *)((int)this_ptr + 0xd));
+      RunTimer(*(char *)((intptr_t)this_ptr + 9),*(int *)((intptr_t)this_ptr + 0xd));
       if (param_2 != '\0') {
-        CreateObject0(param_1,&DAT_10012758,&DAT_10012768,1,*(int *)((int)this_ptr + 4),0);
+        CreateObject0(param_1,&DAT_10012758,&DAT_10012768,1,*(int *)((intptr_t)this_ptr + 4),0);
         return;
       }
       uVar3 = rand();
@@ -158,10 +158,10 @@ void  FUN_10001de0(void *this_ptr,int param_1,char param_2)
         uVar3 = (uVar3 - 1 | -2) + 1;
       }
       if (uVar3 == 0) {
-        CreateObject0(param_1,&DAT_10012758,&DAT_10012770,1,*(int *)((int)this_ptr + 4),0);
+        CreateObject0(param_1,&DAT_10012758,&DAT_10012770,1,*(int *)((intptr_t)this_ptr + 4),0);
       }
       else if (uVar3 == 1) {
-        CreateObject0(param_1,&DAT_10012758,&DAT_10012760,1,*(int *)((int)this_ptr + 4),0);
+        CreateObject0(param_1,&DAT_10012758,&DAT_10012760,1,*(int *)((intptr_t)this_ptr + 4),0);
         return;
       }
     }
@@ -509,9 +509,9 @@ int __cdecl FUN_10002440(unsigned int param_1,int param_2,int param_3,int param_
 
 {
   int iVar1;
-  int extraout_var;
-  int extraout_var_00;
-  int extraout_var_01;
+  int extraout_var = 0;
+  int extraout_var_00 = 0;
+  int extraout_var_01 = 0;
   unsigned short auStack_34 [4];
   unsigned int auStack_2c [11];
   
@@ -594,8 +594,8 @@ void  FUN_10002610(void *this_ptr,int *param_1,unsigned int param_2,int *param_3
   unsigned int uVar6;
   int *puVar7;
   
-  puVar7 = *(int **)((int)this_ptr + 8);
-  if (param_2 <= (unsigned int)(*(int *)((int)this_ptr + 0xc) - (int)puVar7 >> 2)) {
+  puVar7 = *(int **)((intptr_t)this_ptr + 8);
+  if (param_2 <= (unsigned int)(*(int *)((intptr_t)this_ptr + 0xc) - (int)puVar7 >> 2)) {
     if ((unsigned int)((int)puVar7 - (intptr_t)param_1 >> 2) < param_2) {
       puVar5 = param_1 + param_2;
       if (param_1 != puVar7) {
@@ -608,18 +608,18 @@ void  FUN_10002610(void *this_ptr,int *param_1,unsigned int param_2,int *param_3
           puVar5 = puVar5 + 1;
         } while (puVar4 != puVar7);
       }
-      puVar7 = *(int **)((int)this_ptr + 8);
+      puVar7 = *(int **)((intptr_t)this_ptr + 8);
       for (iVar2 = param_2 - ((int)puVar7 - (intptr_t)param_1 >> 2); iVar2 != 0; iVar2 = iVar2 + -1) {
         if (puVar7 != (int *)0x0) {
           *puVar7 = *param_3;
         }
         puVar7 = puVar7 + 1;
       }
-      puVar7 = *(int **)((int)this_ptr + 8);
+      puVar7 = *(int **)((intptr_t)this_ptr + 8);
       for (; param_1 != puVar7; param_1 = param_1 + 1) {
         *param_1 = *param_3;
       }
-      *(unsigned int *)((int)this_ptr + 8) = *(int *)((int)this_ptr + 8) + param_2 * 4;
+      *(unsigned int *)((intptr_t)this_ptr + 8) = *(int *)((intptr_t)this_ptr + 8) + param_2 * 4;
       return;
     }
     if (param_2 != 0) {
@@ -630,7 +630,7 @@ void  FUN_10002610(void *this_ptr,int *param_1,unsigned int param_2,int *param_3
         }
         puVar5 = puVar5 + 1;
       }
-      puVar7 = *(int **)((int)this_ptr + 8);
+      puVar7 = *(int **)((intptr_t)this_ptr + 8);
       for (puVar5 = puVar7 + -param_2; param_1 != puVar5; puVar5 = puVar5 + -1) {
         puVar7 = puVar7 + -1;
         *puVar7 = puVar5[-1];
@@ -639,11 +639,11 @@ void  FUN_10002610(void *this_ptr,int *param_1,unsigned int param_2,int *param_3
       for (; param_1 != puVar7; param_1 = param_1 + 1) {
         *param_1 = *param_3;
       }
-      *(int *)((int)this_ptr + 8) = *(int *)((int)this_ptr + 8) + param_2 * 4;
+      *(int *)((intptr_t)this_ptr + 8) = *(int *)((intptr_t)this_ptr + 8) + param_2 * 4;
     }
     return;
   }
-  iVar2 = *(int *)((int)this_ptr + 4);
+  iVar2 = *(int *)((intptr_t)this_ptr + 4);
   if ((iVar2 == 0) || (uVar6 = (int)puVar7 - iVar2 >> 2, uVar6 <= param_2)) {
     uVar6 = param_2;
   }
@@ -660,7 +660,7 @@ void  FUN_10002610(void *this_ptr,int *param_1,unsigned int param_2,int *param_3
   }
   puVar4 = malloc(iVar3 * 4);
   puVar5 = puVar4;
-  for (puVar7 = *(int **)((int)this_ptr + 4); uVar6 = param_2, puVar1 = puVar5, puVar7 != param_1
+  for (puVar7 = *(int **)((intptr_t)this_ptr + 4); uVar6 = param_2, puVar1 = puVar5, puVar7 != param_1
       ; puVar7 = puVar7 + 1) {
     if (puVar5 != (int *)0x0) {
       *puVar5 = *puVar7;
@@ -673,7 +673,7 @@ void  FUN_10002610(void *this_ptr,int *param_1,unsigned int param_2,int *param_3
     }
     puVar1 = puVar1 + 1;
   }
-  puVar1 = *(int **)((int)this_ptr + 8);
+  puVar1 = *(int **)((intptr_t)this_ptr + 8);
   puVar7 = puVar5 + param_2;
   if (param_1 != puVar1) {
     puVar5 = (int *)((int)puVar7 + (param_2 * -4 - (int)puVar5) + (intptr_t)param_1);
@@ -685,16 +685,16 @@ void  FUN_10002610(void *this_ptr,int *param_1,unsigned int param_2,int *param_3
       puVar7 = puVar7 + 1;
     } while (puVar5 != puVar1);
   }
-  FUN_10003a0b(*(int **)((int)this_ptr + 4));
-  *(int **)((int)this_ptr + 0xc) = puVar4 + iVar2;
-  iVar2 = *(int *)((int)this_ptr + 4);
+  FUN_10003a0b(*(int **)((intptr_t)this_ptr + 4));
+  *(int **)((intptr_t)this_ptr + 0xc) = puVar4 + iVar2;
+  iVar2 = *(int *)((intptr_t)this_ptr + 4);
   if (iVar2 == 0) {
-    *(int **)((int)this_ptr + 4) = puVar4;
-    *(int **)((int)this_ptr + 8) = puVar4 + param_2;
+    *(int **)((intptr_t)this_ptr + 4) = puVar4;
+    *(int **)((intptr_t)this_ptr + 8) = puVar4 + param_2;
     return;
   }
-  *(int **)((int)this_ptr + 4) = puVar4;
-  *(int **)((int)this_ptr + 8) = puVar4 + (*(int *)((int)this_ptr + 8) - iVar2 >> 2) + param_2;
+  *(int **)((intptr_t)this_ptr + 4) = puVar4;
+  *(int **)((intptr_t)this_ptr + 8) = puVar4 + (*(int *)((intptr_t)this_ptr + 8) - iVar2 >> 2) + param_2;
   return;
 }
 

@@ -5,7 +5,7 @@
 #include <time.h>
 
 /* Global variables */
-int this_ptr = 0;
+intptr_t this_ptr = 0;
 char DAT_1002b040[] = "cut";
 char DAT_1002b044[] = "fang";
 char DAT_1002b074[] = "raid";

@@ -5,7 +5,7 @@
 #include <time.h>
 
 /* Global variables */
-int this_ptr = 0;
+intptr_t this_ptr = 0;
 char DAT_1002d01c[] = "Z20";
 char DAT_1002d020[] = "Z19";
 char DAT_1002d024[] = "Z18";
@@ -164,7 +164,7 @@ void  FUN_100011f0(void *this_ptr,int param_1)
   int iVar1;
   int *puVar2;
   int local_48 [17];
-*(int *)((int)this_ptr + 0x2c) = param_1;
+*(int *)((intptr_t)this_ptr + 0x2c) = param_1;
   return;
 }
 
@@ -254,7 +254,7 @@ int *  FUN_100013b0(void *this_ptr,int *param_1)
 puVar2 = param_1;
   for (iVar1 = 0xb; iVar1 != 0; iVar1 = iVar1 + -1) {
     *puVar2 = *(int *)this_ptr;
-    this_ptr = (int *)((int)this_ptr + 4);
+    this_ptr = (int *)((intptr_t)this_ptr + 4);
     puVar2 = puVar2 + 1;
   }
   return param_1;

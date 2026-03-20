@@ -68,7 +68,7 @@ BOOL __cdecl FUN_100015f0(int param_1)
 int __cdecl FUN_10001630(int param_1,int param_2,int param_3,int param_4)
 
 {
-  int extraout_var;
+  int extraout_var = 0;
   int uVar1;
   int uVar2;
   unsigned int uVar3;
