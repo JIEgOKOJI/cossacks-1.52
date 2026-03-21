@@ -1365,12 +1365,7 @@ void  FUN_10006010(int param_1)
           if (cVar1 == '\0') {
             iVar2 = GetReadyUnits(&DAT_10016050);
             if (iVar2 != 0) {
-              if (0) {
-                iVar2 = 0;
-              }
-              else {
                 iVar2 = GetUpgradeCost(DAT_100163e4 & 0xff,&DAT_10016280,5);
-              }
               FUN_10002fd0(5,(iVar2 * 0xb) / 10,0);
             }
           }
@@ -1379,28 +1374,13 @@ void  FUN_10006010(int param_1)
         if (cVar1 != '\0') {
           cVar1 = UpgIsRun(&DAT_10016150);
           if (cVar1 == '\0') {
-            if (0) {
-              iVar2 = 0;
-            }
-            else {
               iVar2 = GetUpgradeCost(DAT_100163e4 & 0xff,&DAT_10016150,3);
-            }
             uVar3 = FUN_10002fd0(3,(iVar2 * 0xb) / 10,2);
             if ((char)uVar3 != '\0') {
-              if (0) {
-                iVar2 = 0;
-              }
-              else {
                 iVar2 = GetUpgradeCost(DAT_100163e4 & 0xff,&DAT_10016150,1);
-              }
               uVar3 = FUN_10002fd0(1,(iVar2 * 0x69) / 100,2);
               if ((char)uVar3 != '\0') {
-                if (0) {
-                  iVar2 = 0;
-                }
-                else {
                   iVar2 = GetUpgradeCost(DAT_100163e4 & 0xff,&DAT_10016150,4);
-                }
                 FUN_10002fd0(4,(iVar2 * 0xb) / 10,2);
               }
             }
@@ -1455,12 +1435,7 @@ void  FUN_10006330(int param_1)
   SetPDistribution(9,4,4);
   cVar1 = UpgIsRun(&DAT_10016230);
   if (cVar1 == '\0') {
-    if (0) {
-      iVar2 = 0;
-    }
-    else {
       iVar2 = GetUpgradeCost((char)DAT_100163e4,&DAT_10016230,3);
-    }
     iVar3 = GetMoney(3);
     if (iVar3 < (iVar2 * 0xb) / 10) {
       uVar5 = 4;
@@ -1474,12 +1449,7 @@ void  FUN_10006330(int param_1)
   }
   cVar1 = UpgIsRun(&DAT_10016150);
   if (cVar1 == '\0') {
-    if (0) {
-      iVar2 = 0;
-    }
-    else {
       iVar2 = GetUpgradeCost((char)DAT_100163e4,&DAT_10016150,3);
-    }
     iVar3 = GetMoney(3);
     if (iVar3 < (iVar2 * 0xb) / 10) {
       uVar5 = 9;
@@ -1493,12 +1463,7 @@ void  FUN_10006330(int param_1)
   }
   cVar1 = UpgIsRun(&DAT_10016280);
   if (cVar1 == '\0') {
-    if (0) {
-      iVar2 = 0;
-    }
-    else {
       iVar2 = GetUpgradeCost((char)DAT_100163e4,&DAT_10016280,3);
-    }
     iVar3 = GetMoney(3);
     if (iVar3 < (iVar2 * 0xd) / 10) {
       uVar4 = 9;
@@ -1515,12 +1480,7 @@ void  FUN_10006330(int param_1)
   }
   iVar2 = GetUnits(&DAT_10016118);
   if ((iVar2 == 0) && (iVar2 = GetPeaceTimeLeft(), iVar2 < 2)) {
-    if (0) {
-      iVar2 = 0;
-    }
-    else {
       iVar2 = GetUnitCost((char)DAT_100163e4,&DAT_10016118,2);
-    }
     iVar3 = GetMoney(2);
     if (iVar3 < (iVar2 * 0xb) / 10) {
       uVar5 = 3;
@@ -1782,16 +1742,12 @@ void FUN_10006c20(void)
 
 {
   int iVar1;
-  int extraout_ECX = 0;
-  int extraout_ECX_00 = 0;
-  int extraout_ECX_01 = 0;
-  int extraout_ECX_02 = 0;
   int uVar2;
   
   uVar2 = 0;
   if (*(int *)(((unsigned char *)&DAT_100160c8) + DAT_100163e4 * 4) != 0) {
     FUN_10006720();
-    uVar2 = extraout_ECX;
+    uVar2 = 0;
   }
   FUN_10005e30(uVar2);
   FUN_10006770();
@@ -1802,13 +1758,13 @@ void FUN_10006c20(void)
   FUN_10005c10();
   FUN_10005ad0();
   iVar1 = GetPeaceTimeLeft();
-  uVar2 = extraout_ECX_00;
+  uVar2 = 0;
   if (iVar1 < 3) {
     FUN_100052f0();
-    uVar2 = extraout_ECX_01;
+    uVar2 = 0;
   }
   FUN_10006010(uVar2);
-  FUN_10006330(extraout_ECX_02);
+  FUN_10006330(0);
   FUN_10006670();
   return;
 }
@@ -1822,8 +1778,6 @@ void FUN_10006c80(void)
 {
   char cVar1;
   int iVar2;
-  int extraout_ECX = 0;
-  int extraout_ECX_00 = 0;
   int iVar3;
   
   FUN_10006ba0();
@@ -1852,8 +1806,8 @@ void FUN_10006c80(void)
     iVar3 = iVar3 + -1;
   } while (iVar3 != 0);
   FUN_10006770();
-  FUN_10006010(extraout_ECX);
-  FUN_10006330(extraout_ECX_00);
+  FUN_10006010(0);
+  FUN_10006330(0);
   FUN_100052f0();
   FUN_10005ad0();
   return;

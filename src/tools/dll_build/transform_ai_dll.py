@@ -637,12 +637,21 @@ def main():
 
     # Fix extraout_ECX Ghidra artifacts: these represent x86 ECX register
     # output from function calls. On ARM64/non-x86, they're meaningless.
-    # Initialize all extraout_ECX* declarations to 0.
-    raw_code = re.sub(
-        r'^(\s*int\s+extraout_ECX\w*)\s*;',
-        r'\1 = 0;',
-        raw_code, flags=re.MULTILINE
-    )
+    # The __fastcall functions that receive extraout_ECX as param_1 never
+    # actually use it (verified: param_1 is dead in all 20 AI DLLs).
+    # Replace all extraout_ECX references with 0, then remove declarations,
+    # then remove the unused param_1 from __fastcall-derived functions.
+
+    # Step A: Replace ALL extraout_ECX* usages with 0 (before removing decls)
+    raw_code = re.sub(r'\bextraout_ECX\w*\b', '0', raw_code)
+    # Step B: Remove lines that are now "int 0 = 0;" or "int 0;"
+    raw_code = re.sub(r'^\s*int\s+0\s*(?:=\s*0\s*)?;\s*\n', '', raw_code, flags=re.MULTILINE)
+    # Step C: Clean up "uVarN = 0;" that was followed by "FUN_xxx(uVarN)"
+    # where uVarN is now always 0. These are simple enough the compiler handles them.
+    # Note: __fastcall param_1 is NOT stripped here — it appears as an extra
+    # argument in API calls (e.g. GetUnits(&zone, param_1)) but fix_arg_counts.py
+    # in the build script trims it. The param_1 comes from x86 ECX register
+    # passing in __fastcall convention and is harmless.
 
     # Remove _DAT_ prefix (normalize to DAT_)
     raw_code = re.sub(r'\b_DAT_', 'DAT_', raw_code)
@@ -691,6 +700,70 @@ def main():
     raw_code = re.sub(
         r'sprintf\s*\(\s*&(DAT_\w+)\s*,\s*&DAT_\w+\s*\)\s*;',
         _fix_sprintf_no_args, raw_code)
+
+    # Simplify if(0){...}else{...} → just the else body.
+    # These come from DAT_xxx == (code*)0x0 checks for optional APIs
+    # (GetUnitCost, GetUpgradeCost). After init, pointers are always valid,
+    # so the check becomes if(0). The else branch always executes.
+    # Only simplify when the if(0) block has NO labels (goto targets).
+    # Work line-by-line for safety.
+    def _simplify_if0_else(code):
+        """Remove if(0){simple_body}else{else_body} keeping only else body."""
+        lines = code.split('\n')
+        out = []
+        i = 0
+        while i < len(lines):
+            line = lines[i]
+            stripped = line.strip()
+            # Match "if (0) {" at the start of a line
+            if re.match(r'^\s*if\s*\(\s*0\s*\)\s*\{', stripped):
+                # Collect the if(0) block
+                if_lines = [line]
+                depth = stripped.count('{') - stripped.count('}')
+                j = i + 1
+                while j < len(lines) and depth > 0:
+                    if_lines.append(lines[j])
+                    depth += lines[j].count('{') - lines[j].count('}')
+                    j += 1
+                if_body = '\n'.join(if_lines)
+                # Check for labels (goto targets) — don't simplify if present
+                if re.search(r'LAB_\w+:', if_body):
+                    out.append(line)
+                    i += 1
+                    continue
+                # Check if "else {" follows
+                if j < len(lines) and re.match(r'^\s*else\s*\{', lines[j].strip()):
+                    # Collect the else block
+                    else_lines = []
+                    depth = lines[j].count('{') - lines[j].count('}')
+                    k = j + 1
+                    while k < len(lines) and depth > 0:
+                        else_lines.append(lines[k])
+                        depth += lines[k].count('{') - lines[k].count('}')
+                        k += 1
+                    # Remove last line (closing brace of else)
+                    if else_lines and else_lines[-1].strip() == '}':
+                        else_lines = else_lines[:-1]
+                    # Emit else body lines (dedented by one level)
+                    for el in else_lines:
+                        out.append(el)
+                    i = k
+                    continue
+                elif j < len(lines) and lines[j].strip().startswith('else'):
+                    # else on same line as closing }  e.g. "} else {"
+                    # Just skip the dead if(0) block
+                    out.append(line)
+                    i += 1
+                    continue
+                else:
+                    # No else — skip the entire dead if(0) block
+                    i = j
+                    continue
+            else:
+                out.append(line)
+                i += 1
+        return '\n'.join(out)
+    raw_code = _simplify_if0_else(raw_code)
 
     # Collect remaining DAT_ variables (AI state)
     var_decls = collect_remaining_dats(raw_code, api_mapping, pe)
