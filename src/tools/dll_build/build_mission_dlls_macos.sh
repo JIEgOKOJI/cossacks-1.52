@@ -34,7 +34,7 @@ if [ ! -f "$DMCR" ]; then
 fi
 
 # Process each decompiled .c file (excluding ai/ and unrar/)
-find "$DECOMP_DIR" -name "*.c" -not -path "*/ai/*" -not -path "*/unrar/*" | sort | while read decomp_c; do
+find "$DECOMP_DIR" -name "*.c" -not -path "*/ai/*" -not -path "*/unrar/*" -not -path "*/usermissions/*" | sort | while read decomp_c; do
     # Get relative path: missions/Poland/Misspo01/Mission.c
     rel="${decomp_c#$DECOMP_DIR/}"
     dir="$(dirname "$rel")"

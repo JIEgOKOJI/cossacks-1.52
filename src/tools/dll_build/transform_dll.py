@@ -106,7 +106,7 @@ def identify_game_functions(blocks):
                 continue
             if '__CallSettingFrame' in block:
                 continue
-            if '__startOneArgErrorHandling' in block or '__math_exit' in block or '__CxxThrowException' in block:
+            if '__startOneArgErrorHandling' in block or '__math_exit' in block:
                 continue
             if '__fload_withFB' in block or '__ctrandisp2' in block:
                 continue
@@ -1087,6 +1087,15 @@ if __name__ == '__main__':
 
     # Remove SEH label references: puStack_c = &LAB_xxx;
     raw_code = re.sub(r'^.*&LAB_\w+.*$\n?', '', raw_code, flags=re.MULTILINE)
+
+    # Replace C++ exception throw with early return (CMS_Start uses __CxxThrowException
+    # for error handling in its scripting engine; without SEH, just return on error)
+    # Remove the entire line with __CxxThrowException and the 'does not return' comment
+    raw_code = re.sub(r'^.*\b__CxxThrowException_?\d*\b.*$\n?', '', raw_code, flags=re.MULTILINE)
+    raw_code = re.sub(r'^\s*/\* WARNING: Subroutine does not return \*/\s*$\n?', '', raw_code, flags=re.MULTILINE)
+
+    # Replace __fclose_lk with fclose
+    raw_code = re.sub(r'\b__fclose_lk\b', 'fclose', raw_code)
 
     # Second pass: remove broken stack-fill loops left after SEH removal
     # SEH removal may break for-loop headers that contained ExceptionList references,
