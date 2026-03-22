@@ -12761,6 +12761,7 @@ AddMissionsPack::AddMissionsPack()
 		char dllname_lc[260];
 		strcpy(dllname_lc, dllname);
 		_strlwr(dllname_lc);
+		for (char* p = dllname_lc; *p; p++) { if (*p == '\\') *p = '/'; }
 
 		char* ext = strstr(dllname_lc, ".dll");
 		if (!ext) ext = strstr(dllname_lc, ".cms");
@@ -12800,6 +12801,11 @@ AddMissionsPack::AddMissionsPack()
 		}
 
 		Gclose(F);
+
+#ifndef _WIN32
+		for (char* p = Pack[NMiss].Map; *p; p++) { if (*p == '\\') *p = '/'; }
+		for (char* p = Pack[NMiss].Preview; *p; p++) { if (*p == '\\') *p = '/'; }
+#endif
 
 		strcpy(processed[processedCount++], base);
 
@@ -12865,8 +12871,8 @@ bool SelectSingleMission()
 	DialogsSystem MMenu(menu_x_off, menu_y_off);
 	MMenu.addPicture(nullptr, 0, 0, &Back, &Back, &Back);
 
-	SQPicture PRV("Maps2\\Single1.bmp");
-	BPXView* PREV = MMenu.addBPXView(nullptr, 495, 162, 292, 190, 1, 1, 1, (byte*)(PRV.PicPtr + 2)/*Preview+4*/, nullptr);
+	SQPicture PRV("Maps2/Single1.bmp");
+	BPXView* PREV = MMenu.addBPXView(nullptr, 495, 162, 292, 190, 1, 1, 1, PRV.PicPtr ? (byte*)(PRV.PicPtr + 2) : nullptr/*Preview+4*/, nullptr);
 	//PREV->Visible=false;
 	GPPicture* PMASK = MMenu.addGPPicture(nullptr, 495, 162, MASKA.GPID, 0);
 	LocalGP HFONT("rom10");
@@ -12957,16 +12963,17 @@ HHH1:
 			//};
 			if (LB->CurItem >= N0)
 			{
-				PRV.LoadPicture(AMSP.Pack[LB->CurItem - N0].Bitmap);
-				PREV->Ptr = (byte*)(PRV.PicPtr + 2);
+				if (AMSP.Pack[LB->CurItem - N0].Bitmap[0])
+					PRV.LoadPicture(AMSP.Pack[LB->CurItem - N0].Bitmap);
+				PREV->Ptr = PRV.PicPtr ? (byte*)(PRV.PicPtr + 2) : nullptr;
 				prmiss = LB->CurItem;
 			}
 			else
 			{
 				char ccc[200];
-				sprintf(ccc, "Maps2\\single%d.bmp", LB->CurItem + 1);
+				sprintf(ccc, "Maps2/single%d.bmp", LB->CurItem + 1);
 				PRV.LoadPicture(ccc);
-				PREV->Ptr = (byte*)(PRV.PicPtr + 2);
+				PREV->Ptr = PRV.PicPtr ? (byte*)(PRV.PicPtr + 2) : nullptr;
 				prmiss = LB->CurItem;
 			};
 		};

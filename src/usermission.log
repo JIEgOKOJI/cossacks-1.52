@@ -1,0 +1,755 @@
+[L3D] Load3DMap COMPLETE
+CMS_Start OnInit: enter
+CMS_Start OnInit: FUN_10005470 done
+CMS_Start OnInit: fopen=0x20868c968
+CMS_Start OnInit: calling FUN_10001380 (init script ctx)
+CMS_Start OnInit: script path from start.dat='USERMISSIONS/USHAKOV2/USHAKOV2.CMS'
+  FUN_10001380: opening script 'USERMISSIONS/USHAKOV2/USHAKOV2.CMS'
+  FUN_10001380: script fopen=0x20868c968
+  FUN_10001380: opening funclist 'UserMissions/funclist.sce'
+  FUN_10001380: funclist fopen=0x20868c968
+CMS_Start OnInit: FUN_10001380 done
+CMS_Start OnInit: calling FUN_100015c0 (compile/exec)
+  FUN_100015c0: _sctx_script_data=0xab3ab8000 _sctx_funclist_data=0xab328f800
+  FUN_100015c0: writing this_ptr offsets
+  FUN_100015c0: malloc searcher
+  FUN_100015c0: calling FUN_100016a0
+  FUN_100016a0: CMS_Start=0xfffffffffffffffe dmcr=0xfffffffffffffffe
+  FUN_100016a0: funclist=0xab328f800 size=6092 end=0xab3290fcc
+  FUN_100016a0: funclist first 200 chars: 'CONST WOOD  0
+CONST GOLD  1
+CONST STONE 2
+CONST FOOD  3
+CONST IRON  4
+CONST COAL  5
+
+CONST LAND_AI     0
+CONST MEDITERR_AI 1
+CONST WATER_AI    2
+
+CONST EASY		0
+CONST NORMAL	1
+CONST HARD		'
+  FUN_100016a0: parsing func line, local_280='AssignNation'
+  FUN_100016a0: sscanf returned 1, local_2e0='AssignNation' local_308='????????'
+  FUN_100016a0: func[26]='AssignNation' addr=0x102d1fc74 nargs=2
+  FUN_100016a0: parsing func line, local_280='InitialUpgradeEx'
+  FUN_100016a0: sscanf returned 1, local_2e0='InitialUpgradeEx' local_308='AssignNation'
+  FUN_100016a0: WARN: symbol 'InitialUpgradeEx' not found
+  FUN_100016a0: func[27]='InitialUpgradeEx' addr=0x0 nargs=2
+  FUN_100016a0: parsing func line, local_280='INT  GetUnitsAmount0'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetUnitsAmount0'
+  FUN_100016a0: func[28]='GetUnitsAmount0' addr=0x102d21070 nargs=2
+  FUN_100016a0: parsing func line, local_280='INT  GetUnitsAmount1'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetUnitsAmount1'
+  FUN_100016a0: func[29]='GetUnitsAmount1' addr=0x102d22ff4 nargs=2
+  FUN_100016a0: parsing func line, local_280='INT  GetUnitsAmount2'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetUnitsAmount2'
+  FUN_100016a0: func[30]='GetUnitsAmount2' addr=0x102d23490 nargs=3
+  FUN_100016a0: parsing func line, local_280='INT  GetTotalAmount0'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetTotalAmount0'
+  FUN_100016a0: func[31]='GetTotalAmount0' addr=0x102d23cd8 nargs=1
+  FUN_100016a0: parsing func line, local_280='INT  GetTotalAmount1'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetTotalAmount1'
+  FUN_100016a0: func[32]='GetTotalAmount1' addr=0x102d23e88 nargs=2
+  FUN_100016a0: parsing func line, local_280='INT  GetReadyAmount'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetReadyAmount'
+  FUN_100016a0: func[33]='GetReadyAmount' addr=0x102d241c4 nargs=2
+  FUN_100016a0: parsing func line, local_280='BOOL IsUpgradeDoing'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='IsUpgradeDoing'
+  FUN_100016a0: func[34]='IsUpgradeDoing' addr=0x102d24410 nargs=2
+  FUN_100016a0: parsing func line, local_280='BOOL IsUpgradeDone'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='IsUpgradeDone'
+  FUN_100016a0: func[35]='IsUpgradeDone' addr=0x102d24544 nargs=2
+  FUN_100016a0: parsing func line, local_280='INT GetAmountOfWarriors'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetAmountOfWarriors'
+  FUN_100016a0: func[36]='GetAmountOfWarriors' addr=0x102d242c4 nargs=1
+  FUN_100016a0: parsing func line, local_280='BOOL IsUpgradeEnabled'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='IsUpgradeEnabled'
+  FUN_100016a0: func[37]='IsUpgradeEnabled' addr=0x102d24674 nargs=2
+  FUN_100016a0: parsing func line, local_280='INT  GetDied'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetDied'
+  FUN_100016a0: func[38]='GetDied' addr=0x102d247a8 nargs=2
+  FUN_100016a0: parsing func line, local_280='BOOL CreateObject0'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='CreateObject0'
+  FUN_100016a0: func[39]='CreateObject0' addr=0x102d2489c nargs=6
+  FUN_100016a0: parsing func line, local_280='SelectTypeOfUnitsInZone'
+  FUN_100016a0: sscanf returned 1, local_2e0='SelectTypeOfUnitsInZone' local_308='CreateObject0'
+  FUN_100016a0: func[40]='SelectTypeOfUnitsInZone' addr=0x102d227bc nargs=4
+  FUN_100016a0: parsing func line, local_280='ClearSelection'
+  FUN_100016a0: sscanf returned 1, local_2e0='ClearSelection' local_308='SelectTypeOfUnitsInZone'
+  FUN_100016a0: func[41]='ClearSelection' addr=0x102d2227c nargs=1
+  FUN_100016a0: parsing func line, local_280='SelectUnits'
+  FUN_100016a0: sscanf returned 1, local_2e0='SelectUnits' local_308='ClearSelection'
+  FUN_100016a0: func[42]='SelectUnits' addr=0x102d25254 nargs=2
+  FUN_100016a0: parsing func line, local_280='SelectUnitsType'
+  FUN_100016a0: sscanf returned 1, local_2e0='SelectUnitsType' local_308='SelectUnits'
+  FUN_100016a0: func[43]='SelectUnitsType' addr=0x102d25ab8 nargs=3
+  FUN_100016a0: parsing func line, local_280='SelectUnits1'
+  FUN_100016a0: sscanf returned 1, local_2e0='SelectUnits1' local_308='SelectUnitsType'
+  FUN_100016a0: func[44]='SelectUnits1' addr=0x102d25664 nargs=3
+  FUN_100016a0: parsing func line, local_280='INT GetNInside'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetNInside'
+  FUN_100016a0: func[45]='GetNInside' addr=0x102d2630c nargs=1
+  FUN_100016a0: parsing func line, local_280='INT GetMaxInside'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetMaxInside'
+  FUN_100016a0: func[46]='GetMaxInside' addr=0x102d26450 nargs=1
+  FUN_100016a0: parsing func line, local_280='PushUnitAway'
+  FUN_100016a0: sscanf returned 1, local_2e0='PushUnitAway' local_308='GetMaxInside'
+  FUN_100016a0: func[47]='PushUnitAway' addr=0x102d265ac nargs=1
+  FUN_100016a0: parsing func line, local_280='BOOL CheckLeaveAbility'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='CheckLeaveAbility'
+  FUN_100016a0: func[48]='CheckLeaveAbility' addr=0x102d26b3c nargs=1
+  FUN_100016a0: parsing func line, local_280='SendUnitsToTransport'
+  FUN_100016a0: sscanf returned 1, local_2e0='SendUnitsToTransport' local_308='CheckLeaveAbility'
+  FUN_100016a0: func[49]='SendUnitsToTransport' addr=0x102d268c0 nargs=1
+  FUN_100016a0: parsing func line, local_280='PushAllUnitsAway'
+  FUN_100016a0: sscanf returned 1, local_2e0='PushAllUnitsAway' local_308='SendUnitsToTransport'
+  FUN_100016a0: func[50]='PushAllUnitsAway' addr=0x102d2676c nargs=1
+  FUN_100016a0: parsing func line, local_280='AttackZoneByArtillery'
+  FUN_100016a0: sscanf returned 1, local_2e0='AttackZoneByArtillery' local_308='PushAllUnitsAway'
+  FUN_100016a0: func[51]='AttackZoneByArtillery' addr=0x102d26fac nargs=3
+  FUN_100016a0: parsing func line, local_280='AttackBuildingsInZone'
+  FUN_100016a0: sscanf returned 1, local_2e0='AttackBuildingsInZone' local_308='AttackZoneByArtillery'
+  FUN_100016a0: func[52]='AttackBuildingsInZone' addr=0x102d27c64 nargs=3
+  FUN_100016a0: parsing func line, local_280='BOOL SelDie'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='SelDie'
+  FUN_100016a0: func[53]='SelDie' addr=0x102d25e78 nargs=1
+  FUN_100016a0: parsing func line, local_280='BOOL SelOpenGates'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='SelOpenGates'
+  FUN_100016a0: func[54]='SelOpenGates' addr=0x102d26268 nargs=1
+  FUN_100016a0: parsing func line, local_280='BOOL SelCloseGates'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='SelCloseGates'
+  FUN_100016a0: func[55]='SelCloseGates' addr=0x102d28000 nargs=1
+  FUN_100016a0: parsing func line, local_280='BOOL SelSendTo'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='SelSendTo'
+  FUN_100016a0: func[56]='SelSendTo' addr=0x102d280a4 nargs=4
+  FUN_100016a0: parsing func line, local_280='BOOL SelSendAndKill'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='SelSendAndKill'
+  FUN_100016a0: func[57]='SelSendAndKill' addr=0x102d28264 nargs=4
+  FUN_100016a0: parsing func line, local_280='SelAttackGroup'
+  FUN_100016a0: sscanf returned 1, local_2e0='SelAttackGroup' local_308='SelSendAndKill'
+  FUN_100016a0: func[58]='SelAttackGroup' addr=0x102d25f8c nargs=2
+  FUN_100016a0: parsing func line, local_280='BOOL Patrol'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='Patrol'
+  FUN_100016a0: func[59]='Patrol' addr=0x102d28424 nargs=3
+  FUN_100016a0: parsing func line, local_280='RefreshScreen'
+  FUN_100016a0: sscanf returned 1, local_2e0='RefreshScreen' local_308='Patrol'
+  FUN_100016a0: func[60]='RefreshScreen' addr=0x102d2b168 nargs=0
+  FUN_100016a0: parsing func line, local_280='ChangeFriendsEx'
+  FUN_100016a0: sscanf returned 1, local_2e0='ChangeFriendsEx' local_308='RefreshScreen'
+  FUN_100016a0: func[61]='ChangeFriendsEx' addr=0x12dcb6620 nargs=3
+  FUN_100016a0: parsing func line, local_280='SelChangeNation'
+  FUN_100016a0: sscanf returned 1, local_2e0='SelChangeNation' local_308='ChangeFriendsEx'
+  FUN_100016a0: func[62]='SelChangeNation' addr=0x102d286f4 nargs=2
+  FUN_100016a0: parsing func line, local_280='SetStandGround'
+  FUN_100016a0: sscanf returned 1, local_2e0='SetStandGround' local_308='SelChangeNation'
+  FUN_100016a0: func[63]='SetStandGround' addr=0x102d28b2c nargs=2
+  FUN_100016a0: parsing func line, local_280='AllowAttack'
+  FUN_100016a0: sscanf returned 1, local_2e0='AllowAttack' local_308='SetStandGround'
+  FUN_100016a0: func[64]='AllowAttack' addr=0x102d28bc0 nargs=2
+  FUN_100016a0: parsing func line, local_280='SelAutoKill'
+  FUN_100016a0: sscanf returned 1, local_2e0='SelAutoKill' local_308='AllowAttack'
+  FUN_100016a0: func[65]='SelAutoKill' addr=0x102d289dc nargs=1
+  FUN_100016a0: parsing func line, local_280='HINT'
+  FUN_100016a0: sscanf returned 1, local_2e0='HINT' local_308='SelAutoKill'
+  FUN_100016a0: func[66]='HINT' addr=0x102d28c5c nargs=2
+  FUN_100016a0: parsing func line, local_280='DisableMission'
+  FUN_100016a0: sscanf returned 1, local_2e0='DisableMission' local_308='HINT'
+  FUN_100016a0: func[67]='DisableMission' addr=0x102d28cf4 nargs=1
+  FUN_100016a0: parsing func line, local_280='EnableMission'
+  FUN_100016a0: sscanf returned 1, local_2e0='EnableMission' local_308='DisableMission'
+  FUN_100016a0: func[68]='EnableMission' addr=0x102d28d34 nargs=1
+  FUN_100016a0: parsing func line, local_280='SetVictoryText'
+  FUN_100016a0: sscanf returned 1, local_2e0='SetVictoryText' local_308='EnableMission'
+  FUN_100016a0: func[69]='SetVictoryText' addr=0x102d28d70 nargs=1
+  FUN_100016a0: parsing func line, local_280='SetLooseText'
+  FUN_100016a0: sscanf returned 1, local_2e0='SetLooseText' local_308='SetVictoryText'
+  FUN_100016a0: func[70]='SetLooseText' addr=0x102d28de8 nargs=1
+  FUN_100016a0: parsing func line, local_280='ShowVictory'
+  FUN_100016a0: sscanf returned 1, local_2e0='ShowVictory' local_308='SetLooseText'
+  FUN_100016a0: func[71]='ShowVictory' addr=0x102d28e60 nargs=0
+  FUN_100016a0: parsing func line, local_280='LooseGame'
+  FUN_100016a0: sscanf returned 1, local_2e0='LooseGame' local_308='ShowVictory'
+  FUN_100016a0: func[72]='LooseGame' addr=0x102d28ee0 nargs=0
+  FUN_100016a0: parsing func line, local_280='ShowCentralText'
+  FUN_100016a0: sscanf returned 1, local_2e0='ShowCentralText' local_308='LooseGame'
+  FUN_100016a0: func[73]='ShowCentralText' addr=0x102d28f40 nargs=2
+  FUN_100016a0: parsing func line, local_280='ShowPageEx'
+  FUN_100016a0: sscanf returned 1, local_2e0='ShowPageEx' local_308='ShowCentralText'
+  FUN_100016a0: func[74]='ShowPageEx' addr=0x12dcb6654 nargs=1
+  FUN_100016a0: parsing func line, local_280='BOOL AskQuestionEx'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='AskQuestionEx'
+  FUN_100016a0: func[75]='AskQuestionEx' addr=0x12dcb6678 nargs=1
+  FUN_100016a0: parsing func line, local_280='INT GetResource'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetResource'
+  FUN_100016a0: func[76]='GetResource' addr=0x102d29a34 nargs=2
+  FUN_100016a0: parsing func line, local_280='AddResource'
+  FUN_100016a0: sscanf returned 1, local_2e0='AddResource' local_308='GetResource'
+  FUN_100016a0: func[77]='AddResource' addr=0x102d29af0 nargs=3
+  FUN_100016a0: parsing func line, local_280='SubResource'
+  FUN_100016a0: sscanf returned 1, local_2e0='SubResource' local_308='AddResource'
+  FUN_100016a0: func[78]='SubResource' addr=0x12dcb6794 nargs=3
+  FUN_100016a0: parsing func line, local_280='SetResource'
+  FUN_100016a0: sscanf returned 1, local_2e0='SetResource' local_308='SubResource'
+  FUN_100016a0: func[79]='SetResource' addr=0x102d29c0c nargs=3
+  FUN_100016a0: parsing func line, local_280='INT GetUnitCost'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetUnitCost'
+  FUN_100016a0: func[80]='GetUnitCost' addr=0x102d29d08 nargs=3
+  FUN_100016a0: parsing func line, local_280='INT GetUpgradeCost'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetUpgradeCost'
+  FUN_100016a0: func[81]='GetUpgradeCost' addr=0x102d29e64 nargs=3
+  FUN_100016a0: parsing func line, local_280='RunTimerEx'
+  FUN_100016a0: sscanf returned 1, local_2e0='RunTimerEx' local_308='GetUpgradeCost'
+  FUN_100016a0: func[82]='RunTimerEx' addr=0x12dcb65ec nargs=2
+  FUN_100016a0: parsing func line, local_280='RunTimer'
+  FUN_100016a0: sscanf returned 1, local_2e0='RunTimer' local_308='RunTimerEx'
+  FUN_100016a0: func[83]='RunTimer' addr=0x102d2ab20 nargs=2
+  FUN_100016a0: parsing func line, local_280='BOOL TimerDone'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='TimerDone'
+  FUN_100016a0: func[84]='TimerDone' addr=0x102d2abb4 nargs=1
+  FUN_100016a0: parsing func line, local_280='BOOL TimerDoneFirst'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='TimerDoneFirst'
+  FUN_100016a0: func[85]='TimerDoneFirst' addr=0x102d2ac78 nargs=1
+  FUN_100016a0: parsing func line, local_280='BOOL TimerIsEmpty'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='TimerIsEmpty'
+  FUN_100016a0: func[86]='TimerIsEmpty' addr=0x102d2ad60 nargs=1
+  FUN_100016a0: parsing func line, local_280='FreeTimer'
+  FUN_100016a0: sscanf returned 1, local_2e0='FreeTimer' local_308='TimerIsEmpty'
+  FUN_100016a0: func[87]='FreeTimer' addr=0x102d2ae08 nargs=1
+  FUN_100016a0: parsing func line, local_280='INT GetTime'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetTime'
+  FUN_100016a0: func[88]='GetTime' addr=0x102d2ae90 nargs=1
+  FUN_100016a0: parsing func line, local_280='INT GetGlobalTime'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetGlobalTime'
+  FUN_100016a0: func[89]='GetGlobalTime' addr=0x102d2af14 nargs=0
+  FUN_100016a0: parsing func line, local_280='BYTE Trigg'
+  FUN_100016a0: sscanf returned 2, local_2e0='BYTE' local_308='Trigg'
+  FUN_100016a0: func[90]='Trigg' addr=0x102d29fa4 nargs=1
+  FUN_100016a0: parsing func line, local_280='SetTrigg'
+  FUN_100016a0: sscanf returned 1, local_2e0='SetTrigg' local_308='Trigg'
+  FUN_100016a0: func[91]='SetTrigg' addr=0x102d2a020 nargs=2
+  FUN_100016a0: parsing func line, local_280='RunAI'
+  FUN_100016a0: sscanf returned 1, local_2e0='RunAI' local_308='SetTrigg'
+  FUN_100016a0: func[92]='RunAI' addr=0x102d2a18c nargs=1
+  FUN_100016a0: parsing func line, local_280='RunAIWithPeasants'
+  FUN_100016a0: sscanf returned 1, local_2e0='RunAIWithPeasants' local_308='RunAI'
+  FUN_100016a0: func[93]='RunAIWithPeasants' addr=0x102d2a908 nargs=2
+  FUN_100016a0: parsing func line, local_280='SetStartPoint'
+  FUN_100016a0: sscanf returned 1, local_2e0='SetStartPoint' local_308='RunAIWithPeasants'
+  FUN_100016a0: func[94]='SetStartPoint' addr=0x102d2be10 nargs=1
+  FUN_100016a0: parsing func line, local_280='BOOL UnitsCenter'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='UnitsCenter'
+  FUN_100016a0: func[95]='UnitsCenter' addr=0x102d2af24 nargs=3
+  FUN_100016a0: parsing func line, local_280='BOOL SelCenter'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='SelCenter'
+  FUN_100016a0: func[96]='SelCenter' addr=0x102d2b180 nargs=3
+  FUN_100016a0: parsing func line, local_280='BOOL CreateZoneNearUnit'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='CreateZoneNearUnit'
+  FUN_100016a0: func[97]='CreateZoneNearUnit' addr=0x102d2b3e4 nargs=5
+  FUN_100016a0: parsing func line, local_280='BOOL CreateZoneNearGroup'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='CreateZoneNearGroup'
+  FUN_100016a0: func[98]='CreateZoneNearGroup' addr=0x102d2b860 nargs=4
+  FUN_100016a0: parsing func line, local_280='SetLightSpot'
+  FUN_100016a0: sscanf returned 1, local_2e0='SetLightSpot' local_308='CreateZoneNearGroup'
+  FUN_100016a0: func[99]='SetLightSpot' addr=0x102d2bbd4 nargs=3
+  FUN_100016a0: parsing func line, local_280='ClearLightSpot'
+  FUN_100016a0: sscanf returned 1, local_2e0='ClearLightSpot' local_308='SetLightSpot'
+  FUN_100016a0: func[100]='ClearLightSpot' addr=0x102d2bd78 nargs=1
+  FUN_100016a0: parsing func line, local_280='INT GetTopDst'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetTopDst'
+  FUN_100016a0: func[101]='GetTopDst' addr=0x102d2cabc nargs=2
+  FUN_100016a0: parsing func line, local_280='AttackEnemyInZone'
+  FUN_100016a0: sscanf returned 1, local_2e0='AttackEnemyInZone' local_308='GetTopDst'
+  FUN_100016a0: func[102]='AttackEnemyInZone' addr=0x102d2c030 nargs=3
+  FUN_100016a0: parsing func line, local_280='StartAI'
+  FUN_100016a0: sscanf returned 1, local_2e0='StartAI' local_308='AttackEnemyInZone'
+  FUN_100016a0: func[103]='StartAI' addr=0x102d2ccc4 nargs=6
+  FUN_100016a0: parsing func line, local_280='DoNotUseSelInAI'
+  FUN_100016a0: sscanf returned 1, local_2e0='DoNotUseSelInAI' local_308='StartAI'
+  FUN_100016a0: func[104]='DoNotUseSelInAI' addr=0x102d2d5b8 nargs=1
+  FUN_100016a0: parsing func line, local_280='SetAIProperty'
+  FUN_100016a0: sscanf returned 1, local_2e0='SetAIProperty' local_308='DoNotUseSelInAI'
+  FUN_100016a0: func[105]='SetAIProperty' addr=0x102d2d7a8 nargs=3
+  FUN_100016a0: parsing func line, local_280='INT AskComplexQuestion'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='AskComplexQuestion'
+  FUN_100016a0: func[106]='AskComplexQuestion' addr=0x102d294b4 nargs=6
+  FUN_100016a0: parsing func line, local_280='SetTutorial'
+  FUN_100016a0: sscanf returned 1, local_2e0='SetTutorial' local_308='AskComplexQuestion'
+  FUN_100016a0: func[107]='SetTutorial' addr=0x102d2d714 nargs=1
+  FUN_100016a0: parsing func line, local_280='BOOL GetQuestPressed'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='GetQuestPressed'
+  FUN_100016a0: func[108]='GetQuestPressed' addr=0x102d2d748 nargs=0
+  FUN_100016a0: parsing func line, local_280='DisableUpgrade'
+  FUN_100016a0: sscanf returned 1, local_2e0='DisableUpgrade' local_308='GetQuestPressed'
+  FUN_100016a0: func[109]='DisableUpgrade' addr=0x102d20c9c nargs=2
+  FUN_100016a0: parsing func line, local_280='EnableUnit'
+  FUN_100016a0: sscanf returned 1, local_2e0='EnableUnit' local_308='DisableUpgrade'
+  FUN_100016a0: func[110]='EnableUnit' addr=0x102d20e58 nargs=3
+  FUN_100016a0: parsing func line, local_280='INT GetMyNation'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetMyNation'
+  FUN_100016a0: func[111]='GetMyNation' addr=0x102d2caa4 nargs=0
+  FUN_100016a0: parsing func line, local_280='SelErase'
+  FUN_100016a0: sscanf returned 1, local_2e0='SelErase' local_308='GetMyNation'
+  FUN_100016a0: func[112]='SelErase' addr=0x102d25f30 nargs=1
+  FUN_100016a0: parsing func line, local_280='INT AskMultilineQuestionEx'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='AskMultilineQuestionEx'
+  FUN_100016a0: func[113]='AskMultilineQuestionEx' addr=0x12dcb66ec nargs=4
+  FUN_100016a0: parsing func line, local_280='TakeFood'
+  FUN_100016a0: sscanf returned 1, local_2e0='TakeFood' local_308='AskMultilineQuestionEx'
+  FUN_100016a0: func[114]='TakeFood' addr=0x102d2dcec nargs=1
+  FUN_100016a0: parsing func line, local_280='TakeWood'
+  FUN_100016a0: sscanf returned 1, local_2e0='TakeWood' local_308='TakeFood'
+  FUN_100016a0: func[115]='TakeWood' addr=0x102d2debc nargs=1
+  FUN_100016a0: parsing func line, local_280='TakeStone'
+  FUN_100016a0: sscanf returned 1, local_2e0='TakeStone' local_308='TakeWood'
+  FUN_100016a0: func[116]='TakeStone' addr=0x102d2e08c nargs=1
+  FUN_100016a0: parsing func line, local_280='RepairBuildingsBySel'
+  FUN_100016a0: sscanf returned 1, local_2e0='RepairBuildingsBySel' local_308='TakeStone'
+  FUN_100016a0: func[117]='RepairBuildingsBySel' addr=0x102d2e25c nargs=2
+  FUN_100016a0: parsing func line, local_280='BOOL CheckBuildingsComplete'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='CheckBuildingsComplete'
+  FUN_100016a0: func[118]='CheckBuildingsComplete' addr=0x102d2e410 nargs=1
+  FUN_100016a0: parsing func line, local_280='INT GetKilled'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetKilled'
+  FUN_100016a0: func[119]='GetKilled' addr=0x102d2e608 nargs=1
+  FUN_100016a0: parsing func line, local_280='INT GetUnitsByNation'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetUnitsByNation'
+  FUN_100016a0: func[120]='GetUnitsByNation' addr=0x102d2e7b4 nargs=2
+  FUN_100016a0: parsing func line, local_280='ProduceUnit'
+  FUN_100016a0: sscanf returned 1, local_2e0='ProduceUnit' local_308='GetUnitsByNation'
+  FUN_100016a0: func[121]='ProduceUnit' addr=0x102d2e964 nargs=3
+  FUN_100016a0: parsing func line, local_280='BOOL CreateBuilding'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='CreateBuilding'
+  FUN_100016a0: func[122]='CreateBuilding' addr=0x102d2f348 nargs=4
+  FUN_100016a0: parsing func line, local_280='SetDestPoint'
+  FUN_100016a0: sscanf returned 1, local_2e0='SetDestPoint' local_308='CreateBuilding'
+  FUN_100016a0: func[123]='SetDestPoint' addr=0x102d2f6f4 nargs=2
+  FUN_100016a0: parsing func line, local_280='RegisterDynGroup'
+  FUN_100016a0: sscanf returned 1, local_2e0='RegisterDynGroup' local_308='SetDestPoint'
+  FUN_100016a0: func[124]='RegisterDynGroup' addr=0x102d2f9b0 nargs=1
+  FUN_100016a0: parsing func line, local_280='BOOL NationIsErased'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='NationIsErased'
+  FUN_100016a0: func[125]='NationIsErased' addr=0x102d31c10 nargs=1
+  FUN_100016a0: parsing func line, local_280='RemoveGroup'
+  FUN_100016a0: sscanf returned 1, local_2e0='RemoveGroup' local_308='NationIsErased'
+  FUN_100016a0: func[126]='RemoveGroup' addr=0x102d2feb8 nargs=2
+  FUN_100016a0: parsing func line, local_280='SaveSelectedUnits'
+  FUN_100016a0: sscanf returned 1, local_2e0='SaveSelectedUnits' local_308='RemoveGroup'
+  FUN_100016a0: func[127]='SaveSelectedUnits' addr=0x102d2ef38 nargs=3
+  FUN_100016a0: parsing func line, local_280='BOOL CheckProduction'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='CheckProduction'
+  FUN_100016a0: func[128]='CheckProduction' addr=0x102d2f17c nargs=1
+  FUN_100016a0: parsing func line, local_280='SelectUnitsInZone'
+  FUN_100016a0: sscanf returned 1, local_2e0='SelectUnitsInZone' local_308='CheckProduction'
+  FUN_100016a0: func[129]='SelectUnitsInZone' addr=0x102d21ac0 nargs=3
+  FUN_100016a0: parsing func line, local_280='INT GetAINation'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetAINation'
+  FUN_100016a0: func[130]='GetAINation' addr=0x102d30210 nargs=0
+  FUN_100016a0: parsing func line, local_280='BOOL TryUnit'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='TryUnit'
+  FUN_100016a0: func[131]='TryUnit' addr=0x102d30258 nargs=4
+  FUN_100016a0: parsing func line, local_280='BOOL TryUpgrade'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='TryUpgrade'
+  FUN_100016a0: func[132]='TryUpgrade' addr=0x102d305a8 nargs=3
+  FUN_100016a0: parsing func line, local_280='SetPDistribution'
+  FUN_100016a0: sscanf returned 1, local_2e0='SetPDistribution' local_308='TryUpgrade'
+  FUN_100016a0: func[133]='SetPDistribution' addr=0x102d30870 nargs=3
+  FUN_100016a0: parsing func line, local_280='AssignAmountOfMineUpgrades'
+  FUN_100016a0: sscanf returned 1, local_2e0='AssignAmountOfMineUpgrades' local_308='SetPDistribution'
+  FUN_100016a0: func[134]='AssignAmountOfMineUpgrades' addr=0x102d308f0 nargs=1
+  FUN_100016a0: parsing func line, local_280='BOOL AssignMineUpgrade'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='AssignMineUpgrade'
+  FUN_100016a0: func[135]='AssignMineUpgrade' addr=0x102d30a00 nargs=3
+  FUN_100016a0: parsing func line, local_280='SET_MINE_CAPTURE_RADIUS'
+  FUN_100016a0: sscanf returned 1, local_2e0='SET_MINE_CAPTURE_RADIUS' local_308='AssignMineUpgrade'
+  FUN_100016a0: func[136]='SET_MINE_CAPTURE_RADIUS' addr=0x102d31004 nargs=1
+  FUN_100016a0: parsing func line, local_280='SET_MINE_UPGRADE1_RADIUS'
+  FUN_100016a0: sscanf returned 1, local_2e0='SET_MINE_UPGRADE1_RADIUS' local_308='SET_MINE_CAPTURE_RADIUS'
+  FUN_100016a0: func[137]='SET_MINE_UPGRADE1_RADIUS' addr=0x102d31054 nargs=1
+  FUN_100016a0: parsing func line, local_280='SET_MINE_UPGRADE2_RADIUS'
+  FUN_100016a0: sscanf returned 1, local_2e0='SET_MINE_UPGRADE2_RADIUS' local_308='SET_MINE_UPGRADE1_RADIUS'
+  FUN_100016a0: func[138]='SET_MINE_UPGRADE2_RADIUS' addr=0x102d310a4 nargs=1
+  FUN_100016a0: parsing func line, local_280='SET_DEFAULT_MAX_WORKERS'
+  FUN_100016a0: sscanf returned 1, local_2e0='SET_DEFAULT_MAX_WORKERS' local_308='SET_MINE_UPGRADE2_RADIUS'
+  FUN_100016a0: func[139]='SET_DEFAULT_MAX_WORKERS' addr=0x102d310f4 nargs=1
+  FUN_100016a0: parsing func line, local_280='SET_MIN_PEASANT_BRIGADE'
+  FUN_100016a0: sscanf returned 1, local_2e0='SET_MIN_PEASANT_BRIGADE' local_308='SET_DEFAULT_MAX_WORKERS'
+  FUN_100016a0: func[140]='SET_MIN_PEASANT_BRIGADE' addr=0x102d31144 nargs=1
+  FUN_100016a0: parsing func line, local_280='INT GetMoney'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetMoney'
+  FUN_100016a0: func[141]='GetMoney' addr=0x102d31194 nargs=1
+  FUN_100016a0: parsing func line, local_280='INT GetUnits'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetUnits'
+  FUN_100016a0: func[142]='GetUnits' addr=0x102d3121c nargs=1
+  FUN_100016a0: parsing func line, local_280='INT GetReadyUnits'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetReadyUnits'
+  FUN_100016a0: func[143]='GetReadyUnits' addr=0x102d314b0 nargs=1
+  FUN_100016a0: parsing func line, local_280='BOOL UpgIsDone'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='UpgIsDone'
+  FUN_100016a0: func[144]='UpgIsDone' addr=0x102d31704 nargs=1
+  FUN_100016a0: parsing func line, local_280='BOOL UpgIsRun'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='UpgIsRun'
+  FUN_100016a0: func[145]='UpgIsRun' addr=0x102d317c8 nargs=1
+  FUN_100016a0: parsing func line, local_280='AssignMine'
+  FUN_100016a0: sscanf returned 1, local_2e0='AssignMine' local_308='UpgIsRun'
+  FUN_100016a0: func[146]='AssignMine' addr=0x102d30d10 nargs=1
+  FUN_100016a0: parsing func line, local_280='AssignPeasant'
+  FUN_100016a0: sscanf returned 1, local_2e0='AssignPeasant' local_308='AssignMine'
+  FUN_100016a0: func[147]='AssignPeasant' addr=0x102d30d90 nargs=1
+  FUN_100016a0: parsing func line, local_280='AssignHouse'
+  FUN_100016a0: sscanf returned 1, local_2e0='AssignHouse' local_308='AssignPeasant'
+  FUN_100016a0: func[148]='AssignHouse' addr=0x102d30e10 nargs=1
+  FUN_100016a0: parsing func line, local_280='AssignWall'
+  FUN_100016a0: sscanf returned 1, local_2e0='AssignWall' local_308='AssignHouse'
+  FUN_100016a0: func[149]='AssignWall' addr=0x102d30f84 nargs=1
+  FUN_100016a0: parsing func line, local_280='BOOL FieldExist'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='FieldExist'
+  FUN_100016a0: func[150]='FieldExist' addr=0x102d31b78 nargs=0
+  FUN_100016a0: parsing func line, local_280='INT GetDifficulty'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetDifficulty'
+  FUN_100016a0: func[151]='GetDifficulty' addr=0x102d31b8c nargs=0
+  FUN_100016a0: parsing func line, local_280='INT GetStartRes'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetStartRes'
+  FUN_100016a0: func[152]='GetStartRes' addr=0x102d31b9c nargs=0
+  FUN_100016a0: parsing func line, local_280='INT GetResOnMap'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetResOnMap'
+  FUN_100016a0: func[153]='GetResOnMap' addr=0x102d31bdc nargs=0
+  FUN_100016a0: parsing func line, local_280='INT GetLandType'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetLandType'
+  FUN_100016a0: func[154]='GetLandType' addr=0x102d31bec nargs=0
+  FUN_100016a0: parsing func line, local_280='SetStandartVictory'
+  FUN_100016a0: sscanf returned 1, local_2e0='SetStandartVictory' local_308='GetLandType'
+  FUN_100016a0: func[155]='SetStandartVictory' addr=0x102d31bfc nargs=0
+  FUN_100016a0: parsing func line, local_280='SetPlayerName'
+  FUN_100016a0: sscanf returned 1, local_2e0='SetPlayerName' local_308='SetStandartVictory'
+  FUN_100016a0: func[156]='SetPlayerName' addr=0x102d31f04 nargs=2
+  FUN_100016a0: parsing func line, local_280='INT GetDiff'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetDiff'
+  FUN_100016a0: func[157]='GetDiff' addr=0x102d31bac nargs=1
+  FUN_100016a0: parsing func line, local_280='BOOL CheckGroupLeaveAbility'
+  FUN_100016a0: sscanf returned 2, local_2e0='BOOL' local_308='CheckGroupLeaveAbility'
+  FUN_100016a0: func[158]='CheckGroupLeaveAbility' addr=0x12dcb6710 nargs=2
+  FUN_100016a0: parsing func line, local_280='INT	GetGroupNInside'
+  FUN_100016a0: sscanf returned 2, local_2e0='INT' local_308='GetGroupNInside'
+  FUN_100016a0: func[159]='GetGroupNInside' addr=0x12dcb6744 nargs=2
+  FUN_100016a0: parsing func line, local_280='VOID CompleteMission'
+  FUN_100016a0: sscanf returned 2, local_2e0='VOID' local_308='CompleteMission'
+  FUN_100016a0: func[160]='CompleteMission' addr=0x12dcb676c nargs=1
+  FUN_100016a0: parsing func line, local_280='VOID EnableMissionEx'
+  FUN_100016a0: sscanf returned 2, local_2e0='VOID' local_308='EnableMissionEx'
+  FUN_100016a0: func[161]='EnableMissionEx' addr=0x12dcb66c4 nargs=1
+  FUN_100016a0: parsing func line, local_280='VOID DisableMissionEx'
+  FUN_100016a0: sscanf returned 2, local_2e0='VOID' local_308='DisableMissionEx'
+  FUN_100016a0: func[162]='DisableMissionEx' addr=0x12dcb669c nargs=1
+  FUN_100016a0: parsing func line, local_280='VOID PreserveTrigger'
+  FUN_100016a0: sscanf returned 2, local_2e0='VOID' local_308='PreserveTrigger'
+  FUN_100016a0: func[163]='PreserveTrigger' addr=0x12dcb67d8 nargs=1
+  FUN_100016a0: parsing func line, local_280='VOID StartAIEx'
+  FUN_100016a0: sscanf returned 2, local_2e0='VOID' local_308='StartAIEx'
+  FUN_100016a0: func[164]='StartAIEx' addr=0x12dcb67e8 nargs=6
+  FUN_100016a0: parsing func line, local_280='VOID ShowAlarm'
+  FUN_100016a0: sscanf returned 2, local_2e0='VOID' local_308='ShowAlarm'
+  FUN_100016a0: func[165]='ShowAlarm' addr=0x102d21954 nargs=1
+  FUN_100016a0: parsing func line, local_280='VOID ProduceUnitFast'
+  FUN_100016a0: sscanf returned 2, local_2e0='VOID' local_308='ProduceUnitFast'
+  FUN_100016a0: func[166]='ProduceUnitFast' addr=0x102d2eb60 nargs=4
+  FUN_100015c0: FUN_100016a0 done, calling FUN_10001c40
+  FUN_10001c40: searching UNITS
+  FUN_10001c40: UNITS found, iterating
+  FUN_10001c40: RegisterUnits(0x12dcbc11c, 'tower1G')
+  FUN_10001c40: RegisterUnits(0x12dcbc124, 'tower2G')
+  FUN_10001c40: RegisterUnits(0x12dcbc12c, 'tower3G')
+  FUN_10001c40: RegisterUnits(0x12dcbc134, 'tower4G')
+  FUN_10001c40: RegisterUnits(0x12dcbc13c, 'orangeGunsG')
+  FUN_10001c40: RegisterUnits(0x12dcbc144, 'greenGrigatesG')
+  FUN_10001c40: RegisterUnits(0x12dcbc14c, 'mortar1G')
+  FUN_10001c40: RegisterUnits(0x12dcbc154, 'mortar2G')
+  FUN_10001c40: RegisterUnits(0x12dcbc15c, 'mortar3G')
+  FUN_10001c40: RegisterUnits(0x12dcbc164, 'mortar4G')
+  FUN_10001c40: RegisterUnits(0x12dcbc16c, 'greenGunsG')
+  FUN_10001c40: RegisterUnits(0x12dcbc174, 'ochakovShipsG')
+  FUN_10001c40: RegisterUnits(0x12dcbc17c, 'ochakovLinkorsG')
+  FUN_10001c40: searching ZONES
+  FUN_10001c40: ZONES done, searching UNITTYPES
+  FUN_10001c40: UNITTYPES done, searching PLAYERS
+  FUN_10001c40: PLAYERS search done, _playerlist_data=0x1076438d4 DAT_100132f4=256
+  FUN_10001c40: PLAYER[0] name='??????'
+  FUN_10001c40: SetPlayerName done
+  FUN_10001c40: calling FUN_100038d0 dst=0x1076438d4
+  FUN_10001c40: FUN_100038d0 done
+  FUN_10001c40: PLAYER[1] name='?????'
+  FUN_10001c40: SetPlayerName done
+  FUN_10001c40: calling FUN_100038d0 dst=0x1076438ec
+  FUN_10001c40: FUN_100038d0 done
+  FUN_10001c40: PLAYER[2] name='??????'
+  FUN_10001c40: SetPlayerName done
+  FUN_10001c40: calling FUN_100038d0 dst=0x107643904
+  FUN_10001c40: FUN_100038d0 done
+  FUN_10001c40: PLAYER[3] name='??????????'
+  FUN_10001c40: SetPlayerName done
+  FUN_10001c40: calling FUN_100038d0 dst=0x10764391c
+  FUN_10001c40: FUN_100038d0 done
+  FUN_10001c40: PLAYER[4] name='???????'
+  FUN_10001c40: SetPlayerName done
+  FUN_10001c40: calling FUN_100038d0 dst=0x107643934
+  FUN_10001c40: FUN_100038d0 done
+  FUN_10001c40: PLAYER[5] name='??????'
+  FUN_10001c40: SetPlayerName done
+  FUN_10001c40: calling FUN_100038d0 dst=0x10764394c
+  FUN_10001c40: FUN_100038d0 done
+  FUN_10001c40: PLAYER[6] name='?????'
+  FUN_10001c40: SetPlayerName done
+  FUN_10001c40: calling FUN_100038d0 dst=0x107643964
+  FUN_10001c40: FUN_100038d0 done
+  FUN_10001c40: PLAYER[7] name='??????????'
+  FUN_10001c40: SetPlayerName done
+  FUN_10001c40: calling FUN_100038d0 dst=0x10764397c
+  FUN_10001c40: FUN_100038d0 done
+  FUN_10001c40: PLAYERS loop done, count=8
+  FUN_10001c40: PLAYERS done, searching FORMATIONS
+  FUN_100015c0: FUN_10001c40 done, calling FUN_10002040
+  FUN_10002040: enter, searching SCRIPT
+  FUN_10002040: SCRIPT found, cur=0xab0d10cbc end=0xab0d13253
+  FUN_10002040: loop top, cur='CONDITION 	 ALWAYS
+'
+  FUN_10002040: after CONDITION, cur='ALWAYS
+
+TIMES		1
+'
+  FUN_10002040: calling FUN_10002ab0 (ALWAYS)
+  FUN_10002040: FUN_10002ab0 done
+  FUN_10002040: iVar3=0 condCount=0
+  FUN_10002040: checking TIMES, cur='TIMES		1
+'CTION 		
+  FUN_10002040: checking ACTION, cur='ACTION 		
+	ChangeFr'
+  FUN_10002040: entering ACTION loop
+  FUN_10002040: ACTION item, cur='ChangeFriendsEx( 0,134480401,-'
+  FUN_10002040: FUN_100019f0 done, token='ChangeFriendsEx( 0,134480401,-'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='ChangeFriendsEx('
+  FUN_10002d20: lookup 'ChangeFriendsEx' -> idx=61
+  FUN_10002d20: _eb=0x12dcbc11c _c2=1 iVar3=61 local_238=0x16d0c33bc
+  FUN_10002d20: switch val=0 nargs=3
+' FUN_10002040: ACTION item, cur='SetLightSpot( watch1Z,7,1 ), 
+  FUN_10002040: FUN_100019f0 done, token='SetLightSpot( watch1Z,7,1 )'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='SetLightSpot('
+  FUN_10002d20: lookup 'SetLightSpot' -> idx=99
+  FUN_10002d20: _eb=0x12dcbc11c _c2=2 iVar3=99 local_238=0x16d0c3e6c
+  FUN_10002d20: switch val=0 nargs=3
+' FUN_10002040: ACTION item, cur='SetLightSpot( watch2Z,7,2 ), 
+  FUN_10002040: FUN_100019f0 done, token='SetLightSpot( watch2Z,7,2 )'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='SetLightSpot('
+  FUN_10002d20: lookup 'SetLightSpot' -> idx=99
+  FUN_10002d20: _eb=0x12dcbc11c _c2=3 iVar3=99 local_238=0x16d0c3e6c
+  FUN_10002d20: switch val=0 nargs=3
+' FUN_10002040: ACTION item, cur='SetLightSpot( watch3Z,7,3 ), 
+  FUN_10002040: FUN_100019f0 done, token='SetLightSpot( watch3Z,7,3 )'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='SetLightSpot('
+  FUN_10002d20: lookup 'SetLightSpot' -> idx=99
+  FUN_10002d20: _eb=0x12dcbc11c _c2=4 iVar3=99 local_238=0x16d0c3e6c
+  FUN_10002d20: switch val=0 nargs=3
+' FUN_10002040: ACTION item, cur='SetLightSpot( watch4Z,7,4 ), 
+  FUN_10002040: FUN_100019f0 done, token='SetLightSpot( watch4Z,7,4 )'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='SetLightSpot('
+  FUN_10002d20: lookup 'SetLightSpot' -> idx=99
+  FUN_10002d20: _eb=0x12dcbc11c _c2=5 iVar3=99 local_238=0x16d0c3e6c
+  FUN_10002d20: switch val=0 nargs=3
+' FUN_10002040: ACTION item, cur='SetLightSpot( watch5Z,7,5 ), 
+  FUN_10002040: FUN_100019f0 done, token='SetLightSpot( watch5Z,7,5 )'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='SetLightSpot('
+  FUN_10002d20: lookup 'SetLightSpot' -> idx=99
+  FUN_10002d20: _eb=0x12dcbc11c _c2=6 iVar3=99 local_238=0x16d0c3e6c
+  FUN_10002d20: switch val=0 nargs=3
+' FUN_10002040: ACTION item, cur='SetLightSpot( watch6Z,7,6 ), 
+  FUN_10002040: FUN_100019f0 done, token='SetLightSpot( watch6Z,7,6 )'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='SetLightSpot('
+  FUN_10002d20: lookup 'SetLightSpot' -> idx=99
+  FUN_10002d20: _eb=0x12dcbc11c _c2=7 iVar3=99 local_238=0x16d0c3e6c
+  FUN_10002d20: switch val=0 nargs=3
+  FUN_10002040: ACTION item, cur='SetLightSpot( rear1Z,7,7 ), 
+'
+  FUN_10002040: FUN_100019f0 done, token='SetLightSpot( rear1Z,7,7 )'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='SetLightSpot('
+  FUN_10002d20: lookup 'SetLightSpot' -> idx=99
+  FUN_10002d20: _eb=0x12dcbc11c _c2=8 iVar3=99 local_238=0x16d0c3e6c
+  FUN_10002d20: switch val=0 nargs=3
+' FUN_10002040: ACTION item, cur='SetLightSpot( watch7Z,7,8 ), 
+  FUN_10002040: FUN_100019f0 done, token='SetLightSpot( watch7Z,7,8 )'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='SetLightSpot('
+  FUN_10002d20: lookup 'SetLightSpot' -> idx=99
+  FUN_10002d20: _eb=0x12dcbc11c _c2=9 iVar3=99 local_238=0x16d0c3e6c
+  FUN_10002d20: switch val=0 nargs=3
+' FUN_10002040: ACTION item, cur='SetLightSpot( watch8Z,7,9 ), 
+  FUN_10002040: FUN_100019f0 done, token='SetLightSpot( watch8Z,7,9 )'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='SetLightSpot('
+  FUN_10002d20: lookup 'SetLightSpot' -> idx=99
+  FUN_10002d20: _eb=0x12dcbc11c _c2=10 iVar3=99 local_238=0x16d0c3e6c
+  FUN_10002d20: switch val=0 nargs=3
+  FUN_10002040: ACTION item, cur='SetLightSpot( watch9Z,7,10 ), '
+  FUN_10002040: FUN_100019f0 done, token='SetLightSpot( watch9Z,7,10 )'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='SetLightSpot('
+  FUN_10002d20: lookup 'SetLightSpot' -> idx=99
+  FUN_10002d20: _eb=0x12dcbc11c _c2=11 iVar3=99 local_238=0x16d0c3e6c
+  FUN_10002d20: switch val=0 nargs=3
+  FUN_10002040: ACTION item, cur='InitialUpgradeEx( "mortar1G","'
+  FUN_10002040: FUN_100019f0 done, token='InitialUpgradeEx( "mortar1G","'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='InitialUpgradeEx('
+  FUN_10002d20: lookup 'InitialUpgradeEx' -> idx=27
+  FUN_10002d20: _eb=0x12dcbc11c _c2=12 iVar3=27 local_238=0x16d0c2a2c
+  FUN_10002d20: switch val=0 nargs=2
+  FUN_10002040: ACTION item, cur='InitialUpgradeEx( "mortar1G","'
+  FUN_10002040: FUN_100019f0 done, token='InitialUpgradeEx( "mortar1G","'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='InitialUpgradeEx('
+  FUN_10002d20: lookup 'InitialUpgradeEx' -> idx=27
+  FUN_10002d20: _eb=0x12dcbc11c _c2=13 iVar3=27 local_238=0x16d0c2a2c
+  FUN_10002d20: switch val=0 nargs=2
+  FUN_10002040: ACTION item, cur='InitialUpgradeEx( "greenGunsG"'
+  FUN_10002040: FUN_100019f0 done, token='InitialUpgradeEx( "greenGunsG"'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='InitialUpgradeEx('
+  FUN_10002d20: lookup 'InitialUpgradeEx' -> idx=27
+  FUN_10002d20: _eb=0x12dcbc11c _c2=14 iVar3=27 local_238=0x16d0c2a2c
+  FUN_10002d20: switch val=0 nargs=2
+  FUN_10002040: ACTION item, cur='InitialUpgradeEx( "greenGunsG"'
+  FUN_10002040: FUN_100019f0 done, token='InitialUpgradeEx( "greenGunsG"'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='InitialUpgradeEx('
+  FUN_10002d20: lookup 'InitialUpgradeEx' -> idx=27
+  FUN_10002d20: _eb=0x12dcbc11c _c2=15 iVar3=27 local_238=0x16d0c2a2c
+  FUN_10002d20: switch val=0 nargs=2
+  FUN_10002040: ACTION item, cur='InitialUpgradeEx( "greenGunsG"'
+  FUN_10002040: FUN_100019f0 done, token='InitialUpgradeEx( "greenGunsG"'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='InitialUpgradeEx('
+  FUN_10002d20: lookup 'InitialUpgradeEx' -> idx=27
+  FUN_10002d20: _eb=0x12dcbc11c _c2=16 iVar3=27 local_238=0x16d0c2a2c
+  FUN_10002d20: switch val=0 nargs=2
+  FUN_10002040: ACTION item, cur='InitialUpgradeEx( "greenGunsG"'
+  FUN_10002040: FUN_100019f0 done, token='InitialUpgradeEx( "greenGunsG"'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='InitialUpgradeEx('
+  FUN_10002d20: lookup 'InitialUpgradeEx' -> idx=27
+  FUN_10002d20: _eb=0x12dcbc11c _c2=17 iVar3=27 local_238=0x16d0c2a2c
+  FUN_10002d20: switch val=0 nargs=2
+  FUN_10002040: ACTION item, cur='InitialUpgradeEx( "greenGunsG"'
+  FUN_10002040: FUN_100019f0 done, token='InitialUpgradeEx( "greenGunsG"'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='InitialUpgradeEx('
+  FUN_10002d20: lookup 'InitialUpgradeEx' -> idx=27
+  FUN_10002d20: _eb=0x12dcbc11c _c2=18 iVar3=27 local_238=0x16d0c2a2c
+  FUN_10002d20: switch val=0 nargs=2
+  FUN_10002040: ACTION item, cur='InitialUpgradeEx( "greenGunsG"'
+  FUN_10002040: FUN_100019f0 done, token='InitialUpgradeEx( "greenGunsG"'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='InitialUpgradeEx('
+  FUN_10002d20: lookup 'InitialUpgradeEx' -> idx=27
+  FUN_10002d20: _eb=0x12dcbc11c _c2=19 iVar3=27 local_238=0x16d0c2a2c
+  FUN_10002d20: switch val=0 nargs=2
+  FUN_10002040: ACTION item, cur='RunTimer( 0,55 ), 
+	RunTimer('
+  FUN_10002040: FUN_100019f0 done, token='RunTimer( 0,55 )'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='RunTimer('
+  FUN_10002d20: lookup 'RunTimer' -> idx=83
+  FUN_10002d20: _eb=0x12dcbc11c _c2=20 iVar3=83 local_238=0x16d0c39ec
+  FUN_10002d20: switch val=0 nargs=2
+  FUN_10002040: ACTION item, cur='RunTimer( 1,10000 ), 
+	RunTim'
+  FUN_10002040: FUN_100019f0 done, token='RunTimer( 1,10000 )'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='RunTimer('
+  FUN_10002d20: lookup 'RunTimer' -> idx=83
+  FUN_10002d20: _eb=0x12dcbc11c _c2=21 iVar3=83 local_238=0x16d0c39ec
+  FUN_10002d20: switch val=0 nargs=2
+  FUN_10002040: ACTION item, cur='RunTimer( 7,400 ), 
+	SetTrigg'
+  FUN_10002040: FUN_100019f0 done, token='RunTimer( 7,400 )'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='RunTimer('
+  FUN_10002d20: lookup 'RunTimer' -> idx=83
+  FUN_10002d20: _eb=0x12dcbc11c _c2=22 iVar3=83 local_238=0x16d0c39ec
+  FUN_10002d20: switch val=0 nargs=2
+  FUN_10002040: ACTION item, cur='SetTrigg( 1,0 ), 
+	ShowPageEx'
+  FUN_10002040: FUN_100019f0 done, token='SetTrigg( 1,0 )'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='SetTrigg('
+  FUN_10002d20: lookup 'SetTrigg' -> idx=91
+  FUN_10002d20: _eb=0x12dcbc11c _c2=23 iVar3=91 local_238=0x16d0c3c2c
+  FUN_10002d20: switch val=0 nargs=2
+  FUN_10002040: ACTION item, cur='ShowPageEx( 81 ), 
+	ShowPageE'
+  FUN_10002040: FUN_100019f0 done, token='ShowPageEx( 81 )'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='ShowPageEx('
+  FUN_10002d20: lookup 'ShowPageEx' -> idx=74
+  FUN_10002d20: _eb=0x12dcbc11c _c2=24 iVar3=74 local_238=0x16d0c3764
+  FUN_10002d20: switch val=0 nargs=1
+  FUN_10002040: ACTION item, cur='ShowPageEx( 87 ), 
+	EnableMis'
+  FUN_10002040: FUN_100019f0 done, token='ShowPageEx( 87 )'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='ShowPageEx('
+  FUN_10002d20: lookup 'ShowPageEx' -> idx=74
+  FUN_10002d20: _eb=0x12dcbc11c _c2=25 iVar3=74 local_238=0x16d0c3764
+  FUN_10002d20: switch val=0 nargs=1
+  FUN_10002040: ACTION item, cur='EnableMissionEx( 0 ), 
+	Enabl'
+  FUN_10002040: FUN_100019f0 done, token='EnableMissionEx( 0 )'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='EnableMissionEx('
+  FUN_10002d20: lookup 'EnableMissionEx' -> idx=161
+  FUN_10002d20: _eb=0x12dcbc11c _c2=26 iVar3=161 local_238=0x16d0c4fdc
+  FUN_10002d20: switch val=0 nargs=1
+  FUN_10002040: ACTION item, cur='EnableMissionEx( 1 ), 
+	Enabl'
+  FUN_10002040: FUN_100019f0 done, token='EnableMissionEx( 1 )'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='EnableMissionEx('
+  FUN_10002d20: lookup 'EnableMissionEx' -> idx=161
+  FUN_10002d20: _eb=0x12dcbc11c _c2=27 iVar3=161 local_238=0x16d0c4fdc
+  FUN_10002d20: switch val=0 nargs=1
+  FUN_10002040: ACTION item, cur='EnableMissionEx( 2 ), 
+	Enabl'
+  FUN_10002040: FUN_100019f0 done, token='EnableMissionEx( 2 )'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='EnableMissionEx('
+  FUN_10002d20: lookup 'EnableMissionEx' -> idx=161
+  FUN_10002d20: _eb=0x12dcbc11c _c2=28 iVar3=161 local_238=0x16d0c4fdc
+  FUN_10002d20: switch val=0 nargs=1
+  FUN_10002040: ACTION item, cur='EnableMissionEx( 3 ), 
+	Enabl'
+  FUN_10002040: FUN_100019f0 done, token='EnableMissionEx( 3 )'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='EnableMissionEx('
+  FUN_10002d20: lookup 'EnableMissionEx' -> idx=161
+  FUN_10002d20: _eb=0x12dcbc11c _c2=29 iVar3=161 local_238=0x16d0c4fdc
+  FUN_10002d20: switch val=0 nargs=1
+  FUN_10002040: ACTION item, cur='EnableMissionEx( 4 ) 
+
+%----'
+  FUN_10002040: FUN_100019f0 done, token='EnableMissionEx( 4 )'
+  FUN_10002d20: tokenizing param_1=0x16d10a2c8
+  FUN_10002d20: token='EnableMissionEx('
+  FUN_10002d20: lookup 'EnableMissionEx' -> idx=161
+  FUN_10002d20: _eb=0x12dcbc11c _c2=30 iVar3=161 local_238=0x16d0c4fdc
+  FUN_10002d20: switch val=0 nargs=1
+  FUN_10002040: loop top, cur='CONDITION 	GetDiff( '
+  FUN_10002040: after CONDITION, cur='GetDiff( 0 ) == 0
+T'
+  FUN_10002040: calling FUN_10002810
+zsh: trace trap  ./dmcr

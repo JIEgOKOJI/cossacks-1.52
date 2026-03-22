@@ -11,6 +11,9 @@
 #include "Nature.h"
 #include <crtdbg.h>
 #include <math.h>
+#if !defined(_MSC_VER) && !defined(_WIN32)
+#include <dlfcn.h>
+#endif
 
 extern void dbglog(const char* fmt, ...);
 
@@ -6015,7 +6018,11 @@ void LoadAIFromDLL( byte Nat, char* Name )
 		MessageBox( NULL, cc, "AI loadind from DLL", MB_TOPMOST );
 		assert( 0 );
 #else
+#ifndef _WIN32
 		const char* err = dlerror();
+#else
+		const char* err = "(LoadLibrary failed)";
+#endif
 		sprintf( cc, "Could not load %s: %s", Name, err ? err : "unknown error" );
 		fprintf(stderr, "[AI] %s\n", cc);
 		assert( 0 );

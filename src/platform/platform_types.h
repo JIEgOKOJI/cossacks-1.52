@@ -584,7 +584,7 @@ static inline int UnmapViewOfFile(const void* p) {
 #define CreateFileMapping CreateFileMappingA
 
 // --- Module stubs ---
-static inline HMODULE GetModuleHandleA(const char* name) { (void)name; return NULL; }
+static inline HMODULE GetModuleHandleA(const char* name) { (void)name; return (HMODULE)RTLD_DEFAULT; }
 static inline DWORD GetModuleFileNameA(HMODULE h, char* buf, DWORD sz) {
     (void)h; if(buf && sz > 0) buf[0] = 0; return 0;
 }
