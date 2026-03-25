@@ -4897,7 +4897,20 @@ char* CurAIDLL = NULL;
 
 void AIER( char* Mess )
 {
-	MessageBox( NULL, Mess, CurAIDLL, MB_TOPMOST );
+	// In original game this showed a MessageBox per call — suppress repeated messages
+	static char lastMsg[256] = {0};
+	static int repeatCount = 0;
+	if (strncmp(lastMsg, Mess, 255) == 0) {
+		repeatCount++;
+		return; // suppress duplicate
+	}
+	if (repeatCount > 0) {
+		fprintf(stderr, "[AI] (repeated %d more times)\n", repeatCount);
+	}
+	strncpy(lastMsg, Mess, 255);
+	lastMsg[255] = '\0';
+	repeatCount = 0;
+	fprintf(stderr, "[AI-Error] %s (DLL: %s)\n", Mess, CurAIDLL ? CurAIDLL : "?");
 }
 
 void AI_Error()

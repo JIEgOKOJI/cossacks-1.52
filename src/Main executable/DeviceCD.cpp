@@ -36,6 +36,10 @@ static bool SDL_Mixer_Initialized = false;
 static int PrevTrack1 = -1, PrevTrack2 = -1, PrevTrack3 = -1;
 static int NextCommand = -1;
 
+// Deferred playback — set by channelFinished callback, consumed by main thread
+static volatile int _cd_pending_action = 0; // 0=none, 1=PlayRandomTrack, 2=PlayCDTrack(NextCommand-1000), 3=PlayCDTrack(NextCommand)
+static volatile bool _cd_halt_in_progress = false; // suppress callback during explicit halt
+
 // Предварительные объявления
 static void channelFinished(int channel);
 void PlayCDTrack(int Id);
@@ -112,7 +116,10 @@ bool CDeviceCD::Close()
         return FALSE;
 
     // Остановка всех каналов и очистка
+    _cd_halt_in_progress = true;
     Mix_HaltChannel(-1);
+    _cd_halt_in_progress = false;
+    _cd_pending_action = 0;
     for (int i = 0; i < NTracks; ++i) {
         if (chunkTracks[i]) {
             Mix_FreeChunk(chunkTracks[i]);
@@ -145,7 +152,10 @@ bool CDeviceCD::Resume()
 bool CDeviceCD::Stop()
 {
     if (FOpened && currentChannel != -1) {
+        _cd_halt_in_progress = true;
         Mix_HaltChannel(currentChannel);
+        _cd_halt_in_progress = false;
+        _cd_pending_action = 0; // clear any action set by callback during halt
         currentChannel = -1;
         return TRUE;
     }
@@ -167,30 +177,26 @@ bool CDeviceCD::SetVolume(DWORD Volume)
 
 bool CDeviceCD::Play(DWORD Track)
 {
-    fprintf(stderr, "[CD] Play: Track=%u FOpened=%d StartTrack=%d NTracks=%d\n", Track, FOpened, StartTrack, NTracks);
     if (!FOpened)
         return FALSE;
 
-    if (Track < StartTrack || Track >= StartTrack + NTracks)
-    {
-        fprintf(stderr, "[CD] Play: Track %u out of range [%d..%d)\n", Track, StartTrack, StartTrack + NTracks);
+    if (Track < StartTrack || Track >= (DWORD)(StartTrack + NTracks))
         return FALSE;
-    }
 
     int idx = Track - StartTrack;
     if (!chunkTracks[idx])
-    {
-        fprintf(stderr, "[CD] Play: chunkTracks[%d] is NULL\n", idx);
         return FALSE;
-    }
 
-    // Остановка предыдущего трека
-    if (currentChannel != -1)
+    // Остановка предыдущего трека (suppress callback to avoid re-trigger)
+    if (currentChannel != -1) {
+        _cd_halt_in_progress = true;
         Mix_HaltChannel(currentChannel);
+        _cd_halt_in_progress = false;
+        _cd_pending_action = 0;
+    }
 
     // Воспроизведение нового трека
     currentChannel = Mix_PlayChannel(-1, chunkTracks[idx], 0);
-    fprintf(stderr, "[CD] Play: Mix_PlayChannel returned %d\n", currentChannel);
     return (currentChannel >= 0);
 }
 
@@ -202,6 +208,14 @@ static void channelFinished(int channel)
     if (channel != currentChannel)
         return;
 
+    // Suppress callback during explicit halt (Play/Stop from main thread)
+    if (_cd_halt_in_progress)
+        return;
+
+    // IMPORTANT: This callback runs inside SDL_mixer's audio thread with the
+    // audio lock held. Calling Mix_PlayChannel here would deadlock.
+    // Instead, set a flag and let the main thread handle it.
+
     if (!PlayMode)
     {
         NextCommand = -1;
@@ -210,17 +224,38 @@ static void channelFinished(int channel)
 
     if (NextCommand == -1)
     {
-        PlayRandomTrack();
+        _cd_pending_action = 1; // request PlayRandomTrack on main thread
     }
     else if (NextCommand >= 1000)
     {
-        PlayCDTrack(NextCommand - 1000);
-        NextCommand = -1;
+        _cd_pending_action = 2; // request PlayCDTrack(NextCommand - 1000)
     }
     else
     {
+        _cd_pending_action = 3; // request PlayCDTrack(NextCommand)
+    }
+}
+
+// Called from the main thread (e.g. ProcessMessages) to handle deferred track changes
+void PollCDPlayback()
+{
+    int action = _cd_pending_action;
+    if (!action) return;
+    _cd_pending_action = 0;
+
+    switch (action)
+    {
+    case 1:
+        PlayRandomTrack();
+        break;
+    case 2:
+        PlayCDTrack(NextCommand - 1000);
+        NextCommand = -1;
+        break;
+    case 3:
         PlayCDTrack(NextCommand);
         NextCommand = -1;
+        break;
     }
 }
 
@@ -235,7 +270,6 @@ void PlayCDTrack(int Id)
 
 void PlayRandomTrack()
 {
-    fprintf(stderr, "[CD] PlayRandomTrack: PlayMode=%d CurrentNation=%d NTracks=%d StartTrack=%d\n", PlayMode, CurrentNation, NTracks, StartTrack);
     if (PlayMode == 1 && CurrentNation != -1) {
         PlayCDTrack(TracksMask[CurrentNation]);
         return;
@@ -250,7 +284,6 @@ void PlayRandomTrack()
     PrevTrack2 = PrevTrack1;
     PrevTrack1 = Track;
 
-    fprintf(stderr, "[CD] PlayRandomTrack: selected Track=%d\n", Track);
     PlayCDTrack(Track);
 }
 

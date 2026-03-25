@@ -1647,7 +1647,6 @@ void ProcessHints();
 //Draw a lot of stuff on screen
 void GFieldShow()
 {
-	fprintf(stderr, "[GFS] GFieldShow entered, SHOWSLIDE=%d\n", SHOWSLIDE);
 	PrepareSound();
 
 	int uuu = (tmt & 31);
@@ -1660,42 +1659,34 @@ void GFieldShow()
 
 	if (SHOWSLIDE)
 	{
-		fprintf(stderr, "[GFS] SetRLCWindow\n");
 		SetRLCWindow(smapx, smapy, smaplx << 5, mul3(smaply) << 3, SCRSizeX);
-		fprintf(stderr, "[GFS] TestTriangle\n");
 		TestTriangle();
-		fprintf(stderr, "[GFS] TestBlob\n");
 		TestBlob();
 		time6 = GetRealTime() - time0;
 		time0 = GetRealTime();
-		fprintf(stderr, "[GFS] ShowNewMonsters\n");
 		ShowNewMonsters();
 		time0 = GetRealTime();
 		{
 			extern int _wallShowPostCreate;
 			if (_wallShowPostCreate > 0) {
-				FILE* wlog = fopen("dmcr_wall.log", "a");
+				FILE* wlog = _wlog_fopen();
 				if (wlog) { fprintf(wlog, "GFS: before WallHandleDraw\n"); fflush(wlog); fclose(wlog); }
 			}
 		}
-		fprintf(stderr, "[GFS] WallHandleDraw\n");
 		WallHandleDraw();
 		{
 			extern int _wallShowPostCreate;
 			if (_wallShowPostCreate > 0) {
-				FILE* wlog = fopen("dmcr_wall.log", "a");
+				FILE* wlog = _wlog_fopen();
 				if (wlog) { fprintf(wlog, "GFS: after WallHandleDraw\n"); fflush(wlog); fclose(wlog); }
 			}
 		}
 	}
 
-	fprintf(stderr, "[GFS] ShowExpl\n");
 	ShowExpl();
-	fprintf(stderr, "[GFS] DrawShar\n");
 
 	for (int v = 0; v < 8; v++)
 		DrawShar(NATIONS + v);
-	fprintf(stderr, "[GFS] DrawShar done\n");
 
 	if (SHOWSLIDE)
 	{
@@ -1719,7 +1710,7 @@ void GFieldShow()
 		{
 			extern int _wallShowPostCreate;
 			if (_wallShowPostCreate > 0) {
-				FILE* wlog = fopen("dmcr_wall.log", "a");
+				FILE* wlog = _wlog_fopen();
 				if (wlog) { fprintf(wlog, "GFS: before ShowZBuffer\n"); fflush(wlog); fclose(wlog); }
 			}
 		}
@@ -1727,7 +1718,7 @@ void GFieldShow()
 		{
 			extern int _wallShowPostCreate;
 			if (_wallShowPostCreate > 0) {
-				FILE* wlog = fopen("dmcr_wall.log", "a");
+				FILE* wlog = _wlog_fopen();
 				if (wlog) {
 					fprintf(wlog, "GFS: after ShowZBuffer\n");
 					fprintf(wlog, "GFS: HEAP_CHECK after ShowZBuffer: %s\n", HeapValidate(GetProcessHeap(), 0, NULL) ? "OK" : "CORRUPTED");
@@ -1735,11 +1726,10 @@ void GFieldShow()
 				}
 			}
 		}
-		fprintf(stderr, "[GFS] ShowPulse\n");
 		{
 			extern int _wallShowPostCreate;
 			if (_wallShowPostCreate > 0) {
-				FILE* wlog = fopen("dmcr_wall.log", "a");
+				FILE* wlog = _wlog_fopen();
 				if (wlog) { fprintf(wlog, "GFS: before ShowPulse\n"); fflush(wlog); fclose(wlog); }
 			}
 		}
@@ -1747,7 +1737,7 @@ void GFieldShow()
 		{
 			extern int _wallShowPostCreate;
 			if (_wallShowPostCreate > 0) {
-				FILE* wlog = fopen("dmcr_wall.log", "a");
+				FILE* wlog = _wlog_fopen();
 				if (wlog) {
 					fprintf(wlog, "GFS: after ShowPulse\n");
 					fprintf(wlog, "GFS: HEAP_CHECK after ShowPulse: %s\n", HeapValidate(GetProcessHeap(), 0, NULL) ? "OK" : "CORRUPTED");
@@ -1761,7 +1751,7 @@ void GFieldShow()
 			{
 				extern int _wallShowPostCreate;
 				if (_wallShowPostCreate > 0) {
-					FILE* wlog = fopen("dmcr_wall.log", "a");
+					FILE* wlog = _wlog_fopen();
 					if (wlog) { fprintf(wlog, "GFS: before ShowAllBars\n"); fflush(wlog); fclose(wlog); }
 				}
 			}
@@ -1769,7 +1759,7 @@ void GFieldShow()
 			{
 				extern int _wallShowPostCreate;
 				if (_wallShowPostCreate > 0) {
-					FILE* wlog = fopen("dmcr_wall.log", "a");
+					FILE* wlog = _wlog_fopen();
 					if (wlog) {
 						fprintf(wlog, "GFS: after ShowAllBars\n");
 						fprintf(wlog, "GFS: HEAP_CHECK after ShowAllBars: %s\n", HeapValidate(GetProcessHeap(), 0, NULL) ? "OK" : "CORRUPTED");
@@ -1784,7 +1774,7 @@ void GFieldShow()
 			{
 				extern int _wallShowPostCreate;
 				if (_wallShowPostCreate > 0) {
-					FILE* wlog = fopen("dmcr_wall.log", "a");
+					FILE* wlog = _wlog_fopen();
 					if (wlog) { fprintf(wlog, "GFS: before LShow\n"); fflush(wlog); fclose(wlog); }
 				}
 			}
@@ -1792,7 +1782,7 @@ void GFieldShow()
 			{
 				extern int _wallShowPostCreate;
 				if (_wallShowPostCreate > 0) {
-					FILE* wlog = fopen("dmcr_wall.log", "a");
+					FILE* wlog = _wlog_fopen();
 					if (wlog) {
 						fprintf(wlog, "GFS: after LShow\n");
 						fprintf(wlog, "GFS: HEAP_CHECK after LShow: %s\n", HeapValidate(GetProcessHeap(), 0, NULL) ? "OK" : "CORRUPTED");
@@ -1808,7 +1798,7 @@ void GFieldShow()
 		{
 			extern int _wallShowPostCreate;
 			if (_wallShowPostCreate > 0) {
-				FILE* wlog = fopen("dmcr_wall.log", "a");
+				FILE* wlog = _wlog_fopen();
 				if (wlog) { fprintf(wlog, "GFS2: !SHOWSLIDE, returning early\n"); fflush(wlog); fclose(wlog); }
 			}
 		}
@@ -1817,7 +1807,7 @@ void GFieldShow()
 	{
 		extern int _wallShowPostCreate;
 		if (_wallShowPostCreate > 0) {
-			FILE* wlog = fopen("dmcr_wall.log", "a");
+			FILE* wlog = _wlog_fopen();
 			if (wlog) { fprintf(wlog, "GFS2: SHOWSLIDE=true, continuing\n"); fflush(wlog); fclose(wlog); }
 		}
 	}
@@ -2102,7 +2092,7 @@ void GFieldShow()
 	{
 		extern int _wallShowPostCreate;
 		if (_wallShowPostCreate > 0) {
-			FILE* wlog = fopen("dmcr_wall.log", "a");
+			FILE* wlog = _wlog_fopen();
 			if (wlog) { fprintf(wlog, "GFS2: SetRLCWindow2 done\n"); fflush(wlog); fclose(wlog); }
 		}
 	}
@@ -2111,7 +2101,7 @@ void GFieldShow()
 	{
 		extern int _wallShowPostCreate;
 		if (_wallShowPostCreate > 0) {
-			FILE* wlog = fopen("dmcr_wall.log", "a");
+			FILE* wlog = _wlog_fopen();
 			if (wlog) { fprintf(wlog, "GFS2: ProcessSelectedTower done\n"); fflush(wlog); fclose(wlog); }
 		}
 	}
@@ -2120,7 +2110,7 @@ void GFieldShow()
 	{
 		extern int _wallShowPostCreate;
 		if (_wallShowPostCreate > 0) {
-			FILE* wlog = fopen("dmcr_wall.log", "a");
+			FILE* wlog = _wlog_fopen();
 			if (wlog) { fprintf(wlog, "GFS2: ScenaryLights done\n"); fflush(wlog); fclose(wlog); }
 		}
 	}
@@ -2140,7 +2130,7 @@ void GFieldShow()
 	{
 		extern int _wallShowPostCreate;
 		if (_wallShowPostCreate > 0) {
-			FILE* wlog = fopen("dmcr_wall.log", "a");
+			FILE* wlog = _wlog_fopen();
 			if (wlog) { fprintf(wlog, "GFS2: Fog done\n"); fflush(wlog); fclose(wlog); }
 		}
 	}
@@ -2149,7 +2139,7 @@ void GFieldShow()
 	{
 		extern int _wallShowPostCreate;
 		if (_wallShowPostCreate > 0) {
-			FILE* wlog = fopen("dmcr_wall.log", "a");
+			FILE* wlog = _wlog_fopen();
 			if (wlog) { fprintf(wlog, "GFS2: DrawCurves done\n"); fflush(wlog); fclose(wlog); }
 		}
 	}
@@ -2158,7 +2148,7 @@ void GFieldShow()
 	{
 		extern int _wallShowPostCreate;
 		if (_wallShowPostCreate > 0) {
-			FILE* wlog = fopen("dmcr_wall.log", "a");
+			FILE* wlog = _wlog_fopen();
 			if (wlog) { fprintf(wlog, "GFS2: ShowCostPlaces done\n"); fflush(wlog); fclose(wlog); }
 		}
 	}
@@ -2167,7 +2157,7 @@ void GFieldShow()
 	{
 		extern int _wallShowPostCreate;
 		if (_wallShowPostCreate > 0) {
-			FILE* wlog = fopen("dmcr_wall.log", "a");
+			FILE* wlog = _wlog_fopen();
 			if (wlog) { fprintf(wlog, "GFS2: GenShow done\n"); fflush(wlog); fclose(wlog); }
 		}
 	}
@@ -2183,7 +2173,7 @@ void GFieldShow()
 	{
 		extern int _wallShowPostCreate;
 		if (_wallShowPostCreate > 0) {
-			FILE* wlog = fopen("dmcr_wall.log", "a");
+			FILE* wlog = _wlog_fopen();
 			if (wlog) { fprintf(wlog, "GFS2: ShowChat done\n"); fflush(wlog); fclose(wlog); }
 		}
 	}
@@ -2193,7 +2183,7 @@ void GFieldShow()
 		{
 			extern int _wallShowPostCreate;
 			if (_wallShowPostCreate > 0) {
-				FILE* wlog = fopen("dmcr_wall.log", "a");
+				FILE* wlog = _wlog_fopen();
 				if (wlog) { fprintf(wlog, "GFS2: NoText=true, returning\n"); fflush(wlog); fclose(wlog); }
 			}
 		}
@@ -2205,7 +2195,7 @@ void GFieldShow()
 	{
 		extern int _wallShowPostCreate;
 		if (_wallShowPostCreate > 0) {
-			FILE* wlog = fopen("dmcr_wall.log", "a");
+			FILE* wlog = _wlog_fopen();
 			if (wlog) { fprintf(wlog, "GFS2: ProcessHints done\n"); fflush(wlog); fclose(wlog); }
 		}
 	}
@@ -2214,7 +2204,7 @@ void GFieldShow()
 	{
 		extern int _wallShowPostCreate;
 		if (_wallShowPostCreate > 0) {
-			FILE* wlog = fopen("dmcr_wall.log", "a");
+			FILE* wlog = _wlog_fopen();
 			if (wlog) { fprintf(wlog, "GFS2: ShowDestn done\n"); fflush(wlog); fclose(wlog); }
 		}
 	}
@@ -2238,7 +2228,7 @@ void GFieldShow()
 	{
 		extern int _wallShowPostCreate;
 		if (_wallShowPostCreate > 0) {
-			FILE* wlog = fopen("dmcr_wall.log", "a");
+			FILE* wlog = _wlog_fopen();
 			if (wlog) { fprintf(wlog, "GFS2: SeqErrors done\n"); fflush(wlog); fclose(wlog); }
 		}
 	}
@@ -2258,7 +2248,7 @@ void GFieldShow()
 	{
 		extern int _wallShowPostCreate;
 		if (_wallShowPostCreate > 0) {
-			FILE* wlog = fopen("dmcr_wall.log", "a");
+			FILE* wlog = _wlog_fopen();
 			if (wlog) { fprintf(wlog, "GFS2: ShowWinner done\n"); fflush(wlog); fclose(wlog); }
 		}
 	}
@@ -2267,7 +2257,7 @@ void GFieldShow()
 	{
 		extern int _wallShowPostCreate;
 		if (_wallShowPostCreate > 0) {
-			FILE* wlog = fopen("dmcr_wall.log", "a");
+			FILE* wlog = _wlog_fopen();
 			if (wlog) { fprintf(wlog, "GFS3: DrawSMS done, heap=%s\n", HeapValidate(GetProcessHeap(),0,NULL)?"OK":"BAD"); fflush(wlog); fclose(wlog); }
 		}
 	}
@@ -2276,7 +2266,7 @@ void GFieldShow()
 	{
 		extern int _wallShowPostCreate;
 		if (_wallShowPostCreate > 0) {
-			FILE* wlog = fopen("dmcr_wall.log", "a");
+			FILE* wlog = _wlog_fopen();
 			if (wlog) { fprintf(wlog, "GFS3: ShowRMap done, heap=%s\n", HeapValidate(GetProcessHeap(),0,NULL)?"OK":"BAD"); fflush(wlog); fclose(wlog); }
 		}
 	}
@@ -2372,7 +2362,7 @@ void GFieldShow()
 	{
 		extern int _wallShowPostCreate;
 		if (_wallShowPostCreate > 0) {
-			FILE* wlog = fopen("dmcr_wall.log", "a");
+			FILE* wlog = _wlog_fopen();
 			if (wlog) { fprintf(wlog, "GFS3: NGidot block done, heap=%s\n", HeapValidate(GetProcessHeap(),0,NULL)?"OK":"BAD"); fflush(wlog); fclose(wlog); }
 		}
 	}
@@ -2586,7 +2576,7 @@ void GFieldShow()
 	{
 		extern int _wallShowPostCreate;
 		if (_wallShowPostCreate > 0) {
-			FILE* wlog = fopen("dmcr_wall.log", "a");
+			FILE* wlog = _wlog_fopen();
 			if (wlog) { fprintf(wlog, "GFS3: time/score block done, heap=%s\n", HeapValidate(GetProcessHeap(),0,NULL)?"OK":"BAD"); fflush(wlog); fclose(wlog); }
 		}
 	}
@@ -2595,7 +2585,7 @@ void GFieldShow()
 	{
 		extern int _wallShowPostCreate;
 		if (_wallShowPostCreate > 0) {
-			FILE* wlog = fopen("dmcr_wall.log", "a");
+			FILE* wlog = _wlog_fopen();
 			if (wlog) { fprintf(wlog, "GFS3: DrawAllGrp done, heap=%s\n", HeapValidate(GetProcessHeap(),0,NULL)?"OK":"BAD"); fflush(wlog); fclose(wlog); }
 		}
 	}
@@ -2611,7 +2601,7 @@ void GFieldShow()
 		{
 			extern int _wallShowPostCreate;
 			if (_wallShowPostCreate > 0) {
-				FILE* wlog = fopen("dmcr_wall.log", "a");
+				FILE* wlog = _wlog_fopen();
 				if (wlog) { fprintf(wlog, "GFS3: InfoMode return, heap=%s\n", HeapValidate(GetProcessHeap(),0,NULL)?"OK":"BAD"); fflush(wlog); fclose(wlog); }
 			}
 		}
@@ -2694,7 +2684,7 @@ void GFieldShow()
 	{
 		extern int _wallShowPostCreate;
 		if (_wallShowPostCreate > 0) {
-			FILE* wlog = fopen("dmcr_wall.log", "a");
+			FILE* wlog = _wlog_fopen();
 			if (wlog) {
 				fprintf(wlog, "GFS: END of GFieldShow\n");
 				fprintf(wlog, "GFS: HEAP_CHECK end of GFieldShow: %s\n", HeapValidate(GetProcessHeap(), 0, NULL) ? "OK" : "CORRUPTED");
@@ -3120,44 +3110,44 @@ void ProcessScreen()
 	HANDLE _hHeap = GetProcessHeap();
 	GameKeyCheck();
 	if (_wallShowPostCreate > 0) {
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) { fprintf(wlog, "PS: before GFieldShow, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "BAD"); fflush(wlog); fclose(wlog); }
 	}
 	NoPFOG = 1;
 	GFieldShow();
 	NoPFOG = 0;
 	if (_wallShowPostCreate > 0) {
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) { fprintf(wlog, "PS: after GFieldShow, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "BAD"); fflush(wlog); fclose(wlog); }
 	}
 	GMiniShow();
 	if (_wallShowPostCreate > 0) {
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) { fprintf(wlog, "PS: after GMiniShow, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "BAD"); fflush(wlog); fclose(wlog); }
 	}
 	ShowProp();
 	if (_wallShowPostCreate > 0) {
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) { fprintf(wlog, "PS: after ShowProp, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "BAD"); fflush(wlog); fclose(wlog); }
 	}
 	ShowAbility();
 	if (_wallShowPostCreate > 0) {
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) { fprintf(wlog, "PS: after ShowAbility, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "BAD"); fflush(wlog); fclose(wlog); }
 	}
 	DrawZones();
 	if (_wallShowPostCreate > 0) {
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) { fprintf(wlog, "PS: after DrawZones, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "BAD"); fflush(wlog); fclose(wlog); }
 	}
 	GlobalHandleMouse(false);//BUGFIX: call rate was way to high
 	if (_wallShowPostCreate > 0) {
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) { fprintf(wlog, "PS: after GlobalHandleMouse, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "BAD"); fflush(wlog); fclose(wlog); }
 	}
 	MFix();
 	if (_wallShowPostCreate > 0) {
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) { fprintf(wlog, "PS: after MFix, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "BAD"); fflush(wlog); fclose(wlog); }
 	}
 }
@@ -3208,14 +3198,14 @@ void GlobalHandleMouse(bool process_scrolling)
 	DRAWLOCK = 0;
 
 	if (_wallShowPostCreate > 0) {
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) { fprintf(wlog, "GHM: entry, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
 	}
 
 	ProcessInformation();
 
 	if (_wallShowPostCreate > 0) {
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) { fprintf(wlog, "GHM: ProcessInformation done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
 	}
 
@@ -3223,7 +3213,7 @@ void GlobalHandleMouse(bool process_scrolling)
 	ProcessRESSEND();
 
 	if (_wallShowPostCreate > 0) {
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) { fprintf(wlog, "GHM: ProcessRESSEND done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
 	}
 

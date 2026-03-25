@@ -304,6 +304,11 @@ Main\ executable/CMakeFiles/dmcr.dir/Build.cpp.obj: \
  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include/windowsx.h \
  /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/resource.h \
  /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/lines.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include/stdio.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include/corecrt_stdio_config.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include/_mingw_off_t.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include/swprintf.inl \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include/sec_api/stdio_s.h \
  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include/c++/15.2.0/cstdint \
  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stdint.h \
  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include/stdint.h \
@@ -315,11 +320,6 @@ Main\ executable/CMakeFiles/dmcr.dir/Build.cpp.obj: \
  /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/MapDiscr.h \
  /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/AntiBug.h \
  /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/Icons.h \
- /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include/stdio.h \
- /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include/corecrt_stdio_config.h \
- /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include/_mingw_off_t.h \
- /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include/swprintf.inl \
- /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include/sec_api/stdio_s.h \
  /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/gFile.h \
  /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/Upgrade.h \
  /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/UnSyncro.h \

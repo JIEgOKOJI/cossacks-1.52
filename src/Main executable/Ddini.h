@@ -15,6 +15,18 @@
 #include <stdarg.h>
 #include "resource.h"
 #include "lines.h"
+#include <stdio.h>
+
+// Wall debug logging — set to 0 to disable all dmcr_wall.log I/O
+#define WALL_LOG_ENABLED 0
+
+static inline FILE* _wlog_fopen(void) {
+#if WALL_LOG_ENABLED
+    return fopen("dmcr_wall.log", "a");
+#else
+    return NULL;
+#endif
+}
 
 #define free _ExFree
 #define malloc _ExMalloc

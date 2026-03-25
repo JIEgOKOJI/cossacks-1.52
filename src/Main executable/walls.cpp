@@ -422,7 +422,7 @@ void WallSystem::AddCluster( WallCluster* WC )
 	}
 	HANDLE _hHeap = GetProcessHeap();
 	{
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) { fprintf(wlog, "  AddCluster: NCells=%d NClusters=%d\n", WC->NCells, NClusters); fflush(wlog); fclose(wlog); }
 	}
 	WCL = (WallCluster**) realloc( (void*) WCL, ( NClusters + 1 ) * sizeof(WallCluster*) );
@@ -442,7 +442,7 @@ void WallSystem::AddCluster( WallCluster* WC )
 		if ( W1[i].Visible )
 		{
 			{
-				FILE* wlog = fopen("dmcr_wall.log", "a");
+				FILE* wlog = _wlog_fopen();
 				if (wlog) { fprintf(wlog, "    StandOnLand cell %d: x=%d y=%d\n", i, W1[i].x, W1[i].y); fflush(wlog); fclose(wlog); }
 			}
 			if ( !W1[i].StandOnLand( WCLUS ) )
@@ -450,7 +450,7 @@ void WallSystem::AddCluster( WallCluster* WC )
 				W1[i].Visible = 0;
 			}
 			{
-				FILE* wlog = fopen("dmcr_wall.log", "a");
+				FILE* wlog = _wlog_fopen();
 				if (wlog) {
 					fprintf(wlog, "    StandOnLand cell %d done, Visible=%d\n", i, W1[i].Visible);
 					fprintf(wlog, "    HEAP_CHECK after StandOnLand[%d]: %s\n", i, HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED");
@@ -466,24 +466,24 @@ int _wallShowPostCreate = 0;
 void WallSystem::Show()
 {
 	if (_wallShowPostCreate > 0) {
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) { fprintf(wlog, "RENDER: WallSystem::Show NClusters=%d (post-create #%d)\n", NClusters, _wallShowPostCreate); fflush(wlog); fclose(wlog); }
 	}
 	for ( int i = 0; i < NClusters; i++ )
 	{
 		if ( WCL[i] ) {
 			if (_wallShowPostCreate > 0) {
-				FILE* wlog = fopen("dmcr_wall.log", "a");
+				FILE* wlog = _wlog_fopen();
 				if (wlog) { fprintf(wlog, "  RENDER: cluster %d NCells=%d\n", i, WCL[i]->NCells); fflush(wlog); fclose(wlog); }
 			}
 			WCL[i]->View();
 			if (_wallShowPostCreate > 0) {
-				FILE* wlog = fopen("dmcr_wall.log", "a");
+				FILE* wlog = _wlog_fopen();
 				if (wlog) { fprintf(wlog, "  RENDER: cluster %d done\n", i); fflush(wlog); fclose(wlog); }
 			}
 		}
 	};
-	//if (_wallShowPostCreate > 0) _wallShowPostCreate--; // disabled: keep logging active
+	if (_wallShowPostCreate > 0) _wallShowPostCreate--;
 };
 void _WallNotifyCreated() { _wallShowPostCreate = 5; }
 //###----------------<   CLASS: WallCell   >----------------###
@@ -709,12 +709,12 @@ bool WallCell::StandOnLand( WallCluster* WC )
 	};
 	Nation* NT = &NATIONS[WC->NI];
 	{
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) { fprintf(wlog, "      StandOnLand: calling CreateNewMonsterAt x=%d y=%d NIndex=%d\n", (int(x)<<10)+512, (int(y)<<10)+512, WC->NIndex); fflush(wlog); fclose(wlog); }
 	}
 	int ID = NT->CreateNewMonsterAt( ( int( x ) << 10 ) + 512, ( int( y ) << 10 ) + 512, WC->NIndex, true );
 	{
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) {
 			fprintf(wlog, "      StandOnLand: CreateNewMonsterAt returned ID=%d\n", ID);
 			fprintf(wlog, "      HEAP_CHECK after CreateNewMonsterAt: %s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED");
@@ -772,7 +772,7 @@ bool WallCell::StandOnLand( WallCluster* WC )
 	DynamicalLockTopCell( x, y );
 	NI = WC->NI;
 	{
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) {
 			fprintf(wlog, "      StandOnLand: completed OK\n");
 			fprintf(wlog, "      HEAP_CHECK after LockCells: %s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED");
@@ -1349,7 +1349,7 @@ void SetWallBuildMode( byte NI, word NIndex )
 {
 	if (_wallShowPostCreate > 0) {
 		HANDLE _hHeap = GetProcessHeap();
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) {
 			fprintf(wlog, "SWBM: NI=%d NIndex=%d NCornPt=%d CornPt=%p NCells=%d Cells=%p heap=%s\n",
 				NI, NIndex, TMPCluster.NCornPt, (void*)TMPCluster.CornPt, TMPCluster.NCells, (void*)TMPCluster.Cells,

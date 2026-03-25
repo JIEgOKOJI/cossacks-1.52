@@ -284,14 +284,14 @@ Main\ executable/CMakeFiles/dmcr.dir/Ddini.cpp.obj: \
  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/windowsx.h \
  /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/resource.h \
  /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/lines.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/stdio.h \
+ /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/sec_api/stdio_s.h \
  /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/ResFile.h \
  /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/FastDraw.h \
  /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/mode.h \
  /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/MapDiscr.h \
  /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/AntiBug.h \
  /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/Icons.h \
- /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/stdio.h \
- /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/sec_api/stdio_s.h \
  /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/gFile.h \
  /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/Upgrade.h \
  /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/UnSyncro.h \

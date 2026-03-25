@@ -7957,14 +7957,17 @@ void CheckArmies( City* );
 
 void EliminateBuilding( OneObject* OB );
 
-// === STATE HASH DIAGNOSTIC ===
-// Logs a hash of all unit positions at each tick to detect when state diverges
+// === STATE HASH DIAGNOSTIC (DISABLED — sync verified) ===
+#define STATE_HASH_ENABLED 0
 static FILE* stateHashFile = nullptr;
 #define STATE_HASH_START 0
 #define STATE_HASH_END   160
 
 static void LogStateHash()
 {
+#if !STATE_HASH_ENABLED
+	return;
+#else
 	if (tmtmt < STATE_HASH_START || tmtmt > STATE_HASH_END)
 	{
 		if (stateHashFile && tmtmt > STATE_HASH_END)
@@ -8020,6 +8023,7 @@ static void LogStateHash()
 	}
 
 	fflush(stateHashFile);
+#endif
 }
 // === END STATE HASH DIAGNOSTIC ===
 

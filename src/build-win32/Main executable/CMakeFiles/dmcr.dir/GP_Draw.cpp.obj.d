@@ -185,15 +185,15 @@ Main\ executable/CMakeFiles/dmcr.dir/GP_Draw.cpp.obj: \
  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/windowsx.h \
  /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/resource.h \
  /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/lines.h \
- /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/ResFile.h \
- /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/mode.h \
- /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/fastdraw.h \
- /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/Lines.h \
  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/stdio.h \
  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/corecrt_stdio_config.h \
  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/_mingw_off_t.h \
  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/swprintf.inl \
  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/sec_api/stdio_s.h \
+ /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/ResFile.h \
+ /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/mode.h \
+ /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/fastdraw.h \
+ /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/Lines.h \
  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/assert.h \
  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/cstdint \
  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/lib/gcc/i686-w64-mingw32/15.2.0/include/stdint.h \

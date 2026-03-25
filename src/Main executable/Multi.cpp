@@ -2678,7 +2678,7 @@ int CreateWall( byte NI, byte* lp )
 {
 	HANDLE _hHeap = GetProcessHeap();
 	{
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) {
 			fprintf(wlog, "CreateWall: NI=%d size=%d\n", NI, ((word*)lp)[0]);
 			fprintf(wlog, "  HEAP_CHECK entry: %s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED");
@@ -2688,7 +2688,7 @@ int CreateWall( byte NI, byte* lp )
 	WallCluster WCLT;
 	WCLT.CreateByData( (word*) lp );
 	{
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) {
 			fprintf(wlog, "  CreateByData done: NCells=%d Type=%d NIndex=%d\n", WCLT.NCells, WCLT.Type, WCLT.NIndex);
 			fprintf(wlog, "  HEAP_CHECK after CreateByData: %s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED");
@@ -2697,7 +2697,7 @@ int CreateWall( byte NI, byte* lp )
 	}
 	WCLT.CreateSprites();
 	{
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) {
 			fprintf(wlog, "  CreateSprites done\n");
 			fprintf(wlog, "  HEAP_CHECK after CreateSprites: %s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED");
@@ -2706,7 +2706,7 @@ int CreateWall( byte NI, byte* lp )
 	}
 	WSys.AddCluster( &WCLT );
 	{
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) {
 			fprintf(wlog, "  AddCluster done\n");
 			fprintf(wlog, "  HEAP_CHECK after AddCluster: %s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED");
@@ -2717,7 +2717,7 @@ int CreateWall( byte NI, byte* lp )
 	{
 		extern void _WallNotifyCreated();
 		_WallNotifyCreated();
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) {
 			fprintf(wlog, "  SendSelectedToWork done, returning %d\n", ((word*)lp)[0]);
 			fprintf(wlog, "  HEAP_CHECK after SendSelectedToWork: %s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED");
@@ -4874,7 +4874,7 @@ void ExecuteBuffer()
 	{
 		byte cmd = ExBuf[pos];
 		{
-			FILE* wlog = fopen("dmcr_wall.log", "a");
+			FILE* wlog = _wlog_fopen();
 			if (wlog) { fprintf(wlog, "ExBuf cmd=%d pos=%d EBPos=%d\n", cmd, pos, EBPos); fflush(wlog); fclose(wlog); }
 		}
 		pos++;

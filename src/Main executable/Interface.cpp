@@ -3,6 +3,10 @@
 #include "NewCode/UdpHolePuncher.h"
 #include <SDL.h>
 #include "ddini.h"
+
+extern void _hb(const char* label);
+extern int _hb_frame;
+extern void _wd_activate(bool on);
 #include "ResFile.h"
 #include "FastDraw.h"
 #include "mgraph.h"
@@ -299,6 +303,10 @@ extern tpSendRecBuffer* SendRecBuffer;
 
 __declspec(dllexport) bool ProcessMessages()
 {
+	// Handle deferred CD track changes (from SDL_mixer callback thread)
+	extern void PollCDPlayback();
+	PollCDPlayback();
+
 	if (PDIF_Inside)
 	{
 		return false;
@@ -8702,7 +8710,7 @@ void DrawAllScreen()
 	GFieldShow();
 
 	if (_wallShowPostCreate > 0) {
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) { fprintf(wlog, "DAS: GFieldShow done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
 	}
 
@@ -8710,7 +8718,7 @@ void DrawAllScreen()
 	GMiniShow();
 
 	if (_wallShowPostCreate > 0) {
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) { fprintf(wlog, "DAS: GMiniShow done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
 	}
 
@@ -8718,7 +8726,7 @@ void DrawAllScreen()
 	ShowProp();
 
 	if (_wallShowPostCreate > 0) {
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) { fprintf(wlog, "DAS: ShowProp done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
 	}
 
@@ -8726,7 +8734,7 @@ void DrawAllScreen()
 	ShowAbility();
 
 	if (_wallShowPostCreate > 0) {
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) { fprintf(wlog, "DAS: ShowAbility done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
 	}
 
@@ -8736,7 +8744,7 @@ void DrawAllScreen()
 	DrawZones();
 
 	if (_wallShowPostCreate > 0) {
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) { fprintf(wlog, "DAS: DrawZones done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
 	}
 
@@ -8746,7 +8754,7 @@ void DrawAllScreen()
 	GlobalHandleMouse(true);
 
 	if (_wallShowPostCreate > 0) {
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) { fprintf(wlog, "DAS: GlobalHandleMouse done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
 	}
 
@@ -8754,7 +8762,7 @@ void DrawAllScreen()
 	MFix();
 
 	if (_wallShowPostCreate > 0) {
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) { fprintf(wlog, "DAS: END, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
 	}
 
@@ -8780,66 +8788,75 @@ void FastScreenProcess()
 	extern int _wallShowPostCreate;
 	HANDLE _hHeap = GetProcessHeap();
 
+	_hb("FS:GField");
 	GFieldShow();
 
 	if (_wallShowPostCreate > 0) {
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) { fprintf(wlog, "FSP: GFieldShow done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
 	}
 
+	_hb("FS:PM");
 	ProcessMessages();
 
 	if (SHOWSLIDE)
 	{
+		_hb("FS:Mini");
 		GMiniShow();
 
 		if (_wallShowPostCreate > 0) {
-			FILE* wlog = fopen("dmcr_wall.log", "a");
+			FILE* wlog = _wlog_fopen();
 			if (wlog) { fprintf(wlog, "FSP: GMiniShow done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
 		}
 
+		_hb("FS:Prop");
 		ShowProp();
 
 		if (_wallShowPostCreate > 0) {
-			FILE* wlog = fopen("dmcr_wall.log", "a");
+			FILE* wlog = _wlog_fopen();
 			if (wlog) { fprintf(wlog, "FSP: ShowProp done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
 		}
 
+		_hb("FS:Abil");
 		ShowAbility();
 
 		if (_wallShowPostCreate > 0) {
-			FILE* wlog = fopen("dmcr_wall.log", "a");
+			FILE* wlog = _wlog_fopen();
 			if (wlog) { fprintf(wlog, "FSP: ShowAbility done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
 		}
 
+		_hb("FS:Zones");
 		DrawZones();
 
 		if (_wallShowPostCreate > 0) {
-			FILE* wlog = fopen("dmcr_wall.log", "a");
+			FILE* wlog = _wlog_fopen();
 			if (wlog) { fprintf(wlog, "FSP: DrawZones done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
 		}
 
+		_hb("FS:Dlgs");
 		GSYS.ProcessDialogs();
 
 		if (_wallShowPostCreate > 0) {
-			FILE* wlog = fopen("dmcr_wall.log", "a");
+			FILE* wlog = _wlog_fopen();
 			if (wlog) { fprintf(wlog, "FSP: ProcessDialogs done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
 		}
 
 		GVPort->NeedToDraw = true;
 	}
 
+	_hb("FS:Mouse");
 	GlobalHandleMouse(true);
 
 	if (_wallShowPostCreate > 0) {
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) { fprintf(wlog, "FSP: GlobalHandleMouse done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
 	}
 
+	_hb("FS:MFix");
 	MFix();
 
 	if (_wallShowPostCreate > 0) {
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) { fprintf(wlog, "FSP: END, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
 	}
 
@@ -8847,6 +8864,7 @@ void FastScreenProcess()
 	{
 		int time0 = GetRealTime();
 
+		_hb("FS:Refresh");
 		GSYS.RefreshView();
 		time8 = GetRealTime() - time0;
 	}
@@ -8994,6 +9012,7 @@ extern int screen_height;
 void PlayGame()
 {
 	InGame = true;
+	_wd_activate(true);
 	fprintf(stderr, "[PG] PlayGame entered\n");
 
 	if (window_mode)
@@ -9040,6 +9059,7 @@ StartPlay://IMPORTANT: Main game loop
 
 		time1 = GetRealTime();
 
+		_hb("PM1");
 		ProcessMessages();
 
 		if (bActive)
@@ -9047,43 +9067,51 @@ StartPlay://IMPORTANT: Main game loop
 			extern int _wallShowPostCreate;
 			HANDLE _hHeap = GetProcessHeap();
 			GameMode = 0;
+			_hb("PreDraw");
 			PreDrawGameProcess();
 
 			if (_wallShowPostCreate > 0) {
-				FILE* wlog = fopen("dmcr_wall.log", "a");
+				FILE* wlog = _wlog_fopen();
 				if (wlog) { fprintf(wlog, "LOOP: PreDraw done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
 			}
 
+			_hb("PM2");
 			ProcessMessages();
 
 			if (GameNeedToDraw)
 			{
+				_hb("DrawAll");
 				DrawAllScreen();
 				GameNeedToDraw = false;
 			}
 			else
 			{
+				_hb("FastScr");
 				FastScreenProcess();
 			}
 
 			if (_wallShowPostCreate > 0) {
-				FILE* wlog = fopen("dmcr_wall.log", "a");
+				FILE* wlog = _wlog_fopen();
 				if (wlog) { fprintf(wlog, "LOOP: Screen done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
 			}
 
+			_hb("PM3");
 			ProcessMessages();
 
 			time1 = GetRealTime();
 
+			_hb("PostDraw");
 			PostDrawGameProcess();
+			_hb_frame++;
 
 			if (_wallShowPostCreate > 0) {
-				FILE* wlog = fopen("dmcr_wall.log", "a");
+				FILE* wlog = _wlog_fopen();
 				if (wlog) { fprintf(wlog, "LOOP: PostDraw done, heap=%s\n", HeapValidate(_hHeap, 0, NULL) ? "OK" : "CORRUPTED"); fflush(wlog); fclose(wlog); }
 			}
 
 			if (MakeMenu)
 			{
+				_wd_activate(false);
 				switch (MenuType)
 				{
 				case 1:
@@ -9126,6 +9154,7 @@ StartPlay://IMPORTANT: Main game loop
 					break;
 				}
 				MakeMenu = false;
+				_wd_activate(true);
 			}
 			else
 			{
@@ -9147,6 +9176,7 @@ StartPlay://IMPORTANT: Main game loop
 
 	} while (!GameExit);
 
+	_wd_activate(false);
 	Lobby = 0;
 	PlayGameMode = 0;
 

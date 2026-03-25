@@ -33,7 +33,7 @@ typedef short* lpShort;
 typedef uintptr_t* lpCashRef;
 GP_System::GP_System()
 {
-	CashSize = 4200000;
+	CashSize = 8400000; // doubled for 64-bit (CASH_HDR 16 vs 8)
 	PackCash = new byte[CashSize + 4];
 	PackCash[CashSize] = 0x37;
 	PackCash[CashSize + 1] = 0x42;
@@ -150,25 +150,52 @@ byte* GP_System::GetCash(int Size)
 	int NSeg = 0;
 	int tpos = CashPos;
 	int cas = CashSize;
-	//COUNTER=div(CashPos*100,CashSize).quot;
 	byte* Cash = PackCash;
-	//assert(Cash[CashSize]==0x37&&Cash[CashSize+1]==0x42);
+
+	// Clamp: never request more than the entire cache can hold
+	if (Size + CASH_HDR > cas) {
+		Size = cas - CASH_HDR;
+	}
+
 	while (tpos < cas && UsedSize < Size)
 	{
 		int sz = INTV(Cash + tpos + sizeof(intptr_t));
+		if (sz < CASH_HDR) { tpos = cas; break; }
 		UsedSize += sz;
 		tpos += sz;
 		NSeg++;
 	};
 	if (UsedSize < Size)
 	{
+		// Wrap around: evict from start
 		tpos = 0;
 		UsedSize = -CASH_HDR;
 		NSeg = 0;
 		CashPos = 0;
 		while (UsedSize < Size)
 		{
+			if (tpos >= cas) {
+				// Complete cache reset
+				CashPos = 0;
+				PTRV(Cash) = 0;
+				INTV(Cash + sizeof(intptr_t)) = CashSize;
+				tpos = 0;
+				UsedSize = -CASH_HDR;
+				NSeg = 0;
+				int sz = INTV(Cash + sizeof(intptr_t));
+				UsedSize += sz;
+				tpos += sz;
+				NSeg = 1;
+				break;
+			}
 			int sz = INTV(Cash + tpos + sizeof(intptr_t));
+			if (sz < CASH_HDR) {
+				// Corrupted entry — reset the rest of cache as one big free block
+				int remaining = cas - tpos;
+				PTRV(Cash + tpos) = 0;
+				INTV(Cash + tpos + sizeof(intptr_t)) = remaining;
+				sz = remaining;
+			}
 			UsedSize += sz;
 			tpos += sz;
 			NSeg++;
@@ -10809,7 +10836,7 @@ void GP_System::FreeRefs(int FileIndex)
 		{
 			if ((PACKOFS) && PACKOFS != NO_PACK)
 			{
-				INTV(PACKOFS - 8) = 0;
+				PTRV(PACKOFS - CASH_HDR) = 0;
 			}
 
 			//lpGPCUR->Pack=NULL;

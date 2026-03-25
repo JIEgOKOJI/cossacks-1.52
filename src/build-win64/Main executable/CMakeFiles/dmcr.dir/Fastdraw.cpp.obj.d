@@ -304,13 +304,13 @@ Main\ executable/CMakeFiles/dmcr.dir/Fastdraw.cpp.obj: \
  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include/windowsx.h \
  /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/resource.h \
  /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/lines.h \
- /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/ResFile.h \
- /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/mode.h \
  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include/stdio.h \
  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include/corecrt_stdio_config.h \
  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include/_mingw_off_t.h \
  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include/swprintf.inl \
  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/x86_64-w64-mingw32/include/sec_api/stdio_s.h \
+ /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/ResFile.h \
+ /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/mode.h \
  /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/Fastdraw.h \
  /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/GP_Draw.h \
  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-x86_64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stdint.h \

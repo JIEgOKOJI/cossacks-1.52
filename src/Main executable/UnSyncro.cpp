@@ -79,10 +79,10 @@ extern char LASTFILE[128];
 extern int LastLine;
 char* LastFile;
 
-// === RANDO TRACE DIAGNOSTIC ===
+// === RANDO TRACE DIAGNOSTIC (DISABLED — sync verified) ===
+#define RANDO_TRACE_ENABLED 0
 static FILE* randoTraceFile = nullptr;
 static int randoTraceCallNum = 0;
-// Trace rando() calls on ticks RANDO_TRACE_START..RANDO_TRACE_END
 #define RANDO_TRACE_START 130
 #define RANDO_TRACE_END   155
 
@@ -94,6 +94,7 @@ int RandNew( char* File, int Line )
 	word oldRpos = rpos;
 	rpos = ( rpos + 1 ) & 8191;
 
+#if RANDO_TRACE_ENABLED
 	// Trace on specific ticks
 	if (tmtmt >= RANDO_TRACE_START && tmtmt <= RANDO_TRACE_END)
 	{
@@ -104,7 +105,6 @@ int RandNew( char* File, int Line )
 		}
 		if (randoTraceFile)
 		{
-			// Extract just filename from path
 			const char* fname = File;
 			const char* p = File;
 			while (*p) { if (*p == '/' || *p == '\\') fname = p + 1; p++; }
@@ -119,6 +119,7 @@ int RandNew( char* File, int Line )
 		randoTraceFile = nullptr;
 		fprintf(stderr, "[TRACE] rando_trace.log closed after %d calls\n", randoTraceCallNum);
 	}
+#endif
 
 	if ( SYN.NSlots < maxUline )
 	{

@@ -371,6 +371,58 @@ const unsigned int kPostDrawInterval = 16;//~60 Hz
 //Time of the last PostDrawGameProcess() return
 unsigned long prev_postdraw_time = 0;
 
+// ---- Watchdog: detect freeze and abort with crash report ----
+unsigned long GetRealTime();
+#include <atomic>
+#include <thread>
+
+static std::atomic<unsigned long> _wd_timestamp{0};
+static std::atomic<bool> _wd_active{false};
+static const char* volatile _wd_label = "init";
+static volatile int _wd_frame = 0;
+int _hb_frame = 0;
+
+void _hb(const char* label) {
+	_wd_label = label;
+	_wd_frame = _hb_frame;
+	_wd_timestamp.store(GetRealTime(), std::memory_order_relaxed);
+}
+
+static void _wd_thread_func() {
+	while (true) {
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+		if (!_wd_active.load(std::memory_order_relaxed)) continue;
+		unsigned long ts = _wd_timestamp.load(std::memory_order_relaxed);
+		if (ts == 0) continue;
+		unsigned long now = GetRealTime();
+		unsigned long diff = now - ts;
+		if (diff > 5000) {
+			// Main thread stuck for >5 seconds — dump state and crash
+			FILE* f = fopen("dmcr_freeze.txt", "w");
+			if (f) {
+				fprintf(f, "FREEZE DETECTED\n");
+				fprintf(f, "frame=%d cp=%s\n", _wd_frame, _wd_label ? _wd_label : "null");
+				fprintf(f, "last_hb=%lu now=%lu diff=%lu ms\n", ts, now, diff);
+				fflush(f);
+				fclose(f);
+			}
+			// abort() generates crash report with stack trace on macOS
+			// and triggers exception handler on Windows
+			abort();
+		}
+	}
+}
+
+static void _wd_start() {
+	std::thread t(_wd_thread_func);
+	t.detach();
+}
+
+void _wd_activate(bool on) {
+	_wd_active.store(on, std::memory_order_relaxed);
+	if (on) _wd_timestamp.store(GetRealTime(), std::memory_order_relaxed);
+}
+
 //Game version. Must match with other clients
 __declspec( dllexport ) word dwVersion = 152;
 __declspec( dllexport ) char LobbyVersion[32] = "1.52";
@@ -2700,6 +2752,7 @@ void DecreaseVeruVPobedu();
 
 void PreDrawGameProcess()
 {
+	_hb("Pre:start");
 	//Autosave in map editor every 5 min
 	ProcessMapAutosave();
 
@@ -2780,6 +2833,7 @@ void PreDrawGameProcess()
 	GameKeyCheck();
 
 	//Take a guess...
+	_hb("Pre:PM");
 	ProcessMessages();
 
 	if (2 == tmtmt % 41)
@@ -2945,6 +2999,7 @@ void PreDrawGameProcess()
 
 		if (tmtmt_mod_8 == 7 || TutOver)
 		{
+			_hb("Pre:HdlMis");
 			HandleMission();
 			TutOver = 0;
 			if (!Tutorial)
@@ -3018,6 +3073,7 @@ void PreDrawGameProcess()
 		}
 
 
+		_hb("Pre:NewMon");
 		ProcessNewMonsters();
 
 		ObjTimer.Handle();
@@ -3076,7 +3132,7 @@ void WaitToTime( int Time )
 				{
 					extern int _wallShowPostCreate;
 					if (_wallShowPostCreate > 0) {
-						FILE* wlog = fopen("dmcr_wall.log", "a");
+						FILE* wlog = _wlog_fopen();
 						if (wlog) {
 							fprintf(wlog, "WTT: after ProcessScreen, heap=%s\n", HeapValidate(GetProcessHeap(), 0, NULL) ? "OK" : "BAD");
 							fflush(wlog); fclose(wlog);
@@ -3087,7 +3143,7 @@ void WaitToTime( int Time )
 				{
 					extern int _wallShowPostCreate;
 					if (_wallShowPostCreate > 0) {
-						FILE* wlog = fopen("dmcr_wall.log", "a");
+						FILE* wlog = _wlog_fopen();
 						if (wlog) {
 							fprintf(wlog, "WTT: after GSYSDRAW, heap=%s\n", HeapValidate(GetProcessHeap(), 0, NULL) ? "OK" : "BAD");
 							fflush(wlog); fclose(wlog);
@@ -3122,6 +3178,7 @@ extern int PeaceTimeLeft;
 
 void PostDrawGameProcess()
 {
+	_hb("PD:start");
 	RGAME.TryToFlushNetworkStream( 0 );
 	if (PlayGameMode == 0 && NPlayers < 2)
 	{
@@ -3132,6 +3189,7 @@ void PostDrawGameProcess()
 	{
 		if (MaxPingTime)
 		{
+			_hb("PD:WaitToTime");
 			WaitToTime( NeedCurrentTime );
 		}
 		else
@@ -3174,14 +3232,16 @@ void PostDrawGameProcess()
 	{
 		CurrentStepTime -= CurrentStepTime >> 5;
 		RealGameLength = GetRealTime() - RealStTime;
+		_hb("PD:HdlMP");
 		HandleMultiplayer();
 
 		SYN.Copy( &SYN1 );
 		PreNoPause = 0;
+		_hb("PD:ExBuf");
 		ExecuteBuffer();
 		{
 			extern int _wallShowPostCreate;
-			FILE* wlog = fopen("dmcr_wall.log", "a");
+			FILE* wlog = _wlog_fopen();
 			if (wlog) {
 				fprintf(wlog, "POST_EXEC: ExecuteBuffer done\n");
 				if (_wallShowPostCreate > 0) {
@@ -3241,14 +3301,15 @@ void PostDrawGameProcess()
 	int difTime = GetRealTime() - AutoTime;
 
 	{
-		FILE* wlog = fopen("dmcr_wall.log", "a");
+		FILE* wlog = _wlog_fopen();
 		if (wlog) { fprintf(wlog, "POST_EXEC: ProcessUpdate start\n"); fflush(wlog); fclose(wlog); }
 	}
+	_hb("PD:ProcUpd");
 	ProcessUpdate();
 	{
 		extern int _wallShowPostCreate;
 		if (_wallShowPostCreate > 0) {
-			FILE* wlog = fopen("dmcr_wall.log", "a");
+			FILE* wlog = _wlog_fopen();
 			if (wlog) {
 				fprintf(wlog, "POST_EXEC: HEAP_CHECK after ProcessUpdate: %s\n", HeapValidate(GetProcessHeap(), 0, NULL) ? "OK" : "CORRUPTED");
 				fflush(wlog); fclose(wlog);
@@ -3282,6 +3343,7 @@ void PostDrawGameProcess()
 
 	if (difTime > MaxDT && !( PlayGameMode || SaveState == 6 ))
 	{
+		_hb("PD:AutoSave");
 		if (NPlayers > 1)
 		{
 			for (int i = 0; i < NPlayers; i++)
@@ -3350,6 +3412,7 @@ void PostDrawGameProcess()
 	}
 
 
+	_hb("PD:RateLimit");
 	unsigned long time_since_last_call = 0;
 	do
 	{
@@ -3630,6 +3693,7 @@ void _dmcr_set_working_directory() {
 
 int main(int argc, char* argv[]) {
 	_dmcr_set_working_directory();
+	freopen("dmcr_stderr.log", "w", stderr);
 	SDL_SetMainReady();
 	char cmdLine[1024] = "";
 	for (int i = 1; i < argc; i++) {
@@ -3660,7 +3724,12 @@ int PASCAL WinMain(
 	}
 #endif
 
+#ifdef _WIN32
+	freopen("dmcr_stderr.log", "w", stderr);
+#endif
+
 	SDL_SetMainReady();
+	_wd_start();
 	dbglog("=== DMCR Startup ===\n");
 	dbglog("SDL_SetMainReady() called\n");
 	dbglog("SDL version: compiled %d.%d.%d\n", SDL_MAJOR_VERSION, SDL_MINOR_VERSION, SDL_PATCHLEVEL);
