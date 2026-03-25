@@ -18,9 +18,12 @@
 | Игровая логика | ✅ | ✅ 90% | Single-player работает; 21 threaded block удалён |
 | 64-bit porting | ✅ | ✅ 95% | 90+ pointer-size багов исправлено, ZBuffer intptr_t |
 | CMake / сборка | ✅ | ✅ 100% | 3 платформы (macOS, Win32, Win64), toolchain-файлы |
-| Мультиплеер sync | ✅ | ⚠️ 70% | TSin/TCos/TAtg исправлены; FPU-риски + double-rando() остаются |
+| Мультиплеер sync | ✅ | ✅  90% | TSin/TCos/TAtg исправлены; FPU-риски + double-rando() остаются |
+| Мультиплеер lan server browser | ✅ | ✅  90% | работает при хосте клиента на платформах win и macos |
 | AI DLL | ✅ | ✅ 100% | 20 AI .dylib (Mach-O bundle arm64) собраны, dist/macOS-arm64/ai/ |
-| Mission DLL | ✅ | ✅ 100% | 220 mission + 1 usermission .dylib собраны, OnInit вызывается явно через dlsym |
+| Mission DLL | ✅ | ⚠️  34% | 220 mission + 1 usermission .dylib собраны, OnInit вызывается явно через dlsym |
+
+---
 
 # 🌟 Cossacks: Back to War 1.52
 

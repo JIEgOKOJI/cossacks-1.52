@@ -5,6 +5,7 @@ set(COMMCORE_SOURCES
     CommCore.cpp
     CommInet.cpp
     CommInit.cpp
+    CommLanDiscovery.cpp
     CommPeers.cpp
     CommPing.cpp
     CommQueue.cpp

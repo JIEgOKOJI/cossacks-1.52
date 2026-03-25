@@ -128,6 +128,13 @@ typedef struct PEER_ENTRY
 #define CC_PT_SEND_NEW_NAME		0x10	// Сервер отсылает данные об изменившимся имени пользователя
 #define CC_PT_SEND_NEW_DATA		0x11	// Сервер отсылает данные об изменившихся данных пользователя
 
+// LAN Discovery packet types
+#define CC_PT_LAN_QUERY			0x12	// Client broadcasts to discover LAN servers
+#define CC_PT_LAN_RESPONSE		0x13	// Server responds with session info
+
+#define DISCOVERY_PORT			34001	// Separate port for LAN discovery broadcasts
+#define MAX_LAN_SERVERS			16		// Max servers in discovery list
+
 //
 // ---------------------------------------------------------------------------------------------
 enum ConnectState
@@ -267,6 +274,40 @@ typedef struct CC_PK_SEND_NEW_DATA
 	BYTE		m_UserData[];
 } *LPCC_PK_SEND_NEW_DATA;
 
+// CC_PT_LAN_QUERY (broadcast by client seeking LAN servers)
+typedef struct CC_PK_LAN_QUERY
+{
+	wire_u32	m_lProto;			// PROTO_ID
+	u_short		m_uType;			// CC_PT_LAN_QUERY
+	CHAR		m_cProtoVersion;	// CC_PROTO_VERSION
+} *LPCC_PK_LAN_QUERY;
+
+// CC_PT_LAN_RESPONSE (server replies with session info)
+typedef struct CC_PK_LAN_RESPONSE
+{
+	wire_u32	m_lProto;						// PROTO_ID
+	u_short		m_uType;						// CC_PT_LAN_RESPONSE
+	CHAR		m_szSessionName[MAX_HOST_NAME];	// Game name
+	CHAR		m_szHostName[MAX_HOST_NAME];		// Host player name
+	u_short		m_uPlayerCount;					// Current players
+	u_short		m_uMaxPlayers;					// Max players
+	u_short		m_uGamePort;					// DATA_PORT
+	DWORD		m_dwOptions;					// Game type/options
+} *LPCC_PK_LAN_RESPONSE;
+
+// Discovered LAN server entry (client-side list)
+typedef struct LAN_SERVER_ENTRY
+{
+	in_addr		m_Addr;							// Server IP
+	u_short		m_uGamePort;					// Server game port
+	CHAR		m_szSessionName[MAX_HOST_NAME];
+	CHAR		m_szHostName[MAX_HOST_NAME];
+	u_short		m_uPlayerCount;
+	u_short		m_uMaxPlayers;
+	DWORD		m_dwOptions;
+	DWORD		m_dwDiscoverTime;				// GetTickCount when discovered
+} *LPLAN_SERVER_ENTRY;
+
 // ---------------------------------------------------------------------------------------------
 // Описание пакета в очереди сообщений, ожидающих подтверждение
 typedef struct FRAME_ENTRY
@@ -339,6 +380,16 @@ public:
 
 	BOOL	InitNetwork();					// Инициализация сетевого интерфейса
 	BOOL	CloseNetwork();					// Закрытие сетевого интерфейса
+
+	// LAN Discovery
+	BOOL	StartLanDiscovery();			// Open discovery socket and broadcast query
+	BOOL	StopLanDiscovery();				// Close discovery socket
+	BOOL	PollLanDiscovery();				// Receive and process discovery responses
+	u_short	GetLanServerCount();
+	LAN_SERVER_ENTRY* GetLanServer(u_short index);
+	BOOL	StartLanAdvertise();			// Server: start listening for discovery queries
+	BOOL	StopLanAdvertise();				// Server: stop listening
+	BOOL	PollLanAdvertise();				// Server: respond to discovery queries
 
 	CCommCore();
 	virtual ~CCommCore();
@@ -519,6 +570,18 @@ protected:
 	VOID SetCommCoreUID( LPCSTR lpcszCCUID );
 	VOID NewCommCoreUID( LPSTR lpszCCUID );
 	VOID GetCommCoreUID( LPSTR lpszCCUID );
+
+	// LAN Discovery internals
+	SOCKET		m_DiscoverySocket;				// Socket for LAN discovery (port DISCOVERY_PORT)
+	LAN_SERVER_ENTRY m_LanServers[MAX_LAN_SERVERS];	// Discovered servers
+	u_short		m_uLanServerCount;				// Number of discovered servers
+	BOOL		m_bLanDiscoveryActive;			// Discovery socket open?
+	BOOL		m_bLanAdvertiseActive;			// Advertising socket open?
+
+	BOOL InitDiscoverySocket();
+	BOOL CloseDiscoverySocket();
+	BOOL SendLanQuery();
+	BOOL SendLanResponse(sockaddr_in* lpSender);
 
 	// ---------------------------------------------------------------------------------------------
 };

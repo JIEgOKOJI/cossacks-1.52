@@ -3233,7 +3233,9 @@ void PostDrawGameProcess()
 		CurrentStepTime -= CurrentStepTime >> 5;
 		RealGameLength = GetRealTime() - RealStTime;
 		_hb("PD:HdlMP");
+		_wd_activate(false);
 		HandleMultiplayer();
+		_wd_activate(true);
 
 		SYN.Copy( &SYN1 );
 		PreNoPause = 0;

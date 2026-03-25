@@ -786,6 +786,191 @@ bool PIEnumeratePlayers(PlayerInfo* PIN, bool DoMsg)
 
 void LBEnumerateSessions(ListBox*, int) {}
 
+// ========== LAN Server Discovery ==========
+
+void LBEnumerateLanSessions(ListBox* LB)
+{
+	LB->ClearItems();
+
+	if (!NETWORK_INIT)
+	{
+		IPCORE.InitNetwork();
+		NETWORK_INIT = true;
+	}
+
+	// Start LAN discovery and send broadcast query
+	IPCORE.StartLanDiscovery();
+
+	// Wait briefly for responses (poll for ~600ms)
+	DWORD startTime = GetTickCount();
+	while (GetTickCount() - startTime < 600)
+	{
+		IPCORE.PollLanDiscovery();
+		ProcessMessages();
+	}
+
+	// Populate the listbox with discovered servers
+	u_short count = IPCORE.GetLanServerCount();
+	for (u_short i = 0; i < count; i++)
+	{
+		LAN_SERVER_ENTRY* srv = IPCORE.GetLanServer(i);
+		if (!srv) continue;
+
+		char displayName[128];
+		snprintf(displayName, sizeof(displayName), "%s (%s)",
+				 srv->m_szSessionName, inet_ntoa(srv->m_Addr));
+
+		// Param1 encodes: low byte = current players, next byte = max players, high word = options
+		int param = (srv->m_uPlayerCount & 0xFF) | ((srv->m_uMaxPlayers & 0xFF) << 8);
+		LB->AddItem(displayName, param);
+	}
+
+	fprintf(stderr, "[NET] LBEnumerateLanSessions: found %d servers\n", count);
+}
+
+extern int menu_x_off;
+extern int menu_y_off;
+extern int ItemChoose;
+extern int NameChoose;
+extern char PlName[32];
+extern bool MMItemChoose(SimpleDialog* SD);
+void SlowLoadPalette(LPCSTR lpFileName);
+void SlowUnLoadPalette(LPCSTR lpFileName);
+void ShowString(int x, int y, LPCSTR s, RLCFont* f);
+void LoadFog(int);
+extern RLCFont WhiteFont;
+extern RLCFont YellowFont;
+bool WaitingJoinGame(int);
+bool FindSessionAndJoin(char* Name, char* Nick, bool Style, unsigned short port);
+
+bool MPL_JoinLanGame(int ID)
+{
+	LocalGP BTNS("Interface\\Game_Select");
+	LocalGP FONT1("romw");
+	LocalGP FONT2("romw1");
+	RLCFont FontA(FONT2.GPID);
+	RLCFont FontP(FONT1.GPID);
+	LoadFog(2);
+	SQPicture Back("Interface\\Game_Select_Background.bmp");
+	DialogsSystem MENU(menu_x_off, menu_y_off);
+	MENU.addPicture(nullptr, 0, 0, &Back, &Back, &Back);
+	GP_Button* Join = MENU.addGP_Button(nullptr, 93, 594, BTNS.GPID, 0, 1);
+	Join->OnUserClick = &MMItemChoose;
+	Join->UserParam = mcmJoin;
+	GP_Button* Refresh = MENU.addGP_Button(nullptr, 238, 594, BTNS.GPID, 2, 3);
+	Refresh->OnUserClick = &MMItemChoose;
+	Refresh->UserParam = mcmRefresh;
+	GP_Button* Cancel = MENU.addGP_Button(nullptr, 384, 594, BTNS.GPID, 4, 5);
+	Cancel->OnUserClick = &MMItemChoose;
+	Cancel->UserParam = mcmCancel;
+	ListBox* LB = MENU.addGP_ListBox(nullptr, 92, 172, 15, BTNS.GPID, 6, 26, &WhiteFont, &YellowFont, nullptr);
+
+	LBEnumerateLanSessions(LB);
+	LB->CurItem = -1;
+	LB->M_Over = 9;
+	if (LB->NItems) LB->CurItem = 0;
+
+	int pp = 1;
+	do
+	{
+		ItemChoose = -1;
+		do
+		{
+			ProcessMessages();
+			// Continue polling for new servers in background
+			IPCORE.PollLanDiscovery();
+
+			Join->Enabled = (LB->CurItem != -1);
+
+			MENU.MarkToDraw();
+			MENU.ProcessDialogs();
+
+			// Show player count for each server
+			for (int i = 0; i < LB->NItems; i++)
+			{
+				char nps[16];
+				int ppr = (LB->GetItem(i)->Param1) & 65535;
+				sprintf(nps, "%d/%d", ppr & 255, ppr >> 8);
+				if (LB->CurItem == i)
+					ShowString(LB->x + 364, LB->y + 6 + i * 26, nps, &WhiteFont);
+				else
+					ShowString(LB->x + 364, LB->y + 6 + i * 26, nps, &YellowFont);
+			}
+
+			MENU.RefreshView();
+
+			if (ItemChoose == mcmRefresh)
+			{
+				LBEnumerateLanSessions(LB);
+				ItemChoose = -1;
+				if (!LB->NItems) LB->CurItem = -1;
+				else LB->CurItem = 0;
+			}
+
+			if (pp)
+			{
+				SlowLoadPalette("2\\agew_1.pal");
+				pp = 0;
+			}
+		} while (ItemChoose == -1);
+
+		if (ItemChoose == mcmJoin && LB->CurItem != -1)
+		{
+			// Get selected server info
+			u_short idx = (u_short)LB->CurItem;
+			LAN_SERVER_ENTRY* srv = IPCORE.GetLanServer(idx);
+			if (srv)
+			{
+				// Stop discovery before connecting
+				IPCORE.StopLanDiscovery();
+
+				// Set IPADDR to the selected server's IP
+				strncpy(IPADDR, inet_ntoa(srv->m_Addr), sizeof(IPADDR) - 1);
+				IPADDR[sizeof(IPADDR) - 1] = '\0';
+				u_short gamePort = srv->m_uGamePort;
+
+				PlayerMenuMode = 1;
+				if (FindSessionAndJoin(IPADDR, PlName, true, gamePort))
+				{
+					SlowUnLoadPalette("2\\agew_1.pal");
+					WaitingJoinGame(0);
+					return true;
+				}
+				else
+				{
+					// Connection failed — show error, go back to list
+					LocalGP BOR2("Interface\\Bor2");
+					WaitWithError("ICUNJ", BOR2.GPID);
+					// Re-start discovery
+					IPCORE.StartLanDiscovery();
+				}
+			}
+		}
+	} while (ItemChoose != mcmCancel);
+
+	IPCORE.StopLanDiscovery();
+	SlowUnLoadPalette("2\\agew_1.pal");
+	return false;
+}
+
+// ========== LAN Server Advertise (for host) ==========
+
+void StartLanServerAdvertise()
+{
+	if (!NETWORK_INIT) return;
+	IPCORE.StartLanAdvertise();
+}
+
+void StopLanServerAdvertise()
+{
+	IPCORE.StopLanAdvertise();
+}
+
+void PollLanServerAdvertise()
+{
+	IPCORE.PollLanAdvertise();
+}
+
 bool FindSessionAndJoin(char* Name, char* Nick, bool Style, unsigned short port)
 {
 	NORMNICK1(Nick);
@@ -1748,7 +1933,7 @@ bool StartIGame(bool SINGLE)
 }
 
 void ProcessNetCash() { NCASH.Process(); }
-void ProcessNewInternet() { IPCORE.QueueProcess(); }
+void ProcessNewInternet() { IPCORE.QueueProcess(); IPCORE.PollLanAdvertise(); }
 char* CreateDiffStr(char*) { return nullptr; }
 void LoadSaveFile() {}
 void SyncroDoctor() {}

@@ -990,6 +990,12 @@ bool CreateSession(char* SessName, char* Name, DWORD User2, bool Style, int MaxP
 extern int GMTYPE;
 void IPCORESetAndSendUserData(byte* pData, unsigned short size);
 
+// LAN discovery functions (MPlayerStub.cpp)
+bool MPL_JoinLanGame(int ID);
+void StartLanServerAdvertise();
+void StopLanServerAdvertise();
+void PollLanServerAdvertise();
+
 bool historical_battle_over_gsc_network = false;
 
 bool DoNewInet = 0;
@@ -1070,12 +1076,10 @@ RetryConn:
 	{
 		DoNewInet = 1;
 	}
-#ifndef _MSC_VER
-	else if (selected_network_protocol == 1)//LAN — use CommCore on macOS (no DirectPlay)
+	else if (selected_network_protocol == 1)//LAN — use CommCore (cross-platform)
 	{
 		DoNewInet = 1;
 	}
-#endif
 
 	if (!DoNewInet)
 	{
@@ -1147,21 +1151,35 @@ RetryConn:
 	case mcmHost:
 		if (CreateNamedSession(PlName, 0, GMMAXPL))
 		{
+			StartLanServerAdvertise();
 			WaitingHostGame(0);
+			StopLanServerAdvertise();
 		}
 		break;
 
 	case mcmJoin:
 		if (DoNewInet)
 		{
-			PlayerMenuMode = 1;
-			if (!FindSessionAndJoin(IPADDR, PlName, true, 0))
+			if (selected_network_protocol == 1)
 			{
-				WaitWithMessage(GetTextByID("ICUNJ"));
+				//TCP/IP LAN — show server browser
+				if (MPL_JoinLanGame(0))
+				{
+					//Connected via LAN browser
+				}
 			}
 			else
 			{
-				WaitingJoinGame(0);
+				//Direct IP — connect to IPADDR directly
+				PlayerMenuMode = 1;
+				if (!FindSessionAndJoin(IPADDR, PlName, true, 0))
+				{
+					WaitWithMessage(GetTextByID("ICUNJ"));
+				}
+				else
+				{
+					WaitingJoinGame(0);
+				}
 			}
 		}
 		else
@@ -1323,6 +1341,46 @@ TryConnection:
 	if (BTLID == -1)
 	{
 		goto TryConnection;
+	}
+
+	// TCP/IP LAN or Direct IP — use CommCore (cross-platform)
+	if (selected_network_protocol == 1 || selected_network_protocol == 2)
+	{
+		CloseMPL();
+		CreateMultiplaterInterface();
+
+		switch (connection_menu_result)
+		{
+		case mcmHost:
+			if (CreateNamedSession(PlName, BTLID + 1, 2))
+			{
+				StartLanServerAdvertise();
+				WaitingHostGame(BTLID + 1);
+				StopLanServerAdvertise();
+			}
+			break;
+
+		case mcmJoin:
+			if (selected_network_protocol == 1)
+			{
+				MPL_JoinLanGame(BTLID + 1);
+			}
+			else
+			{
+				PlayerMenuMode = 1;
+				if (!FindSessionAndJoin(IPADDR, PlName, true, 0))
+				{
+					void WaitWithMessage(char* Message);
+					WaitWithMessage(GetTextByID("ICUNJ"));
+				}
+				else
+				{
+					WaitingJoinGame(0);
+				}
+			}
+			break;
+		}
+		return;
 	}
 
 	if (!lpDirectPlay3A)

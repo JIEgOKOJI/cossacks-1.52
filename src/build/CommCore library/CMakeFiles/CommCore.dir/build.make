@@ -114,10 +114,24 @@ CommCore\ library/CMakeFiles/CommCore.dir/CommInit.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CommCore.dir/CommInit.cpp.s"
 	cd "/Users/ildarkarimov/Documents/cossacks-1.52/src/build/CommCore library" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/ildarkarimov/Documents/cossacks-1.52/src/CommCore library/CommInit.cpp" -o CMakeFiles/CommCore.dir/CommInit.cpp.s
 
+CommCore\ library/CMakeFiles/CommCore.dir/CommLanDiscovery.cpp.o: CommCore\ library/CMakeFiles/CommCore.dir/flags.make
+CommCore\ library/CMakeFiles/CommCore.dir/CommLanDiscovery.cpp.o: /Users/ildarkarimov/Documents/cossacks-1.52/src/CommCore\ library/CommLanDiscovery.cpp
+CommCore\ library/CMakeFiles/CommCore.dir/CommLanDiscovery.cpp.o: CommCore\ library/CMakeFiles/CommCore.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/ildarkarimov/Documents/cossacks-1.52/src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CommCore library/CMakeFiles/CommCore.dir/CommLanDiscovery.cpp.o"
+	cd "/Users/ildarkarimov/Documents/cossacks-1.52/src/build/CommCore library" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT "CommCore\\ library/CMakeFiles/CommCore.dir/CommLanDiscovery.cpp.o" -MF CMakeFiles/CommCore.dir/CommLanDiscovery.cpp.o.d -o CMakeFiles/CommCore.dir/CommLanDiscovery.cpp.o -c "/Users/ildarkarimov/Documents/cossacks-1.52/src/CommCore library/CommLanDiscovery.cpp"
+
+CommCore\ library/CMakeFiles/CommCore.dir/CommLanDiscovery.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CommCore.dir/CommLanDiscovery.cpp.i"
+	cd "/Users/ildarkarimov/Documents/cossacks-1.52/src/build/CommCore library" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/ildarkarimov/Documents/cossacks-1.52/src/CommCore library/CommLanDiscovery.cpp" > CMakeFiles/CommCore.dir/CommLanDiscovery.cpp.i
+
+CommCore\ library/CMakeFiles/CommCore.dir/CommLanDiscovery.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CommCore.dir/CommLanDiscovery.cpp.s"
+	cd "/Users/ildarkarimov/Documents/cossacks-1.52/src/build/CommCore library" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/ildarkarimov/Documents/cossacks-1.52/src/CommCore library/CommLanDiscovery.cpp" -o CMakeFiles/CommCore.dir/CommLanDiscovery.cpp.s
+
 CommCore\ library/CMakeFiles/CommCore.dir/CommPeers.cpp.o: CommCore\ library/CMakeFiles/CommCore.dir/flags.make
 CommCore\ library/CMakeFiles/CommCore.dir/CommPeers.cpp.o: /Users/ildarkarimov/Documents/cossacks-1.52/src/CommCore\ library/CommPeers.cpp
 CommCore\ library/CMakeFiles/CommCore.dir/CommPeers.cpp.o: CommCore\ library/CMakeFiles/CommCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/ildarkarimov/Documents/cossacks-1.52/src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CommCore library/CMakeFiles/CommCore.dir/CommPeers.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/ildarkarimov/Documents/cossacks-1.52/src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CommCore library/CMakeFiles/CommCore.dir/CommPeers.cpp.o"
 	cd "/Users/ildarkarimov/Documents/cossacks-1.52/src/build/CommCore library" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT "CommCore\\ library/CMakeFiles/CommCore.dir/CommPeers.cpp.o" -MF CMakeFiles/CommCore.dir/CommPeers.cpp.o.d -o CMakeFiles/CommCore.dir/CommPeers.cpp.o -c "/Users/ildarkarimov/Documents/cossacks-1.52/src/CommCore library/CommPeers.cpp"
 
 CommCore\ library/CMakeFiles/CommCore.dir/CommPeers.cpp.i: cmake_force
@@ -131,7 +145,7 @@ CommCore\ library/CMakeFiles/CommCore.dir/CommPeers.cpp.s: cmake_force
 CommCore\ library/CMakeFiles/CommCore.dir/CommPing.cpp.o: CommCore\ library/CMakeFiles/CommCore.dir/flags.make
 CommCore\ library/CMakeFiles/CommCore.dir/CommPing.cpp.o: /Users/ildarkarimov/Documents/cossacks-1.52/src/CommCore\ library/CommPing.cpp
 CommCore\ library/CMakeFiles/CommCore.dir/CommPing.cpp.o: CommCore\ library/CMakeFiles/CommCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/ildarkarimov/Documents/cossacks-1.52/src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CommCore library/CMakeFiles/CommCore.dir/CommPing.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/ildarkarimov/Documents/cossacks-1.52/src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CommCore library/CMakeFiles/CommCore.dir/CommPing.cpp.o"
 	cd "/Users/ildarkarimov/Documents/cossacks-1.52/src/build/CommCore library" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT "CommCore\\ library/CMakeFiles/CommCore.dir/CommPing.cpp.o" -MF CMakeFiles/CommCore.dir/CommPing.cpp.o.d -o CMakeFiles/CommCore.dir/CommPing.cpp.o -c "/Users/ildarkarimov/Documents/cossacks-1.52/src/CommCore library/CommPing.cpp"
 
 CommCore\ library/CMakeFiles/CommCore.dir/CommPing.cpp.i: cmake_force
@@ -145,7 +159,7 @@ CommCore\ library/CMakeFiles/CommCore.dir/CommPing.cpp.s: cmake_force
 CommCore\ library/CMakeFiles/CommCore.dir/CommQueue.cpp.o: CommCore\ library/CMakeFiles/CommCore.dir/flags.make
 CommCore\ library/CMakeFiles/CommCore.dir/CommQueue.cpp.o: /Users/ildarkarimov/Documents/cossacks-1.52/src/CommCore\ library/CommQueue.cpp
 CommCore\ library/CMakeFiles/CommCore.dir/CommQueue.cpp.o: CommCore\ library/CMakeFiles/CommCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/ildarkarimov/Documents/cossacks-1.52/src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CommCore library/CMakeFiles/CommCore.dir/CommQueue.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/ildarkarimov/Documents/cossacks-1.52/src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CommCore library/CMakeFiles/CommCore.dir/CommQueue.cpp.o"
 	cd "/Users/ildarkarimov/Documents/cossacks-1.52/src/build/CommCore library" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT "CommCore\\ library/CMakeFiles/CommCore.dir/CommQueue.cpp.o" -MF CMakeFiles/CommCore.dir/CommQueue.cpp.o.d -o CMakeFiles/CommCore.dir/CommQueue.cpp.o -c "/Users/ildarkarimov/Documents/cossacks-1.52/src/CommCore library/CommQueue.cpp"
 
 CommCore\ library/CMakeFiles/CommCore.dir/CommQueue.cpp.i: cmake_force
@@ -159,7 +173,7 @@ CommCore\ library/CMakeFiles/CommCore.dir/CommQueue.cpp.s: cmake_force
 CommCore\ library/CMakeFiles/CommCore.dir/CommRaw.cpp.o: CommCore\ library/CMakeFiles/CommCore.dir/flags.make
 CommCore\ library/CMakeFiles/CommCore.dir/CommRaw.cpp.o: /Users/ildarkarimov/Documents/cossacks-1.52/src/CommCore\ library/CommRaw.cpp
 CommCore\ library/CMakeFiles/CommCore.dir/CommRaw.cpp.o: CommCore\ library/CMakeFiles/CommCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/ildarkarimov/Documents/cossacks-1.52/src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CommCore library/CMakeFiles/CommCore.dir/CommRaw.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/ildarkarimov/Documents/cossacks-1.52/src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CommCore library/CMakeFiles/CommCore.dir/CommRaw.cpp.o"
 	cd "/Users/ildarkarimov/Documents/cossacks-1.52/src/build/CommCore library" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT "CommCore\\ library/CMakeFiles/CommCore.dir/CommRaw.cpp.o" -MF CMakeFiles/CommCore.dir/CommRaw.cpp.o.d -o CMakeFiles/CommCore.dir/CommRaw.cpp.o -c "/Users/ildarkarimov/Documents/cossacks-1.52/src/CommCore library/CommRaw.cpp"
 
 CommCore\ library/CMakeFiles/CommCore.dir/CommRaw.cpp.i: cmake_force
@@ -173,7 +187,7 @@ CommCore\ library/CMakeFiles/CommCore.dir/CommRaw.cpp.s: cmake_force
 CommCore\ library/CMakeFiles/CommCore.dir/CommRecv.cpp.o: CommCore\ library/CMakeFiles/CommCore.dir/flags.make
 CommCore\ library/CMakeFiles/CommCore.dir/CommRecv.cpp.o: /Users/ildarkarimov/Documents/cossacks-1.52/src/CommCore\ library/CommRecv.cpp
 CommCore\ library/CMakeFiles/CommCore.dir/CommRecv.cpp.o: CommCore\ library/CMakeFiles/CommCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/ildarkarimov/Documents/cossacks-1.52/src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CommCore library/CMakeFiles/CommCore.dir/CommRecv.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/ildarkarimov/Documents/cossacks-1.52/src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CommCore library/CMakeFiles/CommCore.dir/CommRecv.cpp.o"
 	cd "/Users/ildarkarimov/Documents/cossacks-1.52/src/build/CommCore library" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT "CommCore\\ library/CMakeFiles/CommCore.dir/CommRecv.cpp.o" -MF CMakeFiles/CommCore.dir/CommRecv.cpp.o.d -o CMakeFiles/CommCore.dir/CommRecv.cpp.o -c "/Users/ildarkarimov/Documents/cossacks-1.52/src/CommCore library/CommRecv.cpp"
 
 CommCore\ library/CMakeFiles/CommCore.dir/CommRecv.cpp.i: cmake_force
@@ -187,7 +201,7 @@ CommCore\ library/CMakeFiles/CommCore.dir/CommRecv.cpp.s: cmake_force
 CommCore\ library/CMakeFiles/CommCore.dir/CommServerList.cpp.o: CommCore\ library/CMakeFiles/CommCore.dir/flags.make
 CommCore\ library/CMakeFiles/CommCore.dir/CommServerList.cpp.o: /Users/ildarkarimov/Documents/cossacks-1.52/src/CommCore\ library/CommServerList.cpp
 CommCore\ library/CMakeFiles/CommCore.dir/CommServerList.cpp.o: CommCore\ library/CMakeFiles/CommCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/ildarkarimov/Documents/cossacks-1.52/src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CommCore library/CMakeFiles/CommCore.dir/CommServerList.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/ildarkarimov/Documents/cossacks-1.52/src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CommCore library/CMakeFiles/CommCore.dir/CommServerList.cpp.o"
 	cd "/Users/ildarkarimov/Documents/cossacks-1.52/src/build/CommCore library" && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT "CommCore\\ library/CMakeFiles/CommCore.dir/CommServerList.cpp.o" -MF CMakeFiles/CommCore.dir/CommServerList.cpp.o.d -o CMakeFiles/CommCore.dir/CommServerList.cpp.o -c "/Users/ildarkarimov/Documents/cossacks-1.52/src/CommCore library/CommServerList.cpp"
 
 CommCore\ library/CMakeFiles/CommCore.dir/CommServerList.cpp.i: cmake_force
@@ -203,6 +217,7 @@ CommCore_OBJECTS = \
 "CMakeFiles/CommCore.dir/CommCore.cpp.o" \
 "CMakeFiles/CommCore.dir/CommInet.cpp.o" \
 "CMakeFiles/CommCore.dir/CommInit.cpp.o" \
+"CMakeFiles/CommCore.dir/CommLanDiscovery.cpp.o" \
 "CMakeFiles/CommCore.dir/CommPeers.cpp.o" \
 "CMakeFiles/CommCore.dir/CommPing.cpp.o" \
 "CMakeFiles/CommCore.dir/CommQueue.cpp.o" \
@@ -216,6 +231,7 @@ CommCore_EXTERNAL_OBJECTS =
 CommCore\ library/libCommCore.a: CommCore\ library/CMakeFiles/CommCore.dir/CommCore.cpp.o
 CommCore\ library/libCommCore.a: CommCore\ library/CMakeFiles/CommCore.dir/CommInet.cpp.o
 CommCore\ library/libCommCore.a: CommCore\ library/CMakeFiles/CommCore.dir/CommInit.cpp.o
+CommCore\ library/libCommCore.a: CommCore\ library/CMakeFiles/CommCore.dir/CommLanDiscovery.cpp.o
 CommCore\ library/libCommCore.a: CommCore\ library/CMakeFiles/CommCore.dir/CommPeers.cpp.o
 CommCore\ library/libCommCore.a: CommCore\ library/CMakeFiles/CommCore.dir/CommPing.cpp.o
 CommCore\ library/libCommCore.a: CommCore\ library/CMakeFiles/CommCore.dir/CommQueue.cpp.o
@@ -224,7 +240,7 @@ CommCore\ library/libCommCore.a: CommCore\ library/CMakeFiles/CommCore.dir/CommR
 CommCore\ library/libCommCore.a: CommCore\ library/CMakeFiles/CommCore.dir/CommServerList.cpp.o
 CommCore\ library/libCommCore.a: CommCore\ library/CMakeFiles/CommCore.dir/build.make
 CommCore\ library/libCommCore.a: CommCore\ library/CMakeFiles/CommCore.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/ildarkarimov/Documents/cossacks-1.52/src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX static library libCommCore.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/ildarkarimov/Documents/cossacks-1.52/src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX static library libCommCore.a"
 	cd "/Users/ildarkarimov/Documents/cossacks-1.52/src/build/CommCore library" && $(CMAKE_COMMAND) -P CMakeFiles/CommCore.dir/cmake_clean_target.cmake
 	cd "/Users/ildarkarimov/Documents/cossacks-1.52/src/build/CommCore library" && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/CommCore.dir/link.txt --verbose=$(VERBOSE)
 

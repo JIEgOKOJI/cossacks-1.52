@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/CommCore.dir/CommInet.cpp.o.d"
   "CMakeFiles/CommCore.dir/CommInit.cpp.o"
   "CMakeFiles/CommCore.dir/CommInit.cpp.o.d"
+  "CMakeFiles/CommCore.dir/CommLanDiscovery.cpp.o"
+  "CMakeFiles/CommCore.dir/CommLanDiscovery.cpp.o.d"
   "CMakeFiles/CommCore.dir/CommPeers.cpp.o"
   "CMakeFiles/CommCore.dir/CommPeers.cpp.o.d"
   "CMakeFiles/CommCore.dir/CommPing.cpp.o"

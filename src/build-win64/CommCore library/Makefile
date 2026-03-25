@@ -202,6 +202,30 @@ CommInit.cpp.s:
 	cd /Users/ildarkarimov/Documents/cossacks-1.52/src/build-win64 && $(MAKE) $(MAKESILENT) -f "CommCore library/CMakeFiles/CommCore.dir/build.make" "CommCore library/CMakeFiles/CommCore.dir/CommInit.cpp.s"
 .PHONY : CommInit.cpp.s
 
+CommLanDiscovery.obj: CommLanDiscovery.cpp.obj
+.PHONY : CommLanDiscovery.obj
+
+# target to build an object file
+CommLanDiscovery.cpp.obj:
+	cd /Users/ildarkarimov/Documents/cossacks-1.52/src/build-win64 && $(MAKE) $(MAKESILENT) -f "CommCore library/CMakeFiles/CommCore.dir/build.make" "CommCore library/CMakeFiles/CommCore.dir/CommLanDiscovery.cpp.obj"
+.PHONY : CommLanDiscovery.cpp.obj
+
+CommLanDiscovery.i: CommLanDiscovery.cpp.i
+.PHONY : CommLanDiscovery.i
+
+# target to preprocess a source file
+CommLanDiscovery.cpp.i:
+	cd /Users/ildarkarimov/Documents/cossacks-1.52/src/build-win64 && $(MAKE) $(MAKESILENT) -f "CommCore library/CMakeFiles/CommCore.dir/build.make" "CommCore library/CMakeFiles/CommCore.dir/CommLanDiscovery.cpp.i"
+.PHONY : CommLanDiscovery.cpp.i
+
+CommLanDiscovery.s: CommLanDiscovery.cpp.s
+.PHONY : CommLanDiscovery.s
+
+# target to generate assembly for a file
+CommLanDiscovery.cpp.s:
+	cd /Users/ildarkarimov/Documents/cossacks-1.52/src/build-win64 && $(MAKE) $(MAKESILENT) -f "CommCore library/CMakeFiles/CommCore.dir/build.make" "CommCore library/CMakeFiles/CommCore.dir/CommLanDiscovery.cpp.s"
+.PHONY : CommLanDiscovery.cpp.s
+
 CommPeers.obj: CommPeers.cpp.obj
 .PHONY : CommPeers.obj
 
@@ -364,6 +388,9 @@ help:
 	@echo "... CommInit.obj"
 	@echo "... CommInit.i"
 	@echo "... CommInit.s"
+	@echo "... CommLanDiscovery.obj"
+	@echo "... CommLanDiscovery.i"
+	@echo "... CommLanDiscovery.s"
 	@echo "... CommPeers.obj"
 	@echo "... CommPeers.i"
 	@echo "... CommPeers.s"

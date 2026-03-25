@@ -11,6 +11,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/ildarkarimov/Documents/cossacks-1.52/src/CommCore library/CommCore.cpp" "CommCore library/CMakeFiles/CommCore.dir/CommCore.cpp.o" "gcc" "CommCore library/CMakeFiles/CommCore.dir/CommCore.cpp.o.d"
   "/Users/ildarkarimov/Documents/cossacks-1.52/src/CommCore library/CommInet.cpp" "CommCore library/CMakeFiles/CommCore.dir/CommInet.cpp.o" "gcc" "CommCore library/CMakeFiles/CommCore.dir/CommInet.cpp.o.d"
   "/Users/ildarkarimov/Documents/cossacks-1.52/src/CommCore library/CommInit.cpp" "CommCore library/CMakeFiles/CommCore.dir/CommInit.cpp.o" "gcc" "CommCore library/CMakeFiles/CommCore.dir/CommInit.cpp.o.d"
+  "/Users/ildarkarimov/Documents/cossacks-1.52/src/CommCore library/CommLanDiscovery.cpp" "CommCore library/CMakeFiles/CommCore.dir/CommLanDiscovery.cpp.o" "gcc" "CommCore library/CMakeFiles/CommCore.dir/CommLanDiscovery.cpp.o.d"
   "/Users/ildarkarimov/Documents/cossacks-1.52/src/CommCore library/CommPeers.cpp" "CommCore library/CMakeFiles/CommCore.dir/CommPeers.cpp.o" "gcc" "CommCore library/CMakeFiles/CommCore.dir/CommPeers.cpp.o.d"
   "/Users/ildarkarimov/Documents/cossacks-1.52/src/CommCore library/CommPing.cpp" "CommCore library/CMakeFiles/CommCore.dir/CommPing.cpp.o" "gcc" "CommCore library/CMakeFiles/CommCore.dir/CommPing.cpp.o.d"
   "/Users/ildarkarimov/Documents/cossacks-1.52/src/CommCore library/CommQueue.cpp" "CommCore library/CMakeFiles/CommCore.dir/CommQueue.cpp.o" "gcc" "CommCore library/CMakeFiles/CommCore.dir/CommQueue.cpp.o.d"

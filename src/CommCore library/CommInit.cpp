@@ -62,6 +62,13 @@ CCommCore::CCommCore()
 	m_dwTxBytes = 0;
 	m_dwNxBytes = 0;
 
+	// LAN Discovery
+	m_DiscoverySocket = INVALID_SOCKET;
+	m_uLanServerCount = 0;
+	memset(m_LanServers, 0, sizeof(m_LanServers));
+	m_bLanDiscoveryActive = FALSE;
+	m_bLanAdvertiseActive = FALSE;
+
 #ifdef CC_DEBUG
 	DebugMessage( "-- Log Started ---------------------------------" );
 #endif //CC_DEBUG
@@ -74,6 +81,7 @@ CCommCore::~CCommCore()
 #ifdef CC_DEBUG
 	DebugMessage( "-- Log Stopped ---------------------------------" );
 #endif //CC_DEBUG
+	CloseDiscoverySocket();
 	if (m_lpbRecvBuffer) {
 		free( m_lpbRecvBuffer );
 		m_lpbRecvBuffer = nullptr;
