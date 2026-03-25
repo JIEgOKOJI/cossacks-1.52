@@ -1,4 +1,5 @@
 #include <cstdint>
+#include <cstddef>
 #include "ddini.h"
 #include "ResFile.h"
 #include "FastDraw.h"
@@ -1328,7 +1329,7 @@ void SaveSelection( SaveBuf* SB )
 	for (int i = 0; i < 80; i++)
 	{
 		SelGroup* SG = &SelSet[i];
-		xBlockWrite( SB, &SG->NMemb, ( sizeof(SelGroup) ) - 8 );
+		xBlockWrite( SB, &SG->NMemb, sizeof(SelGroup) - offsetof(SelGroup, NMemb) );
 		if (SG->NMemb)
 		{
 			xBlockWrite( SB, SG->Member, SG->NMemb << 1 );
@@ -1354,7 +1355,7 @@ void LoadSelection( SaveBuf* SB )
 	for (int i = 0; i < 80; i++)
 	{
 		SelGroup* SG = &SelSet[i];
-		xBlockRead( SB, &SG->NMemb, ( sizeof(SelGroup) ) - 8 );
+		xBlockRead( SB, &SG->NMemb, sizeof(SelGroup) - offsetof(SelGroup, NMemb) );
 		if (SG->NMemb)
 		{
 			SG->Member = new word[SG->NMemb];
@@ -1529,7 +1530,7 @@ void SaveAnmObj( SaveBuf* SB )
 			if (NAN.Sender)NAN.Sender = (OneObject*) ( NAN.Sender->Index );
 			else NAN.Sender = (OneObject*) 0xFFFFFFFF;
 			NAN.Weap = (Weapon*) NAN.Weap->MyIndex;
-			xBlockWrite( SB, &NAN.x, sizeof( AnmObject ) - 4 );
+			xBlockWrite( SB, &NAN.x, sizeof(AnmObject) - offsetof(AnmObject, x) );
 		};
 	};
 };
@@ -1549,7 +1550,7 @@ void LoadAnmObj( SaveBuf* SB )
 		xBlockRead( SB, &ai, 2 );
 		EUsage[ai] = 1;
 		AnmObject* NAN = GAnm[ai];
-		xBlockRead( SB, &NAN->x, sizeof( AnmObject ) - 4 );
+		xBlockRead( SB, &NAN->x, sizeof(AnmObject) - offsetof(AnmObject, x) );
 		if ((int)(intptr_t)( NAN->Sender ) != -1)NAN->Sender = Group[(int)(intptr_t)( NAN->Sender )];
 		else NAN->Sender = NULL;
 		NAN->Weap = WPLIST[(int)(intptr_t)( NAN->Weap )];
@@ -2703,11 +2704,13 @@ void SaveMission( SaveBuf* SB )
 {
 	xBlockWrite( SB, &MISSLIST.CurrentMission, 4 );
 
-	xBlockWrite( SB, &SCENINF.hLib, 4 );
-
-	if (!SCENINF.hLib)
 	{
-		return;
+		int has_hLib = (SCENINF.hLib != nullptr) ? 1 : 0;
+		xBlockWrite( SB, &has_hLib, 4 );
+		if (!has_hLib)
+		{
+			return;
+		}
 	}
 
 	xBlockWrite( SB, PlName, 64 );

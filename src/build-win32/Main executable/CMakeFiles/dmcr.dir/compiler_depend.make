@@ -4803,6 +4803,7 @@ Main\ executable/CMakeFiles/dmcr.dir/Ddex1.cpp.obj: /Users/ildarkarimov/Document
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/_mingw_mac.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/_mingw_off_t.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/_mingw_secapi.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/_mingw_stat64.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/_mingw_stdarg.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/_mingw_unicode.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/_timeval.h \
@@ -4812,12 +4813,49 @@ Main\ executable/CMakeFiles/dmcr.dir/Ddex1.cpp.obj: /Users/ildarkarimov/Document
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/basetsd.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/bcrypt.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/bemapiset.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/atomic \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/backward/binders.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/atomic_base.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/atomic_lockfree_defines.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/chrono.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/exception.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/functional_hash.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/hash_bytes.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/invoke.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/memoryfwd.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/move.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/parse_numbers.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/postypes.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/refwrap.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/requires_hosted.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/std_abs.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/std_thread.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/stl_function.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/stl_pair.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/stringfwd.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/this_thread_sleep.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/unique_ptr.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/uses_allocator.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/utility.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/version.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/cstdint \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/cstdlib \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/ctime \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/cwchar \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/debug/assertions.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/i686-w64-mingw32/bits/c++config.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/i686-w64-mingw32/bits/cpu_defines.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/i686-w64-mingw32/bits/gthr-default.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/i686-w64-mingw32/bits/gthr.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/i686-w64-mingw32/bits/os_defines.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/iosfwd \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/limits \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/new \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/ratio \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/stdlib.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/thread \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/tuple \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/type_traits \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/cderr.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/cguid.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/combaseapi.h \
@@ -4902,9 +4940,11 @@ Main\ executable/CMakeFiles/dmcr.dir/Ddex1.cpp.obj: /Users/ildarkarimov/Document
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/pshpack2.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/pshpack4.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/pshpack8.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/pthread.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/pthread_compat.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/pthread_signal.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/pthread_time.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/pthread_unistd.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/realtimeapiset.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/reason.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/rpc.h \
@@ -4917,6 +4957,7 @@ Main\ executable/CMakeFiles/dmcr.dir/Ddex1.cpp.obj: /Users/ildarkarimov/Document
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/rpcnterr.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/rpcsal.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/sal.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/sched.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/sdkddkver.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/sdks/_mingw_ddk.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/sec_api/stdio_s.h \
@@ -4924,6 +4965,7 @@ Main\ executable/CMakeFiles/dmcr.dir/Ddex1.cpp.obj: /Users/ildarkarimov/Document
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/sec_api/stralign_s.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/sec_api/string_s.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/sec_api/sys/timeb_s.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/sec_api/wchar_s.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/securityappcontainer.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/securitybaseapi.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/servprov.h \
@@ -4942,6 +4984,7 @@ Main\ executable/CMakeFiles/dmcr.dir/Ddex1.cpp.obj: /Users/ildarkarimov/Document
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/swprintf.inl \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/synchapi.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/sys/timeb.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/sys/types.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/sysinfoapi.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/systemtopologyapi.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/threadpoolapiset.h \
@@ -4956,6 +4999,7 @@ Main\ executable/CMakeFiles/dmcr.dir/Ddex1.cpp.obj: /Users/ildarkarimov/Document
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/utilapiset.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/vadefs.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/virtdisk.h \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/wchar.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/winapifamily.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/winbase.h \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/wincon.h \
@@ -10366,6 +10410,7 @@ Main\ executable/CMakeFiles/dmcr.dir/LoadSave.cpp.obj: /Users/ildarkarimov/Docum
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/cctype \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/cerrno \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/clocale \
+  /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/cstddef \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/cstdint \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/cstdio \
   /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/cstdlib \
@@ -23408,11 +23453,27 @@ Main\ executable/CMakeFiles/dmcr.dir/walls.cpp.obj: /Users/ildarkarimov/Document
 
 /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/DeviceCD.cpp:
 
+/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/psapi.h:
+
+/Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/StringHash.h:
+
+/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/mutex:
+
+/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/unique_lock.h:
+
+/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/i686-w64-mingw32/bits/error_constants.h:
+
+/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/std_mutex.h:
+
+/Users/ildarkarimov/Documents/cossacks-1.52/src/platform/psapi.h:
+
+/Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/Ddini.cpp:
+
 /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/sys/types.h:
 
-/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/pthread_unistd.h:
+/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/signal.h:
 
-/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/psapi.h:
+/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/pthread_unistd.h:
 
 /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/tuple:
 
@@ -23430,27 +23491,13 @@ Main\ executable/CMakeFiles/dmcr.dir/walls.cpp.obj: /Users/ildarkarimov/Document
 
 /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/unique_ptr.h:
 
-/Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/StringHash.h:
-
-/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/mutex:
-
-/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/unique_lock.h:
-
 /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/this_thread_sleep.h:
-
-/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/i686-w64-mingw32/bits/error_constants.h:
-
-/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/std_mutex.h:
 
 /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/sched.h:
 
 /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/parse_numbers.h:
 
-/Users/ildarkarimov/Documents/cossacks-1.52/src/platform/psapi.h:
-
-/Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/Ddini.cpp:
-
-/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/signal.h:
+/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/atomic_base.h:
 
 /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/dplay.h:
 
@@ -23715,6 +23762,8 @@ Main\ executable/CMakeFiles/dmcr.dir/walls.cpp.obj: /Users/ildarkarimov/Document
 /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/sdl/include/SDL_keycode.h:
 
 /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/sdl/include/SDL_atomic.h:
+
+/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/bits/atomic_lockfree_defines.h:
 
 /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/Megapolis.h:
 
@@ -24537,6 +24586,8 @@ Main\ executable/CMakeFiles/dmcr.dir/walls.cpp.obj: /Users/ildarkarimov/Document
 /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/consoleapi.h:
 
 /Users/ildarkarimov/Documents/cossacks-1.52/src/Main\ executable/WeaponID.h:
+
+/opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/i686-w64-mingw32/include/c++/15.2.0/atomic:
 
 /opt/homebrew/Cellar/mingw-w64/13.0.0_2/toolchain-i686/lib/gcc/i686-w64-mingw32/15.2.0/include/avx512bwintrin.h:
 

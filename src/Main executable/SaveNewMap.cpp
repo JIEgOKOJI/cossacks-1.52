@@ -723,7 +723,6 @@ void LoadUnits3( ResFile f1 )
 	DeleteAllUnits();
 	int NU;
 	RBlockRead( f1, &NU, 4 );
-	fprintf(stderr, "[LU3] LoadUnits3: NU=%d units to load\n", NU);
 	for ( int q = 0; q < NU; q++ )
 	{
 		byte NI;
@@ -771,12 +770,7 @@ void LoadUnits3( ResFile f1 )
 					OB->GraphDir = DIR;
 					OB->StandGround = 0 != ( Opt & 1 );
 					OB->NoSearchVictim = 0 != ( Opt & 2 );
-					if (q < 5) fprintf(stderr, "[LU3]   Created unit[%d]: NI=%d Name='%s' x=%d y=%d\n", q, NI, Name, x, y);
-				} else {
-					if (q < 5) fprintf(stderr, "[LU3]   FAILED CreateNewUnitAt3: NI=%d Name='%s' x=%d y=%d\n", q, NI, Name, x, y);
 				}
-			} else {
-				if (q < 5) fprintf(stderr, "[LU3]   NOT FOUND or Wall: NI=%d Name='%s' found=%d NMon=%d\n", q, NI, Name, found, NT->NMon);
 			}
 		}
 	}
@@ -2139,7 +2133,6 @@ void CheckMapNameForStart( char* Name );
 //Loads mapdata from file
 void Load3DMap( char* Map )
 {
-	fprintf(stderr, "[L3D] Load3DMap: Map='%s'\n", Map ? Map : "(null)");
 	LockBars.Clear();
 
 	UnLockBars.Clear();
@@ -2158,13 +2151,11 @@ void Load3DMap( char* Map )
 	}
 
 	ResFile f1 = RReset( Map );
-	fprintf(stderr, "[L3D] RReset returned f1=%d (INVALID=%d)\n", (int)(intptr_t)f1, (int)(intptr_t)INVALID_HANDLE_VALUE);
 
 	ClearMaps();
 
 	if ( f1 == INVALID_HANDLE_VALUE )
 	{
-		fprintf(stderr, "[L3D] ERROR: Cannot open map file!\n");
 		return;
 	}
 
@@ -2184,7 +2175,6 @@ void Load3DMap( char* Map )
 		RBlockRead( f1, &sign, 4 );
 		RBlockRead( f1, &size, 4 );
 		posit += 4 + size;
-		fprintf(stderr, "[L3D] Block: sign=0x%08X('%c%c%c%c') size=%d\n", sign, sign&0xFF, (sign>>8)&0xFF, (sign>>16)&0xFF, (sign>>24)&0xFF, size);
 
 		switch ( sign )
 		{
@@ -2291,32 +2281,24 @@ void Load3DMap( char* Map )
 
 	RClose( f1 );
 
-	fprintf(stderr, "[L3D] RClose done, calling post-load functions\n");
-
 	//CreateMapLocking();
 
 	rando();//!!
 
 	CreateTotalLocking();
-	fprintf(stderr, "[L3D] CreateTotalLocking done\n");
 
 	ClearRender();
-	fprintf(stderr, "[L3D] ClearRender done\n");
 
 	CreateMiniMap();
-	fprintf(stderr, "[L3D] CreateMiniMap done\n");
 
 	ClearTrianglesSystem();
-	fprintf(stderr, "[L3D] ClearTrianglesSystem done\n");
 
 	CreateTrianglesSystem();
-	fprintf(stderr, "[L3D] CreateTrianglesSystem done\n");
 
 	if ( !WTopMap )
 	{
 		CreateWTopMap();
 	}
-	fprintf(stderr, "[L3D] WTopMap done\n");
 
 	GTOP[0].LinksDist = LinksDist;
 	GTOP[0].MotionLinks = MotionLinks;
@@ -2324,7 +2306,6 @@ void Load3DMap( char* Map )
 	GTOP[0].TopMap = TopMap;
 	GTOP[0].TopRef = TopRef;
 	NChAreas = 0;
-	fprintf(stderr, "[L3D] GTOP set, looping walls...\n"); fflush(stderr);
 
 	for ( int i = 0; i < MAXOBJECT; i++ )
 	{
@@ -2334,20 +2315,16 @@ void Load3DMap( char* Map )
 			DynamicalLockTopCell( OB->WallX, OB->WallY );
 		}
 	}
-	fprintf(stderr, "[L3D] Walls done, ResearchCurrentIsland...\n"); fflush(stderr);
 
 	for ( int q = 0; q < 8; q++ )
 	{
 		ResearchCurrentIsland( q );
 	}
-	fprintf(stderr, "[L3D] ResearchCurrentIsland done\n"); fflush(stderr);
 
 	{ extern word* TopIslands; if (!TopIslands) ResearchIslands(); }
 	CreateCostPlaces();
-	fprintf(stderr, "[L3D] CreateCostPlaces done\n");
 
 	Loadingmap = 0;
-	fprintf(stderr, "[L3D] Load3DMap COMPLETE\n");
 }
 
 void Load3DMapLandOnly( char* Map )
@@ -2359,7 +2336,20 @@ void Load3DMapLandOnly( char* Map )
 	CheckMapName( Map );
 	ResFile f1 = RReset( Map );
 	ClearMaps();
-	if ( f1 == INVALID_HANDLE_VALUE )return;
+	if ( f1 == INVALID_HANDLE_VALUE ) {
+		if (RivDir) {
+			// CheckMapName already generated the random map in memory.
+			// Skip file loading, but perform post-processing.
+			if ( !WTopMap )CreateWTopMap();
+			ClearRender();
+			ClearTrianglesSystem();
+			CreateTrianglesSystem();
+			NChAreas = 0;
+			CreateCostPlaces();
+			Loadingmap = 0;
+		}
+		return;
+	}
 	if ( !LoadHeader( f1 ) )
 	{
 		RClose( f1 );

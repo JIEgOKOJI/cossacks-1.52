@@ -178,7 +178,7 @@ void GetDivPoint(int x1, int y1, int x2, int y2, byte* CurDiv, SelectionRequest*
 	int r0 = Norm(x1 - SR->x, y1 - SR->y);
 	int r1 = Norm(x2 - SR->x, y2 - SR->y);
 	if ((r0 > rd&&r1 > rd) || (r0 < rd&&r1 < rd)) {
-		if (r0 < rd&&r1 < rd)*CurDiv = div(rand(), 11000).quot;
+		if (r0 < rd&&r1 < rd)*CurDiv = (rand() % 32768) / 11000;
 		return;
 	};
 	int xp0 = x1 + ((x2 - x1) >> 2);

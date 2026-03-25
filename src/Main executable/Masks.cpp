@@ -342,7 +342,18 @@ extern RLCTable SimpleMaskB;
 extern RLCTable SimpleMaskC;
 extern RLCTable SimpleMaskD;
 void CopyMaskedBitmap(byte* Bits, int x, int y, int MaskID) {
-	CopyMaskedBitmap64(Bits, x, y, (void*)(SimpleMaskA->OfsTable[MaskID]));
+	if (!SimpleMaskA || !SimpleMaskB || !SimpleMaskC || !SimpleMaskD) {
+		return;
+	}
+	int cnt = SimpleMaskA->SCount & 65535;
+	if (MaskID < 0 || MaskID >= cnt) {
+		return;
+	}
+	void* maskA = (void*)(SimpleMaskA->OfsTable[MaskID]);
+	if (!maskA) {
+		return;
+	}
+	CopyMaskedBitmap64(Bits, x, y, maskA);
 	CopyMaskedTransparentBitmap_4(Bits, x, y, (void*)(SimpleMaskB->OfsTable[MaskID]));
 	CopyMaskedTransparentBitmap_8(Bits, x, y, (void*)(SimpleMaskC->OfsTable[MaskID]));
 	CopyMaskedTransparentBitmap_12(Bits, x, y, (void*)(SimpleMaskD->OfsTable[MaskID]));

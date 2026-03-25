@@ -1590,16 +1590,11 @@ int MM_ProcessSinglePlayer()
 {
 	extern void dbglog(const char* fmt, ...);
 	dbglog("MM_ProcessSinglePlayer: enter\n");
-	fprintf(stderr, "[MENU] MM_ProcessSinglePlayer: enter\n");
 	use_gsc_network_protocol = false;
 	SFLB_LoadPlayerData();
-	fprintf(stderr, "[MENU] MM_ProcessSinglePlayer: LoadPlayerData done\n");
 	LoadFog(2);
-	fprintf(stderr, "[MENU] MM_ProcessSinglePlayer: LoadFog done\n");
 	LocalGP BTNS("Interface\\Single_Player");
-	fprintf(stderr, "[MENU] MM_ProcessSinglePlayer: BTNS loaded\n");
 	SQPicture MnPanel("Interface\\Background_Single_Player.bmp");
-	fprintf(stderr, "[MENU] MM_ProcessSinglePlayer: MnPanel loaded\n");
 	DialogsSystem MMenu(menu_x_off, menu_y_off);
 	LocalGP HFONT("rom10");
 	RLCFont hfnt(HFONT.GPID);
@@ -2738,7 +2733,6 @@ void ChatProcess();
 //Shows lobby interface for multiplayer deathmatch and single player random map
 bool MPL_WaitingGame(bool Host, bool SINGLE)
 {
-	fprintf(stderr, "[MENU] MPL_WaitingGame: enter (Host=%d, SINGLE=%d)\n", Host, SINGLE);
 	if (SINGLE)
 	{
 		use_gsc_network_protocol = false;
@@ -5263,9 +5257,7 @@ ffe2:
 		}
 	}
 
-	fprintf(stderr, "[MENU] MPL_WaitingGame: about to free Preview=%p\n", (void*)Preview);
 	free(Preview);
-	fprintf(stderr, "[MENU] MPL_WaitingGame: freed Preview OK\n");
 
 	if (mcmCancel == ItemChoose)
 	{
@@ -5276,7 +5268,6 @@ ffe2:
 	SpeedSh = exFMode;
 	FrmDec = exFMode + 1;
 
-	fprintf(stderr, "[MENU] MPL_WaitingGame: returning (ItemChoose=%d)\n", ItemChoose);
 	return (ItemChoose == mcmOk) || PlayerMenuMode != 1;
 }
 
@@ -6049,17 +6040,13 @@ extern int RunMethod;
 
 bool SingleOptions()
 {
-	fprintf(stderr, "[MENU] SingleOptions: enter\n");
 	if (MPL_WaitingGame(1, 1))
 	{
-		fprintf(stderr, "[MENU] SingleOptions: MPL_WaitingGame returned true, calling StartIGame\n");
 		StartIGame(1);
-		fprintf(stderr, "[MENU] SingleOptions: StartIGame returned\n");
 		return true;
 	}
 	else
 	{
-		fprintf(stderr, "[MENU] SingleOptions: MPL_WaitingGame returned false\n");
 		return false;
 	}
 }
@@ -6702,13 +6689,9 @@ int processMainMenu()
 	MMenu.addTextButton(nullptr, 1024 - GetRLCStrWidth(BuildVersion, &SmallYellowFont1), 748, BuildVersion, &SmallYellowFont1, &SmallYellowFont1, &SmallYellowFont1, 0);
 
 	int nn = 0;
-	extern int _pd_trace_enable;
-	extern int _pd_callcount;
 
 	while (true)
 	{
-		fprintf(stderr, "[MENU] Top of while(true), nn=%d, ItemChoose=%d\n", nn, ItemChoose);
-		fflush(stderr);
 		if (CurrentCampagin != -1 && CurrentMission != -1)
 		{
 			ProcessCampagins(CurrentCampagin);
@@ -6773,23 +6756,17 @@ int processMainMenu()
 
 			InMainMenuLoop = 1;
 
-			if(nn==0) { _pd_trace_enable = _pd_callcount + 1; fprintf(stderr, "[MENU-LOOP] Before ProcessMessages (nn=%d)\n", nn); fflush(stderr); }
 			ProcessMessages();
 
-			if(nn==0) { fprintf(stderr, "[MENU-LOOP] Before ProcessDialogs\n"); fflush(stderr); }
 			MMenu.ProcessDialogs();
 
-			if(nn==0) { fprintf(stderr, "[MENU-LOOP] After ProcessDialogs\n"); fflush(stderr); }
 			MMenu.RefreshView();
-			if(nn==0) { fprintf(stderr, "[MENU-LOOP] After RefreshView\n"); fflush(stderr); }
 
 			InMainMenuLoop = 0;
 			if (!nn)
 			{
-				fprintf(stderr, "[MENU] SlowLoadPalette + LoadFog (nn=0)\n"); fflush(stderr);
 				SlowLoadPalette("2\\agew_1.pal");
 				LoadFog(2);
-				fprintf(stderr, "[MENU] SlowLoadPalette + LoadFog done\n"); fflush(stderr);
 			}
 			nn++;
 
@@ -6809,24 +6786,18 @@ int processMainMenu()
 			}
 		} while (ItemChoose == -1);
 
-		fprintf(stderr, "[MENU] ItemChoose=%d\n", ItemChoose);
-
 		if (ItemChoose == mcmSingle)
 		{
 			SlowUnLoadPalette("2\\agew_1.pal");
 			bool enr = EnterName();
-			fprintf(stderr, "[MENU] EnterName returned %d\n", enr);
 			if (enr)
 			{
 				int res = MM_ProcessSinglePlayer();
-				fprintf(stderr, "[MENU] MM_ProcessSinglePlayer returned %d\n", res);
 				if (res == 5)
 				{
-					fprintf(stderr, "[MENU] Back from Single Player, continue\n");
 					continue;
 				}
 			}
-			fprintf(stderr, "[MENU] mcmSingle: falling through (will break)\n");
 		}
 
 		if (ItemChoose == mcmMulti)
@@ -6849,10 +6820,8 @@ int processMainMenu()
 
 		if (ItemChoose == mcmEdit)
 		{
-			fprintf(stderr, "[MENU] Entering Options submenu\n");
 			SlowUnLoadPalette("2\\agew_1.pal");
 			ProcessMenuOptions();
-			fprintf(stderr, "[MENU] Returned from Options, continue to main loop\n");
 			continue;
 		}
 
@@ -9013,33 +8982,25 @@ void PlayGame()
 {
 	InGame = true;
 	_wd_activate(true);
-	fprintf(stderr, "[PG] PlayGame entered\n");
 
 	if (window_mode)
 	{//Explicit call in case if game starts at 1024x768
 		ResizeAndCenterWindow();
 	}
 
-	fprintf(stderr, "[PG] Calling GSSetup800\n");
 	GSSetup800();
 
-	fprintf(stderr, "[PG] Calling LoadFog\n");
 	LoadFog(0);
 
 	//Zero NucList, NucSN, NNuc
-	fprintf(stderr, "[PG] Calling InitGame\n");
 	InitGame();
 
 	if (exRealLx != RealLx)
 	{//Use last used game resoultion (loaded from settings)
-		fprintf(stderr, "[PG] Setting display mode %dx%d\n", exRealLx, exRealLy);
 		SetGameDisplayModeAnyway(exRealLx, exRealLy);
 	}
 
-	//Does what the name says
-	fprintf(stderr, "[PG] Calling DrawAllScreen\n");
 	DrawAllScreen();
-	fprintf(stderr, "[PG] DrawAllScreen done\n");
 	GameNeedToDraw = false;
 	GameExit = false;
 	MakeMenu = false;
@@ -9733,26 +9694,19 @@ void AllGame()
 	int menuChoice;
 	do
 	{
-		fprintf(stderr, "[ALLGAME] Calling processMainMenu\n");
 		menuChoice = processMainMenu();
-		fprintf(stderr, "[ALLGAME] processMainMenu returned %d\n", menuChoice);
 		if (menuChoice == mcmSingle)
 		{
 			if (EditMapMode)
 			{
-				fprintf(stderr, "[ALLGAME] Entering EditGame\n");
 				EditGame();
 			}
 			else
 			{
-				fprintf(stderr, "[ALLGAME] Entering PlayGame\n");
 				PlayGame();
 			}
-			fprintf(stderr, "[ALLGAME] Calling UnLoading\n");
 			UnLoading();
-			fprintf(stderr, "[ALLGAME] UnLoading done\n");
 		}
-		fprintf(stderr, "[ALLGAME] Loop check: menuChoice=%d, mcmExit=%d\n", menuChoice, mcmExit);
 	} while (mcmExit != menuChoice);
 }
 

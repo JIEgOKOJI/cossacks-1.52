@@ -2036,7 +2036,7 @@ void Init3DMapSystem() {
 	LoadRLC("ms_c.msk", &SimpleMaskC);
 	LoadRLC("ms_d.msk", &SimpleMaskD);
 	Mode3D = true;
-	if (SectMap)for (int i = 0; i < MaxSector * MaxTH * 6; i++)SetSectMap(i, div(rand(), 11000).quot);
+	if (SectMap)for (int i = 0; i < MaxSector * MaxTH * 6; i++)SetSectMap(i, (rand() % 32768) / 11000);
 };
 void ClearRender() {
 	SVSC.RefreshScreen();
